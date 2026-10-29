@@ -1,0 +1,74 @@
+{
+  "reviewed_at": "2026-10-29T18:56:33Z",
+  "source_commit": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+  "scope": "Independent inspection of existing actual native screenshots and static source; no new UI actions/test execution",
+  "images_viewed": [
+    "images/04-comfort-hand-visible.jpg",
+    "images/06-comfort-near-character.jpg",
+    "images/08-comfort-scene-second-position.jpg"
+  ],
+  "observation": "Comfort option is visibly selected green; ordinary courtyard clock advances. No separately discernible skin-colored hand mesh was identified around the cursor in these three captures. Image04 name describes attempted action, not a successful outcome.",
+  "classification": "Observed visual acceptance gap; underlying cause and live simulation input state unconfirmed",
+  "static_findings": [
+    {
+      "source": "src/Yukkuri.Game/InteractionRoom.cs:240-258",
+      "finding": "quietCompany requires armed Comfort, no held mouse, no tap contact; each frame initially hides hand, then qualifying focused/non-panning/non-close-up/unpaused scene plane hit calls ShowInteractionTool, sets position at height0.5 and Visible=true, and provides live simulation hand."
+    },
+    {
+      "source": "src/Yukkuri.Game/InteractionRoom.Tools.cs:43-84",
+      "finding": "Comfort takes default branch with three skin-colored finger meshes, then InteractionLayer8; there is no missing Comfort mesh branch evident statically."
+    },
+    {
+      "source": "src/Yukkuri.Game/InteractionRoom.Input.cs:537-545",
+      "finding": "UpdateTapTool returns immediately when tap contact absent; only an active tap expiration hides hand. SelectAction calls CancelGesture which clears tap contact at Input326. Cannot attribute persistent missing-hand observation to unconditional later tap clearing."
+    },
+    {
+      "source": "src/Yukkuri.Game/InteractionRoom.cs:164-188",
+      "finding": "Frame order is input -> UpdateInteractionHand -> simulation -> camera/actors -> UpdateTapTool. No trace was captured of actual frame flags/hand visibility."
+    }
+  ],
+  "uncertainties": [
+    "Runtime quietCompany, focus, scene-hit, plane-hit, visible and mesh state were not emitted.",
+    "Dark cursor halo and very small default finger geometry may obscure discernibility; screenshots alone do not prove no mesh or no live simulation hand.",
+    "Default residents do not initially meet HumanCompany thresholds; absence of approach is not counted as a failure."
+  ],
+  "counting_boundary": "Keep separate from 23 pure suites 849 pass / 6 fail. HumanCompany 17/17 is pure-rule evidence and cannot satisfy native hand-render acceptance.",
+  "root_cause_confirmed": false,
+  "no_rerun": true,
+  "review_updates": [
+    {
+      "reviewed_at": "2026-10-29T19:02:44.550707+00:00",
+      "scope": "Independent inspection of three newly supplied actual native bound-window screenshots only; no new UI action, tests, source changes or reruns by this reviewer.",
+      "evidence": [
+        {
+          "path": "images/comfort-window-observation.png",
+          "sha256": "ef32db07906d7b5084d4726fead744630b4af1f4d5a3cb884b7d9391c4555812",
+          "size_bytes": 101460,
+          "independent_visual_observation": "Comfort is selected; ordinary courtyard clock reads 02:56. A very small skin-colored hand model is visibly present near scene center with a separate shadow below/right, without desktop cursor halo."
+        },
+        {
+          "path": "images/comfort-window-paused.png",
+          "sha256": "527a79b4d1e07a668c9b128ba9ae8b21259fbb21c991b232b0f3aaa89f8737eb",
+          "size_bytes": 102361,
+          "independent_visual_observation": "Courtyard explicitly shows paused; the previously visible central hand and its shadow are not present."
+        },
+        {
+          "path": "images/comfort-window-disarmed.png",
+          "sha256": "97f0fb506db73649b4d177621d8e09a04efd5f46dc9238b1abe14b0dff291c60",
+          "size_bytes": 103239,
+          "independent_visual_observation": "Courtyard clock reads 03:54; bottom panel shows empty hand and the hand put away. The previously visible central hand and shadow are not present. Parent records preceding right-click; image independently establishes disarmed state, not the input event itself."
+        }
+      ],
+      "supersedes": "Initial classification and tentative non-discernibility observation from the three desktop screenshots above are retained as historical observations but are no longer the current acceptance finding. The direct window capture positively demonstrates the small rendered hand; desktop cursor halo obscured prior discernibility. Do not count missing-hand product failure.",
+      "current_classification": "Limited native visibility/state observations passed: Comfort hand visible during ordinary running time; not visible when paused; not visible in disarmed empty-hand state.",
+      "boundaries": [
+        "A screenshot does not independently demonstrate that the preceding input was right-click; that event is supported by the parent action record.",
+        "These images do not establish autonomous approach, uninterrupted six-second companionship accrual, any bond benefit, thresholds, or full feature acceptance.",
+        "HumanCompany 17/17 remains pure-rule evidence, distinct from this finite native visibility observation.",
+        "No product root cause was established for the original apparent issue; stronger capture evidence supersedes it rather than proving a repaired defect."
+      ]
+    }
+  ],
+  "latest_reviewed_at": "2026-10-29T19:02:44.550707+00:00",
+  "current_classification": "Limited native hand visibility, pause-hide and disarmed-hide observations passed; initial apparent missing-hand concern superseded by direct window evidence, not a product failure."
+}

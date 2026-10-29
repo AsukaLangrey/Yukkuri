@@ -1,0 +1,11 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.ColdCare/Family.ColdCare.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source
+PASS 冷藏十倍延缓实际年龄与消耗，普通时间仍前进
+PASS 濒危救治时间只延缓，取出和读档不重新派发
+PASS 冷藏有保存期限，到期不能无限暂停生命过程
+PASS 到期没有空位时仍留冷藏但不再延缓，腾空后可以取出
+PASS 冷藏中死者仍能取出，不能复活或再次制造死亡
+PASS 暂停与近看不推进冷藏期限，原暂停不改变保存状态
+PASS 亲代从实际食水分出一份并搬运，不隔空增加幼体需求
+PASS 用户拿走运输份额立即解除亲代占用，放下不能复制
+PASS 搬运中存档继续保留唯一份额与照护来源

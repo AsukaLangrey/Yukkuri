@@ -1,0 +1,21 @@
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(21,38): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(24,21): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(27,21): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(31,21): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(40,36): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(53,28): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+  Yukkuri.Simulation -> /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/bin/Debug/net10.0/Yukkuri.Simulation.dll
+  Yukkuri.Game -> /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Game/.godot/mono/temp/bin/Debug/Yukkuri.Game.dll
+
+Build succeeded.
+
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(21,38): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(24,21): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(27,21): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(31,21): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(40,36): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/FamilyValidation.cs(53,28): warning CS8602: Dereference of a possibly null reference. [/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj]
+    6 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:09.48

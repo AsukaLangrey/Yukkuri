@@ -1,0 +1,14 @@
+{
+  "reviewed_at": "2026-10-29T19:03:19Z",
+  "kind": "actual rendered images, separate from native play",
+  "source_commit": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+  "files": [
+    "render/01-yard.png",
+    "render/02-close.png",
+    "render/03-feeding-controls.png",
+    "render/04-force-controls.png",
+    "render/05-help.png"
+  ],
+  "observed": "5fixedframes show courtyard3characters, front close-up adult, feeding and force controls, readable scrollable help. No obvious overlapping controls in these frames;10bottomFits/forceSingleLine booleans true. Does not test all resolutions/longnames/complete interactions.",
+  "performance_scope": "180process-frame intervals only on cloud llvmpipe; median48.119ms p95 59.644ms max78.899ms; not general hardware benchmark."
+}

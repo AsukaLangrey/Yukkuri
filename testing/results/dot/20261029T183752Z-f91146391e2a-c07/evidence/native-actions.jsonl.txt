@@ -1,0 +1,23 @@
+{"at":"2026-10-29T18:51:58.514Z","action":"startup"}
+{"at":"2026-10-29T18:52:08.941Z","action":"ordinary-cursor-no-hand"}
+{"at":"2026-10-29T18:52:19.825Z","action":"speech-controls"}
+{"at":"2026-10-29T18:52:41.011Z","action":"comfort-hand-visible"}
+{"at":"2026-10-29T18:53:02.249Z","action":"paused-comfort"}
+{"at":"2026-10-29T18:53:12.765Z","action":"comfort-near-character"}
+{"at":"2026-10-29T18:53:25.404Z","action":"comfort-outside-scene"}
+{"at":"2026-10-29T18:53:40.568Z","action":"comfort-scene-second-position"}
+{"at":"2026-10-29T18:54:16.918Z","action":"right-click-disarmed"}
+{"at":"2026-10-29T18:54:27.284Z","action":"closeup-before-family"}
+{"at":"2026-10-29T18:54:35.381Z","action":"family-closeup-open"}
+{"at":"2026-10-29T18:54:44.051Z","action":"family-bottom-close-label"}
+{"at":"2026-10-29T18:55:15.778Z","action":"family-close-keeps-closeup"}
+{"at":"2026-10-29T18:55:34.053Z","action":"family-original-pause"}
+{"at":"2026-10-29T18:55:52.677Z","action":"family-close-retains-paused-closeup"}
+{"at":"2026-10-29T18:56:14.464Z","action":"juvenile-menu"}
+{"at":"2026-10-29T18:57:11.711Z","action":"juvenile-family-teaching"}
+{"at":"2026-10-29T18:57:54.470Z","action":"juvenile-teach-controls"}
+{"at":"2026-10-29T18:58:33.550Z","action":"teaching-request-feedback"}
+{"at":"2026-10-29T18:59:02.157Z","action":"return-courtyard-after-teaching-refusal"}
+{"at":"2026-10-29T18:59:18.556Z","action":"comfort-window-observation","note":"bound-window screenshot to assess cursor/halo occlusion uncertainty"}
+{"at":"2026-10-29T19:00:17.504Z","action":"comfort-window-paused"}
+{"at":"2026-10-29T19:00:38.247Z","action":"comfort-window-disarmed"}

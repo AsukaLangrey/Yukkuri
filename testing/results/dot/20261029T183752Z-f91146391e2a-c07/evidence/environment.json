@@ -1,0 +1,28 @@
+{
+  "id": "dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe",
+  "checked_at": "2026-10-29T19:02:38.483467+00:00",
+  "os": "Debian GNU/Linux 13.6 x86_64; Linux 6.18.55",
+  "cpu": "AMD EPYC 9V74 80-Core Processor; 9 logical processors exposed",
+  "gpu": "Mesa llvmpipe (LLVM 19.1.7, 256 bits), software renderer",
+  "driver": "OpenGL 4.5 Core Profile, Mesa 25.0.7-2+deb13u1",
+  "dotnet": "10.0.402",
+  "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+  "display": "Authorized own-cloud CUA/Sky desktop1364x1024; actual game client1180x812 at92,120; bound-window screenshots without desktop pointer halo.",
+  "desktop_observation_authorized": true,
+  "audio": "Current c07 startup again ALSA device unavailable; all audio drivers failed, Dummy fallback. No audible acceptance.",
+  "limitations": [
+    "Not the locked Windows platform.",
+    "V-Sync mode change unsupported by driver.",
+    "lscpu cannot read sandbox CPU sysfs; CPU model from /proc/cpuinfo and count from getconf."
+  ],
+  "identity_note": "Stable environment identity reused after actual toolchain/OS/renderer re-verification; run_id is separate.",
+  "profile": "cloud1837-c07",
+  "working_directory": "/workspace",
+  "current_verification": [
+    "godot-current-verification.json",
+    "nuget-current-verification.json",
+    "dotnet-info.txt",
+    "game-runtime.txt",
+    "native desktop captures after additional authorization evidence accepted"
+  ]
+}

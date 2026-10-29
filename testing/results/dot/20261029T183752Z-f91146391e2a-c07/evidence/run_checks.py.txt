@@ -1,0 +1,72 @@
+import os,sys,json,pathlib,hashlib,subprocess,datetime,time,fcntl,signal,shlex,re
+b=pathlib.Path('/workspace/shared/yukkuri-cloud-20261029T183752-f911463')
+out=b/'evidence'; source=b/'source'
+lock=open(b/'run.lock','w');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+start=time.monotonic();deadline=start+max(0,(datetime.datetime.fromisoformat('2026-10-29T19:05:00+00:00')-datetime.datetime.now(datetime.timezone.utc)).total_seconds())
+run={'started_at':now(),'finished_at':None,'status':'running','source_commit':'f91146391e2a1629b86530eff5b82fbf0085ec23','source_tree':'ed1c7f6ad5f8034ae7071da577175bbcc476385e','source_worktree_clean':None,'source_materialization':'362 exact Git blob verified source files and exact 12 LFS objects via authorized connector or verified unchanged cache, dependency closure only; no complete Git checkout; no LFS validation','scope':'Pure .NET Linux behavior/math checks only; no game launch, runtime, visual or Windows acceptance','configuration':'Release, UseAppHost=false; external NuGet config with empty package sources; no product source changes','steps':[]}
+env=os.environ.copy(); env.update({'DOTNET_ROOT':str(pathlib.Path('/workspace/shared/yukkuri-cloud-20261029')/'toolchain/dotnet'),'DOTNET_CLI_HOME':str(b/'dotnet-home'),'DOTNET_SKIP_FIRST_TIME_EXPERIENCE':'1','DOTNET_CLI_TELEMETRY_OPTOUT':'1','DOTNET_NOLOGO':'1','NUGET_PACKAGES':str(b/'nuget-packages'),'TMPDIR':str(b/'temp'),'XDG_RUNTIME_DIR':str(b/'runtime')})
+(b/'temp').mkdir(exist_ok=True)
+dotnet=str(pathlib.Path('/workspace/shared/yukkuri-cloud-20261029')/'toolchain/dotnet/dotnet')
+def save():(out/'run.json').write_text(json.dumps(run,indent=2))
+def exec_step(id,args,timeout=300,report=None):
+ step={'id':id,'command':shlex.join(args),'working_directory':str(source),'started_at':now(),'finished_at':None,'exit_code':None,'status':'running','evidence':['evidence/'+id+'.txt']}
+ run['steps'].append(step);save();print('START',id,flush=True)
+ limit=min(timeout,max(.01,deadline-time.monotonic()))
+ with (out/(id+'.txt')).open('w') as log:
+  log.write('COMMAND: '+step['command']+'\nCWD: '+str(source)+'\n');log.flush()
+  p=subprocess.Popen(args,cwd=source,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+  try:code=p.wait(timeout=limit)
+  except subprocess.TimeoutExpired:
+   os.killpg(p.pid,signal.SIGTERM)
+   try:p.wait(timeout=5)
+   except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait()
+   code=p.returncode;step['status']='timeout';step['reason']='Test process group exceeded remaining run or per-check timeout'
+ step['exit_code']=code;step['finished_at']=now()
+ if step['status']!='timeout':step['status']='passed' if code==0 else 'failed'
+ text=(out/(id+'.txt')).read_text()
+ step['passed_count']=len(re.findall(r'^PASS[: ]',text,re.M));step['failed_count']=len(re.findall(r'^FAIL[: ]',text,re.M))
+ if report:
+  path=out/report
+  if path.exists():
+   data=json.loads(path.read_text());step['evidence'].append('evidence/'+report)
+   step['json_success']=data.get('success');step['json_failures']=data.get('failures')
+   for key in ['checks','results','scenarios']:
+    if isinstance(data.get(key),list):
+     step[key+'_count']=len(data[key])
+     if key in ['checks','results']:
+      vals=data[key];step['passed_count']=sum(v.get('passed') is True for v in vals);step['failed_count']=sum(v.get('passed') is False for v in vals)
+   if data.get('success') is False or (isinstance(data.get('failures'),int) and data['failures']>0):step['status']='failed'
+   if id=='NaturalLife.Soak':
+    step['expected_scenarios']=24
+    step['seeds']=sorted(set(v['seed'] for v in data.get('scenarios',[])))
+    step['simulated_seconds_by_scenario']=[v['seconds'] for v in data.get('scenarios',[])]
+    step['passed_count']=sum(v.get('passed') is True for v in data.get('scenarios',[]));step['failed_count']=sum(v.get('passed') is False for v in data.get('scenarios',[]))
+    if len(data.get('scenarios',[]))!=24:
+     step['status']='failed' if step['status']!='timeout' else 'timeout';step['reason']='Expected 24 complete scenarios'
+  elif code==0:
+   step['status']='failed';step['reason']='Missing expected JSON report'
+ save();print('END',id,step['status'],'exit',code,'passed',step['passed_count'],'failed',step['failed_count'],flush=True)
+ return step
+save()
+(out/'sdk-version-from-source.txt').write_text(subprocess.check_output([dotnet,'--version'],cwd=source,env=env,text=True))
+cfg=b/'NuGet.offline.Config';cfg.write_text('<?xml version="1.0" encoding="utf-8"?><configuration><packageSources><clear /></packageSources></configuration>\n')
+try:
+ for id in ['Simulation.Smoke', 'Milestone.Smoke', 'Interaction.Smoke', 'Input.Intent', 'NaturalLife.Smoke', 'Interaction.Continuity', 'ActorGeometry.Smoke', 'NaturalLife.Soak', 'Interaction.Depth', 'Interaction.Injury', 'Family.Social', 'Family.Reproduction', 'Family.ColdCare', 'Family.Aftermath', 'Family.Risk', 'Interaction.InjuryPresentation', 'Family.Compatibility', 'Family.CareLearning', 'Family.Teaching', 'Interaction.StateBoundaries', 'Interaction.HumanCompany', 'Family.Protection', 'Family.Presentation']:
+  if time.monotonic()>deadline:break
+  project='checks/'+id+'/'+id+'.csproj'
+  restore=exec_step(id+'-restore',[dotnet,'restore',project,'--configfile',str(cfg),'-p:UseAppHost=false','-p:NuGetAudit=false'],180)
+  if restore['status']!='passed':continue
+  args=[dotnet,'run','--configuration','Release','--no-restore','--project',project,'-p:UseAppHost=false','-p:UseSharedCompilation=false']
+  report=id+'.json' if id in ['Interaction.Smoke','Input.Intent','NaturalLife.Smoke','Interaction.Continuity','ActorGeometry.Smoke','NaturalLife.Soak'] else None
+  if report:args+=['--',str(out/report)]
+  exec_step(id,args,timeout=1800 if id=='NaturalLife.Soak' else 600,report=report)
+finally:
+ manifest=json.loads((out/'materialization-manifest.json').read_text());changed=[]
+ for f in manifest['files']:
+  if f['path'] not in {'src/Yukkuri.Game/Assets/Art/sanctuary-morning.png.import','src/Yukkuri.Game/Assets/pipeline-probe.glb.import'} and hashlib.sha256((source/f['path']).read_bytes()).hexdigest()!=f['sha256']:changed.append(f['path'])
+ run['materialized_sources_unchanged']=not changed;run['changed_files']=changed
+ run['finished_at']=now();run['duration_seconds']=time.monotonic()-start
+ run['status']='failed' if changed or any(s['status']=='failed' for s in run['steps']) else 'timeout' if any(s['status']=='timeout' for s in run['steps']) else 'partial'
+ save();print('RUN FINISHED',run['status'],flush=True)
+

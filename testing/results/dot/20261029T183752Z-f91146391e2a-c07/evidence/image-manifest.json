@@ -1,0 +1,177 @@
+{
+  "run_id": "20261029T183752Z-f91146391e2a-c07",
+  "source_commit": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+  "created_at": "2026-10-29T19:03:57.579857+00:00",
+  "files": [
+    {
+      "path": "images/01-startup.jpg",
+      "sha256": "67128d8bef64afbf92bd7ac783cd3dffaf8ddb9aa0601a27734e0e6e6241e0ce",
+      "bytes": 131009
+    },
+    {
+      "path": "images/02-ordinary-cursor-no-hand.jpg",
+      "sha256": "727cab6ac2ece08bec1c9ac408ed3fe2af01a29dc474806bd3e244890523cf42",
+      "bytes": 130713
+    },
+    {
+      "path": "images/03-speech-controls.jpg",
+      "sha256": "5cf5a8b8ff95ef0ff4680e79493373b682ed48f6d00161035cf20fd6d378dfba",
+      "bytes": 128571
+    },
+    {
+      "path": "images/04-comfort-hand-visible.jpg",
+      "sha256": "a83a8a5a7949589f88d18d08792b12bf212060bd8f5747045b0cb85e6835fe8a",
+      "bytes": 129335
+    },
+    {
+      "path": "images/05-paused-comfort.jpg",
+      "sha256": "17219215561b97d0a2b683e720d857f58a65c9a94cffddc4c80a673901a9ee5d",
+      "bytes": 129417
+    },
+    {
+      "path": "images/06-comfort-near-character.jpg",
+      "sha256": "67a0e8d851c1c09c9b6040d2e530efbc01cc2fb278f64afe5fd78b1c8ffafe8a",
+      "bytes": 128555
+    },
+    {
+      "path": "images/07-comfort-outside-scene.jpg",
+      "sha256": "974373089bed3a81d1fede38a3336b7aaf8edea18090bc728507a41cd5a58495",
+      "bytes": 129331
+    },
+    {
+      "path": "images/08-comfort-scene-second-position.jpg",
+      "sha256": "5460a0ee6f9d4c4c54a80f04ddedf6299d740b7e0e386959c3747fa61dd79bfd",
+      "bytes": 128848
+    },
+    {
+      "path": "images/09-right-click-disarmed.jpg",
+      "sha256": "3d3a4a1ce07682f45f00c8ade01f63f3398d16c5c437c3d964b105ae4351a5f3",
+      "bytes": 130791
+    },
+    {
+      "path": "images/10-closeup-before-family.jpg",
+      "sha256": "3015b05a2c14c5ac874c00911480c4c6d2c9d448d2ce09cb0fa5d338dad4bc6b",
+      "bytes": 120584
+    },
+    {
+      "path": "images/11-family-closeup-open.jpg",
+      "sha256": "770ab5db896c56529e3dd140d8d1c0f408a03df54ea934f0d1c8596dbf17d584",
+      "bytes": 111162
+    },
+    {
+      "path": "images/12-family-bottom-close-label.jpg",
+      "sha256": "9354019574b9995a2b1a690e2bd1aa2d9f7e22f197e11f531af531c9a6bb7a5d",
+      "bytes": 108410
+    },
+    {
+      "path": "images/13-family-close-keeps-closeup.jpg",
+      "sha256": "50ef5199b344741ca0a36f792d1ab749188963b215ff81952b601eaf443cb44b",
+      "bytes": 120977
+    },
+    {
+      "path": "images/14-family-original-pause.jpg",
+      "sha256": "8ca97652e195729ce090b0f8aced10ec46fecf2f868ff7367d7921f2274b2267",
+      "bytes": 108137
+    },
+    {
+      "path": "images/15-family-close-retains-paused-closeup.jpg",
+      "sha256": "6280b66aa8131c31454d314a3ed235786a97753ba03e3d6c2d008e398d614c36",
+      "bytes": 120203
+    },
+    {
+      "path": "images/16-juvenile-menu.jpg",
+      "sha256": "9a31a03e28dd678dadce1e089b2ef9ad3f98762426b439b62d17bed09675882c",
+      "bytes": 121593
+    },
+    {
+      "path": "images/17-juvenile-family-teaching.jpg",
+      "sha256": "9819b36d79acf3ef737aea52e8a169e6f0936c26ea2e5af72f74708cf763223b",
+      "bytes": 110073
+    },
+    {
+      "path": "images/18-juvenile-teach-controls.jpg",
+      "sha256": "d3f8b6a7a8dae30f45982dd2c74bbacadd6ffcdeff07b8e8b4df3474343f47af",
+      "bytes": 106712
+    },
+    {
+      "path": "images/19-teaching-request-feedback.jpg",
+      "sha256": "81641f634746abde06bd68f2eddffc4a6b5869c5f00aea98d6c3af0233426a56",
+      "bytes": 113595
+    },
+    {
+      "path": "images/20-return-courtyard-after-teaching-refusal.jpg",
+      "sha256": "8d67de641b120c1b26b01d4c25ca58879b5ed64b8235568eaf287ceae4f020c2",
+      "bytes": 132035
+    },
+    {
+      "path": "images/comfort-window-disarmed.png",
+      "sha256": "97f0fb506db73649b4d177621d8e09a04efd5f46dc9238b1abe14b0dff291c60",
+      "bytes": 103239
+    },
+    {
+      "path": "images/comfort-window-observation.png",
+      "sha256": "ef32db07906d7b5084d4726fead744630b4af1f4d5a3cb884b7d9391c4555812",
+      "bytes": 101460
+    },
+    {
+      "path": "images/comfort-window-paused.png",
+      "sha256": "527a79b4d1e07a668c9b128ba9ae8b21259fbb21c991b232b0f3aaa89f8737eb",
+      "bytes": 102361
+    },
+    {
+      "path": "render/01-yard.png",
+      "sha256": "f5904cab9beeedeccdf599b59465af47f7575525cf89fc9e02e031f9449cdfdc",
+      "bytes": 213228
+    },
+    {
+      "path": "render/02-close.png",
+      "sha256": "3aa5e0c9c79c06ba7add3ccfad0225f7f5c6a891f60cebdbd0c8e7528376d4a5",
+      "bytes": 197032
+    },
+    {
+      "path": "render/03-feeding-controls.png",
+      "sha256": "09b35d6faaf76bb2b9fcedc84325cc7ae02d63255cedb867beece65caef218fe",
+      "bytes": 189493
+    },
+    {
+      "path": "render/04-force-controls.png",
+      "sha256": "eff1747cb608f2f4e7418167ba4ee4c68c4366af70fd4a9aed29ec43df7bac2f",
+      "bytes": 184245
+    },
+    {
+      "path": "render/05-help.png",
+      "sha256": "73eba7b2585a3eb4f2115700e4ce2981e455c0408108bafed0b2325184936cae",
+      "bytes": 325298
+    },
+    {
+      "path": "render/render-checks.json",
+      "sha256": "a8e6655f6c4222e6a0e0e86ff566c493ccdb584e0e0797702c7c5672b97b4c70",
+      "bytes": 2017
+    },
+    {
+      "path": "evidence/native-observation.json",
+      "sha256": "492b0c8987debf3d9e5a69a516a49af9c018e68de5cbb823d88d99482f350766",
+      "bytes": 5416
+    },
+    {
+      "path": "evidence/native-actions.jsonl",
+      "sha256": "e4ae2ee68b1635acc443656683f54ef962255aa53d3195e0b99e492c2c08dc16",
+      "bytes": 1647
+    },
+    {
+      "path": "evidence/render-visual-observation.json",
+      "sha256": "185ae3f9a45cf32d621e608d095f3913a7de6032b4745b323a6266a59f402016",
+      "bytes": 778
+    },
+    {
+      "path": "evidence/comfort-ui-review.json",
+      "sha256": "66b788ed2c469a3f5d87f2f47df1d6835a53bae20a228a4eb1a14f1e658814be",
+      "bytes": 5767
+    }
+  ],
+  "image_count": 28,
+  "native_images": 23,
+  "engine_render_images": 5,
+  "privacy": "Only own-cloud game images, no browser private content or personal saves.",
+  "retention": "Private Library metadata recorded separately; no public share or permanent retention guarantee."
+}

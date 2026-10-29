@@ -1,0 +1,20 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.HumanCompany/Interaction.HumanCompany.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source
+PASS 普通时间实际靠近后才积累陪伴，满六秒一段只记一次
+PASS 不到六秒没有完成记忆，真实近处相处才改善关系
+PASS 信任、依恋、安全、熟悉度及近期伤害各自限制主动请求
+PASS 疼痛、饥渴、疲劳和恐惧优先，不能用陪伴掩盖身体需要
+PASS 不安时可以主动找安慰并留下真实相处记忆
+PASS 暂停和近看不会增长陪伴时间、记忆或关系
+PASS 冷藏立即结束主动陪伴，冷藏内无隔空关系增长
+PASS 收手立即停止收益，旧位置宽限和换区不能补齐相处
+PASS 未完成时离开接触半径须重积连续六秒
+PASS 永久脚底失能可在手边相处，但不能靠陪伴恢复走路
+PASS 真实高伤害立即打断请求，保留伤势与救治优先
+PASS 同档续接保留真实累计时间且完成后重读不重复记忆
+PASS 读档不会把保存的手位置当成新的实际输入
+PASS 非法完成标志、超现实接触时间和失效残留均拒绝整档保存
+PASS 冷藏濒危死亡与强制准备整档不能夹带已清理的活动陪伴
+PASS 明确头部Hurt记录头部戒备，身体恢复和读档不把它变为侧腹记忆
+PASS 离散弹额真实伤害归于头部且长期记忆不需要连续手势
+Human company: 0 failure(s)

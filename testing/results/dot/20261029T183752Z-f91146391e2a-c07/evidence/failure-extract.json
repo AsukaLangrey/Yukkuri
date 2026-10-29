@@ -1,0 +1,192 @@
+{
+  "source_commit": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+  "failures": [
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "a completed held meal sweet or drink releases needs after its actual swallowing response",
+      "passed": false,
+      "error": "Drink/water: holding the finished tool trapped the oil or skipped swallowing; diagnostics={\"accepted\":true,\"sawSwallow\":true,\"moved\":true,\"sawNaturalIntake\":true,\"endX\":-0.30000062845401326,\"endZ\":-0.7917167814584771,\"peakX\":1.2079999999999997,\"maxDistanceFromStart\":1.2079999999999997,\"totalTravel\":3.1880000000000006,\"closestDestination\":0.7920000000000003,\"sawDestinationIntake\":true,\"returnedAfterDestination\":true,\"destinationId\":\"destination\",\"destinationX\":2,\"destinationZ\":0,\"destinationPortions\":4,\"targetX\":-0.3862521514355943,\"targetZ\":-0.9512650943138317,\"Activity\":\"\\u6162\\u6162\\u6765\",\"Fullness\":79.70000000000027,\"Energy\":89.76000000000022,\"Hydration\":71.70000000000014,\"EatingRemaining\":0,\"GroundIntake\":true,\"GroundIntakeSourceId\":null,\"NaturalIntakePending\":false,\"lastDisplayedPose\":\"idle\",\"ReactionPose\":\"idle\",\"ReactionPoseRemaining\":0,\"ReactionSituation\":\"mouthful-done\",\"ReactionRefused\":false,\"HasInteractionGesture\":true,\"InteractionGestureTarget\":\"interaction-oil-0\",\"CurrentInteractionAction\":12,\"InteractionGestureOwnsPose\":false,\"InteractionIntakeAccepted\":true,\"Carried\":false,\"Falling\":false,\"Restraint\":0,\"excretionActive\":false,\"Resting\":false}",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:297"
+      ]
+    },
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "an autonomous invitation supplies the same body pose used by the renderer",
+      "passed": false,
+      "error": "autonomous invitation lacks a pose or matching speech: idle, ",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:604"
+      ]
+    },
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "voice intent follows the oil's actual response instead of the last selected tool group",
+      "passed": false,
+      "error": "autonomous nuzzle request has no matching sound intent",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:661"
+      ]
+    },
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "stored treasure keeps ownership through save and cannot be displayed as present",
+      "passed": false,
+      "error": "saving lost ownership or autonomy displayed a stored object",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:1305"
+      ]
+    },
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",
+      "passed": false,
+      "error": "empty mouse hold froze movement or continued pressure: X=-1.0800000000000005, health=99.99749999999996/99.96, pose=idle",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:1389"
+      ]
+    },
+    {
+      "check_id": "Family.Protection",
+      "name": "保护者远离时不消除危险，实际走近后才能保护",
+      "output_header": "FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护",
+      "passed": false,
+      "error": "FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护\n   at Program.<<Main>$>g__Require|0_0(Boolean condition, String reason) in /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/checks/Family.Protection/Program.cs:line 6\n   at Program.<>c.<<Main>$>b__0_8() in /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/checks/Family.Protection/Program.cs:line 96\n   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/checks/Family.Protection/Program.cs:line 8",
+      "format": "full stdout failure block",
+      "source_locations": [
+        "checks/Family.Protection/Program.cs:6",
+        "checks/Family.Protection/Program.cs:8",
+        "checks/Family.Protection/Program.cs:88",
+        "checks/Family.Protection/Program.cs:96"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "accepted": true,
+    "sawSwallow": true,
+    "moved": true,
+    "sawNaturalIntake": true,
+    "endX": -0.30000062845401326,
+    "endZ": -0.7917167814584771,
+    "peakX": 1.2079999999999997,
+    "maxDistanceFromStart": 1.2079999999999997,
+    "totalTravel": 3.1880000000000006,
+    "closestDestination": 0.7920000000000003,
+    "sawDestinationIntake": true,
+    "returnedAfterDestination": true,
+    "destinationId": "destination",
+    "destinationX": 2,
+    "destinationZ": 0,
+    "destinationPortions": 4,
+    "targetX": -0.3862521514355943,
+    "targetZ": -0.9512650943138317,
+    "Activity": "慢慢来",
+    "Fullness": 79.70000000000027,
+    "Energy": 89.76000000000022,
+    "Hydration": 71.70000000000014,
+    "EatingRemaining": 0,
+    "GroundIntake": true,
+    "GroundIntakeSourceId": null,
+    "NaturalIntakePending": false,
+    "lastDisplayedPose": "idle",
+    "ReactionPose": "idle",
+    "ReactionPoseRemaining": 0,
+    "ReactionSituation": "mouthful-done",
+    "ReactionRefused": false,
+    "HasInteractionGesture": true,
+    "InteractionGestureTarget": "interaction-oil-0",
+    "CurrentInteractionAction": 12,
+    "InteractionGestureOwnsPose": false,
+    "InteractionIntakeAccepted": true,
+    "Carried": false,
+    "Falling": false,
+    "Restraint": 0,
+    "excretionActive": false,
+    "Resting": false
+  },
+  "no_failure_retry": true,
+  "root_cause_confirmed": false,
+  "interpretation_limit": "Only current JSON/stdout and pinned source are used. A failed compound assertion does not establish which component failed unless diagnostics explicitly record it. Following statements in a failed Check body are not executed; independent Check bodies may continue.",
+  "continuity_assertion_location": "checks/Interaction.Continuity/Program.cs:339",
+  "compound_assertion": "accepted && sawSwallow && moved && c.X > .5",
+  "subcase_execution": {
+    "counting_unit": "One named top-level check; do not add nested combinations to aggregate.",
+    "failed_combination": "Drink/water",
+    "after_failure": "Remaining statements and later nested combinations in this Check body were not executed. Exact case boundary is retained in failed-check-source.json."
+  },
+  "independent_readonly_review": "evidence/readonly-failure-review.json",
+  "current_readonly_context": {
+    "source_commit": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+    "analysis_kind": "Read-only current failure/source analysis; no project execution or retry",
+    "items": [
+      {
+        "applies_to": "a completed held meal sweet or drink releases needs after its actual swallowing response",
+        "confirmed": "Current diagnostics accepted/sawSwallow/moved/sawDestinationIntake/returnedAfterDestination true; endX=-0.30000062845401326. Compound failure is terminal X>.5, not missing swallow/movement.",
+        "assertion": "checks/Interaction.Continuity/Program.cs:339",
+        "not_executed": [
+          "Drink/water next assertion line347",
+          "Drink/water end/cancel/release statements lines348-351",
+          "next Drink/rest combination"
+        ],
+        "coverage_note": "Seven previous subcombinations completed by fixed loop/exception control flow; do not add nested cases to top-level pass count."
+      },
+      {
+        "applies_to": "an autonomous invitation supplies the same body pose used by the renderer",
+        "assertion": "checks/Interaction.Continuity/Program.cs:610",
+        "not_executed": [
+          "same Check pause/closeup follow-up assertions at lines611-614"
+        ],
+        "root_cause_confirmed": false
+      },
+      {
+        "applies_to": "voice intent follows the oil's actual response instead of the last selected tool group",
+        "assertion": "checks/Interaction.Continuity/Program.cs:665",
+        "not_executed": [
+          "same Check coo-refuse/coo-hurt assertions lines666-670"
+        ],
+        "root_cause_confirmed": false
+      },
+      {
+        "applies_to": "stored treasure keeps ownership through save and cannot be displayed as present",
+        "assertion": "checks/Interaction.Continuity/Program.cs:1312",
+        "interpretation_limit": "Stored ownership existence AND ReactionSituation==treasure-missing failed; current error does not split components, so loss of ownership is not established.",
+        "root_cause_confirmed": false
+      },
+      {
+        "applies_to": "an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",
+        "assertion": "checks/Interaction.Continuity/Program.cs:1397",
+        "confirmed": "Predicate c.X>.1 && c.Health>=health && Pose!=pressure; current X=-1.0800000000000005, health=99.99749999999996/99.96 and pose=idle show only positive-X condition failed. Creature changed X; no observed continued pressure or health loss.",
+        "static_hypothesis": "Fixture resets X/Z to0 but retains default TargetX=-2.7. Current Hurt clears FollowPlayer after localized damage; Press may clear follow and allow old negative-X target. No per-frame instrumentation verifies this causal chain.",
+        "static_source_locations": [
+          "checks/Interaction.Continuity/Program.cs:1389-1399",
+          "src/Yukkuri.Simulation/MilestoneInteraction.cs:154-160",
+          "src/Yukkuri.Simulation/InteractionWorld.cs:16-26"
+        ],
+        "not_executed": [
+          "sim.EndInteractionGesture at line1398"
+        ],
+        "root_cause_confirmed": false
+      },
+      {
+        "applies_to": "保护者远离时不消除危险，实际走近后才能保护",
+        "assertion": "checks/Family.Protection/Program.cs:96",
+        "confirmed": "Current stdout reports failure at Program.cs:96 after two 0.25-second phases. Distant-protector HasThreat assertion at94 passed; protector position/target reset at95 followed by !HasThreat assertion at96 failed. Full stdout stack retained.",
+        "root_cause_confirmed": false,
+        "branch_coverage_limit": "foreach maternal=false,true; error does not record maternal flag. Cannot identify which branch failed or claim both branches executed/failed. Remaining statements/later branch after throw are not executed, but later independent top-level Check bodies continue.",
+        "positive_control": "Separate normal-nearby protection Check at lines68-76 passed for both branches; do not describe all protection as broken.",
+        "static_hypothesis": "Fixture sets NextSocial/NextCare/NextAutonomy=10000 but leaves DecisionIn at default. Actor or target may move under ordinary idle logic during delayed phases; only protector is reset at95, so old near coordinates need not imply current body contact. This is unverified static hypothesis, not per-frame diagnosis.",
+        "source_scope": "checks/Family.Protection/Program.cs:68-98",
+        "static_source_locations": [
+          "checks/Family.Protection/Program.cs:13-21",
+          "checks/Family.Protection/Program.cs:88-98",
+          "src/Yukkuri.Simulation/InteractionBehavior.cs:403-410",
+          "src/Yukkuri.Simulation/FamilySocial.cs:149-151",
+          "src/Yukkuri.Simulation/FamilySocial.cs:516-518",
+          "src/Yukkuri.Simulation/FamilyRisk.cs:267-268"
+        ],
+        "interpretation_limit": "Current distances, target motion, contact state and maternal flag were not logged; no particular distance/state gate is confirmed as the cause.",
+        "fixture_scope": "Despite the test name saying actual approach, line95 directly assigns position and target in a pure-rule fixture; this is not observed walking or native UI."
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Injury/Interaction.Injury.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source
+PASS 重大底部损伤有持久上限，护理和食物不会即刻恢复
+PASS 轻伤有普通时间恢复过程且近看暂停
+PASS 不同伤处可连续护理，左右伤势不串位
+PASS 重复护理不刷健康或额外扣物资
+PASS 再次濒危继承原救治余量且读档不重置
+PASS 危重即时清理尚未入口食物，不伪造消耗
+PASS 死亡一次结算并清理手持摄入及学习占用
+PASS 关闭致命后果仍保留伤残且允许护理
+PASS 系统性伤害不编造玩家局部接触
+PASS 旧档默认身体状态，显式空或坏伤势拒绝
+PASS 冷藏只以十分之一速度累积生理负荷
+PASS 冷藏达到排泄阈值不产物，取出后才完成一次
+PASS 旧场景的通用护理能选到实际底部伤处
+PASS 死亡释放手持但保留原有固定装置的支撑
+PASS 冷藏危重时钟只减一次身体时间

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "engine-contact",
+    "status": "passed",
+    "command": "bash /workspace/shared/yukkuri-cloud-20261029T183752-f911463/run-engine-checks.sh",
+    "phase": "contact",
+    "invocation_note": "One actual wrapper invocation, contact then render sequentially; phase is metadata, not shell argument.",
+    "working_directory": "/workspace",
+    "project_path": "/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Game",
+    "started_at": "2026-10-29T19:01:06Z",
+    "finished_at": "2026-10-29T19:01:19Z",
+    "exit_code": 0,
+    "passed_count": 4,
+    "failed_count": 0,
+    "timeout_seconds": 300,
+    "required": false,
+    "seeds": [],
+    "reason": "Engine authored ray/contact geometry, not native mouse acceptance. Warnings retained individually from this log.",
+    "warnings": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.",
+      "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+    ],
+    "evidence": [
+      "evidence/engine-contact-start.txt",
+      "evidence/engine-contact-end.txt",
+      "evidence/engine-contact-exit.txt",
+      "evidence/engine-contact.txt",
+      "evidence/contact.json"
+    ]
+  },
+  {
+    "id": "engine-layout",
+    "status": "passed",
+    "command": "bash /workspace/shared/yukkuri-cloud-20261029T183752-f911463/run-engine-checks.sh",
+    "phase": "render",
+    "invocation_note": "One actual wrapper invocation, contact then render sequentially; phase is metadata, not shell argument.",
+    "working_directory": "/workspace",
+    "project_path": "/workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/src/Yukkuri.Game",
+    "started_at": "2026-10-29T19:01:19Z",
+    "finished_at": "2026-10-29T19:01:42Z",
+    "exit_code": 0,
+    "passed_count": 10,
+    "failed_count": 0,
+    "timeout_seconds": 300,
+    "required": false,
+    "seeds": [],
+    "reason": "5actual rendered images individually inspected,10fixed layout assertions; not full native interaction acceptance. Warnings retained individually from this log.",
+    "warnings": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "evidence": [
+      "evidence/engine-render-start.txt",
+      "evidence/engine-render-end.txt",
+      "evidence/engine-render-exit.txt",
+      "evidence/engine-render.txt",
+      "evidence/render-checks.json"
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Presentation/Family.Presentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source
+PASS 保存期内的说明与真实十倍延缓一致
+PASS 超期但仍Stored时说明不能声称继续延缓
+PASS 取出后旧超期计时不能盖过实际复苏状态

@@ -1,0 +1,30 @@
+{
+ "source_commit":"f91146391e2a1629b86530eff5b82fbf0085ec23",
+ "status":"passed",
+ "status_scope":"Only the finite enumerated real UI observations. Not full visual-interaction-review, companionship reward or all v2-v11 acceptance.",
+ "started_at":"2026-10-29T18:51:33Z",
+ "finished_at":"2026-10-29T19:00:38Z",
+ "summary":"本轮实际云桌面确认：安慰选中后普通小院里有很小的肤色手模型和投影，暂停及右键收手后消失；此前桌面截图的光标暗晕遮挡造成难辨，窗口级截图已排除‘手未显示’疑点，不列产品失败。家庭面板的‘关闭面板’保留近看与原暂停；特殊干预区默认收起。现有幼体豆豆与长辈判断/教导按钮可见；真实点击讲述树叶后因双方不愿安静相处被拒，未声称完成教学。游戏正常退出0。完整陪伴关系收益、全流程家庭/出生/伤势/声音等仍未验收。",
+ "command":"CUA/Sky actual own-cloud native window actions and screenshots; no injected save or product edits",
+ "display":"Alice same cloud Linux desktop1364x1024; game client1180x812 at92,120",
+ "window_id":41943043,
+ "profile":"cloud1837-c07",
+ "passed_count":null,
+ "failed_count":null,
+ "observations":[
+  {"id":"startup","at":"2026-10-29T18:51:58.514Z","images":["images/01-startup.jpg"],"result":"New pinned build starts into actual3-character courtyard. Room ready log and isolated profile match."},
+  {"id":"comfort-hand-visibility","at":"2026-10-29T18:59:18.556Z","images":["images/02-ordinary-cursor-no-hand.jpg","images/03-speech-controls.jpg","images/04-comfort-hand-visible.jpg","images/06-comfort-near-character.jpg","images/08-comfort-scene-second-position.jpg","images/comfort-window-observation.png"],"result":"Selected 说话→安慰, then moved pointer into ordinary unpaused courtyard without clicking a creature. Initial desktop screenshots at3positions did not resolve the tiny hand under the cursor halo. Bound-window capture without that overlay clearly shows a small flesh-colored model around client(592,397) and its shadow, with 安慰 selected and world clock running. Initial non-observation is superseded, not a product failure. Ordinary idle cursor before arming showed no distinct hand."},
+  {"id":"comfort-pause-right-cancel","at":"2026-10-29T19:00:38.247Z","images":["images/comfort-window-paused.png","images/comfort-window-disarmed.png"],"result":"Space pauses world and visible hand disappears; after resuming and right click, tools switch to 空手, feedback 手已经收回, and no hand remains at the prior location. This proves finite visible-state changes only, not hidden relationship reward accounting."},
+  {"id":"family-close-preserves-closeup","at":"2026-10-29T18:55:15.778Z","images":["images/10-closeup-before-family.jpg","images/11-family-closeup-open.jpg","images/12-family-bottom-close-label.jpg","images/13-family-close-keeps-closeup.jpg"],"result":"Opened family from near-look. Text explains near-look proposals do not advance until courtyard; special intervention initially collapsed. Bottom button is 关闭面板, not 回到小院. Clicking it retains close-up view and its natural-time pause."},
+  {"id":"family-preserves-explicit-pause","at":"2026-10-29T18:55:52.677Z","images":["images/14-family-original-pause.jpg","images/15-family-close-retains-paused-closeup.jpg"],"result":"Explicit Space pause before reopening family; Esc closes panel but top remains 小院暂停中 / 继续 and close-up remains. Then explicitly resumed."},
+  {"id":"juvenile-teaching-entry-refusal","at":"2026-10-29T18:58:33.550Z","images":["images/16-juvenile-menu.jpg","images/17-juvenile-family-teaching.jpg","images/18-juvenile-teach-controls.jpg","images/19-teaching-request-feedback.jpg","images/20-return-courtyard-after-teaching-refusal.jpg"],"result":"Selected default豆豆·灵梦·幼体; family shows juvenile needs, elder松果's personal belief 树叶:觉得可以吃喝 and explanatory teaching text. Clicked 讲讲树叶·觉得可以吃喝; modal closes preserving close-up and says 双方还没有愿意安静相处，先照顾吃喝、身体和关系。 Tab returns to courtyard. This is actual refusal handling, not six-second teaching completion or newborn growth."},
+  {"id":"normal-exit","at":"2026-10-29T19:00:38Z","result":"Closed only own game titlebar; runtime end and exit0 recorded; following window list has terminal and no own game. Subsequent engine checks are separate sequential processes."}
+ ],
+ "limitations":[
+  "Default relation/need conditions do not guarantee autonomous companionship. No actual approach, continuous6second relationship benefit, voice/subtitle acknowledgement, save-resume companionship or abuse history outcome was established.",
+  "No new pregnancy/birth/aftercare/death/memorial/risk/protection success flow was performed through UI. Pure suites remain separate evidence.",
+  "No long names/newborn list, full body injury/organ/food presentation, focus-loss/pan/orbit/close-up live-hand reward boundary or all resolutions acceptance.",
+  "Current audio again fell back to Dummy, not audible verification. No approved historical-save fixture.",
+  "Capture labels are action-attempt labels, not pass declarations. Early desktop pointer halo obscured tiny hand; later window captures provide the decisive visible evidence. Action JSONL records capture completion rather than exact input onset."
+ ]
+}

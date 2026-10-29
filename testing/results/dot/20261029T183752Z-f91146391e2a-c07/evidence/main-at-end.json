@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-29T19:03:19Z",
+  "main_commit": "881458c93622444b565efc4a70c30223671835fb",
+  "tested_commit": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+  "same_as_tested": false,
+  "note": "Later main is not covered by pinned c07."
+}

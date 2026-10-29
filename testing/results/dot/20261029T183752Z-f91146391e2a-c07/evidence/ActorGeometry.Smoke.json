@@ -1,0 +1,379 @@
+{
+  "at": "2026-10-29T18:49:46.7742526+00:00",
+  "scope": "Offline surface geometry and motion only; visual/performance acceptance pending",
+  "success": true,
+  "checks": [
+    {
+      "name": "old flat eye cannot preserve face clearance across its whole shape",
+      "passed": true
+    },
+    {
+      "name": "new eye surface maintains clearance through blinks",
+      "passed": true
+    },
+    {
+      "name": "mirrored eyes have matched depth",
+      "passed": true
+    },
+    {
+      "name": "old underside spot intersects skin instead of remaining outside",
+      "passed": true
+    },
+    {
+      "name": "underside markings follow the same continuous skin with positive clearance",
+      "passed": true
+    },
+    {
+      "name": "bow inset trim follows the actual folded cloth without sinking into it",
+      "passed": true
+    },
+    {
+      "name": "hat crown closes to a single point rather than an open ring",
+      "passed": true
+    },
+    {
+      "name": "hat brim closes its seam and keeps the rolled edge inside its thickness",
+      "passed": true
+    },
+    {
+      "name": "press and squeeze deform opposite axes without inversion at any force",
+      "passed": true
+    },
+    {
+      "name": "intake stages distinguish offer chewing sipping swallowing and finished",
+      "passed": true
+    },
+    {
+      "name": "repair progressively closes tears and lays stitches instead of showing every stitch at once",
+      "passed": true
+    },
+    {
+      "name": "every cleanable surface has marks whose entire footprint matches the real anatomical hit region",
+      "passed": true
+    },
+    {
+      "name": "localized water and dirt stay visible until that region is actually dried or cleaned",
+      "passed": true
+    },
+    {
+      "name": "landing absorbs impact and settles without inversion or runaway motion",
+      "passed": true
+    },
+    {
+      "name": "repeated impacts replay their response while speech during a held motion does not restart its cycle",
+      "passed": true
+    },
+    {
+      "name": "fringe tips close without burying the visible end in the skin",
+      "passed": true
+    },
+    {
+      "name": "close-up orbit reaches front side and back while staying above the floor at every supported height",
+      "passed": true
+    },
+    {
+      "name": "touch motion measures the contacted surface and cannot be supplied by idle animation or a gap between regions",
+      "passed": true
+    },
+    {
+      "name": "reprojecting a moving pointer separates rubbing from the body\u0027s own travel",
+      "passed": true
+    },
+    {
+      "name": "a camera looking above the horizon cannot place objects behind its ray",
+      "passed": true
+    },
+    {
+      "name": "hanging support follows the outer skin and hair rather than ending behind an unsupported body",
+      "passed": true
+    },
+    {
+      "name": "the former stretched hat could enter the former box roof",
+      "passed": true
+    },
+    {
+      "name": "hat shape remains rigid and fits the box through pressure, damaged tilt and small reactions",
+      "passed": true
+    },
+    {
+      "name": "carry support tracks the deformed and turned underside instead of using the idle body\u0027s height",
+      "passed": true
+    },
+    {
+      "name": "left and right visual patches use the corresponding saved surface state",
+      "passed": true
+    },
+    {
+      "name": "towel thickness closes continuously and the drinking water stays inside the open cup",
+      "passed": true
+    },
+    {
+      "name": "a supine hat extends beyond the former standing-only footprint",
+      "passed": true
+    },
+    {
+      "name": "former absolute carry projection shifts the oil when only height changes",
+      "passed": true
+    },
+    {
+      "name": "standing and turned placement envelopes contain the hat through deformation and its turning path",
+      "passed": true
+    },
+    {
+      "name": "relative support drag stays still under reframing and remains bounded at shallow and upward angles",
+      "passed": true
+    },
+    {
+      "name": "support drag matches orthographic ground projection at ordinary downward viewing angles",
+      "passed": true
+    },
+    {
+      "name": "eye color layers and highlights remain inside the actual face-conforming lid at every supported expression",
+      "passed": true
+    },
+    {
+      "name": "relaxed joy and sleep eyelids have distinct readable curves without moving the eye corners",
+      "passed": true
+    },
+    {
+      "name": "the lined cradle closes underneath and stays outside the skin and hair envelope",
+      "passed": true
+    },
+    {
+      "name": "wrapped support stays above the floor while rocking at every body size",
+      "passed": true
+    },
+    {
+      "name": "the tufted cushion is closed and its support height matches its authored top surface",
+      "passed": true
+    },
+    {
+      "name": "cushion support lifts the posed body clear instead of intersecting it during rest or a turn",
+      "passed": true
+    },
+    {
+      "name": "cushion support does not allocate managed objects during repeated body and cradle calculations",
+      "passed": true
+    },
+    {
+      "name": "the soft wrapping also clears the cushion instead of hiding its lower cloth inside it",
+      "passed": true
+    },
+    {
+      "name": "a turned hat and its hair cap clear the cushion as well as the skin",
+      "passed": true
+    },
+    {
+      "name": "a fingertip contact leaves the palm above the surface instead of burying its larger heel",
+      "passed": true
+    },
+    {
+      "name": "the central ribbon knot is readable above the hair instead of burying its front surface",
+      "passed": true
+    },
+    {
+      "name": "dressing tape and gauze follow the selected skin or hair with a closed taper at each edge",
+      "passed": true
+    },
+    {
+      "name": "visible care dressings clear the cushion under a resting or rolled body",
+      "passed": true
+    },
+    {
+      "name": "tap response moves away from the touched surface and mirrors with the contact direction",
+      "passed": true
+    },
+    {
+      "name": "tear tracks conform to the cheeks and remain below the eyes",
+      "passed": true
+    },
+    {
+      "name": "tear traces build and fade continuously and freeze when presentation is paused",
+      "passed": true
+    },
+    {
+      "name": "soft ball panels stay inside their contact radius with outward front faces",
+      "passed": true
+    },
+    {
+      "name": "ball rotation follows displacement and reverses without spinning during a hold",
+      "passed": true
+    },
+    {
+      "name": "ball picking follows the visible sphere instead of a fixed screen-distance shortcut",
+      "passed": true
+    },
+    {
+      "name": "cookie edges close and the hand portion rests above the spoon\u0027s inner surface",
+      "passed": true
+    },
+    {
+      "name": "offered spoon and cookie meet the mouth without burying their rims in the face",
+      "passed": true
+    },
+    {
+      "name": "care cloth is closed and its underside stays above the contact plane",
+      "passed": true
+    },
+    {
+      "name": "repair needle reaches the exact tip while its shaft eye and thread clear the cloth plane",
+      "passed": true
+    },
+    {
+      "name": "pebble and its mineral vein stay above ground inside the prop pick bounds",
+      "passed": true
+    },
+    {
+      "name": "beveled fixture panels preserve their authored bounds and outward unit normals",
+      "passed": true
+    },
+    {
+      "name": "rounded fixture faces share closed edges and use Godot clockwise outward winding",
+      "passed": true
+    },
+    {
+      "name": "box panels meet without overlapping coplanar strips at posts back or floor",
+      "passed": true
+    },
+    {
+      "name": "hop has a visible ballistic clearance and plants its underside through squash",
+      "passed": true
+    },
+    {
+      "name": "hop finishes on stopping, never bobs at rest, and supports quarter-second simulation updates",
+      "passed": true
+    },
+    {
+      "name": "hop freezes on pause and resets cleanly on carry restraint or teleport",
+      "passed": true
+    },
+    {
+      "name": "paused camera changes preserve an airborne hop but not a real support loss",
+      "passed": true
+    },
+    {
+      "name": "hop faces every actual flight direction and turns only while planted",
+      "passed": true
+    },
+    {
+      "name": "midair target changes wait until landing and paused turns keep their heading",
+      "passed": true
+    },
+    {
+      "name": "rear hair covers the skin continuously and closes its lower hem inside the body",
+      "passed": true
+    },
+    {
+      "name": "hat bow front backing tails and knot clear the crown rather than intersecting it",
+      "passed": true
+    },
+    {
+      "name": "visible hat brim clears the crown hair during hops pressure and damaged tilt",
+      "passed": true
+    },
+    {
+      "name": "new rear hair remains clear of the cushion when tilted or rolled",
+      "passed": true
+    },
+    {
+      "name": "head ribbon wings and tails clear the hair without collapsing their front and backing",
+      "passed": true
+    },
+    {
+      "name": "crown and rear form a single round profile without a pinched horizontal join",
+      "passed": true
+    },
+    {
+      "name": "ground eating and drinking lower the mouth toward the actual source heading",
+      "passed": true
+    },
+    {
+      "name": "sickness and resting poses stay bounded and have continuous gentle breathing",
+      "passed": true
+    },
+    {
+      "name": "direct contact deformation follows force without turning a soft touch into collapse",
+      "passed": true
+    },
+    {
+      "name": "accessory attention cannot turn the mouth away during intake or direct manipulation",
+      "passed": true
+    },
+    {
+      "name": "ground preparation opens a steady mouth before the portion enters and then starts chewing",
+      "passed": true
+    },
+    {
+      "name": "every live intake mouth frame follows the continuous face surface",
+      "passed": true
+    },
+    {
+      "name": "supported mouth reaches leaves river meals sweets and cup rims across body sizes",
+      "passed": true
+    },
+    {
+      "name": "intake bends into contact and returns smoothly using its saved mouthful progress",
+      "passed": true
+    },
+    {
+      "name": "rotated hair support uses actual vertices instead of empty bounding box corners",
+      "passed": true
+    },
+    {
+      "name": "a natural appeal turns toward the perceived hand and stays gently raised",
+      "passed": true
+    },
+    {
+      "name": "airborne and planted hop phases hand over to intake without discarding their visible pose",
+      "passed": true
+    },
+    {
+      "name": "live pose smoothing reaches intake contact consistently across frame schedules",
+      "passed": true
+    },
+    {
+      "name": "supported intake reaches raised supplies on box floors cushions and soft wrapping",
+      "passed": true
+    },
+    {
+      "name": "simulation source contacts match the actual leaves food and cup geometry",
+      "passed": true
+    },
+    {
+      "name": "permitted wrapped intake reaches its source while low river water remains physically out of reach",
+      "passed": true
+    },
+    {
+      "name": "tree picking blocks actual trunks and crowns but leaves their empty corners open",
+      "passed": true
+    },
+    {
+      "name": "tree picking preserves props in front and occludes props behind the visible trunk",
+      "passed": true
+    },
+    {
+      "name": "cached tree picking performs repeated rays without per-query allocations",
+      "passed": true
+    },
+    {
+      "name": "woodland water banks and flow traces face upward while tree trunks face outward",
+      "passed": true
+    },
+    {
+      "name": "river flow ribbons have a consistent cross-stream width instead of folding along themselves",
+      "passed": true
+    },
+    {
+      "name": "tree ball collisions cover the actual leaning trunk at every sphere cross section",
+      "passed": true
+    },
+    {
+      "name": "a floating ball stays supported by the curved bank and its picking sphere follows its visible height",
+      "passed": true
+    },
+    {
+      "name": "optimized cushion support matches the full original surface scan across varied body poses",
+      "passed": true
+    }
+  ]
+}

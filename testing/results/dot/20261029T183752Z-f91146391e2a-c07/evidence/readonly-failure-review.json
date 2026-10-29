@@ -1,0 +1,146 @@
+{
+  "reviewed_at": "2026-10-29T18:53:41.309001+00:00",
+  "source_commit": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+  "scope": "Read-only existing result and source analysis; no test rerun, no product/assertion changes",
+  "pure_finished_at": "2026-10-29T18:51:13.986176+00:00",
+  "suites": 23,
+  "passed_count": 849,
+  "failed_count": 6,
+  "counts_independently_verified_from_stdout_or_soak_json": true,
+  "continuity": {
+    "passed": 119,
+    "failed": 5,
+    "results": [
+      {
+        "name": "a completed held meal sweet or drink releases needs after its actual swallowing response",
+        "passed": false,
+        "error": "Drink/water: holding the finished tool trapped the oil or skipped swallowing; diagnostics={\"accepted\":true,\"sawSwallow\":true,\"moved\":true,\"sawNaturalIntake\":true,\"endX\":-0.30000062845401326,\"endZ\":-0.7917167814584771,\"peakX\":1.2079999999999997,\"maxDistanceFromStart\":1.2079999999999997,\"totalTravel\":3.1880000000000006,\"closestDestination\":0.7920000000000003,\"sawDestinationIntake\":true,\"returnedAfterDestination\":true,\"destinationId\":\"destination\",\"destinationX\":2,\"destinationZ\":0,\"destinationPortions\":4,\"targetX\":-0.3862521514355943,\"targetZ\":-0.9512650943138317,\"Activity\":\"\\u6162\\u6162\\u6765\",\"Fullness\":79.70000000000027,\"Energy\":89.76000000000022,\"Hydration\":71.70000000000014,\"EatingRemaining\":0,\"GroundIntake\":true,\"GroundIntakeSourceId\":null,\"NaturalIntakePending\":false,\"lastDisplayedPose\":\"idle\",\"ReactionPose\":\"idle\",\"ReactionPoseRemaining\":0,\"ReactionSituation\":\"mouthful-done\",\"ReactionRefused\":false,\"HasInteractionGesture\":true,\"InteractionGestureTarget\":\"interaction-oil-0\",\"CurrentInteractionAction\":12,\"InteractionGestureOwnsPose\":false,\"InteractionIntakeAccepted\":true,\"Carried\":false,\"Falling\":false,\"Restraint\":0,\"excretionActive\":false,\"Resting\":false}"
+      },
+      {
+        "name": "an autonomous invitation supplies the same body pose used by the renderer",
+        "passed": false,
+        "error": "autonomous invitation lacks a pose or matching speech: idle, "
+      },
+      {
+        "name": "voice intent follows the oil's actual response instead of the last selected tool group",
+        "passed": false,
+        "error": "autonomous nuzzle request has no matching sound intent"
+      },
+      {
+        "name": "stored treasure keeps ownership through save and cannot be displayed as present",
+        "passed": false,
+        "error": "saving lost ownership or autonomy displayed a stored object"
+      },
+      {
+        "name": "an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",
+        "passed": false,
+        "error": "empty mouse hold froze movement or continued pressure: X=-1.0800000000000005, health=99.99749999999996/99.96, pose=idle"
+      }
+    ],
+    "prior_four_failures_byte_identical": true,
+    "program_sha256": "609dd27339c848263dbcb83edf1af0be5e6707e8183d290aa97177eab145466c",
+    "program_unchanged_from_c06": true,
+    "new_failure": {
+      "check_start_line": 1389,
+      "failed_assertion_line": 1397,
+      "compound_assertion": "c.X > .1 && c.Health >= health && InteractionPresentation.Pose(c) != \"pressure\"",
+      "recorded_values": {
+        "X": -1.0800000000000005,
+        "health": 99.99749999999996,
+        "baseline_health": 99.96,
+        "pose": "idle"
+      },
+      "known_false_component": "c.X > .1",
+      "known_true_components": [
+        "c.Health >= health",
+        "pose != pressure"
+      ],
+      "not_executed": [
+        "sim.EndInteractionGesture() at line1398"
+      ],
+      "static_hypothesis": {
+        "confirmed": false,
+        "path": [
+          "InteractionGesture.cs:476-478 Press -> Distress with damage .04",
+          "InteractionWorld.cs:123 damage>0 -> Hurt",
+          "MilestoneInteraction.cs:154-160 explicit/player hurt clears FollowPlayer",
+          "Fixture at1391 sets X/Z=0 but not TargetX/TargetZ; default small bell TargetX=-2.7",
+          "InteractionBehavior.cs:403-410 ordinary target movement may continue toward retained negative X"
+        ],
+        "limits": "No runtime trace of FollowPlayer/TargetX was emitted. Result proves negative displacement and no continued pressure at sample, not frozen movement. Whether directional test expectation or product semantics should change requires developer decision."
+      }
+    },
+    "old_failure_boundaries": [
+      {
+        "line": 339,
+        "known_false_component": "terminal c.X > .5",
+        "not_executed": [
+          "Drink/water line347",
+          "Drink/water cancellation/put-down lines348-351",
+          "Drink/rest next subcombination"
+        ],
+        "notes": "All four diagnostic booleans true and destination portion5->4; same complete diagnostics as c06. Seven preceding subcombinations do not add aggregate passes."
+      },
+      {
+        "line": 610,
+        "not_executed": [
+          "pause reaction assertion611-612",
+          "close-up expiry613-614"
+        ]
+      },
+      {
+        "line": 665,
+        "not_executed": [
+          "refusal sound666-668",
+          "hurt sound669-670"
+        ]
+      },
+      {
+        "line": 1312,
+        "notes": "Stored+OwnerId object existence AND treasure-missing response; no diagnostic identifies failed component. Do not claim ownership loss."
+      }
+    ],
+    "other_three_hypothesis": {
+      "confirmed": false,
+      "description": "Default three-creature fixture can enter family activity before old autonomy; current Behavior348 and374-396, FamilySocial409-428. No per-frame confirmation."
+    }
+  },
+  "family_protection": {
+    "passed": 13,
+    "failed": 1,
+    "failure_stdout_full": "COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Protection/Family.Protection.csproj -p:UseAppHost=false -p:UseSharedCompilation=false\nCWD: /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source\nPASS 正常地面近处有余力者可以护伴和护幼\nPASS 吃喝、训练、手占用、逃离等状态不能同时保护\nFAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护\n   at Program.<<Main>$>g__Require|0_0(Boolean condition, String reason) in /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/checks/Family.Protection/Program.cs:line 6\n   at Program.<>c.<<Main>$>b__0_8() in /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/checks/Family.Protection/Program.cs:line 96\n   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in /workspace/shared/yukkuri-cloud-20261029T183752-f911463/source/checks/Family.Protection/Program.cs:line 8\nPASS 悬挂高处目标不能被地面冲突或母体攻击命中\nPASS 同样距离的地面目标仍会受到共用伤害流程处理\nPASS 第三方箱体遮挡死亡，绕开以后才记后来发现\nPASS 第三方箱体遮挡亲近时不能据此获知背叛\nPASS 母体受到攻击正在逃离时先停下伤幼行为\nPASS 近看中目标死亡立即清其他照护、冲突和伤幼引用，不推进时钟\nPASS 安置旧遗体也清残留伤幼引用，不补造远处目击\nPASS 死亡清引用只影响死者，不删除其他仍有效目标\nPASS 冷藏打断双方危险状态，暂停近看不推进预警和出手间隔\nPASS 同档继续的保护和危险结算一致\nPASS 孕育中的母体离世即时停止孕育，现有亲缘与身份仍保留\n",
+    "failed_check": "保护者远离时不消除危险，实际走近后才能保护",
+    "check_start_line": 88,
+    "failed_assertion_line": 96,
+    "exact_error": "实际在近处仍不保护",
+    "setup": {
+      "seed": 20261101,
+      "modes_in_order": [
+        false,
+        true
+      ],
+      "first": "protector.X=TargetX=-5; Z=TargetZ=-5; Tick .25s",
+      "first_assertion": "HasThreat(actor,maternal), line94, passed in failing iteration",
+      "second": "directly reset protector position+target to (.825,1.43) nonmaternal or (.75,1.4) maternal; Tick .25s",
+      "second_assertion": "!HasThreat(actor,maternal), line96, failed"
+    },
+    "branch_identified": false,
+    "not_executed_boundary": "If failure was false branch, true branch not entered; if true branch, false branch already completed. Log does not include flag, so cannot specify. All later top-level checks ran and passed.",
+    "positive_control": "Normal nearby guard companion/juvenile check lines68-76 passed both branches.",
+    "static_hypothesis": {
+      "confirmed": false,
+      "description": "Fixture disables social/care/autonomy timers, but leaves DecisionIn default0. Ordinary target movement at Behavior403-410 can move target during initial .25s. Line95 only restores protector to original coordinate, not target; actual contact/visibility may no longer hold.",
+      "candidate_conditions": [
+        "FamilySocial149-151 footprint contact range and height difference <=.45 plus visibility",
+        "FamilySocial516-518 companion defender: CanProtectFamily, Courage>=.55, visible actor within2, target contact and family relation",
+        "FamilyRisk267-268 juvenile defender: CanProtectFamily, Courage>=.55, caregiver, target contact, visible actor within2.5"
+      ],
+      "missing_diagnostics": [
+        "maternal branch",
+        "actor/target/protector coordinates at failing frame",
+        "FamilyInContact / FamilyVisible booleans",
+        "protector activity and all eligibility terms"
+      ]
+    }
+  }
+}
