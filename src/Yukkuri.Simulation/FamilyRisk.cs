@@ -167,7 +167,12 @@ public sealed partial class WorldSimulation
         // One physical settlement and one random decision; neither is repeated on load.
         Hurt(mother,4+p.RecoveryDebt*.06,"强制繁育负担","player",BodyPart.Side);
         if(mother.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical)
-        {CancelIntervention(mother,"强制干预造成严重后果，新的孕育未能开始。");return;}
+        {
+            // Critical/death cleanup may already have ended preparation during Hurt.
+            // Do not emit a second cancellation or overwrite the recorded death outcome.
+            if(FamilyRules.UnderIntervention(mother))CancelIntervention(mother,"强制干预造成严重后果，新的孕育未能开始。");
+            return;
+        }
         double chance=FamilyRules.CrossEcology(mother,father)?.02:.65;
         if(Next()>=chance){CancelIntervention(mother,"强制干预没有使孕育开始，身体与关系后果仍在。");return;}
         p.Phase=PregnancyPhase.Gestating;p.EventId=NewFamilyId("birth");p.Elapsed=0;p.WaitingSeconds=0;

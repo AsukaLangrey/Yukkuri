@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v12-interaction-depth-F-20261030",
+  "revision": "dot-v13-interaction-depth-G-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -11,7 +11,7 @@
   "required_checks": [
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
-    "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation",
+    "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
     "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
@@ -22,6 +22,11 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "testing/reviews/20261029T174248Z-cc3aecca7663-c06.md",
+    "planning/stages/interaction-depth-20261030/G.txt",
+    "planning/stages/interaction-depth-20261030/G-pregnancy.txt",
+    "planning/stages/interaction-depth-20261030/G-emergency.txt",
+    "planning/stages/interaction-depth-20261030/G-ui-verification.txt",
     "planning/stages/interaction-depth-20261030/F.txt",
     "planning/stages/interaction-depth-20261030/F-mouth.txt",
     "planning/stages/interaction-depth-20261030/F-communication.txt",
@@ -141,6 +146,15 @@
     "严重口伤者不能清楚讲述关系事实/离世或担任教师，进行中课程中断但安静陪伴可保留；受伤听者仍能理解，不清除记忆、血缘或已知事实。新旧事实传播必须分别验证，保留健康讲者对照、口伤听者对照、读档与时钟案例。",
     "真实观察口部受伤前后递食入口和张口/吞咽速度、有限食水数量、旧模式重复喂食提示；旧近看持食在被拒后仍在手中，允许放回。严重口伤普通台词含混，唱歌失败没有成功好感，伸展可行；剧痛和濒危求助声音优先。普通非语言声复用现有短音，需试听是否自然，未试听不能算通过。",
     "连续喂食旧检查只补了实际吞咽等待，未改原断言。Main.MilestoneStates旧状态验证仍有暂停期间护理/喂食夹具与D批禁操作规则的历史冲突，尚需单独修订夹具，不得据此放开暂停产品规则；实际状态回归本批仍未测。完整器官/手术和H2/H3缺项保持，不能用本批有限口部功能替代。"
+  ],
+  "interaction_depth_G_focus": [
+    "最新c06已实测B提交cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d：669通过/4失败，完整游戏构建6警告0错误；不覆盖C-G。四失败均Continuity，详见c06 review。Drink/water实际完成并返回，末态X>.5失败；其余自主邀请/声音/收纳宝物复合条件仍待分量定位。G不声称修复这四项，不删除原断言或失败证据；当前最新源码仍需复测。",
+    "v13保留此前全部检查、c04原失败断言和诊断。新增Family.PregnancyBoundaries与Interaction.EmergencyIntervention；开发机全部未运行。完整固定提交先构建，再执行新旧检查，缺实际图形环境仍明确未测。",
+    "孕育准备只累计双方当帧实际近处相处；优先找食、远处空等、遮挡和手势不算准备，未完成连续时间重积。脚部失能但已在近处且条件满足仍有正常路径。读档不能借上一帧相处印记跳过剩余时间，旧六种36有向组合两种方式检查保留。",
+    "分娩在危险逃离、冲突、伤幼、支撑未稳、嘴忙、排泄或手势期间等待；在全部宝宝空间预留成功后才中断练习/跟随/等待/休息、人油陪伴与照护搬运。已搬运食物放下保留份额，空间不足时不抢先打断，失能母体无需恢复行走才能分娩。部分隔离检查调用内部边界，完整普通时间出生另有对照，不能混称所有用例都是全流程。",
+    "强制准备中经Hurt进入濒危要立即取消未完成干预，使近看托举救助可用，材料消耗、信任和恢复债保留；已开始的孕育不因该清理自动取消。致死结果仍记录死亡中止，不能被随后取消覆写或重复记账。",
+    "运行旧Main三条实际图形验证路线：暂停状态下拒绝护理，继续后在近看完成护理/真实嘴部喂食，等待吞咽但冻结被动恢复时钟；保留原184秒/55秒显示、恢复/死亡/保护断言。自动存档比较必须先实际耗食再读回，纠正/跌落比较先恢复操作且保持近看世界冻结。",
+    "旧近看普通暂停必须冻结物理，清未完成手势/托举力，暂停松手及恢复不能补结算；继续按钮无模态盾遮挡、仍可退出近看。分别验证Space、点击按钮和保存/夹具显式Pause入口。旧ShowResult声音按实际身体选择，死亡/冷藏静默、求救/疼痛优先、口伤含混，正常音色保留；纯声音选择断言不证明实际试听。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

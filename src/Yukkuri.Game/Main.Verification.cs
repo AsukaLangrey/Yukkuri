@@ -71,6 +71,7 @@ public partial class Main
             await ClickButton("observe");Assert(candidate.Observation.Samples>0,"observation UI writes evidence");
             await ClickButton("close");await Wait(1);
             Assert(Sim.State.Mode==PlayMode.CloseUp,"UI enters close-up");
+            Assert(!Sim.State.Settings.Pause,"framework close-up freezes passive time while real interaction remains running");
             double frozenTime=Sim.State.WorldSeconds;ulong rng=Sim.State.RandomState;
             var actor=Actors[candidate.Id];var before=actor.GlobalPosition;
             var screen=Camera.UnprojectPosition(before);

@@ -34,7 +34,11 @@ public partial class Main
             await LogicalShortcut(Key.Escape);await ClickButton("continue");
             Assert(_slot==1&&_saveSlotOption.Selected==0,"menu slot-one load synchronizes the visible save-slot selector");
             // A controlled autosave fixture verifies its real menu route; natural generation is tested separately.
-            Save(0,false);int autoFood=Sim.State.Food;await ClickButton("feed");
+            Save(0,false);int autoFood=Sim.State.Food;
+            await ClickButton("pause");
+            Assert(!Sim.State.Settings.Pause,"autosave comparison resumes before real feeding");
+            await ClickButton("feed");
+            Assert(Sim.State.Food==autoFood-1,"autosave comparison actually changes inventory through feeding before restore");
             await LogicalShortcut(Key.Escape);await ClickButton("continue-auto");
             Assert(Sim.State.Food==autoFood&&Sim.State.Settings.Pause&&!_welcome.Visible,"automatic save can be restored from the player menu");
             await ClickButton("pause");await ClickButton("save");
@@ -128,7 +132,10 @@ public partial class Main
             var storyResult=new{worldSeconds=Sim.State.WorldSeconds,progress=Sim.State.Progress.Completed.ToArray(),identity=oil.Id,scenarioComplete=Sim.State.ScenarioComplete};
             var correctionComparison=await VerifyM01CorrectionKnowledge();
             await VerifyM01PhysicalConsequences();
-            var result=new{success=true,scope="Real Godot GUI/input/physics with explicitly controlled comparison fixtures; not user playtest",story=storyResult,correctionComparison,physicalComparison=new{worldSeconds=Sim.State.WorldSeconds,progress=Sim.State.Progress.Completed.ToArray()}};
+            var physicalComparison=new{worldSeconds=Sim.State.WorldSeconds,progress=Sim.State.Progress.Completed.ToArray()};
+            await VerifyM01ExplicitPause();
+            VerifyLegacyVoicePriorities();
+            var result=new{success=true,scope="Real Godot GUI/input/physics with explicitly controlled comparison fixtures; not user playtest",story=storyResult,correctionComparison,physicalComparison};
             Directory.CreateDirectory(EvidenceDirectory);File.WriteAllText(Path.Combine(EvidenceDirectory,"m01-integration-result.json"),JsonSerializer.Serialize(result,new JsonSerializerOptions{WriteIndented=true}));
             GD.Print("M01_INTEGRATION_COMPLETE");QuitGameCleanly(0);
         }
@@ -145,6 +152,58 @@ public partial class Main
         await Wait(.1);
         Input.ParseInputEvent(new InputEventKey{PhysicalKeycode=Key.Pause,Keycode=logical,Pressed=false});
         await Wait(.3);
+    }
+    private async Task VerifyM01ExplicitPause()
+    {
+        StartNewMilestone();Sim.State.Settings.Invasions=false;
+        await ClickButton("hug");await Wait(.8);
+        var c=Sim.Selected!;var actor=Actors[c.Id];
+        var point=Camera.UnprojectPosition(actor.GlobalPosition+new Vector3(0,-.08f,.3f));
+        Mouse(point,true);await Wait(.3);
+        Assert(_gestureActive,"pause comparison starts a real held gesture");
+        await LogicalShortcut(Key.Space);
+        Assert(Sim.State.Settings.Pause&&actor.Freeze&&!_gestureActive&&_held==null,"explicit pause freezes physics and cancels the held gesture");
+        var position=actor.Position;double health=c.Health,time=Sim.State.WorldSeconds;
+        await Wait(.8);
+        Assert(actor.Position.DistanceTo(position)<.01f&&c.Health==health&&Sim.State.WorldSeconds==time,"explicit pause has no physical movement, injury or passive progress");
+        Mouse(point,false);await Wait(.1);
+        Assert(!c.ActionCounts.ContainsKey("Hug"),"release while paused does not submit the cancelled gesture");
+        await ClickButton("grab");
+        point=Camera.UnprojectPosition(actor.GlobalPosition);
+        Mouse(point,true);await Wait(.2);
+        Assert(_held==null&&!_gestureActive,"paused close-up does not start a new grab");
+        Mouse(point,false);await Wait(.1);
+        await ClickButton("pause");await Wait(.2);
+        Assert(!Sim.State.Settings.Pause&&!actor.Freeze&&!_modalShield.Visible,"visible Continue remains usable without a modal shield");
+        Assert(!c.ActionCounts.ContainsKey("Hug")&&_held==null,"resume does not replay or restore the cancelled hold");
+        // A fresh mouse-down is required after resume, then Space must also cancel physical support.
+        point=Camera.UnprojectPosition(actor.GlobalPosition);
+        Mouse(point,true);await Wait(.2);
+        Assert(_held==actor,"a fresh post-resume press can grab normally");
+        await LogicalShortcut(Key.Space);
+        Assert(_held==null&&actor.Freeze,"pause removes the active physics grab force");
+        Mouse(point,false);await Wait(.1);
+        await ClickButton("close");
+        Assert(Sim.State.Mode!=PlayMode.CloseUp&&Sim.State.Settings.Pause,"paused player can leave close-up without resuming time");
+    }
+    private void VerifyLegacyVoicePriorities()
+    {
+        var c=new Creature();var accepted=new InteractionResult(true,"已有反馈","",Yukkuri.Simulation.Expression.Content);
+        foreach(var pair in new[]{(ContactAction.Stroke,"coo-stroke"),(ContactAction.Hug,"coo-hug"),(ContactAction.Nuzzle,"coo-nuzzle"),(ContactAction.Train,"feed")})
+            Assert(LegacyVoiceCue(c,accepted,pair.Item1)==pair.Item2,"legacy normal action retains its existing sound: "+pair.Item1);
+        c.Interaction.Injuries.Sites.Add(new(){Part=BodyPart.Mouth,PermanentLoss=70});
+        Assert(LegacyVoiceCue(c,accepted,ContactAction.Hug)=="coo-refuse","legacy mouth-limited affection uses a short nonverbal cue");
+        var refused=accepted with{Success=false};
+        c.Expression=Yukkuri.Simulation.Expression.Calling;
+        Assert(LegacyVoiceCue(c,refused,ContactAction.Stroke)=="coo-help","legacy help request precedes refusal and mouth limitation");
+        c.Pain=50;
+        Assert(LegacyVoiceCue(c,accepted,ContactAction.Hug)=="coo-hurt","legacy severe pain precedes ordinary affection");
+        c.Condition=PhysicalCondition.Critical;
+        Assert(LegacyVoiceCue(c,refused,ContactAction.Stroke)=="coo-help","legacy critical help has priority");
+        c.Family.ColdStorage.Stored=true;
+        Assert(LegacyVoiceCue(c,refused,ContactAction.Stroke)=="","legacy cold storage remains silent");
+        c.Family.ColdStorage.Stored=false;c.Condition=PhysicalCondition.Dead;
+        Assert(LegacyVoiceCue(c,refused,ContactAction.Stroke)=="","legacy dead creature does not voice a refusal");
     }
     private async Task<object> VerifyM01CorrectionKnowledge()
     {
@@ -173,6 +232,11 @@ public partial class Main
             }
             Sim.State.Settings.Pause=true;Sim.Select(target.Id);RebuildRegion();UpdateUi();await Wait(.3);
             await ClickButton("discipline");await Wait(1.2);
+            // Pause is only for fixture placement. Real contact is allowed in
+            // close-up with the passive world frozen, not with explicit pause on.
+            await ClickButton("pause");
+            Assert(!Sim.State.Settings.Pause&&Sim.State.Mode==PlayMode.CloseUp,"correction comparison resumes contact while close-up isolates world time");
+            double frozenTime=Sim.State.WorldSeconds;
             var actor=Actors[target.Id];double trust=witness.Trust,fear=witness.Fear,remoteFear=remote.Fear;
             _pressure.Value=.25;_contactTool=ContactTool.Hand;_toolMaterial.Select(0);
             var point=Camera.UnprojectPosition(actor.GlobalPosition+new Vector3(0,-.10f,.35f)*actor.BodyScale);
@@ -180,6 +244,7 @@ public partial class Main
             Assert(target.ActionCounts.TryGetValue("Discipline",out int corrections)&&corrections>0,"comparison held mouse input applies correction");
             Assert(justified?witness.Trust>trust&&witness.Fear<=fear:witness.Fear>fear,"same moderate input distinguishes reasoned correction from arbitrary harm");
             Assert(remote.Fear==remoteFear,"remote uninformed observer remains unchanged in GUI comparison");
+            Assert(Sim.State.WorldSeconds==frozenTime,"correction comparison close-up prevents incidental world ticks");
             await Screenshot(justified?"m01-known-intruder-correction":"m01-arbitrary-correction");
             observations.Add(new{justified,witnessTrustChange=witness.Trust-trust,witnessFearChange=witness.Fear-fear,remoteFearChange=remote.Fear-remoteFear});
             ExitCloseUp();
@@ -194,6 +259,9 @@ public partial class Main
         target.X=0;target.Z=0;near.X=1;near.Z=0;far.X=8;far.Z=-8;
         RebuildRegion();UpdateUi();await Wait(.4);
         await ClickButton("discipline");await Wait(1);
+        await ClickButton("pause");
+        Assert(!Sim.State.Settings.Pause&&Sim.State.Mode==PlayMode.CloseUp,"physical comparison resumes before real contact and physics");
+        double frozenTime=Sim.State.WorldSeconds;
         var actor=Actors[target.Id];double health=target.Health,nearFear=near.Fear,farFear=far.Fear;
         _pressure.Value=.85;_contactTool=ContactTool.TrainingPaddle;_toolMaterial.Select(2);
         var cheek=Camera.UnprojectPosition(actor.GlobalPosition+new Vector3(.22f,0,.3f));
@@ -216,6 +284,7 @@ public partial class Main
         health=target.Health;
         Mouse(point,false);await Wait(2);
         Assert(target.Health<health&&target.InjuryCause=="跌落碰撞","actual rigid-body fall reaches impact injury rule");
+        Assert(Sim.State.WorldSeconds==frozenTime,"physical comparison close-up isolates contact and fall from passive world time");
         await Screenshot("m01-fall-response");
         ExitCloseUp();UpdateUi();await Wait(.3);
         await ClickButton("diary");await Wait(.3);

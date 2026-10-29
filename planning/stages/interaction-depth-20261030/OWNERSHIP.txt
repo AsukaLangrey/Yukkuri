@@ -20,3 +20,7 @@ E批：关系子代理拥有FamilySocial.cs、FamilyRisk.cs、FamilyAftermath.cs
 
 F批：身体子代理拥有InteractionMouth.cs、checks/Interaction.Mouth与F-mouth.txt；关系子代理拥有FamilySocial/Aftermath/Learning的讲述门槛、新checks/Family.MouthCommunication与F-communication.txt；界面子代理拥有InteractionPresentation/InteractionWorld的唱歌、MilestoneWorld的台词和旧转述、InteractionRoom.Ui、新checks/Interaction.MouthPresentation与F-presentation.txt。
 主协调拥有MouthIntake、旧Feed与吞咽时钟/手势接线、旧Main界面与连续喂食夹具、旧侵入行动占用、请求/交接及所有Git操作。所有检查未运行，只交独立远端。
+
+G批：主协调拥有Main.MilestoneStates.cs及总交接/请求/Git；关系子代理拥有FamilyReproduction.cs、新checks/Family.PregnancyBoundaries和G-pregnancy.txt，修正有据的实际接近/遮挡边界；身体子代理先只读审查身体与家庭清理，不写产品直至另行分配；界面子代理拥有Main.cs/Main.Input.cs/Main.MilestoneInput.cs/Main.MilestoneUi.cs以及Main.MilestoneVerification.cs/Main.Verification.cs夹具，处理旧暂停物理/手势和音效接线，G-ui-verification.txt。子代理不运行、不Git，跨文件变更由主协调确认。
+
+G补充分工：身体子代理接管InteractionInjury.cs即时濒危清理、新checks/Interaction.EmergencyIntervention与G-emergency.txt；主协调另接FamilyRisk.cs避免Hurt之后重复取消覆盖结果、Main.Ui暂停喂食提示。分娩让位逻辑由关系子代理在FamilyReproduction.cs完成。其余既有分工不变。

@@ -35,7 +35,7 @@ public partial class Main
         }
         if(input is InputEventKey {Pressed:true,Echo:false} key)
         {
-            if(ShortcutKey(key)==Key.Space){Sim.State.Settings.Pause=!Sim.State.Settings.Pause;UpdateUi();return true;}
+            if(ShortcutKey(key)==Key.Space){ToggleMilestonePause();return true;}
             if(ShortcutKey(key)==Key.F){MilestoneFeed();return true;}
             if(ShortcutKey(key)==Key.O){Sim.Observe();Sim.State.Progress.ResearchObservations++;UpdateUi();return true;}
             if(ShortcutKey(key)==Key.Escape)
@@ -44,6 +44,8 @@ public partial class Main
                 return true;
             }
         }
+        if(CloseInteractionSuspended&&Sim.State.Mode==PlayMode.CloseUp&&input is InputEventMouseButton or InputEventMouseMotion)
+        {SuspendCloseInteraction();return true;}
         if(Sim.State.Mode!=PlayMode.CloseUp||_grabTool||_foodInHand)return false;
         if(input is InputEventMouseMotion motion)
         {
@@ -80,6 +82,7 @@ public partial class Main
     private void FinishGesture()
     {
         if(!_gestureActive)return;
+        if(CloseInteractionSuspended){CancelGesture();return;}
         string? id=_gestureTarget;double duration=Math.Clamp(_gestureDuration,.05,6);
         _gestureActive=false;_gestureTarget=null;
         if(id==null)return;
@@ -89,7 +92,7 @@ public partial class Main
             actor.SetContactPose(_contactAction,false);
             if(result.Success&&_contactAction==ContactAction.Discipline)actor.ApplyCentralImpulse(new Vector3(0,.25f,-.3f)*_gestureForce*2);
         }
-        ShowResult(result);
+        ShowResult(result,Sim.State.Creatures.Find(c=>c.Id==id));
     }
     private void CancelGesture()
     {
@@ -99,6 +102,7 @@ public partial class Main
     }
     private void ProcessMilestone(float dt)
     {
+        if(CloseInteractionSuspended)SuspendCloseInteraction();
         if(Sim.State.HelpTargetId!=_audibleHelpId)
         {
             _audibleHelpId=Sim.State.HelpTargetId;

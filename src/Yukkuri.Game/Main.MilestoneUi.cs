@@ -33,9 +33,17 @@ public partial class Main
     private readonly System.Collections.Generic.List<(CheckButton button,Func<bool> read)> _settingToggles=new();
     private HSlider _musicSetting=null!,_effectsSetting=null!;
     private bool MilestoneModalOpen=>Sim.State.MilestoneScenario&&(_welcome.Visible||_settingsPanel.Visible||_diaryPanel.Visible||_helpPanel.Visible);
+    // Explicit pause suspends interaction without placing a modal shield over Continue.
+    private bool CloseInteractionSuspended=>Sim.State.Settings.Pause||MilestoneModalOpen;
+    private void ToggleMilestonePause()
+    {
+        Sim.State.Settings.Pause=!Sim.State.Settings.Pause;
+        if(Sim.State.Settings.Pause)SuspendCloseInteraction();
+        UpdateUi();
+    }
     private void SuspendCloseInteraction()
     {
-        CancelGesture();_held=null;_mapDragging=false;
+        CancelGesture();_held=null;_foodInHand=false;_mapDragging=false;_force=0;
         foreach(var actor in Actors.Values)actor.Freeze=true;
     }
     private VBoxContainer ScrollPanel(Vector2 position,Vector2 size,string color)
@@ -122,7 +130,7 @@ public partial class Main
         _hint=Text(footer,"",13);_hint.AutowrapMode=TextServer.AutowrapMode.Off;
         var controls=Panel(_uiRoot,new(22,758),new(236,84),"f7f2e6f0");
         var controlsRow=new HBoxContainer();controls.AddChild(controlsRow);
-        AddCompact(controlsRow,"pause","暂停",()=>{Sim.State.Settings.Pause=!Sim.State.Settings.Pause;UpdateUi();});
+        AddCompact(controlsRow,"pause","暂停",ToggleMilestonePause);
         AddCompact(controlsRow,"settings","设置",OpenSettings);
         AddCompact(controlsRow,"guide","菜单",OpenMilestoneMenu);
         AddCompact(controlsRow,"manual","帮助",OpenHelp);
@@ -247,18 +255,29 @@ public partial class Main
     }
     private void MilestoneFeed()
     {
+        if(Sim.State.Settings.Pause){Toast("先继续时间，再喂食。");return;}
         if(Sim.Selected==null||Sim.Selected.Condition is PhysicalCondition.Critical or PhysicalCondition.Dead)
         {Toast("当前无法喂食。重伤需先用护理包稳定，已经离去的油库里无法回应。");return;}
         if(Sim.State.Mode==PlayMode.CloseUp){_gestureActive=false;_foodInHand=!_foodInHand;Toast("把食物移到嘴部附近，点击喂食。");}
         else if(Sim.Selected!=null&&Sim.Feed(Sim.Selected.Id)){Sound("feed");Toast("它记住了这次照护。");}
         else Toast(LegacyFeedFailure());
     }
-    private void ShowResult(InteractionResult result)
+    private static string LegacyVoiceCue(Creature? speaker,InteractionResult result,ContactAction action)
+    {
+        if(speaker==null||speaker.Condition==PhysicalCondition.Dead||speaker.Family.ColdStorage.Stored)return "";
+        if(speaker.Condition==PhysicalCondition.Critical)return "coo-help";
+        if(speaker.Pain>=40||speaker.Expression==Expression.Hurt||result.Damage>0)return "coo-hurt";
+        if(speaker.Expression==Expression.Calling)return "coo-help";
+        if(!MouthFunction.CanSpeakClearly(speaker))return "coo-refuse";
+        if(!result.Success)return "coo-refuse";
+        return action switch
+        {ContactAction.Stroke=>"coo-stroke",ContactAction.Hug=>"coo-hug",ContactAction.Nuzzle=>"coo-nuzzle",_=>"feed"};
+    }
+    private void ShowResult(InteractionResult result,Creature? speaker=null)
     {
         Toast(result.Message);
-        string cue=!result.Success?"coo-refuse":result.Damage>0?"coo-hurt":_contactAction switch
-        {ContactAction.Stroke=>"coo-stroke",ContactAction.Hug=>"coo-hug",ContactAction.Nuzzle=>"coo-nuzzle",_=>"feed"};
-        Sound(cue);UpdateUi();
+        string cue=LegacyVoiceCue(speaker??Sim.Selected,result,_contactAction);
+        if(cue.Length>0)Sound(cue);UpdateUi();
     }
     private void UpdateMilestoneUi()
     {
@@ -266,7 +285,7 @@ public partial class Main
         if(_profileCreatureId!=c?.Id){_profileCreatureId=c?.Id;_profileScroll.ScrollVertical=0;}
         if(_modalShield!=null)_modalShield.Visible=MilestoneModalOpen;
         _top.Text=$"油库里乐园    /    {Sim.ActiveRegion.Name}                    资金 {s.Money}     食物 {s.Food}     护理包 {s.Medicine}                    {WorldSimulation.FormatClock(s.WorldSeconds)}";
-        _modeLabel.Text=close?"互动特写 · 世界暂停":s.Settings.Pause?"暂停中":s.Mode==PlayMode.Human?"主角视角 · WASD 移动":"管理视角 · 点击选择";
+        _modeLabel.Text=s.Settings.Pause?"暂停中":close?"互动特写 · 世界暂停":s.Mode==PlayMode.Human?"主角视角 · WASD 移动":"管理视角 · 点击选择";
         _threatInfo.Text=s.Threat.Phase switch{ThreatPhase.Approaching=>"林缘有动静，留意乐园入口。",ThreatPhase.Intruding=>s.Threat.HelpRequested?"油库里正在求助！":"油库里正在守护乐园。",ThreatPhase.Retreating=>"入侵者正在离开。",_=>"慢慢照顾，慢慢认识。"};
         string Task(string key,string text)=>$"{(s.Progress.Completed.Contains(key)?"✓":"○")}  {text}";
         _objectives.Text=string.Join("\n",new[]{Task("feed","照顾一顿饭"),Task("affection","建立温和的接触"),Task("train","一起练习三次"),Task("admit","接纳林缘的新伙伴"),Task("defense","共同守护乐园"),Task("contract","整理一次养护记录")});

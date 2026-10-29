@@ -32,23 +32,37 @@ public partial class Main
             Assert(oil.Condition==PhysicalCondition.Critical&&_detail.Text.Contains("重伤待救"),"critical status is visible and distinct");
             await ClickButton("treat");await Wait(.6);
             var actor=Actors[oil.Id];var point=Camera.UnprojectPosition(actor.GlobalPosition+new Vector3(0,.17f,.26f));
+            int pausedMedicine=Sim.State.Medicine;double pausedCritical=oil.CriticalRemaining;
+            Mouse(point,true);await Wait(.8);Mouse(point,false);await Wait(.3);
+            Assert(oil.Condition==PhysicalCondition.Critical&&Sim.State.Medicine==pausedMedicine&&oil.CriticalRemaining==pausedCritical,
+                "paused nursing input neither treats nor consumes supplies or critical time");
+            await ClickButton("pause");
+            Assert(!Sim.State.Settings.Pause&&Sim.State.Mode==PlayMode.CloseUp,"resume allows active nursing while close-up keeps passive recovery frozen");
             Mouse(point,true);await Wait(.8);Mouse(point,false);await Wait(.3);
             Assert(oil.Condition==PhysicalCondition.Recovering,"real nursing input stabilizes critical creature");
             await Screenshot("m01-state-recovering");
-            ExitCloseUp();oil.Fullness=10;UpdateUi();
+            // Keep the exact recovery-clock fixture in close-up. Feed through real
+            // mouth input, and finish the first portion before offering another.
+            oil.Fullness=10;UpdateUi();
             Assert(_relationship.Text.Contains("184 秒"),"low-nutrition recovery estimate reflects slower progress");
             int foodBefore=Sim.State.Food;await ClickButton("feed");
+            await Click(Camera.UnprojectPosition(actor.GlobalPosition+new Vector3(0,0,.45f)));
             Assert(Sim.State.Food==foodBefore-1&&oil.Fullness>10&&oil.Condition==PhysicalCondition.Recovering,"real feeding button nourishes recovering creature without premature mobility");
-            await ClickButton("feed");UpdateUi();
+            for(int n=0;n<80&&oil.Interaction.EatingRemaining>0;n++)await Wait(.1);
+            Assert(oil.Interaction.EatingRemaining==0,"first recovery portion finishes before the next real mouth input");
+            await ClickButton("feed");
+            await Click(Camera.UnprojectPosition(actor.GlobalPosition+new Vector3(0,0,.45f)));UpdateUi();
             Assert(oil.Fullness>35&&_relationship.Text.Contains("55 秒"),"feeding updates the recovery estimate to the nourished rate");
             await Screenshot("m01-state-recovery-nutrition");
-            Sim.State.Settings.Pause=false;Sim.Advance(60);Sim.State.Settings.Pause=true;
+            ExitCloseUp();Sim.State.Settings.Pause=false;Sim.Advance(60);Sim.State.Settings.Pause=true;
             await Wait(.3);UpdateUi();await Screenshot("m01-state-recovered");
             Assert(oil.Condition==PhysicalCondition.Active,"stabilized creature recovers after simulated recovery interval");
             oil.Trust=85;oil.Familiarity=12;
             // Reproduce death while an emergency request is active. This is a controlled state fixture.
+            await ClickButton("pause");
             oil.Health=1;oil.FillingIntegrity=1;
             Sim.Contact(oil.Id,new(ContactAction.Discipline,ContactArea.Cheek,ContactTool.TrainingPaddle,1,6));
+            Sim.State.Settings.Pause=true;
             await Wait(.4);UpdateUi();var first=actor.VisualMotionOffset;
             await Wait(.7);var second=actor.VisualMotionOffset;
             await Screenshot("m01-state-dead");
@@ -82,6 +96,24 @@ public partial class Main
             Assert(suspended.Freeze&&suspended.Position.DistanceTo(pausedPosition)<.01f&&Sim.Selected.Health==pausedHealth,"settings pauses close-up physics");
             await ClickButton("close-settings");await Wait(.2);
             Assert(!suspended.Freeze&&!Sim.State.Settings.Pause,"closing settings restores the previous running state");
+            await ClickButton("hug");
+            var pausedOil=Sim.Selected!;
+            var hugPoint=Camera.UnprojectPosition(suspended.GlobalPosition+new Vector3(0,.1f,.25f));
+            Mouse(hugPoint,true);await Wait(.2);
+            int hugsBeforePause=pausedOil.ActionCounts.GetValueOrDefault("Hug");
+            // Interrupt a genuinely held action without sending a mouse-up through
+            // the toolbar first. The ordinary pause flag is the controlled fixture.
+            Sim.State.Settings.Pause=true;await Wait(.2);
+            var ordinaryPausedPosition=suspended.Position;double ordinaryPausedHealth=pausedOil.Health;
+            Input.ParseInputEvent(new InputEventMouseMotion{Position=GetViewport().GetFinalTransform()*(hugPoint+new Vector2(120,-80)),
+                GlobalPosition=GetViewport().GetFinalTransform()*(hugPoint+new Vector2(120,-80)),ButtonMask=MouseButtonMask.Left});
+            await Wait(.5);Mouse(hugPoint,false);await Wait(.2);
+            Assert(suspended.Freeze&&suspended.Position.DistanceTo(ordinaryPausedPosition)<.01f&&pausedOil.Health==ordinaryPausedHealth&&
+                pausedOil.ActionCounts.GetValueOrDefault("Hug")==hugsBeforePause&&!_gestureActive,
+                "ordinary pause freezes close-up physics and cancels unfinished contact without settling it");
+            await ClickButton("pause");await Wait(.3);
+            Assert(!Sim.State.Settings.Pause&&!suspended.Freeze&&pausedOil.ActionCounts.GetValueOrDefault("Hug")==hugsBeforePause&&!_gestureActive,
+                "resuming ordinary pause does not replay contact held or released during pause");
             ExitCloseUp();StartNewMilestone();UpdateUi();
             var rosterClick=ChooseRoster("小铃");
             Sim.State.Threat.NextAt=0;Sim.Advance(11);UpdateUi();

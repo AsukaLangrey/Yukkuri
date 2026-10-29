@@ -77,6 +77,7 @@ public partial class Main
         Action(right,"close","E  进入互动特写",CloseUp);
         Action(right,"feed","F  喂食 · 1份",()=>
         {
+            if(Sim.State.Settings.Pause){Toast("先继续时间，再喂食。");return;}
             if(Sim.State.Mode==PlayMode.CloseUp){_foodInHand=!_foodInHand;Toast("移动食物到嘴部附近，点击喂食。");}
             else if(Sim.Selected!=null&&Sim.Feed(Sim.Selected.Id))Sound("feed");else Toast(LegacyFeedFailure());
         });

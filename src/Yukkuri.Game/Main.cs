@@ -99,6 +99,7 @@ public partial class Main : Node3D
         if(!_ready)return;
         // A stall is not offline progress. Simulation time advances only while the app is running.
         float dt=(float)Math.Min(delta,.1);
+        if(CloseInteractionSuspended)SuspendCloseInteraction();
         Sim.AdvanceInteractionPresentation(dt);
         Sim.Advance(dt*(Sim.State.MilestoneScenario?Sim.State.Settings.Speed:1));
         if(Sim.State.MilestoneScenario)ProcessMilestone(dt);
@@ -108,7 +109,7 @@ public partial class Main : Node3D
             {
                 actor.Visible=!close||c.Id==Sim.State.SelectedId;
                 actor.CollisionLayer=actor.Visible?2u:0u;
-                actor.Refresh(c,c.Id==Sim.State.SelectedId,close&&c.Id==Sim.State.SelectedId,MilestoneModalOpen?0:dt,_force,MilestoneModalOpen);
+                actor.Refresh(c,c.Id==Sim.State.SelectedId,close&&c.Id==Sim.State.SelectedId,CloseInteractionSuspended?0:dt,_force,CloseInteractionSuspended);
             }
         _human.Visible=Sim.State.Mode==PlayMode.Human||(Sim.State.MilestoneScenario&&!close);
         if(_human.Visible&&Sim.State.Mode==PlayMode.Human&&(!Sim.State.MilestoneScenario||!Sim.State.Settings.Pause))
@@ -132,7 +133,8 @@ public partial class Main : Node3D
     }
     public override void _PhysicsProcess(double delta)
     {
-        if(!_ready||MilestoneModalOpen)return;
+        if(!_ready)return;
+        if(CloseInteractionSuspended){SuspendCloseInteraction();return;}
         if(Sim!=null&&Sim.State.MilestoneScenario&&_gestureActive&&_contactAction==ContactAction.Hug&&Sim.Selected!=null&&Actors.TryGetValue(Sim.Selected.Id,out var hugged))
         {
             var target=new Vector3((float)Sim.Selected.X,.72f*hugged.BodyScale,(float)Sim.Selected.Z);

@@ -184,6 +184,13 @@ public sealed partial class WorldSimulation
     private void StopIncapacitatedActions(Creature c)
     {
         var i = c.Interaction;
+        // End an unfinished intervention before rescue actions or a close-up save.
+        // A fatal Hurt settles Die immediately after this cleanup; let Die keep
+        // the original pregnancy phase long enough to record its death outcome.
+        bool deathPending=State.Settings.LethalInjuries&&
+            (c.FillingIntegrity<=0||c.CriticalRemaining<=0);
+        if(c.Condition==PhysicalCondition.Critical&&FamilyRules.UnderIntervention(c)&&!deathPending)
+            CancelIntervention(c,"母体进入濒危，强制干预立即中止；没有开始新的孕育，已用材料、关系后果与原有恢复负担保留。");
         EndHumanCompany(c);
         DropCareParcel(c);c.Family.CareTargetId=null;
         // Loading an already-dead body must not refresh social deadlines.

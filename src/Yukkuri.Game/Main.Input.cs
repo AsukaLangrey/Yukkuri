@@ -34,11 +34,17 @@ public partial class Main
                 case Key.F5: Save(_slot);break;
                 case Key.F9: Load(_slot);break;
                 case Key.O: Sim.Observe();break;
-                case Key.F: if(Sim.State.Mode==PlayMode.CloseUp)_foodInHand=!_foodInHand;else if(Sim.Selected!=null)Sim.Feed(Sim.Selected.Id);break;
+                case Key.F:
+                    if(Sim.State.Settings.Pause)Toast("先继续时间，再喂食。");
+                    else if(Sim.State.Mode==PlayMode.CloseUp)_foodInHand=!_foodInHand;
+                    else if(Sim.Selected!=null)Sim.Feed(Sim.Selected.Id);
+                    break;
                 case Key.Key1: _buildKind=FacilityKind.Feeder;break;
                 case Key.Key2: _buildKind=FacilityKind.Bed;break;
             }
         }
+        if(CloseInteractionSuspended&&Sim.State.Mode==PlayMode.CloseUp&&input is InputEventMouseButton or InputEventMouseMotion)
+        {SuspendCloseInteraction();return;}
         if(input is InputEventMouseMotion motion&&_held!=null)
             _holdTarget=HoldPoint(motion.Position);
         if(input is not InputEventMouseButton mouse)return;
@@ -79,6 +85,7 @@ public partial class Main
     }
     public override void _Input(InputEvent input)
     {
+        if(_ready&&CloseInteractionSuspended)SuspendCloseInteraction();
         if(input is InputEventKey traceKey&&System.Array.Exists(OS.GetCmdlineUserArgs(),arg=>arg=="--trace-keys"))
             GD.Print($"INPUT_KEY physical={traceKey.PhysicalKeycode} logical={traceKey.Keycode} unicode={traceKey.Unicode} pressed={traceKey.Pressed} echo={traceKey.Echo}");
         if(_ready&&Sim.State.MilestoneScenario&&input is InputEventMouseButton {ButtonIndex:MouseButton.Left,Pressed:false}&&_gestureActive)FinishGesture();

@@ -161,9 +161,15 @@ public sealed partial class WorldSimulation
                 if(f.ColdStorage.Stored||!FamilyRules.WillPair(mother,father)||!FamilyRules.WillPair(father,mother)||
                     !FamilyActionReady(mother)||!FamilyActionReady(father)||f.CareTargetId!=null||father.Family.CareTargetId!=null||
                     f.CompanionTargetId!=father.Id||father.Family.CompanionTargetId!=mother.Id||
-                    mother.RegionId!=father.RegionId||Distance(mother.X,mother.Z,father.X,father.Z)>1.85||
+                    mother.Interaction.Lowering||father.Interaction.Lowering||
+                    Math.Abs(mother.Interaction.VelocityX)+Math.Abs(mother.Interaction.VelocityZ)>.05||
+                    Math.Abs(father.Interaction.VelocityX)+Math.Abs(father.Interaction.VelocityZ)>.05||
+                    !FamilyInContact(mother,father)||f.LastCompanionActivityAt!=State.WorldSeconds||
+                    father.Family.LastCompanionActivityAt!=State.WorldSeconds||
                     InteractionGestureTarget==mother.Id||InteractionGestureTarget==father.Id)
                 {p.Elapsed=0;continue;}
+                // Waiting near each other is not preparation: both must have
+                // actually spent this tick together after their own needs.
                 p.Elapsed+=bodyDt;
                 if(p.Elapsed<6)continue;
                 string? eligibility=PregnancyEligibility(mother,father,p.Method);
@@ -202,8 +208,10 @@ public sealed partial class WorldSimulation
         var p=mother.Family.Pregnancy;
         if(p.EventId==null||State.CompletedBirths.Contains(p.EventId))return;
         var i=mother.Interaction;
-        if(mother.Condition!=PhysicalCondition.Active||i.Carried||i.Falling||i.Height>.05||i.Restraint!=RestraintKind.None||i.Supine||
-            i.EatingRemaining>0||i.Physiology.Active||InteractionGestureTarget==mother.Id)return;
+        if(mother.Condition!=PhysicalCondition.Active||i.Carried||i.Falling||i.Lowering||i.Height>.05||i.Restraint!=RestraintKind.None||i.Supine||
+            Math.Abs(i.VelocityX)+Math.Abs(i.VelocityZ)>.05||
+            i.EatingRemaining>0||i.Physiology.Active||InteractionGestureTarget==mother.Id||mother.RetreatRemaining>0||
+            mother.Family.FlightRemaining>0||mother.Family.Conflict.TargetId!=null||mother.Family.ChildThreat.TargetId!=null)return;
         if(father==null){EndPregnancy(mother,"孕育记录缺少父体来源，停止结算并保留母体状态。");return;}
         var babies=new List<Creature>();
         // Reserve enough dry free space for the entire birth before settling any.
@@ -222,6 +230,9 @@ public sealed partial class WorldSimulation
             {mother.Family.LastEvent="宝宝快出生了，需要母体旁边有干燥的空位置。";return;}
             babies.Add(probe);
         }
+        // Only make ordinary activities yield after the complete birth has space.
+        // Do not drop carried food or stop companionship merely while waiting.
+        YieldActivitiesForDelivery(mother);
         foreach(var baby in babies)
         {
             baby.Name=$"{mother.Name}的宝宝{State.Creatures.Count(c=>c.Family.MotherId==mother.Id)+1}";
@@ -257,5 +268,14 @@ public sealed partial class WorldSimulation
         Hurt(mother,p.Method==BirthMethod.Live?7+p.Burden*.12:2+p.Burden*.05,"生产负担",null);
         EndPregnancy(mother,$"{babies.Count}只宝宝出生了，母体需要恢复，幼体需要吃喝与保暖。"+
             (p.Decision==PregnancyDecision.ProtectYoung?"这次曾在危险中主动坚持保胎。":""));
+    }
+
+    private void YieldActivitiesForDelivery(Creature mother)
+    {
+        var i=mother.Interaction;
+        i.ActiveCue=null;i.CueElapsed=0;i.CueTravel=0;i.CueUnderstood=false;i.CueDemonstration=false;
+        i.FollowPlayer=false;i.WaitRemaining=0;i.Resting=false;i.RestRemaining=0;
+        EndHumanCompany(mother);CancelFamilyCare(mother);ClearCompanionship(mother);
+        mother.Activity="生产后休息";
     }
 }
