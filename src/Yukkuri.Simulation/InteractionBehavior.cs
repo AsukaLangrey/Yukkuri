@@ -225,6 +225,7 @@ public sealed partial class WorldSimulation
             if (c.Fullness > 40 && c.Energy > 40 && !i.Digestion.Symptomatic)
             { c.Health = Clamp100(c.Health + dt * .025); c.Pain = Math.Max(0, c.Pain - dt * .06); }
             if(c.Family.ColdStorage.Stored){c.Activity="冷藏保存中";continue;}
+            if(FamilyRules.UnderIntervention(c)){c.Activity="强制干预进行中";continue;}
             if(!i.Supine||i.Carried||i.Falling||i.Restraint!=RestraintKind.None)i.WetRestRemaining=0;
             if (i.WetRestRemaining > 0)
             { i.WetRestRemaining = Math.Max(0, i.WetRestRemaining - dt); i.DrySurfaceOverTime(dt*1.2,true); }
@@ -269,6 +270,8 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if((c.Fullness<12||i.Hydration<12)&&i.ActiveCue!=null)CompleteCue(c,false);
+            if(TryMaternalCrisis(c,dt))continue;
+            if((c.Family.Conflict.TargetId!=null||c.Family.FlightRemaining>0)&&i.EatingRemaining<=0&&TryFamilyActivity(c,dt))continue;
             if (i.ActiveCue is { } cue)
             {
                 i.CueElapsed += dt;

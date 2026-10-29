@@ -80,6 +80,7 @@ public partial class CreatureActor
         Refresh(c,selected,false,paused?0:delta,0,true,true);
         Freeze=true;
         var life=c.Interaction;
+        pose=ActorInjuryPresentation.GuardPose(c,pose);
         // Physiology is an idle posture, not a final override of contact or pain.
         // In close-up its world timer can stay active while a gesture owns the pose.
         if(pose=="idle"&&life.Physiology.Active&&c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)
@@ -115,7 +116,7 @@ public partial class CreatureActor
         {_visual.Scale=new Vector3(1.12f,.64f,1.08f)*BodyScale;PoseTag="dead";}
         else
         {
-            if(c.Expression is Yukkuri.Simulation.Expression.Hurt or Yukkuri.Simulation.Expression.Frightened)
+            if(DisplayedExpression is Yukkuri.Simulation.Expression.Hurt or Yukkuri.Simulation.Expression.Frightened)
                 _visual.Position+=new Vector3(Mathf.Sin(_phase*27)*.009f,0,0);
             PoseTag=pose;
             if(ActorReactionMotion.Sample(pose,age,new((float)life.ReactionDirectionX,(float)life.ReactionDirectionZ)) is { } motion)
@@ -211,11 +212,11 @@ public partial class CreatureActor
         // The hop already has authored timing. Filtering its arc again erases takeoff and impact.
         if(_hopMotion.Active)
         {
-            var hop=_hopMotion.Frame;
+            var hop=ActorInjuryPresentation.AdaptHop(c,_hopMotion.Frame);
             _visual.Scale*=AccessoryPoint(hop.Scale);
             _visual.Position+=new Vector3(_hopMotion.Position.X-Position.X,hop.Lift*BodyScale,_hopMotion.Position.Y-Position.Z);
             _visual.Rotation+=new Vector3(Mathf.DegToRad(hop.Pitch),0,0);
-            if(pose=="idle")PoseTag="hop";
+            if(pose is "idle" or "careful-step")PoseTag=ActorInjuryPresentation.StepStrength(c)<.8f?"careful-step":"hop";
         }
         else if(canHop)
             _visual.Position+=new Vector3(_hopMotion.Position.X-Position.X,0,_hopMotion.Position.Y-Position.Z);
@@ -281,7 +282,7 @@ public partial class CreatureActor
         RefreshHangingHarness(life);
         RefreshBodySurfaceMarks(_dirtVisual!,life,false);
         RefreshBodySurfaceMarks(_wetVisual!,life,true);
-        _footVisual!.Visible=life.FootIntegrity<80;
+        _footVisual!.Visible=life.FootIntegrity<80&&life.Injuries.At(BodyPart.Bottom)==null&&!life.HasDressing(BodyPart.Bottom);
         SceneArt.SetSurfaceOpacity(_footVisual,Mathf.Clamp((float)(100-life.FootIntegrity)/70,.4f,1));
         RefreshAccessoryWear(_accessoryRoot,life.Accessory);
         RefreshAccessoryWear(_looseAccessory,life.Accessory);

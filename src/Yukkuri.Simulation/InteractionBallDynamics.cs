@@ -31,7 +31,7 @@ public sealed partial class WorldSimulation
                 }
             foreach(var c in State.Creatures)
             {
-                if(c.RegionId!=ball.RegionId)continue;
+                if(c.RegionId!=ball.RegionId||c.Family.ColdStorage.Stored||c.Family.Memorialized)continue;
                 double scale=c.IsYoung?.73:c.IsElder?1.03:1;var life=c.Interaction;
                 if(life.Restraint==RestraintKind.Box)
                 {ResolveBallBox(ball,c.X,c.Z,InteractionFixtureGeometry.BoxWidth*.5*scale,InteractionFixtureGeometry.BoxDepth*.5*scale,.48);continue;}
@@ -73,7 +73,7 @@ public sealed partial class WorldSimulation
             if(!cushion.Stored&&cushion.RegionId==owner.RegionId&&cushion.Kind==RoomObjectKind.Cushion&&Box(cushion.X,cushion.Z,InteractionFixtureGeometry.CushionWidth*.5,InteractionFixtureGeometry.CushionDepth*.5))return false;
         foreach(var c in State.Creatures)
         {
-            if(c.RegionId!=owner.RegionId)continue;double scale=c.IsYoung?.73:c.IsElder?1.03:1;var life=c.Interaction;
+            if(c.RegionId!=owner.RegionId||c.Family.ColdStorage.Stored||c.Family.Memorialized)continue;double scale=c.IsYoung?.73:c.IsElder?1.03:1;var life=c.Interaction;
             if(life.Restraint==RestraintKind.Box&&Box(c.X,c.Z,InteractionFixtureGeometry.BoxWidth*.5*scale,InteractionFixtureGeometry.BoxDepth*.5*scale))return false;
             if(life.Restraint==RestraintKind.Hanging&&Box(c.X+.8*scale,c.Z-.55*scale,.45*scale,.35*scale))return false;
             if(life.Height<=.55&&Distance(x,z,c.X,c.Z)<BallBodyRadius(c)+radius)return false;

@@ -165,6 +165,7 @@ public partial class InteractionRoom : Node3D
     {
         if(!_ready)return;
         float dt=(float)Math.Min(.1,delta);_elapsed+=dt;
+        if(LeaveUnavailableCloseup())_message="当前对象已冷藏或安置，回到小院视角；家庭记录仍可查看，原暂停设置保持不变。";
         if(!_modalOpen)
         {
             if(_windowFocused)ProcessRoomGesture(dt,delta);
@@ -177,7 +178,7 @@ public partial class InteractionRoom : Node3D
         UpdateRoomCamera(dt);
         foreach(var c in Sim.State.Creatures)
         {
-            var actor=_actors[c.Id];actor.Visible=!c.Family.ColdStorage.Stored&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
+            var actor=_actors[c.Id];actor.Visible=HasVisibleFamilyBody(c)&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
             string pose=InteractionPresentation.Pose(c);
             if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);

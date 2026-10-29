@@ -1,0 +1,32 @@
+C批次：家庭丧失、悲伤与遗体安置
+负责范围：src/Yukkuri.Simulation/FamilyAftermath.cs、checks/Family.Aftermath/、本文件。
+仅源码和文档读写、静态审查；未运行项目、编译器、检查程序、截图或Git操作。
+
+已完成源码
+1. 死亡发生时RegisterFamilyDeath只记录同区、近处实际可见的目击。箱体、树干遮挡、冷藏内部、远处和不同区域不全图广播。
+2. 后来靠近遗体记Discovered；实际交谈记Told，保留初始来源、转述者和亲自确认时间。听说后看到遗体只升级为发现，不追认为死亡目击。
+3. KnownLosses按死者ID保存。每次离世只结算一次恐惧和悲伤；原版已有死亡个人记忆时避免迁移重复施加，且不把旧距离判定追认为目击。
+4. 家人悲伤180秒、熟悉朋友90秒，上限300秒；陪伴能较缓慢地缓解，时间结束仍保留事实、亲缘、文字记忆。未知死因不从后台DeathCause复制成知情者归因。
+5. 相处小院只在身体安稳、吃喝充足、无人占用时寻求熟悉且双方接受的陪伴，实际动作仍由原相处流程处理。伤势、吃喝、休息、照护、冷藏和其他任务优先。自动转述只在双方本帧真实近距离相处时发生，有30秒间隔。
+6. LayToRest要求未暂停、同区、已死亡且先取出冷藏。释放装置、动作、食物预约、照护与冲突目标，遗体保留在State。不会改变X/Z、触发跌落、新伤害或重复死亡；身份、血缘、伴侣和死因保留。
+7. 安置前按实际可见情况捕获告别在场者。先解除箱体不倒算在场。安置后新路过者不能发现已隐藏遗体，但已知者仍能实际转述。
+8. 新字段均有缺字段默认；显式null、非法来源/计时、活体安置、安置仍占装置/食物/动作、无事实悲伤、伪造听说为目击等拒绝保存。
+
+接口与接线（主协调已整合）
+public string LayToRest(string id)
+public string TellFamilyLoss(string speakerId,string listenerId,string deceasedId)
+public static string FamilyRules.DescribeAftermath(Creature c)
+public static void FamilyRules.ValidateAftermath(WorldState state)
+private void RegisterFamilyDeath(Creature deceased)：Die写入Dead/DeathAt后、清除支撑前调用；原死亡循环恐惧/记忆已去掉以免重复。
+private void TickFamilyAftermath(double dt)：相处与普通世界正常时间末尾调用，近看和暂停不推进。
+Memorialized用于实体隐藏与碰撞排除，仍留名单和家庭引用；界面由family_ui接入。
+主协调已把普通世界Dead统一跳过，避免非M01死者仍长大移动；M01旧死亡事件转述改走TellFamilyLoss，避免泄露内部死因。
+
+普通模式静态审查结论和限制
+共享Family/Interaction字段均有初始化默认；视线、身体、冷藏和同区检查可复用。普通模式保留死亡知情、手动近处转述、有限悲伤计时和遗体安置。
+旧管理模式不消费CompanionTargetId，因此本文件在普通模式只结算事实和悲伤，不排入自动陪伴任务。自主寻求陪伴与伴随转述目前仅在相处小院发生，未声称旧管理模式也有同样行动表现。
+冷藏内部既不能作为可见遗体，也不能作为知情观察者或转述参与者；悲伤计时沿用BiologicalDelta十倍有限延缓。
+
+独立远端待测（只写用例，尚未执行）
+checks/Family.Aftermath覆盖17组：真实目击去重、后来发现与未知死因、冷藏、箱体/跨区、树干遮挡、转述与确认、安置后不再发现、实际告别、悬挂遗体无二次跌落、预约食物一次释放、有限悲伤及饥渴优先、实际陪伴缓解、暂停/活体拒绝、存档继续一致、缺字段/坏来源拒绝、旧记忆迁移、普通模式事实/计时/安置与死者停龄。
+编译状态、用例结果、画面、声音及操作手感尚未确认。完整提交与远端执行由主协调按testing/request.json统一安排。

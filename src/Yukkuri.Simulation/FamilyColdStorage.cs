@@ -34,6 +34,7 @@ public sealed partial class WorldSimulation
                 return "先放稳并结束接触、解除装置，再安排冷藏。";
             if(State.Creatures.Count(x=>x.Family.ColdStorage.Stored)>=4)return "目前四个保存位置已占满，先妥善安置取出的个体。";
             if(i.EatingRemaining>0)return "先等它咽下这一口。";
+            if(FamilyRules.UnderIntervention(c))CancelIntervention(c,"安排冷藏时干预已停止；已用材料和关系后果保留。");
             DropCareParcel(c);DetachNaturalIntake(c);ClearCompanionship(c);c.Family.CareTargetId=null;
             i.ActiveCue=null;i.FollowPlayer=false;i.Resting=false;i.RestRemaining=0;
             i.ReactionPose="idle";i.ReactionPoseRemaining=0;i.PendingConversation=null;

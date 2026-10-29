@@ -1,0 +1,38 @@
+C批：身体外观、步幅与声音优先级
+日期：2026-10-30 / Asia/Shanghai
+状态：仅源码修改和静态文本审查；未编译、未渲染、未运行检查或游戏、未听取音频。只有独立远端完整SHA的报告才构成实机结果。
+
+源码变化
+1. 新增ActorInjuryPresentation纯表现规则与CreatureActor.Injury几何标记。沿现有ActorSurfaceMarks.Dressing对应部位投影，不改头身、饰品或接触面的既有几何参数。头、左右脸、左右侧面、口、底部各使用实际局部伤势；淡色淤痕随可恢复Damage变化，稳定旧痕随PermanentLoss保留，非露骨表现。
+2. 真正敷料覆盖同部位伤痕；没有治疗不会因为总Health低而凭空出现固定脸侧绷带。M01和互动共用真实部位敷料。旧档只有FootIntegrity而无新局部伤势时继续显示原底部标记。
+3. 有支撑能力但底部受损时，沿原跳步时序缩小抬升、压缩及俯仰；水平位置、碰撞和移动速度仍由模拟层决定。FootIntegrity<=25停止自主跳步；飞行/其他既有形态不错误使用底部能力。
+4. 显示表情独立以死亡/濒危、剧痛、严重恐惧优先，不能被新家庭React的笑脸遮住。剧痛亲昵姿势改为护身，仍在实际按压/握持的动作保留。托举/跌落和危重支撑方向仍保留。
+5. VoiceCue将死亡与冷藏静音，危重使用呼救、剧痛使用疼痛声音；普通不安/愤怒不再默认亲昵。InteractionRoom.Audio跟踪当前发声个体，死亡/冷藏时立即停止它的旧声音；更高优先的呼救/疼痛可中断普通亲昵语音。
+
+主协调契约
+- MilestoneWorld.React在新反应前清旧ReactionSituation/ReactionRefused/ReactionPose/ReactionPoseRemaining；Feedback在React后填写新情境。已静态搜索所有React调用，未发现调用者先设ReactionPose再调用React的必要依赖。实际吃喝状态EatingRemaining及手持/支撑状态不清；Pose会由这些真实状态重新导出。
+- 已安置的遗体为Dead（ValidateAftermath校验），VoiceCue、声音候选与正在播放的发声者清理均经过Dead判断。主UI的HasVisibleFamilyBody已经用于Actor隐藏和近看退出；松脱饰品、敷料、局部标记、名字及孕育标记均是Actor后代，随Actor隐藏。身份仍留在选择器里供家庭记录查看。
+- 没有新增音频素材；仅调整既有cue选择与抢占。具体听感仍未确认。
+
+纯数据远端检查
+checks/Interaction.InjuryPresentation（新增，6组）只引用Simulation与纯数学ActorHopMotion/ActorInjuryPresentation，不启动Godot。
+覆盖：左右局部标记隔离；淤痕恢复与永久旧痕保留；敷料覆盖不删伤势；危重/剧痛/死亡表情和姿势优先；跳步健康参数不变、受伤只调努力程度不改水平轨迹；声音优先；新家庭React不沿用旧饮水/拒绝元数据。
+这组通过也不能证明标记实际可见、贴面无穿插或音频播放无延迟；既有ActorGeometry/Contact/声音验证断言保留。
+
+独立远端实际观察要求
+A. 同镜头对照健康个体、仅左脸伤、仅右脸伤、头/侧面/口/底部伤；普通距离和近看、正面和斜后面都检查。确认没有左右串位，局部痕迹随身体转动/压缩贴合，没有漂浮、闪烁或穿到饰品上。底部用托起/翻面观察，不能因站立时不可见就判数据未生效。
+B. 对应伤处完成护理，再护理另一处；敷料必须显示在真实接触部位，两处都保留，不把淤痕透过敷料画出。治疗未完成不出现敷料。伤势恢复后普通淤痕减淡；永久底部伤残旧痕仍在。
+C. 同一路径观察FootIntegrity=100、60、30、23；100保留原跳步，60/30抬升更低、步态谨慎，23不自行跳走。既有飞行形态底部伤不自动禁飞。记录足底/垫子接触、幼体比例，不把数值断言当实机接触通过。
+D. 高信任、亲昵过程中造成剧痛，及家庭亲近反应遇到濒危；检查笑嘴/脸红不会盖过伤态。按压、托举、落下时仍保留真实物理支撑动作。死亡后不再唱歌、蹭动或播活体声音。
+E. 已播普通亲昵时触发危重呼救，应抢占普通声音；已发声个体死亡或进入冷藏，旧声音立即停止。刚喝过水再触发同伴拒绝/照护回应，不应播放上一口吞咽声。检查静音/音量零/读档和模态对话期间切换也不漏声。
+F. 家庭语音、严重疼痛和多人同时呼救的优先级、真实听感需要独立远端录音/观察，报告注明机器、完整SHA、输出路径与未测项。
+G. 安置遗体前后及保存重载后，检查遗体、名字、敷料、伤痕、松脱饰品和孕育标记均不留在院内；原坐标不再能点击到该个体，选择器仍能查看身份与亲缘。若从近看安置，应回小院并保持原暂停设置。模态期间原声音停止，关闭面板、恢复时间与重载不得重新播该个体声音。
+
+第二轮静态调用与类型审查
+- RefreshInteraction先调用Refresh，伤痕层与显示表情在同一帧刷新，再计算互动姿势；BuildDressings已有幂等保护。健康且无局部伤势数据的个体不额外创建伤痕网格。
+- ActorInjuryPresentation使用System.Numerics.Vector3与HopFrame，CreatureActor通过既有AccessoryPoint转换为Godot.Vector3。SculptSurface的点和颜色回调分别接收Godot.Vector3/Color；每层经EnableSurfaceFade复制独立材质后更新透明度。
+- Game工程自动包含ActorInjuryPresentation和ActorHopMotion；Simulation工程没有链接这两文件；新增纯数据检查显式链接两文件并引用Simulation，静态未发现重复类型来源。
+- ActorSurfaceMarks的七个敷料部位提供伤痕键；伤痕查询和HasDressing使用同一DressingSiteSide规范化，未发现左右键或Whole键不一致。
+- 没有因此新增表现源码修改：未发现确定调用/类型错误；这不等于编译或实机通过。Memorialized贯通结论依赖当前有效存档约束和已读的主协调UI接线，G项仍待远端实看。
+
+所有提交和推送由主协调统一执行。冻结art03、原启动器未改。

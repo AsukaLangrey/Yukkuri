@@ -11,7 +11,7 @@ public sealed partial class PeerBond
     public double CareSeconds { get; set; }
     public string LastEvent { get; set; } = "";
 }
-public sealed class PregnancyState
+public sealed partial class PregnancyState
 {
     public PregnancyPhase Phase { get; set; }
     public BirthMethod Method { get; set; }
@@ -67,7 +67,8 @@ public static partial class FamilyRules
     public static double GestationSeconds(BirthMethod method) => method == BirthMethod.Live ? 480 : 240;
     public static double RecoverySeconds(BirthMethod method) => method == BirthMethod.Live ? 300 : 180;
     public static bool CommonSpecies(string species) => species is "reimu" or "marisa" or "alice" or "patchouli";
-    public static bool WillSocialize(Creature c) => !c.Family.ColdStorage.Stored && c.Family.ColdStorage.RecoveryRemaining<=0 && c.Condition == PhysicalCondition.Active && c.Pain < 25 &&
+    public static bool WillSocialize(Creature c) => !UnderIntervention(c)&&c.Family.ChildThreat.TargetId==null&&
+        !c.Family.ColdStorage.Stored && c.Family.ColdStorage.RecoveryRemaining<=0 && c.Condition == PhysicalCondition.Active && c.Pain < 25 &&
         c.Fear < 55 && c.Fullness > 25 && c.Interaction.Hydration > 25 && c.Energy > 25 &&
         !c.Interaction.Digestion.Symptomatic && c.Interaction.Restraint == RestraintKind.None &&
         !c.Interaction.Carried && !c.Interaction.Falling && !c.Interaction.Supine &&
@@ -84,7 +85,7 @@ public static partial class FamilyRules
         if(c.Family.ColdStorage.Stored)return "冷藏保存中 · 生命过程按十倍延缓；需要及时取出";
         string stage=p.Phase switch
         {
-            PregnancyPhase.Preparing => "正在等待双方靠近与接受",
+            PregnancyPhase.Preparing => UnderIntervention(c)?"繁育干预进行中，可及时停止":"正在等待双方靠近与接受",
             PregnancyPhase.Gestating => p.Method==BirthMethod.Stem?"茎生孕育中，需要安稳的照护":"胎生孕育中，需要更多吃喝与休息",
             PregnancyPhase.Recovering => "孕育后的恢复期",
             _ => ""

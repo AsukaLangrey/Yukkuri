@@ -24,6 +24,9 @@ public static class InteractionPresentation
     public static string VoiceCue(Creature c)
     {
         var i=c.Interaction;
+        if(c.Condition==PhysicalCondition.Dead||c.Family.ColdStorage.Stored)return "";
+        if(c.Condition==PhysicalCondition.Critical)return "coo-help";
+        if(c.Pain>=40)return "coo-hurt";
         // Pain and requests for help can also reject an action. Keep their own voice;
         // an ordinary frightened refusal still uses the refusal cue.
         if(c.Expression==Expression.Hurt||i.ReactionSituation is "stomach-unwell" or "stomach-no-food" or "touch-sore"||
@@ -31,6 +34,7 @@ public static class InteractionPresentation
         if(c.Expression==Expression.Calling)return "coo-help";
         if(i.ReactionRefused)return "coo-refuse";
         if(c.Expression==Expression.Frightened)return "coo-hurt";
+        if(c.Expression is Expression.Angry or Expression.Defiant or Expression.Worried)return "coo-refuse";
         if(i.ReactionSituation.Contains("nuzzle",StringComparison.Ordinal))return "coo-nuzzle";
         if(i.ReactionSituation is "eat" or "eat-leaves" or "sweet" or "drink" or "mouthful-done")return "feed";
         if(i.ReactionSituation is "lift" or "lift-low" or "rock")return "coo-hug";

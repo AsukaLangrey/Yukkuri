@@ -35,6 +35,11 @@ public sealed partial class WorldSimulation
     private void React(Creature c,Expression expression,string speech,string reaction,double seconds=4)
     {
         if(c.Condition==PhysicalCondition.Dead)return;
+        c.Interaction.ReactionSituation="";c.Interaction.ReactionRefused=false;
+        c.Interaction.ReactionPose="idle";c.Interaction.ReactionPoseRemaining=0;
+        if(c.Condition==PhysicalCondition.Critical){expression=Expression.Exhausted;speech="……";}
+        else if(c.Pain>=40&&expression is Expression.Content or Expression.Delighted){expression=Expression.Hurt;speech="还疼着……";}
+        else if(c.Fear>=68&&expression is Expression.Content or Expression.Delighted){expression=Expression.Frightened;speech="先别靠近……";}
         c.Expression=expression;c.Speech=speech;c.LastReaction=reaction;c.ReactionSerial++;c.ReactionRemaining=seconds;
     }
     private void Remember(Creature c,Incident incident,string text,double weight)
@@ -123,6 +128,13 @@ public sealed partial class WorldSimulation
                 var incident=State.Incidents.Find(e=>e.Id==fact.IncidentId);if(incident==null)continue;
                 var listener=State.Creatures.FirstOrDefault(c=>c.Id!=speaker.Id&&c.RegionId==speaker.RegionId&&IsAvailable(c)&&Distance(c.X,c.Z,speaker.X,speaker.Z)<2.5&&!Knows(c,incident.Id));
                 if(listener==null)continue;
+                if(incident.Kind==IncidentKind.Death)
+                {
+                    var deceased=State.Creatures.Find(c=>c.Id==incident.TargetId);
+                    if(deceased!=null&&speaker.Family.KnownLosses.ContainsKey(deceased.Id))
+                        TellFamilyLoss(speaker.Id,listener.Id,deceased.Id);
+                    continue;
+                }
                 Learn(listener,incident,KnowledgeSource.Told,true,speaker.Id);
                 Remember(listener,incident,$"听{speaker.Name}说：{incident.Description}",1);
             }

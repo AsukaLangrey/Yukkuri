@@ -12,6 +12,7 @@ public partial class InteractionRoom
     private bool _muted;
     private double _lastSound;
     private int _playingVoicePriority;
+    private string? _speakingCreatureId;
 
     private void InitializeRoomAudio()
     {
@@ -40,7 +41,7 @@ public partial class InteractionRoom
 
     private void IgnoreCurrentRoomVoices()
     {
-        _sound.Stop();_playingVoicePriority=0;
+        _sound.Stop();_playingVoicePriority=0;_speakingCreatureId=null;
         foreach(var c in Sim.State.Creatures)_heardReactions[c.Id]=c.ReactionSerial;
     }
 
@@ -56,6 +57,17 @@ public partial class InteractionRoom
         if(!ReferenceEquals(_audioSimulation,Sim))
         {
             _audioSimulation=Sim;IgnoreCurrentRoomVoices();_lastSound=_elapsed-.65;
+        }
+        if(_speakingCreatureId is { } speakerId)
+        {
+            var speaker=Sim.State.Creatures.Find(c=>c.Id==speakerId);
+            if(speaker==null||speaker.Condition==PhysicalCondition.Dead||speaker.Family.ColdStorage.Stored)
+            {_sound.Stop();_playingVoicePriority=0;_speakingCreatureId=null;}
+            else if(_sound.Playing&&_playingVoicePriority<(speaker.Condition==PhysicalCondition.Critical?120:speaker.Pain>=40?100:0))
+            {
+                _sound.Stop();_playingVoicePriority=0;_speakingCreatureId=null;
+                _heardReactions.Remove(speakerId);_lastSound=_elapsed-.65;
+            }
         }
         float music=RoomVolume(Sim.State.Settings.MusicVolume,.55);
         float effects=RoomVolume(Sim.State.Settings.EffectsVolume,.7);
@@ -85,11 +97,12 @@ public partial class InteractionRoom
         foreach(var c in Sim.State.Creatures)
         {
             if(!_actors.TryGetValue(c.Id,out var actor)||!actor.Visible||c.ReactionRemaining<=0||
-                c.Speech.Length==0||c.Condition==PhysicalCondition.Dead)continue;
+                c.Speech.Length==0||c.Condition==PhysicalCondition.Dead||c.Family.ColdStorage.Stored)continue;
             if(c.Interaction.ReactionSituation is "prepare-natural-food" or "prepare-natural-water")continue;
             if(_heardReactions.TryGetValue(c.Id,out int serial)&&serial==c.ReactionSerial)continue;
             string cue=InteractionPresentation.VoiceCue(c);
-            int voicePriority=cue switch{"coo-hurt"=>100,"coo-help"=>80,"coo-refuse"=>60,_=>20};
+            if(cue.Length==0)continue;
+            int voicePriority=c.Condition==PhysicalCondition.Critical?120:cue switch{"coo-hurt"=>100,"coo-help"=>80,"coo-refuse"=>60,_=>20};
             int priority=voicePriority+(c.Id==Sim.State.SelectedId?1:0);
             if(priority<=bestPriority)continue;
             string candidatePath="res://Assets/Audio/"+cue+".wav";
@@ -98,12 +111,13 @@ public partial class InteractionRoom
         }
         if(speaking==null)return;
         // Selection breaks candidate ties; it never grants permission to cut off a voice.
-        bool urgent=bestVoicePriority==100&&_playingVoicePriority<100;
+        bool urgent=bestVoicePriority>=80&&_playingVoicePriority<bestVoicePriority;
         if(_sound.Playing&&!urgent)return;
         if(!urgent&&_elapsed-_lastSound<=.65)return;
         var stream=GD.Load<AudioStream>(path);if(stream==null)return;
         _sound.Stream=stream;_sound.Play();_lastSound=_elapsed;
         _playingVoicePriority=bestVoicePriority;
+        _speakingCreatureId=speaking.Id;
         // Unplayed current reactions remain eligible until their own expiry.
         _heardReactions[speaking.Id]=speaking.ReactionSerial;
     }

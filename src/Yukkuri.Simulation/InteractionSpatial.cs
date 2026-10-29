@@ -33,7 +33,7 @@ public sealed partial class WorldSimulation
         }
         foreach(var other in State.Creatures)
         {
-            if(other.Id==c.Id||other.Family.ColdStorage.Stored||other.RegionId!=c.RegionId||other.Interaction.Height>1&&other.Interaction.Restraint==RestraintKind.None)continue;
+            if(other.Id==c.Id||other.Family.ColdStorage.Stored||other.Family.Memorialized||other.RegionId!=c.RegionId||other.Interaction.Height>1&&other.Interaction.Restraint==RestraintKind.None)continue;
             double gap=own+InteractionFootprint(other);
             if(Distance(x,z,other.X,other.Z)<gap-.00001)return false;
         }

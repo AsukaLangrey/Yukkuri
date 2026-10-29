@@ -144,6 +144,13 @@ public sealed partial class WorldSimulation
     {
         if(!double.IsFinite(amount)||amount<0)throw new ArgumentOutOfRangeException(nameof(amount));
         if(amount==0||c.Condition==PhysicalCondition.Dead)return;
+        if(part.HasValue||actor!=null)
+        {
+            DetachNaturalIntake(c);DropCareParcel(c);c.Family.CareTargetId=null;
+            c.Interaction.Resting=false;c.Interaction.RestRemaining=0;
+            c.Interaction.ActiveCue=null;c.Interaction.FollowPlayer=false;c.Interaction.WaitRemaining=0;
+            if(c.Family.CompanionTargetId!=null)ClearCompanionship(c);
+        }
         var injuries=c.Interaction.Injuries;
         // Systemic illness, starvation and childbirth have no invented contact site.
         if(part.HasValue)ApplyLocalInjury(c,part.Value,side,amount,cause);
@@ -182,15 +189,22 @@ public sealed partial class WorldSimulation
         c.Interaction.Injuries.DeathCause=cause;
         c.Interaction.Injuries.DeathAt=State.WorldSeconds;
         c.Condition=PhysicalCondition.Dead;c.Health=0;c.Speech="";c.Expression=Expression.Exhausted;c.Activity="已死亡";
+        RegisterFamilyDeath(c);
+        var pregnancy=c.Family.Pregnancy;
+        if(pregnancy.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)
+        {
+            pregnancy.Outcome="母体离世，孕育中止。";
+            c.Family.LastEvent=pregnancy.Outcome;
+        }
+        pregnancy.Phase=PregnancyPhase.None;pregnancy.InterventionRemaining=0;pregnancy.RecoveryRemaining=0;
+        c.Family.ChildThreat=new();c.Family.Conflict=new();c.Family.FlightRemaining=0;
         c.CriticalRemaining=0;c.RecoveryRemaining=0;c.Stabilized=false;c.ReactionRemaining=0;
         StopIncapacitatedActions(c);
         if(InteractionGestureTarget==c.Id)_interactionGesture=null;
         NormalizeDeadInteractionSupport(c);
         RefreshHelpAfterResolution(c);
         c.LastReaction="再也没有回应。";c.ReactionSerial++;
-        var e=Emit(IncidentKind.Death,c,null,$"{c.Name}因{cause}死亡",10);
-        foreach(var witness in State.Creatures.Where(w=>w.Id!=c.Id&&Knows(w,e.Id)))
-        {witness.Fear=Clamp100(witness.Fear+8);Remember(witness,e,$"目睹{c.Name}离去。",10);}
+        Emit(IncidentKind.Death,c,null,$"{c.Name}因{cause}死亡",10);
         Log($"{c.Name}已经无法恢复。你可以继续照顾其他油库里，或读取此前存档。");
     }
     private void NormalizeDeadInteractionSupport(Creature c)

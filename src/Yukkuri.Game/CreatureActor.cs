@@ -154,37 +154,41 @@ public partial class CreatureActor : RigidBody3D
         if(Main.SimpleActors){Freeze=!close||suspended;if(!close)Position=new((float)c.X,.46f*BodyScale,(float)c.Z);return;}
         _phase+=delta;_reactionAge+=delta;_poseAge+=delta;
         if(c.ReactionSerial!=_lastSerial){_lastSerial=c.ReactionSerial;_reactionAge=0;}
-        DisplayedExpression=c.Expression;
+        var expression=ActorInjuryPresentation.ExpressionFor(c);
+        DisplayedExpression=expression;
         if(Main.NameplatesEnabled){
         _name.Visible=selected&&!close;_name.Text=c.Name+(c.Condition==PhysicalCondition.Critical?" · 待救":"");
         _speech.Text=c.Speech;_speech.Visible=!close&&c.Speech.Length>0&&_reactionAge<6;
         }
-        _bandage.Visible=c.Health<75||c.Condition==PhysicalCondition.Recovering;
-        RefreshTears(c.Condition!=PhysicalCondition.Dead&&c.Expression is Expression.Hurt or Expression.Frightened,delta);
-        _blushRoot.Visible=c.Expression is Expression.Content or Expression.Delighted or Expression.Shy;
-        BuildMouth(c.Expression);
+        _bandage.Visible=false;
+        if(_dressings.Count>0||c.Interaction.Dressings.Count>0||c.Interaction.DressingPart!=null)
+        {BuildDressings();RefreshDressings(c.Interaction);}
+        RefreshInjuryMarks(c.Interaction);
+        RefreshTears(c.Condition!=PhysicalCondition.Dead&&expression is Expression.Hurt or Expression.Frightened,delta);
+        _blushRoot.Visible=expression is Expression.Content or Expression.Delighted or Expression.Shy;
+        BuildMouth(expression);
         float eyes=1,browLeft=0,browRight=0;
-        if(c.Expression is Expression.Content or Expression.Sleeping)eyes=.12f;
-        else if(c.Expression==Expression.Delighted)eyes=.20f;
-        else if(c.Expression is Expression.Defiant or Expression.Angry){eyes=.65f;browLeft=-17;browRight=17;}
-        else if(c.Expression is Expression.Hurt or Expression.Frightened or Expression.Shy or Expression.Worried){browLeft=17;browRight=-17;}
-        else if(c.Expression==Expression.Exhausted){eyes=.42f;browLeft=9;browRight=-9;}
-        if(Mathf.Sin(_phase*1.6f)>.994f&&c.Expression==Expression.Neutral)eyes=.1f;
-        var eyeCurve=c.Expression switch {Expression.Content=>EyeCurve.Relaxed,Expression.Delighted=>EyeCurve.Joy,Expression.Sleeping=>EyeCurve.Sleep,_=>EyeCurve.Open};
+        if(expression is Expression.Content or Expression.Sleeping)eyes=.12f;
+        else if(expression==Expression.Delighted)eyes=.20f;
+        else if(expression is Expression.Defiant or Expression.Angry){eyes=.65f;browLeft=-17;browRight=17;}
+        else if(expression is Expression.Hurt or Expression.Frightened or Expression.Shy or Expression.Worried){browLeft=17;browRight=-17;}
+        else if(expression==Expression.Exhausted){eyes=.42f;browLeft=9;browRight=-9;}
+        if(Mathf.Sin(_phase*1.6f)>.994f&&expression==Expression.Neutral)eyes=.1f;
+        var eyeCurve=expression switch {Expression.Content=>EyeCurve.Relaxed,Expression.Delighted=>EyeCurve.Joy,Expression.Sleeping=>EyeCurve.Sleep,_=>EyeCurve.Open};
         SetSurfaceEyes(eyes,eyeCurve);
-        SetSurfaceBrows(browLeft,browRight,c.Expression==Expression.Frightened?ActorBrowSurface.FrightHeight:0);
+        SetSurfaceBrows(browLeft,browRight,expression==Expression.Frightened?ActorBrowSurface.FrightHeight:0);
         Vector3 visualScale=Vector3.One;Vector3 visualOffset=Vector3.Zero;
         if(!close)
         {
             Freeze=true;Position=Position.Lerp(new((float)c.X,.46f*BodyScale,(float)c.Z),Mathf.Min(1,delta*12));
             if(!interactionPresentation)
             {
-                _hopMotion.Advance(new(Position.X,Position.Z),delta,c.Condition==PhysicalCondition.Active,delta<=0);
-                var hop=_hopMotion.Frame;
+                _hopMotion.Advance(new(Position.X,Position.Z),delta,c.Condition==PhysicalCondition.Active&&ActorInjuryPresentation.StepStrength(c)>0,delta<=0);
+                var hop=ActorInjuryPresentation.AdaptHop(c,_hopMotion.Frame);
                 visualScale=AccessoryPoint(hop.Scale);
                 visualOffset=new((_hopMotion.Position.X-Position.X)/BodyScale,hop.Lift,(_hopMotion.Position.Y-Position.Z)/BodyScale);
                 _visual.Rotation=new(Mathf.DegToRad(hop.Pitch),_hopMotion.Heading,0);
-                PoseTag=_hopMotion.Active?"hop":_hopMotion.Turning?"turn":"idle";
+                PoseTag=_hopMotion.Active?(ActorInjuryPresentation.StepStrength(c)<.8f?"careful-step":"hop"):_hopMotion.Turning?"turn":"idle";
             }
         }
         else
@@ -194,7 +198,8 @@ public partial class CreatureActor : RigidBody3D
             float squash=Mathf.Clamp(force/150,0,.18f);
             visualScale=new(1+squash,1-squash,1+squash*.4f);PoseTag="close";
         }
-        if(_contactActive&&close)
+        if(_contactActive&&close&&c.Condition==PhysicalCondition.Active&&
+            (c.Pain<40||_contactAction is ContactAction.Discipline or ContactAction.Treat))
         {
             float rhythm=Mathf.Sin(_poseAge*8);
             switch(_contactAction)
@@ -208,9 +213,9 @@ public partial class CreatureActor : RigidBody3D
                 default:PoseTag=_contactAction.ToString().ToLowerInvariant();break;
             }
         }
-        else if(c.Expression is Expression.Hurt or Expression.Frightened)
+        else if(expression is Expression.Hurt or Expression.Frightened)
         {visualOffset.X+=Mathf.Sin(_phase*35)*.012f;visualScale.Y*=.93f;PoseTag="tremble";}
-        else if(c.Expression==Expression.Defiant)
+        else if(expression==Expression.Defiant)
         {_visual.RotationDegrees=new Vector3(-5,_visual.RotationDegrees.Y,Mathf.Sin(_phase*2)*2);PoseTag="defiant";}
         if(c.Condition!=PhysicalCondition.Active)
         {

@@ -10,6 +10,7 @@ public partial class InteractionRoom
     private readonly List<string> _selectorIds=new();
     private string _selectorSignature="";
     private string? _familyFirstId,_familySecondId;
+    private bool _breedingInterventionExpanded;
     private readonly Dictionary<string,FamilyStatusMarker> _familyMarkers=new();
 
     private static string SpeciesName(string species)=>species switch
@@ -20,7 +21,19 @@ public partial class InteractionRoom
     };
 
     private string OilListName(Creature c)=>c.Name+" · "+SpeciesName(c.Body.SpeciesId)+
-        (c.Condition==PhysicalCondition.Dead?" · 已离世":c.Family.ColdStorage.Stored?" · 冷藏中":c.IsYoung?" · 幼体":"");
+        (c.Family.Memorialized?" · 已安置":c.Family.ColdStorage.Stored?
+            (c.Condition==PhysicalCondition.Dead?" · 遗体冷藏中":" · 冷藏中"):c.Condition==PhysicalCondition.Dead?" · 已离世":c.IsYoung?" · 幼体":"");
+
+    private static bool HasVisibleFamilyBody(Creature c)=>!c.Family.ColdStorage.Stored&&!c.Family.Memorialized;
+
+    private bool LeaveUnavailableCloseup()
+    {
+        if(Sim.State.Mode!=PlayMode.CloseUp||Sim.Selected is not { } selected||HasVisibleFamilyBody(selected))return false;
+        // Keep the selected identity and the explicit pause setting. Only the empty
+        // close-up is left; historical family information remains available.
+        CancelGesture();Sim.State.Mode=PlayMode.Management;
+        return true;
+    }
 
     private void BuildOilSelector(Control parent)
     {
@@ -103,17 +116,50 @@ public partial class InteractionRoom
         if(first==null)return;
         _modalContents.AddChild(Text(FamilySummary(first),14));
         string firstId=first.Id;
+        if(first.Condition==PhysicalCondition.Dead)
+        {
+            if(first.Family.Memorialized)
+                _modalContents.AddChild(Text("遗体已经安置。这里保留它的名字、家人和共同经历。",14));
+            else if(first.Family.ColdStorage.Stored)
+            {
+                _modalContents.AddChild(Text("遗体仍在冷藏中，先取出，再安排告别与安置。",14));
+                _modalContents.AddChild(Button("取出遗体",()=>ApplyFamilyCommand(()=>Sim.SetColdStorage(firstId,false))));
+            }
+            else
+            {
+                _modalContents.AddChild(Text("安置后遗体会离开小院活动区域，家人记录与死因仍会保留。",14));
+                _modalContents.AddChild(Button("安置遗体",()=>ApplyFamilyCommand(()=>Sim.LayToRest(firstId))));
+            }
+            _modalContents.AddChild(Button("回到小院",CloseModal));return;
+        }
+        if(first.Family.ColdStorage.Stored)
+        {
+            _modalContents.AddChild(Text("它正在有限冷藏中。先取出并观察恢复，再安排相处或照护。",14));
+            _modalContents.AddChild(Button("取出这只油，观察复苏",()=>ApplyFamilyCommand(()=>Sim.SetColdStorage(firstId,false))));
+            _modalContents.AddChild(Button("回到小院",CloseModal));return;
+        }
+        if(first.Family.Pregnancy.InterventionRemaining>0)
+            _modalContents.AddChild(Button("停止正在进行的繁育干预",()=>ApplyFamilyCommand(()=>Sim.InterruptPregnancyIntervention(firstId))));
+        if(first.Family.ChildThreat.TargetId!=null)
+            _modalContents.AddChild(Button("制止对幼体的伤害",()=>ApplyFamilyCommand(()=>Sim.ProtectFamilyChild(firstId))));
         bool breeding=first.Family.AllowsBreeding;
         _modalContents.AddChild(Button(breeding?"繁殖许可：允许 · 点击禁止":"繁殖许可：禁止 · 点击允许",
             ()=>ApplyFamilyCommand(()=>Sim.SetBreedingPermission(firstId,!breeding))));
 
-        var otherOils=oils.Where(c=>c.Id!=firstId).ToArray();
+        Creature? other=null;
+        var otherOils=oils.Where(c=>c.Id!=firstId&&c.Condition!=PhysicalCondition.Dead&&HasVisibleFamilyBody(c)).ToArray();
         if(otherOils.Length>0)
         {
-            AddFamilyChoice("另一只油",otherOils,_familySecondId,id=>{_familySecondId=id;ShowFamily();});
             var second=otherOils.FirstOrDefault(c=>c.Id==_familySecondId)??otherOils[0];
+            other=second;
+            _familySecondId=second.Id;
+            AddFamilyChoice("另一只油",otherOils,_familySecondId,id=>{_familySecondId=id;ShowFamily();});
             string secondId=second.Id;
             _modalContents.AddChild(Text(FamilySummary(second),14));
+            if(second.Family.Pregnancy.InterventionRemaining>0)
+                _modalContents.AddChild(Button("停止另一只的繁育干预",()=>ApplyFamilyCommand(()=>Sim.InterruptPregnancyIntervention(secondId))));
+            if(second.Family.ChildThreat.TargetId!=null)
+                _modalContents.AddChild(Button("制止另一只对幼体的伤害",()=>ApplyFamilyCommand(()=>Sim.ProtectFamilyChild(secondId))));
             _modalContents.AddChild(Button("邀请它们靠近相处",()=>ApplyFamilyCommand(()=>Sim.InviteCompanion(firstId,secondId))));
             bool partners=first.Family.PartnerIds.Contains(secondId)||second.Family.PartnerIds.Contains(firstId);
             if(partners)
@@ -142,7 +188,8 @@ public partial class InteractionRoom
                 _modalContents.AddChild(Button("请成年一方照护幼体",()=>ApplyFamilyCommand(()=>Sim.ArrangeCare(caregiverId,childId))));
             }
         }
-        else _modalContents.AddChild(Text("这里还没有另一只油可以邀请。",14));
+        else _modalContents.AddChild(Text("这里暂时没有另一只可以邀请的油。冷藏中的个体需要先取出。",14));
+        AddBreedingIntervention(first,other);
         _modalContents.AddChild(Button("制止这只油的家庭冲突",()=>ApplyFamilyCommand(()=>Sim.InterruptFamilyConflict(firstId))));
         _modalContents.AddChild(Text("冷藏只让相关生命过程以正常速度的十分之一推进。有保存期限和复苏风险，需要及时取出照护；旧伤仍会保留，不能无限拖住濒危状态。",13,"78816e"));
         bool stored=first.Family.ColdStorage.Stored;
@@ -152,6 +199,35 @@ public partial class InteractionRoom
         _modalContents.AddChild(Button(autonomous?"自主繁育：开 · 点击关闭":"自主繁育：关 · 点击开启",
             ()=>ApplyFamilyCommand(()=>Sim.SetAutonomousBreeding(!autonomous))));
         _modalContents.AddChild(Button("回到小院",CloseModal));
+    }
+
+    private void AddBreedingIntervention(Creature first,Creature? other)
+    {
+        _modalContents.AddChild(Button(_breedingInterventionExpanded?"特殊繁育干预 · 收起":"特殊繁育干预 · 展开",()=>
+        {_breedingInterventionExpanded=!_breedingInterventionExpanded;ShowFamily();}));
+        if(!_breedingInterventionExpanded)return;
+        _modalContents.AddChild(Text("强制干预会无视母体意愿并损害它对你的信任。恢复不足时身体负担更重，可能伤亡；有材料也不保证受孕或生产成功。普通安排仍尊重双方。",14,"8a624e"));
+        Creature? father=first.Body.ReproductionRole==ReproductionRole.Paternal?first:
+            other?.Body.ReproductionRole==ReproductionRole.Paternal?other:null;
+        Creature? mother=first.Body.ReproductionRole==ReproductionRole.Maternal?first:
+            other?.Body.ReproductionRole==ReproductionRole.Maternal?other:null;
+        if(father!=null)
+        {
+            string fatherId=father.Id;
+            int available=Sim.State.BreedingMaterials.Count(m=>m.FatherId==fatherId&&m.BodyId==father.Body.Id&&m.ExpiresAt>Sim.State.WorldSeconds);
+            _modalContents.AddChild(Text("材料来源："+father.Name+"。尚可用的材料："+available+"份。收集仍需要它本身愿意且身体适合。",13));
+            _modalContents.AddChild(Button("收集所选父体的一份材料",()=>ApplyFamilyCommand(()=>Sim.CollectBreedingMaterial(fatherId))));
+        }
+        else _modalContents.AddChild(Text("先选择一只承担父体角色的成熟油，才能取得有明确来源的材料。",13));
+        if(mother==null||father==null||mother.Id==father.Id)
+        {
+            _modalContents.AddChild(Text("需要分别选定母体与父体。出生角色不会因这项干预改变，幼体不能参与。",13));return;
+        }
+        string motherId=mother.Id,sourceFatherId=father.Id;
+        _modalContents.AddChild(Text("干预对象："+mother.Name+"；材料来源："+father.Name+"。开始会消耗一份材料，停止操作也不会返还。",13));
+        var methods=Row(_modalContents);
+        methods.AddChild(Button("强制茎生干预",()=>ApplyFamilyCommand(()=>Sim.RequestForcedPregnancy(motherId,sourceFatherId,BirthMethod.Stem))));
+        methods.AddChild(Button("强制胎生干预",()=>ApplyFamilyCommand(()=>Sim.RequestForcedPregnancy(motherId,sourceFatherId,BirthMethod.Live))));
     }
 
     private void AddFamilyChoice(string caption,Creature[] oils,string? selected,Action<string> select)
@@ -175,8 +251,12 @@ public partial class InteractionRoom
         if(c.Family.MotherId!=null||c.Family.FatherId!=null)details.Add("母亲："+NameFor(c.Family.MotherId)+"；父亲："+NameFor(c.Family.FatherId));
         if(c.Family.PartnerIds.Count>0)details.Add("伴侣："+string.Join("、",c.Family.PartnerIds.OrderBy(id=>id).Select(id=>NameFor(id))));
         if(c.Family.CaregiverIds.Count>0)details.Add("照护者："+string.Join("、",c.Family.CaregiverIds.Select(id=>NameFor(id))));
-        string situation=FamilyRules.Describe(c);
+        string situation=c.Condition==PhysicalCondition.Dead?"":FamilyRules.Describe(c);
         if(situation.Length>0)details.Add(situation);
+        string aftermath=FamilyRules.DescribeAftermath(c);
+        if(aftermath.Length>0)details.Add(aftermath);
+        string risk=c.Condition==PhysicalCondition.Dead?"":FamilyRules.DescribeRisk(c);
+        if(risk.Length>0)details.Add(risk);
         return string.Join("\n",details);
     }
 
@@ -185,6 +265,7 @@ public partial class InteractionRoom
         // Modal pause is temporary; the simulation must see the original pause state.
         CloseModal();
         _message=Sim.State.Settings.Pause?"小院仍暂停着。先继续时间，再安排活动。":action();
+        LeaveUnavailableCloseup();
         RefreshRoomUi();
     }
 }
@@ -212,7 +293,7 @@ internal partial class FamilyStatusMarker : Node3D
     public void Present(Creature c,float bodyScale,Vector3 motion,bool selected)
     {
         var p=c.Family.Pregnancy;
-        Visible=c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&p.Phase==PregnancyPhase.Gestating;
+        Visible=c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&p.Phase==PregnancyPhase.Gestating;
         if(!Visible)return;
         Position=motion+new Vector3(.76f*bodyScale,.80f*bodyScale,-.10f);
         _stem.Visible=p.Method==BirthMethod.Stem;_cradle.Visible=p.Method==BirthMethod.Live;

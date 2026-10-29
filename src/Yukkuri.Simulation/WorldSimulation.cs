@@ -74,7 +74,7 @@ public sealed partial class WorldSimulation
         {
             SynchronizeCareParcels();
             TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickFamilySocial(dt);
-            TickAutonomousBreeding();SynchronizeCareParcels();TickColdStorage(dt);return;
+            TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);SynchronizeCareParcels();TickColdStorage(dt);return;
         }
         if(State.MilestoneScenario) TickMilestoneWorld(dt);
         // An autonomous arrival/retreat may move the selected creature to another region.
@@ -86,7 +86,7 @@ public sealed partial class WorldSimulation
             var residents = State.Creatures.Where(c => c.RegionId == region.Id).ToArray();
             foreach (var c in residents)
             {
-                if(State.MilestoneScenario && c.Condition==PhysicalCondition.Dead) continue;
+                if(c.Condition==PhysicalCondition.Dead) continue;
                 c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
                 c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
                 c.Energy = Math.Max(0, c.Energy - Config.EnergyPerSecond * dt);
@@ -135,7 +135,7 @@ public sealed partial class WorldSimulation
             for(int j=i+1;j<residents.Length;j++)
             {
                 var a=residents[i];var b=residents[j];
-                if(State.MilestoneScenario && (a.Condition==PhysicalCondition.Dead || b.Condition==PhysicalCondition.Dead))continue;
+                if(a.Condition==PhysicalCondition.Dead || b.Condition==PhysicalCondition.Dead)continue;
                 if(a.Quarantine!=b.Quarantine)continue;
                 double dx=b.X-a.X,dz=b.Z-a.Z,dist=Math.Sqrt(dx*dx+dz*dz);
                 if(dist>=1.05)continue;
@@ -160,6 +160,7 @@ public sealed partial class WorldSimulation
                 }
             }
         }
+        TickFamilyAftermath(dt);
         State.WageTimer += dt;
         if (State.WageTimer >= 60)
         {

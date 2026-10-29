@@ -33,7 +33,7 @@ public sealed partial class WorldSimulation
         {
             if(!double.IsFinite(x.Value)||!double.IsFinite(z.Value)||Math.Abs(x.Value)>7.7||Math.Abs(z.Value)>7.7)return false;
             if(!WoodlandLayout.GroundFits(State,obj.RegionId,x.Value,z.Value,.2))return false;
-            if(State.Creatures.Any(c=>!c.Family.ColdStorage.Stored&&c.RegionId==obj.RegionId&&Distance(c.X,c.Z,x.Value,z.Value)<InteractionFootprint(c)+.2))return false;
+            if(State.Creatures.Any(c=>!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&c.RegionId==obj.RegionId&&Distance(c.X,c.Z,x.Value,z.Value)<InteractionFootprint(c)+.2))return false;
             obj.X=x.Value;obj.Z=z.Value;obj.Height=RoomSupplySupport.Height(State,obj.RegionId,obj.X,obj.Z,obj.Kind);
         }
         // Cancel retains its original ground location. Holding itself never consumes a portion.

@@ -16,7 +16,7 @@ public static partial class FamilyRules
         {
             var f=c.Family;
             Require(f!=null&&f.Peers!=null&&f.PartnerIds!=null&&f.CaregiverIds!=null&&f.Pregnancy!=null&&
-                f.ColdStorage!=null&&f.LifeKnowledge!=null&&f.Conflict!=null,"家庭数据缺失");
+                f.ColdStorage!=null&&f.LifeKnowledge!=null&&f.Conflict!=null&&f.ChildThreat!=null&&f.KnownLosses!=null,"家庭数据缺失");
             Require(c.Interaction!=null,"身体数据缺失");
             BodyInjuryState.Validate(c.Interaction.Injuries,s.WorldSeconds);
             Require(Number(c.Interaction.FootIntegrity,100)&&c.Interaction.FootIntegrity<=100-c.Interaction.Injuries.PermanentFootLoss+.00001,
@@ -38,7 +38,7 @@ public static partial class FamilyRules
                 "幼体出生缺少结算或亲缘记录");
             var p=f.Pregnancy;
             Require(Enum.IsDefined(p.Phase)&&Enum.IsDefined(p.Method)&&Number(p.Elapsed,GestationSeconds(p.Method))&&
-                Number(p.WaitingSeconds,90)&&Number(p.Burden,100)&&Number(p.RecoveryRemaining,RecoverySeconds(p.Method))&&
+                Number(p.WaitingSeconds,90)&&Number(p.Burden,100)&&Number(p.RecoveryRemaining,900)&&
                 Number(p.RetryAt)&&p.PlannedChildren is >=0 and <=3&&Text(p.Outcome)&&
                 Reference(p.FatherId)&&(p.EventId==null||!string.IsNullOrWhiteSpace(p.EventId)&&p.EventId.Length<=128),"孕育数据无效");
             if(p.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)
@@ -81,5 +81,7 @@ public static partial class FamilyRules
                     o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water,"食水搬运归属无效");
         }
         ValidateSocial(s);
+        ValidateAftermath(s);
+        ValidateRisk(s);
     }
 }

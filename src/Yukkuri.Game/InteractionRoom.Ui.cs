@@ -157,11 +157,18 @@ public partial class InteractionRoom
         RefreshRoomUi();
     }
     private void SelectOil(string id)
-    {CancelGesture();Sim.State.SelectedId=id;_familyFirstId=id;_message="正在观察"+Sim.Selected!.Name+"。";RefreshRoomUi();}
+    {
+        CancelGesture();Sim.State.SelectedId=id;_familyFirstId=id;
+        bool leftClose=LeaveUnavailableCloseup();
+        _message=Sim.Selected!.Family.Memorialized?"正在查看"+Sim.Selected.Name+"留下的家庭记录。":
+            Sim.Selected.Family.ColdStorage.Stored?"它仍在冷藏中，可从家庭与照护面板取出。":"正在观察"+Sim.Selected.Name+"。";
+        if(leftClose)_message+=" 已回到小院视角，原来的暂停设置保持不变。";
+        RefreshRoomUi();
+    }
     private void ToggleClose()
     {
-        if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected?.Family.ColdStorage.Stored==true)
-        {_message="它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
+        if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected is { } selected&&!HasVisibleFamilyBody(selected))
+        {_message=selected.Family.Memorialized?"遗体已经安置，可以在家庭面板查看留下的记录。":"它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
         _message=Sim.State.Mode==PlayMode.CloseUp?"近看时自然时间暂停。左键按住环境或中键拖动转视角，左键按住小油进行互动；滚轮拉近拉远。":"回到小院，继续观察它自己会做什么。";
         RefreshRoomUi();
@@ -187,14 +194,17 @@ public partial class InteractionRoom
         RefreshVitalMeters(c);
         if(!_toolArmed)
         {
-            _title.Text=i.Carried?"托着 · 先看看它":"空手 · 先看看它";
-            _hint.Text=i.Carried?"按住身体继续搬运，慢慢松手放下；快速甩动后松手会抛出。Shift＋滚轮调高度，也可在空地单击放稳。":"按住身体抓起拖动，慢慢松手放下；快速甩动后松手会抛出。空手拿食水、推球；双击近看。";
+            _title.Text=c.Family.Memorialized?"家人记录":c.Family.ColdStorage.Stored?"冷藏保存":i.Carried?"托着 · 先看看它":"空手 · 先看看它";
+            _hint.Text=c.Family.Memorialized?"家庭面板保留名字、亲缘与共同经历。选择小院里的另一只，可以继续相处。":
+                c.Family.ColdStorage.Stored?"从家庭与照护面板取出，才能再次靠近；冷藏只会有限延缓。":
+                i.Carried?"按住身体继续搬运，慢慢松手放下；快速甩动后松手会抛出。Shift＋滚轮调高度，也可在空地单击放稳。":"按住身体抓起拖动，慢慢松手放下；快速甩动后松手会抛出。空手拿食水、推球；双击近看。";
         }
         _who.Text=c.Name+" · "+SpeciesName(c.Body.SpeciesId)+(c.IsYoung?"幼体":"");
         string intake=i.NaturalIntakePending?i.EatingKind==IntakeKind.Water?"准备喝这一口":"准备取这一口":
             i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":i.GroundIntake&&i.GroundIntakeKind==RoomObjectKind.Leaves?"慢慢嚼着叶子":"慢慢嚼着这一口";
         string activity=i.EatingRemaining>0?intake:i.Resting?"慢慢休息":WorldSimulation.CanSelfMove(c)?c.Activity:"暂时无法自己挪动";
-        string state=c.Condition==PhysicalCondition.Dead?"不再回应了":c.Family.ColdStorage.Stored?"冷藏中，需及时取出照护":c.Condition==PhysicalCondition.Critical?"身体状态很差，急需护理":
+        string state=c.Family.Memorialized?"已经安置，家人与经历仍保留":c.Condition==PhysicalCondition.Dead?
+            (c.Family.ColdStorage.Stored?"遗体仍在冷藏中":"不再回应了"):c.Family.ColdStorage.Stored?"冷藏中，需及时取出照护":c.Condition==PhysicalCondition.Critical?"身体状态很差，急需护理":
             i.Physiology.Active?i.Physiology.Excreting==ExcretionKind.Urine?"正在撒尿":"正在排便":
             i.Falling?"正在下落":i.Carried?"正在被托着":i.Restraint switch{RestraintKind.Box=>"留在关着的箱子里",RestraintKind.Frame=>"被固定具限制着",RestraintKind.Hanging=>"留在悬挂装置上",RestraintKind.Wrap=>"被软布包裹着",RestraintKind.Hand=>"被手按住",_=>i.Supine?"身体翻了过来":activity};
         if(c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering&&!i.Falling&&
@@ -215,8 +225,12 @@ public partial class InteractionRoom
             i.Accessory.Integrity<=0?"原来的饰品已经损坏。":i.Accessory.Place switch{AccessoryPlace.Stored=>"饰品被收起来了。",AccessoryPlace.Hung=>"饰品挂在高处。",_=>"饰品离开了头顶。"};
         _condition.Text=c.Condition==PhysicalCondition.Dead?state+"\n\n"+accessory:state+"\n\n"+mood+(needs.Length>0?"\n"+needs:"")+"\n\n"+accessory+
             (i.FootIntegrity<70?"\n"+(i.FootTreated?"伤处已经护理，仍需慢慢养好。":"移动部位不舒服，需要看看。") :"");
-        string family=FamilyRules.Describe(c);
+        string family=c.Condition==PhysicalCondition.Dead?"":FamilyRules.Describe(c);
         if(family.Length>0)_condition.Text+="\n\n"+family;
+        string aftermath=FamilyRules.DescribeAftermath(c);
+        if(aftermath.Length>0)_condition.Text+="\n\n"+aftermath;
+        string risk=c.Condition==PhysicalCondition.Dead?"":FamilyRules.DescribeRisk(c);
+        if(risk.Length>0)_condition.Text+="\n\n"+risk;
         _memory.Text=c.PersonalMemories.Count==0?"还没有一起经历很多事。":string.Join("\n\n",c.PersonalMemories.TakeLast(3).Reverse().Select(m=>m.Text));
         _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
         _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";

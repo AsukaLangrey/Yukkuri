@@ -7,6 +7,7 @@ public partial class CreatureActor
     private readonly Dictionary<(BodyPart,SurfaceSide),Node3D> _dressings=new();
     private void BuildDressings()
     {
+        if(_dressings.Count>0)return;
         foreach(var mark in ActorSurfaceMarks.Dressing)
         {
             var root=new Node3D();_visual.AddChild(root);_dressings[(mark.Part,mark.Side)]=root;

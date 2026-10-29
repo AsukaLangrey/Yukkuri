@@ -8,3 +8,6 @@ checks/Interaction.Depth、testing/request.json 及本阶段文档的必要改�
 AGENTS.md 的既有本地通信修改及 .local/alice-communication 保持本地，不纳入产品提交。
 A/B/C 分批提交；仅静态阅读审查，所有运行检查只交独立远程 Alice/dot。
 原聊天路线错误仅作历史记录；用户后续明确只通过GitHub交接，本轮不继续消息通信或修复应用内部状态。
+
+C批细分：关系子代理仅FamilyAftermath.cs、checks/Family.Aftermath与aftermath.txt；身体子代理Game角色/音频表现、InteractionPresentation.cs、checks/Interaction.InjuryPresentation与C-body-visual.txt；界面子代理InteractionRoom家庭面板/列表/选择及checks/Family.Risk、C-family-ui.txt。
+主协调整合FamilyRisk.cs、孕育/普通世界/碰撞/死亡即时清理及所有跨文件修改，静态核对后统一提交。C批交接C.txt，所有运行仍在独立远端。

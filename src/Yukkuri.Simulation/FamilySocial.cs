@@ -134,7 +134,7 @@ public sealed partial class WorldSimulation
         if (observer.RegionId != target.RegionId || observer.Condition != PhysicalCondition.Active ||
             observer.Interaction.Resting || observer.Family.ColdStorage.Stored || observer.Quarantine != target.Quarantine ||
             observer.Interaction.Restraint == RestraintKind.Box || target.Interaction.Restraint == RestraintKind.Box ||
-            target.Family.ColdStorage.Stored || Distance(observer.X, observer.Z, target.X, target.Z) > range) return false;
+            target.Family.ColdStorage.Stored || target.Family.Memorialized || Distance(observer.X, observer.Z, target.X, target.Z) > range) return false;
         if (!WoodlandLayout.HasRiver(State, observer.RegionId)) return true;
         double dx = target.X - observer.X, dz = target.Z - observer.Z, square = dx * dx + dz * dz;
         foreach (var tree in WoodlandLayout.Trees)
@@ -507,7 +507,7 @@ public sealed partial class WorldSimulation
         if (conflict.StrikeRemaining > 0) return true;
         conflict.StrikeRemaining = 3; conflict.Strikes++;
         double damage = 7 + c.Aggression * 7;
-        Hurt(target, damage, "家庭冲突伤害", c.Id);
+        Hurt(target, damage, "家庭冲突伤害", c.Id, BodyPart.Side);
         var bond = FamilyBond(target, c); bond.Fear = Clamp100(bond.Fear + 15); bond.Resentment = Clamp100(bond.Resentment + 12);
         bond.Affection = Math.Max(0, bond.Affection - 15); bond.LastHarmAt = State.WorldSeconds; bond.LastEvent = "受到对方的家庭冲突伤害";
         var incident = Emit(IncidentKind.Attack, target, c.Id, $"{c.Name}在家庭冲突中伤害了{target.Name}", damage);

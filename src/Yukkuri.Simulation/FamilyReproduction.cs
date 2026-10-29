@@ -44,7 +44,10 @@ public sealed partial class WorldSimulation
                 FamilyActionReady(c)&&FamilyVisible(mother,c)&&c.Fullness>70&&c.Interaction.Hydration>70)
                 .OrderBy(c=>c.Id,StringComparer.Ordinal).FirstOrDefault();
             if(father==null)continue;
-            BirthMethod method=mother.Health>=90&&mother.Energy>=80&&mother.Fullness>=90?BirthMethod.Live:BirthMethod.Stem;
+            bool secure=!State.Creatures.Any(c=>c.RegionId==mother.RegionId&&c.Condition==PhysicalCondition.Active&&
+                (c.IsIntruder||c.Family.Conflict.TargetId!=null||c.Family.ChildThreat.TargetId!=null)&&FamilyVisible(mother,c,5));
+            BirthMethod method=secure&&mother.Patience>=.5&&father.Patience>=.35&&mother.Health>=90&&mother.Energy>=80&&mother.Fullness>=90
+                ?BirthMethod.Live:BirthMethod.Stem;
             if(PregnancyEligibility(mother,father,method)!=null)continue;
             string previous=State.LastActionMessage;
             RequestPregnancy(mother.Id,father.Id,method);
@@ -85,6 +88,9 @@ public sealed partial class WorldSimulation
             return "先等双方结束眼前的照护、休息或其他相处，再提出孕育安排。";
         p.Phase=PregnancyPhase.Preparing;p.Method=method;p.FatherId=fatherId;
         p.Elapsed=0;p.WaitingSeconds=0;p.Burden=0;p.PlannedChildren=0;p.EventId=null;p.Outcome="";
+        p.Forced=false;p.InterventionRemaining=0;p.RecoveryDebt=0;p.Decision=PregnancyDecision.Undecided;
+        p.PrenatalAttachment=Clamp100(mother.Patience*60+(mother.Family.Peers.GetValueOrDefault(fatherId)?.Affection??0)*.4);
+        p.NextDecisionAt=State.WorldSeconds+30;
         BeginCompanionship(mother,father!);
         return State.LastActionMessage="已向双方提出安排。它们需要实际靠近并接受，之后才会开始孕育。";
     }
@@ -111,7 +117,7 @@ public sealed partial class WorldSimulation
             p.Outcome="宝宝已出生，母体在生产后离世。";mother.Family.LastEvent=p.Outcome;
             ClearCompanionship(mother);RecordInteraction(mother,"pregnancy-outcome",p.Outcome,5);return;
         }
-        p.Phase=PregnancyPhase.Recovering;p.RecoveryRemaining=FamilyRules.RecoverySeconds(p.Method);
+        p.Phase=PregnancyPhase.Recovering;p.InterventionRemaining=0;p.RecoveryRemaining=Math.Min(900,FamilyRules.RecoverySeconds(p.Method)+p.RecoveryDebt);
         p.RetryAt=State.WorldSeconds+p.RecoveryRemaining;p.Outcome=outcome;
         ClearCompanionship(mother);mother.Family.LastEvent=outcome;
         RecordInteraction(mother,"pregnancy-outcome",outcome,3);
@@ -129,7 +135,7 @@ public sealed partial class WorldSimulation
             {
                 if(p.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)
                 {p.Phase=PregnancyPhase.None;p.Outcome="母体离世，孕育中止。";f.LastEvent=p.Outcome;ClearCompanionship(mother);RecordInteraction(mother,"pregnancy-loss",p.Outcome,5);}
-                p.Phase=PregnancyPhase.None;p.RecoveryRemaining=0;
+                p.Phase=PregnancyPhase.None;p.RecoveryRemaining=0;p.InterventionRemaining=0;
                 continue;
             }
             if(p.Phase==PregnancyPhase.Recovering)
@@ -140,6 +146,7 @@ public sealed partial class WorldSimulation
                 continue;
             }
             var father=State.Creatures.Find(c=>c.Id==p.FatherId);
+            if(FamilyRules.UnderIntervention(mother)){AdvanceForcedIntervention(mother,father,bodyDt);continue;}
             if(p.Phase==PregnancyPhase.Preparing)
             {
                 p.WaitingSeconds=Math.Min(90,p.WaitingSeconds+bodyDt);
@@ -179,8 +186,9 @@ public sealed partial class WorldSimulation
             mother.Fullness=Math.Max(0,mother.Fullness-bodyDt*(p.Method==BirthMethod.Live?.022:.01));
             mother.Interaction.Hydration=Math.Max(0,mother.Interaction.Hydration-bodyDt*(p.Method==BirthMethod.Live?.018:.008));
             mother.Energy=Math.Max(0,mother.Energy-bodyDt*(p.Method==BirthMethod.Live?.02:.008));
-            p.Elapsed=Math.Min(FamilyRules.GestationSeconds(p.Method),p.Elapsed+bodyDt*(distressed?.25:1));
-            if(p.Burden>=80)
+            p.Elapsed=Math.Min(FamilyRules.GestationSeconds(p.Method),p.Elapsed+bodyDt*(distressed?(p.Decision==PregnancyDecision.ProtectYoung?.5:.25):1));
+            if(ConsiderPregnancyRisk(mother,bodyDt))continue;
+            if(p.Burden>=(p.Decision==PregnancyDecision.ProtectYoung?95:80))
             {EndPregnancy(mother,p.Method==BirthMethod.Live?"身体持续处于危险中，发生了生理性吸收；这次孕育未能继续。":"持续失养或伤病使茎生发育失败，需要照护母体。");continue;}
             if(p.Burden>=50)Hurt(mother,bodyDt*.035,"孕育负担",null);
             if(mother.Condition==PhysicalCondition.Dead)continue;
@@ -243,6 +251,7 @@ public sealed partial class WorldSimulation
         }
         State.CompletedBirths.Add(p.EventId);
         Hurt(mother,p.Method==BirthMethod.Live?7+p.Burden*.12:2+p.Burden*.05,"生产负担",null);
-        EndPregnancy(mother,$"{babies.Count}只宝宝出生了，母体需要恢复，幼体需要吃喝与保暖。");
+        EndPregnancy(mother,$"{babies.Count}只宝宝出生了，母体需要恢复，幼体需要吃喝与保暖。"+
+            (p.Decision==PregnancyDecision.ProtectYoung?"这次曾在危险中主动坚持保胎。":""));
     }
 }
