@@ -1,10 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Yukkuri.Simulation;
 
 public static partial class FamilyRules
 {
     public static void ValidateFamily(WorldState s)
     {
-        static void Require(bool valid,string message)
+        static void Require([DoesNotReturnIf(false)] bool valid,string message)
         {if(!valid)throw new InvalidDataException(message);}
         static bool Number(double n,double max=double.MaxValue)=>double.IsFinite(n)&&n>=0&&n<=max;
         static bool Text(string? value,int max=512)=>value!=null&&value.Length<=max;
@@ -21,7 +23,7 @@ public static partial class FamilyRules
             BodyInjuryState.Validate(c.Interaction.Injuries,s.WorldSeconds);
             Require(Number(c.Interaction.FootIntegrity,100)&&c.Interaction.FootIntegrity<=100-c.Interaction.Injuries.PermanentFootLoss+.00001,
                 "底部支撑超过永久损伤上限");
-            Require(f!.Peers.Count<=creatures.Count&&f.Peers.All(pair=>pair.Key!=c.Id&&creatures.ContainsKey(pair.Key)&&pair.Value!=null&&
+            Require(f.Peers.Count<=creatures.Count&&f.Peers.All(pair=>pair.Key!=c.Id&&creatures.ContainsKey(pair.Key)&&pair.Value!=null&&
                 Number(pair.Value.Familiarity,100)&&Number(pair.Value.Affection,100)&&Number(pair.Value.Fear,100)&&
                 Number(pair.Value.Resentment,100)&&Number(pair.Value.CareSeconds,1000000)&&Text(pair.Value.LastEvent)),"同伴关系数值或引用无效");
             Require(f.CaregiverIds.Count<=creatures.Count&&f.CaregiverIds.Distinct().Count()==f.CaregiverIds.Count&&
@@ -34,7 +36,7 @@ public static partial class FamilyRules
                 (f.MotherId==null||f.FatherId==null||f.MotherId!=f.FatherId),"亲缘或照护目标无效");
             // Historical parenthood belongs to the continuous identity. A later
             // body transfer may change today's role without rewriting that fact (v033).
-            Require(f.BirthEventId==null||s.CompletedBirths!.Contains(f.BirthEventId)&&f.MotherId!=null&&f.FatherId!=null,
+            Require(f.BirthEventId==null||s.CompletedBirths.Contains(f.BirthEventId)&&f.MotherId!=null&&f.FatherId!=null,
                 "幼体出生缺少结算或亲缘记录");
             var p=f.Pregnancy;
             Require(Enum.IsDefined(p.Phase)&&Enum.IsDefined(p.Method)&&Number(p.Elapsed,GestationSeconds(p.Method))&&
@@ -47,7 +49,7 @@ public static partial class FamilyRules
             if(p.Phase==PregnancyPhase.Preparing)
                 Require(p.EventId==null&&p.PlannedChildren==0&&p.Elapsed<=6.001,"准备期提前生成了出生数据");
             if(p.Phase==PregnancyPhase.Gestating)
-                Require(p.EventId!=null&&!s.CompletedBirths!.Contains(p.EventId)&&
+                Require(p.EventId!=null&&!s.CompletedBirths.Contains(p.EventId)&&
                     (p.Method==BirthMethod.Live?p.PlannedChildren==1:p.PlannedChildren is 2 or 3),"孕育数量或结算状态无效");
             var cold=f.ColdStorage;
             Require(Number(cold.Elapsed,1000000)&&Number(cold.RecoveryRemaining,30)&&cold.Sessions>=0,"冷藏记录无效");

@@ -408,9 +408,10 @@ public sealed partial class WorldSimulation
         if (!FamilyActionReady(c)) { if (c.Family.CompanionTargetId != null) ClearCompanionship(c); return false; }
         if (c.Family.CompanionTargetId == null)
         {
-            if (State.WorldSeconds < c.Family.NextSocialAt || c.IsYoung) return false;
+            if (State.WorldSeconds < c.Family.NextSocialAt || c.IsYoung || AutomaticCompanionShouldWait(c)) return false;
             c.Family.NextSocialAt = State.WorldSeconds + 12;
             var candidate = State.Creatures.Where(x => x != c && FamilyActionReady(x) && x.Family.CompanionTargetId == null &&
+                !AutomaticCompanionShouldWait(x) &&
                 FamilyVisible(c, x, 4) && (!x.IsYoung || FamilyRules.IsCloseFamily(c, x)) &&
                 (!c.Family.Peers.TryGetValue(x.Id, out var own) || own.Fear < 40 && own.Resentment < 35 && State.WorldSeconds >= own.NextInvitationAt) &&
                 (!x.Family.Peers.TryGetValue(c.Id, out var theirs) || theirs.Fear < 40 && theirs.Resentment < 35 && State.WorldSeconds >= theirs.NextInvitationAt))

@@ -18,6 +18,14 @@ InteractionFeedback Feed(WorldSimulation sim,InteractionAction action,double sec
     sim.EndInteractionGesture();return reply;
 }
 void Tick(WorldSimulation sim,int ticks){for(int n=0;n<ticks;n++){sim.AdvanceInteractionPresentation(.1);sim.Advance(.1);}}
+string AutonomyDiagnostics(WorldSimulation sim,Creature c)=>JsonSerializer.Serialize(new{
+    sim.State.WorldSeconds,c.Id,c.Activity,c.Speech,c.Fullness,c.Energy,c.Fear,c.Pain,c.Trust,
+    c.Interaction.Hydration,c.Interaction.NextAutonomyAt,c.Interaction.ReactionSituation,
+    c.Interaction.ReactionPose,c.Interaction.ReactionPoseRemaining,c.Interaction.NuzzleFamiliarity,
+    c.Family.CompanionTargetId,c.Family.NextSocialAt,c.Family.CareTargetId,
+    pose=InteractionPresentation.Pose(c),voice=InteractionPresentation.VoiceCue(c),
+    ownedObjects=sim.State.RoomObjects.Where(o=>o.OwnerId==c.Id).Select(o=>new{o.Id,o.Kind,o.Stored,o.OwnerId}),
+    peers=sim.State.Creatures.Where(o=>o.Id!=c.Id).Select(o=>new{o.Id,o.Activity,o.Family.CompanionTargetId,o.Family.NextSocialAt})});
 WorldSimulation CompletionFixture()
 {
     var sim=Fresh();var c=sim.Selected!;
@@ -300,6 +308,9 @@ Check("a completed held meal sweet or drink releases needs after its actual swal
     foreach(string need in new[]{"food","water","rest"})
     {
         var sim=CompletionFixture();var c=sim.Selected!;
+        // This check keeps its fixed 12-second endpoint. Isolate unrelated idle
+        // decisions, while leaving real needs, travel and intake untouched.
+        c.DecisionIn=10000;
         if(need=="food")c.Fullness=25;else if(need=="water")c.Interaction.Hydration=20;else c.Energy=10;
         var destination=new RoomObject{Id="destination",Kind=need=="food"?RoomObjectKind.Meal:need=="water"?RoomObjectKind.Water:RoomObjectKind.Cushion,X=2,Z=0,Portions=5};
         var held=new RoomObject{Id="held",Kind=action==InteractionAction.Drink?RoomObjectKind.Water:action==InteractionAction.FeedSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal,X=-3,Z=0,Portions=2};
@@ -309,16 +320,34 @@ Check("a completed held meal sweet or drink releases needs after its actual swal
         bool accepted=false,moved=false,sawSwallow=false,sawNaturalIntake=false;
         double startX=c.X,startZ=c.Z,peakX=c.X,maxDistanceFromStart=0,totalTravel=0;
         double closestDestination=WorldSimulation.Distance(c.X,c.Z,destination.X,destination.Z);
-        bool sawDestinationIntake=false,returnedAfterDestination=false;
+        bool sawDestinationIntake=false,returnedAfterDestination=false,idleTargetIsolated=false;
+        int idleTargetIsolationFrame=-1;
+        double idleTargetIsolationX=0,idleTargetIsolationZ=0,previousIdleTargetX=0,previousIdleTargetZ=0;
         string lastDisplayedPose="";
         for(int n=0;n<240;n++)
         {
             var frame=HeldFrame(sim,input);
-            // Diagnostics only: observe the unchanged frame sequence and predicates.
+            bool atDestinationIntake=c.Interaction.GroundIntake&&c.Interaction.EatingRemaining>0&&c.Interaction.GroundIntakeSourceId==destination.Id;
+            if(!idleTargetIsolated&&atDestinationIntake)
+            {
+                // A real needs approach leaves an unrelated idle target behind.
+                // Only after actual arrival/reservation, discard that idle intent;
+                // never move the body or manufacture intake/completion state.
+                double x=c.X,z=c.Z,fullnessBefore=c.Fullness,waterBefore=c.Interaction.Hydration;
+                int destinationBefore=destination.Portions,heldBefore=held.Portions;
+                bool acceptedBefore=sim.InteractionIntakeAccepted;
+                previousIdleTargetX=c.TargetX;previousIdleTargetZ=c.TargetZ;
+                c.TargetX=c.X;c.TargetZ=c.Z;
+                Require(c.X==x&&c.Z==z&&c.Fullness==fullnessBefore&&c.Interaction.Hydration==waterBefore&&
+                    destination.Portions==destinationBefore&&held.Portions==heldBefore&&sim.InteractionIntakeAccepted==acceptedBefore,
+                    "idle isolation changed position, needs, portions or acceptance");
+                idleTargetIsolated=true;idleTargetIsolationFrame=n;idleTargetIsolationX=x;idleTargetIsolationZ=z;
+            }
+            // Observe the same full 240-frame sequence and original predicates.
             peakX=Math.Max(peakX,c.X);totalTravel+=frame.Travel;
             maxDistanceFromStart=Math.Max(maxDistanceFromStart,WorldSimulation.Distance(startX,startZ,c.X,c.Z));
             closestDestination=Math.Min(closestDestination,WorldSimulation.Distance(c.X,c.Z,destination.X,destination.Z));
-            sawDestinationIntake|=c.Interaction.GroundIntake&&c.Interaction.EatingRemaining>0&&c.Interaction.GroundIntakeSourceId==destination.Id;
+            sawDestinationIntake|=atDestinationIntake;
             returnedAfterDestination|=sawDestinationIntake&&c.X<=.5;
             lastDisplayedPose=frame.Pose;
             accepted|=sim.InteractionIntakeAccepted;
@@ -338,13 +367,17 @@ Check("a completed held meal sweet or drink releases needs after its actual swal
         }
         Require(accepted&&sawSwallow&&moved&&c.X>.5,$"{action}/{need}: holding the finished tool trapped the oil or skipped swallowing; diagnostics="+
             JsonSerializer.Serialize(new{accepted,sawSwallow,moved,sawNaturalIntake,endX=c.X,endZ=c.Z,peakX,maxDistanceFromStart,totalTravel,
-                closestDestination,sawDestinationIntake,returnedAfterDestination,destinationId=destination.Id,destinationX=destination.X,destinationZ=destination.Z,
+                closestDestination,sawDestinationIntake,returnedAfterDestination,idleTargetIsolated,idleTargetIsolationFrame,
+                idleTargetIsolationX,idleTargetIsolationZ,previousIdleTargetX,previousIdleTargetZ,c.DecisionIn,
+                destinationId=destination.Id,destinationX=destination.X,destinationZ=destination.Z,
                 destinationPortions=destination.Portions,targetX=c.TargetX,targetZ=c.TargetZ,c.Activity,c.Fullness,c.Energy,c.Interaction.Hydration,
                 c.Interaction.EatingRemaining,c.Interaction.GroundIntake,c.Interaction.GroundIntakeSourceId,c.Interaction.NaturalIntakePending,
                 lastDisplayedPose,c.Interaction.ReactionPose,c.Interaction.ReactionPoseRemaining,c.Interaction.ReactionSituation,c.Interaction.ReactionRefused,
                 sim.HasInteractionGesture,sim.InteractionGestureTarget,sim.CurrentInteractionAction,sim.InteractionGestureOwnsPose,sim.InteractionIntakeAccepted,
                 c.Interaction.Carried,c.Interaction.Falling,c.Interaction.Restraint,excretionActive=c.Interaction.Physiology.Active,c.Interaction.Resting}));
         Require(need=="rest"?c.Interaction.Resting&&c.Energy>10:sawNaturalIntake&&destination.Portions<5,"autonomous need never completed after release");
+        Require(need=="rest"||idleTargetIsolated&&sawDestinationIntake&&idleTargetIsolationFrame>=0,
+            "idle isolation did not follow a real intake from the destination");
         double fullness=c.Fullness,water=c.Interaction.Hydration;
         sim.EndInteractionGesture(true);
         Require(!sim.InteractionIntakeAccepted&&held.HeldByHand&&held.Portions==1&&c.Fullness==fullness&&c.Interaction.Hydration==water,"cancellation refunded food or implicitly released the held container");
@@ -607,7 +640,7 @@ Check("an autonomous invitation supplies the same body pose used by the renderer
     c.Interaction.NextAutonomyAt=0;c.Interaction.NuzzleFamiliarity=30;sim.State.RoomObjects.Clear();
     sim.SetInteractionHand(c.X,c.Z+.5,true);
     Tick(sim,5);
-    Require(InteractionPresentation.Pose(c)=="invite"&&c.Speech.Contains("蹭"),$"autonomous invitation lacks a pose or matching speech: {InteractionPresentation.Pose(c)}, {c.Speech}");
+    Require(InteractionPresentation.Pose(c)=="invite"&&c.Speech.Contains("蹭"),"autonomous invitation lacks a pose or matching speech; diagnostics="+AutonomyDiagnostics(sim,c));
     sim.State.Settings.Pause=true;double remaining=c.Interaction.ReactionPoseRemaining;
     sim.AdvanceInteractionPresentation(.1);Require(c.Interaction.ReactionPoseRemaining==remaining,"pause advanced the reaction");
     sim.State.Settings.Pause=false;sim.State.Mode=PlayMode.CloseUp;Tick(sim,30);
@@ -662,7 +695,7 @@ Check("voice intent follows the oil's actual response instead of the last select
 {
     var sim=Fresh();var c=sim.Selected!;c.Fear=0;c.Trust=80;c.Interaction.NuzzleFamiliarity=30;c.Interaction.NextAutonomyAt=0;c.Fullness=90;c.Interaction.Hydration=90;
     sim.SetInteractionHand(c.X,c.Z+.5,true);
-    Tick(sim,5);Require(InteractionPresentation.VoiceCue(c)=="coo-nuzzle","autonomous nuzzle request has no matching sound intent");
+    Tick(sim,5);Require(InteractionPresentation.VoiceCue(c)=="coo-nuzzle","autonomous nuzzle request has no matching sound intent; diagnostics="+AutonomyDiagnostics(sim,c));
     c.Fear=80;c.Trust=5;
     sim.ExecuteInteraction(c.Id,new(InteractionAction.Comfort));
     Require(InteractionPresentation.VoiceCue(c)=="coo-refuse","refusal sounds like accepted affection");
@@ -1309,7 +1342,7 @@ Check("stored treasure keeps ownership through save and cannot be displayed as p
     var state=JsonSerializer.Deserialize<WorldState>(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions),SaveStore.JsonOptions)!;
     SaveStore.Validate(state);sim=new WorldSimulation(state);c=sim.Selected!;c.Fullness=90;c.Interaction.Hydration=90;c.Interaction.NextAutonomyAt=0;
     Tick(sim,5);
-    Require(state.RoomObjects.Any(o=>o.Id==item.Id&&o.Stored&&o.OwnerId==c.Id)&&c.Interaction.ReactionSituation=="treasure-missing","saving lost ownership or autonomy displayed a stored object");
+    Require(state.RoomObjects.Any(o=>o.Id==item.Id&&o.Stored&&o.OwnerId==c.Id)&&c.Interaction.ReactionSituation=="treasure-missing","saving lost ownership or autonomy displayed a stored object; itemId="+item.Id+"; diagnostics="+AutonomyDiagnostics(sim,c));
 });
 Check("rapid harsh speech shares a response interval instead of rewriting the relationship on every click",()=>
 {

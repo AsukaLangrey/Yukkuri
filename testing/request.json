@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v13-interaction-depth-G-20261030",
+  "revision": "dot-v14-interaction-depth-H-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -11,7 +11,7 @@
   "required_checks": [
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
-    "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
+    "Interaction.Continuity", "Interaction.AutonomyPriority", "Interaction.CompletedNeeds", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
     "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
@@ -22,6 +22,10 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/H.txt",
+    "planning/stages/interaction-depth-20261030/H-autonomy.txt",
+    "planning/stages/interaction-depth-20261030/H-intake.txt",
+    "planning/stages/interaction-depth-20261030/H-validation.txt",
     "testing/reviews/20261029T174248Z-cc3aecca7663-c06.md",
     "planning/stages/interaction-depth-20261030/G.txt",
     "planning/stages/interaction-depth-20261030/G-pregnancy.txt",
@@ -155,6 +159,13 @@
     "强制准备中经Hurt进入濒危要立即取消未完成干预，使近看托举救助可用，材料消耗、信任和恢复债保留；已开始的孕育不因该清理自动取消。致死结果仍记录死亡中止，不能被随后取消覆写或重复记账。",
     "运行旧Main三条实际图形验证路线：暂停状态下拒绝护理，继续后在近看完成护理/真实嘴部喂食，等待吞咽但冻结被动恢复时钟；保留原184秒/55秒显示、恢复/死亡/保护断言。自动存档比较必须先实际耗食再读回，纠正/跌落比较先恢复操作且保持近看世界冻结。",
     "旧近看普通暂停必须冻结物理，清未完成手势/托举力，暂停松手及恢复不能补结算；继续按钮无模态盾遮挡、仍可退出近看。分别验证Space、点击按钮和保存/夹具显式Pause入口。旧ShowResult声音按实际身体选择，死亡/冷藏静默、求救/疼痛优先、口伤含混，正常音色保留；纯声音选择断言不证明实际试听。"
+  ],
+  "interaction_depth_H_focus": [
+    "v14承接全部旧要求。H针对c06四项失败提交源码调整，尚未复测，不能关闭旧失败。先构建完整固定SHA并保留警告，再完整运行Interaction.Continuity及新Interaction.AutonomyPriority、Interaction.CompletedNeeds；失败不跳过其他独立项目。",
+    "默认三油的0.5秒自主邀请/声音和收纳宝物原断言、时间、人口保持，新增分量诊断。自动选择同伴给已到期且可执行的短回应留机会，两侧及逆序都测；已开始相处、显式邀请、准备孕育、照护、需求与危险不被抢断。短窗口后家庭活动继续，不能因手一直在场永久不结伴。暂停冻结、存读不重放回应；正在进行的人油相处不被新自动选伴截走。",
+    "原held完成9组合仍保留240帧及末态X>.5等全部断言。只在该夹具延后闲逛决定，并在首次真实目标摄入后清理旧闲逛目的地；新增实际坐标/需求/份量不变断言和隔离时点诊断。Interaction.CompletedNeeds另走不隔离的真实饮水全程，确认喝够、吞完后仍正常移动且两份水各消费一次。不能把夹具隔离说成产品吞咽修复，c06原始证据保持。",
+    "FamilyValidation为既有抛错Require声明失败不返回，去掉三处旧空值抑制，保留完整坏档校验和异常。c06的6个CS8602是旧B结果，本批是否消除需以新构建日志为准，不预报零警告。",
+    "实际界面观察多人环境里的自主邀请姿态/台词/声音与后续结伴、收纳宝物后惦记而不显示实体、饮水结束恢复生活。没有音频或图形条件的项单列未测，不用纯规则替代。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

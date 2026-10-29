@@ -349,8 +349,8 @@ public sealed partial class WorldSimulation
             }
             if(TryFamilyCare(c,dt)||TryFamilyActivity(c,dt))continue;
             if(TryHumanCompany(c,dt))continue;
-            var ball = State.RoomObjects.FirstOrDefault(o => o.Kind == RoomObjectKind.Ball && !o.Stored&&o.RegionId==c.RegionId&&o.Id!=InteractionGestureObject&&!RoomBallEnvironment.InWater(State,o));
-            if (ball != null && CanSelfMove(c)&&i.ToyInterest > .4 && c.Fear < 45 && c.Energy > 30 && Distance(c.X, c.Z, ball.X, ball.Z) < 3)
+            var ball = BallForAutonomousPlay(c);
+            if (ball != null)
             {
                 if (Distance(c.X, c.Z, ball.X, ball.Z) > BallBodyRadius(c)+InteractionFixtureGeometry.BallRadius+.06) RoomMove(c, ball.X, ball.Z, dt);
                 else if (State.WorldSeconds - i.LastRequestAt > 3)
@@ -367,8 +367,7 @@ public sealed partial class WorldSimulation
                 }
                 c.Activity = "和球球玩"; continue;
             }
-            if(i.ToyInterest>.4&&State.WorldSeconds>=i.NextAutonomyAt&&State.RoomObjects.Any(o=>o.Kind==RoomObjectKind.Ball&&!o.Stored&&o.RegionId==c.RegionId&&
-                RoomBallEnvironment.InWater(State,o)&&Distance(c.X,c.Z,o.X,o.Z)<3))
+            if(CanNoticeAutonomousWaterBall(c))
             {
                 i.NextAutonomyAt=State.WorldSeconds+12;c.Activity="看着水上的球，留在岸边";
                 Feedback(c,"ball-in-water",Expression.Curious,"球漂在水上，它留在岸边看，没有追下去。","idle",false);continue;
@@ -386,8 +385,7 @@ public sealed partial class WorldSimulation
                     if (a.Place == AccessoryPlace.Ground && a.Integrity > 0)
                     { c.TargetX = a.X; c.TargetZ = a.Z; }
                 }
-                else if (SeesHelpingHand(c)&&i.NuzzleFamiliarity > 8 && c.Trust > 40 && c.Fear < 35 &&
-                    InteractionReadiness.WillAcceptAffection(c,BodyPart.Cheek,SurfaceSide.Whole))
+                else if (CanRequestAutonomousNuzzle(c))
                 {
                     c.TargetX = State.PlayerX; c.TargetZ = State.PlayerZ;
                     Feedback(c, "request-nuzzle", Expression.Content, "它记得一起蹭脸的经历，主动靠过来。", "invite");
@@ -413,6 +411,44 @@ public sealed partial class WorldSimulation
             else c.Activity = "慢慢来";
         }
         PruneConsumedSupplies();
+    }
+
+    private bool CanRequestAutonomousNuzzle(Creature c) => SeesHelpingHand(c)&&
+        c.Interaction.NuzzleFamiliarity>8&&c.Trust>40&&c.Fear<35&&
+        InteractionReadiness.WillAcceptAffection(c,BodyPart.Cheek,SurfaceSide.Whole);
+
+    private RoomObject? BallForAutonomousPlay(Creature c)
+    {
+        var ball=State.RoomObjects.FirstOrDefault(o=>o.Kind==RoomObjectKind.Ball&&!o.Stored&&
+            o.RegionId==c.RegionId&&o.Id!=InteractionGestureObject&&!RoomBallEnvironment.InWater(State,o));
+        return ball!=null&&CanSelfMove(c)&&c.Interaction.ToyInterest>.4&&c.Fear<45&&c.Energy>30&&
+            Distance(c.X,c.Z,ball.X,ball.Z)<3?ball:null;
+    }
+
+    private bool CanNoticeAutonomousWaterBall(Creature c)=>c.Interaction.ToyInterest>.4&&
+        State.WorldSeconds>=c.Interaction.NextAutonomyAt&&State.RoomObjects.Any(o=>o.Kind==RoomObjectKind.Ball&&!o.Stored&&
+            o.RegionId==c.RegionId&&RoomBallEnvironment.InWater(State,o)&&Distance(c.X,c.Z,o.X,o.Z)<3);
+
+    private bool AutomaticCompanionShouldWait(Creature c)
+    {
+        // Reserve only idle automatic selection, on both sides. Existing family
+        // activities and explicit invitations never pass through this gate.
+        var i=c.Interaction;
+        // Even an expired request must reach TryHumanCompany once to clear its
+        // saved state before another oil installs a competing companion target.
+        if(i.HumanCompany.Until>0)return true;
+        if(!FamilyActionReady(c)||!CanSelfMove(c)||NaturalResources.WantsFood(c)||NaturalResources.WantsWater(c)||c.Energy<22)return false;
+        // Presentation is deliberately transient: pause freezes this window;
+        // loading clears it rather than replaying an old one-shot response.
+        if(i.ReactionPoseRemaining>0&&i.ReactionSituation is "request-nuzzle" or "treasure-missing" or "treasure" or
+            "accessory-care-wait" or "accessory-high" or "accessory-taken" or "sing" or "stretch")return true;
+        if(State.WorldSeconds<i.NextAutonomyAt)return false;
+        // These branches already precede the short-response slot. Do not reserve
+        // a response that the current ball activity cannot actually reach.
+        if(BallForAutonomousPlay(c)!=null||CanNoticeAutonomousWaterBall(c))return false;
+        return !i.HasAccessory||CanRequestAutonomousNuzzle(c)||
+            State.RoomObjects.Any(o=>o.OwnerId==c.Id&&o.Kind==RoomObjectKind.Treasure&&
+                (o.Stored||o.RegionId==c.RegionId&&Distance(c.X,c.Z,o.X,o.Z)<1.8))||c.Fear<30&&c.Pain<20;
     }
 
     private void RoomMove(Creature c, double x, double z, double dt)
