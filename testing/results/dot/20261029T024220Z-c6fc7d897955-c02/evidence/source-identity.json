@@ -1,0 +1,19 @@
+{
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "source_tree": "92a47c07273dc2b592206a15084d2160b72eb170",
+  "frozen_at": "2026-10-29T02:38:54Z",
+  "request_revision": "dot-v2-static-polish-20261029",
+  "request_sha256": "4e7cdf8d2a4d667143272705f908c0be11022b5ee382aa9b3eed42388bb65e2e",
+  "protocol_sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+  "report_template_sha256": "e3e20ff9acb4437209942deb13a4359a601cd42747b01bf63a4bd3a73e2a6f70",
+  "source_worktree_clean": null,
+  "materialized_files": 116,
+  "required_dependency_files": 99,
+  "missing_dependency_files": [],
+  "instruction_files": [
+    "AGENTS.md"
+  ],
+  "repo_skill_files": [],
+  "materialization": "Dependency closure only, not a complete authenticated Git/LFS checkout",
+  "global_run_lock": "/workspace/shared/yukkuri-cloud-20261029/run.lock"
+}

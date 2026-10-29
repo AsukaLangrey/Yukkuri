@@ -1,0 +1,11 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-build --no-restore --project checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj -p:UseAppHost=false -- /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/evidence/ActorGeometry.IntakeCombinations.json --intake-combinations --motion
+CWD: /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/source
+Combination progress: 288/1728, motion failures 0, worst 0.002243
+Combination progress: 576/1728, motion failures 0, worst 0.002243
+Combination progress: 864/1728, motion failures 0, worst 0.002243
+Combination progress: 1152/1728, motion failures 0, worst 0.002243
+Combination progress: 1440/1728, motion failures 0, worst 0.002243
+Combination progress: 1728/1728, motion failures 0, worst 0.002243
+Intake combinations: 1728 cases, 1500 entered, 0 unreachable credited intakes, 0 preparation pose conflicts, worst gap 0.002097
+Blocked portions lost: 0; restored mobility recovered 40/40
+Animated combinations failed: 0; worst contact gap 0.002243

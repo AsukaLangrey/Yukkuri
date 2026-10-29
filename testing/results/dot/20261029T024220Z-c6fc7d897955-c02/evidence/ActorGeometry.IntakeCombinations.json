@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-29T02:45:53.4238552+00:00",
+  "scope": "Actual pure simulation intake followed by shared source geometry. Optional production pose smoothing at 30/60/144fps and irregular steps, starting facing away. Blocked portions retained; unwrapped blocked cases regain foot movement and try alternate standing points for 10 seconds. No native renderer.",
+  "tested": 1728,
+  "accepted": 1500,
+  "gaps": 0,
+  "overrides": 0,
+  "lostBlockedPortions": 0,
+  "mobileAttempts": 40,
+  "mobileRecovered": 40,
+  "animate": true,
+  "motionFailures": 0,
+  "worstMotion": 0.002243218,
+  "worstGap": 0.0020966902,
+  "success": true,
+  "case_count": 1728,
+  "dimensions": {
+    "wrapped": [
+      false,
+      true
+    ],
+    "dressed": [
+      false,
+      true
+    ],
+    "species": [
+      "marisa",
+      "reimu"
+    ],
+    "size": [
+      0.73,
+      1,
+      1.03
+    ],
+    "bedOffset": [
+      0,
+      0.5,
+      0.9
+    ],
+    "heading": [
+      -1.5707964,
+      0,
+      1.5707964,
+      3.1415927
+    ],
+    "reach": [
+      0.4,
+      0.792
+    ],
+    "kind": [
+      "Meal",
+      "Sweet",
+      "Water"
+    ]
+  },
+  "problem_cases": [],
+  "_publication": {
+    "derived": true,
+    "omitted_fields": [
+      "cases (successful per-case rows)"
+    ],
+    "raw_sha256": "dafd387177877a808723b8d794fe928e57c978abe42055db2cfe999e754d1b36",
+    "raw_bytes": 774825,
+    "raw_retention": "Current cloud execution workspace only; no durable external link. Aggregate outcomes, coverage dimensions and detectable problem rows retained."
+  }
+}

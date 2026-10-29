@@ -1,0 +1,702 @@
+{
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "mode": "Authorized GitHub connector exact Git blobs, hash-verified against frozen recursive tree; unchanged blobs reused only after current-tree identity verification; dependency closure only, not full checkout or LFS",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "git_blob_sha": "c88fc0bbcdbd45949d2dc701deafc62b18cc567a",
+      "sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285",
+      "bytes": 1584
+    },
+    {
+      "path": "NuGet.Config",
+      "git_blob_sha": "5c598e395c3673f5587f2de35fc7f6c24eb9f291",
+      "sha256": "338e57d24cd5c6fe90f0b71b3a3cf16ee21ef8ac3711fe72c37dc1fe4365fad5",
+      "bytes": 305
+    },
+    {
+      "path": "README.md",
+      "git_blob_sha": "253edce12c0a6273fa4c35cf4b6df560bd915887",
+      "sha256": "91ed7dc0bc95890d39b51536b496412276072bcc6375aa946ad443de9ad390cc",
+      "bytes": 4413
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj",
+      "git_blob_sha": "ba4b9cf05722855e530828207b80dca11739daee",
+      "sha256": "6cdf2cd9228450627461743c3ef1fab5f168b412e4575b407f9fb25874a248bb",
+      "bytes": 2678
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/HopIntakeAudit.cs",
+      "git_blob_sha": "c89d8e356be810e2f9c947838fbf8a16832abfdc",
+      "sha256": "99d89451399d90232d5c08d218a591ec042cf68e7b0ed856a8b2a0d45f473880",
+      "bytes": 3670
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/IntakeCombinationAudit.cs",
+      "git_blob_sha": "d0f85baa2f0bf7f54c0f10a30683b8edf2668060",
+      "sha256": "fb13a863de4f4d2a9285aac95548438ee595ad233c5c8b4c10061844319b7242",
+      "bytes": 7762
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/Program.cs",
+      "git_blob_sha": "cb08526ea28e917b052b3a6d0ccfcc41c368a66f",
+      "sha256": "50d33bf279dc9b45797feefa92572a3830ebbe6e949e82f33417ff25d620ae5e",
+      "bytes": 91060
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/WoodlandOcclusionAudit.cs",
+      "git_blob_sha": "0d0f3912052e9aa76f5b34280a293485ef20e966",
+      "sha256": "a90fe9c987baa0faf94e6400b02f6cf4f8483bd1daf982fcaa0ed138680f238c",
+      "bytes": 3045
+    },
+    {
+      "path": "checks/Input.Intent/Input.Intent.csproj",
+      "git_blob_sha": "cbe05f15d557566dd3670b6ffb0882cbaa685e35",
+      "sha256": "ecb37f1c1d9a8bd4cbd2b8b927fae3ade4be7b54ef7ff4afe83c546d70e2bb91",
+      "bytes": 532
+    },
+    {
+      "path": "checks/Input.Intent/Program.cs",
+      "git_blob_sha": "283596e1c6e699349dd198872e36f85759bec794",
+      "sha256": "6ef9679dc5bc10dd89b9e934ea590f60ef6d088caa7c8894aaf474cbb3e3efb1",
+      "bytes": 24835
+    },
+    {
+      "path": "checks/Input.Intent/fixtures/contact-traces.json",
+      "git_blob_sha": "d8073b10f85ff5bd850df9e45e8fbb64dbbab1d0",
+      "sha256": "ad8ff07ccaa4e85a627f0511fce96ea85e7940d6f3390b5052ea454a38f8ae93",
+      "bytes": 1548
+    },
+    {
+      "path": "checks/Interaction.Continuity/Interaction.Continuity.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326
+    },
+    {
+      "path": "checks/Interaction.Continuity/Program.cs",
+      "git_blob_sha": "36cd058f59dbbbab32b74ccfae2ac9f9a80ef880",
+      "sha256": "13c6aee6f50c440fe203279f49b89e85fa809d6b8732ffecb3424c91efa84f36",
+      "bytes": 88002
+    },
+    {
+      "path": "checks/Interaction.Smoke/Interaction.Smoke.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326
+    },
+    {
+      "path": "checks/Interaction.Smoke/Program.cs",
+      "git_blob_sha": "e1e1cfbaadec3fce5d8cfdfeb7d2a2904a1cd7f0",
+      "sha256": "d74f2c50a3e8a125067e89bfcf2bf44c3e9f32ba30025c944b2226020bf9df3f",
+      "bytes": 28431
+    },
+    {
+      "path": "checks/Milestone.Smoke/Milestone.Smoke.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326
+    },
+    {
+      "path": "checks/Milestone.Smoke/Program.cs",
+      "git_blob_sha": "b54c7363bb392c58ab7fc10039f07e318bcc75c8",
+      "sha256": "fb873da203ce313ea6d4c9af0a5cccd3c92bfd4c70af1ad96a0e94568c8d47e3",
+      "bytes": 21440
+    },
+    {
+      "path": "checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326
+    },
+    {
+      "path": "checks/NaturalLife.Smoke/Program.cs",
+      "git_blob_sha": "524a41f2575d9b5b1eb3b19f488a8be9d873df9b",
+      "sha256": "d47a6e155e081ce269d73ca4c43c14243e1593ccee7d8c1363ba323ba51ead0d",
+      "bytes": 62524
+    },
+    {
+      "path": "checks/NaturalLife.Soak/NaturalLife.Soak.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326
+    },
+    {
+      "path": "checks/NaturalLife.Soak/Program.cs",
+      "git_blob_sha": "38a949d2d784314d050905af31c98333cc22cb13",
+      "sha256": "67da49126e24c40cd7d06b7c0c68bf5a80c5985afa6d778abc6f9ed411401ef1",
+      "bytes": 7298
+    },
+    {
+      "path": "checks/Simulation.Smoke/Program.cs",
+      "git_blob_sha": "c5c24771759107b5aa8b4e3e995da553ccec265b",
+      "sha256": "c762438cf273bb3e8469c80e64539eebdd1f271cf8c6c8bfcc6e5a0c675b432a",
+      "bytes": 8690
+    },
+    {
+      "path": "checks/Simulation.Smoke/Simulation.Smoke.csproj",
+      "git_blob_sha": "ed7b61782864a46e67f4b0a435335aa9f4cd9b3c",
+      "sha256": "fa5a375fc8191331fffe02c9a330cadd37f22f144b2b53af98602cc37585b972",
+      "bytes": 325
+    },
+    {
+      "path": "global.json",
+      "git_blob_sha": "e8a91cbf7506d4f30d2f278f1efdd6fce4156686",
+      "sha256": "81ae2087dbfb46027fd94748351fb4b1ab24145fbb52544a2822bf128e2e48f1",
+      "bytes": 105
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/PLAN.md",
+      "git_blob_sha": "5a7739ed66ceaa2fe72fd59f1e088be84ae8ee63",
+      "sha256": "1bad5a625c1455e050f07548991b2c18c15324dc34cd48cf7c8c5a3dd9511666",
+      "bytes": 3384
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/input.md",
+      "git_blob_sha": "2902ed4e2971573038bb8ee98c6b3bff8838c9a1",
+      "sha256": "c675e762486d0b13d6617faf58f83b418e44f60f530be57ea6847872fc02d318",
+      "bytes": 8624
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/integration.md",
+      "git_blob_sha": "faeb5eb89ee8019e80355cccc6b03b9e1e03c372",
+      "sha256": "3e60214707bf66e16fa7ba23bfae7a61fcad38fa99e242079d2d29d6f88cdb40",
+      "bytes": 5802
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/life.md",
+      "git_blob_sha": "6a077e8103c5f777a4802d9f6eaf2db602df9189",
+      "sha256": "8ef994dfe7c25edd493a7facbf753cff8d2ee9a23027fd46a51771f5502c6bcc",
+      "bytes": 9774
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/presentation.md",
+      "git_blob_sha": "66c8c7bd044a8fdecbe34600812061f5f3736c44",
+      "sha256": "c104ab0f9b3506a12acf990faaabcf616295d6573a7c47549217e6e4083eec34",
+      "bytes": 8715
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review.md",
+      "git_blob_sha": "8b6c9642681cd6a5943cd8ba1a9751af047160ca",
+      "sha256": "87ed1f5dcacffdaec530ee376fb4b94eac45d484e8aa731a63327fd06fc61a51",
+      "bytes": 17813
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessoryPlacement.cs",
+      "git_blob_sha": "8b647ea8e6502703414720b8e6235beb9d8cc95b",
+      "sha256": "f04742365c623b0cc7389c5f22ace840008fb3bc612afe0887d1539670ccf285",
+      "bytes": 2575
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessorySupport.cs",
+      "git_blob_sha": "82d9f3fac767f95b1dc8136faa7d6517c3f646c4",
+      "sha256": "89fe6ce2f840f04f9e6f22fb5ff2eec823da7f450a4b4f747106acc7aa4e3f00",
+      "bytes": 2657
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessorySurface.cs",
+      "git_blob_sha": "97bcc4e666dccbc26bc3cd004ed395243b21962a",
+      "sha256": "6975b0cd5c1db69bd494e68e298583038cc6ad2a6f8e6b1e9a7c741d39647c8e",
+      "bytes": 2871
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessoryWear.cs",
+      "git_blob_sha": "8012b84cf38da57e4399b4a4c9a9b43eeb911c8c",
+      "sha256": "b0a6fe613f6b964022ba0f8774a220ed58e16cdcbce607083a7c265a486efbd2",
+      "bytes": 752
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorBodyBounds.cs",
+      "git_blob_sha": "6cd8a418546aad4a1cc0e683b12313c2fe8f230c",
+      "sha256": "0186fc1d6a59d2a2470502150a31f215d205200956ed9a4fc6efb8d6036918de",
+      "bytes": 1203
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorBrowSurface.cs",
+      "git_blob_sha": "fbfc01016a1ff6ab4b7c2807ba6de2d262f08d54",
+      "sha256": "1f55b0b53b19217a6d238934c04cdcb2dcdf0a081156f0b9ada181aca8a23a35",
+      "bytes": 722
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorCradleSurface.cs",
+      "git_blob_sha": "77580a03a17c7c04ebb8c09e288e5a5ae4551a74",
+      "sha256": "08296b7a1c4822b9cab35b49480b6b05596c2fb6b1a1b33caab0b0381f441502",
+      "bytes": 642
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorCushionSurface.cs",
+      "git_blob_sha": "af116ee20a5d36b4e12bbdfe446b0b9adbef5bba",
+      "sha256": "cb91de21bee30fa896fd3b5652b817f945291e86dd78b5be445c0ac9ef81c95c",
+      "bytes": 6046
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorDressingSurface.cs",
+      "git_blob_sha": "2a5d830ba129f77ff55a72d89b3f8c39fbbb65a2",
+      "sha256": "ce5e88cdf7bb153f1ff107dbad9d9b1596b8784a9536c49480e4755cf79ccc0c",
+      "bytes": 2717
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorEyeSurface.cs",
+      "git_blob_sha": "a794c5c5ec3cf9b97a24c09ae90ecda4497a3899",
+      "sha256": "70cb04748eda104a702974bf9b92bfbe2eb0ecd714837c829098b24093fd1bdd",
+      "bytes": 1716
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorFaceSurface.cs",
+      "git_blob_sha": "6b6378311e879f6f7e63302304cde1f4509d1521",
+      "sha256": "c53712632cd666f853b4713b7ff56b05ef58743b1e31d1ebd46167194ffc5957",
+      "bytes": 1481
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorHairSurface.cs",
+      "git_blob_sha": "a628fd02fb2dd36f42ef70c9d79b83a5f4c2c251",
+      "sha256": "97070962868f2c36c513b89243bb4712b31305030aacbe8f29ac20c251b7d7cb",
+      "bytes": 6364
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorHarnessSurface.cs",
+      "git_blob_sha": "9e13ee15c29e471993018bdd960349825624465c",
+      "sha256": "903f100140a88a0c56d7d334b51039d3106d835f076d31b5b3a2fd8165953dc1",
+      "bytes": 2009
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorHopMotion.cs",
+      "git_blob_sha": "96db9539b63c27d2558132153975cd26b5fb6ea8",
+      "sha256": "4ec8c5949195e1da69549c87c4c6ce1ed1addf18c689807c092ca63468ad9072",
+      "bytes": 3376
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorIntakeMouthSurface.cs",
+      "git_blob_sha": "9dabceccca390c78be8cb6802059f84ef6298c83",
+      "sha256": "1651fc8bc6d8c15234463b08168098fa6bb52e672a8a80088d16ebb8a24fe190",
+      "bytes": 1573
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorIntakePresentation.cs",
+      "git_blob_sha": "bcdfa75e19aac784d9e8c113fde60fc4cf26a412",
+      "sha256": "694d232628c3fa4854708004931cdaca8e9cfe47ac9aec55f0ddb402cd5b3ea8",
+      "bytes": 1072
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorMeshSupport.cs",
+      "git_blob_sha": "af7e4029a90ba97b814a49753e4183893f42845a",
+      "sha256": "cb82451b3853f4923eff9b90a4904b8df69a9e5d0efe5558f25900c1b678f9a3",
+      "bytes": 514
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorMouthSurface.cs",
+      "git_blob_sha": "2c864bc7440242ee25a4e45ab25f48666c56bfca",
+      "sha256": "aa82e4a05a8273c7f5da12973b98a22a06395d748161e960700eb229da7d2c0a",
+      "bytes": 1181
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorNaturalPose.cs",
+      "git_blob_sha": "c39d9255a050bf190e2e24324683aa90c31304d4",
+      "sha256": "764951ac57a304e317f2526ef9f12a4643f6a09ccb4adc6f62421c15885e032d",
+      "bytes": 6440
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorNaturalSupport.cs",
+      "git_blob_sha": "985c44b85b5381a9f2d87875f0af16030219f16b",
+      "sha256": "b6bf9cbfffe17fb09d0036b2c5b495a4fe1f7525c99ce76f15a8ed71a2961b4d",
+      "bytes": 5206
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorPoseClock.cs",
+      "git_blob_sha": "0e899f7729fca7d829ef6ba19caf4d0999fab86d",
+      "sha256": "866d0614baba54fcfd752b011e1b44af1d95dc000547017e86578a4d1d4f2857",
+      "bytes": 521
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorPoseSmoothing.cs",
+      "git_blob_sha": "23fa55e93c0468367d51097f999126d32ffbe859",
+      "sha256": "1e868b109589ed208251e7e4abbcd3cd6cd381f28169776490b52632995e2003",
+      "bytes": 1241
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorReactionMotion.cs",
+      "git_blob_sha": "6796f2abad90d3f3ea4d1bb049511db39c786060",
+      "sha256": "1ecd92722cd1bce214e3c5c1dc6b8133a2ca715b5b952cecf594d851af232126",
+      "bytes": 3950
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorSurfaceMarks.cs",
+      "git_blob_sha": "463c8c976a3ae071cca81c0d3f54d43891eb61ca",
+      "sha256": "3c86cd8583f7b5f87c6148dc31e6d3f1ff6bbf3b8594af70ab937954255489c8",
+      "bytes": 4400
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorTearSurface.cs",
+      "git_blob_sha": "9c497763f41ffa652b0b2b779381afba02091163",
+      "sha256": "1ca9292abc4b5fc24cf15b097c0708c1ecf161fee08de68319b9fbd368047d8e",
+      "bytes": 748
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorTouchShape.cs",
+      "git_blob_sha": "bc6644997855cc5b25ab604da6a5d810902b21be",
+      "sha256": "17a373963a719b090197a62ecdf776e804fe12ffac2da5e3c41bee6e7b384210",
+      "bytes": 603
+    },
+    {
+      "path": "src/Yukkuri.Game/ContactStrokeTracker.cs",
+      "git_blob_sha": "809cd843ee49b5b5ca3e0c80fcfa674866a148c0",
+      "sha256": "81a25c98de934d25f85794468e99336cbee2952d6b9ee847ddfa61459213fcd0",
+      "bytes": 1770
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionBallSurface.cs",
+      "git_blob_sha": "625c90950c760793bc94b3fb37856638e043fb59",
+      "sha256": "181634ae9f7ef0aa470039e0e27854c16f354aa75c96ed2a33c1cb4a53ec6ddd",
+      "bytes": 1660
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionCameraOrbit.cs",
+      "git_blob_sha": "cc65829fc3ae3f2ddaee7e2641863a5cbca84961",
+      "sha256": "6261aa5ba5ec87508a27867bfc2d484301cf324733d6fd3d00b4ae9d0dbe581b",
+      "bytes": 2268
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionCareSurface.cs",
+      "git_blob_sha": "1cdd16b082267cb56f20b2653d82e7363d93b78a",
+      "sha256": "be42864de4b674f63bf95a4fc4a608cf944b5ce108bcde6ebeb0f8b3f5cf85f8",
+      "bytes": 1452
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionFixtureSurface.cs",
+      "git_blob_sha": "29c1499e4f2399b8aa03cc76d3c17768472bdd37",
+      "sha256": "a0edaf47573300fd3a6baacbf2ecf45be9aedf8995784cbbcf2ecef915d8dd0f",
+      "bytes": 1143
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionFoodSurface.cs",
+      "git_blob_sha": "a58a6f8d6cc0d10dcdfd9e897b35649de63de47f",
+      "sha256": "f7fc2c9861324fa69e9116dc11a316a43d7b3d9ffec64a1fc2b109a6f009f4ef",
+      "bytes": 4835
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionPropContact.cs",
+      "git_blob_sha": "4812e5662188fe4247d798914576cb4fa316bf89",
+      "sha256": "0b783c1e6270cd5a7fbfb4eeb14d2cbac0310b17adf5aa3cc6b7cc421813b6df",
+      "bytes": 1194
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionToolSurface.cs",
+      "git_blob_sha": "24293245b92748c0016d0e36dc8b1ee41f8660c6",
+      "sha256": "87c28d0e88cf5799373d81e6ab9f228378f34ef5a4ddfa0241367ba2a48bd7a0",
+      "bytes": 1267
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionTreasureSurface.cs",
+      "git_blob_sha": "bbf3a14f164ffbc6c79938a4bb130bbff4400d5f",
+      "sha256": "0f931f00fe19c9de29d479f5dfb149c6b7ffcf1c2ee5342bfb61bb7b245d4645",
+      "bytes": 606
+    },
+    {
+      "path": "src/Yukkuri.Game/WoodlandOcclusion.cs",
+      "git_blob_sha": "acf8eb8840368dec6e7b24679fbbb1b505ca048e",
+      "sha256": "39444dda2c20e5cc3d2e043943bcf47fecc3e6811a7146b1572c8acf2e23b1f8",
+      "bytes": 3468
+    },
+    {
+      "path": "src/Yukkuri.Game/WoodlandSurface.cs",
+      "git_blob_sha": "b29620b367cb215cbe59bb636c7d5f27467eb7fc",
+      "sha256": "5524f4b3f8f5668cd9794a5f4b171eb23bde162648045b49d2dc75b83bf010e1",
+      "bytes": 4424
+    },
+    {
+      "path": "src/Yukkuri.Simulation/BodyContactGeometry.cs",
+      "git_blob_sha": "b360e7987f4fc4086432dfec75c674f1fed2bf05",
+      "sha256": "0531c6716f35e6aed6d1914d379f6c9eb4efa7bdf0245ef174be5f7d02e60d4d",
+      "bytes": 2436
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ContactMotion.cs",
+      "git_blob_sha": "7cb1f04f8f68da6a5018d34434f418f76ece0194",
+      "sha256": "d92f18212c24444d7ad734a9da7c2fbaba44ca04667ad323c74a6b18903e4bf6",
+      "bytes": 7040
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CreatureAppearance.cs",
+      "git_blob_sha": "720aaa3f38f5a337c48cbea7335167ce924f5a63",
+      "sha256": "6d1eb277d20deec106127748092170584fdc303b5706f3a399933c4eb547da4b",
+      "bytes": 384
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CushionGeometry.cs",
+      "git_blob_sha": "31e8e91dc64a58afeedcc3083ae7359cae955a33",
+      "sha256": "a8077965aa815d7ffacf400543aca890c5e8a664c98f352f131cb920cfde2df0",
+      "bytes": 2653
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+      "git_blob_sha": "6ce1cc74cd61ad3c5ee2852b6f66b6981521e7b1",
+      "sha256": "bbf6d0a80408c1f9a588b55d4b36abeb9c84fe375365852d51111dd3bafb4033",
+      "bytes": 6910
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+      "git_blob_sha": "5477462f10cc544351fe1f4a5946760ca636da27",
+      "sha256": "f10e9e89108be047e8b168069466e40f49d4771b44727a4e9d3c0af3b5c8e2dc",
+      "bytes": 30316
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionCatalog.cs",
+      "git_blob_sha": "a51354bfcb6c016a49fe938d18d8250078ac5a70",
+      "sha256": "14242a60bbb9af4c2c5fc3cea88a6b23d6da33375ba3a30f37b6ce4b440287ce",
+      "bytes": 10745
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionConversation.cs",
+      "git_blob_sha": "40fe0a2f6840cfba7e302237f48dea84280274f0",
+      "sha256": "96749ff772b29cf4ea14c87103795175873d49457e98c25b6de14ec34081092d",
+      "bytes": 4153
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionDressings.cs",
+      "git_blob_sha": "7f08fbb9342e7b15c349bbdf46fbb27dde234778",
+      "sha256": "96df22b5947c7bafa75036c0b609e0c0f5c4bb744008086fe7f0faa541f67257",
+      "bytes": 3058
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionFixtureGeometry.cs",
+      "git_blob_sha": "49e7c193ef0ba7307277494773735077344ca0b1",
+      "sha256": "9caa19fa04f9167b711636d67ed493012ac7dad97807d9699761e3480f695878",
+      "bytes": 1876
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionGesture.cs",
+      "git_blob_sha": "ca96a6359d905410b8816fd53565ae4a78d0900b",
+      "sha256": "b9701b9743bbdf267b9fbea65bc95f89477ab96e0a97bc5e7aa46db2a7cc4fa1",
+      "bytes": 46566
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionHarshSpeech.cs",
+      "git_blob_sha": "3642b1c2116cae0dcd8762191fd8ae4f10e52ccd",
+      "sha256": "5e4e029765f21091c3bcb8f66190f7c89430be2d4f8f52cf867141c209fca24f",
+      "bytes": 2805
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionLowering.cs",
+      "git_blob_sha": "fea8030ea23f22edf3177164795213be5043235c",
+      "sha256": "ffa0db8bcb0f689a48ba7918d8c50881183034b0e5f201548012f3ae8b07702a",
+      "bytes": 954
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionPresentation.cs",
+      "git_blob_sha": "64e5daa160d5ae2dd4c87b4b17ecac61e27dc2c5",
+      "sha256": "3a9e8a11a4bc1fa7db78b6a50ba98a77716f438f0995323d41a0cf0a16b169f3",
+      "bytes": 2575
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionRest.cs",
+      "git_blob_sha": "9c0553598afadb3f7f69733005c3a58039658953",
+      "sha256": "7ddf5a6f55c6cc606095cef745d35f4f30860203fdd4aed1a4d8e61a21cff458",
+      "bytes": 3421
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionRolling.cs",
+      "git_blob_sha": "33339be2cf557145cbe8b4ef0c447f0c10f3c12d",
+      "sha256": "d05146f27ea76b392d7f848a053fd041ae220d96212ab01bf185695a56ea07be",
+      "bytes": 1081
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSensitivity.cs",
+      "git_blob_sha": "155f7a5209fa8635921706a013e81600fc973a45",
+      "sha256": "6fec77a4c7c91e0fe89f659190c2949df798467395f4990079c64c2ce4dffb32",
+      "bytes": 1206
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+      "git_blob_sha": "1b49726cd1329bc40db326c9b2c009037c75b41b",
+      "sha256": "4d030907f0a19d0b7eac81958c2ff6be53b13bb23ad4022cdbffd607d8b5f237",
+      "bytes": 3803
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionState.cs",
+      "git_blob_sha": "56f95ac32f48227365ac9e80d11a2680605982fb",
+      "sha256": "715a4bb9b970521906b3e157e72760dacb7a9f2038b6d95e5b25102d3bbd9de2",
+      "bytes": 7677
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSupply.cs",
+      "git_blob_sha": "43263e3b356edb95bc2abc3ff417789f412ee2c0",
+      "sha256": "c87f6c45a16505d48ba50bdca8541bfa457566e39219625cfe35be7f5dcdc759",
+      "bytes": 2382
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSurface.cs",
+      "git_blob_sha": "9896239402565bd7a5d2d27e0f6b01fdc1151f1f",
+      "sha256": "4d825e18bdeae2757d16635b0d068cf166e5eb914fe42500f109a4730cc1b058",
+      "bytes": 4004
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSurfaceObservation.cs",
+      "git_blob_sha": "1519bd938295debcc325370f060f77e6ee9b504a",
+      "sha256": "58c8675f5eadb7dc127fcf267d7df56a549bba9f109dedd4c067bd45fefe36f2",
+      "bytes": 1582
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionTreasure.cs",
+      "git_blob_sha": "a8e45c2ead0867f7862465c03a38f77f107292ed",
+      "sha256": "106dac74c91134664281c53d60a13e3f5ea0d75ac338a0ff5ed53eba7bf83438",
+      "bytes": 1758
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionValidation.cs",
+      "git_blob_sha": "2ac01500ec87f641258de59d04c4757fac42be17",
+      "sha256": "76c05617bc31bc764cc3b75a69c1e06512fdf39ab267eb3f577d7dca7311b03c",
+      "bytes": 8433
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "git_blob_sha": "bc2f707bcdae9250546e8246c689a1ab5757fc2a",
+      "sha256": "0ebf0bfedf90d08efba5cac503d3c43aa800270601bec0f626970645da99cd3e",
+      "bytes": 28686
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneBehavior.cs",
+      "git_blob_sha": "af0ede73dfc65fe7436a1ded4f7df8307113caef",
+      "sha256": "b7f20152e234c736d5d44b2fae079421da96ffcacbea499ff3a7a839297b7e84",
+      "bytes": 18991
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneInteraction.cs",
+      "git_blob_sha": "e93f783dbee556cb143d03a94759c70f214d6497",
+      "sha256": "3b469ce61bb4d336e79b636504c0d483b77fd8c15e8d93de9d5ec0bccd4fb9f5",
+      "bytes": 15820
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneState.cs",
+      "git_blob_sha": "9433225825b17f031f625ff690a3512976b8ed9a",
+      "sha256": "f96843024aeecc743cef4dd6225ed4af64ee7e4ccd4bfa63b853262a00b13dbc",
+      "bytes": 6178
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneValidation.cs",
+      "git_blob_sha": "ac70093fd3c2ee69bef8c535e97682cffd9e8a46",
+      "sha256": "aa3d0cd98f2190910ccf52fbd4f6e169ea381b9d2ba9e4df18839db8d14363bc",
+      "bytes": 3761
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+      "git_blob_sha": "b97ca5fb55f517e50e5467e4e86960f157d17756",
+      "sha256": "e50d3678747960d2f29566efd8b2fd040bfcc190be00ab8656bcd9a657bc030d",
+      "bytes": 12667
+    },
+    {
+      "path": "src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+      "git_blob_sha": "742eb968f62bc13a0cb845c3226fc0c6ab0ddd02",
+      "sha256": "63b466fa21a3d2c313087eef7e03283c63003a41a9b5d6d170b3d2d8c70e3719",
+      "bytes": 4265
+    },
+    {
+      "path": "src/Yukkuri.Simulation/NaturalLife.cs",
+      "git_blob_sha": "ad25c59e6d98ef02e87b8e17e6aa6716461f29e9",
+      "sha256": "7cfe0f995f1c7dc380eb83d12259700b7d593e8e2539de9809a7ca70d986039d",
+      "bytes": 27137
+    },
+    {
+      "path": "src/Yukkuri.Simulation/OilDialogue.cs",
+      "git_blob_sha": "deed80cc47e1140fe3aa973d5b601497128fa351",
+      "sha256": "22696c739b6ad14f16583735eb041dde8832b763386776c0ed5650664f83900f",
+      "bytes": 20648
+    },
+    {
+      "path": "src/Yukkuri.Simulation/RoomBallEnvironment.cs",
+      "git_blob_sha": "6c2cf20dc4607859e97a8a73cbe5a4db0d67dad3",
+      "sha256": "4b3af34b5cc225a82df3be025e103d6da435b0a87c716cbc75c994559dc070ae",
+      "bytes": 817
+    },
+    {
+      "path": "src/Yukkuri.Simulation/RoomResourceText.cs",
+      "git_blob_sha": "8982277999ec76887fced798502da4759954b048",
+      "sha256": "431113245f55a7dd83f04c2d1f9f1832832820ab453262fad3b5fbca55dbe85b",
+      "bytes": 2376
+    },
+    {
+      "path": "src/Yukkuri.Simulation/SaveStore.cs",
+      "git_blob_sha": "c689dc0653f7733a753688d4b9cf6956f2ce290d",
+      "sha256": "7d733b6c290eafe18e3da63af113c3cb3eb921d15d4d39657023ad04c827297e",
+      "bytes": 5877
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+      "git_blob_sha": "9cea030b0e067d7edfe852ca65330951d47d7f61",
+      "sha256": "ae9d3250c5128ea3f5b513c50321b1f6372d6486a508f89d191d4e120bbe4993",
+      "bytes": 1495
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WorldSimulation.cs",
+      "git_blob_sha": "e5c27a64b7ae32bb7090bba09966ab344eba0cc0",
+      "sha256": "4e22f228991e718239a256e675872852bfd67b8d090a620fa2fa98b731531319",
+      "bytes": 15321
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WorldState.cs",
+      "git_blob_sha": "d976eaeb79369eb76f2c2a15331263b634c3879d",
+      "sha256": "61a3f5205b3466d58e90c44e4b1f316144baf681f20a546cc5a60e9910942549",
+      "bytes": 5402
+    },
+    {
+      "path": "src/Yukkuri.Simulation/Yukkuri.Simulation.csproj",
+      "git_blob_sha": "07669f7d0bb89c5477d131404aefa8c9c7fdb534",
+      "sha256": "1fc90d506731c455296ea51c8b13f75aa2f7ebe9e5a9f2bcb7b0bd88d4c7c359",
+      "bytes": 1684
+    },
+    {
+      "path": "testing/DOT-HANDOFF.md",
+      "git_blob_sha": "ff6d5c0f3435a15abcd4f2c8e405a07bcadc61c2",
+      "sha256": "65db09ce7b87f113b0b312eee46a6559f1d0aaba6813f1ef7389b6901ad90319",
+      "bytes": 1859
+    },
+    {
+      "path": "testing/PROTOCOL.md",
+      "git_blob_sha": "8a27583fe3d5e51521a646536f6eb9ce52bf913a",
+      "sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+      "bytes": 8127
+    },
+    {
+      "path": "testing/report-template.json",
+      "git_blob_sha": "cce0e30300fe00e0eba86bf7041f87128c9f9a98",
+      "sha256": "e3e20ff9acb4437209942deb13a4359a601cd42747b01bf63a4bd3a73e2a6f70",
+      "bytes": 1508
+    },
+    {
+      "path": "testing/request.json",
+      "git_blob_sha": "923fa655888fcbb5738e071f0c26e9689c5705c1",
+      "sha256": "4e7cdf8d2a4d667143272705f908c0be11022b5ee382aa9b3eed42388bb65e2e",
+      "bytes": 2267
+    },
+    {
+      "path": "testing/reviews/20261029T013947Z-d729036ccfa4-c01.md",
+      "git_blob_sha": "bc72a79647a8ab8631cfee3974b6f0d8699f7a0b",
+      "sha256": "48c1c5f975f24f0896613d07d09f0a29dbecba39b47da9029fbcb61851a1a1f1",
+      "bytes": 3301
+    },
+    {
+      "path": "toolchain.lock.json",
+      "git_blob_sha": "755cd024437f393ad3941e0af3cfca06eed84639",
+      "sha256": "757032e50d135a6bb3e44d666758cca92a2d23d3954523e33208de2e6b161789",
+      "bytes": 2003
+    },
+    {
+      "path": "tools/build.ps1",
+      "git_blob_sha": "fe6105b15b4180aa202a4abfe9d3c7f29233df14",
+      "sha256": "e36a7a6165a7a2fd503b0e1dbcf4bd0af3b6bfa506a948b8a6f879fb271a1f61",
+      "bytes": 823
+    },
+    {
+      "path": "tools/check-night-repair-offline.ps1",
+      "git_blob_sha": "8cf8eb2ec6df3675522969cbd4ecf83421356720",
+      "sha256": "3324f42d2418d5a2b9407729eb2cf63efef06dd7dde93653574c115267be4a69",
+      "bytes": 6995
+    },
+    {
+      "path": "tools/setup.ps1",
+      "git_blob_sha": "c19f1ee7b6895eaf21337019856bc3a01a8fdad2",
+      "sha256": "12b7352b9541804337c13fee8b5d949c3bc8212fa145368848475066f706f8f1",
+      "bytes": 3094
+    }
+  ]
+}

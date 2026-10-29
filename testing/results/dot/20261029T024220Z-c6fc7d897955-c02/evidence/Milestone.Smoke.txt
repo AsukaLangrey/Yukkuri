@@ -1,0 +1,71 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Milestone.Smoke/Milestone.Smoke.csproj -p:UseAppHost=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/source
+PASS: authored M01 scenario has valid identities and distinct starting individuals
+PASS: stroke hug and nuzzle produce distinct responses
+PASS: care changes trust and attachment and preserves personal memories
+PASS: unfamiliar wild creature can refuse intimate contact
+PASS: unknown wild creature is not silently teleported into sanctuary
+PASS: earned trust permits invitation and preserves identity
+PASS: player admission builds belonging but does not award a certificate
+PASS: position tool force and duration produce different actual injury
+PASS: care-tool protection prevents excessive pressure injury
+PASS: care protection covers all affection actions body areas and tools at maximum force and duration
+PASS: disabling care protection changes real rules, not just visuals
+PASS: training affects learned behavior and guard ability
+PASS: time spent resting allows training fatigue to recover
+PASS: unjustified harm frightens witnesses but not an uninformed distant creature
+PASS: distant creature has no magical knowledge of the incident
+PASS: nearby conversation can carry previously unknown incident information
+PASS: nearby creature witnesses the actual intrusion
+PASS: proportionate correction of a known intruder is approved by an informed sanctuary creature
+PASS: intervention resolves encounter and returns the same intruder to wilderness
+PASS: outmatched sanctuary defender calls the protagonist for help
+PASS: player can respond to the call and protect the defender
+PASS: help resolves the threat instead of leaving a permanent attack state
+PASS: M01 injury is not a hidden nonlethal health floor
+PASS: emergency treatment spends medicine and enters timed recovery
+PASS: stabilized individual recovers after actual world time
+PASS: untreated critical injury can become irreversible
+PASS: independent lethal-injury toggle preserves injury but prevents death
+PASS: M01 close-up freezes every passive state and random generator
+PASS: direct affection still works without target aging during close-up
+PASS: M01 close-up exits without catch-up
+PASS: manual pause freezes passive simulation
+PASS: M01 feelings knowledge events progress and settings survive save roundtrip
+PASS: M01 loaded tuning and random state continue deterministically
+PASS: nonfinite psychological values are rejected before UI
+PASS: null M01 settings produce controlled invalid-data error
+PASS: self-parent identity is rejected
+PASS: six unrelated flags cannot substitute for the six actual chapter objectives
+PASS: all named objectives unlock the chapter completion state
+PASS: parent correction is a conditional probability, not unconditional scripted punishment
+PASS: distant uninformed parent and elders do not correct unseen food theft
+PASS: learned sharing changes actual food competition behavior
+PASS: six real training sessions reduce actual theft across matched seeds without guaranteeing instant perfection
+TRAINING_BEHAVIOR_COMPARISON: controls=100/120; six_sessions=57/120
+PASS: long interaction sessions preserve active offense evidence during history pruning
+PASS: incapacitated intruder does not leave a permanent hostile encounter
+TERMINAL_CONTACT: {"Condition":3,"Speech":"","LastReaction":"\u518D\u4E5F\u6CA1\u6709\u56DE\u5E94\u3002","Message":"\u4F24\u52BF\u5DF2\u7ECF\u4E0D\u53EF\u9006\uFF0C\u5B83\u65E0\u6CD5\u518D\u56DE\u5E94\u3002"}
+PASS: fatal contact preserves terminal state instead of restoring a living response
+PASS: a stabilized recovering individual can receive food without regaining mobility early
+PASS: protagonist can protect an incapacitated victim without requiring it to move
+PASS: protecting another individual does not erase an existing critical rescue request
+PASS: ending an intrusion preserves the unrelated unresolved medical request
+PASS: stabilizing the last emergency clears its resolved medical request
+PASS: losing one critical individual does not hide another unresolved emergency
+PASS: new wilderness bullying does not replace an unresolved critical medical request
+PROTECTION_REGRESSION: {"wrongProtectionRejected":true,"initialProtection":true,"repeatProtectionRejected":true,"staleHelpCleared":true}
+PASS: protection does not award rescue credit for an unrelated nearby offense
+PASS: one resolved wild threat cannot be used for repeated trust and protection rewards
+PASS: help no longer directs the player to a threat that has moved out of reach
+STAFF_DEFENSE_REGRESSION: {"hostileFullness":0,"hostileHealth":9.9625,"residentFullness":39.98625,"residentHealth":58}
+PASS: default park staff care for their residents instead of provisioning the active intruder
+PASS: player may still deliberately feed an intruder through direct interaction
+PASS: a selected wild individual entering the park leaves a valid selection in the current region
+PASS: selected retreating intruder leaves the park without making the world unsaveable
+ONGOING_INTRUSION_EXPRESSION: {"Expression":5,"ReactionRemaining":0,"Phase":2}
+PASS: ongoing intruder remains visibly defiant after its initial speech expires
+PASS: ongoing hostile behavior does not conceal significant pain
+PASS: fear overrides an intruder's defiant resting expression
+PASS: retreating individual does not retain the ongoing intrusion expression
+RESULT: 63 M01 checks passed. Saves retained: /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/temp/yukkuri-m01-checks/27f487e7a87b4f67b8e18d1a88db9f32

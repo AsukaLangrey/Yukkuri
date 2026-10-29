@@ -1,0 +1,39 @@
+{
+  "id": "ActorGeometry.IntakeCombinations",
+  "started_at": "2026-10-29T02:43:07.793334+00:00",
+  "finished_at": "2026-10-29T02:45:53.566069+00:00",
+  "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-build --no-restore --project checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj -p:UseAppHost=false -- /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/evidence/ActorGeometry.IntakeCombinations.json --intake-combinations --motion",
+  "working_directory": "/workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/source",
+  "status": "passed",
+  "exit_code": 0,
+  "expected_cases": 1728,
+  "frame_schedules": [
+    "30fps",
+    "60fps",
+    "144fps",
+    "irregular .01/.035/.008/.019/.041 seconds"
+  ],
+  "evidence": [
+    "evidence/ActorGeometry.IntakeCombinations.txt",
+    "evidence/ActorGeometry.IntakeCombinations.json"
+  ],
+  "duration_seconds": 165.77268784399712,
+  "summary": {
+    "at": "2026-10-29T02:45:53.4238552+00:00",
+    "scope": "Actual pure simulation intake followed by shared source geometry. Optional production pose smoothing at 30/60/144fps and irregular steps, starting facing away. Blocked portions retained; unwrapped blocked cases regain foot movement and try alternate standing points for 10 seconds. No native renderer.",
+    "tested": 1728,
+    "accepted": 1500,
+    "gaps": 0,
+    "overrides": 0,
+    "lostBlockedPortions": 0,
+    "mobileAttempts": 40,
+    "mobileRecovered": 40,
+    "animate": true,
+    "motionFailures": 0,
+    "worstMotion": 0.002243218,
+    "worstGap": 0.0020966902,
+    "success": true
+  },
+  "actual_case_count": 1728,
+  "materialized_sources_unchanged": true
+}

@@ -1,0 +1,20 @@
+{
+  "started_at": "2026-10-29T02:42:20.876517+00:00",
+  "finished_at": "2026-10-29T02:45:53.618220+00:00",
+  "status": "completed",
+  "deadline": "2026-10-29T03:28:25+00:00",
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "exclusive_lock": "/workspace/shared/yukkuri-cloud-20261029/run.lock",
+  "steps": [
+    {
+      "runner": "run_checks.py",
+      "exit_code": 0,
+      "finished_at": "2026-10-29T02:43:07.760491+00:00"
+    },
+    {
+      "runner": "run_optional.py",
+      "exit_code": 0,
+      "finished_at": "2026-10-29T02:45:53.615773+00:00"
+    }
+  ]
+}

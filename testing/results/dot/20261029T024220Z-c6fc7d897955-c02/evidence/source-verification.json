@@ -1,0 +1,12 @@
+{
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "source_tree": "92a47c07273dc2b592206a15084d2160b72eb170",
+  "tree_truncated": false,
+  "remote_tree_entries": 1232,
+  "verified_materialized_blob_count": 116,
+  "git_blob_and_sha256_mismatches": [],
+  "materialized_sources_unchanged_after_execution": true,
+  "complete_checkout": false,
+  "full_lfs_integrity_verified": false,
+  "validation": "Publisher independently matched every materialized file after execution to pinned recursive tree Git blob SHA and materialization SHA256. Unmaterialized assets/full Git worktree not verified."
+}

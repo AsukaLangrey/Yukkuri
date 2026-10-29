@@ -1,0 +1,30 @@
+import pathlib, fcntl, subprocess, json, datetime, time, signal, os
+b=pathlib.Path('/workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8')
+lock=open('/workspace/shared/yukkuri-cloud-20261029/run.lock','a')
+fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+deadline=datetime.datetime.fromisoformat('2026-10-29T03:28:25+00:00')
+identity={'started_at':now(),'finished_at':None,'status':'running','deadline':deadline.isoformat(),'source_commit':'c6fc7d89795501c26057b991276b4657d62dc122','exclusive_lock':'/workspace/shared/yukkuri-cloud-20261029/run.lock','steps':[]}
+def save():(b/'evidence/round-lifecycle.json').write_text(json.dumps(identity,indent=2))
+save()
+try:
+ for name in ['run_checks.py','run_optional.py']:
+  if name=='run_optional.py':
+   run=json.loads((b/'evidence/run.json').read_text())
+   if not any(s['id']=='ActorGeometry.Smoke' and s['status']=='passed' for s in run['steps']):
+    identity['steps'].append({'runner':name,'status':'skipped','reason':'ActorGeometry main check did not pass'});continue
+  remaining=(deadline-datetime.datetime.now(datetime.timezone.utc)).total_seconds()
+  if remaining<=0:identity['status']='timeout';break
+  p=subprocess.Popen(['python',str(b/name)],start_new_session=True)
+  try:code=p.wait(timeout=remaining)
+  except subprocess.TimeoutExpired:
+   os.killpg(p.pid,signal.SIGTERM)
+   try:p.wait(timeout=5)
+   except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait()
+   identity['status']='timeout';code=p.returncode
+  identity['steps'].append({'runner':name,'exit_code':code,'finished_at':now()});save()
+  if identity['status']=='timeout':break
+finally:
+ identity['finished_at']=now()
+ if identity['status']=='running':identity['status']='completed'
+ save()

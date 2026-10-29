@@ -1,0 +1,22 @@
+import os,json,pathlib,datetime,subprocess,time,signal,shlex,fcntl,hashlib
+b=pathlib.Path('/workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8');o=b/'evidence';s=b/'source'
+lock=open(b/'run.lock','w');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+env=os.environ.copy();env.update({'DOTNET_ROOT':str(pathlib.Path('/workspace/shared/yukkuri-cloud-20261029')/'toolchain/dotnet'),'DOTNET_CLI_HOME':str(b/'dotnet-home'),'DOTNET_SKIP_FIRST_TIME_EXPERIENCE':'1','DOTNET_CLI_TELEMETRY_OPTOUT':'1','DOTNET_NOLOGO':'1','NUGET_PACKAGES':str(b/'nuget-packages'),'TMPDIR':str(b/'temp'),'XDG_RUNTIME_DIR':str(b/'runtime')})
+args=[str(pathlib.Path('/workspace/shared/yukkuri-cloud-20261029')/'toolchain/dotnet/dotnet'),'run','--configuration','Release','--no-build','--no-restore','--project','checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj','-p:UseAppHost=false','--',str(o/'ActorGeometry.IntakeCombinations.json'),'--intake-combinations','--motion']
+now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+r={'id':'ActorGeometry.IntakeCombinations','started_at':now(),'finished_at':None,'command':shlex.join(args),'working_directory':str(s),'status':'running','exit_code':None,'expected_cases':1728,'frame_schedules':['30fps','60fps','144fps','irregular .01/.035/.008/.019/.041 seconds'],'evidence':['evidence/ActorGeometry.IntakeCombinations.txt','evidence/ActorGeometry.IntakeCombinations.json']}
+(o/'supplemental-run.json').write_text(json.dumps(r,indent=2));start=time.monotonic()
+with (o/'ActorGeometry.IntakeCombinations.txt').open('w') as f:
+ f.write('COMMAND: '+r['command']+'\nCWD: '+str(s)+'\n');f.flush()
+ p=subprocess.Popen(args,cwd=s,env=env,stdout=f,stderr=subprocess.STDOUT,start_new_session=True)
+ try:r['exit_code']=p.wait(timeout=600)
+ except subprocess.TimeoutExpired:
+  os.killpg(p.pid,signal.SIGTERM);p.wait(timeout=5);r['exit_code']=p.returncode;r['status']='timeout'
+r['finished_at']=now();r['duration_seconds']=time.monotonic()-start
+if (o/'ActorGeometry.IntakeCombinations.json').exists():
+ d=json.loads((o/'ActorGeometry.IntakeCombinations.json').read_text());r['summary']={k:v for k,v in d.items() if k!='cases'};r['actual_case_count']=len(d.get('cases',[]))
+ if r['status']!='timeout':r['status']='passed' if r['exit_code']==0 and d.get('success') is True and d.get('tested')==1728 and r['actual_case_count']==1728 else 'failed'
+else:r['status']='failed' if r['status']!='timeout' else 'timeout'
+manifest=json.loads((o/'materialization-manifest.json').read_text());r['materialized_sources_unchanged']=all(hashlib.sha256((s/f['path']).read_bytes()).hexdigest()==f['sha256'] for f in manifest['files'])
+(o/'supplemental-run.json').write_text(json.dumps(r,indent=2));print(json.dumps(r,indent=2))
+

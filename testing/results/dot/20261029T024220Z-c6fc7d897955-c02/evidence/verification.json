@@ -1,0 +1,135 @@
+{
+  "verified_at": "2026-10-29T02:47:12.235785+00:00",
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "source_tree": "92a47c07273dc2b592206a15084d2160b72eb170",
+  "materialized_files": 116,
+  "all_materialized_source_git_blobs_and_sha256_match_initial_manifest_and_pinned_tree": true,
+  "source_worktree_clean": null,
+  "reason_null": "Only verified dependency closure; no complete authenticated Git/LFS checkout",
+  "source_changes": [],
+  "compiler_generated_files_note": "bin/obj created during per-check builds, not materialized product files and not for source publication",
+  "lifecycle": {
+    "started_at": "2026-10-29T02:42:20.876517+00:00",
+    "finished_at": "2026-10-29T02:45:53.618220+00:00",
+    "status": "completed",
+    "deadline": "2026-10-29T03:28:25+00:00",
+    "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+    "exclusive_lock": "/workspace/shared/yukkuri-cloud-20261029/run.lock",
+    "steps": [
+      {
+        "runner": "run_checks.py",
+        "exit_code": 0,
+        "finished_at": "2026-10-29T02:43:07.760491+00:00"
+      },
+      {
+        "runner": "run_optional.py",
+        "exit_code": 0,
+        "finished_at": "2026-10-29T02:45:53.615773+00:00"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "Simulation.Smoke",
+      "started_at": "2026-10-29T02:42:22.236276+00:00",
+      "finished_at": "2026-10-29T02:42:28.677474+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 42,
+      "failed_count": 0,
+      "json_success": null,
+      "json_failures": null
+    },
+    {
+      "id": "Milestone.Smoke",
+      "started_at": "2026-10-29T02:42:29.544703+00:00",
+      "finished_at": "2026-10-29T02:42:32.466206+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 63,
+      "failed_count": 0,
+      "json_success": null,
+      "json_failures": null
+    },
+    {
+      "id": "Interaction.Smoke",
+      "started_at": "2026-10-29T02:42:33.333378+00:00",
+      "finished_at": "2026-10-29T02:42:36.457407+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 48,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0
+    },
+    {
+      "id": "Input.Intent",
+      "started_at": "2026-10-29T02:42:37.326876+00:00",
+      "finished_at": "2026-10-29T02:42:40.656117+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 37,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0
+    },
+    {
+      "id": "NaturalLife.Smoke",
+      "started_at": "2026-10-29T02:42:41.523672+00:00",
+      "finished_at": "2026-10-29T02:42:46.859697+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 83,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0
+    },
+    {
+      "id": "Interaction.Continuity",
+      "started_at": "2026-10-29T02:42:47.727819+00:00",
+      "finished_at": "2026-10-29T02:42:51.404721+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 104,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0
+    },
+    {
+      "id": "ActorGeometry.Smoke",
+      "started_at": "2026-10-29T02:42:52.224295+00:00",
+      "finished_at": "2026-10-29T02:43:00.166353+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 92,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": null
+    },
+    {
+      "id": "NaturalLife.Soak",
+      "started_at": "2026-10-29T02:43:01.087665+00:00",
+      "finished_at": "2026-10-29T02:43:07.671336+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "passed_count": 24,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0
+    }
+  ],
+  "required_pure_dotnet_passed_count": 493,
+  "required_pure_dotnet_failed_count": 0,
+  "soak_scenarios": 24,
+  "soak_seeds": [
+    72341,
+    592813,
+    1597331,
+    20261029
+  ],
+  "simulated_seconds_per_soak_scenario": 3600,
+  "geometry_cases": 1728,
+  "geometry_success": true,
+  "overall_status": "partial",
+  "no_game_runtime_or_visual_acceptance": true
+}

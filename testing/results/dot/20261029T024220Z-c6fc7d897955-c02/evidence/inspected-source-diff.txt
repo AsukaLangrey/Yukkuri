@@ -1,0 +1,689 @@
+--- previous/checks/ActorGeometry.Smoke/Program.cs
++++ current/checks/ActorGeometry.Smoke/Program.cs
+@@ -235,6 +235,19 @@
+     if(tracker.Sample("a",Yukkuri.Simulation.BodyPart.Head,new(105,100),new(0,.4f,.3f),1).Distance!=0)return false;
+     tracker.Reset();if(tracker.Sample("a",cheek,new(107,100),new(.12f,0,.5f),1).Distance!=0)return false;
+     return tracker.Sample("b",cheek,new(109,100),new(-.3f,0,.5f),1).Distance==0;
++});
++Check("reprojecting a moving pointer separates rubbing from the body's own travel",()=>
++{
++    var tracker=new ContactStrokeTracker();var cheek=Yukkuri.Simulation.BodyPart.Cheek;
++    tracker.Sample("oil",cheek,new(100,100),new(0,0,.5f),1);
++    // The same old pointer now lands at x=.3 because the body/camera moved;
++    // the user's two-pixel motion contributes only the further .02.
++    var stroke=tracker.Sample("oil",cheek,new(102,100),new(.32f,0,.5f),1,
++        previousLocalPoint:new(.3f,0,.5f));
++    if(MathF.Abs(stroke.Distance-.02f)>.00001f)return false;
++    if(tracker.Sample("oil",cheek,new(float.NaN,100),new(.4f,0,.5f),1).Distance!=0)return false;
++    // Invalid input must reseed the next frame, not span the missing sample.
++    return tracker.Sample("oil",cheek,new(104,100),new(.4f,0,.5f),1).Distance==0;
+ });
+ Check("a camera looking above the horizon cannot place objects behind its ray",()=>
+ {
+--- previous/checks/Input.Intent/Program.cs
++++ current/checks/Input.Intent/Program.cs
+@@ -218,6 +218,29 @@
+             for(int n=0;n<8;n++)impact=Math.Max(impact,t.Sample("oil",Vector3.Zero,normal,1.0/60).StopImpact);
+             Require(outward?impact==0:impact>0,"diagonal withdrawal and mostly tangential stroke were conflated");
+         }
++    }
++});
++Check("slow withdrawal after a fast rub clears both impact history and force tail",()=>
++{
++    foreach(int fps in new[]{30,60,144})
++    {
++        double dt=1.0/fps;var t=Tracker();
++        for(int n=0;n<Math.Ceiling(.2/dt);n++)Step(t,5,dt);
++        var withdrawn=t.Sample("oil",Vector3.UnitZ*(float)(.2*dt),Vector3.UnitZ,dt);
++        Require(withdrawn.StopImpact==0&&withdrawn.Force<.13,$"slow exit inherited force at {fps} fps");
++        Require(Stop(t,dt).StopImpact==0,$"slow exit inherited strike at {fps} fps");
++        for(int n=0;n<Math.Ceiling(.2/dt);n++)Step(t,5,dt);
++        Require(Stop(t,dt).StopImpact>0,"later deliberate contact stop was disabled");
++    }
++});
++Check("slow reversal during braking does not complete the previous stroke",()=>
++{
++    foreach(int fps in new[]{30,60,144})
++    {
++        double dt=1.0/fps;var t=Tracker();
++        for(int n=0;n<Math.Ceiling(.2/dt);n++)Step(t,5,dt);
++        Require(Step(t,-.2,dt).StopImpact==0,"reversal completed the incoming hit");
++        Require(Stop(t,dt).StopImpact==0,"reversed stroke left a pending hit");
+     }
+ });
+ Check("pulling away during stop confirmation cancels the pending hit",()=>
+@@ -326,6 +349,53 @@
+     }
+     Require(c.X>.5&&c.Fullness>10&&!s.InteractionGestureOwnsPose,"stationary touch trapped hungry oil or kept the stroke pose");
+ });
++Check("idle rubbing tools release autonomous needs after a brief nuzzle invitation",()=>
++{
++    foreach(var action in new[]{InteractionAction.Stroke,InteractionAction.Nuzzle,InteractionAction.Clean,InteractionAction.Dry,InteractionAction.CleanAccessory})
++    {
++        var s=Fresh();var c=s.Selected!;s.State.Creatures.RemoveAll(o=>o.Id!=c.Id);s.State.RoomObjects.Clear();
++        c.Fullness=35;c.Energy=90;c.Fear=0;c.Interaction.Hydration=90;c.X=0;c.Z=0;
++        c.Interaction.NextAutonomyAt=10000;
++        var part=action==InteractionAction.Nuzzle?BodyPart.Cheek:action==InteractionAction.CleanAccessory?BodyPart.Accessory:BodyPart.Head;
++        if(action==InteractionAction.CleanAccessory)c.Interaction.Accessory.Place=AccessoryPlace.Hand;
++        s.State.RoomObjects.Add(new(){Id="meal",Kind=RoomObjectKind.Meal,X=2,Z=0,Portions=5});
++        var input=new InteractionInput(action,part,Force:.2,Duration:.05,Motion:0);
++        Require(s.BeginInteractionGesture(c.Id,input).Success,"could not start stationary tool fixture");
++        bool sawNuzzleReply=false;
++        for(int n=0;n<160;n++)
++        {
++            var reply=s.ContinueInteractionGesture(input,true);
++            if(action==InteractionAction.Nuzzle&&!sawNuzzleReply&&reply.Pose=="nuzzle-ready")
++            {
++                sawNuzzleReply=true;
++                Require(s.InteractionGestureOwnsPose,"first nuzzle response released movement before its body pose");
++            }
++            s.AdvanceInteractionPresentation(.05);s.Advance(.05);
++            if(!s.InteractionGestureOwnsPose)Require(InteractionPresentation.Pose(c) is not ("stroke" or "nuzzle" or "nuzzle-ready" or "wipe"),
++                $"idle {action} left an old body pose over autonomous movement");
++        }
++        Require(action!=InteractionAction.Nuzzle||sawNuzzleReply,"stationary invitation never received its reply");
++        Require(c.X>.5&&c.Fullness>35&&!s.InteractionGestureOwnsPose,$"idle {action} trapped hungry oil");
++    }
++    foreach(var action in new[]{InteractionAction.Hold,InteractionAction.Press,InteractionAction.Lift})
++    {
++        var s=Fresh();var c=s.Selected!;
++        Require(s.BeginInteractionGesture(c.Id,new(action,Force:.2)).Success&&s.InteractionGestureOwnsPose,
++            $"intentional stationary {action} lost support/control");
++    }
++});
++Check("ending rubbing pose does not erase a newer independent reaction",()=>
++{
++    var s=Fresh();var c=s.Selected!;c.Fear=0;c.Fullness=90;c.Interaction.Hydration=90;
++    var moving=new InteractionInput(InteractionAction.Stroke,BodyPart.Head,Force:.2,Duration:.05,Motion:.01);
++    s.BeginInteractionGesture(c.Id,moving);s.ContinueInteractionGesture(moving,true);
++    Require(InteractionPresentation.Pose(c)=="stroke","fixture never produced the rubbing pose");
++    s.ContinueInteractionGesture(moving with {Motion=0},true);
++    Require(InteractionPresentation.Pose(c)!="stroke","idle tool retained the previous rubbing pose");
++    s.ExecuteInteraction(c.Id,new(InteractionAction.Poke,BodyPart.Cheek,Force:.2));
++    s.ContinueInteractionGesture(moving with {Motion=0},true);
++    Require(InteractionPresentation.Pose(c)=="poke","idle cleanup erased a newer independent reaction");
++});
+ Check("refusal gives pose ownership back after its actual response settles",()=>
+ {
+     var s=Fresh();var c=s.Selected!;s.BeginInteractionGesture(c.Id,new(InteractionAction.Touch));
+--- previous/checks/NaturalLife.Smoke/Program.cs
++++ current/checks/NaturalLife.Smoke/Program.cs
+@@ -66,6 +66,49 @@
+     s.ExecuteInteraction(c.Id,new(InteractionAction.TeachFollow));c.Interaction.CueUnderstood=false;
+     Tick(s,2);Require(c.Interaction.ActiveCue==null&&!c.Interaction.FollowPlayer,"failed attempt left a persistent follow order");
+ });
++Check("completed follow intent yields to autonomous rest with or without a visible hand",()=>
++{
++    foreach(bool hasHand in new[]{false,true})foreach(bool cushion in new[]{false,true})foreach(bool reload in new[]{false,true})
++    {
++        var s=Fresh();var c=s.Selected!;c.Energy=21;c.Fear=0;c.Pain=0;
++        c.Interaction.FollowPlayer=true;c.Interaction.ActiveCue=null;
++        if(cushion)Source(s,RoomObjectKind.Cushion,0,0);
++        if(reload){s=Reload(s);c=s.Selected!;}
++        for(int n=0;n<100;n++)
++        {
++            if(hasHand)s.SetInteractionHand(2,0,true);
++            Tick(s,.05);
++        }
++        Require(!c.Interaction.FollowPlayer&&c.Interaction.Resting&&c.Energy>21&&
++            c.Interaction.RestRemaining is >0 and <29,"persistent follow prevented actual rest or timer progress");
++    }
++});
++Check("low trust can cautiously use the only supply while the hand remains visible",()=>
++{
++    foreach(var kind in new[]{RoomObjectKind.Meal,RoomObjectKind.Water})
++    {
++        var s=Fresh();var c=s.Selected!;c.Trust=5;c.Fear=0;c.Interaction.LastHelpDecisionAt=0;
++        if(kind==RoomObjectKind.Water)c.Interaction.Hydration=35;else c.Fullness=35;
++        var supply=Source(s,kind,1.5,portions:3);
++        for(int n=0;n<10;n++){s.SetInteractionHand(supply.X,supply.Z,true);Tick(s,.05);}
++        Require(supply.Portions==3,"low trust skipped its initial cautious look");
++        for(int n=0;n<390;n++){s.SetInteractionHand(supply.X,supply.Z,true);Tick(s,.05);}
++        Require(supply.Portions<3&&(kind==RoomObjectKind.Water?c.Interaction.Hydration:c.Fullness)>35,
++            "continuous human presence excluded the only supply indefinitely");
++    }
++});
++Check("immobile intake chooses the urgent need independently of object order",()=>
++{
++    foreach(bool waterFirst in new[]{false,true})
++    {
++        var s=Fresh();var c=s.Selected!;c.Interaction.FootIntegrity=10;c.Fullness=35;c.Interaction.Hydration=10;
++        foreach(var kind in waterFirst?new[]{RoomObjectKind.Water,RoomObjectKind.Meal}:new[]{RoomObjectKind.Meal,RoomObjectKind.Water})
++            Source(s,kind,.5,portions:3);
++        Tick(s,.25);
++        Require(c.Interaction.GroundIntakeKind==RoomObjectKind.Water&&c.Interaction.NaturalIntakePending&&c.X==0&&c.Z==0,
++            "immobile choice followed collection order instead of the more urgent water need");
++    }
++});
+ Check("hungry creature discovers reaches and consumes leaves without human input",()=>
+ {
+     var s=Fresh();var c=s.Selected!;c.Fullness=35;var leaf=Source(s,RoomObjectKind.Leaves,2.5);
+@@ -414,12 +457,55 @@
+     var s=Fresh();var json=JsonNode.Parse(JsonSerializer.Serialize(s.State,SaveStore.JsonOptions))!;
+     var life=json["Creatures"]![0]!["Interaction"]!.AsObject();life.Remove("Resources");life.Remove("Digestion");
+     life.Remove("GroundIntakeKind");life.Remove("GroundIntakeDistance");life.Remove("GroundIntakeSourceHeight");
+-    life.Remove("GroundIntakeSourceId");life.Remove("NaturalBitePause");
++    life.Remove("GroundIntakeSourceId");life.Remove("NaturalBitePause");life.Remove("NaturalIntakePending");
+     var state=JsonSerializer.Deserialize<WorldState>(json.ToJsonString(),SaveStore.JsonOptions)!;SaveStore.Validate(state);
+     Require(state.Creatures[0].Interaction.Resources.Count==0&&state.Creatures[0].Interaction.Digestion.Severity==0,"old defaults unsafe");
+     Require(state.Creatures[0].Interaction.GroundIntakeKind==null&&state.Creatures[0].Interaction.GroundIntakeDistance==.792&&
+         state.Creatures[0].Interaction.GroundIntakeSourceHeight==0&&state.Creatures[0].Interaction.GroundIntakeSourceId==null&&
+-        state.Creatures[0].Interaction.NaturalBitePause==0,"old mouthful geometry defaults unsafe");
++        state.Creatures[0].Interaction.NaturalBitePause==0&&!state.Creatures[0].Interaction.NaturalIntakePending,"old mouthful geometry defaults unsafe");
++});
++Check("missing pending field resumes an already accepted mouthful without replaying its portion",()=>
++{
++    // Synthetic legacy shape, not an authorized historical-save fixture. Only
++    // remove the flag after acceptance; a reserved modern bite is not old data.
++    foreach(var kind in new[]{RoomObjectKind.Meal,RoomObjectKind.Water})
++    foreach(bool omitGeometry in new[]{false,true})
++    foreach(bool close in new[]{false,true})
++    {
++        var original=Fresh();var oil=original.Selected!;
++        oil.Fullness=kind==RoomObjectKind.Meal?65:90;
++        oil.Interaction.Hydration=kind==RoomObjectKind.Water?60:90;
++        var source=Source(original,kind,.5,portions:1);
++        Tick(original,.75);
++        Require(!oil.Interaction.NaturalIntakePending&&oil.Interaction.EatingRemaining>0&&
++            oil.Interaction.Digestion.Exposures==1&&source.Portions==0,"fixture did not accept exactly one unfinished mouthful");
++        double fullness=oil.Fullness,hydration=oil.Interaction.Hydration;
++        double remaining=oil.Interaction.EatingRemaining;
++        var json=JsonNode.Parse(JsonSerializer.Serialize(original.State,SaveStore.JsonOptions))!;
++        var life=json["Creatures"]![0]!["Interaction"]!.AsObject();
++        life.Remove("NaturalIntakePending");
++        if(omitGeometry)
++            foreach(string field in new[]{"GroundIntakeKind","GroundIntakeDistance","GroundIntakeSourceHeight","GroundIntakeSourceId","NaturalBitePause"})life.Remove(field);
++        var state=JsonSerializer.Deserialize<WorldState>(json.ToJsonString(),SaveStore.JsonOptions)!;
++        SaveStore.Validate(state);var loaded=new WorldSimulation(state);var resumed=loaded.Selected!;
++        loaded.State.Mode=close?PlayMode.CloseUp:PlayMode.Management;
++        Require(!resumed.Interaction.NaturalIntakePending&&resumed.Interaction.EatingRemaining==remaining&&
++            resumed.Fullness==fullness&&resumed.Interaction.Hydration==hydration&&resumed.Interaction.Digestion.Exposures==1,
++            "loading changed accepted intake or turned it back into a reservation");
++        for(int frame=0;frame<80;frame++)
++        {
++            loaded.AdvanceInteractionPresentation(.05);loaded.Advance(.05);
++            Require(resumed.Fullness<=fullness&&resumed.Interaction.Hydration<=hydration&&
++                resumed.Interaction.Digestion.Exposures==1&&
++                loaded.State.RoomObjects.Where(o=>NaturalResources.IsResource(o.Kind)).Sum(o=>o.Portions)==0,
++                "continuation granted nutrition, repeated exposure, or restored the swallowed portion");
++        }
++        Require(resumed.Interaction.EatingRemaining==0&&!resumed.Interaction.NaturalIntakePending,
++            "accepted legacy mouthful did not finish");
++        if(close)Require(resumed.Fullness==fullness&&resumed.Interaction.Hydration==hydration,
++            "close-up continuation advanced passive needs");
++        SaveStore.Validate(loaded.State);
++    }
+ });
+ Check("save rejects invalid natural mouthful geometry",()=>
+ {
+--- previous/checks/Simulation.Smoke/Program.cs
++++ current/checks/Simulation.Smoke/Program.cs
+@@ -59,6 +59,36 @@
+ var invalid=WorldSimulation.Create().State;invalid.Regions.Add(null!);Reject(()=>SaveStore.Validate(invalid),"null region rejected with controlled invalid-data result");
+ invalid=WorldSimulation.Create().State;invalid.Creatures[0].Observation.Notes=null!;Reject(()=>SaveStore.Validate(invalid),"null observations rejected before UI reads them");
+ invalid=WorldSimulation.Create().State;invalid.PlayerX=double.PositiveInfinity;Reject(()=>SaveStore.Validate(invalid),"nonfinite player position rejected");
++// Synthetic corruption cases exercise fallback; they are not historical-save compatibility evidence.
++var structureStore=new SaveStore(Path.Combine(root,"structure-corruption"));
++var validInteraction=WorldSimulation.CreateInteractionPlaytest().State;
++structureStore.Save(validInteraction,1);structureStore.Save(validInteraction,1);
++string structureBackup=File.ReadAllText(structureStore.SlotPath(1)+".bak");
++void RecoverStructuralCorruption(WorldState damaged,string description)
++{
++    string damagedJson=Json(damaged);File.WriteAllText(structureStore.SlotPath(1),damagedJson);
++    Reject(()=>SaveStore.Validate(damaged),description+" is rejected as invalid data");
++    var recovered=structureStore.Load(1);
++    Check(recovered.RecoveredBackup&&Json(recovered.State)==Json(validInteraction),description+" falls back to the valid backup");
++    Reject(()=>structureStore.Save(validInteraction,1),description+" cannot replace the good backup");
++    Check(File.ReadAllText(structureStore.SlotPath(1))==damagedJson&&
++        File.ReadAllText(structureStore.SlotPath(1)+".bak")==structureBackup,description+" leaves both files unchanged");
++}
++var pendingWithNull=WorldSimulation.CreateInteractionPlaytest().State;
++var pendingLife=pendingWithNull.Creatures[0].Interaction;
++var pendingSource=pendingWithNull.RoomObjects.First(o=>o.Kind==RoomObjectKind.Leaves);
++pendingSource.Portions--;
++pendingLife.GroundIntake=true;pendingLife.NaturalIntakePending=true;pendingLife.EatingRemaining=1;
++pendingLife.GroundIntakeSourceId=pendingSource.Id;pendingLife.GroundIntakeKind=pendingSource.Kind;
++pendingWithNull.RoomObjects.Insert(0,null!);
++RecoverStructuralCorruption(pendingWithNull,"null object before a pending intake reference");
++var missingLearning=WorldSimulation.CreateInteractionPlaytest().State;
++missingLearning.Creatures[0].Interaction.ActiveCue=LearnedCue.Wait;
++missingLearning.Creatures[0].Interaction.Learning.Clear();
++RecoverStructuralCorruption(missingLearning,"active lesson without its learning record");
++missingLearning.Creatures[0].Interaction.ActiveCue=null;
++SaveStore.Validate(missingLearning);
++Check(missingLearning.Creatures[0].Interaction.Learning.Count==0,"inactive empty learning records remain valid");
+ var isolated=WorldSimulation.Create();isolated.Travel("wild");var rescued=isolated.Selected!;isolated.Rescue();isolated.Advance(120);
+ Check(rescued.X is >= -7 and <= -4.5&&rescued.Z is >= 4.2 and <= 6.6,"quarantine resident stays within the observation area");
+ var crowd=WorldSimulation.Create(100);crowd.Advance(20);
+--- previous/src/Yukkuri.Game/ContactStrokeTracker.cs
++++ current/src/Yukkuri.Game/ContactStrokeTracker.cs
+@@ -10,16 +10,25 @@
+     private Vector2 _pointer;
+     private Vector3 _point;
+     public void Reset()=>_target=null;
+-    public ContactStroke Sample(string? target,BodyPart part,Vector2 pointer,Vector3 localPoint,float bodyScale,SurfaceSide side=SurfaceSide.Whole)
++    public ContactStroke Sample(string? target,BodyPart part,Vector2 pointer,Vector3 localPoint,float bodyScale,SurfaceSide side=SurfaceSide.Whole,
++        Vector3? previousLocalPoint=null)
+     {
+         var stroke=new ContactStroke(0,Vector2.Zero);
++        if(target==null||!float.IsFinite(bodyScale)||bodyScale<=0||
++            !float.IsFinite(pointer.X)||!float.IsFinite(pointer.Y)||
++            !Finite(localPoint)||previousLocalPoint is { } previous&&!Finite(previous))
++        {Reset();return stroke;}
+         if(target!=null&&target==_target&&part==_part&&side==_side&&Vector2.DistanceSquared(pointer,_pointer)>.000001f)
+         {
+-            Vector3 movement=(localPoint-_point)*bodyScale;
++            // The caller can reproject the previous pointer on the current pose.
++            // This excludes body/camera travel that coincided with a moving mouse.
++            Vector3 movement=(localPoint-(previousLocalPoint??_point))*bodyScale;
++            if(!float.IsFinite(movement.LengthSquared())){Reset();return stroke;}
+             Vector2 direction=new(movement.X,-movement.Y);
+             if(direction.LengthSquared()>0)direction/=System.MathF.Max(.025f,direction.Length());
+             stroke=new(movement.Length(),direction);
+         }
+         _target=target;_part=part;_side=side;_pointer=pointer;_point=localPoint;return stroke;
+     }
++    private static bool Finite(Vector3 point)=>float.IsFinite(point.X)&&float.IsFinite(point.Y)&&float.IsFinite(point.Z);
+ }
+--- previous/src/Yukkuri.Simulation/ContactMotion.cs
++++ current/src/Yukkuri.Simulation/ContactMotion.cs
+@@ -51,13 +51,19 @@
+         double approachFraction=rawSpeed>0?Math.Clamp(approachSpeed/rawSpeed,0,1):0;
+         double effectiveSpeed=rawSpeed*Math.Sqrt(tangentFraction*tangentFraction+Math.Pow(approachFraction*InwardSpeedWeight,2));
+         if(!double.IsFinite(effectiveSpeed)){Reset();return default;}
+-        Vector3 direction=pointerTravel.LengthSquared()>.000001f?Vector3.Normalize(pointerTravel):Vector3.Zero;
++        Vector3 direction=distance>.000001&&pointerTravel.LengthSquared()>0?Vector3.Normalize(pointerTravel):Vector3.Zero;
+         _cooldown=Math.Max(0,_cooldown-seconds);
+         double impact=0;
+         // Pulling away is not driving into or across the body. Cancel the stroke even
+         // while the ray still intersects skin, so its later endpoint cannot become a hit.
+-        bool withdrawing=normalSpeed>StoppedSpeed&&normalSpeed>rawSpeed*tangentFraction;
+-        if(withdrawing){ClearBrake();_quickSeconds=0;_quickDistance=0;_previousSpeed=0;}
++        bool withdrawing=distance>.000001&&normalSpeed>0&&normalSpeed>rawSpeed*tangentFraction;
++        bool changedDirection=distance>.000001&&_travelDirection.LengthSquared()>.1f&&
++            Vector3.Dot(direction,_travelDirection)<.4f;
++        if(withdrawing||changedDirection)
++        {ClearBrake();_quickSeconds=0;_quickDistance=0;_previousSpeed=0;_travelDirection=Vector3.Zero;}
++        // Even a slow withdrawal breaks the incoming stroke. Its force must not
++        // inherit the filter tail of the preceding fast rub while skin is still hit.
++        if(withdrawing){_forceSpeed=0;effectiveSpeed=0;}
+         // A brake is a gesture, not an inference about the user's character or a mouse pressure sensor.
+         // It needs an engaged, uninterrupted contact stroke followed by a sharp stop. Release,
+         // leaving the body and stalled frames reset the stroke instead of completing a hit.
+@@ -84,8 +90,6 @@
+         }
+         if(rawSpeed>=QuickSpeed&&!withdrawing)
+         {
+-            if(_travelDirection.LengthSquared()>.1f&&Vector3.Dot(direction,_travelDirection)<.4f)
+-            {_quickDistance=0;_quickSeconds=0;}
+             _quickSeconds+=seconds;_quickDistance+=distance;_travelDirection=direction;
+         }
+         else {_quickSeconds=0;_quickDistance=0;}
+--- previous/src/Yukkuri.Simulation/InteractionBehavior.cs
++++ current/src/Yukkuri.Simulation/InteractionBehavior.cs
+@@ -91,6 +91,7 @@
+         foreach (var c in State.Creatures)
+         {
+             var i = c.Interaction;
++            ResetInterruptedNaturalSearch(c);
+             ValidatePendingConversation(c);
+             if(i.GroundIntakeSourceId!=null&&
+                 (c.Condition==PhysicalCondition.Dead||i.Carried||i.Falling||i.Supine||i.Height>.25||
+@@ -176,6 +177,7 @@
+             if (c.Condition == PhysicalCondition.Dead) continue;
+             var i = c.Interaction;
+             i.Resting=false;
++            ResetInterruptedNaturalSearch(c);
+             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
+             c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
+             i.Hydration = Math.Max(0,i.Hydration-dt*.025);
+@@ -200,6 +202,9 @@
+                 continue;
+             }
+             UpdateInteractionRest(c,dt);
++            // Rest takes priority over a completed lesson's persistent follow
++            // order. Otherwise that order prevents UpdateInteractionRest forever.
++            if(i.ActiveCue==null&&i.RestRemaining>0)i.FollowPlayer=false;
+             TickDigestiveHealth(c,dt);
+             ObserveNaturalResources(c);
+             if (i.FootTreated && i.FootIntegrity < 100 && c.Fullness > 25 && c.Energy > 20)
+@@ -306,6 +311,8 @@
+             if((c.Fullness<15||i.Hydration<15)&&TickNaturalNeeds(c,dt))continue;
+             if (i.RestRemaining > 0 || c.Energy < 22 || i.Resting)
+             {
++                ResetNaturalResourceSearch(c);
++                i.HelpWaitingUntil=0;
+                 ApproachInteractionRest(c,dt);
+                 continue;
+             }
+@@ -406,10 +413,12 @@
+         var i = c.Interaction;
+         if(i.EatingRemaining>0){c.Activity=i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":"慢慢嚼着这一口";return true;}
+         if (i.NaturalBitePause>0 || i.Carried || i.Falling || i.Height > .25 || i.Supine) return false;
+-        var food = State.RoomObjects.FirstOrDefault(o => o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand && o.Portions > 0 &&
++        var food = State.RoomObjects.Where(o => o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand && o.Portions > 0 &&
+             (NaturalResources.IsWater(o.Kind)?NaturalResources.WantsWater(c):NaturalResources.IsFood(o.Kind)&&
+                 NaturalResources.WantsFood(c)&&!DigestiveFoodPause(c))&&
+-            Distance(c.X, c.Z, o.X, o.Z) <= NaturalResources.Reach(c) && CanReachRoomFood(c,o)&&NaturalResources.Consumer(State,o)==null);
++            Distance(c.X, c.Z, o.X, o.Z) <= NaturalResources.Reach(c) && CanReachRoomFood(c,o)&&NaturalResources.Consumer(State,o)==null)
++            .OrderBy(o=>NaturalResources.IsWater(o.Kind)?i.Hydration:c.Fullness)
++            .ThenBy(o=>Distance(c.X,c.Z,o.X,o.Z)).FirstOrDefault();
+         if (food == null)
+         {
+             var low=State.RoomObjects.Find(o=>o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand&&o.Portions>0&&
+@@ -445,13 +454,14 @@
+         foreach(var oil in State.Creatures)
+             if(oil.Interaction.GroundIntakeSourceId==id)DetachNaturalIntake(oil);
+         if (obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet && !State.UnlimitedResources) State.Food += obj.Portions;
+-        foreach (var c in State.Creatures.Where(c => Distance(c.X, c.Z, obj.X, obj.Z) < 2 && c.Condition != PhysicalCondition.Dead))
++        foreach (var c in State.Creatures.Where(c => c.RegionId==obj.RegionId&&Distance(c.X, c.Z, obj.X, obj.Z) < 2 &&
++            c.Condition != PhysicalCondition.Dead&&CanSeeResource(c,obj)))
+             Feedback(c, "cold", Expression.Shy, "眼前的东西被收起，它停下来望着你。", "withdraw");
+         if(obj.Kind==RoomObjectKind.Treasure)
+         {
+             obj.Stored=true;
+             var owner=State.Creatures.Find(c=>c.Id==obj.OwnerId&&c.Condition!=PhysicalCondition.Dead);
+-            if(owner!=null&&owner.RegionId==obj.RegionId&&Distance(owner.X,owner.Z,obj.X,obj.Z)<2)
++            if(owner!=null&&owner.RegionId==obj.RegionId&&Distance(owner.X,owner.Z,obj.X,obj.Z)<2&&CanSeeResource(owner,obj))
+             {
+                 Distress(owner,1);RecordInteraction(owner,"treasure-away","自己的小石头被收走了。",1);
+                 Feedback(owner,"treasure-missing",Expression.Worried,"它看着你收走小石头，还记得那是自己的宝物。","withdraw");
+--- previous/src/Yukkuri.Simulation/InteractionGesture.cs
++++ current/src/Yukkuri.Simulation/InteractionGesture.cs
+@@ -30,6 +30,7 @@
+     }
+ 
+     private ContactGesture? _interactionGesture;
++    private const double NuzzleReplyHoldSeconds=.35;
+     public bool HasInteractionGesture => _interactionGesture != null;
+     public string? InteractionGestureTarget => _interactionGesture?.TargetId;
+     public string? InteractionGestureObject=>_interactionGesture?.ObjectId;
+@@ -38,7 +39,16 @@
+     public double InteractionGestureSeconds => _interactionGesture?.Elapsed ?? 0;
+     public bool InteractionGestureOwnsPose=>_interactionGesture is { Refused:false } g&&
+         (g.ContactActive||g.Input.Action is InteractionAction.Lift or InteractionAction.Throw or InteractionAction.AdjustHanging or InteractionAction.Tease or InteractionAction.Roll)&&
+-        (g.Input.Action!=InteractionAction.Touch||g.Input.Motion>.000001);
++        (g.Input.Action switch
++        {
++            InteractionAction.Touch=>g.Input.Motion>.000001,
++            InteractionAction.Stroke or InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory=>g.Input.Motion>.0005,
++            // An invitation has a short stationary contact phase; waiting after
++            // that response is not a grip that can prevent the oil from leaving.
++            InteractionAction.Nuzzle=>g.Input.Motion>.0005||g.Input.Part==BodyPart.Cheek&&
++                (g.ContactElapsed<.45||g.NuzzleWelcomed&&g.Elapsed-g.FeedbackAt<NuzzleReplyHoldSeconds),
++            _=>true
++        });
+     private bool InteractionGestureBlocksAutonomy=>InteractionGestureOwnsPose&&CurrentInteractionAction!=InteractionAction.PlayBall;
+     public bool InteractionIntakeAccepted=>_interactionGesture is {Applied:true} g&&
+         g.Input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
+@@ -156,6 +166,14 @@
+         double motion = resumedContact?0:Math.Min(input.Motion, dt * 2.5);
+         g.Motion += motion;
+         var i = c.Interaction;
++        if(!g.Refused&&!InteractionGestureOwnsPose&&g.ReactionSerial==c.ReactionSerial&&
++            input.Action is InteractionAction.Touch or InteractionAction.Stroke or InteractionAction.Nuzzle or
++                InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory)
++        {
++            // Releasing the idle gesture also releases its own body pose, while
++            // preserving a newer autonomous intake, help or injury response.
++            i.ReactionPose="idle";i.ReactionPoseRemaining=0;
++        }
+         double force = input.Force;
+         // Refusal permits avoidance, but is not immunity to a later physical impact
+         // while the hand still actually reaches the body. One impact per held gesture.
+@@ -248,8 +266,9 @@
+                 if(nuzzle&&!g.NuzzleWelcomed)
+                 {
+                     g.NuzzleWelcomed=true;g.FeedbackAt=g.Elapsed;
+-                    return g.Last=Feedback(c,"nuzzle-ready",c.Trust<35?Expression.Shy:Expression.Curious,
++                    g.Last=Feedback(c,"nuzzle-ready",c.Trust<35?Expression.Shy:Expression.Curious,
+                         "它把脸侧轻轻靠过来了。小幅慢慢移动，和它一起蹭蹭。","nuzzle-ready");
++                    g.ReactionSerial=c.ReactionSerial;return g.Last;
+                 }
+                 if (motion <= .0005) return g.Last = g.Last with {
+                     Message = nuzzle?"它还贴着手，等你轻轻回蹭。":"手停在这里，慢慢移动才会继续摸。",
+--- previous/src/Yukkuri.Simulation/InteractionPresentation.cs
++++ current/src/Yukkuri.Simulation/InteractionPresentation.cs
+@@ -21,16 +21,29 @@
+ 
+ public static class InteractionPresentation
+ {
+-    public static string VoiceCue(Creature c)=>c.Interaction.ReactionRefused?"coo-refuse":
+-        c.Expression is Expression.Hurt or Expression.Frightened||c.Interaction.ReactionSituation=="stomach-unwell"?"coo-hurt":
+-        c.Interaction.ReactionSituation.Contains("nuzzle",StringComparison.Ordinal)?"coo-nuzzle":
+-        c.Expression==Expression.Calling?"coo-help":"coo-stroke";
++    public static string VoiceCue(Creature c)
++    {
++        var i=c.Interaction;
++        // Pain and requests for help can also reject an action. Keep their own voice;
++        // an ordinary frightened refusal still uses the refusal cue.
++        if(c.Expression==Expression.Hurt||i.ReactionSituation=="stomach-unwell")return "coo-hurt";
++        if(c.Expression==Expression.Calling)return "coo-help";
++        if(i.ReactionRefused)return "coo-refuse";
++        if(c.Expression==Expression.Frightened)return "coo-hurt";
++        if(i.ReactionSituation.Contains("nuzzle",StringComparison.Ordinal))return "coo-nuzzle";
++        if(i.ReactionSituation is "eat" or "eat-leaves" or "sweet" or "drink" or "mouthful-done")return "feed";
++        if(i.ReactionSituation is "lift" or "lift-low" or "rock")return "coo-hug";
++        return "coo-stroke";
++    }
+     public static string Pose(Creature c)
+     {
+         var i=c.Interaction;
+         if(c.Condition==PhysicalCondition.Dead)return "dead";
+         if(i.Falling)return "fall";
+-        if(i.ReactionPoseRemaining>0&&i.ReactionPose!="idle")return i.ReactionPose;
++        // Eating can finish without a swallow reaction (for example while in pain).
++        // Its short reaction timer must not keep an empty mouth in an intake pose.
++        if(i.ReactionPoseRemaining>0&&i.ReactionPose!="idle"&&
++            (i.ReactionPose is not ("eat" or "sip")||i.EatingRemaining>0))return i.ReactionPose;
+         if(i.EatingRemaining>0)return i.EatingKind==IntakeKind.Water?"sip":"eat";
+         if(i.Resting)return "rest";
+         if(i.Carried)return "carry";
+--- previous/src/Yukkuri.Simulation/InteractionValidation.cs
++++ current/src/Yukkuri.Simulation/InteractionValidation.cs
+@@ -11,6 +11,13 @@
+         static bool Range(params double[] values) => Finite(values) && values.All(v => v >= 0 && v <= 100);
+         Require(s.MilestoneScenario && s.RoomObjects != null && s.InteractionSequence >= 0, "互动世界状态无效");
+         var ids = s.Creatures.Select(c => c.Id).ToHashSet();
++        // Validate object structure before pending-intake references inspect its entries.
++        var objectIds = new HashSet<string>();
++        foreach (var o in s.RoomObjects!)
++            Require(o != null && !string.IsNullOrWhiteSpace(o.Id) && objectIds.Add(o.Id) && Enum.IsDefined(o.Kind) &&
++                s.Regions.Any(r => r.Id == o.RegionId) && (o.OwnerId == null || ids.Contains(o.OwnerId)) &&
++                Finite(o.X, o.Z, o.Height, o.VelocityX, o.VelocityZ,o.Contamination) && o.Contamination is >=0 and <=1 && Math.Abs(o.X) <= 9 && Math.Abs(o.Z) <= 9 &&
++                o.Height is >= 0 and <= 5 && o.Portions is >= 0 and <= 1000, "互动场景物品无效");
+         var accessoryIds = new HashSet<string>();
+         foreach (var c in s.Creatures)
+         {
+@@ -49,6 +56,7 @@
+                     learning.Attempts >= 0 && learning.Successes >= 0 && learning.Applications >= 0 &&
+                     learning.Successes <= learning.Attempts && learning.Applications <= learning.Successes &&
+                     Finite(learning.LastPracticeAt, learning.DemonstrationX, learning.DemonstrationZ), "学习记录无效");
++            Require(i.ActiveCue==null||i.Learning!.ContainsKey(i.ActiveCue.Value),"当前练习缺少学习记录");
+             Require(i.Memories!.All(p => !string.IsNullOrWhiteSpace(p.Key) && double.IsFinite(p.Value) && p.Value >= 0 && p.Value <= 100), "互动记忆无效");
+             Require(i.SurfaceDirt!=null&&i.SurfaceWetness!=null&&i.SurfaceDirt.Concat(i.SurfaceWetness).All(p=>Enum.IsDefined(p.Key)&&p.Key!=BodyPart.Accessory&&Range(p.Value)),"局部清洁状态无效");
+             Require(i.SideDirt!=null&&i.SideWetness!=null&&i.SideDirt.Concat(i.SideWetness).All(p=>InteractionLife.HasPairedSides(p.Key)&&p.Value!=null&&Range(p.Value.Left,p.Value.Right)),"左右清洁状态无效");
+@@ -72,11 +80,5 @@
+                 intake!=null&&double.IsFinite(intake.At)&&intake.At>=0&&intake.At<=s.WorldSeconds+.001&&
+                 (intake.SourceId==null||!string.IsNullOrWhiteSpace(intake.SourceId))),"最近吃喝记忆无效");
+         }
+-        var objectIds = new HashSet<string>();
+-        foreach (var o in s.RoomObjects!)
+-            Require(o != null && !string.IsNullOrWhiteSpace(o.Id) && objectIds.Add(o.Id) && Enum.IsDefined(o.Kind) &&
+-                s.Regions.Any(r => r.Id == o.RegionId) && (o.OwnerId == null || ids.Contains(o.OwnerId)) &&
+-                Finite(o.X, o.Z, o.Height, o.VelocityX, o.VelocityZ,o.Contamination) && o.Contamination is >=0 and <=1 && Math.Abs(o.X) <= 9 && Math.Abs(o.Z) <= 9 &&
+-                o.Height is >= 0 and <= 5 && o.Portions is >= 0 and <= 1000, "互动场景物品无效");
+     }
+ }
+--- previous/src/Yukkuri.Simulation/NaturalLife.cs
++++ current/src/Yukkuri.Simulation/NaturalLife.cs
+@@ -143,6 +143,11 @@
+                 if(life.Resources.Count>=128)life.Resources.Remove(life.Resources.MinBy(p=>p.Value.SeenAt).Key);
+                 life.Resources[obj.Id]=memory=new();
+             }
++            if(memory.RegionId!=obj.RegionId||memory.X!=obj.X||memory.Z!=obj.Z)
++            {
++                if(life.ResourceTargetId==obj.Id)ResetNaturalResourceSearch(c);
++                memory.AvoidUntil=0;
++            }
+             memory.RegionId=obj.RegionId;memory.Kind=obj.Kind;memory.X=obj.X;memory.Z=obj.Z;
+             memory.Available=obj.Portions>0;memory.SeenAt=State.WorldSeconds;
+         }
+@@ -197,12 +202,17 @@
+         var life=c.Interaction;
+         bool thirsty=NaturalResources.WantsWater(c),hungry=NaturalResources.WantsFood(c);
+         if(life.EatingRemaining>0){c.Activity=life.EatingKind==IntakeKind.Water?"小口喝水":"慢慢嚼这一口";return true;}
+-        if(!thirsty&&!hungry){life.ResourceTargetId=null;life.ResourceStuckSeconds=0;return false;}
++        if(!thirsty&&!hungry){ResetNaturalResourceSearch(c);life.HelpWaitingUntil=0;return false;}
+         if(life.NaturalBitePause>0){c.Activity="停一小会儿，再看看想吃喝什么";return true;}
+         if(!thirsty&&hungry&&DigestiveFoodPause(c))
+         {c.Activity="肚子不舒服，歇一会儿再吃";return true;}
+         ObserveNaturalResources(c);
+         bool hand=SeesHelpingHand(c);
++        if(!hand)
++        {
++            life.HelpWaitingUntil=0;
++            if(life.ReactionPose=="help-look")life.ReactionPoseRemaining=0;
++        }
+         double urgent=Math.Min(c.Fullness,life.Hydration);
+         if(hand&&State.WorldSeconds-life.LastHelpDecisionAt>=24&&c.ReactionRemaining<=0)
+         {
+@@ -222,37 +232,47 @@
+             }
+         }
+         if(State.WorldSeconds<life.HelpWaitingUntil&&urgent>=12){c.Activity="看向手，等一小会儿";return true;}
+-        ResourceMemory? target=null;double best=double.NegativeInfinity;string? targetId=null;
++        ResourceMemory? target=null;double best=double.NegativeInfinity;string? targetId=null;bool targetUrgent=false;
+         foreach(var (id,m) in life.Resources)
+         {
+             if(m.RegionId!=c.RegionId||!m.Available||m.AvoidUntil>State.WorldSeconds)continue;
+             bool water=NaturalResources.IsWater(m.Kind);if(water?!thirsty:!hungry||DigestiveFoodPause(c))continue;
+             double need=water?100-life.Hydration:100-c.Fullness;
++            bool urgentNeed=need>85;
+             double distance=Distance(c.X,c.Z,m.X,m.Z);
+             double score=need*.10-distance*.45-m.Suspicion*.025;
+             if(!NaturalResources.IsWild(m.Kind)&&hand&&c.Trust<40&&Distance(m.X,m.Z,State.PlayerX,State.PlayerZ)<1.8)
+                 score-=(40-c.Trust)*.15;
+             if(id==life.ResourceTargetId)score+=.4;
+-            if(score>best){best=score;target=m;targetId=id;}
++            // A less urgent nearby snack must not displace available water (or
++            // food) needed to interrupt rest. Keep normal scoring within a tier.
++            if(target==null||urgentNeed&&!targetUrgent||urgentNeed==targetUrgent&&score>best)
++            {best=score;target=m;targetId=id;targetUrgent=urgentNeed;}
+         }
+         if(target!=null&&targetId!=null)
+         {
+-            if(life.ResourceTargetId!=targetId)
++            bool changedTarget=life.ResourceTargetId!=targetId;
++            if(changedTarget)
+             {life.ResourceTargetId=targetId;life.ResourceBestDistance=Distance(c.X,c.Z,target.X,target.Z);life.ResourceStuckSeconds=0;c.TargetX=c.X;c.TargetZ=c.Z;}
+-            var obj=State.RoomObjects.Find(o=>o.Id==targetId);
++            // The remembered location can guide a search, but looking up its ID
++            // must not reveal a moved source outside current sight or this region.
++            var obj=State.RoomObjects.Find(o=>o.Id==targetId&&o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand&&
++                Distance(c.X,c.Z,o.X,o.Z)<=NaturalResources.SenseRange&&CanSeeResource(c,o));
+             double distance=Distance(c.X,c.Z,target.X,target.Z);
+             bool distrust=hand&&c.Trust<25&&urgent>=12&&!NaturalResources.IsWild(target.Kind)&&
+                 Distance(target.X,target.Z,State.PlayerX,State.PlayerZ)<1.8;
+-            if(distrust)
+-            {
+-                target.AvoidUntil=State.WorldSeconds+3;life.ResourceTargetId=null;
+-                c.Activity="先离手远一点，自己找找";return true;
++            if(distrust&&changedTarget)
++            {
++                // Keep the chosen goal during a brief cautious look. Repeatedly
++                // discarding it would reject the only supply until near starvation.
++                life.HelpWaitingUntil=State.WorldSeconds+1.5;
++                c.Activity="先看一会儿手旁的吃喝";return true;
+             }
+             if(distance<=NaturalResources.Reach(c)&&obj!=null&&obj.RegionId==c.RegionId&&!obj.Stored&&!obj.HeldByHand&&obj.Portions>0&&
+                 Distance(c.X,c.Z,obj.X,obj.Z)<=NaturalResources.Reach(c)&&CanReachRoomFood(c,obj)&&NaturalResources.Consumer(State,obj)==null&&
+                 !life.Carried&&!life.Falling&&!life.Supine&&life.Height<=.25)
+             {
+-                BeginNaturalIntake(c,obj);life.ResourceTargetId=null;life.ResourceStuckSeconds=0;return true;
++                BeginNaturalIntake(c,obj);ResetNaturalResourceSearch(c);return true;
+             }
+             if(CanSelfMove(c))
+             {
+@@ -276,10 +296,11 @@
+                 else life.ResourceStuckSeconds+=dt;
+                 c.Activity=adjusting?"换个站位，试着够到嘴边":NaturalResources.IsWater(target.Kind)?"去找水水":"去找能吃的东西";
+                 if(life.ResourceStuckSeconds>=3)
+-                {target.AvoidUntil=State.WorldSeconds+30;life.ResourceTargetId=null;life.ResourceStuckSeconds=0;c.Activity="这边过不去，换个地方找";}
++                {target.AvoidUntil=State.WorldSeconds+30;ResetNaturalResourceSearch(c);c.Activity="这边过不去，换个地方找";}
+                 return true;
+             }
+         }
++        if(life.ResourceTargetId!=null)ResetNaturalResourceSearch(c);
+         if(!CanSelfMove(c)){c.Activity="想找吃喝，但身体走不开";return false;}
+         if(State.WorldSeconds>=life.ExploreUntil||Distance(c.X,c.Z,c.TargetX,c.TargetZ)<.3)
+         {
+@@ -289,6 +310,26 @@
+             c.TargetZ=Math.Clamp(c.Z+Math.Sin(angle)*3.2,-edge,edge);
+         }
+         RoomMove(c,c.TargetX,c.TargetZ,dt);c.Activity=thirsty?"四处找水水":"四处找能吃的叶子";return true;
++    }
++
++    private static void ResetNaturalResourceSearch(Creature c)
++    {
++        var life=c.Interaction;
++        life.ResourceTargetId=null;life.ResourceBestDistance=100;life.ResourceStuckSeconds=0;
++        life.ExploreUntil=0;
++    }
++
++    private void ResetInterruptedNaturalSearch(Creature c)
++    {
++        var life=c.Interaction;
++        if(!life.Carried&&!life.Falling&&!life.Supine&&life.Restraint==RestraintKind.None&&
++            c.Condition is not (PhysicalCondition.Critical or PhysicalCondition.Dead)&&life.ActiveCue==null&&
++            !(InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy))return;
++        // Also used by presentation: carrying in close-up can relocate the body
++        // without advancing world time. Old approach progress must not survive it.
++        ResetNaturalResourceSearch(c);
++        life.HelpWaitingUntil=0;
++        if(life.ReactionPose=="help-look")life.ReactionPoseRemaining=0;
+     }
+ 
+     private bool TryResourceStandingPoint(Creature c,RoomObject source,out (double X,double Z) point)
+--- previous/src/Yukkuri.Simulation/RoomResourceText.cs
++++ current/src/Yukkuri.Simulation/RoomResourceText.cs
+@@ -6,25 +6,32 @@
+     public static string Label(RoomObject obj,WorldState? state=null)
+     {
+         if(obj.Portions==0&&state!=null&&NaturalResources.Consumer(state,obj)!=null)
+-            return obj.Kind==RoomObjectKind.Water?"水杯 · 正在喝最后一口":"食物 · 正在吃最后一口";
++            return obj.Kind switch
++            {
++                RoomObjectKind.Leaves=>"叶簇 · 最后一口还没吃完",
++                RoomObjectKind.Meal=>"饭饭 · 最后一口还没吃完",
++                RoomObjectKind.Sweet=>"甜甜 · 最后一口还没吃完",
++                RoomObjectKind.Water=>"水杯 · 最后一口还没喝完",
++                _=>""
++            };
+         return obj.Kind switch
+     {
+         RoomObjectKind.Leaves=>obj.Portions>0?"叶簇 · 可以自己啃":"叶簇 · 已经吃空",
+         RoomObjectKind.RiverWater=>"河岸 · 可以靠岸喝水",
+-        RoomObjectKind.Meal=>"饭饭 · 按住拿起",
+-        RoomObjectKind.Sweet=>"甜甜 · 按住拿起",
+-        RoomObjectKind.Water=>"水杯 · 按住拿起",
+-        RoomObjectKind.Ball=>state!=null&&RoomBallEnvironment.InWater(state,obj)?"软球 · 漂在水上":"软球 · 按住后拖出方向",
++        RoomObjectKind.Meal=>obj.Portions>0?"饭饭 · 空手按住拿起":"饭饭 · 已经吃空",
++        RoomObjectKind.Sweet=>obj.Portions>0?"甜甜 · 空手按住拿起":"甜甜 · 已经吃空",
++        RoomObjectKind.Water=>obj.Portions>0?"水杯 · 空手按住拿起":"水杯 · 已经喝空",
++        RoomObjectKind.Ball=>state!=null&&RoomBallEnvironment.InWater(state,obj)?"软球 · 漂在水上":"软球 · 空手拖动，松开推球",
+         RoomObjectKind.Treasure=>"小宝物",
+         _=>""
+         };
+     }
+     public static string Describe(RoomObject obj,WorldState? state=null)=>obj.Kind switch
+     {
+-        RoomObjectKind.Leaves when obj.Portions==0&&state!=null&&NaturalResources.Consumer(state,obj)!=null=>"这一簇已经没有下一口了，它还在慢慢嚼最后一点叶子。",
++        RoomObjectKind.Leaves when obj.Portions==0&&state!=null&&NaturalResources.Consumer(state,obj)!=null=>"这一簇的最后一口还没吃完，暂时没有多余的叶子。",
+         RoomObjectKind.Leaves=>obj.Portions>0?"这里还有可食的叶子。油饿了会自己来找，但野外叶子不如备好的饭饭稳妥，吃后可能不舒服。":"这簇叶子已经吃空，只剩残叶；需要再找别的食物。",
+         RoomObjectKind.RiverWater=>"这里可以站在岸边喝水。河水未经处理，喝后可能不舒服；饮水不需要下河。",
+-        RoomObjectKind.Ball when state!=null&&RoomBallEnvironment.InWater(state,obj)=>"软球被水托住，慢慢漂着。油会留在岸边；按住球，仍可以把它朝岸边推回来。",
++        RoomObjectKind.Ball when state!=null&&RoomBallEnvironment.InWater(state,obj)=>"软球被水托住，慢慢漂着。油会留在岸边；空手按住球，朝岸边拖动后松开，可以把它推回来。",
+         _=>Label(obj,state)
+     };
+ }

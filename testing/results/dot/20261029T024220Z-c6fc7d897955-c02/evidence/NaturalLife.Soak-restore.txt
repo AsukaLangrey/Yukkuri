@@ -1,0 +1,5 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/NaturalLife.Soak/NaturalLife.Soak.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/source
+  Determining projects to restore...
+  Restored /workspace/shared/yukkuri-cloud-20261029T0238-c6fc7d8/source/checks/NaturalLife.Soak/NaturalLife.Soak.csproj (in 89 ms).
+  1 of 2 projects are up-to-date for restore.

@@ -1,0 +1,264 @@
+{
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "scope": "Seed settings re-read from pinned current source; no seed overrides; generated sequences are not expanded or fabricated. Test invocations use source defaults.",
+  "checks": {
+    "Simulation.Smoke": {
+      "world_seed": 92137,
+      "synthetic_interaction_corruption_seed": 20261028
+    },
+    "Milestone.Smoke": {
+      "initial_base_world_seed": 92137,
+      "milestone_seed": 20261027,
+      "sharing_input_seed_ranges": [
+        [
+          1,
+          40
+        ],
+        [
+          1,
+          120
+        ]
+      ],
+      "sharing_state_formula": "unchecked(seed*0x9E3779B97F4A7C15UL)"
+    },
+    "Interaction.Smoke": {
+      "interaction_world_seed": 20261028
+    },
+    "Input.Intent": {
+      "interaction_world_seed": 20261028,
+      "input_traces": "fixed synthetic fixture checks/Input.Intent/fixtures/contact-traces.json"
+    },
+    "NaturalLife.Smoke": {
+      "fresh_default_seed": 20261029,
+      "direct_world_default_seed": 20261028,
+      "fixed_input_seed_ranges": [
+        [
+          1,
+          20
+        ]
+      ],
+      "system_random_seed_generators": [
+        1009,
+        779,
+        292107,
+        291044
+      ]
+    },
+    "Interaction.Continuity": {
+      "interaction_world_seed": 20261028,
+      "mixed_gesture_system_random_seeds": [
+        71001,
+        71002,
+        71003,
+        71004,
+        71005,
+        71006,
+        71007,
+        71008,
+        71009,
+        71010,
+        71011,
+        71012
+      ]
+    },
+    "ActorGeometry.Smoke": {
+      "interaction_world_seed": 20261028,
+      "system_random_seed": 20261029
+    },
+    "NaturalLife.Soak": {
+      "world_seeds": [
+        72341,
+        592813,
+        1597331,
+        20261029
+      ],
+      "scenario_count": 6,
+      "cases": 24,
+      "simulated_seconds_per_case": 3600
+    },
+    "ActorGeometry.IntakeCombinations": {
+      "interaction_world_seed": 20261028,
+      "combinations": 1728,
+      "frame_schedules": [
+        [
+          0.03333333333333333
+        ],
+        [
+          0.016666666666666666
+        ],
+        [
+          0.006944444444444444
+        ],
+        [
+          0.01,
+          0.035,
+          0.008,
+          0.019,
+          0.041
+        ]
+      ]
+    }
+  },
+  "source_excerpts": [
+    {
+      "file": "src/Yukkuri.Simulation/WorldState.cs",
+      "line": 76,
+      "source": "public ulong RandomState { get; set; } = 92137;"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+      "line": 6,
+      "source": "public static WorldSimulation CreateMilestone(bool sandbox=false, ulong seed=20261027)"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+      "line": 10,
+      "source": "s.MilestoneScenario=true;s.RandomState=seed==0?20261027:seed;s.Money=160;s.Food=35;"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "line": 5,
+      "source": "public static WorldSimulation CreateInteractionPlaytest(ulong seed = 20261028)"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "line": 9,
+      "source": "MilestoneScenario = true, InteractionPlaytest = true, RandomState = seed == 0 ? 20261028 : seed,"
+    },
+    {
+      "file": "checks/ActorGeometry.Smoke/Program.cs",
+      "line": 1385,
+      "source": "var random=new Random(20261029);float maximum=0;"
+    },
+    {
+      "file": "checks/Interaction.Continuity/Program.cs",
+      "line": 1066,
+      "source": "for(int seed=1;seed<=12;seed++)"
+    },
+    {
+      "file": "checks/Interaction.Continuity/Program.cs",
+      "line": 1068,
+      "source": "var random=new Random(71000+seed);var sim=Fresh();"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 128,
+      "source": "WorldSimulation SharingScene(ulong seed,bool trained,bool parentNearby,int sessions=0)"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 140,
+      "source": "for(ulong seed=1;seed<=40;seed++)"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 142,
+      "source": "var w=SharingScene(seed,false,true);var child=w.State.Creatures[2];var parent=w.State.Creatures[0];"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 146,
+      "source": "var unseen=SharingScene(8,false,false);"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 148,
+      "source": "var learned=SharingScene(8,true,true);"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 151,
+      "source": "for(ulong seed=1;seed<=120;seed++)"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 153,
+      "source": "if(SharingScene(seed,false,false).State.Incidents.Any(e=>e.Kind==IncidentKind.Theft))baselineThefts++;"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 154,
+      "source": "if(SharingScene(seed,false,false,6).State.Incidents.Any(e=>e.Kind==IncidentKind.Theft))practicedThefts++;"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 19,
+      "source": "WorldSimulation Fresh(ulong seed=20261029)"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 353,
+      "source": "for(ulong seed=1;seed<=20;seed++)"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 369,
+      "source": "for(ulong seed=1;seed<=20;seed++)"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 379,
+      "source": "int low=0,high=0;var rng=new Random(1009);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 382,
+      "source": "ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 393,
+      "source": "observations[\"trust-help\"]=new{seedGenerator=1009,samplesPerGroup=150,low,high,lowInterval95=Interval(low,150),highInterval95=Interval(high,150)};"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 402,
+      "source": "int dirty=0,clean=0;var rng=new Random(779);const int samples=400;"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 405,
+      "source": "ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 416,
+      "source": "observations[\"dirty-versus-clean\"]=new{seedGenerator=779,samplesPerGroup=samples,dirty,clean,dirtyInterval95=Interval(dirty,samples),cleanInterval95=Interval(clean,samples)};"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 753,
+      "source": "int single=0,repeated=0,samples=400;var random=new Random(292107);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 756,
+      "source": "ulong seed=(ulong)random.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 765,
+      "source": "observations[\"repeated-dose\"]=new{seedGenerator=292107,samplesPerGroup=samples,single,repeated,singleInterval95=Interval(single,samples),repeatedInterval95=Interval(repeated,samples)};"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 880,
+      "source": "const int samples=80;int lowWild=0,highWild=0,absentWild=0;var rng=new Random(291044);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 883,
+      "source": "ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 896,
+      "source": "observations[\"first-food-choice\"]=new{seedGenerator=291044,samplesPerGroup=samples,lowWild,highWild,absentWild,"
+    },
+    {
+      "file": "checks/NaturalLife.Soak/Program.cs",
+      "line": 8,
+      "source": "var seeds=args.Length>2?new[]{ulong.Parse(args[2])}:new ulong[]{72341,592813,1597331,20261029};"
+    }
+  ]
+}

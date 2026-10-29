@@ -1,0 +1,12 @@
+{
+  "name": "dotnet-sdk-linux-x64.tar.gz",
+  "rid": "linux-x64",
+  "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.402/dotnet-sdk-10.0.402-linux-x64.tar.gz",
+  "hash": "1904a98dda2db34ba78ba3c4fb1b224455329af91c341d83547843c1839e112b04ae699ee92fa2449a8f62249196a938723078c0c60b9f65c88539d5687729c2",
+  "actual_sha512": "1904a98dda2db34ba78ba3c4fb1b224455329af91c341d83547843c1839e112b04ae699ee92fa2449a8f62249196a938723078c0c60b9f65c88539d5687729c2",
+  "sha512_verified": true,
+  "metadata_url": "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/10.0/releases.json",
+  "official_download_page": "https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-10.0.402-linux-x64-binaries-targz",
+  "install_directory": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet",
+  "installation": "Downloaded tar.gz via curl; verified SHA512 before tarfile extraction filter=data; no system paths or shell profiles modified"
+}

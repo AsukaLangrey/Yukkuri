@@ -1,0 +1,120 @@
+{
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "request_revision": "dot-v2-static-polish-20261029",
+  "scope": "Observed current pure-.NET automated outputs, not coverage of every proposed handoff scenario or real game effects",
+  "new_test_count_delta": {
+    "Simulation.Smoke": 9,
+    "Input.Intent": 4,
+    "NaturalLife.Smoke": 4,
+    "ActorGeometry.Smoke": 1,
+    "total": 18
+  },
+  "new_named_results": [
+    {
+      "check_id": "Input.Intent",
+      "result": {
+        "name": "slow withdrawal after a fast rub clears both impact history and force tail",
+        "passed": true
+      },
+      "evidence": "evidence/Input.Intent.json"
+    },
+    {
+      "check_id": "Input.Intent",
+      "result": {
+        "name": "slow reversal during braking does not complete the previous stroke",
+        "passed": true
+      },
+      "evidence": "evidence/Input.Intent.json"
+    },
+    {
+      "check_id": "Input.Intent",
+      "result": {
+        "name": "idle rubbing tools release autonomous needs after a brief nuzzle invitation",
+        "passed": true
+      },
+      "evidence": "evidence/Input.Intent.json"
+    },
+    {
+      "check_id": "Input.Intent",
+      "result": {
+        "name": "ending rubbing pose does not erase a newer independent reaction",
+        "passed": true
+      },
+      "evidence": "evidence/Input.Intent.json"
+    },
+    {
+      "check_id": "NaturalLife.Smoke",
+      "result": {
+        "name": "completed follow intent yields to autonomous rest with or without a visible hand",
+        "passed": true
+      },
+      "evidence": "evidence/NaturalLife.Smoke.json"
+    },
+    {
+      "check_id": "NaturalLife.Smoke",
+      "result": {
+        "name": "low trust can cautiously use the only supply while the hand remains visible",
+        "passed": true
+      },
+      "evidence": "evidence/NaturalLife.Smoke.json"
+    },
+    {
+      "check_id": "NaturalLife.Smoke",
+      "result": {
+        "name": "immobile intake chooses the urgent need independently of object order",
+        "passed": true
+      },
+      "evidence": "evidence/NaturalLife.Smoke.json"
+    },
+    {
+      "check_id": "NaturalLife.Smoke",
+      "result": {
+        "name": "missing pending field resumes an already accepted mouthful without replaying its portion",
+        "passed": true
+      },
+      "evidence": "evidence/NaturalLife.Smoke.json"
+    },
+    {
+      "check_id": "ActorGeometry.Smoke",
+      "result": {
+        "name": "reprojecting a moving pointer separates rubbing from the body's own travel",
+        "passed": true
+      },
+      "evidence": "evidence/ActorGeometry.Smoke.json"
+    }
+  ],
+  "synthetic_save_fallback_pass_lines": [
+    "PASS: null object before a pending intake reference is rejected as invalid data",
+    "PASS: null object before a pending intake reference falls back to the valid backup",
+    "PASS: null object before a pending intake reference cannot replace the good backup",
+    "PASS: null object before a pending intake reference leaves both files unchanged",
+    "PASS: active lesson without its learning record is rejected as invalid data",
+    "PASS: active lesson without its learning record falls back to the valid backup",
+    "PASS: active lesson without its learning record cannot replace the good backup",
+    "PASS: active lesson without its learning record leaves both files unchanged",
+    "PASS: inactive empty learning records remain valid"
+  ],
+  "synthetic_case_expansion": {
+    "completed_follow_rest": {
+      "dimensions": "visible hand yes/no \u00d7 cushion yes/no \u00d7 reload yes/no",
+      "combinations": 8,
+      "note": "Fixture sets completed-follow state; not a native UI follow lesson"
+    },
+    "accepted_mouthful_missing_pending": {
+      "dimensions": "meal/water \u00d7 old geometry present/omitted \u00d7 management/close-up",
+      "combinations": 8,
+      "assertions": "Load preserves accepted mouthful; continuation finishes without extra nutrition/exposure/refund; close-up no passive hunger/thirst advancement",
+      "historical_save_compatibility": false
+    }
+  },
+  "not_established": [
+    "Complete game build and full Git/LFS asset integrity",
+    "SaveRoom/UI save-failure button flows, exit/restart preserving actual game Sim/window",
+    "Actual FocusExited/Entered lifecycle and room mouse hand refresh suppression",
+    "Unselected-character voice playback, audio timing, real layout and visual effects",
+    "Every targeted handoff edge scenario beyond named existing tests",
+    "Real authorized historical-save compatibility",
+    "New held feed/water post-swallow autonomy-release fix; not in this pinned InteractionGesture diff, and unchanged Continuity must not be presented as verifying future fix"
+  ],
+  "existing_rule_regression": "Remaining existing required check suite and 1728 optional geometry combos rerun from this pinned source; observed green only within these pure-.NET scenarios"
+}

@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-10-29T02:43:27.835293+00:00",
+  "environment_kind": "assistant-owned cloud Linux execution workspace, not user development computer",
+  "scope_id": "dot-cloud-linux-debian13-x64-dotnet10.0.402",
+  "os": "Debian GNU/Linux 13.6 (trixie); Linux 6.18.55 x86_64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "proc_cpuinfo_logical_processors": 9,
+  "cpu_provenance": "/proc/cpuinfo; lscpu unavailable because /sys CPU topology not exposed; container allocation not inferred",
+  "gpu": "Unavailable / not verified",
+  "driver": "Unavailable / not verified",
+  "dotnet": "10.0.402",
+  "godot": "No locked 4.7.2 .NET Windows toolchain installed or launched in this run; prior environment inventory showed standard Godot4.6.3 only",
+  "display": "DISPLAY and WAYLAND_DISPLAY empty; no game launch, desktop observation or screenshot",
+  "desktop_observation_authorized": false
+}
