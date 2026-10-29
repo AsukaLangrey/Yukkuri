@@ -1,0 +1,230 @@
+{
+  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "source_lines": {
+    "Simulation.Smoke": [
+      {
+        "line": 64,
+        "text": "var validInteraction=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 77,
+        "text": "var pendingWithNull=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 85,
+        "text": "var missingLearning=WorldSimulation.CreateInteractionPlaytest().State;"
+      }
+    ],
+    "Milestone.Smoke": [
+      {
+        "line": 10,
+        "text": "    var s=WorldSimulation.CreateMilestone();s.State.Settings.Invasions=false;"
+      },
+      {
+        "line": 44,
+        "text": "    var careCase=WorldSimulation.CreateMilestone();"
+      },
+      {
+        "line": 128,
+        "text": "WorldSimulation SharingScene(ulong seed,bool trained,bool parentNearby,int sessions=0)"
+      },
+      {
+        "line": 130,
+        "text": "    var w=New();w.State.RandomState=unchecked(seed*0x9E3779B97F4A7C15UL);"
+      },
+      {
+        "line": 140,
+        "text": "for(ulong seed=1;seed<=40;seed++)"
+      },
+      {
+        "line": 151,
+        "text": "for(ulong seed=1;seed<=120;seed++)"
+      },
+      {
+        "line": 215,
+        "text": "var movingSelection=WorldSimulation.CreateMilestone();movingSelection.Travel(\"wild\");"
+      }
+    ],
+    "Interaction.Smoke": [
+      {
+        "line": 25,
+        "text": "WorldSimulation Fresh() => WorldSimulation.CreateInteractionPlaytest();"
+      }
+    ],
+    "Input.Intent": [
+      {
+        "line": 26,
+        "text": "WorldSimulation Fresh(){var s=WorldSimulation.CreateInteractionPlaytest();s.Selected!.Trust=60;return s;}"
+      }
+    ],
+    "NaturalLife.Smoke": [
+      {
+        "line": 19,
+        "text": "WorldSimulation Fresh(ulong seed=20261029)"
+      },
+      {
+        "line": 21,
+        "text": "    var s=WorldSimulation.CreateInteractionPlaytest(seed);var c=s.Selected!;"
+      },
+      {
+        "line": 45,
+        "text": "            var box=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];box.X=1.5;box.Z=0;"
+      },
+      {
+        "line": 184,
+        "text": "    var s=WorldSimulation.CreateInteractionPlaytest();s.State.Creatures.RemoveAt(2);s.State.RoomObjects.Clear();"
+      },
+      {
+        "line": 235,
+        "text": "        loaded.Selected.Fullness==food+7&&loaded.State.RandomState==s.State.RandomState&&"
+      },
+      {
+        "line": 333,
+        "text": "    var s=Fresh();var original=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];original.X=1.5;original.Z=0;original.Interaction.Restraint=RestraintKind.Box;"
+      },
+      {
+        "line": 353,
+        "text": "    for(ulong seed=1;seed<=20;seed++)"
+      },
+      {
+        "line": 369,
+        "text": "    for(ulong seed=1;seed<=20;seed++)"
+      },
+      {
+        "line": 379,
+        "text": "    int low=0,high=0;var rng=new Random(1009);"
+      },
+      {
+        "line": 382,
+        "text": "        ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+      },
+      {
+        "line": 402,
+        "text": "    int dirty=0,clean=0;var rng=new Random(779);const int samples=400;"
+      },
+      {
+        "line": 405,
+        "text": "        ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+      },
+      {
+        "line": 432,
+        "text": "    var s=WorldSimulation.CreateInteractionPlaytest();s.State.RoomObjects.Clear();"
+      },
+      {
+        "line": 448,
+        "text": "    Require(JsonSerializer.Serialize(loaded.Selected!.Interaction.Digestion)==before&&loaded.State.RandomState==s.State.RandomState,\"saved exposure rerolled\");"
+      },
+      {
+        "line": 453,
+        "text": "    Require(Math.Abs(s.Selected!.Health-loaded.Selected!.Health)<.00001&&s.State.RandomState==loaded.State.RandomState,\"reloaded future diverged\");"
+      },
+      {
+        "line": 870,
+        "text": "    int single=0,repeated=0,samples=400;var random=new Random(292107);"
+      },
+      {
+        "line": 873,
+        "text": "        ulong seed=(ulong)random.NextInt64(1,long.MaxValue);"
+      },
+      {
+        "line": 960,
+        "text": "        var box=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];box.X=1.5;box.Z=0;box.Interaction.Restraint=RestraintKind.Box;s.State.Creatures.Add(box);"
+      },
+      {
+        "line": 997,
+        "text": "    const int samples=80;int lowWild=0,highWild=0,absentWild=0;var rng=new Random(291044);"
+      },
+      {
+        "line": 1000,
+        "text": "        ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+      }
+    ],
+    "Interaction.Continuity": [
+      {
+        "line": 12,
+        "text": "WorldSimulation Fresh()=>WorldSimulation.CreateInteractionPlaytest();"
+      },
+      {
+        "line": 1266,
+        "text": "    for(int seed=1;seed<=12;seed++)"
+      },
+      {
+        "line": 1268,
+        "text": "        var random=new Random(71000+seed);var sim=Fresh();"
+      }
+    ],
+    "ActorGeometry.Smoke": [
+      {
+        "line": 9,
+        "text": "        var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];c.X=c.Z=0;c.Body.SpeciesId=species;"
+      },
+      {
+        "line": 1240,
+        "text": "        var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];"
+      },
+      {
+        "line": 1289,
+        "text": "        var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];"
+      },
+      {
+        "line": 1367,
+        "text": "    var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;float radius=InteractionBallSurface.Radius;"
+      },
+      {
+        "line": 1385,
+        "text": "    var random=new Random(20261029);float maximum=0;"
+      }
+    ],
+    "NaturalLife.Soak": [
+      {
+        "line": 8,
+        "text": "var seeds=args.Length>2?new[]{ulong.Parse(args[2])}:new ulong[]{72341,592813,1597331,20261029};"
+      },
+      {
+        "line": 12,
+        "text": "foreach(ulong seed in seeds)"
+      },
+      {
+        "line": 14,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(seed);"
+      }
+    ],
+    "src/Yukkuri.Simulation/InteractionWorld.cs": [
+      {
+        "line": 5,
+        "text": "    public static WorldSimulation CreateInteractionPlaytest(ulong seed = 20261028)"
+      },
+      {
+        "line": 9,
+        "text": "            MilestoneScenario = true, InteractionPlaytest = true, RandomState = seed == 0 ? 20261028 : seed,"
+      }
+    ],
+    "src/Yukkuri.Simulation/MilestoneWorld.cs": [
+      {
+        "line": 6,
+        "text": "    public static WorldSimulation CreateMilestone(bool sandbox=false, ulong seed=20261027)"
+      },
+      {
+        "line": 10,
+        "text": "        s.MilestoneScenario=true;s.RandomState=seed==0?20261027:seed;s.Money=160;s.Food=35;"
+      }
+    ],
+    "src/Yukkuri.Simulation/WorldSimulation.cs": [
+      {
+        "line": 45,
+        "text": "        ulong x = State.RandomState;"
+      },
+      {
+        "line": 47,
+        "text": "        State.RandomState = x;"
+      }
+    ],
+    "src/Yukkuri.Simulation/WorldState.cs": [
+      {
+        "line": 76,
+        "text": "    public ulong RandomState { get; set; } = 92137;"
+      }
+    ]
+  },
+  "interpretation": "Explicit seed-generator values enumerate reproducible sampled cases, not every generated random value. Soak uses four fixed seeds and six scenarios."
+}

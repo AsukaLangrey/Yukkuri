@@ -1,0 +1,3 @@
+  Determining projects to restore...
+  Restored /workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj (in 184 ms).
+  Restored /workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Game/Yukkuri.Game.csproj (in 220 ms).

@@ -1,0 +1,19 @@
+{
+  "id": "dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe",
+  "checked_at": "2026-10-29T16:12:37.204858+00:00",
+  "os": "Debian GNU/Linux 13.6 x86_64; Linux 6.18.55",
+  "cpu": "AMD EPYC 9V74 80-Core Processor; 9 logical processors exposed",
+  "gpu": "Mesa llvmpipe (LLVM 19.1.7, 256 bits), software renderer",
+  "driver": "OpenGL 4.5 Core Profile, Mesa 25.0.7-2+deb13u1",
+  "dotnet": "10.0.402",
+  "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+  "display": "Authorized own cloud CUA/Sky desktop 1364x1024, DISPLAY=:0; actual game client 1180x812; render logical viewport1440x900",
+  "desktop_observation_authorized": true,
+  "audio": "ALSA device absent; engine fell back to Dummy; no audible acceptance",
+  "limitations": [
+    "Not the locked Windows platform.",
+    "V-Sync mode change unsupported by driver.",
+    "lscpu cannot read sandbox CPU sysfs; CPU model from /proc/cpuinfo and count from getconf."
+  ],
+  "identity_note": "Stable environment identity reused after actual toolchain/OS/renderer re-verification; run_id is separate."
+}

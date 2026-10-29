@@ -1,0 +1,6 @@
+{
+  "finished_at": "2026-10-29T16:12:37Z",
+  "test_processes_finished": true,
+  "reason": "Native runtime exit0 at16:09:13, contact exit0 at16:09:48, render exit0 at16:10:11; no project test process left. Publication lock remains held until branch readback. Visual evidence review and recording completed16:12:37UTC.",
+  "test_processes_finished_at": "2026-10-29T16:10:11Z"
+}

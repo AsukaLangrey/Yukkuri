@@ -1,0 +1,130 @@
+{
+  "status": "passed",
+  "scope": "Only explicitly observed finite native interactions; not full acceptance.",
+  "started_at": "2026-10-29T15:52:20Z",
+  "finished_at": "2026-10-29T16:09:13Z",
+  "summary": "固定8238c6e真实云桌面运行；一次饮水完成、帮助开关、正常退出实际观察成立。45秒实体杯持有及45秒中键静态持有期间未更新存档，释放后更新；只作有限时序证据，不能冒充完整v4连续视觉验收。",
+  "full_review_passed": false,
+  "full_review_reason": "完整v4与既有焦点未完成；未测/不足项逐一保留，有限原生观察和引擎截图不替代整体验收。",
+  "observations": [
+    {
+      "id": "startup-closeup",
+      "status": "observed",
+      "repetitions": 1,
+      "actual": "Current pinned game entered InteractionRoom, courtyard and three characters displayed; native near-look opened.",
+      "evidence": [
+        "images/01-food-tools.jpg",
+        "images/05-close-up.jpg",
+        "evidence/game-runtime.txt"
+      ]
+    },
+    {
+      "id": "physical-water-cup-held",
+      "status": "limited-observation",
+      "repetitions": 1,
+      "started_at": "2026-10-29T15:56:40.752Z",
+      "finished_at": "2026-10-29T15:57:26.177Z",
+      "action": "Native left button hold for45000ms on placed water cup, then release. No edits to save or game state.",
+      "actual": "Cup present before and after; release feedback returned remaining water to original place. Save mtime unchanged throughout sampled hold and changed at first post-release observation15:57:26.461Z. Difference from previous save mtime was98.975s.",
+      "limitations": [
+        "No screenshot during hold because CUA is serialized; cannot assert uninterrupted visual cup tracking.",
+        "No remaining-food-after-bite variant.",
+        "Wall-time/save-mtime evidence supports busy deferral, but no internal autoClock trace; not complete v4 autosave acceptance."
+      ],
+      "evidence": [
+        "images/02-placed-water-before-hold.jpg",
+        "images/04-held-cup-45s-release.jpg",
+        "evidence/held-water-short-save-timeline.json"
+      ]
+    },
+    {
+      "id": "drink-native",
+      "status": "observed",
+      "repetitions": 1,
+      "observed_window_utc": [
+        "2026-10-29T16:02:46Z",
+        "2026-10-29T16:02:50Z"
+      ],
+      "action": "Select direct drinking; native left drag tracks mouth from absolute x756 to708 at y623, then holds by2400-point drag.",
+      "actual": "Visible cup and closed-eye smiling response, speech says drinking complete; bottom says这一口已经喝好了。先松开，再递下一份。Later right panel记录经历了饮水。",
+      "evidence": [
+        "images/13-water-drag-tracking-mouth.jpg",
+        "images/18-middle-hold-finished-current.jpg"
+      ],
+      "limitations": [
+        "Earlier stationary holds targeted cheek after character rotated; inconclusive, not counted as product failures.",
+        "No complete direct-tool/physical-cup bidirectional water-level reset test."
+      ]
+    },
+    {
+      "id": "help-modal",
+      "status": "observed",
+      "repetitions": 1,
+      "action": "Native click怎么玩, then Escape.",
+      "actual": "Help modal rendered; Escape returned to same close-up scene.",
+      "evidence": [
+        "images/15-help-visible.jpg",
+        "images/16-help-dismissed-before-middle.jpg"
+      ]
+    },
+    {
+      "id": "middle-static-hold",
+      "status": "limited-observation",
+      "repetitions": 1,
+      "observed_window_utc": [
+        "2026-10-29T16:04:06.825Z",
+        "2026-10-29T16:04:53.877Z"
+      ],
+      "action": "Native middle button held45000ms at window-relative769,419; no sustained rotation movement.",
+      "actual": "Save mtime stable until16:04:52.875Z; changed at16:04:53.877Z after release, previous-save gap86.048s. Current screenshot still showed observation-angle feedback and responsive scene.",
+      "evidence": [
+        "images/16-help-dismissed-before-middle.jpg",
+        "images/17-middle-hold-release.jpg",
+        "images/18-middle-hold-finished-current.jpg",
+        "evidence/middle-hold-save-timeline.json"
+      ],
+      "limitations": [
+        "This is static middle-hold evidence, not continuous orbit-motion acceptance.",
+        "Exact action start/end output was truncated; observation range is not fabricated as exact input timestamps.",
+        "No mid-hold image."
+      ]
+    },
+    {
+      "id": "normal-exit",
+      "status": "observed",
+      "repetitions": 1,
+      "finished_at": "2026-10-29T16:09:13Z",
+      "action": "Native Alt+F4.",
+      "actual": "Own game exited normally, exit0; subsequent automated engine checks started only after exit.",
+      "evidence": [
+        "evidence/game-runtime-end.txt",
+        "evidence/game-runtime-exit.txt"
+      ]
+    }
+  ],
+  "not_run": [
+    "Remaining food/water held after partial bite across autosave threshold.",
+    "Sustained middle-button orbit movement across autosave deadline.",
+    "Hidden trees no longer occlude body hit and hidden river cannot be selected in close-up.",
+    "Last sweet pending remains visible, then no transparent hit after entry or held empty.",
+    "Direct drinking and physical cup bidirectional switch water-level/visibility reset.",
+    "Complete jump-heading-airborne-landing chain, back accessories and posture clipping.",
+    "Native speed/force, abrupt stop, rapid release/reentry, focus-loss and repeated sequences.",
+    "Autonomous eating/drinking and low-trust comparison; full v2/v3 save-failure scenarios.",
+    "Audible feedback and approved historical-save compatibility."
+  ],
+  "limitations": [
+    "Native screenshot filenames are capture labels, not pass labels. In particular07-direct-drink-completed and12-water-front-mouth-complete were attempts, not demonstrated completion;13-water-drag-tracking-mouth is the confirmed completed drink.",
+    "A first75000ms timed hold plus concurrent screenshot exceeded CUA request timeout and reset tool kernel; no continuous image evidence, excluded from acceptance. Reinitialized tool and shortened45000ms native hold completed. No confirmed game crash.",
+    "Invalid floating Sky drag coordinates were rejected before input; integer path used subsequently.",
+    "All operations were in own authorized cloud desktop, isolated cloud1544-c04 profile; no user machine or personal saves."
+  ],
+  "tool_failures": [
+    {
+      "action": "75000ms native hold with concurrent screenshot",
+      "status": "tool-timeout",
+      "product_failure_confirmed": false,
+      "recovery": "Reinitialize CUA, use45000ms serialized action; no old timed-out result promoted to pass."
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "run_id": "20261029T154437Z-8238c6e6380f-c04",
+  "files": [
+    {
+      "path": "images/01-food-tools.jpg",
+      "sha256": "cff972ef80227a9348f4b911d8d2729db48ad942c509e7be42fd81c8629b3107",
+      "bytes": 124860
+    },
+    {
+      "path": "images/02-placed-water-before-hold.jpg",
+      "sha256": "75a861ab0b1b005d6bd6913035b29387d1b0dcdd146479d39ff31a4cb6a0e5ca",
+      "bytes": 125644
+    },
+    {
+      "path": "images/03-cup-pickup-release.jpg",
+      "sha256": "e23064fbb9ed3d0a7fd8769747dc76ad0926198de8b3fe5fd553f42d2994e73b",
+      "bytes": 126233
+    },
+    {
+      "path": "images/04-held-cup-45s-release.jpg",
+      "sha256": "5987808e15a9920c6e38edf83fd3095101789884bd8ba3dbe9a1561f7ccee8c3",
+      "bytes": 128405
+    },
+    {
+      "path": "images/05-close-up.jpg",
+      "sha256": "95fc164fe0df351edd87681133b5ea40dd1977d8cc2498f941d45051a3334347",
+      "bytes": 109014
+    },
+    {
+      "path": "images/06-direct-water-ready.jpg",
+      "sha256": "5bfe8a2fd417b07a5b0f2ad12824219d4d4deb779c004b433aca0ff75854075d",
+      "bytes": 110295
+    },
+    {
+      "path": "images/07-direct-drink-completed.jpg",
+      "sha256": "3129b323a086253338f311619bac890b54aac591067f176583fd4c4b136d4541",
+      "bytes": 109233
+    },
+    {
+      "path": "images/08-front-view.jpg",
+      "sha256": "9914baa85fc119958c71875d87e14109b8d72ccc99a81cd87ca73dcbe9573e68",
+      "bytes": 110791
+    },
+    {
+      "path": "images/09-mouth-hover-native.jpg",
+      "sha256": "086df499ffab0715fed12310fcb0859d796dfcf1c72882767827594e4b769d30",
+      "bytes": 110768
+    },
+    {
+      "path": "images/10-drink-after-native-mouth.jpg",
+      "sha256": "7c32d08d86a57e0b63572f6592a73b1ea08fabf1935e33e559e3426c551f166e",
+      "bytes": 109356
+    },
+    {
+      "path": "images/11-drink-native-drag-at-mouth.jpg",
+      "sha256": "103c19c11ab54231d64cb918d0b0a4887f1bf22a7e7b1db08bbcd173187fc8e8",
+      "bytes": 111977
+    },
+    {
+      "path": "images/12-water-front-mouth-complete.jpg",
+      "sha256": "3f3dce702b3c44c8de4f4ee99a9972b2c9bcd06d461004454d7f4a0f2c74e4ef",
+      "bytes": 109494
+    },
+    {
+      "path": "images/13-water-drag-tracking-mouth.jpg",
+      "sha256": "a2d73d56e09cd4a1daca83931e1cef82125e4ddd66bafe6df41aed0cc29bfb48",
+      "bytes": 111505
+    },
+    {
+      "path": "images/14-help-open.jpg",
+      "sha256": "17dcf85657fc36e44929941a8ab0edc2a99e4d81d9ba10caa4cf06770694249f",
+      "bytes": 113205
+    },
+    {
+      "path": "images/15-help-visible.jpg",
+      "sha256": "889b4c1277a69f80abc735fa85a3025539661e56a5b826be9e69d7d9affb9a5d",
+      "bytes": 134636
+    },
+    {
+      "path": "images/16-help-dismissed-before-middle.jpg",
+      "sha256": "9e24be7819e748cf6f033e4950fa41bf463f91f6b33fde07358b63c43178d64d",
+      "bytes": 113136
+    },
+    {
+      "path": "images/17-middle-hold-release.jpg",
+      "sha256": "d447cd8dd97ef60e215549e9477b8b9681ac72e6667b8484e3945884e5aba1b6",
+      "bytes": 113419
+    },
+    {
+      "path": "images/18-middle-hold-finished-current.jpg",
+      "sha256": "d50b6b796dbd75e1262c10089c6dad5aee6da5ba5a250bd6bf94a6049d29e461",
+      "bytes": 113376
+    },
+    {
+      "path": "render/01-yard.png",
+      "sha256": "baa083cb93bc13b537045ff000b6692f8cd073272c4817c4926095a4899850a5",
+      "bytes": 200189
+    },
+    {
+      "path": "render/02-close.png",
+      "sha256": "1c6ccbda41b07a6c8a6fc364efd9e8bd88bb8ab0b1beec9cf6b2ab6410d2f50c",
+      "bytes": 183384
+    },
+    {
+      "path": "render/03-feeding-controls.png",
+      "sha256": "f50bb70e15e53af3e51c9c9d854e34a1025a941b6c3d7cc857527a9058e6b218",
+      "bytes": 175300
+    },
+    {
+      "path": "render/04-force-controls.png",
+      "sha256": "2f0ab2569367611316c4644163023ef766196fdd955fff10f0897d3ba852410c",
+      "bytes": 170199
+    },
+    {
+      "path": "render/05-help.png",
+      "sha256": "931d0902d51fe0275776233a56a96e3d957de36d159c13e6bf8feb742b785a60",
+      "bytes": 297188
+    },
+    {
+      "path": "render/render-checks.json",
+      "sha256": "d9f0eb049e22c50b68d18764f76b6f3f259dc3d4a98b2e8f2b2babdd9bdead72",
+      "bytes": 2018
+    }
+  ],
+  "private_saves_included": false
+}

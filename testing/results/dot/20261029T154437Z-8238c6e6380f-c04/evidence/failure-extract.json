@@ -1,0 +1,25 @@
+{
+  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "failures": [
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "a completed held meal sweet or drink releases needs after its actual swallowing response",
+      "passed": false,
+      "error": "Drink/water: holding the finished tool trapped the oil or skipped swallowing"
+    }
+  ],
+  "no_failure_retry": true,
+  "root_cause_confirmed": false,
+  "compound_assertion": "accepted && sawSwallow && moved && c.X > .5",
+  "source_location": "checks/Interaction.Continuity/Program.cs:143",
+  "subcase_execution": {
+    "counting_unit": "One named top-level check; nested combinations are not added to the 502/1 aggregate.",
+    "control_flow_inference": "The seven preceding combinations reached their end before Drink/water. Drink/water reached the terminal compound assertion, then threw. Drink/rest was not entered.",
+    "not_executed_after_failure": [
+      "Drink/water natural-intake completion assertion at line 144",
+      "Drink/water cancellation and explicit put-down assertions at lines 145-148",
+      "Drink/rest"
+    ]
+  },
+  "interpretation_limit": "Current JSON only records the compound assertion message, not component values. A terminal X condition after 240 * 0.05 s cannot alone distinguish no movement from moving then returning. Product-trapping root cause is unconfirmed."
+}

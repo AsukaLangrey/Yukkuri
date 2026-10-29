@@ -1,0 +1,51 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Smoke/Interaction.Smoke.csproj -p:UseAppHost=false -- /workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/evidence/Interaction.Smoke.json
+CWD: /workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source
+PASS cheek invitation receives an answer before movement earns affection
+PASS leaving the cheek requires a fresh invitation
+PASS forceful nuzzling is rejected without a happy nuzzle memory
+PASS fast rubbing is rejected even with a gentle force setting
+PASS nuzzle guidance names the wrong body part before inviting
+PASS first batch contains twenty groups and unique reachable actions
+PASS pressing down and squeezing sideways return distinct body feedback
+PASS fresh world saves without loss of identity
+PASS motion differentiates a stroke from a stationary hold
+PASS leaving contact never continues hidden effects
+PASS gesture target stays locked when a different selection appears
+PASS nuzzle requires the cheek and respects rejection
+PASS a feeding gesture consumes exactly one portion
+PASS cancel before food entry does not consume it
+PASS fullness is a valid refusal, not disobedience
+PASS taking and returning an accessory cannot farm trust
+PASS repair respects partial work and destroyed items
+PASS hand hold releases but fixed restraints require an explicit release
+PASS cancelled carry stays supported, deliberate drop has a trajectory
+PASS foot injury persists through feeding and removal of restraints
+PASS injured creature can eat nearby food but cannot teleport to a distant plate
+PASS care begins a real recovery period, never instant foot repair
+PASS close-up freezes passive healing and time without a catch-up
+PASS bottom injury does not automatically disable flight or a different body
+PASS training only learns the named skill after real action
+PASS stationary follow does not pretend the learner followed
+PASS dialogue expresses needs without leaking hidden counters
+PASS save-load preserves injury accessory memory and does not replay gestures
+PASS corrupt functional state rejected at the real save entry
+PASS time beside the mouth cannot pre-charge the next bite
+PASS leaving the mouth interrupts readiness to take food
+PASS repair touches the removed accessory rather than any body point
+PASS a stop can interrupt an unfinished follow without awarding completion
+PASS closed box does not let an oil eat through its back wall
+PASS repeated greetings leave a real response window
+PASS putting down cannot intersect another oil or silently discard support
+PASS food seeking does not merge multiple bodies
+PASS pushing into a fixed box does not pass through the occupant
+PASS wiping a cheek leaves dirt elsewhere and preserves local progress
+PASS hanging adjustment persists after cancellation without becoming a drop
+PASS idle standing cannot be sold as a learned stop
+PASS active teasing permits an actual chase in normal time
+PASS voices differ by individual and never promise impossible movement
+PASS instant contact targets the named anatomical part
+PASS head care cannot secretly treat a damaged foot
+PASS hands remain committed to one supported oil until it is set down
+PASS a missing treasure remains visible in the expression after speech ends
+PASS permitted accessory care waits differently from theft
+Interaction checks: 48/48 passed

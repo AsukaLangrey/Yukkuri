@@ -1,0 +1,15 @@
+{
+  "package": "Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+  "bytes": 107698034,
+  "sha256": "129f82db7bafd54ae14bb5bb284041c73860e8c7a009a3a026ca5e946cbff247",
+  "expected_sha256": "129f82db7bafd54ae14bb5bb284041c73860e8c7a009a3a026ca5e946cbff247",
+  "matches_official_release_digest": true,
+  "download_url": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+  "metadata_url": "https://api.github.com/repos/godotengine/godot-builds/releases/tags/4.7.2-stable",
+  "metadata_observation": "Parent read through authorized GitHub connector 2026-10-29T08:43:36Z",
+  "version_observed": "4.7.2.stable.mono.official.ed1daf0bf",
+  "platform": "linux-x64",
+  "project_lock_platform": "windows-x64",
+  "scope": "Authorized same-version Linux .NET package; not evidence of Windows runtime compatibility",
+  "reverified_at": "2026-10-29T15:47:57.326287+00:00"
+}

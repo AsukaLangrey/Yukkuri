@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "run_id": "20261029T084136Z-c6fc7d897955-c03",
-  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
-  "report_path": "testing/results/dot/20261029T084136Z-c6fc7d897955-c03/report.json",
-  "status": "partial",
-  "finished_at": "2026-10-29T09:09:40.778910+00:00"
+  "run_id": "20261029T154437Z-8238c6e6380f-c04",
+  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "report_path": "testing/results/dot/20261029T154437Z-8238c6e6380f-c04/report.json",
+  "status": "failed",
+  "finished_at": "2026-10-29T16:12:37Z"
 }

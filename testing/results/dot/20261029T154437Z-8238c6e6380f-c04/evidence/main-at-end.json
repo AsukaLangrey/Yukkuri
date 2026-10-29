@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-29T16:10:46Z",
+  "main_commit": "f02b0fcfbb3e9649b5f94d35201c4c22661158b9",
+  "tested_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "changed": true,
+  "coverage": "This report covers only the pinned tested commit, not the newer main."
+}

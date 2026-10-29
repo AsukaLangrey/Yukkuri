@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-10-29T16:13:14.132Z",
+  "operation": "create_library_file",
+  "status": "succeeded",
+  "path": "/yukkuri-c04-8238c6e-native-and-render-images.zip",
+  "file_id": "file_00000000b33881f58a6209f8e9672cb4",
+  "library_file_id": "libfile_c2b9921213d48191aacee517714bf878",
+  "file_name": "yukkuri-c04-8238c6e-native-and-render-images.zip",
+  "current_version_number": 0,
+  "restored_from_version_number": null,
+  "xattrs": [
+    {
+      "name": "user.library-file-version",
+      "value": "0"
+    }
+  ],
+  "directory_id": "libdir_69d8843864fc8191a4b6c25e74d26443",
+  "mime_type": "application/zip",
+  "library_artifact_type": "report",
+  "file_size_bytes": 2361437,
+  "external_connectors_accessed": false,
+  "archive_sha256": "7dae125e2b845902da093e9ff68d8f68cf5ba47563211fffba8ecb49102b932f",
+  "archive_bytes": 2361437,
+  "contents": "18 native cloud desktop screenshots,5 actual engine PNGs,render JSON, image/native/review metadata; no private saves",
+  "local_path": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/yukkuri-c04-8238c6e-native-and-render-images.zip",
+  "xattrs_applied_and_verified": true,
+  "access": "Private ChatGPT Library; not a public image URL; no ordinary Git binary.",
+  "expiration": "No expiry provided by Library tool; availability follows private Library retention and user deletion. No public access granted."
+}

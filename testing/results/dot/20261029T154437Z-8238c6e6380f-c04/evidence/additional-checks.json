@@ -1,0 +1,46 @@
+[
+  {
+    "id": "engine-contact",
+    "status": "passed",
+    "command": "bash /workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/run-engine-checks.sh",
+    "started_at": "2026-10-29T16:09:34Z",
+    "finished_at": "2026-10-29T16:09:48Z",
+    "exit_code": 0,
+    "passed_count": 4,
+    "failed_count": 0,
+    "reason": "4 authored engine ray/contact geometry checks pass. Not native mouse acceptance.",
+    "evidence": [
+      "evidence/engine-contact.txt",
+      "evidence/contact.json"
+    ],
+    "required": false,
+    "phase": "contact",
+    "command_note": "One actual wrapper invocation; contact and render phases executed sequentially, not separate bracketed commands.",
+    "working_directory": null,
+    "working_directory_note": "CUA terminal cwd was not recorded; wrapper did not cd. Absolute project path supplied by --path.",
+    "project_path": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Game",
+    "timeout_seconds": 300
+  },
+  {
+    "id": "engine-layout",
+    "status": "passed",
+    "command": "bash /workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/run-engine-checks.sh",
+    "started_at": "2026-10-29T16:09:48Z",
+    "finished_at": "2026-10-29T16:10:11Z",
+    "exit_code": 0,
+    "passed_count": 10,
+    "failed_count": 0,
+    "reason": "Five current rendered scenes; all bottomFits/forceSingleLine true. Five PNGs opened and visually inspected. No clipping seen in these fixed layouts; not movement/play acceptance.",
+    "evidence": [
+      "evidence/engine-render.txt",
+      "evidence/render-checks.json"
+    ],
+    "required": false,
+    "phase": "render",
+    "command_note": "One actual wrapper invocation; contact and render phases executed sequentially, not separate bracketed commands.",
+    "working_directory": null,
+    "working_directory_note": "CUA terminal cwd was not recorded; wrapper did not cd. Absolute project path supplied by --path.",
+    "project_path": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Game",
+    "timeout_seconds": 300
+  }
+]

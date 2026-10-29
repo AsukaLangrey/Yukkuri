@@ -1,0 +1,22 @@
+{
+  "reviewed_at": "2026-10-29T16:12:37.204858+00:00",
+  "reviewer": "dot actual image inspection",
+  "images": [
+    "01-yard.png",
+    "02-close.png",
+    "03-feeding-controls.png",
+    "04-force-controls.png",
+    "05-help.png"
+  ],
+  "result": "All five actual engine images opened: yard, close-up, feeding controls, force controls, help. Text and bottom feedback fit these captures; force row is single-line. No assertion of animated interaction quality.",
+  "performance": {
+    "scope": "180 process-frame intervals in this verification window; not a general hardware benchmark",
+    "samples": 180,
+    "medianMs": 47.549,
+    "p95Ms": 62.633,
+    "maxMs": 126.436,
+    "drawCalls": 185,
+    "renderedObjects": 402,
+    "primitives": 78804
+  }
+}
