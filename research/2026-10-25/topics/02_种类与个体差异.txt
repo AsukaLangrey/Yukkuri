@@ -1,0 +1,113 @@
+种类与个体差异｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C007  灵梦种通常有红色蝴蝶结、红豆馅；条目同时描述关爱幼体与自私粗鲁的版本，不支持“所有灵梦性格相同”。
+适用：英文社区灵梦条目
+证据：C；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K03（详见 conflicts.json）
+出处：
+S19 Yukkuri Reimu
+https://yukkuri.fandom.com/wiki/Yukkuri_Reimu
+读取状态：search_text_only
+
+C008  魔理沙种常被写成筑巢、觅食、保护家庭的角色；黑帽可作船，但各作对浮力持续时间和防雨能力说法不同。
+适用：英文社区魔理沙条目
+证据：C；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K04（详见 conflicts.json）
+出处：
+S20 Yukkuri Marisa
+https://yukkuri.fandom.com/wiki/Yukkuri_Marisa
+读取状态：search_text_only
+
+C009  魔理沙的巨大Dosu、水生、降落伞、暖桌等变体被单独描述；巨型及特殊能力不能推广给所有普通魔理沙。
+适用：英文社区变体汇编
+证据：C；类别：general
+限制：不同变体可能来自不同作者；本轮未回溯全部原图。
+出处：
+S20 Yukkuri Marisa
+https://yukkuri.fandom.com/wiki/Yukkuri_Marisa
+读取状态：search_text_only
+
+C010  帕秋莉常被写成体弱、安静、喜书的智囊；同时存在不识字却执迷书本，以及为实验牺牲同类的阴暗描写。
+适用：英文社区帕秋莉条目
+证据：B；类别：general / cruelty
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K03（详见 conflicts.json）
+出处：
+S21 Yukkuri Patchouli
+https://yukkuri.fandom.com/wiki/Yukkuri_Patchouli
+读取状态：body_read
+
+C011  爱丽丝的都会派口癖、卡仕达内馅、高傲与亲善并存；部分作品另有性冲动/强迫行为变体。
+适用：类型汇编与《ゆっくり飼育書》
+证据：C；类别：general / sexual_violence_reference
+限制：只作题材记录；变体不得当作该种每个个体的必然行为。
+差异组：K03（详见 conflicts.json）
+出处：
+S18 Yukkuri Types
+https://yukkuri.fandom.com/wiki/Yukkuri_Types
+读取状态：search_text_only
+S11 ゆっくりいじめ系2585 ゆっくり飼育書
+https://w.atwiki.jp/yukkuri_gyakutai/pages/4249.html
+读取状态：body_read
+
+C012  百度条目中的橙种活泼、善攀爬，口癖为わかるよー；帕秋莉用むきゅ表达。
+适用：中文类型汇编
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S04 油库里
+https://bkso.baidu.com/item/油库里/4471775?fromModule=lemma_inlink
+读取状态：body_read
+
+C013  类型表把蕾米莉亚列为捕食型、常有身体和飞行能力、喜布丁；把蕾蒂写为捕食者、莉莉白与春季出现联系起来。
+适用：英文类型表
+证据：C；类别：predation
+限制：稀有度是编者印象，未找到频率统计。
+出处：
+S18 Yukkuri Types
+https://yukkuri.fandom.com/wiki/Yukkuri_Types
+读取状态：search_text_only
+
+C014  类型表还列幽香的种植能力、蓝对橙的偏爱、铃仙的Gera口癖；其跨作品一致性没有逐项证明。
+适用：英文类型表
+证据：C；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S18 Yukkuri Types
+https://yukkuri.fandom.com/wiki/Yukkuri_Types
+读取状态：search_text_only
+
+C015  《飼育書》把灵梦写成较易养、魔理沙更活跃，并借都会派价值观教育爱丽丝；属于特定叙事的饲养论。
+适用：《ゆっくり飼育書》
+证据：A；类别：cruelty / care
+限制：该文同时包含严重暴力，不等同中立品种手册。
+差异组：K03（详见 conflicts.json）
+出处：
+S11 ゆっくりいじめ系2585 ゆっくり飼育書
+https://w.atwiki.jp/yukkuri_gyakutai/pages/4249.html
+读取状态：body_read
+
+C071  类型表中的咲夜偏向侍奉蕾米莉亚、内馅布丁；妖梦可用嘴持武器，既有淑女自称，也有粗俗口癖版本。
+适用：英文类型汇编
+证据：C；类别：general / crude_language_reference
+限制：这些是该表的跨作品概括，未逐个追溯原作者。
+出处：
+S18 Yukkuri Types
+https://yukkuri.fandom.com/wiki/Yukkuri_Types
+读取状态：search_text_only
+
+C072  英文魔理沙条目也收录芙兰与魔理沙结伴生育的宠物例子，因此捕食型与普通种并非在所有作品中只有敌对关系。
+适用：英文关系汇编
+证据：C；类别：social / reproduction
+限制：宠物例子不能自动外推到所有野生场景。
+出处：
+S20 Yukkuri Marisa
+https://yukkuri.fandom.com/wiki/Yukkuri_Marisa
+读取状态：search_text_only
+
+

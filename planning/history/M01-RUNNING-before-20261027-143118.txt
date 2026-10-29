@@ -1,0 +1,78 @@
+当前状态 / 2026-10-27 14:00
+Goal active，工作至今晚22:00；M02未启动，用户验收pending。有效工时至少6.56222222h，新活动段详见goal.json；夜间中断空档排除。
+最终候选方向M01-CLANG-20261027-055731：builds/candidates/m01-clang-extended-run；原冻结源码同名-source；hash1be4aa26ed9c93be49ffc5bd895eb1c0a88a15936864dcfda081e39c6ec41162。
+与055029玩法相同，仅将验证时长上限7200提高至28800，支持六小时实际连续运行；不是加速模拟。
+新21600s实际流程exported-soak-20261027-055846-448-69ed92a3=session34023，最早19:58:46；7200s055846-444-b88fb2bf=session33309，最早15:58:46。均未完成，不能提前标通过。
+最新states055846-456-dd2dd3ea=session3343；完整GUI1280x720-055846-470-44e89156=session80094。压力/声音/自动存档尚待此版本执行。打包门槛仍至少7200s，本轮额外六小时验证不假称已完成。
+上一版055029的states/integration055128和stress/audio/autosave055402均通过，7200s055128本任务主动停止以换最终长时验证版本；054116长测亦主动停止并有记录。原050711/050743=session87960>=15:07:43；045309/045333=session61946>=14:53:33；043154/043228=session98345>=14:32:28继续供不同构建对照。
+官方033258低干预写监视053626=session2366/PID34472，预期>=14:06:26；独立MSVCRT诊断054441的1800s054442=session30353，预期>=14:14:42，仅诊断不可交付。初次写监视050515正常30m未复现，不证明根因消失。
+组合模拟seed15曾出现自主入侵者跨区后选择指向远处，导致存档校验拒绝；修正后64种子38400操作/768保存往返、59规则及实际GUI存读档通过。证据simulation-exploration-054705/054815、development-states-054939。新版本已包含修复。
+050711实际新档键鼠试玩、关闭重开恢复、独立空缓存源码重建通过，分别manual-review-care-052400、source-rebuild-052152；不能冒称最新版本这些单项已重复完成。
+--- 历史记录 ---当前状态 / 2026-10-27 13:43
+Goal active，继续至今晚22:00；用户验收pending；M02未启动。已记录有效工时6.56222222h，新活动段时间见goal.json，凌晨空档不计。
+最新候选M01-CLANG-20261027-054116：builds/candidates/m01-clang-staff-presentation；源码同名-source；hash87dbfefa2d7206187e772cebeecfe5eeacb426d90044822833b875995a51624a。
+导出states054130=session1516；1280x720完整GUI054130=session76973；7200s054130=session75003，预期>=15:41:30。收齐退出记录后再记通过。
+旧050711/050743=session87960预期>=15:07:43；旧045309/045333=session61946预期>=14:53:33；旧043154/043228=session98345预期>=14:32:28；版本分开，均尚未完成。
+原生写监视050515正常结束1800s未复现；新低扰动053626=session2366、PID34472，预期>=14:06:26。MSVCRT独立引擎编译=session24518，renderer-probe/msvcrt-comparison-053509，不是发布候选。
+050711原生新档试玩/关闭重开恢复已完成manual-review-care-052400；其独立空缓存源码重建及新导出052359完整GUI通过source-rebuild-052152。最新054116在此基础修正员工暂停仍移动及追随入侵者，真实失败053959/通过054020保留；新版本需自己的发布验证。
+--- 历史记录 ---当前状态 / 2026-10-27T13:21:15.6055287+08:00
+Goal active，继续至2026-10-27 22:00+08；用户验收pending，M02未启动。
+当前候选M01-CLANG-20261027-050711，runtime=builds/candidates/m01-clang-care-policy，source=m01-clang-care-policy-source。
+states050743、完整GUI1280x720-051039、stress/audio/autosave051334通过；integration050743启动器异常，记录未完成。
+两小时050743=session87960，预期>=15:07:43；旧043228=session98345预期>=14:32:28，045333=session61946预期>=14:53:33。均尚未通过。
+原生写监视050515=session29914，子进程6596，仅诊断；预计13:35:16流程结束。第三次官方完整dump045536有效，写坏来源未知。
+独立手动试玩045309已完成6目标与真实存读档；050711修正员工与台词。引擎来源打包门槛真实失败/修正已验证。
+当前有效工作活动段始于13:09:50.3218186，之前累计6.01277778h；凌晨02:48—09:06空档不计。
+--- 历史记录 ---当前状态 / 2026-10-27T12:57:24.3502285+08:00
+Goal active，工作至2026-10-27 22:00+08；M02未启动。发布稳定性阻塞仍在，用户验收pending。
+当前候选M01-CLANG-20261027-045309：builds/candidates/m01-clang-protection；匹配源码m01-clang-protection-source。
+1280x720完整GUI与状态045333通过；stress/audio045640进行中；两小时045333=session61946，从12:53:33至不早于14:53:33。
+旧候选043154两小时043228=session98345，从12:32:28至不早于14:32:28；其其他检查及真实自动存档044808通过。
+官方033258第三次原生捕获045536=session13252，从12:55:36运行；前两次已捕获相同渲染偏移和不对齐指针，第二次完整dump写出失败，直接内存邻域有效。
+人工隔离试玩已正常关闭；4/6目标，保存slot1，发现的问题已修正待新版本继续人工试玩。详见manual-review-043745/observations.txt。
+有效工时当前活动段始于12:27:07.2212097，之前累计5.30089478h。不得将02:48—09:06间断计入。
+--- 历史记录 ---
+活动进程 / 2026-10-27 12:01
+原Goal active，继续至今晚22:00；M02未启动。当前有效工作段从12:01:26.1482250+08:00开始。
+
+session 4167: custom release CLANG-035543 7200s natural run, artifacts/m01/exported-soak-20261027-035645, started11:56:45 expected>=13:56:45. Not yet passed.
+session 67934: official release031837 3600s natural run, artifacts/m01/exported-soak-20261027-031838, started11:18:38 expected>=12:18:38. Not yet passed.
+session 30859: ASan optimized original-pool .NET engine GL1200s natural run, artifacts/m01/asan-game-soak-20261027-034325, started11:43:25 expected>=12:03:25. Read stderr on exit; prior ASan had Jolt cleanup assertions.
+Closed sessions: custom integration36481/stress48441/audio63459 allpassed; outputkind directories035645. Custom states035544passed. Official autosave5664 (035002) passed two real intervals +backup UI. Official states51634 (035425) passed.
+
+Newest game export m01-rescue-polish/M01-20261027-035425 was cloned into m01-clang-runtime/CLANG-035543. Frozen exact source is builds/candidates/m01-clang-runtime-source. New working source AFTER freeze sets Hurt/Treat/StaffCare Activity immediately, and adds states assertion; NOT yet compiled/verified. Do not mix it into frozen candidate evidence.
+Custom engine symbols retained .tools/engine-diagnostics/godot-4.7.2-stable/bin/godot.windows.template_release.x86_64.llvm.mono.exe; shipped candidate stripped with llvm-objcopy. engine-provenance folder inside runtime candidate includes exact source/toolchain provenance, build request/result, ASan-only source patch and allocator-header hashes. No root-cause fix claimed.
+
+M01-033258 release failed at11:37 with0xc0000005; evidence exported-soak-033358/windows-crash-events.json, actual empty logs. Updated verifier saves launch/process-result before error handling. Original033258 failed, no package; 030100 old package preserved but new blocker documented. Further full release cannot pass only short checks.
+Pending user optional priority question from11:15: M02 continuation vs M01 polishing. No reply. Continue M01 meanwhile.
+
+2026-10-27 12:11 / 长时间正式版二次失败
+旧候选M01-20261027-031837的3600秒测试在12:05:42崩溃，实际运行约47分04秒；session67934记录exit=-1073741819。Windows事件1000指向Yukkuri.exe偏移0x14201b8、0xc0000005，与033258失败一致。目录exported-soak-20261027-031838/windows-crash-events.json。没有完成结果，未通过。此旧runner启动于launch/process-result记录修正之前，不能虚构这些文件存在。
+ASan optimized original-pool GL的1200秒实际流程于12:03:29正常结束，exit0/stderr0；结果asan-game-soak-20261027-034325/m01-integration-result.json。仅说明本次ASan运行未复现，不证明正式版已修复。
+CLANG-035543两小时流程仍在运行，结束前不得标通过。
+
+2026-10-27 12:15 / 暂停物理、游戏内指南与新候选
+实际失败development-states-20261027-040958重现打开观察记录后目标仍下落。现在弹窗打开时取消接触、冻结特写刚体；关闭恢复。development-states-041046实际GUI检查记录/设置冻结、恢复、背景购买拦截通过。普通世界暂停与特写可操作规则没有改成统一禁用。
+新增可滚动游戏内帮助，菜单和左下均可进入，独立记录嵌套菜单的暂停状态并屏蔽下层操作。1280x720截图development-1280x720-041241/m01-help.png已检查无遮挡，帮助入口/关闭检查通过；该次完整流程后续被官方开发引擎signal11中断，不能标全流程通过。
+另以help-priority-before.log复现野外冲突覆盖园内重伤求助；修正非重伤求助不覆盖重伤目标，52项规则通过。新M01-CLANG-20261027-041419包含这些修正及多重伤提示/立即更新伤病活动；冻结源码builds/candidates/m01-clang-help-source。独立两小时、缩放全GUI和状态验证现开始，不覆盖035543或030100包。
+旧自编译035543真实自动存档双周期/坏档备份读取通过exported-autosave-20261027-040924；两小时流程仍未完成。发布崩溃阻塞仍在。
+
+12:22 / 验证入口与诊断现场
+CLANG-041419在1280x720完整GUI、状态、60轮压力通过；exported-audio-20261027-041826虽声音断言完成且exit0，但stderr出现2 ObjectDB instances leaked / 1 resources still in use，严格判失败。verbose重跑042013清洁仅为对照，不抹掉原失败；正在重复verbose以定位资源类型。
+新增tools/native/capture-game-crash.cpp及capture-m01-native.ps1，只以调试器创建本项目子进程，记录异常寄存器、指针内存与minidump；没有注册系统调试器或修改其他程序。独立故意访问0x1234的fixture成功捕获二次异常、退出码和dump，证据native-capture-fixture/result。正式033258诊断流程native-capture-20261027-041826正在运行，不作为发布验收。
+新包自然运行门槛改为至少7200真实秒，已进入package-m01调用的m01-release-rules.ps1。真实旧030100的600.143秒通过记录现在被打包门槛拒绝，long-run-package-gate-replay.json；旧包历史事实不改。此为本地入口验证，不声称宿主自动拦截。
+
+2026-10-27T12:30:38.1577520+08:00
+音频资源清理与名单时序回归
+exported-audio-042255 verbose实际复现AudioStreamWAV/AudioStreamPlaybackWAV、sanctuary-loop.wav退出残留。新增Main.Lifecycle统一停止/解绑音乐音效，等待0.2秒再退出；窗口CloseRequested接入同一路径，音频测试用该窗口信号结束并释放捕获效果。CLANG-042608五次音频/关闭路径复验清洁，audio-cleanup-repeat-results.json；1280x720全GUI042657通过。两小时042657尚待。
+旧035543两小时在12:27:46以exit7退出：ObjectDisposedException Godot.Button，发生于ChooseRoster等待滚动期间；不是原生0xc0000005。没有完成，不能算两小时通过。development-states-042940用入侵到达时机稳定重现同一失败。现工作源码改为按个体ID增量更新名单，保留仍在场个体的按钮；回归正在进行，尚未导出此新修正。
+旧041419长测在12:26由本任务明确停止以替换音频修复版本，interruption.json记录原因；不算崩溃或通过。新证据索引verification-index.json分开记录版本/失败/未完成，不代替验收。
+2026-10-27 12:49 / 当前候选与首次异常寄存器
+当前M01-CLANG-20261027-043154，runtime=builds/candidates/m01-clang-roster，exact source=builds/candidates/m01-clang-roster-source。完整GUI/states043228、stress/audio043358全部严格通过；两小时exported-soak-043228从12:32:28运行，预期不早于14:32:28，尚未通过。042608旧长测已主动停止并记录interruption，不能算通过。当前自动存档双周期044808正在运行。
+官方033258在native-capture-041826下12:39:18再现同偏移0x14201b8读访问异常，实际1250.87秒。R12=0x1af2f6d8be0，RBX=0x1af2f50f7f7（未按8字节对齐），RSI=0x180000004b000000；读取owner失败998。反汇编对应渲染列表读取surf及其owner。证明本次收到异常指针，尚不证明写坏来源或释放后使用。1MB dump未包含列表邻域，已扩大为全内存及邻域捕获，native-capture-044448自12:44:49运行，PID548/辅助44936，仅调试本项目子进程，无系统调试器注册。
+人工原生鼠标试玩使用隔离配置manual-review-043745/runtime，PID47100；已实际完成喂食、抚摸/抱抱/蹭蹭不同反应、3次教学、领取委托、野外观察/喂食/邀请被拒。当前暂停在野外01:27。发现进入特写的旧提示仍称拖拽拿起，与默认抚摸工具不符，待本轮试玩后修正。人工试玩与用户验收分开，用户验收仍pending。
+
+2026-10-27 13:10 更正：050711完整GUI050743虽写出成功结果和完成标记，但其exec启动器session9900异常退出-1073740791，未生成process-result和verification-metadata，不能标完整通过。上条工作记录中的“完整GUI通过”应读为玩法断言完成、退出核验未完成；原记录保留，失败单独保留并重跑。states050743确实通过。
+
+
+

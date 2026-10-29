@@ -1,0 +1,10 @@
+{
+  "TickSeconds": 0.25,
+  "HungerPerSecond": 0.22,
+  "EnergyPerSecond": 0.12,
+  "MoveSpeed": 0.8,
+  "FeedGain": 30,
+  "FeederCost": 25,
+  "BedCost": 20,
+  "RegionHalfSize": 9
+}

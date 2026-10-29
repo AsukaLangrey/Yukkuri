@@ -1,0 +1,122 @@
+M01 原生渲染故障调查 / 2026-10-27 上午续接
+
+状态：未解决。所有含 ERROR 的运行都判定失败，即使游戏流程写出了 success=true。
+夜间中断测试 candidate452-stress-20261026-184756 缺完成输出，已单独标为 interrupted。
+
+新证据
+1. 4.5.2完整候选再次崩溃，cycle=15之后signal11；换旧版本不是已经验证的解决方案。
+   artifacts/m01/candidate452-stress-20261027-011213/run.log
+2. 4.7.2纯GDScript读取475个模型部件，无C#、UI、游戏行为；120秒基线复现particles null。
+   artifacts/m01/renderer-probe/gd-120-baseline-20261027.log
+3. morphology对照，每项60秒：静态全部失败；仅Box失败；仅Sphere/Cylinder/Array/Torus各通过一次。
+   artifacts/m01/renderer-probe/matrix-20261027-011626/results.json
+4. Box对照，每项60秒：单位Box网格+保留尺寸缩放失败；禁阴影、移除材质、生成规则Box网格、展开层级静态各通过一次。
+   artifacts/m01/renderer-probe/matrix-20261027-012324/results.json
+5. 完整模型120秒验证：实体材质改背面剔除仍失败；仅Box关闭投影仍失败（63条错误）。短时通过不能外推完整场景稳定。
+   artifacts/m01/renderer-probe/matrix-20261027-012910/results.json
+
+当前行动
+在.tools/engine-diagnostics中用官方4.7.2源代码、隔离LLVM-MinGW与SCons编译带ASan和调试信息的template_debug。
+目标是通过现有纯GDScript最小场景定位原生内存错误，不再把无根因的显示开关组合当修复。
+实际编译命令：platform=windows arch=x86_64 target=template_debug use_mingw=yes use_llvm=yes use_asan=yes dev_build=yes debug_symbols=yes optimize=debug d3d12=no accesskit=no module_text_server_adv_enabled=no module_mono_enabled=no -j12
+编译日志：artifacts/m01/renderer-probe/diagnostic-build.log
+工具与源码来源记录：同目录llvm-provenance.json、godot-source-provenance.json、scons-install.log。
+主项目SDK与发布引擎仍为4.7.2；只有在验证原始失败场景与完整游玩流程后才可变更交验结论。
+
+独立玩法/表现进展
+照护保护原失败：长时间抚摸头顶即使用手掌也损失0.6894健康。修正联合压力上限后44项M01规则检查通过，关闭保护及惩戒伤害保留。
+真实GUI增加同力度的有理由/无理由惩戒对照：知情旁观者信任+1.5、恐惧不增；无理由时恐惧+4.335；远处未知者均不变。该运行含渲染错误，因此整体仍失败。
+证据：artifacts/m01/development-20261027-013424/m01-integration-result.json、run.log。
+实际截图发现入口门柱及字牌遮挡特写脸部。新增相机层级：特写显示目标、地面、手部，排除场景装饰；正在重跑同一入口位置。
+
+交付入口
+新增build-identity.ps1和package-m01.ps1：记录导出源代码/负载对应关系，要求同一默认配置导出的GUI、压力、10分钟自然事件及混音证据；不会把图形错误或旧框架结果当作通过。
+已经验证旧框架导出被入口拒绝、篡改负载被拒绝；完整新版本打包尚未执行，不能宣称发布链完成。
+
+这份记录是调查证据，不是引擎根因结论，也不代表M01达到Ready或用户通过。
+
+09:48 诊断与特写复验
+ASan首次启动在UCRT _setmaxstdio(8192)失败，尚未进入游戏；windows_hook_rtl_allocators=true也导致DLL初始化失败。诊断专用引擎仅在ASAN_ENABLED下跳过扩大stdio句柄上限，保留默认限制，不禁用渲染内存检查。原源码备份file_access_windows.original.cpp。该修改不进入发布引擎。
+启动又发现template_debug默认禁止路径覆盖；重编译增加disable_path_overrides=no以载入独立探针。先前启动失败不算游戏复现。
+最新入口特写development-20261027-014142截图已确认门柱字牌不再遮脸，角色及阴影可见，工具选中状态和档案顶部正确。该GUI运行30条原生错误，整体仍失败。
+
+09:59 原生内存检测进展
+诊断版默认对象池Mobile两分钟未复现原错误（仅初次缺全局脚本缓存错误，随后已用编辑器正常import生成缓存）；OpenGL两分钟无ERROR且正常退出。尚不能将诊断版短时通过外推官方发布引擎。
+由于对象池释放仍保留整个内存页，ASan可能无法识别池内陈旧指针；诊断专用源码在ASAN_ENABLED下将Mobile/GLES的几何实例及表面缓存改为独立堆分配，分别跟踪生命周期。原头文件备份renderer-probe/*.original.h；新增diagnostic_heap_allocator.h，仅诊断使用，未作为修复发布。正在验证并准备带优化编译对照。
+最新完整GUI回归development-20261027-015753包含新增逻辑键失败重放并通过玩法断言，但160条particles错误，整体FAIL。交验标准未放宽。
+
+10:15 运行库与构建对照
+官方4.7.2非.NET版同场景180秒0错误；官方.NET版/.NET10.0.13为9条particles错误；同一个官方.NET版改加载隔离.NET8.0.33仍有2条错误（接近173秒出现）。所有均正常退出，不能只凭exit=0判断通过。切换.NET版本不能视为修复，主项目未改目标框架。
+.NET8隔离完整游戏60轮OpenGL压力通过一次，但与最小场景失败并存，尚不能交验。候选源码在artifacts/m01/runtime8，未替代src。
+诊断版独立堆跟踪debug Mobile180秒无错误；speed优化Mobile180秒同样无错误；两者未启用.NET模块，接下来编译启用.NET的editor诊断版本以补齐差异。
+Windows逻辑W回归在development-20261027-020531明确失败；加入物理/逻辑移动键兼容后development-20261027-020603完整GUI通过且当轮0引擎错误。该单轮通过不代表渲染根治。窗口标题改用Window.Title属性，待实际窗口复验。
+10:38 首个独立导出与诊断对照
+首个M01独立Windows构建M01-20261027-022445采用未修改官方4.7.2.NET release和嵌入.NET10.0.13，默认OpenGL。60轮压力与完整GUI/真实输入回归均0ERROR、exit0；音乐/6种反应音/静音混音验证也通过。10分钟自然玩法尚在运行，仍未Ready。
+启用.NET的ASan独立堆debug引擎完整60轮Mobile压力通过：asan-game-stress-20261027-023100。该结果未复现官方开发引擎故障，不能称根因修复。现在恢复原PagedAllocator头文件（保留heap版本和引擎备份），同工具链同场景再测，用来区分内存分配方式与构建差异。主项目及交付引擎未改。
+额外启动4轮独立默认导出压力验证，针对原有间歇崩溃；首轮通过不外推长期无故障。
+检查Advance入口与v051原文一致：用真实开始至ready_at的时间，不回填排除中断后的虚假起始时间。整轮6小时则明确累计有证据的工作段。未擅自改门槛或开启M02。
+10:43 输入回归与验证入口修正
+暂停读档失败已由真实GUI重现：development-20261027-024138，toolbar load preserves a paused save断言失败。Main.Load现将菜单恢复状态更新为读入存档的暂停值，正在复验暂停存档/运行存档及菜单继续三种情况。
+完整候选M01-20261027-022445已保留Windows包、源代码和四项运行证据，尚未Ready。后续修复须重新导出，不能复用旧候选证据。
+标准对象池的ASan.NET完整压力没有复现particles错误，但退出时stderr出现Jolt FixedSizeFreeList断言；run.log与exit0未反映该错误。旧诊断脚本曾漏检，已用真实日志失败案例asan-stderr-guard-replay.json验证新判定拒绝。正式verify-m01和package入口也新增stderr捕获与检查；旧包为基线候选，不能冒充新严格入口通过。
+导出重复压力第一轮023848成功；外层循环误用了PowerShell残留LASTEXITCODE而退出，属于调用脚本失败，不是游戏失败。已去除该无效判断，使用异常结果，并重新开始四轮检查，额外捕获stderr。
+正在以同一ASan工具链构建优化.NET诊断版（原对象池），用于进一步缩小构建差异。主引擎仍未修改。
+10:49 追加稳定性结果
+同一默认独立候选的4轮额外压力全部通过，每轮60次，80次地区/读档切换；四份run/stdout/stderr清洁、exit0。列表：artifacts/m01/exported-repeated-stress-20261027.json。它们属于022445旧候选，不能替代后续源代码修复后的新构建验证。
+10:55 小窗口验证
+新导出M01-20261027-024947默认完整GUI、60轮压力、混音已通过且stderr清洁；自然10分钟仍在运行。暂停状态修复已进入该导出。
+1280x720测试在开始菜单点击失败，exported-1280x720-20261027-025347截图显示菜单和主要UI完整。追踪发现验证脚本将Viewport坐标直接交给需要Window坐标的Input.ParseInputEvent；本次不能判成玩家鼠标坏掉。依据本地Godot Viewport.xml与Window::get_final_transform，测试Mouse及滚轮转换为最终窗口坐标，正在development-1280x720-20261027-025511重放。测试代码变化计入源代码身份，最终包仍需重新导出。
+优化ASan.NET原对象池引擎11分14秒编译完成，同一实际压力流程再测；仅用于定位，不进入发布包。
+10:58 诊断结果与入口实际拒绝
+优化ASan.NET默认对象池60轮完成，仍未复现particles错误；但退出Jolt断言再次出现。新verify-asan-game真实返回失败（旧版本会漏检）。证据asan-game-stress-20261027-025532/stderr.log。该错误与原纯GDScript/无物理场景中的particles问题不能自动归为同一根因。
+诊断源码在ASAN_ENABLED下为jolt_assert追加sanitizer堆栈输出，原文件另存jolt_globals.original.cpp，下一轮用于确认退出时是哪类对象未释放；不改变断言、不进入发布包。
+小窗口完整开发GUI025511通过。其验证坐标修复正在当前源代码，发布包024947尚未包含，需要最后重新导出。
+11:04 已取得物理退出堆栈
+asan-game-stress-20261027-030120确认断言来自FixedSizeFreeList<JoltJobSystem::Job>析构，路径JoltPhysicsServer3D::finish→Main::cleanup。仅证明是物理任务池在退出检查时尚有未归还对象；尚未证明根因，也不能用它解释无物理最小场景的particles错误。
+保存本地复现包renderer-probe/Yukkuri-renderer-repro-20261027.zip，含纯GDScript模型、实际失败/对照日志和独立Jolt堆栈。未向外发送或提issue。诊断构建不替换发布引擎。
+11:19 新增长时间检查
+已交验030100独立包保留不变，当前新增1小时自然游玩验证参数（只改测试时长与结果记录，未改世界规则）。测试入口要求达到实际请求秒数，不能旧程序跑10分钟就算1小时。export-windows新增独立候选输出目录，避免覆盖已交验默认版本。
+开发引擎development-soak-20261027-031727未完成长测，约开始后短时间即再次signal11原生崩溃，退出-1073741819；完整日志已保留，不能算通过。不是主动取消，也不能说桌面宿主崩溃。
+独立release候选M01-20261027-031837位于builds/candidates/m01-longplay，exported-soak-20261027-031838正在跑3600秒目标；结果未出。与开发引擎运行分开统计。
+11:44 新候选正式release原生崩溃（未修复）
+M01-20261027-033258 / exported-soak-20261027-033358 在约180秒提前退出，无完成结果。run.log与stderr均为空，stdout止于cycle29；Windows Application事件1000/1026（11:37:00）记录Yukkuri.exe 4.7.2.0 / .NET10.0.13、0xc0000005、偏移0x14201b8、进程0x6100。windows-crash-events.json已保存。不能再笼统声称正式release没有复现稳定性问题。
+此前030100特定构建的测试证据仍真实保留，未证明它本身在本次崩溃；新候选阻止交付，原Goal仍未完成。另一个031837一小时进程仍在跑，尚无结论。
+旧verify-m01读空run.log后在Regex.Matches报null，丢失进程退出码。新入口先记录launch/process-result，再以空字符串读取日志并校验退出/完成标记。旧失败的退出码未捕获，不能补造；empty-log-verifier-replay.json明确区别Windows异常与进程退出码。
+继续用优化ASan诊断引擎跑完整自然场景，尝试获取内存错误位置。未将诊断引擎用于交付。
+12:00 源码冻结、自动存档与引擎候选
+新增自动存档菜单读取入口，修正菜单读槽1后可见槽号仍为3。M01-20261027-035001 / exported-autosave-20261027-035002通过两个真实60秒自动保存周期、菜单读自动存档、隔离主档损坏后的真实备份恢复及另存槽2；未把受控文件损坏冒充自然故障。
+保护重伤者原失败critical-protection-before.log已重现；现允许主角保护无行动能力但仍活着的目标，不要求被保护者先恢复。处理他人威胁或入侵结束不会抹去现存重伤求助；稳定最后一项重伤后清理提示。50条M01规则通过。正式官方引擎候选035425的states GUI通过，包含实际点击保护重伤者；该候选尚无完整长时稳定性结论。
+LLVM-MinGW UCRT官方4.7.2源码template_release编译完成（无ASan、无dev，保留原对象池，D3D12/AccessKit关闭）。独立候选M01-CLANG-20261027-035543位于builds/candidates/m01-clang-runtime，基于035425游戏导出；默认builds/windows与030100交验包未替换。引擎来源、参数、哈希和ASan专用且未编译分支补丁在候选engine-provenance目录。不能称为已查明根因的修复；多个构建条件与官方不同。
+此自编译候选states035544、完整GUI/压力/音频035645均通过。exported-soak-20261027-035645正在跑7200真实秒，尚无结果。source冻结目录builds/candidates/m01-clang-runtime-source已逐文件匹配该候选，之后源码修改不混入此候选；package-m01可指定SourceDirectory，仍核对同一build source hash与四类运行证据。
+旧031837官方release的一小时测试仍在跑；ASan GL20分钟测试asan-game-soak-20261027-034325仍在跑。其结论待实际退出和stderr检查。发布崩溃阻塞未解除，Goal active，M02未开工。
+
+2026-10-27 12:11 / 长时间正式版二次失败
+旧候选M01-20261027-031837的3600秒测试在12:05:42崩溃，实际运行约47分04秒；session67934记录exit=-1073741819。Windows事件1000指向Yukkuri.exe偏移0x14201b8、0xc0000005，与033258失败一致。目录exported-soak-20261027-031838/windows-crash-events.json。没有完成结果，未通过。此旧runner启动于launch/process-result记录修正之前，不能虚构这些文件存在。
+ASan optimized original-pool GL的1200秒实际流程于12:03:29正常结束，exit0/stderr0；结果asan-game-soak-20261027-034325/m01-integration-result.json。仅说明本次ASan运行未复现，不证明正式版已修复。
+CLANG-035543两小时流程仍在运行，结束前不得标通过。
+2026-10-27 12:49 / 当前候选与首次异常寄存器
+当前M01-CLANG-20261027-043154，runtime=builds/candidates/m01-clang-roster，exact source=builds/candidates/m01-clang-roster-source。完整GUI/states043228、stress/audio043358全部严格通过；两小时exported-soak-043228从12:32:28运行，预期不早于14:32:28，尚未通过。042608旧长测已主动停止并记录interruption，不能算通过。当前自动存档双周期044808正在运行。
+官方033258在native-capture-041826下12:39:18再现同偏移0x14201b8读访问异常，实际1250.87秒。R12=0x1af2f6d8be0，RBX=0x1af2f50f7f7（未按8字节对齐），RSI=0x180000004b000000；读取owner失败998。反汇编对应渲染列表读取surf及其owner。证明本次收到异常指针，尚不证明写坏来源或释放后使用。1MB dump未包含列表邻域，已扩大为全内存及邻域捕获，native-capture-044448自12:44:49运行，PID548/辅助44936，仅调试本项目子进程，无系统调试器注册。
+人工原生鼠标试玩使用隔离配置manual-review-043745/runtime，PID47100；已实际完成喂食、抚摸/抱抱/蹭蹭不同反应、3次教学、领取委托、野外观察/喂食/邀请被拒。当前暂停在野外01:27。发现进入特写的旧提示仍称拖拽拿起，与默认抚摸工具不符，待本轮试玩后修正。人工试玩与用户验收分开，用户验收仍pending。
+2026-10-27T12:57:24.3502285+08:00 / 保护关联修正与第二次原生现场
+原生鼠标试玩记录在artifacts/m01/manual-review-20261027-043745/observations.txt，隔离slot1复制保留，世界132.75秒，未完成全闭环，不冒充用户验收。真实操作发现旧求助失效；规则回放protection-target-before.log同时确认无关事件可获保护奖励、重复点击刷信任、远离威胁后仍有旧求助。新代码按未解决事件的实际受害者/园内入侵关联选择攻击者，撤退后不再是威胁，解除野外不当行为并保存事件原因；刷新求助保留重伤优先。55项检查after.log全部通过。CLANG-045309在1280x720完整GUI及states045333通过，包含真实保护按钮解除和重复点击不奖励；两小时045333未完成，旧043154两小时043228也继续供独立引擎对照。新源码冻结builds/candidates/m01-clang-protection-source。
+第二次官方033258诊断native-capture-044448在12:52:47、478.615秒，同偏移14201b8。R12=0x20baa3d7278，列表该项保存RBX=0x20baa2ac5c5，邻近列表指针均对齐；RSI=0x6a0000000001。邻域直接ReadProcessMemory成功保留，支持列表含异常指针。完整dump写出失败HRESULT2147942699；51MB文件不完整，capture-result已补dump_saved=false，不能仅因文件存在称完整dump成功。新捕获045536加入MiniDumpIgnoreInaccessibleMemory且分别记录dump_saved/context_captured，按Microsoft MINIDUMP_TYPE文档，不掩盖读不到的区域。仍未知写坏来源。
+官方导入msvcrt.dll的memcpy/memmove，自编译导入UCRT版本；编译器、CRT、功能配置均不同，不能只归因GCC。源头待查，未更改系统设置。
+2026-10-27T13:21:15.6055287+08:00 / 当前候选050711与交付入口核对
+当前runtime=builds/candidates/m01-clang-care-policy，原始冻结源码=m01-clang-care-policy-source，source_sha256=6182ae452bf03a4434bd88e3b2e4c41813c19857593cb1f52a34fa0296eaf769。states050743、独立完整GUI1280x720-051039、stress051334、audio051334、真实自动存档双周期051334均正常exit0且stderr清洁；最初integration050743启动器异常退出，保留为未完成，不与重跑合并。7200秒050743仍运行，最早15:07:43；043154/045309旧长测各自保留独立对照。
+原生键鼠manual-review-protection-045800在前候选045309接续真实旧存档，完成全部六项目标、F5保存、消耗食物再F9恢复，正常退出。不是同一版本从零新档，也不代替用户验收。发现员工喂食入侵者和园内获救台词错误，现050711已修正：员工只自动照护非入侵者，玩家仍可亲自喂食；园内获救承认自己的家。staff-defense-before/after保存实际失败/修正，57项规则通过。
+050711最初缺engine-provenance目录，查明new-engine-candidate入口原先未自动复制；已修复实际创建/打包/解包核验入口，并用该候选缺目录的真实失败engine-provenance-gate-before.json验证拒绝，再补匹配来源和binary-identity通过after.json。后补来源不改变游戏payload；旧045309没有追溯宣称已补。最终源码另冻新快照以包含最新工具/文档，原快照保留。
+官方第三次诊断native-capture-045536在92.4589秒崩溃，完整863412934字节dump可读；渲染列表首项为0x205a4d45f5f，附近对齐surface对象存在。三次异常指针低字节均与第二字节重复，仍未知原因。native-writer-050515只监视自己的官方引擎子进程，改变时序，不算发布验证；仍运行。没有更改系统或归因硬件。
+
+2026-10-27T13:42:48.9649791+08:00 / 写入监视与CRT对照：native-writer-050515正常exit0，1800s下108116帧、355319次首项写事件，未捕获异常写或崩溃。调试器改变时序，此结果不推翻三次正式崩溃、不算发布验收。新053626恢复首次断点MOV后仅保留硬件监视以减少每帧干预，session2366，PID34472；预计14:06:26后结束。独立MSVCRT同LLVM23.1.4对照开始，官方下载sha256已核对，原官方源码新目录编译，参数与UCRT发布候选对齐但不声称生成代码完全相同；session24518/renderer-probe/msvcrt-comparison-053509。不替换当前运行时。
+2026-10-27 13:52 / 组合动作与选择迁移
+simulation-exploration-054705在seed15、step209、累计8609操作/172次保存恢复后失败：选中的刺头退回wild，但ActiveRegionId仍home、SelectedId仍指向刺头，SaveStore.Validate拒绝“选中个体无效”。保留完整trace和原始失败state；不是实际用户坏档或自然时间运行。
+WorldSimulation.Tick现于自主迁移后立即将离开当前地区的选择切换为当前地区个体，早于UI刷新和自动存档。修正后simulation-exploration-054815完成64种子/38400操作/768保存往返，包含暂停/特写时钟、随机规则开关、死亡不可自行复活和保存后确定性延续；全部通过。59项固定规则检查加入入侵到达/撤退两方向选择更新；真实GUI development-states-054939保存按钮与读档通过。
+054116短项全部通过，但因新发现的迁移问题，其未完成的两小时054130由本任务主动停止；interruption.json明确记录，不算引擎崩溃或通过。
+新M01-CLANG-20261027-055029导出并冻结，runtime=builds/candidates/m01-clang-selection-transfer，source同名-source，hashaf5828009577e7f877410fcc42f6681e76c0d98e76e0fee239a5e4208e8d7e56。导出states/1280x720完整GUI/7200s055128进行中；长测不早于15:51:28。尚未打包，不借用旧版本证据。
+独立MSVCRT比较引擎编译成功，实际7分41秒；导入确认msvcrt.dll。M01-MSVCRT-DIAG-054441使用原050711游戏payload、原官方引擎源码、同LLVM20261020编译器版和对齐参数，但CRT不同。1800s exported-soak-054442=session30353，预计>=14:14:42；只诊断，元数据diagnostic_only=true，打包入口实际拒绝delivery-rejection.json，验证元数据自动带diagnostic-engine-experiment。官方exe编译字符串含Fedora MinGW GCC15.1.1/15.2.1，不能据此认定GCC是根因。
+2026-10-27T14:24:17.0781360+08:00 / 独立PNG保存实验：png-probe-061500。官方editor固定同一Image保存64次，62份与原始PNG同hash、035不同但可解码、060压缩流校验失败；每次source_hash=2624967918。ASan editor64份均同hash无错误；Python zlib独立256往返全一致。尚未认定根因。读取系统WHEA确认当天多次处理器核心已更正错误APIC16/17（TLB/Internal parity），轻量CPUID实际映射为逻辑CPU4/5；仅测试进程亲和性对照已开始，不改系统设置。原生写监视053626正常30m未复现；MSVCRT054442正常1800s结束，仅诊断不算交付。
+2026-10-27T14:31:18.3342005+08:00 / 新证据：固定PNG头部与IDAT CRC正确，内部zlib部分失败；clang-packed-output64份29坏，clang-logical0-trial1 0/64坏，clang-logical5-trial1 55/64坏，clang-logical4-trial1 8/64坏，clang-excluded45-trial1 0/64坏。核心映射CPUID实测，WHEA观测保存；尚未归因全部历史崩溃。verify-m01增加仅自有子进程亲和性选项并自动写diagnostic_flags，仍拒绝拿这类证据作默认发布验收。正在063012小窗口对照。
+2026-10-27T14:35:55.7846859+08:00 / 为避免把工具链变化误作修复，增加原官方033258同一二进制、仅排除逻辑4/5的7200s对照。该版之前三次原生崩溃现场保留；此流程仍为diagnostic，不替换当前055731，也不证明根因。
+2026-10-27T14:41:20.7542243+08:00 / 原生独立zlib对照：使用Godot未经修改的zlib1.3.2源码独立编译native-zlib/zlib-repeat.exe，不涉及Godot场景/渲染。固定相同原始字节128次compress2/uncompress，逻辑0=0失败/0不同编码，逻辑5=30失败/31不同编码；进程亲和性仅自身。证据png-probe-061500/native-zlib/logical0-result.json与logical5-result.json，支持本机核心相关执行不稳定，但不宣称已查明所有故障或修复硬件。当前原Goal继续、交付未Ready、默认与隔离证据不得混用。
+[2026-10-27T15:17:33.1017576+08:00] 065955 current short-test PNG audit: 37 decoded, 5 failed, all failures in default integration/states. Affinity states had no decode failures. Empty-cache asset rebuilding did not eliminate host-associated PNG compression failures. Logic checks and image integrity remain separate; do not mark damaged PNGs visually accepted. Evidence artifacts/m01/clean-import-frame-audit.json.

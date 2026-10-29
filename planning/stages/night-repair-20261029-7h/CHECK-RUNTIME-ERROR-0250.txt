@@ -1,0 +1,6 @@
+2026-10-29约02:50 +08，纯.NET检查进程异常，未定因。
+natural-life-27.log保留完整输出。在最后几项剂量抽样前，进程报System.AccessViolationException，堆栈从WorldSimulation.get_State/ObserveNaturalResources进入TickInteractionWorld。此前新增的支撑放置和支撑改变中断检查已输出PASS，但本次未正常结束、没有最终JSON，不能算整轮通过。
+只结束经Win32_Process确认的本次测试子进程16084及其dotnet父进程17732，未停止其他工作或修复系统。
+独立目录check-runtime-0250重新编译，不生成apphost；通过dotnet直接运行DLL，且仅在该验证子进程内设置DOTNET_TieredCompilation=0。natural-life-28.json为60/60，包含400组干净/污染摄入和重复剂量抽样。
+此替代路径只证明这份逻辑在该执行配置下通过；不证明原apphost、分层编译或系统稳定，也不能据此判断异常来自硬件、运行时或项目代码。无原生游戏、Godot或computer-use调用。
+随后使用同一独立DLL、默认运行时配置（不设置DOTNET_TieredCompilation）再次运行，natural-life-29.json同样60/60。没有重试原apphost或声称异常已解决。

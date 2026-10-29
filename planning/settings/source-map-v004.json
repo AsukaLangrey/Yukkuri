@@ -1,0 +1,715 @@
+{
+  "schema_version": 1,
+  "version": "v004",
+  "compiled_on": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "note": "原始证据反向索引；哈希不表示验收。最新确认优先，旧版完整保留。",
+  "sources": [
+    {
+      "version": "v001",
+      "path": "planning/requirements-v001.txt",
+      "title": "Yukkuri 乐园：原始需求与设计草案 v001",
+      "sha256": "d6b6b1e2cb59f850885691018c2b2a425ba2abc3f71a34b385e104b224f2e215",
+      "current_rule_ids": [
+        "PRD-01",
+        "PRD-02",
+        "MOD-01",
+        "GOV-03",
+        "GOV-04"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v002",
+      "path": "planning/requirements-v002.txt",
+      "title": "Yukkuri 乐园：需求增量 v002",
+      "sha256": "c28c37dba18673a1a6a03deb02541baf966ae9c20798b050ab0d3dba35920363",
+      "current_rule_ids": [
+        "PRD-02",
+        "WRL-01"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v003",
+      "path": "planning/requirements-v003.txt",
+      "title": "Yukkuri 乐园：需求纠正 v003",
+      "sha256": "dc365fb73cc244d50424863aa0203854d6416596cecb7e47512d04705a4bbb02",
+      "current_rule_ids": [
+        "WRL-01",
+        "WRL-02",
+        "GOV-04"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v004",
+      "path": "planning/requirements-v004.txt",
+      "title": "Yukkuri 乐园：画面与互动需求 v004",
+      "sha256": "42f565b8b72f7e690c96023483a4c9a60358ea8e50c683b8e1eca9a03e6eaa1a",
+      "current_rule_ids": [
+        "PRD-07",
+        "UX-01",
+        "UX-02"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v005",
+      "path": "planning/requirements-v005.txt",
+      "title": "Yukkuri 乐园：研究分工与镜头确认 v005",
+      "sha256": "d21e333354ad066bec7ae2eb8ef42981fbca6e1eb18f9df1959b1fa618c1ed3b",
+      "current_rule_ids": [
+        "MOD-01",
+        "UX-01",
+        "UX-02",
+        "GOV-01"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v006",
+      "path": "planning/requirements-v006.txt",
+      "title": "Yukkuri 乐园：玩家身份与游戏模式 v006",
+      "sha256": "4d1988716dd13142baea1595955da3a21d118cd522f38217ce613d784c1c331c",
+      "current_rule_ids": [
+        "MOD-01",
+        "MOD-02",
+        "MOD-07"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v007",
+      "path": "planning/requirements-v007.txt",
+      "title": "Yukkuri 乐园：地区、接纳与剧情 v007",
+      "sha256": "55c8067e5f05721f1c81534299e907252d3085ef2ae1867722ca4d60eca259fd",
+      "current_rule_ids": [
+        "MOD-04",
+        "WRL-03",
+        "WRL-07"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v008",
+      "path": "planning/requirements-v008.txt",
+      "title": "Yukkuri 乐园：个体差异、遗传与观察 v008",
+      "sha256": "4dead9c695325716c4a64c415c5ba8870823b7d389fb4eed71b10222024a581e",
+      "current_rule_ids": [
+        "OBS-01",
+        "OBS-02",
+        "OBS-03",
+        "OBS-04",
+        "OBS-05",
+        "REP-10"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v009",
+      "path": "planning/requirements-v009.txt",
+      "title": "Yukkuri 乐园：变异、繁衍与误判 v009",
+      "sha256": "88f50f235fe72296b53ff263f7c644ecfdc702ba15e3809fa160d8a9b98d6390",
+      "current_rule_ids": [
+        "OBS-05",
+        "REP-02",
+        "EVO-02"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v010",
+      "path": "planning/requirements-v010.txt",
+      "title": "Yukkuri 乐园：升级路径与综合牌照评定 v010",
+      "sha256": "1c19dfc3b0cf7e9a4b515640c8aa7e796e9d6f8174ce7f6b0df9739da075ee47",
+      "current_rule_ids": [
+        "EVO-01",
+        "EVO-02",
+        "CRT-02"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v011",
+      "path": "planning/requirements-v011.txt",
+      "title": "Yukkuri 乐园：认证流程、收入与失败规则 v011",
+      "sha256": "7fb9154fb22d0b802b3af4cb6d7bc9262a6095e0e1967f485bb93935433463ba",
+      "current_rule_ids": [
+        "MOD-08",
+        "CRT-04",
+        "OPS-01"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v012",
+      "path": "planning/requirements-v012.txt",
+      "title": "Yukkuri 乐园：直接互动、损伤表现与特写时间 v012",
+      "sha256": "71000fe92a3d3be6ff04a1b5bd28dbac70d3207bab4a9a9bc8276c493f2e615f",
+      "current_rule_ids": [
+        "WRL-06",
+        "UX-04",
+        "UX-05"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v013",
+      "path": "planning/requirements-v013.txt",
+      "title": "Yukkuri 乐园：子弹时间、跨区模拟与分阶段救治 v013",
+      "sha256": "c3c0372c4cbc1d42b7930ee620fbc6927c2ce89aa65b41881d6e1904b7a84ab1",
+      "current_rule_ids": [
+        "WRL-04",
+        "WRL-06",
+        "MED-05"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v014",
+      "path": "planning/requirements-v014.txt",
+      "title": "Yukkuri 乐园：恢复窗口与内馅转移 v014",
+      "sha256": "f44e7b794796ee119a428677517a4f4ccbd81e1ac0841fd056e3972a0e257e91",
+      "current_rule_ids": [
+        "MED-02",
+        "MED-03",
+        "MED-05",
+        "MED-06",
+        "MED-07"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v015",
+      "path": "planning/requirements-v015.txt",
+      "title": "Yukkuri 乐园：转移身体来源、身份与救治期限 v015",
+      "sha256": "42f5fc0f3179d6b45e3a496ae1fc6e319442c4b08e62f01aa4f5763621a49811",
+      "current_rule_ids": [
+        "MOD-09",
+        "MED-02",
+        "MED-04",
+        "MED-05",
+        "MED-06",
+        "MED-07",
+        "MED-09"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v016",
+      "path": "planning/requirements-v016.txt",
+      "title": "Yukkuri 乐园：员工自治、混合建造与物理互动 v016",
+      "sha256": "f74ce38cfeb10e5ebf50414dce352354eaac87dac88c57de95761df3f55d5cc2",
+      "current_rule_ids": [
+        "OPS-04",
+        "OPS-05",
+        "OPS-07",
+        "UX-03"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v017",
+      "path": "planning/requirements-v017.txt",
+      "title": "Yukkuri 乐园：美术、人类镜头与地区规模 v017",
+      "sha256": "71aefdd04c311754cbf37f174600e1bf2353c89c7be72f58cb2f1a80c57c08d4",
+      "current_rule_ids": [
+        "PRD-03",
+        "WRL-08",
+        "UX-01"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v018",
+      "path": "planning/requirements-v018.txt",
+      "title": "Yukkuri 乐园：单人首发、离线停止与短句交流 v018",
+      "sha256": "805cee5379f139137b8bafaac1bbd79734480d9db1610233cd637b9c1fdad517",
+      "current_rule_ids": [
+        "PRD-03",
+        "WRL-04",
+        "WRL-05",
+        "UX-06"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v019",
+      "path": "planning/requirements-v019.txt",
+      "title": "Yukkuri 乐园：完整世代、自由存档与首发平台 v019",
+      "sha256": "6fc60464c10e72257de16a90ce2a9edd7bcf879f5b8c3ecb7f14996dd445f074",
+      "current_rule_ids": [
+        "PRD-03",
+        "PRD-04",
+        "MOD-07",
+        "MOD-09",
+        "BIO-01",
+        "MED-05"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v020",
+      "path": "planning/requirements-v020.txt",
+      "title": "Yukkuri 乐园：开发资源、Demo 窗口与抢先体验 v020",
+      "sha256": "3296ee0a674eed164b59305e2590a068a30cf230c960fdd3fb9f22bef8dcfdfb",
+      "current_rule_ids": [
+        "PRD-01",
+        "PRD-05",
+        "PRD-06",
+        "GOV-03"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v021",
+      "path": "planning/requirements-v021.txt",
+      "title": "Yukkuri 乐园：技术栈认可与双机分工建议 v021",
+      "sha256": "1e5dabf6dfde5b95b1c61c773c128416132979b151734ed2c089912f432cac96",
+      "current_rule_ids": [
+        "PRD-07",
+        "PRD-08"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v022",
+      "path": "planning/requirements-v022.txt",
+      "title": "需求增量 v022 / 2026-10-26",
+      "sha256": "4d1c6b484325be68c3e5dc7d15e264cb172f13a3750df3d82cd687c548103c7a",
+      "current_rule_ids": [
+        "PRD-07",
+        "PRD-08"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v023",
+      "path": "planning/requirements-v023.txt",
+      "title": "Yukkuri 乐园：研究后设定取舍与寿命上限 v023",
+      "sha256": "7dd03404be1aa1e94868c6fff7c22bb5f616ff1377d4297f84baebd9fe437862",
+      "current_rule_ids": [
+        "BIO-02",
+        "BIO-03",
+        "BIO-05",
+        "EVO-01",
+        "PLT-01"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v024",
+      "path": "planning/requirements-v024.txt",
+      "title": "Yukkuri 乐园：繁殖方式范围 v024",
+      "sha256": "0d28115c55add6cff380f5fae09683bdac378ead0b8da0ec9e69612ac19ac5a4",
+      "current_rule_ids": [
+        "REP-01",
+        "GOV-01"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v025",
+      "path": "planning/requirements-v025.txt",
+      "title": "Yukkuri 乐园：子代知识与胎生、茎生差异 v025",
+      "sha256": "05d8dfde9a7ceb58c06cab39f4026887368dba848e27435b1e84a1a3d81b51a7",
+      "current_rule_ids": [
+        "OBS-07",
+        "REP-07",
+        "REP-08",
+        "REP-09",
+        "REP-18"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v026",
+      "path": "planning/requirements-v026.txt",
+      "title": "Yukkuri 乐园：繁殖方式适用条件与访谈方式 v026",
+      "sha256": "aba6265150e363972929df09c26ee7d101f99574bf715d9aa7484a21d1acce32",
+      "current_rule_ids": [
+        "REP-04",
+        "GOV-02"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v027",
+      "path": "planning/requirements-v027.txt",
+      "title": "Yukkuri 乐园：繁殖意愿、强制干预与母子风险 v027",
+      "sha256": "0af79b7850aa2d00b0c325e19abce2a3d785a0f335f5228b04242dd3f1a9e7f9",
+      "current_rule_ids": [
+        "REP-02",
+        "REP-04",
+        "REP-05",
+        "REP-06",
+        "REP-11",
+        "OPS-05"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v028",
+      "path": "planning/requirements-v028.txt",
+      "title": "Yukkuri 乐园：胎生吸收、母体牺牲与茎生杀子触发 v028",
+      "sha256": "7b1a9c9e93d061701d96efd65ac75099a72d768ce76b34a7e67a565711871065",
+      "current_rule_ids": [
+        "REP-06",
+        "REP-12",
+        "REP-13",
+        "REP-14"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v029",
+      "path": "planning/requirements-v029.txt",
+      "title": "Yukkuri 乐园：父系性格影响、认知遗传与收养 v029",
+      "sha256": "4432b1591b224a861eb969850f4725e8a094936cf24ff8dfbaff76bd5e5dac2e",
+      "current_rule_ids": [
+        "OBS-07",
+        "OBS-08",
+        "REP-09",
+        "REP-10",
+        "REP-18"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v030",
+      "path": "planning/requirements-v030.txt",
+      "title": "Yukkuri 乐园：跨种繁殖与子代物种判定 v030",
+      "sha256": "24f4566954e6bd672e0f5ac1151fc742369c630706baba91d6148140cba04364",
+      "current_rule_ids": [
+        "REP-15",
+        "REP-18",
+        "GOV-01"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v031",
+      "path": "planning/requirements-v031.txt",
+      "title": "Yukkuri 乐园：固定繁殖角色与捕食种配对范围 v031",
+      "sha256": "09529f5d773a5bfd22f4ca03fddc2bf8dc3c7f1d91bbfa7bcb40b605a9aac3b8",
+      "current_rule_ids": [
+        "REP-03",
+        "REP-04",
+        "REP-16"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v032",
+      "path": "planning/requirements-v032.txt",
+      "title": "Yukkuri 乐园：捕食种跨类繁殖的罕见原因与母体方向 v032",
+      "sha256": "3200ecc941d95ea367007a5b73ba7568b3972490dbd4a17adf8b3f562a0caaf9",
+      "current_rule_ids": [
+        "REP-16",
+        "REP-17"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v033",
+      "path": "planning/requirements-v033.txt",
+      "title": "Yukkuri 乐园：饰品身份识别、五倍总寿命与转移后繁殖角色 v033",
+      "sha256": "c415209c7bb6ef5a23e92e04720273184607161debe704afc75734a18cf4860d",
+      "current_rule_ids": [
+        "MOD-09",
+        "OBS-06",
+        "BIO-05",
+        "BIO-06",
+        "MED-08"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v034",
+      "path": "planning/requirements-v034.txt",
+      "title": "Yukkuri 乐园：白金资格、财产代管、迁居与玩家收益约束 v034",
+      "sha256": "aea4656df744c0390946a924000993b04ab5c2e46a8b34a700b374526b7f7361",
+      "current_rule_ids": [
+        "PLT-01",
+        "PLT-02",
+        "PLT-04",
+        "PLT-06"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v035",
+      "path": "planning/requirements-v035.txt",
+      "title": "Yukkuri 乐园：白金能力、津贴与迁居后持续回报 v035",
+      "sha256": "1efcb6624c48d4c6a742db744ec5fdf60b41f9eb2a9b10299336082f175d55df",
+      "current_rule_ids": [
+        "PLT-03",
+        "PLT-05",
+        "PLT-07",
+        "PLT-08"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v036",
+      "path": "planning/requirements-v036.txt",
+      "title": "Yukkuri 乐园：离园协商、浮动收益与自愿召回 v036",
+      "sha256": "d30812df7a15435048a391272b8cea12b26a30dfa1c3a3174a05c334ff85b9ef",
+      "current_rule_ids": [
+        "PLT-04",
+        "PLT-06",
+        "PLT-08",
+        "PLT-09"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v037",
+      "path": "planning/requirements-v037.txt",
+      "title": "Yukkuri 乐园：升级路线互斥、形态可逆性与潜力遗传 v037",
+      "sha256": "db3f419b9cfd5c2d3203db53db1997cfa7161d4e034dbcb96c18332513983b2d",
+      "current_rule_ids": [
+        "REP-18",
+        "EVO-03",
+        "EVO-04",
+        "EVO-05"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v038",
+      "path": "planning/requirements-v038.txt",
+      "title": "Yukkuri 乐园：物种路线、升级知识发现与双重成本 v038",
+      "sha256": "5801fc21f46ff6020f0a3a2eeda23debe276a0473464142fec9b0c0b78241547",
+      "current_rule_ids": [
+        "EVO-03",
+        "EVO-06",
+        "EVO-07"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v039",
+      "path": "planning/requirements-v039.txt",
+      "title": "Yukkuri 乐园：巨型路线能力、变化方式与恢复 v039",
+      "sha256": "c729b9efda759e427a6ce5911b98b9df9255b61713f29f15be2a663de4f4f9cb",
+      "current_rule_ids": [
+        "EVO-08",
+        "EVO-09",
+        "EVO-10"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v040",
+      "path": "planning/requirements-v040.txt",
+      "title": "Yukkuri 乐园：有身体路线外形、装备与恢复 v040",
+      "sha256": "c2e309419a607d4398e09ea1810b8e44132f97b558fdea18d1690f56f4b4b868",
+      "current_rule_ids": [
+        "EVO-11",
+        "EVO-12",
+        "EVO-13"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v041",
+      "path": "planning/requirements-v041.txt",
+      "title": "Yukkuri 乐园：飞行能力、水生适应与天生特征兼容 v041",
+      "sha256": "302e1f036d5cfa578a50db214d7d113564fafb22265d2c15c4cd4e887ea4ce35",
+      "current_rule_ids": [
+        "EVO-03",
+        "EVO-14",
+        "EVO-15"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v042",
+      "path": "planning/requirements-v042.txt",
+      "title": "Yukkuri 乐园：第一版六种物种与后续 DLC 范围 v042",
+      "sha256": "bd3c555127d1bc073c21fe955e942d7bd6a852ed99319351e4cc6700c6a39a7f",
+      "current_rule_ids": [
+        "PRD-05",
+        "SPC-01",
+        "SPC-08",
+        "SPC-09",
+        "GOV-03"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v043",
+      "path": "planning/requirements-v043.txt",
+      "title": "Yukkuri 乐园：第一版巨型范围、捕食种身体形态与水生DLC分期 v043",
+      "sha256": "4dce0171530ce85ba70de5834c85d9acf490245e33e71c95835c878232575557",
+      "current_rule_ids": [
+        "PRD-05",
+        "BIO-03",
+        "EVO-05",
+        "EVO-15",
+        "SPC-03",
+        "SPC-06",
+        "SPC-07",
+        "SPC-08",
+        "SPC-09"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v044",
+      "path": "planning/requirements-v044.txt",
+      "title": "Yukkuri 乐园：第一版普通种路线与捕食种能力差异 v044",
+      "sha256": "fbc352865a59c64cdde345f9a17c61f10e173ea2bd0f8bbaff644bea3003f923",
+      "current_rule_ids": [
+        "EVO-14",
+        "SPC-02",
+        "SPC-03",
+        "SPC-04",
+        "SPC-05",
+        "SPC-06",
+        "SPC-07",
+        "SPC-09"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v045",
+      "path": "planning/requirements-v045.txt",
+      "title": "Yukkuri 乐园：普通种能力倾向与分能力成长难度 v045",
+      "sha256": "2369c6ea5be18ac4a1f370efcf26c2e68ff2f35a8934abc79814870c7ef1d380",
+      "current_rule_ids": [
+        "BIO-07",
+        "BIO-08",
+        "SPC-02",
+        "SPC-03",
+        "SPC-04",
+        "SPC-05"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v046",
+      "path": "planning/requirements-v046.txt",
+      "title": "Yukkuri 乐园：剧情开局经营、混合初始居民与十题批次访谈 v046",
+      "sha256": "60d8c93414bd92d99ec946a2f872e2103f3332c41b566250254961a75bbaa926",
+      "current_rule_ids": [
+        "MOD-02",
+        "MOD-03",
+        "OPS-02",
+        "OPS-03",
+        "GOV-02"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v047",
+      "path": "planning/requirements-v047.txt",
+      "title": "Yukkuri 乐园：核心决策第一批确认 v047",
+      "sha256": "157b087be3de4e8ae6b871dd4247cb0ac0e7273b269861a70cb0e40522bf39e5",
+      "current_rule_ids": [
+        "MOD-04",
+        "MOD-05",
+        "MOD-06",
+        "MOD-08",
+        "WRL-03",
+        "MED-01",
+        "DEF-01",
+        "OPS-06",
+        "OPS-07",
+        "GOV-02"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v048",
+      "path": "planning/requirements-v048.txt",
+      "title": "Yukkuri 乐园：综合评级、共同防卫、动态寿命与三语首发 v048",
+      "sha256": "46580b1f1f218f8679e46ae14aff2e769c6d7cc64bb7dd660b620efdddc2de1f",
+      "current_rule_ids": [
+        "PRD-04",
+        "MOD-09",
+        "BIO-04",
+        "BIO-05",
+        "BIO-06",
+        "REP-18",
+        "EVO-04",
+        "CRT-01",
+        "CRT-02",
+        "CRT-03",
+        "CRT-04",
+        "CRT-05",
+        "CRT-06",
+        "CRT-07",
+        "MED-09",
+        "DEF-02",
+        "DEF-03",
+        "DEF-04",
+        "DEF-05",
+        "DEF-06",
+        "DEF-07",
+        "GOV-02",
+        "GOV-03",
+        "GOV-04"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v049",
+      "path": "planning/requirements-v049.txt",
+      "title": "Yukkuri 乐园：完整v1.0、阶段Goal与爱油/惩戒体验 v049",
+      "sha256": "bb35bea473a4caddf97b0ec41037010403aa84f1c135d41c9ae38f73f87a0767",
+      "current_rule_ids": [
+        "PRD-09",
+        "MOD-10",
+        "MOD-11",
+        "MOD-12",
+        "OBS-09",
+        "OBS-10",
+        "OBS-11",
+        "OBS-12",
+        "DEF-08",
+        "DEF-09",
+        "UX-07",
+        "UX-08",
+        "UX-09",
+        "GOV-05",
+        "GOV-06",
+        "GOV-07"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v050",
+      "path": "planning/requirements-v050.txt",
+      "title": "Yukkuri 乐园：核心参与者与命名澄清 v050",
+      "sha256": "0cf38a1024ac46acb9dadd7e839544ba68c8023c8203663fcdb26364b8fef11d",
+      "current_rule_ids": [
+        "PRD-10",
+        "MOD-02",
+        "MOD-03",
+        "MOD-07",
+        "OBS-12",
+        "PLT-04",
+        "DEF-03",
+        "DEF-04",
+        "DEF-06",
+        "DEF-08",
+        "DEF-09"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    },
+    {
+      "version": "v051",
+      "path": "planning/requirements-v051.txt",
+      "title": "Yukkuri 乐园：不足4小时提前交验并接续下一里程碑 v051",
+      "sha256": "def7fc7b0bb961f62c5ba14e29630e327e5caf30a02a5feb2585c8deceea3b38",
+      "current_rule_ids": [
+        "GOV-05",
+        "GOV-08"
+      ],
+      "status": "historical_evidence_latest_confirmation_wins"
+    }
+  ]
+}

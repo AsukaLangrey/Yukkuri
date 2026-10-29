@@ -1,0 +1,13 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Yukkuri.Simulation/Yukkuri.Simulation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ActorNaturalPose.cs;ActorNaturalSupport.cs;ActorBodyBounds.cs;ActorFaceSurface.cs;ActorCradleSurface.cs;ActorCushionSurface.cs;ActorAccessorySupport.cs;ActorAccessorySurface.cs;ActorAccessoryPlacement.cs;ActorHairSurface.cs;ActorSurfaceMarks.cs;ActorDressingSurface.cs;ActorIntakePresentation.cs;ActorReactionMotion.cs" />
+  </ItemGroup>
+</Project>

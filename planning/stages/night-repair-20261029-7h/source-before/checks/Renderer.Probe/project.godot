@@ -1,0 +1,10 @@
+config_version=5
+[application]
+run/main_scene="res://Probe.tscn"
+[display]
+window/size/viewport_width=960
+window/size/viewport_height=600
+[dotnet]
+project/assembly_name="Renderer.Probe"
+[rendering]
+renderer/rendering_method="gl_compatibility"

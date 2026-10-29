@@ -1,0 +1,92 @@
+{
+  "stage_id": "M01",
+  "build_id": "M01-20261027-030100",
+  "build_artifact": "builds/releases/M01-20261027-030100/Yukkuri-M01-Windows-x64.zip",
+  "runtime_evidence": "artifacts/m01/exported-20261027-031219/verification-metadata.json",
+  "feedback_log": "planning/stages/M01/feedback.txt",
+  "known_issues": [
+    {
+      "id": "M01-DEV-RENDER",
+      "blocking": false,
+      "description": "官方开发引擎的间歇渲染错误根因未明，诊断版另有Jolt退出断言；本交付官方release在本机四项严格验证、解压完整GUI及中文路径启动均未复现。保留残余风险，不宣称根治。"
+    },
+    {
+      "id": "M01-SCOPE",
+      "blocking": false,
+      "description": "仅代表性M01闭环，完整v1.0后续范围保留；跨设备、长时间平衡和完整表现待继续验证，用户试玩pending。"
+    },
+    {
+      "id": "M01-RELEASE-CRASH",
+      "blocking": true,
+      "description": "后续候选033258在约180秒自然游玩中出现Windows记录的0xc0000005原生崩溃，根因未明。旧030100已测试结果保留，但后续交付必须解决或充分隔离此风险，不能以短时通过替代。"
+    }
+  ],
+  "checks": [
+    {
+      "id": "M01-C01",
+      "requirement": "培养与基本照护、资源补给闭环可独立游玩",
+      "status": "verified",
+      "result": "本构建真实GUI完成照护、三次教学、任务结算与购粮；自然600.143秒中资金276、食物21、园内6只存活，六项目标完成。最新44规则检查中实际六次训练使匹配120种子争食由100例降至57例，非保证全部教好。",
+      "evidence": [
+        "artifacts/m01/exported-20261027-030120/run.log",
+        "artifacts/m01/exported-20261027-031219/verification-metadata.json",
+        "artifacts/m01/export-scaled-verification-20261027.log",
+        "artifacts/m01/exported-soak-20261027-030120/m01-integration-result.json"
+      ]
+    },
+    {
+      "id": "M01-C02",
+      "requirement": "抚摸抱抱蹭蹭和一种惩戒有不同反馈与基本物理",
+      "status": "verified",
+      "result": "真实按住接触分别完成抚摸、抱抱、蹭蹭；存在不同表情/姿态，力度/位置/时间/工具共同结算；强惩戒产生伤痛，护理扣包改善，高处释放经RigidBody落地产生实际伤势。",
+      "evidence": [
+        "artifacts/m01/exported-20261027-030120/run.log",
+        "artifacts/m01/exported-20261027-031219/verification-metadata.json",
+        "artifacts/m01/export-scaled-verification-20261027.log"
+      ]
+    },
+    {
+      "id": "M01-C03",
+      "requirement": "野外观察保护接纳和园内油库里护园呼救可完整经历",
+      "status": "verified",
+      "result": "自然运行未改事件时钟或资源，出现林缘冲突、保护、邀请、观察区接纳和园内主动防卫/呼救，玩家保护完成守护结果。",
+      "evidence": [
+        "artifacts/m01/exported-20261027-030120/run.log",
+        "artifacts/m01/exported-20261027-031219/verification-metadata.json",
+        "artifacts/m01/export-scaled-verification-20261027.log",
+        "artifacts/m01/exported-soak-20261027-030120/m01-integration-result.json"
+      ]
+    },
+    {
+      "id": "M01-C04",
+      "requirement": "有理由惩戒/无理由伤害/未获知者反应对照有效",
+      "status": "verified",
+      "result": "实际GUI受控情景比较同等适度惩戒：知情者认可、任意伤害的旁观者恐惧增加，远处未知者不立即变化；亲油/年长者条件概率与未知不惩戒由44项规则检查覆盖。",
+      "evidence": [
+        "artifacts/m01/exported-20261027-030120/run.log",
+        "artifacts/m01/exported-20261027-031219/verification-metadata.json",
+        "artifacts/m01/export-scaled-verification-20261027.log",
+        "artifacts/m01/exported-20261027-030120/m01-integration-result.json"
+      ]
+    },
+    {
+      "id": "M01-C05",
+      "requirement": "跨区/特写时钟/存读档保持个体和行为记录",
+      "status": "verified",
+      "result": "真实GUI和解压后运行均验证特写不推进世界、跨区身份保存、护园结局存读档及暂停/运行两类存档恢复；1280x720完整输入路径通过。",
+      "evidence": [
+        "artifacts/m01/exported-20261027-030120/run.log",
+        "artifacts/m01/exported-20261027-031219/verification-metadata.json",
+        "artifacts/m01/export-scaled-verification-20261027.log",
+        "artifacts/m01/exported-1280x720-20261027-030524/verification-metadata.json"
+      ]
+    }
+  ],
+  "user_acceptance": {
+    "message_id": null,
+    "build_id": null,
+    "status": "pending",
+    "evidence": null,
+    "quote": null
+  }
+}

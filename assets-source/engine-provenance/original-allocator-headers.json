@@ -1,0 +1,18 @@
+[
+  {
+    "Path": "D:\\Project\\Yukkuri\\.tools\\engine-diagnostics\\godot-4.7.2-stable\\drivers\\gles3\\rasterizer_scene_gles3.h",
+    "Hash": "4E3D4C1B13EC5982AFB5F6AB477E317BB83B2B2DD7E631AE7738891EF35FFAF7"
+  },
+  {
+    "Path": "D:\\Project\\Yukkuri\\artifacts\\m01\\renderer-probe\\rasterizer_scene_gles3.original.h",
+    "Hash": "4E3D4C1B13EC5982AFB5F6AB477E317BB83B2B2DD7E631AE7738891EF35FFAF7"
+  },
+  {
+    "Path": "D:\\Project\\Yukkuri\\.tools\\engine-diagnostics\\godot-4.7.2-stable\\servers\\rendering\\renderer_rd\\forward_mobile\\render_forward_mobile.h",
+    "Hash": "9AE45452387BBF416B88554BBFB7C006EA3D34D8F6EB5D353E46FB207CD64BE8"
+  },
+  {
+    "Path": "D:\\Project\\Yukkuri\\artifacts\\m01\\renderer-probe\\render_forward_mobile.original.h",
+    "Hash": "9AE45452387BBF416B88554BBFB7C006EA3D34D8F6EB5D353E46FB207CD64BE8"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "S46",
+    "updated_fields": {
+      "access_status": "body_read",
+      "reliability_note": "第三轮读完整主文与后记，确认引用聖者の途虚构病毒；被引用作品已补读S67/S68选段。作者未核，叙述者猜测不作确定病因。"
+    },
+    "reason": "补足原先选段阅读与引用链。",
+    "research_round": 3
+  },
+  {
+    "id": "S47",
+    "updated_fields": {
+      "author_or_site": "即興の人／創作発表Wiki",
+      "access_status": "body_read",
+      "reliability_note": "第三轮读四种分型及后记，确认署名即興の人；Y教授是叙事身份。卵生借用话の長い人仅作者自述，被引原页失效；分裂与河童型明确自设。"
+    },
+    "reason": "后记署名及完整分型补读；旧版已保存在history。",
+    "research_round": 3
+  },
+  {
+    "id": "S43",
+    "updated_fields": {
+      "author_or_site": "お医者さんの人（S125作者目录核对）",
+      "reliability_note": "原相遇篇阅读仍为选段；第三轮经S125作者目录补核署名，并读同系列本篇S126，不混同两个篇章的阅读范围。"
+    },
+    "reason": "补核作者及同系列关系，未把选段升级为全文。",
+    "research_round": 3
+  }
+]

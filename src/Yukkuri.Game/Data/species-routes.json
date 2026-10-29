@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "status": "具体物种和路线待用户决定。基础框架不自动分配升级。",
+  "species": [{ "id": "prototype-common", "displayName": "普通型（原型占位）", "routes": [] }]
+}

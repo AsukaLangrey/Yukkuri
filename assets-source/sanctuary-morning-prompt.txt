@@ -1,0 +1,6 @@
+Built-in ImageGen tool, 2026-10-26; new image; no input reference images.
+Prompt:
+Use case: stylized-concept. Asset type: landscape illustration for the welcome panel of a small creature sanctuary management game. Primary request: a peaceful handmade miniature park in an isometric 3D cartoon style, wooden low fences, round trees, little shelter, flower meadow, stepping stones and distant forest. Warm morning light, sage green and warm cream palette, tactile clay-like materials. Wide 1536x1024 composition, no characters, no text, no lettering, no logos, no watermarks. This is an environmental mood asset, not a screenshot or UI mockup.
+
+Result: src/Yukkuri.Game/Assets/Art/sanctuary-morning.png
+Use: gameplay guide / material mood panel. It does not depict implemented gameplay.

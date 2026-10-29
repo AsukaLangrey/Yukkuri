@@ -1,0 +1,593 @@
+来源索引｜42条来源；包括部分未能完整访问者
+访问日期均为2026-10-25（Asia/Shanghai）。不保存整篇第三方文章。
+完整字段、短摘录和释义见 sources.json。
+
+S01 「ゆっくり」が生まれた時のことを、アスキーアート製作者のDプ竹崎さんに聞いてみたよ
+作者/站点：東方我楽多叢誌；受访者 Dプ竹崎
+语言：ja；类别：creator_interview；读取：body_read
+https://touhougarakuta.com/article/yukkuri_dptakezaki/
+发表：2020-10-08；更新：未知
+页面标注采访发表日期
+短摘录：名台詞を生み出したのは私ではありません。
+释义：那句名台词并不是我创造的。
+限制：起源参与者回忆，一手访谈；具体年份有作者约数，不等同于原始论坛存档
+
+S02 We asked ASCII artist D-p Takezaki about the origin of yukkuris!
+作者/站点：Touhou Garakuta Magazine；D-p Takezaki
+语言：en；类别：translated_interview；读取：body_read
+https://en.touhougarakuta.com/article/yukkuri_dptakezaki-en/
+发表：2021-07-05；更新：未知
+英译页面日期；日文原访谈为2020-10-08
+短摘录：Yukkuris were assembled piece by piece through changes made by many different people
+释义：油库里是许多人逐步改动而形成的。
+限制：与S01同一访谈，不是独立交叉证据
+
+S03 油庫里
+作者/站点：中文百科全書；原作者未署明
+语言：zh-Hant；类别：community_encyclopedia_or_mirror；读取：body_read
+https://www.newton.com.tw/wiki/油庫里
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：徽章制度
+释义：徽章制度。
+限制：含未经逐条出处支持的断言；起源段与创作者访谈冲突；与其他百科疑似有内容重合，不能算独立证实
+
+S04 油库里
+作者/站点：百度百科社区编者
+语言：zh-Hans；类别：community_encyclopedia；读取：body_read
+https://bkso.baidu.com/item/油库里/4471775?fromModule=lemma_inlink
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：非生物类
+释义：非生物类。
+限制：分类和生物细节属于二手汇编；未逐项追到作品；原文把卵生与植物作类比的说法不严谨
+
+S05 Badges
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：body_read
+https://yukkuri.fandom.com/wiki/Badges
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：While the ideas of badges jump from author to author
+释义：徽章观念因作者而异。
+限制：明确承认作者差异；多数条目无原作品脚注；法律待遇为虚构世界内部设定
+
+S06 ゆっくりとは
+作者/站点：ゆっくり八景 Wiki 社区编者
+语言：ja；类别：game_community_documentation；读取：body_read
+https://wikiwiki.jp/yukkuri8kei/ゆっくりとは
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：作者ごとに解釈が異なり
+释义：不同作者的解释不同。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S07 ステータス
+作者/站点：ゆっくり八景 Wiki 社区编者
+语言：ja；类别：game_community_documentation；读取：body_read
+https://wikiwiki.jp/yukkuri8kei/ステータス
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：バッジ試験に必要
+释义：徽章考试需要此项。
+限制：数值包含玩家经验范围，不是已查源代码的公式；版本可能有差异
+
+S08 外出
+作者/站点：ゆっくり八景 Wiki 社区编者
+语言：ja；类别：game_community_documentation；读取：body_read
+https://wikiwiki.jp/yukkuri8kei/外出
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：ゆっくり協会
+释义：油库里协会。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S09 Ｑ＆Ａ
+作者/站点：ゆっくり八景 Wiki 社区编者
+语言：ja；类别：game_community_documentation；读取：body_read
+https://wikiwiki.jp/yukkuri8kei/Ｑ＆Ａ
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：金バッジを取ったからと言って売却額は上がらない
+释义：取得金徽章本身并不会提高卖价。
+限制：区分体验版与产品版；攻略不是跨作品设定
+
+S10 ゆっくりの生態
+作者/站点：ゆっくり観察日記@wiki；ゆっくりにっき栏目
+语言：ja；类别：game_community_documentation；读取：body_read
+https://w.atwiki.jp/ykansatu/pages/49.html
+发表：未知；更新：2026-06-04 20:59
+页面末尾最后更新；未确定所有段落对应同一游戏版本
+短摘录：現行のバージョンでは空腹でHPは減らない。
+释义：条目所指当前版本中，空腹不会减少HP。
+限制：站名为观察日记，但本页在ゆっくりにっき栏目；有删线旧机制、模糊版本和作者评论失效链接
+
+S11 ゆっくりいじめ系2585 ゆっくり飼育書
+作者/站点：ゆっくり虐め専用Wiki；本轮未确认作者署名
+语言：ja；类别：fiction_archived；读取：body_read
+https://w.atwiki.jp/yukkuri_gyakutai/pages/4249.html
+发表：未知；更新：2009-05-04 00:21
+页面最后更新，不是已验证首发日期
+短摘录：一流のブリーダーなら体罰無しでも良い子に育てられるらしい
+释义：文中也提到优秀饲育者可能不用体罚培育。
+限制：虚构饲育指南及讽刺暴力叙事；不是现实动物照护建议
+
+S12 ゆっくりいじめ系1554 バッジシステム
+作者/站点：sdkfz251；ゆっくり虐め専用Wiki保存
+语言：ja；类别：fiction_archived；读取：body_read
+https://w.atwiki.jp/yukkuri_gyakutai/pages/2576.html
+发表：未知；更新：2008-11-17 15:54
+现存页面标注最后更新；本轮未验证当年网页快照或原帖
+短摘录：ゴールドバッヂ
+释义：金徽章。
+限制：可核实具体作品和署名；不能据此认定徽章制度发明者或最早首发
+
+S13 anko2372 金バッジの価値　後編
+作者/站点：hutaba_ranking @ ウィキ；本轮未确认原作者
+语言：ja；类别：fiction_archived；读取：body_read
+https://w.atwiki.jp/hutaba_ranking/pages/186.html
+发表：未知；更新：2010-10-12 16:14
+保存页最后更新，不等同首发
+短摘录：ウチの会社独自の金バッチだ
+释义：这是我们公司自己的金徽章。
+限制：存在各公司自定标准的讽刺故事，非全圈制度
+
+S14 星を掴むゆっくり：試験目前
+作者/站点：enforcer / 小説家になろう
+语言：ja；类别：author_published_fiction；读取：body_read
+https://ncode.syosetu.com/n1758ed/10/
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：銅バッジの試験は随時
+释义：铜徽章考试随时举行。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S15 ゆっくりはゆっくりと歩く：薄っぺらな鍍金
+作者/站点：enforcer / 小説家になろう
+语言：ja；类别：author_published_fiction；读取：body_read
+https://ncode.syosetu.com/n0569hh/9/
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：全ては飼い主がその責任を背負ってくれる。
+释义：一切责任由饲主承担。
+限制：首次打开失败，后来成功读取正文；属于该作者的权利与责任设定
+
+S16 待つぜ待つのぜ冬篭り
+作者/站点：ゆっくりしていってね！！！創作発表Wiki；本轮未确认作者
+语言：ja；类别：fiction_archived；读取：body_read
+https://w.atwiki.jp/slowlove/pages/666.html
+发表：未知；更新：2010-12-02 06:17
+最后更新与一条评论时间相同，不推定为首发
+短摘录：冬場は寒さも厳しく、食料となるものも少ない
+释义：冬季寒冷，食物也少。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S17 ゆちゅりーの性質
+作者/站点：ゆっくりしていってね！！！創作発表Wiki；本轮未确认作者
+语言：ja；类别：fiction_archived；读取：body_partially_read
+https://w.atwiki.jp/slowlove/pages/76.html
+发表：未知；更新：未知
+可见2008年的读者评论；不能把搜索给出的较晚发表估计当首发
+短摘录：季節に関係なく出来る限りの食糧を蓄える習性
+释义：不论季节，尽量储存食物。
+限制：读到储粮和抢食情节；未据全文为其贴纯温馨标签
+
+S18 Yukkuri Types
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Yukkuri_Types
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：This is not a definitive or solid guide to yukkuri
+释义：这不是油库里的确定或权威指南。
+限制：取得较长索引文本；直接打开受阻；稀有度和性格没有统计样本
+
+S19 Yukkuri Reimu
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Yukkuri_Reimu
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：Their personalities are best described as a case-to-case basis
+释义：性格最好按具体个案描述。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S20 Yukkuri Marisa
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Yukkuri_Marisa
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：These depictions vary
+释义：这些描写有差异。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S21 Yukkuri Patchouli
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：body_read
+https://yukkuri.fandom.com/wiki/Yukkuri_Patchouli
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：they're calmer than other yukkuris
+释义：它们比其他油库里更沉静。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S22 Accessory
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：body_read
+https://yukkuri.fandom.com/wiki/Accessory
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：in some recent stories, the families of an accessory-less yukkuri are still able to recognise the yukkuri
+释义：有些较新故事里，家人仍能认出失去饰品的个体。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S23 Rub Rub
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：body_read
+https://yukkuri.fandom.com/wiki/Rub_Rub
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：a sign of affection, a bonding activity
+释义：表达亲昵、建立关系的行为。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S24 Yukkuri
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Yukkuri
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：many others have been depicted as taking a liking to the yukkuris
+释义：也有许多人被描写为喜欢油库里。
+限制：正文直接访问失败/robots限制；只采纳搜索实际返回段落；不假称读完全页
+
+S25 Gutter Trash Yukkuris
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：body_read
+https://yukkuri.fandom.com/wiki/Gutter_Trash_Yukkuris
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：more a matter of nurture than of nature
+释义：更多关乎后天环境而非先天。
+限制：标题带贬义，资料库沿用原题仅供定位；群体概括是该同人汇编观点
+
+S26 Translator’s Guide
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en/ja；类别：community_translation_guide；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Translator%27s_Guide
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：「おちびちゃん」
+释义：小家伙、幼体的亲昵称呼。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S27 ジャンルマークについて
+作者/站点：ゆっくりしていってね！！！創作発表Wiki
+语言：ja；类别：community_classification；读取：body_read
+https://w.atwiki.jp/slowlove/pages/14.html
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：暴力や捕食など
+释义：暴力、捕食等。
+限制：是该站分类，不是全体同人统一流派划分
+
+S28 創作倫理規定
+作者/站点：ゆっくりしていってね！！！創作発表Wiki
+语言：ja；类别：community_rules；读取：body_partially_read
+https://w.atwiki.jp/slowlove/pages/173.html
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：注訳の付け方
+释义：如何添加注释。
+限制：仅记录该站设提示和评级说明；未核对其引用电影分级规则的现实准确性，不作法律依据
+
+S29 ゆっくり八景
+作者/站点：裏えんじ色工房 / BOOTH
+语言：ja；类别：developer_store_page；读取：body_read
+https://booth.pm/ja/items/1727554
+发表：未知；更新：未知
+页面更新履历列2021-12-30 ver1.12b；并非本轮确认的首次发行日
+短摘录：ゆっくり育成シミュレーションゲームです。
+释义：油库里养成模拟游戏。
+限制：作者商店页证实作品和描述；未购买下载或实际游玩
+
+S30 Touhou Garden of the Yukkuri
+作者/站点：Bar Holographic Otaku；发行方另列东游鉴 / Steam
+语言：en；类别：developer_store_page；读取：body_read
+https://store.steampowered.com/app/5159730/
+发表：未知；更新：未知
+商店标注发行日2026-10-09；本轮访问日2026-10-25
+短摘录：Full day and night cycle.
+释义：完整昼夜循环。
+限制：作者/发行方商店宣称；没有实际运行验收
+
+S31 Yukkuri My Friends
+作者/站点：MIURABO K.K. / App Store
+语言：en；类别：developer_store_page；读取：body_read
+https://apps.apple.com/nz/app/yukkuri-my-friends/id1044349334?platform=ipad
+发表：未知；更新：未知
+版权字段©2015；不将版权年份视作首发日期
+短摘录：Yukkuris love manjyus.
+释义：油库里喜爱馒头。
+限制：商店将其标为Role-Playing，描述含simulation；不是纯生态模拟的证据
+
+S32 しむゆっくり 2021
+作者/站点：sin-orb及贡献者；README追溯Mimisuke项目
+语言：ja；类别：developer_repository；读取：body_read
+https://github.com/sin-orb/Simyukkuri2021
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：ゆっくりのシミュレータを作ります。
+释义：制作油库里模拟器。
+限制：只读仓库说明与历史日志，未下载执行，不证明当前构建所有功能正常
+
+S33 Simyukkuri2021 CHANGELOG.txt
+作者/站点：SimYukkuri多分支开发者；sin-orb仓库保存
+语言：ja；类别：developer_changelog；读取：body_read_selected_sections
+https://github.com/sin-orb/Simyukkuri2021/blob/main/CHANGELOG.txt
+发表：未知；更新：未知
+引用段落带2015-01-12至2015-01-31等历史版本日期
+短摘录：見た目のみの実装
+释义：仅实现外观。
+限制：历史分支日志，不直接代表2026年当前实现
+
+S34 シムゆっくり（SimYukkuri）紹介
+作者/站点：ゆっくりプレイス
+语言：ja；类别：community_game_introduction；读取：search_text_only
+https://blog.livedoor.jp/yukkuri_anko/archives/31828030.html
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：各種行動を矯正することができます
+释义：可矫正各种行为。
+限制：直接打开失败，检索片段描述旧版机制；不提升为当前实测
+
+S35 Yukkurigame/Yukkuri
+作者/站点：Yukkurigame / GitHub
+语言：en；类别：developer_repository；读取：body_read
+https://github.com/Yukkurigame/Yukkuri
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：Open-source game about yukkuries
+释义：关于油库里的开源游戏。
+限制：只确认仓库存在及简介；未深入读取代码，不臆测玩法
+
+S36 YUKKURI JUNGLE
+作者/站点：裏えんじ色工房 / BOOTH
+语言：ja；类别：developer_store_page；读取：body_partially_read
+https://booth.pm/ja/items/2091189
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：YUKKURI JUNGLE
+释义：游戏名称。
+限制：确认作者页与下载项，所获正文不足以总结玩法；未下载
+
+S37 Koyukkuri
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Koyukkuri
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：mister treasures
+释义：宝物先生。
+限制：正文打开失败，索引文本支持玩具/幼体训练的同人概括，未验证其声称的普遍性
+
+S38 水槽内自動発生イベ
+作者/站点：ゆっくり八景 Wiki 社区编者
+语言：ja；类别：game_community_documentation；读取：body_read
+https://wikiwiki.jp/yukkuri8kei/水槽内自動発生イベ
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：番の好感度が低いと発生
+释义：伴侣好感低时发生。
+限制：条目本身有问号与推测，保留为玩家归纳
+
+S39 状態異常
+作者/站点：ゆっくり八景 Wiki 社区编者
+语言：ja；类别：game_community_documentation；读取：body_read
+https://wikiwiki.jp/yukkuri8kei/状態異常
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：状態の名称は一部除き当wiki独自のもの。
+释义：状态名称部分为该Wiki自定。
+限制：仅能证明该页面或作品这样描述；不代表统一设定
+
+S40 初心者がまず最初に読むべきおすすめゆっくり虐待10選
+作者/站点：ゆっくりプレイス
+语言：ja；类别：curated_reading_list；读取：search_text_only
+https://blog.livedoor.jp/yukkuri_anko/archives/51607958.html
+发表：未知；更新：未知
+未取得可靠首发日期；不以搜索抓取时间代替发表日期
+短摘录：虐待・いじめ・愛で
+释义：虐待、欺负、爱护。
+限制：保留残酷题材进一步阅读入口；直接抓取失败，不把名单内未读作品算已研究
+
+S41 Yukkuri Wiki / Home
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Yukkuri_Wiki
+发表：未知；更新：未知
+未取得可靠首发日期
+短摘录：there is no solid canon for yukkuri
+释义：油库里没有固定正典。
+限制：主页自述限制过度露骨/猎奇内容；因此此Wiki覆盖有编辑偏好，不能单独代表全部流派。
+
+S42 Yukkuri Diary
+作者/站点：Yukkuri Wiki / Fandom 社区编者
+语言：en；类别：fanon_encyclopedia；读取：search_text_only
+https://yukkuri.fandom.com/wiki/Yukkuri_Diary
+发表：未知；更新：未知
+未取得可靠首发日期
+短摘录：they won't attack when they are at S or A rank
+释义：当处于S或A等级时，它们不会攻击。
+限制：搜索返回游戏正文段落；具体版本未标清，未运行对照。
+
+第二轮新增来源（2026-10-25，均待审定）
+S43｜ゆっくりのお医者さん ～出会い編～
+URL：https://w.atwiki.jp/slowlove/pages/284.html
+作者/站点：ゆっくりしていってね！！！ 創作発表Wiki；作者署名未确认；语言：ja
+可得性：body_read_selected_sections
+日期：2013-06-30 13:01；网页最后更新（可能含评论更新），不是作品首发日期
+限制：读开端、医疗/生态段与结局；含天狗报道的戏中戏，正文随后纠正其夸饰。仅代表本篇。
+
+S44｜ゆっくり駆除のお姉さん：始まり始まり
+URL：https://ncode.syosetu.com/n3645fh/1/
+作者/站点：ねこすず / 小説家になろう；语言：ja
+可得性：body_read_selected_sections
+日期：2019-02-04；发表时间取作者平台作品信息S66，非抓取时间
+限制：已读开篇及作者题材说明；作品信息见S66，不能从标题推出尚未发表的驱除情节。
+
+S45｜ゆっくりを飼うときに気をつけること
+URL：https://w.atwiki.jp/slowlove/pages/230.html
+作者/站点：ゆっくりしていってね！！！ 創作発表Wiki；作者署名未确认；语言：ja
+可得性：body_read_selected_sections
+日期：2013-07-24 00:01；网页最后更新（可能含评论更新），不是作品首发日期
+限制：虚构饲养手册；选择、饮食、体型等段已读，不是真实动物饲养指南或跨作品通则。
+
+S46｜予防接種
+URL：https://w.atwiki.jp/slowlove/pages/234.html
+作者/站点：ゆっくりしていってね！！！ 創作発表Wiki；作者署名未确认；语言：ja
+可得性：body_read_selected_sections
+日期：2012-03-21 19:20；网页最后更新（可能含评论更新），不是作品首发日期
+限制：已核对开端、就诊、结尾及后记；后记引用《聖者の途》的虚构病毒，未追读被引用作品。
+
+S47｜～ゆっくりの出産～
+URL：https://w.atwiki.jp/slowlove/pages/261.html
+作者/站点：ゆっくりしていってね！！！ 創作発表Wiki；作者署名未确认；语言：ja
+可得性：body_read_selected_sections
+日期：2024-11-13 17:53；网页最后更新（可能含评论更新），不是作品首发日期
+限制：读作者前言与茎型出生段；前言引《ゆっくりの産卵》，其旧链接打开失败。文中Y教授是叙事身份，不据此确认作者。
+
+S48｜愛でスレ的ゆっくり加工場
+URL：https://w.atwiki.jp/slowlove/pages/162.html
+作者/站点：ゆっくりしていってね！！！ 創作発表Wiki；作者署名未确认；语言：ja
+可得性：body_read_selected_sections
+日期：2013-04-22 10:52；网页最后更新（可能含评论更新），不是作品首发日期
+限制：已读设施缘起、死后加工与同伴悲伤段；葬礼解释是故事中人的理解。
+
+S49｜anko2412 パーフェクトバッジシステム
+URL：https://w.atwiki.jp/hutaba_ranking/pages/172.html
+作者/站点：触発あき；hutaba_ranking保存；语言：ja
+可得性：body_read_selected_sections
+日期：2010-10-12 16:07；网页最后更新（可能含评论更新），不是作品首发日期
+限制：核对徽章研究、幼体实验与结局；叙述者带偏见，不能当百科客观分类。署名在文末。
+
+S50｜ゆっくりいじめ系1327 都会派が都会に行くこと
+URL：https://w.atwiki.jp/yukkuri_gyakutai/pages/2281.html
+作者/站点：ゆっくり虐め専用Wiki；作者未确认；语言：ja
+可得性：body_read_selected_sections
+日期：2008-11-07 22:09；网页最后更新（可能含评论更新），不是作品首发日期
+限制：前言直接指向Oblivion翻译站；城市法律属于游戏式戏仿，不当作通用油库里社会制度。
+
+S51｜ふたば系ゆっくりいじめ44 裏切りのおにいさん
+URL：https://w.atwiki.jp/futabayukkuriss/pages/65.html
+作者/站点：触発あき；ふたば系ゆっくりいじめSS@WIKI；语言：ja
+可得性：body_read_selected_sections
+日期：2009-10-17 16:12；网页最后更新（可能含评论更新），不是作品首发日期
+限制：开篇点名受ばっちゃあき《都会のゆっくり一家》启发；已读开篇及结尾。此关系不等于两作同一世界观。
+
+S52｜YTの作品一覧
+URL：https://w.atwiki.jp/slowlove/pages/1242.html
+作者/站点：YT；創作発表Wiki作者作品目录；语言：ja
+可得性：body_read
+日期：2009-11-25 23:56；网页最后更新（可能含评论更新），不是作品首发日期
+限制：作者归属及章节入口证据；目录题材标签不代替各篇内容阅读。
+
+S53｜ゆっくりパークの春夏秋冬part1
+URL：https://w.atwiki.jp/slowlove/pages/288.html
+作者/站点：YT（S52作者目录）；语言：ja
+可得性：body_read_selected_sections
+日期：2008-11-01 00:25；网页最后更新（可能含评论更新），不是作品首发日期
+限制：读第一篇建园与部分生态情节；后续章节未通读，不把第一篇概括为全系列结论。
+
+S54｜ゆっくりの帰るところ
+URL：https://w.atwiki.jp/slowlove/pages/81.html
+作者/站点：YT（S52作者目录）；语言：ja
+可得性：body_read_selected_sections
+日期：2012-12-13 21:33；网页最后更新（可能含评论更新），不是作品首发日期
+限制：读受伤、被救、巨大魔理沙气场与结局；前言列三幅插画来源，但本轮未看原图。
+
+S55｜ゆっくりれみりゃのおかしな友達 上
+URL：https://w.atwiki.jp/slowlove/pages/35.html
+作者/站点：YT（S52作者目录）；语言：ja
+可得性：body_read_selected_sections
+日期：2011-05-24 23:10；网页最后更新（可能含评论更新），不是作品首发日期
+限制：已读上篇捕食开端、建立友谊、与群体冲突段；下篇未读，不补写结局。
+
+S56｜【AVあき】ある金バッジゆっくりの一生
+URL：https://blog.livedoor.jp/yukkuri_anko/archives/29557905.html
+作者/站点：AVあき（转载标题署名）；ゆっくりプレイス；语言：ja
+可得性：search_text_only
+日期：2013-07-15；转载页日期，不视为原作者首发日期
+限制：转载目录和评论入口可确认标题署名日期；主页面打开失败，未读漫画图。
+
+S57｜ばっちゃあき 作品分类目录
+URL：https://blog.livedoor.jp/yukkuriplace_anko/archives/cat_305083.html
+作者/站点：ゆっくり！ゆんやーの森／转载目录；语言：ja
+可得性：search_text_only
+日期：未知；目录显示都会2014-05-19、八畳2014-05-13；均非已证实首发
+限制：可见作品名与目录日期；直接抓取超时。作者归属可用S51前言辅助核对；未证实Ammo为同一作者。
+
+S58｜ゆっくり漫画ウミサチリガヤ（公式）
+URL：https://blog.livedoor.jp/umisachirigaya/
+作者/站点：ウミサチリガヤ / umisachirigaya；语言：ja
+可得性：search_text_only
+日期：未知；对应目录日期：2024-12-22、2024-11-17、2024-10-28；不代表其他平台首发
+限制：作者自述官方博客；搜索索引返回3篇日期与标题，视频嵌入未观看，不概括剧情。
+
+S59｜宠物油库里灵梦
+URL：https://manhuaren.com/manhua-chongwuyoukulilingmeng/
+作者/站点：漫画人；页面作者栏为泛名ゆっくり；语言：zh-Hans
+可得性：metadata_only
+日期：2020-10-17；镜像目录日期，不当原作首发
+限制：只读作品目录；作者身份、日文原题及翻译授权未确认；图片章节未读。
+
+S60｜Weimu
+URL：https://jaykingamez.itch.io/weimu
+作者/站点：Jaykingamez；语言：en
+可得性：body_read
+日期：2019-01-13；商店明确Release date：2019-01-13 14:13 UTC
+限制：作者游戏页；说明是制作油库里的未完成jam项目。只核对页面，不代表实际运行和全部玩法。
+
+S61｜cirno's yukkuri-wranglin' hoedown
+URL：https://magicalfeyfenny.itch.io/cirnos-yukkuri-wranglin-hoedown
+作者/站点：magicalfeyfenny；语言：en
+可得性：body_read
+日期：未知；页面标签指向Touhou Station Game Jam 2022，未给精确首发日
+限制：作者页提供控制方式与GitHub代码链接；标Simulation。未下载运行、未审核代码。
+
+S62｜MariAli - Loveforce
+URL：https://create2019.itch.io/mariali-loveforce
+作者/站点：create2019、ChairGTables、Node/Nodegama、Panchamon；正文另列mojo；语言：en
+可得性：body_read
+日期：未知；未取得精确首发日期
+限制：作者首页标YUKKURI AND FLESH；作品页为Salamander风格STG，作为外围玩法样本，不推导养育生态。
+
+S63｜Yukkuri Shite Ne
+URL：https://frome4.itch.io/yukkuri-shite-ne
+作者/站点：Felix Romero / frome4；语言：en
+可得性：body_read
+日期：未知；首发日期未确认；不使用搜索抓取时间代替
+限制：仅标题含Yukkuri；作者说明是花园菜单课程项目，无足够证据关联油库里角色。排除主作品目录，保留检索纠偏记录。
+
+S64｜ゆっくりはゆっくりと歩く：格の違い
+URL：https://ncode.syosetu.com/n0569hh/16/
+作者/站点：enforcer / 小説家になろう；语言：ja
+可得性：body_read_selected_sections
+日期：未知；首发日期未确认；不使用搜索抓取时间代替
+限制：同S15的小说新增第16章阅读，不能算另一部作品；已核对金徽章与特级身份的场景。
+
+S65｜【ばっちゃあき】八畳一間のれいむ一家（保存页）
+URL：https://megalodon.jp/ref/2022-1106-1501-45/blog.livedoor.jp/yukkuri_anko/archives/29883989.html
+作者/站点：ばっちゃあき（转载标题署名）；ゆっくりプレイス保存页；语言：ja
+可得性：metadata_and_comments_only
+日期：未知；URL包含2022-11-06存档时间；不是作品首发日期
+限制：实际返回以评论为主，未看图；评论提到SS改编只是待查线索，不能当作已证实剧情或来源。
+
+S66｜ゆっくり駆除のお姉さん：作品情報
+URL：https://ncode.syosetu.com/novelview/infotop/ncode/n3645fh/
+作者/站点：ねこすず / 小説家になろう；语言：ja
+可得性：body_read
+日期：2019-02-04；平台掲載日与最新掲載日均为2019-02-04 20:01，页面未标时区
+限制：与S44同一作品的元数据，不另计一部；作者简介同时写温馨与爱护/虐待混合。
+

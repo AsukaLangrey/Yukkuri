@@ -1,0 +1,27 @@
+{
+  "start_utc": "2026-10-28T07:14:21Z",
+  "deadline_utc": "2026-10-28T13:14:21Z",
+  "status": "paused",
+  "native_goal_created": true,
+  "native_duration_budget_supported": false,
+  "native_time_limit_enforced": false,
+  "scope": "P01-P20人油互动、美术、油话和持续反馈，代码和无界面验证",
+  "prohibited": [
+    "Yukkuri/Godot game or editor launch",
+    "computer-use or desktop main app launch",
+    "headless game entry",
+    "system/account/security change",
+    "publishing"
+  ],
+  "previous_goal": "Old 8h and full playable acceptance remain incomplete",
+  "baseline": "48 interaction, 9 geometry checks; current source newer than art03",
+  "speed": "No acceleration requested; service tier cannot be set or verified by available interfaces",
+  "deadline_stop_authorized": true,
+  "deadline_action": "At 2026-10-28T13:14:21Z stop new optimization, safely finish pending operation, save report/checkpoint, call update_goal({status: paused}) under explicit deadline-pause instruction; report returned status. Not completion of old goals.",
+  "native_stop_interface": "update_goal: paused|complete|blocked; no timer trigger parameter; manual time checks while executing",
+  "handoff_verified_at_utc": "2026-10-28T13:10:06Z",
+  "final_interval": "Code changes closed; final records and waiting for the explicitly authorized deadline. This interval is not claimed as continuous coding or native testing.",
+  "native_pause_confirmed_utc": "2026-10-28T13:14:53Z",
+  "deadline_pause_delay_seconds": 32,
+  "final_report": "REPORT.txt"
+}

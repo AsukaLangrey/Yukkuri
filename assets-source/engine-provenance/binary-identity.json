@@ -1,0 +1,8 @@
+{
+  "engine": "Godot4.7.2 LLVM-MinGW UCRT release, original allocators, no ASan",
+  "symbol_binary_sha256": "B76716A88C25ABCF63C83833A0437D610204B53E52DF3A02BEF3E392BBBECE88",
+  "runtime_sha256": "449A762C72AC276A360FAD26BA199E117363C73EBBD65904F3B59D84CA77F4FA",
+  "source_tag": "4.7.2-stable",
+  "build_request": "build-request.json",
+  "scope": "Identity of the actual local build; no stability guarantee"
+}

@@ -1,0 +1,1254 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "status": "design_only_unbalanced",
+  "scope": "owned_park_districts_and_buildings",
+  "shared_rules_file": "02-rules-and-economy.txt",
+  "autonomy_file": "05-autonomy-and-workload.txt",
+  "levels": [
+    {
+      "id": "ZL-1",
+      "kind": "区域",
+      "family": "ZL",
+      "level": 1,
+      "name": "生活安置区·安置院",
+      "prerequisites": [],
+      "cost_funds": 120,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "至少1名能完成一个生活岗位的K1油，可兼任其他非重叠职责；永久接纳仍由玩家决定。",
+        "space": "可达入口、挡雨休息点、可达食水和已知边界；玩家选择是否设置观察间，不能强制隔离所有居民。",
+        "evidence": "候选负责人已在真实或自愿练习中完成取用/引导/求助之一；不要求先有付费房屋或认证。"
+      },
+      "new_gameplay": "开放稳定归属地与自主回窝；新居民可在获准后加入生活安排。",
+      "autonomous_work": "油识别自己的窝位，按需取食、返回休息，熟悉者带新伙伴走到食点；能力不足则请求同伴或人类协助。",
+      "exception_handling": "入口不可达或食品耗尽时停止新增接纳，使用已批准备用点并报告原因；不自动弃养。",
+      "visible_change": "可辨认的边界、低位标记和生活路径，角色实际跟随并使用。",
+      "player_choice": "选择接纳对象、生活规则与共住偏好，直接陪伴可选。",
+      "capacity_draft": "每标准区域先管理1个生活组，建议4—8只；需要照护者也是居民，不必须工作。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 0
+    },
+    {
+      "id": "ZL-2",
+      "kind": "区域",
+      "family": "ZL",
+      "level": 2,
+      "name": "生活安置区·邻里院",
+      "prerequisites": [
+        "ZL-1",
+        "HL-1",
+        "HS-1",
+        "HM-1"
+      ],
+      "cost_funds": 360,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2生活协调者＋1名合格K1替补，可由有能力无牌油承担；班次不重叠占用。",
+        "space": "至少2处可分开的居住/休息位置，公共食点和安静路径连通；可用住房或合法室外窝位。",
+        "evidence": "累计2个经营周期出现真实日常交接，并完成一次换食点/错峰或照护替补；自然证据不足可做不含危险的自愿练习。"
+      },
+      "new_gameplay": "开放家庭/偏好分组与错峰生活；玩家可以在相同面积内选择家庭优先或短住周转。",
+      "autonomous_work": "协调者依据已知亲缘和接触反应安排日程、共享食点时段；可疑冲突先分流，永久迁居和接纳不自行决定。",
+      "exception_handling": "同伴拒绝或关系不合时提供临时分时安排，汇总给玩家处理持续问题；不以强制拆散家庭换效率。",
+      "visible_change": "公共院、不同组的标记与往返路径，早餐和休息出现错峰。",
+      "player_choice": "设生活组、安静时段与照护优先级，无需逐只分配每天食物。",
+      "capacity_draft": "每区域默认2生活组，约8—16只；容量还受独立床位和照护负担限制。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 2
+    },
+    {
+      "id": "ZL-3",
+      "kind": "区域",
+      "family": "ZL",
+      "level": 3,
+      "name": "生活安置区·自治住区",
+      "prerequisites": [
+        "ZL-2",
+        "HL-2",
+        "HS-2",
+        "HM-2",
+        "ZY-2"
+      ],
+      "cost_funds": 850,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "2名可轮换K2生活组负责人，且可接入一名K3跨组协调者的日程；K3可由场景经验形成。",
+        "space": "两个可独立使用的组生活单元及临时替补空间；家庭物品有保留位置。",
+        "evidence": "3个经营周期内完成两组资源共享、负责人休息时接岗及一次非危险冲突恢复；没有尚未处理的基础照护缺口。"
+      },
+      "new_gameplay": "开放居民提出生活改善计划、跨组照护及新群体融入方案；长期居民有家庭与自治生活追求。",
+      "autonomous_work": "各组执行生活安排，协调者平衡公共时段和照护请求，替补先接任务；提出建设申请但不自主花大额建设款。",
+      "exception_handling": "整体照护不足时缩减新服务量并保持基本生活；关闭新增接待不删除地区等级、家庭或居民。",
+      "visible_change": "多个生活院共享公共空间，能看见互访、交接与集体选择活动。",
+      "player_choice": "批准居民建议、决定组间资源与长期方向，偶尔介入深层关系问题。",
+      "capacity_draft": "每区域默认3生活组，约12—24只；可建多个区域实例承接中后期50—100只目标。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 5
+    },
+    {
+      "id": "ZS-1",
+      "kind": "区域",
+      "family": "ZS",
+      "level": 1,
+      "name": "公共服务区·补给院",
+      "prerequisites": [
+        "ZL-1"
+      ],
+      "cost_funds": 100,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名K1补给协作者，身体与工具允许执行实际任务；人类采购/重搬运支持。",
+        "space": "收货、储物、取用和休息路线可达；不要求工房DLC。",
+        "evidence": "完成一批真实接收—分放—领取及不足时报告；允许用初始免费物资验证。"
+      },
+      "new_gameplay": "开放常用品储备与一次配置后重复使用的补给规则。",
+      "autonomous_work": "油按标记分发适合搬运的份额并归位，记不清数量者用实物篮位判断，不凭空读全园库存。",
+      "exception_handling": "超出搬运能力、物品不适配或存量不足时申请支持，禁止后台瞬间远程转移。",
+      "visible_change": "低位货架、可见物资和领用路径。",
+      "player_choice": "设常备品种、采购预算与安全库存；采购由人类渠道按已授权额度处理。",
+      "capacity_draft": "默认服务1个生活区的基础需求；准确能力由配送任务负担决定。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 1
+    },
+    {
+      "id": "ZS-2",
+      "kind": "区域",
+      "family": "ZS",
+      "level": 2,
+      "name": "公共服务区·调配院",
+      "prerequisites": [
+        "ZS-1",
+        "HS-1",
+        "HM-1",
+        "ZL-2"
+      ],
+      "cost_funds": 400,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2调配者＋1名K1递送替补；外勤或生活岗位不重复占班。",
+        "space": "分开待领、已领、备用库存；至少两条服务路径可达。",
+        "evidence": "累计2周期按既定预算补货，完成一次缺品替换或延后非必要领取，基础食水未靠玩家逐件补给维持。"
+      },
+      "new_gameplay": "开放生活、教学、外勤之间的资源优先级和采购计划。",
+      "autonomous_work": "油按已知需求打包、送达并确认领取，紧缺时先保基本生活，在允许替代清单内调整。",
+      "exception_handling": "不能用治疗品/特殊食物随意替代普通用品；超预算申请与同因缺货合并，不连弹多条。",
+      "visible_change": "不同用途物资篮、待送区及交接动作。",
+      "player_choice": "选择优先服务哪类业务、库存底线和可替代物品。",
+      "capacity_draft": "默认同时支撑2个区域实例；远距离会占用额外班次，不能无限供给。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 3
+    },
+    {
+      "id": "ZS-3",
+      "kind": "区域",
+      "family": "ZS",
+      "level": 3,
+      "name": "公共服务区·综合调度区",
+      "prerequisites": [
+        "ZS-2",
+        "HS-2",
+        "HM-2",
+        "ZL-3"
+      ],
+      "cost_funds": 1000,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "1名K3跨组协调者＋可轮替K2负责人，且各被管理组已有本地负责人。",
+        "space": "备用库存、候选替补名单和跨区交接位置完整，关键补给路线有替代方案。",
+        "evidence": "累计3周期出现两个业务争用资源并按预案完成调配；协调者休息时能降级保持基本生活。"
+      },
+      "new_gameplay": "开放跨区预算分配、预备队和业务扩张预览；多区域经营可用一套规则运行。",
+      "autonomous_work": "各组只上报已知需要，跨组协调者汇总并安排资源/替补，专业人类人员接收专业需求。",
+      "exception_handling": "协调缺位则各组按原本地预算继续，暂停新增跨区承诺；不让全园AI同时停摆。",
+      "visible_change": "综合任务板、跨区物资交接和替补集合行为。",
+      "player_choice": "决定总体资源倾向和风险储备，审阅聚合趋势，不批每一单普通领用。",
+      "capacity_draft": "默认统筹4个区域实例；多建服务区或提高人员配置扩展，非全世界硬上限。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 6
+    },
+    {
+      "id": "ZY-1",
+      "kind": "区域",
+      "family": "ZY",
+      "level": 1,
+      "name": "育成寄养区·照护庭院",
+      "prerequisites": [
+        "ZL-1",
+        "HL-1",
+        "HS-1"
+      ],
+      "cost_funds": 100,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名合适的K1照护协作者；专业照护由合格人类支持，油不自动获得医疗能力。",
+        "space": "安静休息、活动和取食位置分开且可达；病情要求由具体个体与专业建议判断。",
+        "evidence": "完成一次真实基础生活照护与本人回应确认，不以反复抚摸或训练次数替代。"
+      },
+      "new_gameplay": "开放少量寄养与针对一个生活问题的培养服务；救助后有实际融入阶段。",
+      "autonomous_work": "油带领熟悉环境、提醒日程、照看可承担对象和补给；对象拒绝时改变接近方式或求助。",
+      "exception_handling": "常见不适按已授权方案处理并留证据；伤病及重大处置走原有权限。",
+      "visible_change": "安静庭院与近旁食点，能看到照护者在目标状态变化后回应。",
+      "player_choice": "选择服务对象、培养目标、环境与预算。",
+      "capacity_draft": "默认并行1项基础服务；床位和照护任务负担均需满足。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 0
+    },
+    {
+      "id": "ZY-2",
+      "kind": "区域",
+      "family": "ZY",
+      "level": 2,
+      "name": "育成寄养区·分类育成院",
+      "prerequisites": [
+        "ZY-1",
+        "HC-1",
+        "HT-1",
+        "ZL-2",
+        "ZS-2"
+      ],
+      "cost_funds": 420,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2照护协调者、1名能指导目标能力的教师和1名K1替补；兼岗需排班可行。",
+        "space": "至少两种可切换培养环境：安静适应与共同活动；能按需要互不干扰。",
+        "evidence": "累计2周期照护交接、一次按进展调整教学，以及学到的行为在新场景实际出现。"
+      },
+      "new_gameplay": "开放按个体状态安排不同课程/生活方案，短期寄养与长期育成并行；角色搭配改变方法。",
+      "autonomous_work": "油分组、协商伙伴、安排休息与教师时间，根据观察到的回应提出或执行已授权的小幅计划调整。",
+      "exception_handling": "不适配则退回单独陪伴或延后课程，未达成果不得自动结算；不得读取隐藏性格真值。",
+      "visible_change": "两种活动空间及观察到的分组、示范、休息行为。",
+      "player_choice": "定培养优先级和方法边界、选择是否投入长期目标。",
+      "capacity_draft": "默认2条并行服务线；不能同一个教师同一时段教两组。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 2
+    },
+    {
+      "id": "ZY-3",
+      "kind": "区域",
+      "family": "ZY",
+      "level": 3,
+      "name": "育成寄养区·传习育成中心",
+      "prerequisites": [
+        "ZY-2",
+        "HC-2",
+        "HT-2",
+        "ZS-3"
+      ],
+      "cost_funds": 980,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "1名K2教学组织者，至少2名可轮替教师；有K3公共协调支撑跨区安排。",
+        "space": "课程、恢复与实践空间可组合，个体记录可追溯；外评流程与内部教学分开。",
+        "evidence": "3周期内有完整培养成果、不同情境迁移、教师替班和对象休息的证据。"
+      },
+      "new_gameplay": "开放居民带教新教师、跨区域实践培养、综合外评准备和长期培养业务；知识传授产生真实后继者。",
+      "autonomous_work": "教师示范—练习—观察—调整，教务油安排轮班和实践，申请外评由玩家决定并交外部正式机构。",
+      "exception_handling": "新教师不会则回到见习，旧老师可休息；送评结果不能由内部设施保证，越级仍按既定概率。",
+      "visible_change": "实践区与学习记录展示，能看到见习者逐渐承担示范。",
+      "player_choice": "选择长期培养方向、送评时机与教学投入，保留直接互动。",
+      "capacity_draft": "默认3条服务线；增加线数需要独立空间与有余力的教师，不靠升级标签独享加成。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 5
+    },
+    {
+      "id": "ZF-1",
+      "kind": "区域",
+      "family": "ZF",
+      "level": 1,
+      "name": "边界外勤区·门边守望区",
+      "prerequisites": [
+        "ZL-1"
+      ],
+      "cost_funds": 80,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名可观察与发出求助的K1油；不要求其能战胜入侵者，原人类介入渠道可用。",
+        "space": "清晰边界、可达求助位置与返回生活区的安全路径。",
+        "evidence": "一次观察—提醒—有对象的回应；自愿非危险演练可取代等待真实入侵。"
+      },
+      "new_gameplay": "开放轮值观察与边界来访处理，早期救助仍可由玩家带领开展。",
+      "autonomous_work": "油巡视其能力覆盖范围，辨认已知来访/可疑活动，先提醒和求助；不全图预知敌人。",
+      "exception_handling": "无守卫能力则后撤并告知人类，不自动派普通油正面应敌。",
+      "visible_change": "边界标记、观察点和撤回动作。",
+      "player_choice": "设观察范围、允许接近对象、报警和回避规则。",
+      "capacity_draft": "1条短边界路线；更大范围需增加轮值与观察点。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 1
+    },
+    {
+      "id": "ZF-2",
+      "kind": "区域",
+      "family": "ZF",
+      "level": 2,
+      "name": "边界外勤区·地区联络据点",
+      "prerequisites": [
+        "ZF-1",
+        "HF-1",
+        "HC-2",
+        "HM-2",
+        "HS-2",
+        "ZY-2"
+      ],
+      "cost_funds": 650,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2外勤协调者＋具任务能力的同行者，留园照护/守望和替补人员已单独排班。",
+        "space": "集合、补给、归来复核与临时安置位置；访问路线和风险已有信息。",
+        "evidence": "一次准备—出发—现场协作—返回交接的低风险任务，期间园内基础生活仍稳定。"
+      },
+      "new_gameplay": "开放常规地区委托、熟悉路线复访与归来后安置培养；在园和园外同时运行。",
+      "autonomous_work": "油提出搭档、领取已批用品、检查集合与任务条件，按预案行动、返回并报告；玩家可主动随行。",
+      "exception_handling": "不具所需能力/遇未知重大风险则延迟或撤回并求助；不擅自接纳、出售或转移新对象。",
+      "visible_change": "集合场、任务用品和真实归来交接。",
+      "player_choice": "设任务方向、预算、风险上限与授权范围；新任务首次批准，重复已知任务在明确额度内自治。",
+      "capacity_draft": "默认1支外勤小组＋留园小组；同一个体不能两边同时值岗。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 3
+    },
+    {
+      "id": "ZF-3",
+      "kind": "区域",
+      "family": "ZF",
+      "level": 3,
+      "name": "边界外勤区·协作驿站",
+      "prerequisites": [
+        "ZF-2",
+        "HF-2",
+        "ZS-3",
+        "HC-2"
+      ],
+      "cost_funds": 1500,
+      "construction_shifts": 4,
+      "conditions": {
+        "staff": "2名可轮替K2外勤负责人，K3统筹与两组留园/外勤交接安排。",
+        "space": "可分开两支小组物资和信息；备用归来空间不挤占现有居民基本床位。",
+        "evidence": "3周期中两类任务错峰，1次负责人休息后续接，归来物资和对象身份无重复结算。"
+      },
+      "new_gameplay": "开放多地点任务组合、跨区合作与先遣观察后正式执行；角色的地方关系有用途。",
+      "autonomous_work": "负责人选择已授权任务次序并协调路线时间、资源和轮休；仅依据已掌握信息行事。",
+      "exception_handling": "一队失联/异常按预案报告，人类或另一队响应需真实能力和权限；不自动无限加派油。",
+      "visible_change": "不同小组的集合标识、回程消息和援助准备。",
+      "player_choice": "决定地区合作重点、总风险暴露与关键行动，不逐队逐步点击。",
+      "capacity_draft": "默认最多2支外勤组并行；扩至更多需另建实例与持续供给，不按人口自动生成战斗。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 6
+    },
+    {
+      "id": "ZV-1",
+      "kind": "区域",
+      "family": "ZV",
+      "level": 1,
+      "name": "游客开放区·预约体验庭院",
+      "prerequisites": [
+        "ZL-2",
+        "ZY-2",
+        "ZF-2",
+        "HF-2",
+        "HM-2"
+      ],
+      "cost_funds": 900,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "2个独立可自治生活组（来自不同实际日程，不要求人人工作）；1名K2接待协调者、2名可轮替参与者和独立留园照护，已有明确业务许可。",
+        "space": "公众路线与私人休息区分开，有退场/安静空间，基础安全与食水满足；不得用游客准入规则改成筛查人类制度。",
+        "evidence": "2周期园内、外勤能并存，1次低负荷模拟接待包含拒绝、换班和结束清场。"
+      },
+      "new_gameplay": "首次开放预约观察或互动体验；先选择一种特色，活动时油的生活行为形成内容。",
+      "autonomous_work": "接待油引导已接纳预约批次，参与者按状态加入或退出，伙伴接替，其他生活组照常生活。",
+      "exception_handling": "参与者疲惫/拒绝则替换、改为观赏或缩减场次；不能强迫玩家亲自完成每次接待才能盈利。",
+      "visible_change": "独立入口、短游览路线、安静退场点和角色接班。",
+      "player_choice": "定特色、人数上限、开放时段与互动边界；客人不是只看油的数量。",
+      "capacity_draft": "默认每场4位游客、每日1场；是初始参数，需测寻路/表现，不是最终规模承诺。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 2
+    },
+    {
+      "id": "ZV-2",
+      "kind": "区域",
+      "family": "ZV",
+      "level": 2,
+      "name": "游客开放区·主题游园区",
+      "prerequisites": [
+        "ZV-1",
+        "HV-1",
+        "HS-2",
+        "HM-2"
+      ],
+      "cost_funds": 1800,
+      "construction_shifts": 4,
+      "conditions": {
+        "staff": "1名K2区域协调者，两个活动小组各有K1负责人/替补；其他业务留有独立人员。",
+        "space": "两处互不干扰的特色场景与一条回流动线，私人区不会成为必经通道。",
+        "evidence": "3个正常场次完成分流与换班，至少一次需求变化按预案处理，基础服务未停摆。"
+      },
+      "new_gameplay": "开放两个主题体验的组合、活动排期与简单预约套餐；同一居民组合带来不同展示方式。",
+      "autonomous_work": "各组根据实际客流轮换活动、分流等待者、调整已授权时段；补给组回应真实消耗。",
+      "exception_handling": "一个活动临时关闭则引导到可替代体验或走既定退款渠道，不伪造完成；不把所有客流问题交给玩家。",
+      "visible_change": "两主题空间、可见分流与角色换班。",
+      "player_choice": "选主题组合和开放强度，在安静生活与活跃接待间取舍。",
+      "capacity_draft": "默认每场8位、每日2场错峰；若实际人手不足降低预约数。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 5
+    },
+    {
+      "id": "ZV-3",
+      "kind": "区域",
+      "family": "ZV",
+      "level": 3,
+      "name": "游客开放区·综合生活乐园",
+      "prerequisites": [
+        "ZV-2",
+        "HV-2",
+        "ZY-3",
+        "ZL-3",
+        "ZS-3",
+        "ZF-3"
+      ],
+      "cost_funds": 3400,
+      "construction_shifts": 6,
+      "conditions": {
+        "staff": "1名K3经营协调者，各实际活动区有K2负责人和替补；不得与同一时段外勤负责人重叠。",
+        "space": "至少3个有不同内容的场景、私人生活通道、后勤与应急退场路径完整。",
+        "evidence": "累计3经营周期出现游客/育成/外勤资源冲突并自主解决，关键负责人休息时可降载继续。"
+      },
+      "new_gameplay": "开放跨区域主题日、居民提出的活动方案和长期游客合作；发展风格由已有居民能力与生活决定。",
+      "autonomous_work": "各区申报可用场次，协调者在玩家预算与生活底线内组合，按真实负荷调低接待，并安排各组轮休。",
+      "exception_handling": "大范围缺岗或事故先关部分公开业务、保留基本生活；重大决策仍上报，评级和建筑不因一日异常重置。",
+      "visible_change": "跨区活动路标、集合与交接，场景中能看到策划如何落地。",
+      "player_choice": "批准活动方向和总预算、调整区域发展重点，必要时处理跨组矛盾。",
+      "capacity_draft": "默认同时在园12位游客、最多3场错峰；中后期50—100只是油的生活规模目标，不能与游客数混称。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 10
+    },
+    {
+      "id": "HL-1",
+      "kind": "房屋",
+      "family": "HL",
+      "level": 1,
+      "name": "居住屋·合住小屋",
+      "prerequisites": [
+        "ZL-1"
+      ],
+      "cost_funds": 80,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名K1生活协作者可服务相邻小屋，不要求每屋独占员工。",
+        "space": "4个适配窝位、可达食水、挡雨通风和符合身体大小的出入口。",
+        "evidence": "实际或自愿练习中能回窝、取用和辨认所属物品；需要帮助者能得到响应。"
+      },
+      "new_gameplay": "开放固定窝位和持续的共住关系；物品与个体身份绑定而非升级时刷新。",
+      "autonomous_work": "油自主选择已允许窝位、整理可操作物品、提醒或协助同伴回屋。",
+      "exception_handling": "拒绝共住或不能到达时启用临时安置点并告知，不把不可达当个体懒惰。",
+      "visible_change": "可见个人窝位、饰品位置与回窝路径。",
+      "player_choice": "决定共住规则和安置对象，允许保留空位。",
+      "capacity_draft": "标准4床；大型/特殊形态按占用和实际通行调整，不缩小模型硬塞。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 1
+    },
+    {
+      "id": "HL-2",
+      "kind": "房屋",
+      "family": "HL",
+      "level": 2,
+      "name": "居住屋·家庭分间屋",
+      "prerequisites": [
+        "HL-1",
+        "ZL-2"
+      ],
+      "cost_funds": 260,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "服务该屋的K2生活协调者与K1替补，已有家庭/偏好分组信息。",
+        "space": "至少两个分间、共同区与不穿过他人窝位的路径，保留原物品。",
+        "evidence": "完成一轮错峰休息与一次家庭/共住边界调整，相关油有可观察的适应回应。"
+      },
+      "new_gameplay": "开放家庭私密、共同生活与短期来访的空间取舍，房间组合改变相处机会。",
+      "autonomous_work": "各组按作息使用共同区，敲请/回应再接近他组私人空间，同伴协助短暂安置。",
+      "exception_handling": "临时冲突先错峰，永久迁居交玩家；家庭关系不因换房重置。",
+      "visible_change": "隔间、低位门口标识和公共生活角。",
+      "player_choice": "家庭大房或多小间等布局可选，功能验收相同，不锁唯一蓝图。",
+      "capacity_draft": "标准6床；扩容是次要收益，分间和共享规则为核心变化。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 2
+    },
+    {
+      "id": "HL-3",
+      "kind": "房屋",
+      "family": "HL",
+      "level": 3,
+      "name": "居住屋·自理庭院屋",
+      "prerequisites": [
+        "HL-2",
+        "ZL-3"
+      ],
+      "cost_funds": 620,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "具备轮替生活负责人的住组，能接入区域协调；不要求住户全员K2。",
+        "space": "可独立运转的生活单元、私家庭院和共享补给点，访客与照护路线兼容。",
+        "evidence": "2周期内成员自行协调共享空间，负责人休息时生活继续，幼体/伤者基础需求未遗漏。"
+      },
+      "new_gameplay": "开放住组提出布置与生活活动建议、邻里互助；玩家可培养有自身习惯的家庭。",
+      "autonomous_work": "组内分担可承担的小任务，主动请求用品或互助，按授权布置低风险可移动生活物品。",
+      "exception_handling": "不能自动装修结构或花大额款；个体疲惫时减任务，不强迫所有住户劳动。",
+      "visible_change": "生活庭院、居民偏好的摆放和跨屋互访。",
+      "player_choice": "批准长期布置和家庭发展方向，日常整理不逐件确认。",
+      "capacity_draft": "标准8床；可保留低密度布局，空位不构成失败。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 4
+    },
+    {
+      "id": "HC-1",
+      "kind": "房屋",
+      "family": "HC",
+      "level": 1,
+      "name": "照护寄养屋·安静照护屋",
+      "prerequisites": [
+        "ZY-1",
+        "HL-1"
+      ],
+      "cost_funds": 110,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名具目标照护能力的K1油；已有可联系的人类专业照护渠道。",
+        "space": "近旁食水、安静窝位和观察位置；按对象需要隔开，不强制统一隔离。",
+        "evidence": "完成一次真实照护，状态改变后确认并记录；动作次数不等于结果。"
+      },
+      "new_gameplay": "开放单对象寄养/恢复计划、同伴陪伴和生活适应服务。",
+      "autonomous_work": "照护油按方案提醒进食、送可操作用品、陪伴和向专业人员报告可观察异常。",
+      "exception_handling": "不会或被拒绝时尝试合适方式或求助；禁止自动重大手术/内馅转移。",
+      "visible_change": "近旁食盆与照护者接近、等待回应的动作。",
+      "player_choice": "确定目标与处理权限，选择亲自陪伴或委派。",
+      "capacity_draft": "2个照护位；同时服务数受任务负荷限制，不保证满床同时可照护。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 2
+    },
+    {
+      "id": "HC-2",
+      "kind": "房屋",
+      "family": "HC",
+      "level": 2,
+      "name": "照护寄养屋·分组寄养屋",
+      "prerequisites": [
+        "HC-1",
+        "ZY-2",
+        "HL-2"
+      ],
+      "cost_funds": 350,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2照护协调者＋1名K1替补；能按具体需求分配照护。",
+        "space": "安静/共同活动两类位置、交接记录和适配的生活用品。",
+        "evidence": "不同需求对象在一个周期内得到不同安排，完成交接后同一对象持续被照护。"
+      },
+      "new_gameplay": "开放不同服务方案并行、短住与长期培养兼顾；安排改变实际经历。",
+      "autonomous_work": "照护油根据已知状态分组，按观察调整已授权的时间/同伴，替补读取已知记录。",
+      "exception_handling": "信息不足标记未知并观察；不把隐藏属性当作准确诊断或承诺必定康复。",
+      "visible_change": "可见分组休息与公共活动区、交接的物品和动作。",
+      "player_choice": "设服务重点、接受的需求范围和预算上限。",
+      "capacity_draft": "4照护位，默认2条服务线；教师、护理时间分别计负担。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 4
+    },
+    {
+      "id": "HC-3",
+      "kind": "房屋",
+      "family": "HC",
+      "level": 3,
+      "name": "照护寄养屋·过渡康养屋",
+      "prerequisites": [
+        "HC-2",
+        "ZY-3"
+      ],
+      "cost_funds": 820,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "两名可轮替照护者及K2组织者，专业人类支持可用；照护者兼任需有余量。",
+        "space": "静养、练习自理和回归住组的三种可切换空间，不凭建筑自动治愈。",
+        "evidence": "一次从依赖照护到部分自理再返回生活组的真实过程，明确哪些困难仍存在。"
+      },
+      "new_gameplay": "开放长期康养、生活能力恢复与分阶段回归计划；恢复成果影响今后生活和服务。",
+      "autonomous_work": "油分解可承担步骤、示范并等待回应，与住组交接；需医疗判断时请专业人员。",
+      "exception_handling": "原有身体损伤按规则保留，不能靠住房升级修复；未恢复则延长支持/调整目标，重大处置仍批准。",
+      "visible_change": "练习自理的小设施、过渡活动角及实际归组过程。",
+      "player_choice": "决定长期目标、资源承受范围与重大处置，日常步骤自主。",
+      "capacity_draft": "6照护位；可保留低密度复杂照护，增长不等于同倍任务吞吐。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 7
+    },
+    {
+      "id": "HT-1",
+      "kind": "房屋",
+      "family": "HT",
+      "level": 1,
+      "name": "学习屋·示范学习屋",
+      "prerequisites": [
+        "ZY-1"
+      ],
+      "cost_funds": 90,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "至少1名确实会目标行为、能示范与回应的K1油；能力可先由直接互动或生活中学会。",
+        "space": "一个适配能力练习点与休息位，工具尺寸和身体操作条件有效。",
+        "evidence": "示范者真实执行该行为，学员在变化场景自主尝试，拒绝/疲倦可结束。"
+      },
+      "new_gameplay": "开放单项行为教学与同伴模仿；课程对象与实际活动绑定。",
+      "autonomous_work": "教师示范、等待学员反应、给有限帮助并结束练习；不能以后台经验每秒增长替代学习。",
+      "exception_handling": "学员不理解则更换示范方法或暂停；不无限刷同一动作完成委托。",
+      "visible_change": "练习点与可辨认的示范—尝试—反馈。",
+      "player_choice": "选培养目标和支持方式，不逐次点击训练。",
+      "capacity_draft": "一组最多2学员，人数只是草案；教师当班只能带一组。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 1
+    },
+    {
+      "id": "HT-2",
+      "kind": "房屋",
+      "family": "HT",
+      "level": 2,
+      "name": "学习屋·分课训练屋",
+      "prerequisites": [
+        "HT-1",
+        "ZY-2"
+      ],
+      "cost_funds": 320,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2教学组织者，至少2名拥有不同目标能力的教师或错峰使用合格教师。",
+        "space": "至少两种训练场景及工具存放点，课程与休息时间可排开。",
+        "evidence": "两个培养目标在不同时间完成示范，至少一项能力迁移到生活/职责场景。"
+      },
+      "new_gameplay": "开放课程搭配、搭档学习和实践轮换；同一目标可以不同路径达成。",
+      "autonomous_work": "教务安排可用教师、工具和学员，将训练与生活任务衔接，依据实际表现调整。",
+      "exception_handling": "某教师缺席可改排另一课或休息；不能调用不具能力者假装代课。",
+      "visible_change": "不同练习角与实际换课、工具归位行为。",
+      "player_choice": "设课程优先级、实践机会和学习负担。",
+      "capacity_draft": "两个课程位置，默认每组2—3学员；不保证同一教师同时执教。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 3
+    },
+    {
+      "id": "HT-3",
+      "kind": "房屋",
+      "family": "HT",
+      "level": 3,
+      "name": "学习屋·传习与实践馆",
+      "prerequisites": [
+        "HT-2",
+        "ZY-3"
+      ],
+      "cost_funds": 760,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "2名可轮替合格教师，其中至少1名能指导见习教师的K2油，接入K3协调。",
+        "space": "教学、示范与实践记录位置连通；可借用其他区进行实际训练。",
+        "evidence": "见习者在被支持条件下完成教学，学员在生活中应用；教师休息有接续。"
+      },
+      "new_gameplay": "开放培训新教师、不同岗位实践和综合外评准备，形成传承链。",
+      "autonomous_work": "老教师旁观并给必要支持，见习逐渐接手；教务根据实际记录提出准备送评建议。",
+      "exception_handling": "未能教学则继续见习，既有老师正常休息；不自动颁金银铜、不保证外评通过。",
+      "visible_change": "教师与见习交接、学员跨区实践和结果反馈。",
+      "player_choice": "选择培养哪类教师、安排长期方向与外评。",
+      "capacity_draft": "默认同时2课程＋1个错峰见习位，三者需真实时段，不按老师数量自动复制。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 5
+    },
+    {
+      "id": "HS-1",
+      "kind": "房屋",
+      "family": "HS",
+      "level": 1,
+      "name": "食堂补给屋·公共食屋",
+      "prerequisites": [
+        "ZS-1"
+      ],
+      "cost_funds": 85,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名能按物品/篮位分配的K1油，人类承担需专业操作的烹饪与重搬运。",
+        "space": "安全可达食点、清洁用品和适配食物；营养与捕食种替代食物规则沿用设定。",
+        "evidence": "一轮领取—使用—归位/补充成立，无法食用者得到协助。"
+      },
+      "new_gameplay": "开放食物分配与公共用餐，适量存量可由油管理。",
+      "autonomous_work": "油领取规定份量、引导错峰、补充可处理用品和通报剩余量。",
+      "exception_handling": "缺食或不能搬运走预案；不会做饭的油不能自动生火烹饪。",
+      "visible_change": "货架、食品分区、用餐和归位。",
+      "player_choice": "设食物预算、常备品和基础优先级。",
+      "capacity_draft": "默认一生活组共享；按实际需求量校准，没有无限自动供给。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 1
+    },
+    {
+      "id": "HS-2",
+      "kind": "房屋",
+      "family": "HS",
+      "level": 2,
+      "name": "食堂补给屋·配给与打包屋",
+      "prerequisites": [
+        "HS-1",
+        "ZS-2"
+      ],
+      "cost_funds": 280,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2配给组织者、1名K1替补，已能分辨不同使用清单。",
+        "space": "生活食品与任务用品分区，回收待检物品不混入可直接用物品。",
+        "evidence": "一次生活/教学/外勤争用物资按优先级完成，外勤领用不扣掉生活底线。"
+      },
+      "new_gameplay": "开放用途预算、任务用品包、已允许的替代物品；同一资源有不同投资用途。",
+      "autonomous_work": "油按清单打包并与领取者交接，紧缺先保护基础供应，再延后非必要任务。",
+      "exception_handling": "越预算/未知替代只提出建议；不自动消耗不可替代治疗品或重复领取。",
+      "visible_change": "用途篮、打包点和可见领用凭记。",
+      "player_choice": "决定资源优先级、可替代清单和补货预算。",
+      "capacity_draft": "默认服务2区域；每次配送占真实岗位负担。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 2
+    },
+    {
+      "id": "HS-3",
+      "kind": "房屋",
+      "family": "HS",
+      "level": 3,
+      "name": "食堂补给屋·跨区补给站",
+      "prerequisites": [
+        "HS-2",
+        "ZS-3"
+      ],
+      "cost_funds": 650,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "1名K2后勤负责人、轮替递送者与K3协调入口。",
+        "space": "至少两处服务交接点、备用存放和路线，远区按跨区规则推进。",
+        "evidence": "2周期跨区配送和一次路线受阻的替代交接，库存账实一致。"
+      },
+      "new_gameplay": "开放跨区共享库存、预备物资与分批调配，支持多组自主经营。",
+      "autonomous_work": "本地油分装，递送者运输，接收方复核；跨区简化模拟保持相同消耗与结果。",
+      "exception_handling": "路线堵塞暂存并改派/延后；物品不能复制或瞬移，失联不自动认定送达。",
+      "visible_change": "不同区域的标识、递送来往和暂存物。",
+      "player_choice": "定库存战略、跨区支持优先级，异常合并通知。",
+      "capacity_draft": "默认4区域的服务排程，不保证无距离成本或无限吞吐。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 4
+    },
+    {
+      "id": "HF-1",
+      "kind": "房屋",
+      "family": "HF",
+      "level": 1,
+      "name": "门岗外勤屋·守望小屋",
+      "prerequisites": [
+        "ZF-1"
+      ],
+      "cost_funds": 75,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名K1观察者和可联系的人类支持；本人可以不具战斗能力。",
+        "space": "观察点、提醒方式和撤回路径可用。",
+        "evidence": "在日常来访或自愿演练中观察、通知和有人响应。"
+      },
+      "new_gameplay": "开放具体轮值与来访识别，基础防卫有准备过程。",
+      "autonomous_work": "油在岗观察、交接已知信息、提醒同伴回避，必要时请求主人。",
+      "exception_handling": "危险超能力则撤回，不能因建筑叫守望屋就自动获胜。",
+      "visible_change": "观察位置、值岗标识与真实交班。",
+      "player_choice": "定边界范围、响应方式、休息和求助规则。",
+      "capacity_draft": "1观察岗位；覆盖由路径和感知决定。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 1
+    },
+    {
+      "id": "HF-2",
+      "kind": "房屋",
+      "family": "HF",
+      "level": 2,
+      "name": "门岗外勤屋·任务联络屋",
+      "prerequisites": [
+        "HF-1",
+        "ZF-2"
+      ],
+      "cost_funds": 460,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2外勤负责人，1名留守联络者，参与者符合任务实际能力。",
+        "space": "物资清单、集合和归来复核位置，园内防卫岗位另有承担者。",
+        "evidence": "低风险任务完整准备返回，留园有人接收信息与物资。"
+      },
+      "new_gameplay": "开放预设任务方案、任务前检查与归来信息整理，外出成果影响后续安排。",
+      "autonomous_work": "油协调已批准任务的人选时段、确认用品和返回条件，再向留守交接。",
+      "exception_handling": "缺人/关键物品或新风险不满足则延期，不能消耗原留园班次假装两边有人。",
+      "visible_change": "集合、物资分发、归来汇报场景。",
+      "player_choice": "批准新类型任务和风险边界，重复任务在明确范围内自治。",
+      "capacity_draft": "1小队出行与1留守位，具体小队人数按任务设计。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 3
+    },
+    {
+      "id": "HF-3",
+      "kind": "房屋",
+      "family": "HF",
+      "level": 3,
+      "name": "门岗外勤屋·协作调度屋",
+      "prerequisites": [
+        "HF-2",
+        "ZF-3"
+      ],
+      "cost_funds": 1100,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "2名K2小队负责人和K3协调者，可独立安排留园与替补。",
+        "space": "可区分两队信息物资，援助与回程安排清晰。",
+        "evidence": "2队错峰交接且一次计划变更未造成重复占岗、重复奖励或无人留守。"
+      },
+      "new_gameplay": "开放多任务顺序、先观察后执行与在明确权限内协作援助。",
+      "autonomous_work": "负责人依据真实情报调整已授权任务时序，向区域提出所需支持。",
+      "exception_handling": "不明危险请求玩家决定；援助也占用真实角色与时间，不生成虚拟兵力。",
+      "visible_change": "多队任务标记和跨组讨论、备勤行为。",
+      "player_choice": "选择合作地区、资源投入和关键援助。",
+      "capacity_draft": "默认2小队排程，与区域同步；不是新增完整追击清剿系统。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 5
+    },
+    {
+      "id": "HV-1",
+      "kind": "房屋",
+      "family": "HV",
+      "level": 1,
+      "name": "接待活动屋·预约接待屋",
+      "prerequisites": [
+        "ZV-1"
+      ],
+      "cost_funds": 220,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "1名K1引导者和实际可参加活动的油，区域K2负责人统筹；有替补。",
+        "space": "候场、短活动和休息退场通道，基本票务由合适油或人类工具支持。",
+        "evidence": "一次预约练习出现引导、活动、参与者退出与结束交接。"
+      },
+      "new_gameplay": "开放预约观赏或互动场次，玩家选一种特色即可。",
+      "autonomous_work": "油引导到允许位置、邀请参与者、按信号换班，结束后恢复日常空间。",
+      "exception_handling": "拒绝/疲劳换人或改观赏；空缺导致缩场，不逼玩家顶班。",
+      "visible_change": "预约入口、活动点和结束整理。",
+      "player_choice": "选择活动类型、参与规则和每场上限。",
+      "capacity_draft": "默认4游客/场，1场/周期；收入按实际接待与结果结算。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 1
+    },
+    {
+      "id": "HV-2",
+      "kind": "房屋",
+      "family": "HV",
+      "level": 2,
+      "name": "接待活动屋·主题活动馆",
+      "prerequisites": [
+        "HV-1",
+        "ZV-2"
+      ],
+      "cost_funds": 680,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "2个活动小组有负责人和轮休，区域K2协调者有可用时段。",
+        "space": "可转换的两种主题布置、物品存放与安静后台。",
+        "evidence": "两种活动错峰切换，物品与人员交接正确；一次普通客流变化得到响应。"
+      },
+      "new_gameplay": "开放可选主题组合、可复用活动布置和简单套餐；同一房屋有不同内容配置。",
+      "autonomous_work": "油按日程布置可操作用品、协调表演/游戏/观赏参与者并清场，危险或重型布置由专业支持。",
+      "exception_handling": "某主题无法开展时依规则替代或退费，不能后台发钱假装演完。",
+      "visible_change": "主题变换、伙伴配合、后台休息。",
+      "player_choice": "选主题与排期，培养适合的组合，直接参加可选。",
+      "capacity_draft": "默认每场8游客、2场错峰；须服从区域与人员较低上限。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 4
+    },
+    {
+      "id": "HV-3",
+      "kind": "房屋",
+      "family": "HV",
+      "level": 3,
+      "name": "接待活动屋·居民企划会馆",
+      "prerequisites": [
+        "HV-2",
+        "ZV-3"
+      ],
+      "cost_funds": 1500,
+      "construction_shifts": 4,
+      "conditions": {
+        "staff": "1名能统筹的K2策划负责人及K3区域协调；参与组能独立执行并有替补。",
+        "space": "主题道具与跨区集合点可用，生活/私密空间不会被无授权占用。",
+        "evidence": "一次跨区活动在已批预算内完成，参与者轮休，未挤掉照护与留守。"
+      },
+      "new_gameplay": "开放油依据兴趣与已知经验提出活动计划，玩家筛选方向后由各组合作执行。",
+      "autonomous_work": "策划油征询同伴，区域负责人申报能力与时段，形成计划并按玩家授权筹备。",
+      "exception_handling": "超预算、无参与意愿或重要条件不足则修改或撤回方案；不会为了活动强制工作。",
+      "visible_change": "讨论、准备、邀请与跨区集合，建议内容与角色经历相关。",
+      "player_choice": "批准创意和总资源，处理少数跨区冲突。",
+      "capacity_draft": "单次计划覆盖最多3场景，游客总量服从区域，不能相加超售。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 8
+    },
+    {
+      "id": "HM-1",
+      "kind": "房屋",
+      "family": "HM",
+      "level": 1,
+      "name": "议事管理屋·小组议事屋",
+      "prerequisites": [
+        "ZS-1"
+      ],
+      "cost_funds": 70,
+      "construction_shifts": 1,
+      "conditions": {
+        "staff": "至少1名可记录/转述已知任务的K1油；记录可用图记，不要求人类文字能力。",
+        "space": "可集合位置、简单图记与任务交接点。",
+        "evidence": "完成一次任务认领、执行、返回反馈，重复认领能被识别。"
+      },
+      "new_gameplay": "开放一组油的日程板与已授权任务队列，减少玩家逐项下命令。",
+      "autonomous_work": "油从已批准范围认领能做的任务，完成后带回实物或观察结果，交接未完事项。",
+      "exception_handling": "不懂或冲突时标记并求助，不捏造完成；基本生活任务优先。",
+      "visible_change": "图记、指认、交接和短句讨论。",
+      "player_choice": "设工作重点、对象与权限，查看结果摘要。",
+      "capacity_draft": "默认1组任务板，同一角色同一时段只能一个实际任务。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 0
+    },
+    {
+      "id": "HM-2",
+      "kind": "房屋",
+      "family": "HM",
+      "level": 2,
+      "name": "议事管理屋·分工协调屋",
+      "prerequisites": [
+        "HM-1",
+        "ZS-2"
+      ],
+      "cost_funds": 300,
+      "construction_shifts": 2,
+      "conditions": {
+        "staff": "1名K2协调者、1名K1信息替补；各服务组有可联系负责人。",
+        "space": "分组任务板、休息排班和可观察岗位信息。",
+        "evidence": "2周期有真实交接、负责人休息和同因问题聚合处理；未依赖玩家每单确认。"
+      },
+      "new_gameplay": "开放跨岗位分工、替补和负担管理，玩家修改一条规则可持续影响后续日程。",
+      "autonomous_work": "协调者依据已知状态与回应安排岗位、替补和休息，合并同一根因的请求。",
+      "exception_handling": "看不出隐性委屈时保留观察不确定性；连续异常给趋势提示，不把每只油的每次拒绝都弹窗。",
+      "visible_change": "分组图记、主动休息与换班，角色语气有差别。",
+      "player_choice": "设优先级、工作上限、例外与观察重点。",
+      "capacity_draft": "默认2组协同；协调任务占本人时间，不是免费的全局乘数。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 2
+    },
+    {
+      "id": "HM-3",
+      "kind": "房屋",
+      "family": "HM",
+      "level": 3,
+      "name": "议事管理屋·自治协调馆",
+      "prerequisites": [
+        "HM-2",
+        "ZS-3"
+      ],
+      "cost_funds": 800,
+      "construction_shifts": 3,
+      "conditions": {
+        "staff": "1名K3协调者及可临时代理的K2，各本地组具备独立运行能力。",
+        "space": "分区信息、权限边界和替补网络，重大决策请求入口明确。",
+        "evidence": "3周期出现跨组资源冲突、协调者休息与局部功能降载，基础生活正常且无越权。"
+      },
+      "new_gameplay": "开放区域提案、跨组资源计划与分布式管理，局部缺岗不拖垮全园。",
+      "autonomous_work": "本地组自主日常，跨组协调者只处理公共冲突和已有授权额度；给玩家聚合计划和异常。",
+      "exception_handling": "无K3时停新增跨区计划、各组沿原预算继续；重大手术、转移、出售等仍需玩家批准。",
+      "visible_change": "各组代表交接信息、讨论和返回执行，面板只显示已知事实。",
+      "player_choice": "决定园区战略、资源倾向与重大例外，个体陪伴仍可自由进行。",
+      "capacity_draft": "默认统筹4区域实例；多个协调馆可支持更大规模，不能把全园每件事都变成人工工单。",
+      "shared_rules": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06"
+      ],
+      "implementation_status": "design_only",
+      "maintenance_funds_per_cycle": 4
+    }
+  ]
+}

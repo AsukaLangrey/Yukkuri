@@ -1,0 +1,31 @@
+--- a/drivers/windows/file_access_windows.cpp
++++ b/drivers/windows/file_access_windows.cpp
+@@ -702,7 +702,11 @@
+ 		reserved_file_index++;
+ 	}
+ 
++// Diagnostic-only workaround: UCRT owns this startup allocation before ASan hooks.
++// Keep the default stdio limit; do not disable allocation checks in the renderer.
++#ifndef ASAN_ENABLED
+ 	_setmaxstdio(8192);
++#endif
+ 	print_verbose(vformat("Maximum number of file handles: %d", _getmaxstdio()));
+ }
+ 
+--- a/modules/jolt_physics/jolt_globals.cpp
++++ b/modules/jolt_physics/jolt_globals.cpp
+@@ -84,7 +84,14 @@
+ 	print_verbose(buffer);
+ }
+ 
++#ifdef ASAN_ENABLED
++extern "C" void __sanitizer_print_stack_trace();
++#endif
++
+ bool jolt_assert(const char *p_expr, const char *p_msg, const char *p_file, uint32_t p_line) {
++#ifdef ASAN_ENABLED
++	__sanitizer_print_stack_trace();
++#endif
+ 	ERR_PRINT(vformat("Jolt Physics assertion '%s' failed with message '%s' at '%s:%d'", p_expr, p_msg != nullptr ? p_msg : "", p_file, p_line));
+ 	return false;
+ }

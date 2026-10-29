@@ -1,0 +1,248 @@
+{
+  "status": "preparation_only_not_started",
+  "recorded_at": "2026-10-27T11:07:30.1811438+08:00",
+  "stage": "M02",
+  "source_manifest": "planning/milestones-v003.json",
+  "source_catalog": "planning/settings/setting-catalog-v004.json",
+  "original_acceptance": [
+    {
+      "id": "M02-C01",
+      "requirement": "收入任务与资源设施员工形成可持续经营闭环"
+    },
+    {
+      "id": "M02-C02",
+      "requirement": "墙门房间地形及导航排队实际可用"
+    },
+    {
+      "id": "M02-C03",
+      "requirement": "各类地区用途和首次旅行/快速交通可用"
+    },
+    {
+      "id": "M02-C04",
+      "requirement": "天气事故入侵与共同防卫产生可见后果"
+    },
+    {
+      "id": "M02-C05",
+      "requirement": "跨区后台及离线停止、权限与园区评分符合规则"
+    }
+  ],
+  "confirmed_rules": [
+    {
+      "id": "WRL-01",
+      "status": "confirmed",
+      "title": "地区与授权",
+      "statement": "野生地区危险且有生存压力；公共人类公园中有未经筛查的油库里。乐园和人类生活环境中获授权的金银铜牌个体相对稳定，非绝对安全或固定幸福。牌照不使野外风险消失。",
+      "sources": [
+        "planning/requirements-v002.txt",
+        "planning/requirements-v003.txt"
+      ]
+    },
+    {
+      "id": "WRL-02",
+      "status": "confirmed",
+      "title": "筛查对象",
+      "statement": "筛查对象是油库里，不是人类访客；未经筛查不等于已判危险。",
+      "sources": [
+        "planning/requirements-v003.txt"
+      ]
+    },
+    {
+      "id": "WRL-03",
+      "status": "confirmed",
+      "title": "地图连接",
+      "statement": "大地图选择地区，每地区内自由活动；离开再返回保留当地个体与变化，不重随机。首次前往耗时，建立交通后可快速抵达；快速旅行的具体耗时及费用未定。",
+      "sources": [
+        "planning/requirements-v007.txt",
+        "planning/requirements-v047.txt"
+      ]
+    },
+    {
+      "id": "WRL-04",
+      "status": "confirmed",
+      "title": "跨区模拟",
+      "statement": "游戏运行中未访问地区简化模拟资源、关系和生态，重要事件通知玩家；全局暂停时也暂停。",
+      "sources": [
+        "planning/requirements-v013.txt",
+        "planning/requirements-v018.txt"
+      ]
+    },
+    {
+      "id": "WRL-05",
+      "status": "confirmed",
+      "title": "关闭游戏",
+      "statement": "关闭游戏世界完全停止；下次启动或读档不结算现实离线时长造成的消耗、收益、疾病、恢复、年龄、救治期限或生态变化。",
+      "sources": [
+        "planning/requirements-v018.txt"
+      ]
+    },
+    {
+      "id": "WRL-06",
+      "status": "confirmed",
+      "title": "特写时间",
+      "statement": "特写只结算主动互动与物品消耗，目标及所有地区的年龄等被动过程冻结，退出不补时。子弹时间名称不能被解释为后台持续缓慢运行。",
+      "sources": [
+        "planning/requirements-v012.txt",
+        "planning/requirements-v013.txt"
+      ]
+    },
+    {
+      "id": "WRL-07",
+      "status": "confirmed",
+      "title": "接纳决定",
+      "statement": "可带入隔离观察区，筛查提供信息，玩家最终决定安置；隔离可选，不强制所有个体统一隔离时长。入园不等于获正式牌照。",
+      "sources": [
+        "planning/requirements-v007.txt"
+      ]
+    },
+    {
+      "id": "WRL-08",
+      "status": "confirmed",
+      "title": "规模",
+      "statement": "中后期典型地区约50—100只同时生活是设计目标，不是开局数、世界总上限或完整游戏性能已验证结论。",
+      "sources": [
+        "planning/requirements-v017.txt"
+      ]
+    },
+    {
+      "id": "DEF-01",
+      "status": "confirmed",
+      "title": "天气季节",
+      "statement": "影响食物、户外活动、环境需求和部分事件，不仅画面氛围。",
+      "sources": [
+        "planning/requirements-v047.txt"
+      ]
+    },
+    {
+      "id": "DEF-02",
+      "status": "confirmed",
+      "title": "危机范围",
+      "statement": "天气灾害、设施事故、野生入侵均支持，以野生入侵为主要风险。频率、预警及难度参数待设计，未选定统一高频突袭。",
+      "sources": [
+        "planning/requirements-v048.txt"
+      ]
+    },
+    {
+      "id": "DEF-03",
+      "status": "confirmed",
+      "title": "共同防卫",
+      "statement": "玩家可自己驱赶，也可由园区油库里参与；能力不足的参与者可能受伤或遭侵害等。仅记录非露骨事件类别，不展开侵害过程。",
+      "sources": [
+        "planning/requirements-v048.txt",
+        "planning/requirements-v050.txt"
+      ]
+    },
+    {
+      "id": "DEF-04",
+      "status": "confirmed",
+      "title": "规模协作",
+      "statement": "园区越大越需要油库里参与防卫，不应由单个玩家操作无成本覆盖全部大园区；具体覆盖/调度算法属设计。",
+      "sources": [
+        "planning/requirements-v048.txt",
+        "planning/requirements-v050.txt"
+      ]
+    },
+    {
+      "id": "DEF-05",
+      "status": "confirmed",
+      "title": "危险入侵者处置",
+      "statement": "人类可惩戒入侵者；悬挂危险入侵者可降低相关风险，同时降低园区环境/管理评级。此处只记规则与代价，不增加动作细节。",
+      "sources": [
+        "planning/requirements-v048.txt"
+      ]
+    },
+    {
+      "id": "DEF-06",
+      "status": "confirmed",
+      "title": "评分对象",
+      "statement": "用户明确确认惩戒降低园区环境/管理评级，不降低油库里个人金银铜，不自动剥夺白金身份，也不额外触发园外监管。具体分值/关联效果未定。",
+      "sources": [
+        "planning/requirements-v048.txt",
+        "planning/requirements-v050.txt"
+      ]
+    },
+    {
+      "id": "DEF-07",
+      "status": "confirmed",
+      "title": "园内后果边界",
+      "statement": "主动伤害/危险实验主要影响个体关系与园内情况，不新增园外声望、业务和监管惩罚链；不得擅自从园区扣分推出罚款或业务停业。转移冒用风险是另行已定机制。",
+      "sources": [
+        "planning/requirements-v048.txt"
+      ]
+    },
+    {
+      "id": "DEF-09",
+      "status": "confirmed",
+      "title": "评价与认可分离",
+      "statement": "群体对惩戒的认可、园区环境/管理评级、油库里个人牌照分别处理；v048悬挂惩戒降低园区评分的代价不因正义感取消，不新增一般园外监管。",
+      "sources": [
+        "planning/requirements-v049.txt",
+        "planning/requirements-v050.txt"
+      ]
+    },
+    {
+      "id": "OPS-01",
+      "status": "confirmed",
+      "title": "三类经营",
+      "statement": "培育出售/送养、寄养、训练、委托；游客门票、观赏互动、商店、活动；收容补助、救助、研究、地区治理三类收入全部保留。",
+      "sources": [
+        "planning/requirements-v011.txt"
+      ]
+    },
+    {
+      "id": "OPS-02",
+      "status": "confirmed",
+      "title": "开局重点",
+      "statement": "收容补助和救助委托为主，少量寄养照护为辅；不因此取消其他业务，也不默认全部开局开放。",
+      "sources": [
+        "planning/requirements-v046.txt"
+      ]
+    },
+    {
+      "id": "OPS-03",
+      "status": "confirmed",
+      "title": "业务解锁",
+      "statement": "满足设施、人员能力与资质即可申请，不加统一章节门槛；具体业务条件待拟，特殊剧情事件本身保留。",
+      "sources": [
+        "planning/requirements-v046.txt"
+      ]
+    },
+    {
+      "id": "OPS-04",
+      "status": "confirmed",
+      "title": "员工日常",
+      "statement": "按岗位和预案自治，日常照护、应急稳定并上报；主角跨区不使照护全停，跨区仍服从简化模拟及全局时间规则。",
+      "sources": [
+        "planning/requirements-v016.txt"
+      ]
+    },
+    {
+      "id": "OPS-05",
+      "status": "confirmed",
+      "title": "重大权限",
+      "statement": "昂贵手术、内馅转移、出售等由玩家决定，员工不能借紧急或跨区自动批准；强制繁殖未授予员工自治权限。",
+      "sources": [
+        "planning/requirements-v016.txt",
+        "planning/requirements-v027.txt"
+      ]
+    },
+    {
+      "id": "OPS-06",
+      "status": "confirmed",
+      "title": "重大提醒",
+      "statement": "需批准的紧急重大处置自动减速并提示，期限随游戏时间推进；此规则不覆盖特写世界被动冻结。",
+      "sources": [
+        "planning/requirements-v047.txt"
+      ]
+    },
+    {
+      "id": "OPS-07",
+      "status": "confirmed",
+      "title": "建造范围",
+      "statement": "首版包括成套建筑、内部/室外自由布局、家具设施、墙体、房间、门编辑及地形高低改造；编辑限制/导航/保存须实测。",
+      "sources": [
+        "planning/requirements-v016.txt",
+        "planning/requirements-v047.txt"
+      ]
+    }
+  ]
+}

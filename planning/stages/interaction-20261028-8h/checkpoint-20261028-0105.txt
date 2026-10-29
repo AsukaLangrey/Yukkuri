@@ -1,0 +1,30 @@
+2026-10-28 01:05 +08 续接检查点（追加要求见工作日志）
+
+Goal仍active。原20组/八景下限/8小时主动工作/原生试玩/Windows交付均保留，未完成。
+用户新增美术细度与穿模要求，并于最新消息明确“这一轮可以优先优化这个”。
+用户曾要求暂不实机，后恢复授权；最新再次明确“继续computer-use吧。我刚才试玩了下，崩了”。可以恢复本任务窗口的computer-use。
+不要在用户试玩期间无预告地终止游戏。此前对开发会话72005发送Ctrl+C后退出码1；该日志未显示异常。用户报告崩溃可能对应主动停止，尚不能确定是程序异常。检查Application 1000/1001/1026最近20分钟无Godot匹配记录，范围有限。
+
+已有代码
+Simulation新增InteractionState/Catalog/World/Gesture/Behavior/Validation/Spatial/Surface/OilDialogue。
+第一批场景InteractionRoom.tscn为默认，旧Main保留，通过--legacy或旧集成参数进入。
+全部动作有目录和基础代码；不等于全部分支、变体和表现完成。
+新增37项机制检查通过：artifacts/interaction-20261028/mechanisms-04.json。
+保留6个接触/教学/喂食失败样本before/after，3个重叠失败样本before/after。
+旧Simulation.Smoke 33项与Milestone.Smoke 63项于本轮运行通过；不能替代人油实机验收。
+
+美术与界面
+主体球面从16×8升至按尺寸64×32/40×20/24×12；帽子64段。
+FaceSurface/CreatureActor.Face把眼睛、嘴、眉、腮红等贴合脸部曲面，避免原固定深度悬浮；纯数学3项检查通过。
+箱体/固定具留空间，软包改成开放曲面，悬挂绳长随支点变化，Support检查变形后的支撑面。
+首屏字体和底栏挤压已修，并有render-02图和真实窗口观察。首屏不能证明全部动作。
+native-03实机只完成启动及近看；截图见聊天工具证据。发现近看隐藏地面后软垫悬浮；源码已加入近看地板并隐藏远物，尚未渲染复验。
+computer-use返回过两次unknown screenshotId screenshot-0；后报告physical Escape停止，未继续发桌面输入。最新用户再次授权，恢复需重新识别窗口。
+
+当前重要欠项
+优先角色真正的造型细化：目前头发仍是球形拼接，蝴蝶结三角片、帽子圆锥等，单纯加面数不足。
+全部P01—P20逐变体键鼠验证、声音可辨、姿态连续性与碰撞/道具贴合仍待。
+关键后果链A—E、完整T01—T12、存读档/缩放/失焦/持续运行与性能仍待。
+暂无新的Windows发行包；Play Game.cmd仍指向旧M01冻结版，不要声称新版本已交付。
+source-before保存开工基线；不要覆盖旧交付包。验收表目前统一partial/pending，后续以逐项证据细化。
+工时尚未完整核账；Goal墙钟不能直接当主动工时。不得把等待、休眠、自动续接空档计入8小时。

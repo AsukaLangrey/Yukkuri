@@ -1,0 +1,45 @@
+Windows 初始环境配置
+开始：2026-10-26 00:00 左右（Asia/Shanghai）
+授权：用户要求先用 Windows 配置初始环境；Mac 延后。
+目标：本机工具链、可重复构建入口、版本管理、最小 Godot C# 工程、实际 Windows 导出与启动验证。不是游戏 Demo 验收。
+
+硬件实测：Windows 11 专业工作站版 10.0.26100，Intel i9-14900HX，24 核/32 线程，物理内存约 32 GB，RTX 4080 Laptop GPU 与 Intel UHD Graphics。
+GPU AdapterRAM 的 WMI 值有截断风险，不据此宣称独立显存容量。
+D 盘空余约 373 GB（十进制测量值）；工具链所需空间充足。
+已有 Git 2.55.0.windows.5 和 Git LFS 3.7.1；当前项目尚未初始化 Git。
+已查常见路径和 PATH，未找到 Godot、Blender 或 dotnet。
+
+拟安装：项目 .tools 下便携工具，不修改全局 PATH；Godot 4.7.2 .NET、匹配导出模板、.NET SDK 10.0.402；Blender LTS 版本待下载验证。
+版本与上游哈希保存于 toolchain.lock.json；GitHub 官方发布元数据及 Microsoft 发布元数据为校验来源。
+Blender 官方下载域第一次访问遇到网站验证页，正在寻找正式镜像/其他官方发布渠道，不能将 HTML 当作安装包。
+
+验收清单：
+[待完成] 包下载与哈希校验、工具实际版本输出。
+[待完成] C# 最小工程构建、模拟核心独立构建与最小功能性验证。
+[待完成] Blender 无界面生成/导出一份 GLB，Godot 实际导入。
+[待完成] Godot 有图形运行并保存真实渲染截图。
+[待完成] Windows 导出并启动导出版本，确认独立运行。
+[待完成] Git/LFS 项目设置、启动脚本、环境说明和失败案例。
+任何未完成项须在交付时明确报告；安装完成不代表游戏制作完成。
+
+执行结果（2026-10-26 00:12 左右，原待办清单保留作为开始记录）
+[完成] Godot 4.7.2.stable.mono.official.ed1daf0bf、匹配 4.7.2.stable.mono 模板、.NET SDK 10.0.402 / runtime 10.0.13、Blender 4.5.15 LTS（build 5afeabba6097）。
+所有下载均对照上游 SHA256/SHA512 校验后解压。Blender 从官方 mirror.blender.org 成功获取；初始 download.blender.org 验证页问题未绕过。
+[完成] tools/build.ps1：C# 构建 0 警告、0 错误；Simulation.Smoke 验证特写冻结被动时钟、退出不补时、NaN 拒绝。只验证已实现的时钟，不代表完整子弹时间或动作结算已做完。
+[完成] tools/import-assets.ps1：Blender background 生成 assets-source/pipeline-probe.blend 并导出 GLB；Godot headless import 实际导入成功。
+[完成] tools/verify-render.ps1：实际图形启动，日志确认 OpenGL 3.3 NVIDIA 616.92，RTX 4080 Laptop GPU；截图 artifacts/editor-runtime.png 已目视检查，场景、模型和 UI 显示正常。
+[完成] tools/export-windows.ps1：Windows x64 release 自包含导出成功，输出 builds/windows/Yukkuri.exe 及依赖目录。
+[完成] tools/verify-render.ps1 -Exported：清空 DOTNET_ROOT/X64、去除 .tools 开发路径，从导出目录运行成功；artifacts/exported.log 与 exported.png 确认 C# + 模拟核心 + GLB 及截图成功。截图已目视检查。
+上述仅在这台 Windows 上验证，不是另一台干净 Windows 的兼容性或低配置性能验收。
+[完成] Git main 分支初始化，git lfs install --local；.blend/.glb/.wav 的 LFS attributes 配置。未提交、未设置作者身份、未推送远程。
+[完成] 双击入口 Open Editor.cmd / Run Preview.cmd，PowerShell 构建、导入、运行、导出和验证入口；使用说明 README.txt。
+[完成] 下载入口失败案例：artifacts/checksum-rejection 的故意损坏缓存包被真实 setup.ps1 拒绝，未创建解压目录、未执行二进制。不是仅根据提示词假设安全。
+Godot、.NET 许可告知保存在 third-party 并复制到导出目录。临时占位模型由本项目脚本生成。
+
+边界与待做
+本次原始任务“Windows 初始环境”已完成；未实现游戏 Demo、Steam 接入、发行签名、正式素材、完整简中日英内容。
+本场景的英文 UI 仅为工具检查文本，不是修改用户优先简中的产品要求。
+Compatibility 渲染器仅是当前基础验证选择，Jolt 拿取、形变、近景操作、100 只模拟及最终渲染方案仍待原型实测。
+未更改全局 PATH/执行策略；工具主体为项目便携目录。Godot 设置与构建日志按引擎默认行为写入 Windows 用户目录。
+可执行分发需要复制 builds/windows 整个目录，不能只取 exe。
+Mac 延后，本次未做 Mac 更改。

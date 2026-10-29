@@ -1,0 +1,116 @@
+[
+  {
+    "work_id": "W004",
+    "source_ids": [
+      "S46",
+      "S67",
+      "S68"
+    ],
+    "author": null,
+    "reading_status": "本轮读完整主文与后记，并追读被引用《聖者の途》选段",
+    "summary": "确认引用链：后记借用《聖者の途》的虚构黑病毒来写疫苗故事；不把借用当现实医学或首创证明。",
+    "remaining_work": "作者署名及更早版本仍未核实。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  },
+  {
+    "work_id": "W005",
+    "source_ids": [
+      "S47"
+    ],
+    "author": "即興の人",
+    "reading_status": "本轮读完四种分型正文及后记",
+    "summary": "后记核署名；补读胎生的知识继承、严寒环境卵生及河童型分裂。Y教授为文内身份。",
+    "remaining_work": "《ゆっくりの産卵》原页失效，借用链只核作者自述。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  },
+  {
+    "work_id": "W006",
+    "source_ids": [
+      "S69",
+      "S70"
+    ],
+    "author": "ゆっくり怪談の人",
+    "reading_status": "续篇、番外主文与后记已读",
+    "summary": "生前照顾与身后加工分开；可以拒绝加工、离开或埋葬；番外与《ゆっくりのいる生活》借用关系获作者自述许可。",
+    "remaining_work": "被借用原作的失踪结局不能自动等同死亡；不同作者立场分开。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  },
+  {
+    "work_id": "W010",
+    "source_ids": [
+      "S52",
+      "S96",
+      "S118",
+      "S119"
+    ],
+    "author": "YT",
+    "reading_status": "本轮第2篇、第3篇与尾声正文已读；第4—8篇中间正文未通读",
+    "summary": "第2篇水果交换方案在第3篇被叙述者认为失败，改用协作防御棚。尾声以摄影收入寻求供养，博丽灵梦接管园区，原主人继续管理。",
+    "remaining_work": "补读冬季危机等中段；结尾不能替代全系列阅读。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  },
+  {
+    "work_id": "W012",
+    "source_ids": [
+      "S71"
+    ],
+    "author": "YT",
+    "reading_status": "下篇主文与后记已读",
+    "summary": "受伤两者最终获救、一起生活于神社；不能误写为死亡结局。",
+    "remaining_work": "后记某少女隊具体指向未完全核明。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  },
+  {
+    "work_id": "W023",
+    "source_ids": [
+      "S114"
+    ],
+    "author": "enforcer",
+    "reading_status": "补读首话；仍非全系列阅读",
+    "summary": "白金个体可自有身份和收入，金徽章演员报酬付给主人。小说活体出演设定不能作现实视频制作史。",
+    "remaining_work": "白金早期传播链仍未找到原始证据。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  },
+  {
+    "work_id": null,
+    "existing_source_id": "S31",
+    "source_ids": [
+      "S31",
+      "S89"
+    ],
+    "reading_status": "Android日文商店说明补充",
+    "summary": "ゆっくり育てていってね！与Yukkuri My Friends为同一Miurabo游戏，不增加独立作品计数。",
+    "remaining_work": "未运行；缓存更新时间与页面实时返回日期分开。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  },
+  {
+    "work_id": "W001",
+    "title": "ゆっくりのお医者さん（本篇／出会い編）",
+    "source_ids": [
+      "S43",
+      "S125",
+      "S126"
+    ],
+    "author": "お医者さんの人",
+    "reading_status": "本篇正文及后记已读；相遇篇仍为前轮选读",
+    "summary": "作者目录将本篇及相遇篇并列。诊所接纳受伤和待产个体，也保留其采食与回归野外能力；温水例外和助产是此作规则。",
+    "remaining_work": "相遇篇仍未逐字通读；首发原帖和彩图版待核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3
+  }
+]

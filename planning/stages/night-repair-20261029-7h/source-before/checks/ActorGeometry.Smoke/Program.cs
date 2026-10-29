@@ -1,0 +1,970 @@
+using System.Text.Json;
+
+var checks=new List<object>();
+bool all=true;
+void Check(string name,Func<bool> run){bool ok=run();all&=ok;checks.Add(new{name,passed=ok});Console.WriteLine((ok?"PASS ":"FAIL ")+name);}
+Check("old flat eye cannot preserve face clearance across its whole shape",()=>
+{
+    float centerGap=.541f-ActorFaceSurface.Height(.23f,.04f);
+    float edgeGap=.541f-ActorFaceSurface.Height(.31f,.04f);
+    return edgeGap-centerGap>.02f;
+});
+Check("new eye surface maintains clearance through blinks",()=>
+{
+    foreach(float open in new[]{.08f,.1f,.12f,.2f,.65f,1f})foreach(float side in new[]{-1f,1f})
+        for(int ring=0;ring<=5;ring++)for(int n=0;n<48;n++)
+        {
+            var point=ActorFaceSurface.Point(side*.23f,.04f,.16f,.24f*open,ring/5f,MathF.Tau*n/48,.009f);
+            float gap=point.Z-ActorFaceSurface.Height(point.X,point.Y);
+            if(MathF.Abs(gap-.009f)>.00001f)return false;
+            if(!float.IsFinite(point.Z)||MathF.Abs(ActorFaceSurface.Normal(point.X,point.Y).Length()-1)>.00001f)return false;
+        }
+    return true;
+});
+Check("mirrored eyes have matched depth",()=>MathF.Abs(ActorFaceSurface.Height(-.23f,.04f)-ActorFaceSurface.Height(.23f,.04f))<.00001f);
+Check("old underside spot intersects skin instead of remaining outside",()=>
+{
+    float OldSpotY(float x,float z)=>-.45f-.009f*MathF.Sqrt(MathF.Max(0,1-x*x/(.15f*.15f)-z*z/(.11f*.11f)));
+    return OldSpotY(0,.04f)>ActorFaceSurface.Bottom(0,.04f)
+        &&OldSpotY(.12f,0)<ActorFaceSurface.Bottom(.12f,0);
+});
+Check("underside markings follow the same continuous skin with positive clearance",()=>
+{
+    for(int ring=0;ring<=8;ring++)for(int n=0;n<64;n++)
+    {
+        float x=MathF.Cos(MathF.Tau*n/64)*.36f*ring/8;
+        float z=ActorFaceSurface.CenterZ+MathF.Sin(MathF.Tau*n/64)*.325f*ring/8;
+        float y=ActorFaceSurface.Bottom(x,z,.01f);
+        if(!float.IsFinite(y)||MathF.Abs(ActorFaceSurface.Bottom(x,z)-y-.01f)>.00001f)return false;
+    }
+    return true;
+});
+Check("bow inset trim follows the actual folded cloth without sinking into it",()=>
+{
+    foreach(float side in new[]{-1f,1f})foreach(float edge in new[]{.07f,.93f})for(int i=0;i<=64;i++)
+    {
+        var cloth=ActorAccessorySurface.Bow(side,i/64f,edge);
+        var trim=ActorAccessorySurface.BowTrim(side,i/64f,edge);
+        if(MathF.Abs(trim.X-cloth.X)>1e-6f||MathF.Abs(trim.Y-cloth.Y)>1e-6f||MathF.Abs(trim.Z-cloth.Z-.005f)>1e-6f)return false;
+    }
+    return true;
+});
+Check("hat crown closes to a single point rather than an open ring",()=>
+{
+    var tip=ActorAccessorySurface.HatCone(1,0);
+    for(int n=1;n<=96;n++)if(System.Numerics.Vector3.Distance(tip,ActorAccessorySurface.HatCone(1,n*MathF.Tau/96))>1e-6f)return false;
+    return true;
+});
+Check("hat brim closes its seam and keeps the rolled edge inside its thickness",()=>
+{
+    for(int i=0;i<=96;i++)
+    {
+        float angle=i*MathF.Tau/96;
+        var top=ActorAccessorySurface.HatBrim(1,angle);
+        var bottom=ActorAccessorySurface.HatBrimUnderside(1,angle);
+        var edge=ActorAccessorySurface.HatBrimRim(angle);
+        if(!float.IsFinite(edge.X)||!(top.Y>edge.Y&&edge.Y>bottom.Y))return false;
+        if(MathF.Abs((top.Y-edge.Y)-(edge.Y-bottom.Y))>1e-6f)return false;
+        if(MathF.Abs(top.X-bottom.X)>1e-6f||MathF.Abs(top.Z-bottom.Z)>1e-6f)return false;
+        if(MathF.Abs(top.X-edge.X)>1e-6f||MathF.Abs(top.Z-edge.Z)>1e-6f)return false;
+    }
+    return System.Numerics.Vector3.Distance(ActorAccessorySurface.HatBrim(1,0),ActorAccessorySurface.HatBrim(1,MathF.Tau))<1e-6f;
+});
+Check("press and squeeze deform opposite axes without inversion at any force",()=>
+{
+    foreach(float size in new[]{.73f,1f,1.03f})for(int n=1;n<=100;n++)
+    {
+        float force=n/100f;var p=ActorTouchShape.Press(force)*size;var s=ActorTouchShape.Squeeze(force)*size;
+        if(!(p.Y<size&&p.X>size&&s.X<size&&s.Y>size))return false;
+        foreach(var v in new[]{p,s})
+            if(v.X*v.Y*v.Z/(size*size*size)<.9f||v.X*v.Y*v.Z/(size*size*size)>1.1f)return false;
+    }
+    return ActorTouchShape.Press(0)==System.Numerics.Vector3.One&&ActorTouchShape.Squeeze(0)==System.Numerics.Vector3.One;
+});
+Check("intake stages distinguish offer chewing sipping swallowing and finished",()=>
+{
+    var meal=Yukkuri.Simulation.IntakeKind.Meal;var water=Yukkuri.Simulation.IntakeKind.Water;
+    if(ActorIntakePresentation.Sample(meal,0,false).Active||ActorIntakePresentation.Sample(meal,0,true).MouthFrame!=0)return false;
+    if(ActorIntakePresentation.Sample(water,1,false).MouthFrame!=3||ActorIntakePresentation.Sample(water,.1,false).MouthFrame!=4)return false;
+    var frames=new HashSet<int>();
+    for(int n=3;n<160;n++)
+    {
+        var sample=ActorIntakePresentation.Sample(meal,n/100.0,false);
+        frames.Add(sample.MouthFrame);
+        if(!sample.Active||sample.Width<.9f||sample.Width>1.1f||sample.Height<.9f||sample.Height>1.1f)return false;
+    }
+    return frames.SetEquals(new[]{1,2,4});
+});
+Check("repair progressively closes tears and lays stitches instead of showing every stitch at once",()=>
+{
+    var item=new Yukkuri.Simulation.AccessoryState{Integrity=30,RepairProgress=0};
+    float previousTear=1,previousStitches=0;
+    for(int n=0;n<=70;n++)
+    {
+        item.Integrity=30+n;item.RepairProgress=n/.75;
+        float tear=ActorAccessoryWear.TearOpacity(item,0),stitches=0;
+        for(int i=0;i<8;i++)stitches+=ActorAccessoryWear.StitchOpacity(item,i);
+        if(tear>previousTear+1e-5||stitches<previousStitches-1e-5||stitches>8)return false;
+        if(n==10&&stitches>=2)return false;
+        previousTear=tear;previousStitches=stitches;
+    }
+    if(previousTear!=0||previousStitches!=8)return false;
+    item.Integrity=70;item.RepairProgress=0;
+    return ActorAccessoryWear.TearOpacity(item,0)>0&&Enumerable.Range(0,8).All(i=>ActorAccessoryWear.StitchOpacity(item,i)==0);
+});
+Check("every cleanable surface has marks whose entire footprint matches the real anatomical hit region",()=>
+{
+    var expected=new[]{Yukkuri.Simulation.BodyPart.Head,Yukkuri.Simulation.BodyPart.Cheek,Yukkuri.Simulation.BodyPart.Mouth,Yukkuri.Simulation.BodyPart.Side,Yukkuri.Simulation.BodyPart.Bottom};
+    foreach(var set in new[]{ActorSurfaceMarks.Dirt,ActorSurfaceMarks.Wet,ActorSurfaceMarks.Dressing})
+    {
+        if(!set.Select(m=>m.Part).ToHashSet().SetEquals(expected))return false;
+        foreach(var mark in set)for(int ring=0;ring<=5;ring++)for(int n=0;n<32;n++)
+        {
+            var point=ActorSurfaceMarks.Point(mark,ring/5f,n*MathF.Tau/32,0);
+            if(!mark.OnHair&&ActorSurfaceMarks.ClassifySkin(point)!=mark.Part)
+            {Console.WriteLine($"Misplaced {mark.Part} patch at {point}: {ActorSurfaceMarks.ClassifySkin(point)}");return false;}
+            var raised=ActorSurfaceMarks.Point(mark,ring/5f,n*MathF.Tau/32,.009f);
+            if(MathF.Abs(System.Numerics.Vector3.Distance(point,raised)-.009f)>.00001f)return false;
+        }
+    }
+    return true;
+});
+Check("localized water and dirt stay visible until that region is actually dried or cleaned",()=>
+{
+    var life=new Yukkuri.Simulation.InteractionLife{Dirt=0,Wetness=0};
+    life.SurfaceWetness[Yukkuri.Simulation.BodyPart.Side]=20;
+    life.SurfaceDirt[Yukkuri.Simulation.BodyPart.Mouth]=8;
+    life.WipeSurface(Yukkuri.Simulation.BodyPart.Cheek,100,true);
+    if(life.Wetness>=5||ActorSurfaceMarks.Opacity(life,Yukkuri.Simulation.BodyPart.Side,true)<.8f)return false;
+    if(ActorSurfaceMarks.Opacity(life,Yukkuri.Simulation.BodyPart.Cheek,true)!=0||ActorSurfaceMarks.Opacity(life,Yukkuri.Simulation.BodyPart.Mouth,false)<=0)return false;
+    float previous=1;
+    for(int n=0;n<20;n++)
+    {
+        life.WipeSurface(Yukkuri.Simulation.BodyPart.Side,1,true);
+        float opacity=ActorSurfaceMarks.Opacity(life,Yukkuri.Simulation.BodyPart.Side,true);
+        if(opacity>previous)return false;previous=opacity;
+    }
+    return previous==0&&ActorSurfaceMarks.Opacity(life,Yukkuri.Simulation.BodyPart.Mouth,false)>0;
+});
+Check("landing absorbs impact and settles without inversion or runaway motion",()=>
+{
+    var initial=ActorReactionMotion.Sample("land",0)!.Value;
+    var last=ActorReactionMotion.Sample("land",2.2f)!.Value;
+    if(initial.Scale.Y>=1||initial.Scale.X<=1||System.Numerics.Vector3.Distance(last.Scale,System.Numerics.Vector3.One)>.001f)return false;
+    foreach(string pose in new[]{"greet","comfort","poke","land","settle","ball-bump","help","thirsty","careful-step","nursing","confused","inspect","blocked","held","box","frame","hanging","accessory-watch","rest-invite"})
+    for(int n=0;n<=440;n++)
+    {
+        var m=ActorReactionMotion.Sample(pose,n/100f)!.Value;
+        if(m.Scale.X<.8f||m.Scale.Y<.8f||m.Scale.Z<.8f||m.Scale.X*m.Scale.Y*m.Scale.Z<.9f||m.Scale.X*m.Scale.Y*m.Scale.Z>1.1f)return false;
+        if(m.Offset.Length()>.05f||m.RotationDegrees.Length()>16)return false;
+    }
+    return true;
+});
+Check("repeated impacts replay their response while speech during a held motion does not restart its cycle",()=>
+{
+    var clock=new ActorPoseClock();clock.Advance("flick",1,.1f,false);
+    for(int n=0;n<10;n++)clock.Advance("flick",1,.1f,false);
+    if(clock.Age<.9f)return false;
+    clock.Advance("flick",2,.1f,false);if(clock.Age!=0)return false;
+    clock.Advance("roll",3,.1f,false);clock.Advance("roll",3,.1f,false);
+    clock.Advance("roll",4,.1f,false);if(clock.Age<.19f)return false;
+    float age=clock.Age;clock.Advance("roll",4,1,true);
+    return clock.Age==age;
+});
+Check("fringe tips close without burying the visible end in the skin",()=>
+{
+    for(int strand=0;strand<5;strand++)
+    {
+        var shape=ActorHairSurface.Fringe(strand);
+        var tip=ActorHairSurface.Point(shape,1,0);
+        for(int n=0;n<64;n++)
+            if(System.Numerics.Vector3.Distance(tip,ActorHairSurface.Point(shape,1,n/64f))>1e-6f)return false;
+        for(int row=80;row<=100;row++)for(int n=0;n<64;n++)
+        {
+            var p=ActorHairSurface.Point(shape,row/100f,n/64f);
+            float gap=p.Z-ActorFaceSurface.Height(p.X,p.Y);
+            if(gap<.01f){Console.WriteLine($"Fringe {strand} u={row/100f}: skin clearance {gap:F5}");return false;}
+        }
+    }
+    return true;
+});
+Check("close-up orbit reaches front side and back while staying above the floor at every supported height",()=>
+{
+    foreach(float height in new[]{.62f,.8f,1.1f,2.1f,3.62f})for(int yaw=-180;yaw<=180;yaw+=10)for(int pitch=-25;pitch<=65;pitch+=5)
+    {
+        var offset=InteractionCameraOrbit.Offset(yaw,pitch,height);
+        if(!float.IsFinite(offset.Length())||height+offset.Y<.1499f||offset.Length()<2.4f)return false;
+    }
+    return InteractionCameraOrbit.Offset(0,14.5f,.62f).Z>5&&InteractionCameraOrbit.Offset(180,14.5f,.62f).Z< -5&&
+        InteractionCameraOrbit.Size(3.5f,.65f)<3.5f&&InteractionCameraOrbit.Size(3.5f,1.6f)>3.5f;
+});
+Check("touch motion measures the contacted surface and cannot be supplied by idle animation or a gap between regions",()=>
+{
+    var tracker=new ContactStrokeTracker();var cheek=Yukkuri.Simulation.BodyPart.Cheek;
+    tracker.Sample("a",cheek,new(100,100),new(0,0,.5f),1);
+    if(tracker.Sample("a",cheek,new(100,100),new(.1f,.1f,.5f),1).Distance!=0)return false;
+    var stroke=tracker.Sample("a",cheek,new(102,100),new(.12f,.1f,.5f),1);
+    if(MathF.Abs(stroke.Distance-.02f)>.00001f||stroke.Direction.X<=0)return false;
+    if(tracker.Sample("a",Yukkuri.Simulation.BodyPart.Head,new(105,100),new(0,.4f,.3f),1).Distance!=0)return false;
+    tracker.Reset();if(tracker.Sample("a",cheek,new(107,100),new(.12f,0,.5f),1).Distance!=0)return false;
+    return tracker.Sample("b",cheek,new(109,100),new(-.3f,0,.5f),1).Distance==0;
+});
+Check("a camera looking above the horizon cannot place objects behind its ray",()=>
+{
+    var origin=new System.Numerics.Vector3(0,1,5);
+    if(InteractionCameraOrbit.TryPlaneHit(origin,new(0,.1f,-1),0,out _))return false;
+    if(InteractionCameraOrbit.TryPlaneHit(origin,new(1,0,0),0,out _))return false;
+    if(!InteractionCameraOrbit.TryPlaneHit(origin,new(0,-.2f,-1),0,out var hit)||MathF.Abs(hit.Y)>.00001f)return false;
+    var drag=InteractionCameraOrbit.ViewMotion(System.Numerics.Vector3.UnitX,System.Numerics.Vector3.UnitY,new(20,0),3.5f,700);
+    return MathF.Abs(drag.X-.1f)<.00001f&&drag.Y==0&&drag.Z==0;
+});
+Check("hanging support follows the outer skin and hair rather than ending behind an unsupported body",()=>
+{
+    float DistanceToEllipsoid(System.Numerics.Vector3 point,System.Numerics.Vector3 center,System.Numerics.Vector3 radii)
+    {
+        var p=point-center;var r2=radii*radii;
+        float Metric(float lambda){var q=radii*p/(r2+new System.Numerics.Vector3(lambda));return q.LengthSquared();}
+        if(Metric(0)<=1)return 0;
+        float lo=0,hi=1;while(Metric(hi)>1)hi*=2;
+        for(int n=0;n<40;n++){float mid=(lo+hi)*.5f;if(Metric(mid)>1)lo=mid;else hi=mid;}
+        return System.Numerics.Vector3.Distance(p,r2*p/(r2+new System.Numerics.Vector3(hi)));
+    }
+    bool Clear(System.Numerics.Vector3 p,float radius)
+    {
+        float skin=DistanceToEllipsoid(p,new(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ),new(ActorFaceSurface.RadiusX,ActorFaceSurface.RadiusY,ActorFaceSurface.RadiusZ));
+        float hair=DistanceToEllipsoid(p,ActorSurfaceMarks.HairCenter,ActorSurfaceMarks.HairRadii);
+        if(skin<radius||hair<radius){Console.WriteLine($"Support at {p}: skin {skin:F5}, hair {hair:F5}, radius {radius}");return false;}
+        return true;
+    }
+    for(int n=0;n<=200;n++)
+    {
+        float u=n/200f;
+        if(!Clear(ActorHarnessSurface.Belt(u*MathF.Tau),.01f)||!Clear(ActorHarnessSurface.Yoke(u),.012f))return false;
+        foreach(float side in new[]{-1f,1f})if(!Clear(ActorHarnessSurface.Strap(side,u),.012f))return false;
+    }
+    foreach(float size in new[]{.73f,1,1.03f})
+    {
+        float top=2.31f*size,bottom=1.55f*size+(.46f+ActorHarnessSurface.Anchor.Y)*size;
+        if(top-bottom<.07f*size)return false;
+    }
+    return true;
+});
+Check("the former stretched hat could enter the former box roof",()=>
+{
+    var deform=ActorTouchShape.Squeeze(1);
+    var old=System.Numerics.Vector3.Transform(ActorAccessorySurface.HatCone(1,0),ActorAccessoryPlacement.Rotation(ActorAccessoryPlacement.HatRotation))+ActorAccessoryPlacement.HatOrigin;
+    old*=deform;old.Y+=.08f+(deform.Y-1)*.46f;
+    return old.Y>1.26f-.05f;
+});
+Check("hat shape remains rigid and fits the box through pressure, damaged tilt and small reactions",()=>
+{
+    float side=Yukkuri.Simulation.InteractionFixtureGeometry.BoxSideX-.05f;
+    float back=Yukkuri.Simulation.InteractionFixtureGeometry.BoxBackZ+.04f;
+    float front=Yukkuri.Simulation.InteractionFixtureGeometry.BoxFrontZ-.0175f;
+    float roof=Yukkuri.Simulation.InteractionFixtureGeometry.BoxWallTop;
+    foreach(float force in new[]{0,.25f,.65f,1})foreach(var deform in new[]{ActorTouchShape.Press(force),ActorTouchShape.Squeeze(force)})
+    foreach(float damage in new[]{0,12f})foreach(float yaw in new[]{-15f,0,15f})foreach(float roll in new[]{-3f,0,3f})foreach(float pitch in new[]{-5f,0,5f})
+    {
+        var rotation=ActorAccessoryPlacement.Rotation(new(pitch,yaw,roll));
+        var center=System.Numerics.Vector3.Transform(new System.Numerics.Vector3(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ)*deform,rotation);
+        var radii=new System.Numerics.Vector3(ActorFaceSurface.RadiusX,ActorFaceSurface.RadiusY,ActorFaceSurface.RadiusZ)*deform;
+        float extent=MathF.Sqrt(MathF.Pow(rotation.M12*radii.X,2)+MathF.Pow(rotation.M22*radii.Y,2)+MathF.Pow(rotation.M32*radii.Z,2));
+        float lift=-.38f+.025f-(center.Y-extent);
+        for(int row=0;row<=20;row++)for(int n=0;n<48;n++)foreach(bool brim in new[]{true,false})
+        {
+            var local=brim?ActorAccessorySurface.HatBrim(row/20f,n*MathF.Tau/48):ActorAccessorySurface.HatCone(row/20f,n*MathF.Tau/48);
+            var p=System.Numerics.Vector3.Transform(ActorAccessoryPlacement.Point(local,true,deform,damage),rotation);p.Y+=lift;
+            if(MathF.Abs(p.X)>side-.005f||p.Z<back+.005f||p.Z>front-.005f||p.Y>roof-.005f)
+            {Console.WriteLine($"Hat out of box: {p}, deform {deform}, damage {damage}, rotation {pitch}/{yaw}/{roll}");return false;}
+        }
+    }
+    return true;
+});
+Check("carry support tracks the deformed and turned underside instead of using the idle body's height",()=>
+{
+    foreach(float ageScale in new[]{.73f,1,1.03f})foreach(var deform in new[]{System.Numerics.Vector3.One,ActorTouchShape.Squeeze(1),ActorTouchShape.Press(1)})
+    foreach(float angle in new[]{-.15f,0,.15f})
+    {
+        var scale=deform*ageScale;var rotation=System.Numerics.Quaternion.CreateFromAxisAngle(System.Numerics.Vector3.UnitZ,angle);
+        float bottom=ActorBodyBounds.LowestSkinY(scale,rotation,System.Numerics.Vector3.Zero);
+        float sampleMin=float.PositiveInfinity;
+        for(int latitude=0;latitude<=60;latitude++)for(int n=0;n<80;n++)
+        {
+            float a=latitude*MathF.PI/60,b=n*MathF.Tau/80;
+            var p=new System.Numerics.Vector3(ActorFaceSurface.RadiusX*MathF.Sin(a)*MathF.Cos(b),ActorFaceSurface.CenterY+ActorFaceSurface.RadiusY*MathF.Cos(a),ActorFaceSurface.CenterZ+ActorFaceSurface.RadiusZ*MathF.Sin(a)*MathF.Sin(b));
+            sampleMin=MathF.Min(sampleMin,System.Numerics.Vector3.Transform(p*scale,rotation).Y);
+        }
+        if(bottom>sampleMin+.00001f||sampleMin-bottom>.001f)return false;
+        float palmTop=(bottom/ageScale+.462f-.465f)*ageScale;
+        if(palmTop>=bottom||bottom-palmTop>.004f)return false;
+    }
+    return true;
+});
+Check("left and right visual patches use the corresponding saved surface state",()=>
+{
+    var life=new Yukkuri.Simulation.InteractionLife{Dirt=18,Wetness=0};
+    life.WipeSurface(Yukkuri.Simulation.BodyPart.Cheek,30,false,Yukkuri.Simulation.SurfaceSide.Left);
+    var cheeks=ActorSurfaceMarks.Dirt.Where(m=>m.Part==Yukkuri.Simulation.BodyPart.Cheek).ToArray();
+    return cheeks.Any(m=>m.Side==Yukkuri.Simulation.SurfaceSide.Left)&&cheeks.Any(m=>m.Side==Yukkuri.Simulation.SurfaceSide.Right)&&
+        cheeks.All(m=>m.Side==Yukkuri.Simulation.SurfaceSide.Left?ActorSurfaceMarks.Opacity(life,m.Part,false,m.Side)==0:ActorSurfaceMarks.Opacity(life,m.Part,false,m.Side)>.5f);
+});
+Check("towel thickness closes continuously and the drinking water stays inside the open cup",()=>
+{
+    for(int row=0;row<=10;row++)for(int n=0;n<=128;n++)
+    {
+        var top=InteractionToolSurface.Cloth(row/10f,n*MathF.Tau/128);var bottom=InteractionToolSurface.Cloth(row/10f,n*MathF.Tau/128,true);
+        if(MathF.Abs(top.Y-bottom.Y-.022f)>.00001f||MathF.Abs(top.X)>.141f||MathF.Abs(top.Z)>.111f)return false;
+    }
+    if(System.Numerics.Vector3.Distance(InteractionToolSurface.Cloth(1,0),InteractionToolSurface.Cloth(1,MathF.Tau))>.0001f)return false;
+    float inner=.064f+.04f*(InteractionToolSurface.WaterHeight+.057f)/.132f;
+    if(InteractionToolSurface.WaterRadius>inner||InteractionToolSurface.WaterHeight+.001f>=InteractionToolSurface.CupTop)return false;
+    for(int sip=0;sip<=20;sip++)
+    {
+        float height=InteractionToolSurface.SipWaterHeight(sip/20f),radius=InteractionToolSurface.SipWaterRadius(height);
+        float wall=.064f+.04f*(height+.057f)/.132f;
+        if(radius>=wall||height<-.05f||height+radius*MathF.Sin(5*MathF.PI/180)>.070f)return false;
+    }
+    foreach(float u in new[]{0f,1f})
+    {
+        var p=InteractionToolSurface.CupHandle(u);float wall=.08f+.04f*(p.Y+.075f)/.15f;
+        if(MathF.Abs(p.X-wall)>.00001f)return false;
+    }
+    return true;
+});
+Check("a supine hat extends beyond the former standing-only footprint",()=>
+{
+    float maximum=0;
+    var turn=ActorAccessoryPlacement.Rotation(new(-105,0,0));
+    for(int r=0;r<=30;r++)for(int n=0;n<96;n++)foreach(bool brim in new[]{false,true})
+    {
+        var local=brim?ActorAccessorySurface.HatBrim(r/30f,n*MathF.Tau/96):ActorAccessorySurface.HatCone(r/30f,n*MathF.Tau/96);
+        var p=System.Numerics.Vector3.Transform(ActorAccessoryPlacement.Point(local,true,System.Numerics.Vector3.One),turn)+new System.Numerics.Vector3(0,.04f,-.08f);
+        maximum=MathF.Max(maximum,MathF.Sqrt(p.X*p.X+p.Z*p.Z));
+    }
+    Console.WriteLine($"Supine hat maximum sampled horizontal radius: {maximum}");
+    return maximum>.98f;
+});
+Check("former absolute carry projection shifts the oil when only height changes",()=>
+{
+    var origin=new System.Numerics.Vector3(0,2,5);
+    var direction=System.Numerics.Vector3.Normalize(new System.Numerics.Vector3(0,-.25f,-1));
+    return InteractionCameraOrbit.TryPlaneHit(origin,direction,.8f,out var low)&&InteractionCameraOrbit.TryPlaneHit(origin,direction,.95f,out var high)&&MathF.Abs(high.Z-low.Z)>.5f;
+});
+Check("standing and turned placement envelopes contain the hat through deformation and its turning path",()=>
+{
+    float standing=0,turned=0;
+    foreach(var deform in new[]{System.Numerics.Vector3.One,ActorTouchShape.Press(1),ActorTouchShape.Squeeze(1)})foreach(float damage in new[]{0f,12})for(int step=0;step<=15;step++)
+    {
+        float progress=step/15f;
+        var turn=ActorAccessoryPlacement.Rotation(new(Yukkuri.Simulation.InteractionFixtureGeometry.SupineAngle*progress,0,0));
+        for(int row=0;row<=20;row++)for(int n=0;n<64;n++)foreach(bool brim in new[]{false,true})
+        {
+            var local=brim?ActorAccessorySurface.HatBrim(row/20f,n*MathF.Tau/64):ActorAccessorySurface.HatCone(row/20f,n*MathF.Tau/64);
+            var p=System.Numerics.Vector3.Transform(ActorAccessoryPlacement.Point(local,true,deform,damage),turn)+new System.Numerics.Vector3(0,0,Yukkuri.Simulation.InteractionFixtureGeometry.SupineOffsetZ*progress);
+            float radius=MathF.Sqrt(p.X*p.X+p.Z*p.Z);
+            if(step==0)standing=MathF.Max(standing,radius);turned=MathF.Max(turned,radius);
+        }
+    }
+    Console.WriteLine($"Placement hat envelopes: standing {standing}, turning {turned}");
+    return standing<Yukkuri.Simulation.InteractionFixtureGeometry.StandingFootprint-.01f&&turned<Yukkuri.Simulation.InteractionFixtureGeometry.SupineFootprint-.01f;
+});
+Check("relative support drag stays still under reframing and remains bounded at shallow and upward angles",()=>
+{
+    foreach(float size in new[]{2.8f,4.3f,12.3f})foreach(float yaw in new[]{-180f,-90,0,45,90,180})foreach(float pitch in new[]{-25f,0,1,14.5f,45,65})
+    {
+        var offset=InteractionCameraOrbit.Offset(yaw,pitch,3.62f);
+        var forward=-System.Numerics.Vector3.Normalize(offset);
+        var right=System.Numerics.Vector3.Normalize(System.Numerics.Vector3.Cross(forward,System.Numerics.Vector3.UnitY));
+        if(InteractionCameraOrbit.GroundDrag(right,forward,System.Numerics.Vector2.Zero,size,900)!=System.Numerics.Vector3.Zero)return false;
+        var drag=InteractionCameraOrbit.GroundDrag(right,forward,new(30,-30),size,900);
+        var ahead=System.Numerics.Vector3.Normalize(new System.Numerics.Vector3(forward.X,0,forward.Z));
+        if(!float.IsFinite(drag.Length())||drag.Y!=0||System.Numerics.Vector3.Dot(drag,ahead)<=0||System.Numerics.Vector3.Dot(drag,right)<=0||drag.Length()>size*30/900*4.13f)return false;
+        var one=InteractionCameraOrbit.GroundDrag(right,forward,new(1,-1),size,900);
+        if(System.Numerics.Vector3.Distance(one*30,drag)>.00001f)return false;
+    }
+    return true;
+});
+Check("support drag matches orthographic ground projection at ordinary downward viewing angles",()=>
+{
+    foreach(float pitch in new[]{20f,35,65})foreach(float yaw in new[]{-90f,0,45,180})
+    {
+        var offset=InteractionCameraOrbit.Offset(yaw,pitch,1);
+        var forward=-System.Numerics.Vector3.Normalize(offset);
+        var right=System.Numerics.Vector3.Normalize(System.Numerics.Vector3.Cross(forward,System.Numerics.Vector3.UnitY));
+        var up=System.Numerics.Vector3.Cross(right,forward);
+        var view=InteractionCameraOrbit.ViewMotion(right,up,new(24,-32),4.3f,900);
+        var origin=offset+new System.Numerics.Vector3(0,1,0);
+        if(!InteractionCameraOrbit.TryPlaneHit(origin,forward,.8f,out var before)||!InteractionCameraOrbit.TryPlaneHit(origin+view,forward,.8f,out var after))return false;
+        var drag=InteractionCameraOrbit.GroundDrag(right,forward,new(24,-32),4.3f,900);
+        if(System.Numerics.Vector3.Distance(drag,after-before)>.00001f)return false;
+    }
+    return true;
+});
+Check("eye color layers and highlights remain inside the actual face-conforming lid at every supported expression",()=>
+{
+    foreach(float openness in new[]{.08f,.1f,.12f,.2f,.42f,.65f,1})foreach(var curve in Enum.GetValues<EyeCurve>())
+    foreach(var layer in Enum.GetValues<EyeLayer>())foreach(float side in new[]{-1f,1f})
+    {
+        if(!ActorEyeSurface.Visible(layer,openness))continue;
+        for(int ring=0;ring<=5;ring++)for(int n=0;n<48;n++)
+        {
+            var normalized=ActorEyeSurface.Coordinate(layer,ring/5f,n*MathF.Tau/48);
+            if(normalized.LengthSquared()>1.00001f)return false;
+            var p=ActorEyeSurface.Point(side,openness,curve,layer,ring/5f,n*MathF.Tau/48);
+            if(!float.IsFinite(p.Z)||MathF.Abs(p.Z-ActorFaceSurface.Height(p.X,p.Y)-ActorEyeSurface.Offset(layer))>.00001f)return false;
+            if(layer!=EyeLayer.Outline&&ActorEyeSurface.Offset(layer)<=ActorEyeSurface.Offset(EyeLayer.Outline))return false;
+        }
+    }
+    return true;
+});
+Check("relaxed joy and sleep eyelids have distinct readable curves without moving the eye corners",()=>
+{
+    var relaxed=ActorEyeSurface.Point(1,.12f,EyeCurve.Relaxed,EyeLayer.Outline,0,0);
+    var joy=ActorEyeSurface.Point(1,.20f,EyeCurve.Joy,EyeLayer.Outline,0,0);
+    var sleep=ActorEyeSurface.Point(1,.12f,EyeCurve.Sleep,EyeLayer.Outline,0,0);
+    if(!(joy.Y>relaxed.Y+.015f&&relaxed.Y>sleep.Y+.03f))return false;
+    foreach(float angle in new[]{0,MathF.PI})
+    {
+        var a=ActorEyeSurface.Point(1,.12f,EyeCurve.Relaxed,EyeLayer.Outline,1,angle);
+        var b=ActorEyeSurface.Point(1,.12f,EyeCurve.Sleep,EyeLayer.Outline,1,angle);
+        if(System.Numerics.Vector3.Distance(a,b)>.00001f)return false;
+    }
+    return true;
+});
+Check("the lined cradle closes underneath and stays outside the skin and hair envelope",()=>
+{
+    var skinCenter=new System.Numerics.Vector3(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ);
+    var skinRadii=new System.Numerics.Vector3(ActorFaceSurface.RadiusX,ActorFaceSurface.RadiusY,ActorFaceSurface.RadiusZ);
+    foreach(bool inner in new[]{false,true})for(int row=0;row<=40;row++)for(int n=0;n<=128;n++)
+    {
+        var point=ActorCradleSurface.Point(row/40f,n*MathF.Tau/128,inner);
+        if(!float.IsFinite(point.Length())||(point-skinCenter)/skinRadii is var relative&&relative.LengthSquared()<1)
+        {Console.WriteLine($"Cradle enters skin at {point}");return false;}
+        if(((point-ActorSurfaceMarks.HairCenter)/ActorSurfaceMarks.HairRadii).LengthSquared()<1)
+        {Console.WriteLine($"Cradle enters hair at {point}");return false;}
+        if(row==0&&System.Numerics.Vector3.Distance(point,ActorCradleSurface.Point(0,0,inner))>.00001f)return false;
+    }
+    return true;
+});
+Check("wrapped support stays above the floor while rocking at every body size",()=>
+{
+    foreach(float size in new[]{.73f,1,1.03f})foreach(float angle in new[]{-.18f,-.05f,0,.05f,.18f})foreach(var shape in new[]{System.Numerics.Vector3.One,ActorTouchShape.Press(.5f)})
+    {
+        var scale=shape*size;var rotation=System.Numerics.Quaternion.CreateFromAxisAngle(System.Numerics.Vector3.UnitZ,angle);
+        float min=ActorCradleSurface.LowestY(scale,rotation,System.Numerics.Vector3.Zero);
+        float lift=MathF.Max(0,.003f-.46f*size-min);
+        for(int row=0;row<=ActorCradleSurface.Rows;row++)for(int n=0;n<ActorCradleSurface.Sides;n++)
+        {
+            var p=System.Numerics.Vector3.Transform(ActorCradleSurface.Point(row/(float)ActorCradleSurface.Rows,n*MathF.Tau/ActorCradleSurface.Sides)*scale,rotation);
+            if(p.Y+.46f*size+lift<0)return false;
+        }
+    }
+    return true;
+});
+Check("the tufted cushion is closed and its support height matches its authored top surface",()=>
+{
+    for(int row=0;row<=64;row++)for(int n=0;n<=192;n++)
+    {
+        var p=ActorCushionSurface.Point(row/64f,n/192f);
+        if(!float.IsFinite(p.Length())||p.Y<.009f||p.Y>.231f||MathF.Abs(p.X)>.9001f||MathF.Abs(p.Z)>.6751f)return false;
+        if(row>=32&&MathF.Abs(p.Y-ActorCushionSurface.TopHeight(p.X,p.Z))>.00001f)return false;
+        if(row is 0 or 64&&System.Numerics.Vector3.Distance(p,ActorCushionSurface.Point(row/64f,0))>.00001f)return false;
+    }
+    return ActorCushionSurface.TopHeight(1,0)==0&&ActorCushionSurface.TopHeight(0,.8f)==0;
+});
+Check("cushion support lifts the posed body clear instead of intersecting it during rest or a turn",()=>
+{
+    foreach(float size in new[]{.73f,1.03f})foreach(var position in new[]{new System.Numerics.Vector3(0,0,0),new(.55f,0,.25f),new(.95f,0,0)})foreach(float pitch in new[]{0f,-105})
+    {
+        var scale=new System.Numerics.Vector3(1.07f,.88f,1.04f)*size;
+        var rotation=System.Numerics.Quaternion.CreateFromAxisAngle(System.Numerics.Vector3.UnitX,pitch*MathF.PI/180);
+        var origin=position+System.Numerics.Vector3.UnitY*(.46f*size);
+        origin.Y+=ActorCushionSurface.SkinLift(System.Numerics.Vector3.Zero,origin,scale,rotation);
+        var inverse=System.Numerics.Quaternion.Inverse(rotation);
+        for(int row=32;row<=64;row++)for(int n=0;n<192;n++)
+        {
+            var p=ActorCushionSurface.Point(row/64f,n/192f);
+            var local=System.Numerics.Vector3.Transform(p-origin,inverse)/scale-new System.Numerics.Vector3(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ);
+            local/=new System.Numerics.Vector3(ActorFaceSurface.RadiusX,ActorFaceSurface.RadiusY,ActorFaceSurface.RadiusZ);
+            if(local.LengthSquared()<.99999f){Console.WriteLine($"Cushion enters posed skin at {p}; origin {origin}, pitch {pitch}");return false;}
+        }
+    }
+    return true;
+});
+Check("cushion support does not allocate managed objects during repeated body and cradle calculations",()=>
+{
+    var zero=System.Numerics.Vector3.Zero;var origin=new System.Numerics.Vector3(0,.46f,0);var scale=System.Numerics.Vector3.One;var rotation=System.Numerics.Quaternion.Identity;
+    ActorCushionSurface.SkinLift(zero,origin,scale,rotation);ActorCushionSurface.CradleLift(zero,origin,scale,rotation);
+    long before=GC.GetAllocatedBytesForCurrentThread();
+    for(int n=0;n<20;n++){ActorCushionSurface.SkinLift(zero,origin,scale,rotation);ActorCushionSurface.CradleLift(zero,origin,scale,rotation);}
+    return GC.GetAllocatedBytesForCurrentThread()==before;
+});
+Check("the soft wrapping also clears the cushion instead of hiding its lower cloth inside it",()=>
+{
+    foreach(float size in new[]{.73f,1.03f})foreach(float angle in new[]{-.17f,0,.17f})
+    {
+        var scale=System.Numerics.Vector3.One*size;var rotation=System.Numerics.Quaternion.CreateFromAxisAngle(System.Numerics.Vector3.UnitZ,angle);
+        var origin=new System.Numerics.Vector3(.18f,.46f*size,.05f);
+        origin.Y+=ActorCushionSurface.CradleLift(System.Numerics.Vector3.Zero,origin,scale,rotation);
+        for(int row=0;row<=40;row++)for(int n=0;n<192;n++)
+        {
+            var p=origin+System.Numerics.Vector3.Transform(ActorCradleSurface.Point(row/40f,n*MathF.Tau/192)*scale,rotation);
+            float height=ActorCushionSurface.TopHeight(p.X,p.Z);
+            if(height>0&&p.Y<height){Console.WriteLine($"Cradle intersects cushion at {p}, surface {height}");return false;}
+        }
+    }
+    return true;
+});
+Check("a turned hat and its hair cap clear the cushion as well as the skin",()=>
+{
+    foreach(float size in new[]{.73f,1.03f})foreach(float damage in new[]{0f,12})foreach(float pitch in new[]{-65f,-105})
+    {
+        var scale=ActorTouchShape.Squeeze(.7f)*size;
+        var rotation=System.Numerics.Quaternion.CreateFromAxisAngle(System.Numerics.Vector3.UnitX,pitch*MathF.PI/180);
+        var origin=new System.Numerics.Vector3(.15f,.46f*size,.05f);
+        var transform=ActorAccessorySupport.Transform(true,origin,scale,size,rotation,damage);
+        float lift=MathF.Max(ActorCushionSurface.SkinLift(System.Numerics.Vector3.Zero,origin,scale,rotation),ActorCushionSurface.HairLift(System.Numerics.Vector3.Zero,origin,scale,rotation));
+        lift=MathF.Max(lift,ActorCushionSurface.PointLift(ActorAccessorySupport.Points(true),transform,System.Numerics.Vector3.Zero,.012f*size));
+        origin.Y+=lift;transform=ActorAccessorySupport.Transform(true,origin,scale,size,rotation,damage);
+        for(int row=0;row<=48;row++)for(int n=0;n<128;n++)foreach(bool brim in new[]{true,false})
+        {
+            var local=brim?ActorAccessorySurface.HatBrimUnderside(row/48f,n*MathF.Tau/128):ActorAccessorySurface.HatCone(row/48f,n*MathF.Tau/128);
+            var p=System.Numerics.Vector3.Transform(local,transform);float top=ActorCushionSurface.TopHeight(p.X,p.Z);
+            if(top>0&&p.Y<top){Console.WriteLine($"Hat enters cushion at {p}; top {top}");return false;}
+        }
+        var inverse=System.Numerics.Quaternion.Inverse(rotation);
+        for(int row=16;row<=32;row++)for(int n=0;n<96;n++)
+        {
+            var p=ActorCushionSurface.Point(row/32f,n/96f);
+            var local=(System.Numerics.Vector3.Transform(p-origin,inverse)/scale-ActorSurfaceMarks.HairCenter)/ActorSurfaceMarks.HairRadii;
+            if(local.LengthSquared()<.99999f)return false;
+        }
+    }
+    return true;
+});
+Check("a fingertip contact leaves the palm above the surface instead of burying its larger heel",()=>
+{
+    float oldPalmClearance=-InteractionToolSurface.FingerPad.Y+.003f-.06f;
+    if(oldPalmClearance>=0)return false;
+    var rotation=System.Numerics.Matrix4x4.CreateRotationX(InteractionToolSurface.FingerTiltDegrees*MathF.PI/180);
+    float originY=-System.Numerics.Vector3.Transform(InteractionToolSurface.FingerPad,rotation).Y+.003f;
+    foreach(var piece in new[]{(center:System.Numerics.Vector3.Zero,radii:new System.Numerics.Vector3(.085f,.06f,.10f)),(center:new System.Numerics.Vector3(0,0,-.12f),radii:new System.Numerics.Vector3(.035f,.04f,.10f))})
+    {
+        float extent=MathF.Sqrt(MathF.Pow(rotation.M12*piece.radii.X,2)+MathF.Pow(rotation.M22*piece.radii.Y,2)+MathF.Pow(rotation.M32*piece.radii.Z,2));
+        float bottom=originY+System.Numerics.Vector3.Transform(piece.center,rotation).Y-extent;
+        if(bottom<0){Console.WriteLine($"Hand plane penetration: {bottom}");return false;}
+    }
+    return true;
+});
+Check("the central ribbon knot is readable above the hair instead of burying its front surface",()=>
+{
+    int oldHidden=0;float minimum=float.PositiveInfinity;
+    foreach(var deform in new[]{System.Numerics.Vector3.One,ActorTouchShape.Press(1),ActorTouchShape.Squeeze(1)})
+    for(int row=0;row<=24;row++)for(int n=0;n<=48;n++)
+    {
+        float latitude=row*MathF.PI/24,angle=n*MathF.PI/48;
+        var local=new System.Numerics.Vector3(.08f*MathF.Sin(latitude)*MathF.Cos(angle),.07f*MathF.Cos(latitude),.045f+.065f*MathF.Sin(latitude)*MathF.Sin(angle));
+        var p=ActorAccessoryPlacement.Point(local,false,deform);
+        float q=((p-ActorSurfaceMarks.HairCenter*deform)/(ActorSurfaceMarks.HairRadii*deform)).LengthSquared();minimum=MathF.Min(minimum,q);
+        var old=System.Numerics.Vector3.Transform(local,ActorAccessoryPlacement.Rotation(ActorAccessoryPlacement.BowRotation))+new System.Numerics.Vector3(0,.50f,.10f)*deform;
+        if(((old-ActorSurfaceMarks.HairCenter*deform)/(ActorSurfaceMarks.HairRadii*deform)).LengthSquared()<1)oldHidden++;
+    }
+    Console.WriteLine($"Bow knot: former hidden front samples {oldHidden}, current minimum hair-normalized radius squared {minimum}");
+    return oldHidden>0&&minimum>1;
+});
+Check("dressing tape and gauze follow the selected skin or hair with a closed taper at each edge",()=>
+{
+    foreach(var site in ActorSurfaceMarks.Dressing)foreach(bool pad in new[]{false,true})
+    {
+        var center=site.OnHair?ActorSurfaceMarks.HairCenter:new System.Numerics.Vector3(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ);
+        var radii=site.OnHair?ActorSurfaceMarks.HairRadii:new System.Numerics.Vector3(ActorFaceSurface.RadiusX,ActorFaceSurface.RadiusY,ActorFaceSurface.RadiusZ);
+        for(int row=0;row<=20;row++)for(int n=0;n<96;n++)
+        {
+            var p=ActorDressingSurface.Point(site,row/20f,n*MathF.Tau/96,pad);
+            if(!float.IsFinite(p.Length())||((p-center)/radii).LengthSquared()<=1)return false;
+            if(row==0&&System.Numerics.Vector3.Distance(p,ActorDressingSurface.Point(site,0,0,pad))>.000001)return false;
+        }
+        var outer=ActorDressingSurface.Point(site,1,0,pad);
+        var sameSite=pad?site with {Size=site.Size*new System.Numerics.Vector2(.46f,.76f)}:site;
+        var under=ActorSurfaceMarks.Project(sameSite,System.Numerics.Vector2.UnitX,pad?.019f:.007f);
+        if(System.Numerics.Vector3.Distance(outer,under)>.000001)return false;
+    }
+    return true;
+});
+Check("visible care dressings clear the cushion under a resting or rolled body",()=>
+{
+    int oldPenetrations=0;
+    var life=new Yukkuri.Simulation.InteractionLife();
+    foreach(var site in ActorSurfaceMarks.Dressing)life.Dress(site.Part,site.Side);
+    foreach(float size in new[]{.73f,1.03f})foreach(float pitch in new[]{0f,-105,125})foreach(float roll in new[]{0f,70})
+    {
+        var scale=new System.Numerics.Vector3(1.07f,.88f,1.04f)*size;
+        var rotation=System.Numerics.Quaternion.CreateFromYawPitchRoll(0,pitch*MathF.PI/180,roll*MathF.PI/180);
+        var origin=new System.Numerics.Vector3(.1f,.46f*size,.05f);
+        float skin=MathF.Max(ActorCushionSurface.SkinLift(System.Numerics.Vector3.Zero,origin,scale,rotation),ActorCushionSurface.HairLift(System.Numerics.Vector3.Zero,origin,scale,rotation));
+        float withDressing=MathF.Max(skin,ActorDressingSurface.CushionLift(life,System.Numerics.Vector3.Zero,origin,scale,rotation));
+        foreach(var site in ActorSurfaceMarks.Dressing)for(int row=0;row<=20;row++)for(int n=0;n<96;n++)foreach(bool pad in new[]{false,true})
+        {
+            var p=origin+System.Numerics.Vector3.Transform(ActorDressingSurface.Point(site,row/20f,n*MathF.Tau/96,pad)*scale,rotation);
+            float top=ActorCushionSurface.TopHeight(p.X,p.Z);
+            if(top<=0)continue;if(p.Y+skin<top)oldPenetrations++;
+            if(p.Y+withDressing<top-.00001f){Console.WriteLine($"Dressing inside cushion: {site.Part}, {site.Side}, {p.Y+withDressing-top}");return false;}
+        }
+    }
+    Console.WriteLine($"Dressing samples that skin-only support missed: {oldPenetrations}");return oldPenetrations>0;
+});
+Check("tap response moves away from the touched surface and mirrors with the contact direction",()=>
+{
+    foreach(var normal in new[]{new System.Numerics.Vector3(1,0,0),new(-1,0,0),new(0,0,1),new(0,0,-1)})
+    {
+        var direction=InteractionCameraOrbit.ContactImpulse(normal,new(0,-.3f,-1));
+        if(System.Numerics.Vector2.Dot(direction,new(normal.X,normal.Z))>-.999f)return false;
+        var a=ActorReactionMotion.Sample("poke",0,direction)!.Value;
+        var b=ActorReactionMotion.Sample("poke",0,-direction)!.Value;
+        if(System.Numerics.Vector3.Distance(a.Offset,-b.Offset)>.000001||System.Numerics.Vector3.Distance(a.RotationDegrees,-b.RotationDegrees)>.000001)return false;
+        if(a.Offset.X*direction.X+a.Offset.Z*direction.Y<=0)return false;
+    }
+    var vertical=InteractionCameraOrbit.ContactImpulse(System.Numerics.Vector3.UnitY,new(-1,-.3f,0));
+    return vertical==new System.Numerics.Vector2(-1,0)&&float.IsFinite(InteractionCameraOrbit.ContactImpulse(System.Numerics.Vector3.UnitY,-System.Numerics.Vector3.UnitY).Length());
+});
+Check("tear tracks conform to the cheeks and remain below the eyes",()=>
+{
+    foreach(float side in new[]{-1f,1f})foreach(bool glint in new[]{false,true})for(int row=0;row<=24;row++)for(int n=0;n<96;n++)
+    {
+        var p=ActorTearSurface.Point(side,row/24f,n*MathF.Tau/96,glint);
+        float gap=p.Z-ActorFaceSurface.Height(p.X,p.Y);
+        if(!float.IsFinite(p.Length())||gap<.0149f||gap>.0191f||p.Y>-.074f||p.Y<-.246f)return false;
+        if(row==0&&System.Numerics.Vector3.Distance(p,ActorTearSurface.Point(side,0,0,glint))>.000001)return false;
+    }
+    return true;
+});
+Check("tear traces build and fade continuously and freeze when presentation is paused",()=>
+{
+    var tears=new ActorTearPresentation();tears.Advance(true,.1f);float first=tears.Amount;
+    if(first<=0||first>=1)return false;for(int n=0;n<10;n++)tears.Advance(true,.1f);
+    if(tears.Amount!=1)return false;tears.Advance(false,.1f);float remaining=tears.Amount;
+    if(remaining<=0||remaining>=1)return false;for(int n=0;n<10;n++)tears.Advance(false,0);
+    if(tears.Amount!=remaining)return false;for(int n=0;n<30;n++)tears.Advance(false,.1f);
+    return tears.Amount==0&&ActorReactionMotion.GuardYaw(70,0)==-ActorReactionMotion.GuardYaw(0,70);
+});
+Check("soft ball panels stay inside their contact radius with outward front faces",()=>
+{
+    for(int row=0;row<=48;row++)for(int n=0;n<144;n++)
+    {
+        float u=row/48f,angle=n*MathF.Tau/144;var p=InteractionBallSurface.Point(u,angle);
+        if(!float.IsFinite(p.Length())||p.Length()>.24001f||p.Length()<.238f)return false;
+        if(row>0&&row<48)
+        {
+            var du=InteractionBallSurface.Point(u+.0001f,angle)-p;var dv=InteractionBallSurface.Point(u,angle+.0001f)-p;
+            if(System.Numerics.Vector3.Dot(-System.Numerics.Vector3.Cross(du,dv),p)<=0)return false;
+        }
+    }
+    return true;
+});
+Check("ball rotation follows displacement and reverses without spinning during a hold",()=>
+{
+    var ball=new InteractionBallMotion();ball.Present(3,2,false);ball.Present(3.12,2,false);var moved=ball.Rotation;
+    if(MathF.Abs(moved.Z)<.2f)return false;for(int n=0;n<100;n++)ball.Present(3.12,2,false);
+    if(ball.Rotation!=moved)return false;ball.Present(3.12,2,true);if(ball.Rotation!=moved)return false;
+    ball.Present(3,2,false);return MathF.Abs(ball.Rotation.W-1)<.00001f;
+});
+Check("ball picking follows the visible sphere instead of a fixed screen-distance shortcut",()=>
+{
+    var zero=System.Numerics.Vector3.Zero;var ray=-System.Numerics.Vector3.UnitZ;
+    bool hit=InteractionPropContact.RayHit(Yukkuri.Simulation.RoomObjectKind.Ball,zero,new(0,.24f,2),ray,out float distance);
+    bool outside=InteractionPropContact.RayHit(Yukkuri.Simulation.RoomObjectKind.Ball,zero,new(.26f,.24f,2),ray,out _);
+    bool behind=InteractionPropContact.RayHit(Yukkuri.Simulation.RoomObjectKind.Ball,zero,new(0,.24f,2),-ray,out _);
+    return hit&&MathF.Abs(distance-1.76f)<.00001f&&!outside&&!behind;
+});
+Check("cookie edges close and the hand portion rests above the spoon's inner surface",()=>
+{
+    if(MathF.Abs(InteractionFoodSurface.Plate(0,0,false).Y+InteractionFoodSurface.MealGroundOffset)>.000001f||MathF.Abs(InteractionFoodSurface.CookieTop(0,0,true).Y+InteractionFoodSurface.SweetGroundOffset)>.000001f)return false;
+    for(int n=0;n<144;n++)
+    {
+        float angle=n*MathF.Tau/144;
+        if(System.Numerics.Vector3.Distance(InteractionFoodSurface.CookieTop(1,angle),InteractionFoodSurface.CookieSide(1,angle))>.000001f||
+            System.Numerics.Vector3.Distance(InteractionFoodSurface.CookieTop(1,angle,true),InteractionFoodSurface.CookieSide(0,angle))>.000001f)return false;
+        for(int row=0;row<=24;row++)
+        {
+            var p=InteractionFoodSurface.HandMeal(row/24f,angle,true);float r2=p.X*p.X/.01f+p.Z*p.Z/.0049f;
+            float bowl=.008f+.022f*Math.Clamp(r2,0,1);
+            if(!float.IsFinite(p.Length())||p.Y<bowl+.0009f)return false;
+        }
+    }
+    return true;
+});
+Check("offered spoon and cookie meet the mouth without burying their rims in the face",()=>
+{
+    foreach(float size in new[]{.73f,1,1.03f})foreach(float x in new[]{-.08f,0,.08f})foreach(bool sweet in new[]{false,true})
+    {
+        var normal=ActorFaceSurface.Normal(x,-.175f);var forward=System.Numerics.Vector3.Normalize(new System.Numerics.Vector3(normal.X,0,normal.Z));
+        var right=System.Numerics.Vector3.Cross(System.Numerics.Vector3.UnitY,forward);
+        System.Numerics.Vector3 Transform(System.Numerics.Vector3 p)=>right*p.X+System.Numerics.Vector3.UnitY*p.Y+forward*p.Z;
+        var contact=new System.Numerics.Vector3(x,-.175f,ActorFaceSurface.Height(x,-.175f))*size;
+        var offer=sweet?InteractionFoodSurface.SweetOffer:InteractionFoodSurface.MealOffer;
+        var origin=contact-Transform(offer)+normal*(sweet?.003f:.005f);
+        bool Outside(System.Numerics.Vector3 p)
+        {
+            var world=origin+Transform(p);var q=(world/size-new System.Numerics.Vector3(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ))/new System.Numerics.Vector3(ActorFaceSurface.RadiusX,ActorFaceSurface.RadiusY,ActorFaceSurface.RadiusZ);
+            if(q.LengthSquared()<.9999f){Console.WriteLine($"Offering intersects face: sweet {sweet}, size {size}, contact x {x}, point {p}, normalized radius {q.LengthSquared()}");return false;}
+            return true;
+        }
+        for(int row=0;row<=24;row++)for(int n=0;n<144;n++)
+        {
+            float u=row/24f,a=n*MathF.Tau/144;
+            if(sweet)
+            {
+                if(!Outside(InteractionFoodSurface.CookieTop(u,a)*InteractionFoodSurface.SweetHandScale)||!Outside(InteractionFoodSurface.CookieTop(u,a,true)*InteractionFoodSurface.SweetHandScale)||!Outside(InteractionFoodSurface.CookieSide(u,a)*InteractionFoodSurface.SweetHandScale))return false;
+            }
+            else if(!Outside(InteractionFoodSurface.HandMeal(u,a))||!Outside(InteractionFoodSurface.SpoonBowl(u,a,true))||!Outside(InteractionFoodSurface.SpoonBowl(u,a,false)))return false;
+        }
+        if(!sweet)for(int n=0;n<96;n++)
+        {
+            var rim=InteractionFoodSurface.SpoonRim(n*MathF.Tau/96);
+            foreach(var padding in new[]{System.Numerics.Vector3.UnitX,-System.Numerics.Vector3.UnitX,System.Numerics.Vector3.UnitY,-System.Numerics.Vector3.UnitY,System.Numerics.Vector3.UnitZ,-System.Numerics.Vector3.UnitZ})
+                if(!Outside(rim+padding*.0035f)||!Outside(InteractionFoodSurface.SpoonHandle(n/95f)+padding*.014f))return false;
+        }
+    }
+    return true;
+});
+Check("care cloth is closed and its underside stays above the contact plane",()=>
+{
+    foreach(bool gauze in new[]{false,true})for(int r=0;r<=32;r++)for(int n=0;n<=96;n++)
+    {
+        var p=InteractionCareSurface.Pad(r/32f,n/96f,gauze);
+        if(!float.IsFinite(p.LengthSquared())||p.Y<InteractionCareSurface.PadBottom-.000001f)return false;
+        if(r is 0 or 32&&MathF.Abs(p.X)+MathF.Abs(p.Z)>.00001f)return false;
+        if(System.Numerics.Vector3.Distance(InteractionCareSurface.Pad(r/32f,0,gauze),InteractionCareSurface.Pad(r/32f,1,gauze))>.00001f)return false;
+    }
+    return true;
+});
+Check("repair needle reaches the exact tip while its shaft eye and thread clear the cloth plane",()=>
+{
+    var rotation=System.Numerics.Matrix4x4.CreateRotationX(InteractionCareSurface.NeedleTiltDegrees*MathF.PI/180);
+    bool Clear(System.Numerics.Vector3 p,float radius=0)=>System.Numerics.Vector3.Transform(p-InteractionCareSurface.NeedleTip,rotation).Y+.004f-radius>=-.000001f;
+    for(int r=0;r<=100;r++)
+    {
+        float u=r/100f;
+        for(int n=0;n<=32;n++)if(!Clear(InteractionCareSurface.Needle(u,n/32f)))return false;
+        if(!Clear(InteractionCareSurface.NeedleEye(u),.0017f)||!Clear(InteractionCareSurface.Thread(u),.0015f))return false;
+    }
+    return System.Numerics.Vector3.Distance(InteractionCareSurface.Needle(0,0),InteractionCareSurface.NeedleTip)<.000001f;
+});
+Check("pebble and its mineral vein stay above ground inside the prop pick bounds",()=>
+{
+    bool Inside(System.Numerics.Vector3 p)
+    {
+        var q=(p-new System.Numerics.Vector3(0,.08f,0))/new System.Numerics.Vector3(.11f,.08f,.09f);
+        return p.Y>=0&&q.LengthSquared()<=1.00001f;
+    }
+    for(int r=0;r<=32;r++)for(int n=0;n<=128;n++)
+        if(!Inside(InteractionTreasureSurface.Point(r*MathF.PI/32,n*MathF.Tau/128))||!Inside(InteractionTreasureSurface.Vein(r/32f,n/128f)))return false;
+    return true;
+});
+Check("beveled fixture panels preserve their authored bounds and outward unit normals",()=>
+{
+    foreach(var size in new[]{new System.Numerics.Vector3(1.8f,.1f,1.72f),new(.1f,1.93f,1.72f),new(.08f,2.3f,.08f),new(.2f,.018f,.14f)})
+    for(int face=0;face<6;face++)for(int r=0;r<=14;r++)for(int n=0;n<=14;n++)
+    {
+        var sample=InteractionFixtureSurface.Sample(face,r/14f,n/14f,size,.018f);var p=sample.Point;
+        if(!float.IsFinite(p.LengthSquared())||MathF.Abs(sample.Normal.Length()-1)>.00001f||System.Numerics.Vector3.Dot(p,sample.Normal)<=0)return false;
+        if(MathF.Abs(p.X)>size.X*.5f+.000001f||MathF.Abs(p.Y)>size.Y*.5f+.000001f||MathF.Abs(p.Z)>size.Z*.5f+.000001f)return false;
+    }
+    return true;
+});
+Check("rounded fixture faces share closed edges and use Godot clockwise outward winding",()=>
+{
+    var size=new System.Numerics.Vector3(1.8f,.1f,1.72f);
+    for(int face=0;face<6;face++)for(int n=0;n<=14;n++)foreach(bool atEnd in new[]{false,true})
+    {
+        var p=InteractionFixtureSurface.Sample(face,atEnd?1:0,n/14f,size,.018f).Point;bool match=false;
+        for(int other=0;other<6;other++)if(other!=face)
+            for(int k=0;k<=14;k++)foreach(var uv in new[]{(0f,k/14f),(1f,k/14f),(k/14f,0f),(k/14f,1f)})
+                if(System.Numerics.Vector3.Distance(p,InteractionFixtureSurface.Sample(other,uv.Item1,uv.Item2,size,.018f).Point)<.00001f)match=true;
+        if(!match)return false;
+    }
+    for(int face=0;face<6;face++)
+    {
+        var a=InteractionFixtureSurface.Sample(face,.4f,.4f,size,.018f);
+        var b=InteractionFixtureSurface.Sample(face,.6f,.4f,size,.018f);
+        var c=InteractionFixtureSurface.Sample(face,.6f,.6f,size,.018f);
+        if(System.Numerics.Vector3.Dot(System.Numerics.Vector3.Cross(b.Point-a.Point,c.Point-a.Point),a.Normal)>=0)return false;
+    }
+    return true;
+});
+Check("box panels meet without overlapping coplanar strips at posts back or floor",()=>
+{
+    float panelFront=Yukkuri.Simulation.InteractionFixtureGeometry.BoxSidePanelZ+Yukkuri.Simulation.InteractionFixtureGeometry.BoxSidePanelDepth*.5f;
+    float postBack=Yukkuri.Simulation.InteractionFixtureGeometry.BoxFrontZ-.05f;
+    float sideInside=Yukkuri.Simulation.InteractionFixtureGeometry.BoxSideX-.05f;
+    float floorTop=Yukkuri.Simulation.InteractionFixtureGeometry.BoxFloorY+Yukkuri.Simulation.InteractionFixtureGeometry.BoxFloorThickness*.5f;
+    return MathF.Abs(panelFront-postBack)<.000001f&&MathF.Abs(sideInside-Yukkuri.Simulation.InteractionFixtureGeometry.BoxBackWidth*.5f)<.000001f&&MathF.Abs(floorTop-Yukkuri.Simulation.InteractionFixtureGeometry.BoxWallBottom)<.000001f;
+});
+Check("hop has a visible ballistic clearance and plants its underside through squash",()=>
+{
+    var apex=ActorHopMotion.Sample((ActorHopMotion.Launch+ActorHopMotion.Touchdown)*.5f);
+    if(apex.Lift-.46f*(apex.Scale.Y-1)<.26f)return false;
+    for(int n=0;n<=1000;n++)
+    {
+        float age=ActorHopMotion.Duration*n/1000;
+        var f=ActorHopMotion.Sample(age);
+        if(MathF.Abs(f.Scale.X*f.Scale.Y*f.Scale.Z-1)>.00001f)return false;
+        float clearance=.46f+f.Lift-.46f*f.Scale.Y;
+        if(clearance<-.00001f)return false;
+        if(age<ActorHopMotion.Launch&&(f.Travel!=0||MathF.Abs(clearance)>.00001f))return false;
+        if(age>=ActorHopMotion.Touchdown&&(f.Travel!=1||MathF.Abs(clearance)>.00001f))return false;
+        if(n>0)
+        {
+            var previous=ActorHopMotion.Sample(age-ActorHopMotion.Duration/1000);
+            if(MathF.Abs(previous.Lift-f.Lift)>.006f||MathF.Abs(previous.Scale.Y-f.Scale.Y)>.012f)return false;
+        }
+    }
+    return ActorHopMotion.Sample(0).Scale==System.Numerics.Vector3.One&&ActorHopMotion.Sample(ActorHopMotion.Duration).Scale==System.Numerics.Vector3.One;
+});
+Check("hop finishes on stopping, never bobs at rest, and supports quarter-second simulation updates",()=>
+{
+    foreach(int fps in new[]{30,60,144})
+    {
+        var hop=new ActorHopMotion();hop.Reset(System.Numerics.Vector2.Zero);
+        var target=System.Numerics.Vector2.Zero;
+        for(int frame=1;frame<=fps*5;frame++)
+        {
+            float time=(float)frame/fps;
+            target=new(MathF.Floor(MathF.Min(time,3)*4)*.2f,0);
+            var before=hop.Position;float previousTravel=hop.Frame.Travel;
+            bool active=hop.Active;
+            hop.Advance(target,1f/fps,true,false);
+            if(System.Numerics.Vector2.Distance(hop.Position,target)>.85f)return false;
+            if(active&&hop.Active&&previousTravel==hop.Frame.Travel&&hop.Position!=before)return false;
+        }
+        if(hop.Active||System.Numerics.Vector2.Distance(hop.Position,target)>.00001f)return false;
+        for(int frame=0;frame<fps;frame++){hop.Advance(target,1f/fps,true,false);if(hop.Active||hop.Frame.Lift!=0)return false;}
+    }
+    return true;
+});
+Check("hop freezes on pause and resets cleanly on carry restraint or teleport",()=>
+{
+    var hop=new ActorHopMotion();hop.Reset(System.Numerics.Vector2.Zero);
+    var target=new System.Numerics.Vector2(.4f,0);
+    hop.Advance(target,.1f,true,false);hop.Advance(target,.1f,true,false);
+    var position=hop.Position;var pose=hop.Frame;
+    for(int n=0;n<20;n++)hop.Advance(target,.1f,true,true);
+    if(hop.Position!=position||hop.Frame!=pose)return false;
+    hop.Advance(target,.016f,false,false);
+    if(hop.Active||hop.Position!=target||hop.Frame.Lift!=0)return false;
+    target=new(5,-3);hop.Advance(target,.016f,true,false);
+    return !hop.Active&&hop.Position==target;
+});
+Check("hop faces every actual flight direction and turns only while planted",()=>
+{
+    foreach(int fps in new[]{30,60,144})for(int direction=0;direction<8;direction++)
+    {
+        var hop=new ActorHopMotion();hop.Reset(System.Numerics.Vector2.Zero);
+        float angle=direction*MathF.Tau/8;
+        var target=new System.Numerics.Vector2(MathF.Sin(angle),MathF.Cos(angle))*.4f;
+        bool moved=false;
+        for(int frame=0;frame<fps*2;frame++)
+        {
+            var previous=hop.Position;float oldHeading=hop.Heading;
+            hop.Advance(target,1f/fps,true,false);
+            var travel=hop.Position-previous;
+            if(travel.LengthSquared()>.00000001f)
+            {
+                moved=true;
+                var forward=new System.Numerics.Vector2(MathF.Sin(hop.Heading),MathF.Cos(hop.Heading));
+                if(System.Numerics.Vector2.Dot(System.Numerics.Vector2.Normalize(travel),forward)<.99999f)return false;
+            }
+            if(hop.Turning&&(travel.LengthSquared()>0||hop.Frame.Lift!=0))return false;
+            if(MathF.Abs(MathF.IEEERemainder(hop.Heading-oldHeading,MathF.Tau))>MathF.Tau*1.5f/fps+.00001f)return false;
+        }
+        if(!moved||hop.Active||MathF.Abs(MathF.IEEERemainder(hop.Heading-angle,MathF.Tau))>.00001f)return false;
+    }
+    return true;
+});
+Check("midair target changes wait until landing and paused turns keep their heading",()=>
+{
+    var hop=new ActorHopMotion();hop.Reset(System.Numerics.Vector2.Zero);
+    var forward=new System.Numerics.Vector2(0,.4f);var right=new System.Numerics.Vector2(.4f,.4f);
+    hop.Advance(forward,.1f,true,false);
+    for(int n=0;n<3;n++)
+    {
+        hop.Advance(right,.1f,true,false);
+        if(hop.Heading!=0||hop.Position.X!=0)return false;
+    }
+    hop.Advance(right,.1f,true,false);hop.Advance(right,.016f,true,false);
+    if(!hop.Turning||hop.Position!=forward)return false;
+    float heading=hop.Heading;
+    for(int n=0;n<20;n++)hop.Advance(right,.1f,true,true);
+    return hop.Turning&&hop.Heading==heading&&hop.Position==forward;
+});
+Check("rear hair covers the skin continuously and closes its lower hem inside the body",()=>
+{
+    var skinCenter=new System.Numerics.Vector3(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ);
+    var skinRadii=new System.Numerics.Vector3(ActorFaceSurface.RadiusX,ActorFaceSurface.RadiusY,ActorFaceSurface.RadiusZ);
+    for(int row=0;row<=100;row++)for(int side=0;side<=160;side++)
+    {
+        float u=row/100f,v=side/160f;
+        var p=ActorHairSurface.Back(u,v);var normal=ActorHairSurface.BackNormal(p);
+        if(!float.IsFinite(p.LengthSquared())||((p-skinCenter)/skinRadii).LengthSquared()<=1)return false;
+        if(!float.IsFinite(normal.LengthSquared())||System.Numerics.Vector3.Dot(normal,new(p.X,0,p.Z-ActorFaceSurface.CenterZ))<=0)return false;
+        if(row==100&&((ActorHairSurface.Back(1,v,true)-skinCenter)/skinRadii).LengthSquared()>=1)return false;
+        if(row>0&&System.Numerics.Vector3.Distance(p,ActorHairSurface.Back(u-.01f,v))>.024f)return false;
+    }
+    return true;
+});
+Check("hat bow front backing tails and knot clear the crown rather than intersecting it",()=>
+{
+    bool Clear(System.Numerics.Vector3 p)
+    {
+        p=ActorAccessorySurface.HatBow(p*ActorAccessorySurface.HatBowScale);
+        float t=(p.Y-.028f)/ActorAccessorySurface.HatHeight;
+        if(t<0||t>1)return false;
+        float x=.025f+.13f*t*t,z=-.02f-.08f*t*t;
+        float radius=ActorAccessorySurface.HatCone(t,0).X-x;
+        return MathF.Sqrt(MathF.Pow(p.X-x,2)+MathF.Pow(p.Z-z,2))>=radius+.008f;
+    }
+    foreach(float sign in new[]{-1f,1f})for(int r=0;r<=32;r++)for(int n=0;n<=48;n++)
+    {
+        float u=r/32f,v=n/48f;
+        foreach(var p in new[]{ActorAccessorySurface.Bow(sign,u,v),ActorAccessorySurface.BowTail(sign,u,v)})
+            if(!Clear(p)||!Clear(p-System.Numerics.Vector3.UnitZ*ActorAccessorySurface.ClothThickness))return false;
+        var knot=new System.Numerics.Vector3(0,0,.045f)+new System.Numerics.Vector3(.08f*MathF.Sin(u*MathF.PI)*MathF.Cos(v*MathF.Tau),.07f*MathF.Cos(u*MathF.PI),.065f*MathF.Sin(u*MathF.PI)*MathF.Sin(v*MathF.Tau));
+        if(!Clear(knot))return false;
+    }
+    return true;
+});
+Check("visible hat brim clears the crown hair during hops pressure and damaged tilt",()=>
+{
+    var shapes=new[]{System.Numerics.Vector3.One,ActorTouchShape.Press(1),ActorTouchShape.Squeeze(1),ActorHopMotion.Sample(.052f).Scale,ActorHopMotion.Sample(.4175f).Scale,ActorHopMotion.Sample(.08f).Scale};
+    foreach(var scale in shapes)foreach(float damage in new[]{0f,12f})
+    for(int row=0;row<=36;row++)for(int n=0;n<192;n++)
+    {
+        var local=ActorAccessorySurface.HatBrimUnderside(.55f+.45f*row/36,n*MathF.Tau/192);
+        if(MathF.Pow(local.X-.025f,2)+MathF.Pow(local.Z+.02f,2)<.416f*.416f)continue;
+        var p=ActorAccessoryPlacement.Point(local,true,scale,damage);
+        var center=ActorSurfaceMarks.HairCenter*scale;var radii=ActorSurfaceMarks.HairRadii*scale;
+        float q=MathF.Pow((p.X-center.X)/radii.X,2)+MathF.Pow((p.Z-center.Z)/radii.Z,2);
+        if(q<1&&p.Y<center.Y+radii.Y*MathF.Sqrt(1-q)+.001f)return false;
+    }
+    return true;
+});
+Check("new rear hair remains clear of the cushion when tilted or rolled",()=>
+{
+    var bed=new System.Numerics.Vector3(0,-.46f,0);
+    foreach(float size in new[]{.73f,1,1.03f})foreach(float angle in new[]{0f,.6f,1.8f,3.14f})
+    {
+        var rotation=System.Numerics.Quaternion.CreateFromYawPitchRoll(.4f,angle,.2f);
+        var scale=new System.Numerics.Vector3(size);
+        float lift=ActorCushionSurface.HairLift(bed,System.Numerics.Vector3.Zero,scale,rotation);
+        foreach(var p in ActorHairSurface.BackSupport)
+        {
+            var world=System.Numerics.Vector3.Transform(p*scale,rotation)+System.Numerics.Vector3.UnitY*lift;
+            float top=ActorCushionSurface.TopHeight(world.X,world.Z);
+            if(top>0&&world.Y<bed.Y+top+.006f)return false;
+        }
+    }
+    return true;
+});
+var report=new{at=DateTimeOffset.UtcNow,scope="Offline surface geometry and motion only; visual/performance acceptance pending",success=all,checks};
+if(args.Length>0){Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(args[0]))!);File.WriteAllText(args[0],JsonSerializer.Serialize(report,new JsonSerializerOptions{WriteIndented=true}));}
+return all?0:1;

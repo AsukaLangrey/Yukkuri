@@ -1,0 +1,9 @@
+第二轮追加任务 v1
+原话：再多搜一些相关作品记录到本地。
+继承：上级TASK.txt；多流派保留、来源可追、未经审定不进入planning。
+执行范围：补充具体小说、漫画、视频漫画及游戏；仅写research。
+验收：有新增检索及实际来源；作品能定位到URL；作者未知不补造；摘要符合已读范围；日期性质明确；本地目录可读；旧资料可恢复。
+不把目录获取当作漫画阅读，不把商店页当作游戏运行，不把章节数当新作品数。
+具体证据：sources-added.json、works.json、research-log.json、validation.json。
+未完成项：作品条目remaining_work与research-log.json unresolved。
+审定状态：pending；采纳状态：not_adopted。

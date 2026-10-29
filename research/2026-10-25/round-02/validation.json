@@ -1,0 +1,15 @@
+{
+  "checked_at_utc": "2026-10-25T15:06:56.9931316Z",
+  "sources": 66,
+  "new_sources": 24,
+  "works": 23,
+  "claims_unchanged_count": 75,
+  "actual_query_count": 23,
+  "old_42_source_records_unchanged": true,
+  "source_references_checked": true,
+  "unknown_relevance_game_excluded": true,
+  "existing_series_deepening_marked": true,
+  "errors": [],
+  "scope_note": "结构与记录口径核验；不代替原作全文审查、用户审定或游戏运行。",
+  "result": "passed"
+}

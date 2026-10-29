@@ -1,0 +1,280 @@
+{
+  "created_at": "2026-10-27T23:35:37.8224655+08:00",
+  "purpose": "归档对话前完整设定及接续记录快照；不是实现/玩法验收",
+  "entry": "START-HERE.txt",
+  "confirmed_rule_count": 150,
+  "original_requirement_count": 51,
+  "file_count": 67,
+  "all_copies_hash_verified": true,
+  "missing_rule_sources": [],
+  "files": [
+    {
+      "path": "START-HERE.txt",
+      "sha256": "485B65A48002ADE4EBEB61DD870A19A866E7EF28FA00E1D9FEB078E9AEFF1043"
+    },
+    {
+      "path": "planning/CURRENT.txt",
+      "sha256": "4221D60B1C126A98FECAF1FA8C32574F20C761E6072E7DF27F983B37D01E441B"
+    },
+    {
+      "path": "planning/settings/README.txt",
+      "sha256": "F55C3543279470B7993BA7B43DBA8953E7C943A1471DF4AC51ABAF4843E6790D"
+    },
+    {
+      "path": "planning/settings/handbook-v004.txt",
+      "sha256": "EF0615CC198706DCB3DEF38C441A35279BE476AC5011693B7D7B0BF532905355"
+    },
+    {
+      "path": "planning/settings/setting-catalog-v004.json",
+      "sha256": "E9163F593B8760DDD0AC3557583664FCF3E48E9E93A75C1C3FE883CA5C6915EC"
+    },
+    {
+      "path": "planning/settings/source-map-v004.json",
+      "sha256": "53E3E558893EDD6547D2C1F06852E4003E81BD423EF62391D6E0247FC3E9BB1E"
+    },
+    {
+      "path": "planning/milestones-v003.txt",
+      "sha256": "C4F917228C579858A69C9CD1186A30FDF09E218085D313380883E99EE3F88719"
+    },
+    {
+      "path": "planning/milestones-v003.json",
+      "sha256": "962AFE852F92D24116873B4ED59B7D25A7578E0D0D2761C57B05F987C7554C09"
+    },
+    {
+      "path": "planning/balance-draft-v001.txt",
+      "sha256": "BB04C8F4976B8128B4DBD8E0CF8948BBC4175D06FDA9DBC671EF7094E61E79A8"
+    },
+    {
+      "path": "planning/stages/M01/feedback.txt",
+      "sha256": "63EEF94ABA8B112834F578A595F8113134F13A59A624FC032032F5A579C88A9D"
+    },
+    {
+      "path": "planning/stages/M01/acceptance.json",
+      "sha256": "AC532C7FB7B7CE315B10DABE6EE2203F3A890674B1E92AC951562B5E9AE168C3"
+    },
+    {
+      "path": "planning/stages/M01/gameplay-review-20261027.txt",
+      "sha256": "C980EF38926CAB5A769BDD14A7149B1C40A7FC03465AF636CC4AA58DD1AB6CB9"
+    },
+    {
+      "path": "planning/stages/M01/gameplay-rework-v001.txt",
+      "sha256": "B8AE9908043A99CE5FE8F6C95B382DCD64A819D0E2F3BD8BB478F9816D7C35CA"
+    },
+    {
+      "path": "planning/stages/M01/KNOWN-ISSUES.txt",
+      "sha256": "F818E649C6412D310D3EA7FC14CAA1D60DDB687659E5D840BE3A220A62FC42B2"
+    },
+    {
+      "path": "planning/stages/M01/PLAYER-GUIDE.txt",
+      "sha256": "FBB7FCD7F9D2C6B94B47CC530E5062B32EB21696B6C96A3461AD5A46C57A79FE"
+    },
+    {
+      "path": "toolchain.lock.json",
+      "sha256": "ECF62A197D2EB8B0263A3693160ACA402710C17F95A6FADEE9BB94840392D829"
+    },
+    {
+      "path": "planning/requirements-v001.txt",
+      "sha256": "D6B6B1E2CB59F850885691018C2B2A425BA2ABC3F71A34B385E104B224F2E215"
+    },
+    {
+      "path": "planning/requirements-v002.txt",
+      "sha256": "C28C37DBA18673A1A6A03DEB02541BAF966AE9C20798B050AB0D3DBA35920363"
+    },
+    {
+      "path": "planning/requirements-v003.txt",
+      "sha256": "DC365FB73CC244D50424863AA0203854D6416596CECB7E47512D04705A4BBB02"
+    },
+    {
+      "path": "planning/requirements-v004.txt",
+      "sha256": "42F565B8B72F7E690C96023483A4C9A60358EA8E50C683B8E1ECA9A03E6EAA1A"
+    },
+    {
+      "path": "planning/requirements-v005.txt",
+      "sha256": "D21E333354AD066BEC7AE2EB8EF42981FBCA6E1EB18F9DF1959B1FA618C1ED3B"
+    },
+    {
+      "path": "planning/requirements-v006.txt",
+      "sha256": "4D1988716DD13142BAEA1595955DA3A21D118CD522F38217CE613D784C1C331C"
+    },
+    {
+      "path": "planning/requirements-v007.txt",
+      "sha256": "55C8067E5F05721F1C81534299E907252D3085EF2AE1867722CA4D60ECA259FD"
+    },
+    {
+      "path": "planning/requirements-v008.txt",
+      "sha256": "4DEAD9C695325716C4A64C415C5BA8870823B7D389FB4EED71B10222024A581E"
+    },
+    {
+      "path": "planning/requirements-v009.txt",
+      "sha256": "88F50F235FE72296B53FF263F7C644ECFDC702BA15E3809FA160D8A9B98D6390"
+    },
+    {
+      "path": "planning/requirements-v010.txt",
+      "sha256": "1C19DFC3B0CF7E9A4B515640C8AA7E796E9D6F8174CE7F6B0DF9739DA075EE47"
+    },
+    {
+      "path": "planning/requirements-v011.txt",
+      "sha256": "7FB9154FB22D0B802B3AF4CB6D7BC9262A6095E0E1967F485BB93935433463BA"
+    },
+    {
+      "path": "planning/requirements-v012.txt",
+      "sha256": "71000FE92A3D3BE6FF04A1B5BD28DBAC70D3207BAB4A9A9BC8276C493F2E615F"
+    },
+    {
+      "path": "planning/requirements-v013.txt",
+      "sha256": "C3C0372C4CBC1D42B7930EE620FBC6927C2CE89AA65B41881D6E1904B7A84AB1"
+    },
+    {
+      "path": "planning/requirements-v014.txt",
+      "sha256": "F44E7B794796EE119A428677517A4F4CCBD81E1AC0841FD056E3972A0E257E91"
+    },
+    {
+      "path": "planning/requirements-v015.txt",
+      "sha256": "42F5FC0F3179D6B45E3A496AE1FC6E319442C4B08E62F01AA4F5763621A49811"
+    },
+    {
+      "path": "planning/requirements-v016.txt",
+      "sha256": "F74CE38CFEB10E5EBF50414DCE352354EAAC87DAC88C57DE95761DF3F55D5CC2"
+    },
+    {
+      "path": "planning/requirements-v017.txt",
+      "sha256": "71AEFDD04C311754CBF37F174600E1BF2353C89C7BE72F58CB2F1A80C57C08D4"
+    },
+    {
+      "path": "planning/requirements-v018.txt",
+      "sha256": "805CEE5379F139137B8BAFAAC1BBD79734480D9DB1610233CD637B9C1FDAD517"
+    },
+    {
+      "path": "planning/requirements-v019.txt",
+      "sha256": "6FC60464C10E72257DE16A90CE2A9EDD7BCF879F5B8C3ECB7F14996DD445F074"
+    },
+    {
+      "path": "planning/requirements-v020.txt",
+      "sha256": "3296EE0A674EED164B59305E2590A068A30CF230C960FDD3FB9F22BEF8DCFDFB"
+    },
+    {
+      "path": "planning/requirements-v021.txt",
+      "sha256": "1E5DABF6DFDE5B95B1C61C773C128416132979B151734ED2C089912F432CAC96"
+    },
+    {
+      "path": "planning/requirements-v022.txt",
+      "sha256": "4D1C6B484325BE68C3E5DC7D15E264CB172F13A3750DF3D82CD687C548103C7A"
+    },
+    {
+      "path": "planning/requirements-v023.txt",
+      "sha256": "7DD03404BE1AA1E94868C6FFF7C22BB5F616FF1377D4297F84BAEBD9FE437862"
+    },
+    {
+      "path": "planning/requirements-v024.txt",
+      "sha256": "0D28115C55ADD6CFF380F5FAE09683BDAC378EAD0B8DA0EC9E69612AC19AC5A4"
+    },
+    {
+      "path": "planning/requirements-v025.txt",
+      "sha256": "05D8DFDE9A7CEB58C06CAB39F4026887368DBA848E27435B1E84A1A3D81B51A7"
+    },
+    {
+      "path": "planning/requirements-v026.txt",
+      "sha256": "ABA6265150E363972929DF09C26EE7D101F99574BF715D9AA7484A21D1ACCE32"
+    },
+    {
+      "path": "planning/requirements-v027.txt",
+      "sha256": "0AF79B7850AA2D00B0C325E19ABCE2A3D785A0F335F5228B04242DD3F1A9E7F9"
+    },
+    {
+      "path": "planning/requirements-v028.txt",
+      "sha256": "7B1A9C9E93D061701D96EFD65AC75099A72D768CE76B34A7E67A565711871065"
+    },
+    {
+      "path": "planning/requirements-v029.txt",
+      "sha256": "4432B1591B224A861EB969850F4725E8A094936CF24FF8DFBAFF76BD5E5DAC2E"
+    },
+    {
+      "path": "planning/requirements-v030.txt",
+      "sha256": "24F4566954E6BD672E0F5AC1151FC742369C630706BABA91D6148140CBA04364"
+    },
+    {
+      "path": "planning/requirements-v031.txt",
+      "sha256": "09529F5D773A5BFD22F4CA03FDDC2BF8DC3C7F1D91BBFA7BCB40B605A9AAC3B8"
+    },
+    {
+      "path": "planning/requirements-v032.txt",
+      "sha256": "3200ECC941D95EA367007A5B73BA7568B3972490DBD4A17ADF8B3F562A0CAAF9"
+    },
+    {
+      "path": "planning/requirements-v033.txt",
+      "sha256": "C415209C7BB6EF5A23E92E04720273184607161DEBE704AFC75734A18CF4860D"
+    },
+    {
+      "path": "planning/requirements-v034.txt",
+      "sha256": "AEA4656DF744C0390946A924000993B04AB5C2E46A8B34A700B374526B7F7361"
+    },
+    {
+      "path": "planning/requirements-v035.txt",
+      "sha256": "1EFCB6624C48D4C6A742DB744EC5FDF60B41F9EB2A9B10299336082F175D55DF"
+    },
+    {
+      "path": "planning/requirements-v036.txt",
+      "sha256": "D30812DF7A15435048A391272B8CEA12B26A30DFA1C3A3174A05C334FF85B9EF"
+    },
+    {
+      "path": "planning/requirements-v037.txt",
+      "sha256": "DB3F419B9CFD5C2D3203DB53DB1997CFA7161D4E034DBCB96C18332513983B2D"
+    },
+    {
+      "path": "planning/requirements-v038.txt",
+      "sha256": "5801FC21F46FF6020F0A3A2EEDA23DEBE276A0473464142FEC9B0C0B78241547"
+    },
+    {
+      "path": "planning/requirements-v039.txt",
+      "sha256": "C729B9EFDA759E427A6CE5911B98B9DF9255B61713F29F15BE2A663DE4F4F9CB"
+    },
+    {
+      "path": "planning/requirements-v040.txt",
+      "sha256": "C2E309419A607D4398E09EA1810B8E44132F97B558FDEA18D1690F56F4B4B868"
+    },
+    {
+      "path": "planning/requirements-v041.txt",
+      "sha256": "302E1F036D5CFA578A50DB214D7D113564FAFB22265D2C15C4CD4E887EA4CE35"
+    },
+    {
+      "path": "planning/requirements-v042.txt",
+      "sha256": "BD3C555127D1BC073C21FE955E942D7BD6A852ED99319351E4CC6700C6A39A7F"
+    },
+    {
+      "path": "planning/requirements-v043.txt",
+      "sha256": "4DCE0171530CE85BA70DE5834C85D9ACF490245E33E71C95835C878232575557"
+    },
+    {
+      "path": "planning/requirements-v044.txt",
+      "sha256": "FBC352865A59C64CDDE345F9A17C61F10E173EA2BD0F8BBAFF644BEA3003F923"
+    },
+    {
+      "path": "planning/requirements-v045.txt",
+      "sha256": "2369C6EA5BE18AC4A1F370EFCF26C2E68FF2F35A8934ABC79814870C7EF1D380"
+    },
+    {
+      "path": "planning/requirements-v046.txt",
+      "sha256": "60D8C93414BD92D99EC946A2F872E2103F3332C41B566250254961A75BBAA926"
+    },
+    {
+      "path": "planning/requirements-v047.txt",
+      "sha256": "157B087BE3DE4E8AE6B871DD4247CB0AC0E7273B269861A70CB0E40522BF39E5"
+    },
+    {
+      "path": "planning/requirements-v048.txt",
+      "sha256": "46580B1F1F218F8679E46AE14AFF2E769C6D7CC64BB7DD660B620EFDDDC2DE1F"
+    },
+    {
+      "path": "planning/requirements-v049.txt",
+      "sha256": "BB35BEA473A4CADDF97B0EC41037010403AA84F1C135D41C9AE38F73F87A0767"
+    },
+    {
+      "path": "planning/requirements-v050.txt",
+      "sha256": "0CF38A1024AC46ACB9DADD7E839544BA68C8023C8203663FCDB26364B8FEF11D"
+    },
+    {
+      "path": "planning/requirements-v051.txt",
+      "sha256": "DEF7FC7B0BB961F62C5BA14E29630E327E5CAF30A02A5FEB2585C8DECEEA3B38"
+    }
+  ]
+}

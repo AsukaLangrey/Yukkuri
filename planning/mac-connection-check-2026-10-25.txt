@@ -1,0 +1,19 @@
+远程 Mac 连通性检查
+日期：2026-10-25（Asia/Shanghai）
+用户请求：尝试唤起 Mac，检查能否连接。
+
+已检查结果：
+1. 通过 Codex 远程主机入口成功读取历史聊天记录。此结果不作为当前远程命令执行已成功的证据。
+2. shikideMac-mini.local 在本 Windows 的 DNS 解析失败：不知道这样的主机。
+3. 从相关历史聊天“配置 Mac 局域网连接 Windows”中取得曾使用的 IP 192.168.0.102 和用户 shiki，随后对该地址做实际测试。
+4. 本机 WLAN 当前为 192.168.0.107/24，与该 IP 同子网。
+5. 192.168.0.102 TCP 22 实际连接成功，返回 SSH-2.0-OpenSSH_9.8。
+6. 当前邻居记录的 MAC 为 22-8D-3B-C8-3E-C6，与历史 Mac Wi-Fi 实测地址一致。
+7. 使用 Git 自带 SSH 客户端，以 BatchMode=yes、StrictHostKeyChecking=yes、5 秒连接超时尝试 shiki 登录。
+8. 登录失败：Permission denied (publickey,password,keyboard-interactive)。严格主机密钥校验没有报错，失败点是用户认证。
+9. hostname / sw_vers / uname / sysctl / uptime 未在远程执行；没有获得当前芯片、内存或工具链信息。
+
+结论：目标地址网络可达且 SSH 服务在线，与历史设备网卡记录匹配；尚未取得远程命令执行能力。
+没有发送网络唤醒包，因为服务已响应；不能称“唤醒成功”。
+没有更改 Mac 设置、同步工程、安装软件、读取私钥内容或创建新聊天。
+后续需建立可用的 SSH 身份认证（如配置公钥登录），或另行授权并建立 Mac 上的执行聊天；不能把读到历史记录当作开发通道已就绪。

@@ -1,0 +1,24 @@
+{
+  "checked_at_utc": "2026-10-25T16:13:09Z",
+  "status": "passed_structure_only",
+  "json_files_parsed": 29,
+  "source_count": 126,
+  "work_count": 54,
+  "new_source_count": 60,
+  "new_work_count": 31,
+  "preserved_claim_count": 75,
+  "unique_source_ids": true,
+  "unique_work_ids": true,
+  "unique_source_urls": true,
+  "work_and_relation_source_refs_resolve": true,
+  "all_works_pending_not_adopted": true,
+  "claim_source_refs_resolve": true,
+  "prior_source_revisions": [
+    "S43",
+    "S46",
+    "S47"
+  ],
+  "time_requirement_met": true,
+  "limitation": "结构与时长检查不证明全部作品读完、原帖可靠或用户已审定。",
+  "unchanged_prior_sources_except_documented_updates": true
+}

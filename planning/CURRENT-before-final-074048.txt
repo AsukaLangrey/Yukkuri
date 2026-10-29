@@ -1,0 +1,15 @@
+当前入口 / 2026-10-27 19:33 +08
+原Goal继续至2026-10-27 22:00；完整M01及v1.0范围保留，M02未启动，用户验收pending。旧CURRENT已备份CURRENT-before-20261027-1930.txt。
+当前冻结游戏M01-CLANG-20261027-074048，builds/candidates/m01-clang-expression；游戏源码SHA8282472f5fbdfa852020930c4426347297cfad3acda5f45cef146b57708fc68f。
+独立试玩目录已准备builds/playtest/M01-CLANG-20261027-074048，含程序/指南/可选Play This PC.cmd，尚未正式打包交验。根Play Game.cmd仍030100，根Play M01 Candidate - This PC.cmd是074048本机兼容入口。
+当前21600秒真实运行：默认exported-soak-20261027-074148-367-fbe9b6eb/session84983/PID18980最早21:41:48；隔离4/5的074217-630-807c147b/session4779/PID18732最早21:42:17。均在artifacts/m01。截至19:31均继续推进/无ERROR，不能以中途2h当完成。只读采样session18571，expression-process-observation。
+旧055731默认6h/session34023最早19:58:46，隔离/session13909最早20:32:48；旧065955默认/session1575最早21:02:21，隔离/session9765最早21:03:38。版本证据不得混用。
+旧官方033258隔离2h063545/session76538已失败：15:36:32 exit7，Godot.Button已释放（当前已修复名单时序），原目录failure-assessment.json；不是成功2h或新的原生AV证明。
+当前短项默认GUI074237/状态074353/压力074411/音频074552/自动存档074603均正常退出；默认坏PNG分别8/21、6/10、1/2，不用于验画面。隔离状态074158共10有效图、中文目录GUI074949共21有效图。
+持续入侵表情真实失败/63规则修复见ongoing-expression-before/after。当前游戏源码空缓存重建075451/GUI075452通过，代码运行库相同、PCK不同，expression-source-rebuild/result.json。独立原生全新源码/工具链重建073300及诊断GUI074359通过，二进制hash不同、未替换候选。历史3份存档全字段保留/副本继续120模拟秒，实际损坏档拒绝，historical-save-compatibility-precise-20261027及historical-save-damaged-rejection-20261027。
+本机WHEA APIC16/17对应逻辑4/5，固定PNG及独立native zlib对照有核心相关错误，排除后的样本正常。未改BIOS/系统，不称硬件或所有崩溃根因修复。19:31整理记录的PowerShell自身出现0xC000001D，powershell-host-failure-20261027-1931.json。后续工具可用Windows PowerShell5.1并只对自身排除4/5；默认游戏检查必须明确全系统范围，不能把继承隔离条件当默认证据。
+原生手玩065955六目标及正常重开逐字节恢复完成；随后采集全窗黑，16:24复查仍黑、无盲目输入。manual-clean-import-20261027-071433，PID5568仍旧版隔离菜单；用户可见状态尚无回答，不能将黑图后的视觉算通过。
+下一步：收集长测实际结果，更新PLAYER-GUIDE/KNOWN-ISSUES/candidate-074048；新目录冻结最终支持源码；package-m01用同build默认integration/stress/soak/audio；verify-release-package实际中文空格目录解压运行。旧acceptance保留历史后再更新，用户验收pending，源代码/自评/校验不代替可玩性或完整v1.0。
+工时只计主动实施。16:25—19:30被动等待不计；后续先查active_work_segment_started_at，null时新建段，不把null解析为日期。
+[2026-10-27T20:00:23.3156736+08:00] 旧055731默认6h已正常结束21601.922秒/exit0/园内6只存活。extended-run-six-hour-summary.json独立记录，不代替074048。
+[2026-10-27T21:43:40.2870666+08:00] 当前074048默认21602.669秒/exit0/7只，兼容21601.708秒/exit0/6只；当前长测完成。current-six-hour-summary.json。默认PNG138/330坏，兼容332/332有效。开始最终源码快照与打包，用户验收仍pending。根Play Game.cmd已优先指向当前独立试玩目录；旧builds/windows保留。

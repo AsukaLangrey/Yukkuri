@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-27T21:55:11.2583219+08:00",
+  "goal_tool_status": "complete",
+  "tokens_used": 3379079,
+  "goal_elapsed_seconds": 53146,
+  "recorded_effective_work_hours": 9.19888888888889,
+  "token_budget": null,
+  "user_acceptance": "pending",
+  "scope": "M01 development delivery only. Goal elapsed includes waiting; active work excludes interruption and passive monitoring. Fullv1.0 and user playtest are not marked complete."
+}

@@ -1,0 +1,101 @@
+流派差异与争议｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C057  slowlove的分类页设置性、低俗、抑郁展开、暴力/捕食和恶行等标记；站点名称不能替代对单篇内容的判断。
+适用：创作发表Wiki分类
+证据：B；类别：classification
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S27 ジャンルマークについて
+https://w.atwiki.jp/slowlove/pages/14.html
+读取状态：body_read
+S28 創作倫理規定
+https://w.atwiki.jp/slowlove/pages/173.html
+读取状态：body_partially_read
+
+C058  温情家庭叙事可解释储粮、体力差异、冬季成本；不必取消生态压力。《冬篭り》提供具体例子。
+适用：作品观察
+证据：A；类别：survival / affection
+限制：研究归纳，不是为本项目选择温馨方案。
+出处：
+S16 待つぜ待つのぜ冬篭り
+https://w.atwiki.jp/slowlove/pages/666.html
+读取状态：body_read
+
+C059  残酷饲养题材包含体罚、创伤、弃养和失败饲育；《飼育書》不能仅以标题当作客观养护指南。
+适用：作品观察
+证据：A；类别：cruelty
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S11 ゆっくりいじめ系2585 ゆっくり飼育書
+https://w.atwiki.jp/yukkuri_gyakutai/pages/4249.html
+读取状态：body_read
+
+C060  本轮保留捕食、死亡、工厂利用、性强迫、群落迫害及恶性个体标签等资料类别，只作非渲染摘要。
+适用：本资料库内容分类
+证据：C；类别：classification / cruelty / sexual_violence_reference
+限制：分类是整理行为，不表示认可或已选入游戏。
+出处：
+S18 Yukkuri Types
+https://yukkuri.fandom.com/wiki/Yukkuri_Types
+读取状态：search_text_only
+S22 Accessory
+https://yukkuri.fandom.com/wiki/Accessory
+读取状态：body_read
+S24 Yukkuri
+https://yukkuri.fandom.com/wiki/Yukkuri
+读取状态：search_text_only
+S25 Gutter Trash Yukkuris
+https://yukkuri.fandom.com/wiki/Gutter_Trash_Yukkuris
+读取状态：body_read
+
+C061  生物系文章常把“善良/ゲス”写成性格标签；某些游戏把它数值化，但本轮看到的继承、矫正机制互不相同。
+适用：作品与游戏对照
+证据：C；类别：general
+限制：不能从一个词推导通用不可改变天性。
+差异组：K14（详见 conflicts.json）
+出处：
+S07 ステータス
+https://wikiwiki.jp/yukkuri8kei/ステータス
+读取状态：body_read
+S10 ゆっくりの生態
+https://w.atwiki.jp/ykansatu/pages/49.html
+读取状态：body_read
+S34 シムゆっくり（SimYukkuri）紹介
+https://blog.livedoor.jp/yukkuri_anko/archives/31828030.html
+读取状态：search_text_only
+
+C062  《八景》有性格相关遗传描述；《にっき》攻略称C/B/A/S等级不随父母遗传。
+适用：两个游戏
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K14（详见 conflicts.json）
+出处：
+S07 ステータス
+https://wikiwiki.jp/yukkuri8kei/ステータス
+读取状态：body_read
+S10 ゆっくりの生態
+https://w.atwiki.jp/ykansatu/pages/49.html
+读取状态：body_read
+
+C063  《八景》的非ゆっくり症被表现为高压力后的行动障碍；状态名中有Wiki自命名项，不能全部当作者官方术语。
+适用：《ゆっくり八景》社区记录
+证据：B；类别：trauma / survival
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S39 状態異常
+https://wikiwiki.jp/yukkuri8kei/状態異常
+读取状态：body_read
+
+C073  英文Yukkuri Wiki主页自述没有固定正典，并限制过度露骨/猎奇内容；其条目本身也不能代表全部残酷题材。
+适用：来源自述与覆盖边界
+证据：C；类别：classification
+限制：未把该站编辑边界当本次筛选规则。
+出处：
+S41 Yukkuri Wiki / Home
+https://yukkuri.fandom.com/wiki/Yukkuri_Wiki
+读取状态：search_text_only
+
+

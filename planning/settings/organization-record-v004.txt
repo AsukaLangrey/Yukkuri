@@ -1,0 +1,5 @@
+v051提前接续规则落实记录 / 2026-10-27 Asia/Shanghai
+新增原话requirements-v051；手册/JSON/来源索引v004累计150条规则、51版原始记录；旧版保留。里程碑v003保持8项完整玩法与原验收清单不变，只调整工作节奏。
+已修改真实入口tools/check-milestone.ps1：Ready移除单项6小时硬等待；Advance要求完整证据、无阻塞及ready_at-started_at严格小于4小时；前置阶段Ready即可继续实施，用户Accepted仍独立；NightReady保留整轮6小时检查。
+合成验证16项通过，证据artifacts/milestone-gate-tests/20261026-164930/results.json（路径时间UTC）。其中2小时完成且用户待验收可Ready/Advance；相同场景缺验收证据被拒绝；精确4小时不触发提前接续；夜间不足6小时仍拒绝；缺用户通过不能Accepted。
+这是本地工作流夹具验证，不是游戏实现/宿主自动调度验证。当前没有真实阶段记录或夜间Goal，仍等待用户指定开始时间。

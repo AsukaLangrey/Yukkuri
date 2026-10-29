@@ -1,0 +1,198 @@
+[
+  {
+    "id": "R301",
+    "source_ids": [
+      "S68",
+      "S76"
+    ],
+    "topic": "续写链",
+    "note": "《聖者の途》后记指认抹茶アイス原作《ゆっくりまりさとおうち》，续写者为むの人；不归为同一作者原作续篇。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R302",
+    "source_ids": [
+      "S46",
+      "S67",
+      "S68"
+    ],
+    "topic": "设定借用",
+    "note": "《予防接種》引用《聖者の途》虚构病毒；这是明确指名的借用，不是医学知识。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R303",
+    "source_ids": [
+      "S70",
+      "S77"
+    ],
+    "topic": "许可自述",
+    "note": "《幸せのかたち》后记称获《ゆっくりのいる生活》作者许可；仅确认作者所述借用，不把原篇失踪判为死亡。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R304",
+    "source_ids": [
+      "S47",
+      "S73",
+      "S75"
+    ],
+    "topic": "繁殖规则差异",
+    "note": "卵生、分裂和胎生机制在不同作者笔下不同；《昆虫型出産》后记明确另有蛙卵四格灵感，题材相似不等于互相承袭。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R305",
+    "source_ids": [
+      "S75",
+      "S03",
+      "S04"
+    ],
+    "topic": "野外卵生反例",
+    "note": "《解体新書》把一类卵生写在严寒野外环境，不能用百科的宠物限定覆盖所有作品。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R306",
+    "source_ids": [
+      "S84",
+      "S114"
+    ],
+    "topic": "白金身份差异",
+    "note": "Hourai结局背景将独特自我关联重获人形；enforcer小说写白金自主身份与工资。各自作品规则并列，不能据此认定最早起源。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R307",
+    "source_ids": [
+      "S95",
+      "S101",
+      "S124"
+    ],
+    "topic": "捕食与内馅",
+    "note": "有的作品探索后天饮食学习，有的写诱饵捕食或肉馅蕾米；这些不同解释保留，不合并为统一捕食种生态。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R308",
+    "source_ids": [
+      "S96",
+      "S118",
+      "S119"
+    ],
+    "topic": "同系列观点演变",
+    "note": "水果交换庇护在下一篇被叙述者否定，改为固定协作防御；尾声加入持续供养和园区归属。只摘第2篇会漏掉后续修正。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R309",
+    "source_ids": [
+      "S102",
+      "S117",
+      "S124"
+    ],
+    "topic": "饰品识别差异",
+    "note": "可说服脱帽洗澡、摘饰梳毛，与戴帽使熊被误认是不同作品规则；暂不推统一失饰结论。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R310",
+    "source_ids": [
+      "S103",
+      "S104",
+      "S105",
+      "S106"
+    ],
+    "topic": "媒介范围",
+    "note": "AA脸谱故事可以沿用东方妖怪人物身体与寿命，不自动属于饼馅生命生态。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R311",
+    "source_ids": [
+      "S88",
+      "S100"
+    ],
+    "topic": "版本差异",
+    "note": "Mountain旧商店提30种，2026-07-22开发商2.0公告为54种；记录公告版本，非运行验证。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R312",
+    "source_ids": [
+      "S31",
+      "S89",
+      "S85",
+      "S121"
+    ],
+    "topic": "去重与同名",
+    "note": "日英Miurabo游戏是同一作品；Atami-lab《日記》不可和其他3D《にっき》合并，あーもんど《ライフ》也须按作者区分。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R313",
+    "source_ids": [
+      "S72",
+      "S78",
+      "S79",
+      "S80",
+      "S81",
+      "S82",
+      "S92"
+    ],
+    "topic": "阅读范围",
+    "note": "出版书目、封面和一话公开四格分别记录；未显示的汉化图片与试读失败不算整本已读。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R314",
+    "source_ids": [
+      "S109",
+      "S113"
+    ],
+    "topic": "完结标签",
+    "note": "《ゆっくりを飼う》平台标完结但故事仅两短篇；《ゆっくりが、きた》仍连载，复更许诺不能当已复更。",
+    "evidence_scope": "仅以上具体作品/页面；归纳部分为研究判断",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  },
+  {
+    "id": "R315",
+    "source_ids": [
+      "S77",
+      "S102",
+      "S126"
+    ],
+    "topic": "水耐性与洗澡例外",
+    "note": "《ゆっくりのいる生活》同时出现怕雨、可饮水和洗澡；蕾米前篇可摘帽洗澡；医生本篇明确写温水浸泡例外。不能将某百科的怕水写成所有作品一碰水即死。",
+    "evidence_scope": "各篇具体描写；温度、身体类型和时长条件未统一量化",
+    "review_status": "pending",
+    "adoption_status": "not_adopted"
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "recorded_at_utc": "2026-10-28T21:08:53.478586+08:00",
+  "status": "paused; native Goal confirmed at2026-10-28T13:14:53Z; original full playable goal remains incomplete",
+  "window_start_utc": "2026-10-28T07:14:21Z",
+  "deadline_utc": "2026-10-28T13:14:21Z",
+  "native_duration_timer": false,
+  "checks": [
+    {
+      "kind": "continuity",
+      "file": "mixed-continuity-01.json",
+      "total": 98,
+      "passed": 98,
+      "sha256": "8F7CC61BDB4B8DE70ACDA552EA8BEFD9E5BB926E489814F8CF1F4BCA29502700"
+    },
+    {
+      "kind": "geometry",
+      "file": "fixture-geometry-02.json",
+      "total": 57,
+      "passed": 57,
+      "sha256": "2B3A7618C82A1C9E3839E0184F3DAF5CE6FD53EE4DD1A1656E1F0C9F3B703342"
+    },
+    {
+      "kind": "interaction",
+      "file": "interaction-regression-20.json",
+      "total": 48,
+      "passed": 48,
+      "sha256": "FFC2EAA279ED58D09EE22D771077734160BD112BF159DA873F9ED86D3B62A335"
+    }
+  ],
+  "shared_regression": {
+    "logs": [
+      "milestone-regression-04.log",
+      "simulation-regression-04.log"
+    ],
+    "simulation": 33,
+    "milestone": 63
+  },
+  "historical_save": {
+    "samples": 1,
+    "file": "save-compat-11/result.json",
+    "simulated_seconds": 120,
+    "all_save_compatibility_proven": false
+  },
+  "build_log": "game-build-final-04.log",
+  "images": [
+    "cry-brow-after.png",
+    "dressing-source.png",
+    "ball-source.png",
+    "meal-source.png",
+    "spoon-source.png",
+    "cookie-source.png",
+    "care-source.png",
+    "needle-source.png",
+    "treasure-source.png",
+    "box-source-03.png",
+    "heat-tool-source.png"
+  ],
+  "missing_images": [],
+  "frozen_inventory": [
+    {
+      "path": "Play Interaction Preview.cmd",
+      "length": 75,
+      "last_write_utc": "2026-10-27T18:02:57.9361739Z",
+      "sha256": "2C8A2FAA96C6573E5037F7CF847AD986B1E4D2BC747196F4818E848DD4929B05"
+    },
+    {
+      "path": "builds/playtest/HI01-art03-20261028/Yukkuri.exe",
+      "length": 91761664,
+      "last_write_utc": "2026-10-27T18:01:46.7985568Z",
+      "sha256": "449A762C72AC276A360FAD26BA199E117363C73EBBD65904F3B59D84CA77F4FA"
+    },
+    {
+      "path": "builds/playtest/HI01-art03-20261028/Yukkuri.pck",
+      "length": 15886384,
+      "last_write_utc": "2026-10-27T18:01:19.8631387Z",
+      "sha256": "3FA668FA5B3014C97DCBECBA7D8A4763F244D24D86A1E9BD5BA979D52AEFB964"
+    }
+  ],
+  "frozen_hash_scope": "Current identity and timestamps; no pre-window full binary hash baseline was captured",
+  "native_validation": "not run",
+  "new_playable_package": false,
+  "full_original_goal_completed": false,
+  "mixed_sequence_audit": {
+    "seeds": 12,
+    "attempts": 1440,
+    "accepted": 916,
+    "scope": "Pure simulated state invariants only, not native play or full action coverage"
+  }
+}
