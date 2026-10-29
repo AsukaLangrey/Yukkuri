@@ -1,0 +1,831 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "run_id": "20261029T203626Z-281d0cf63c87-c09-env",
+  "runner": "dot",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_branch": "main",
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "source_tree": "b744d40f68c312910e6dcdecf1d291b2e262a612",
+  "request_revision": "dot-v15-interaction-depth-I-20261030",
+  "request_sha256": "75b83fe65b776beadba9ae2630e56f56649551d6d339d736ca1dd979df92a59e",
+  "protocol_sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+  "source_worktree_clean": null,
+  "started_at": "2026-10-29T20:36:26Z",
+  "finished_at": "2026-10-29T20:42:29.801292+00:00",
+  "retry_of": null,
+  "supersedes": null,
+  "environment": {
+    "id": "alice-cloud-linux-04b471b939c9",
+    "id_kind": "Locally observed current container hostname; not a provider-assigned or registered user-computer environment ID",
+    "provider_environment_id": null,
+    "container_hostname": "04b471b939c9",
+    "boot_identity_sha256": "bced70e00d578cf481f701059eec582351b184ab01a72660cf73775a42c7d998",
+    "os": "Debian GNU/Linux13.6; Linux6.18.55; x86_64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logical_processors": 9,
+    "gpu": "not inspected this round",
+    "driver": "not inspected this round",
+    "dotnet": "Exact previous10.0.402 binary missing; no dotnet on PATH",
+    "godot": "Exact previous4.7.2mono binary missing; PATH link names4.6.3, not executed or substituted",
+    "display": "Not inspected; no current game/window/image acceptance",
+    "desktop_observation_authorized": true,
+    "user_development_machine_used": false
+  },
+  "status": "blocked",
+  "summary": "源码与v15请求未变；当前云工作区缺失此前源码缓存、精确.NET10.0.402/Godot4.7.2mono与本地回执。本轮没有运行项目或重试确定失败，独立记录新的环境阻挡；c08仍为最后完整测试基线，失败未关闭。",
+  "checks": [
+    {
+      "id": "repository-and-dedup-preflight",
+      "status": "passed",
+      "command": "GitHub connector GET main ref, immutable source commit/request/instructions, results ref/latest and immutable c08 report",
+      "working_directory": null,
+      "started_at": "2026-10-29T20:36:26Z",
+      "finished_at": "2026-10-29T20:38:03.514450+00:00",
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "reason": "Metadata reads only: unchanged main281d0cf/v15, existing c08 failed baseline and matching report blob. This is not a test pass.",
+      "evidence": [
+        "evidence/github-metadata.json",
+        "evidence/initial-preflight.json"
+      ]
+    },
+    {
+      "id": "cloud-environment-availability",
+      "status": "blocked",
+      "command": "python3 /workspace/shared/yukkuri-cloud-20261029T203626-281d0cf-env/probe-environment.py",
+      "working_directory": "/workspace/scratch/31f78fd1d54c",
+      "started_at": "2026-10-29T20:40:02.785048+00:00",
+      "finished_at": "2026-10-29T20:40:02.788409+00:00",
+      "exit_code": 0,
+      "passed_count": null,
+      "failed_count": null,
+      "reason": "Read-only probe succeeded but prior source copy, exact .NET10.0.402 and Godot4.7.2mono paths and local publication receipts are absent. PATH has no dotnet; Godot symlink points to4.6.3 non-mono named path, not an authorized substitution.",
+      "evidence": [
+        "evidence/environment-probe.json"
+      ]
+    },
+    {
+      "id": "lfs-integrity",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "game-build",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Simulation.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Milestone.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Input.Intent",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "NaturalLife.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.Continuity",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.AutonomyPriority",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.CompletedNeeds",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "ActorGeometry.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "NaturalLife.Soak",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.Mouth",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.MouthCommunication",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.MouthPresentation",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.PregnancyBoundaries",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.EmergencyIntervention",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Save.Compatibility",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.Depth",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.Injury",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Social",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Reproduction",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.ColdCare",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Aftermath",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Risk",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.InjuryPresentation",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Compatibility",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.CareLearning",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Teaching",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.AdoptionJourney",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.AssistedCare",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Growth",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.StateBoundaries",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Interaction.HumanCompany",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Protection",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "Family.Presentation",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "runtime-smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    },
+    {
+      "id": "visual-interaction-review",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅环境阻断预检，未执行项目。源码/请求无变化，c08确定失败不重复；当前精确工具链与源码缓存缺失，未恢复。旧结果仅见last_complete_test_baseline，不作为本轮结果。",
+      "evidence": [
+        "evidence/environment-probe.json",
+        "evidence/github-metadata.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "cloud-workspace-cache-loss",
+      "classification": "new-environment-blocker",
+      "actual": "Five exact previous paths are absent; no dotnet on PATH; no own project processes.",
+      "interpretation": "Workspace reset/replacement is inferred, exact cause/time unknown. Same OS/kernel does not prove same persistent workspace.",
+      "evidence": [
+        "evidence/environment-probe.json"
+      ]
+    },
+    {
+      "id": "unchanged-terminal-product-baseline",
+      "classification": "deduplication",
+      "actual": "Source281d0cf/requestv15 and c08 report blob unchanged.",
+      "interpretation": "No deterministic failure retry. New blocked report does not replace or invalidate c08 failure findings.",
+      "evidence": [
+        "evidence/github-metadata.json"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": "evidence/environment-probe.json",
+      "sha256": "ef4b461c27a712b198bd754a3839fe886d908ea0df72d47ef2ce1f9ee0544689",
+      "bytes": 3097
+    },
+    {
+      "path": "evidence/github-metadata.json",
+      "sha256": "129da68589c089eb14ae4b9898df824af449eb969d7e66edbc9b8db23e6bee8b",
+      "bytes": 3131
+    },
+    {
+      "path": "evidence/initial-preflight.json",
+      "sha256": "dd7aa10abaff02fe89b6b2aebfbd86219f5f8b22237b29efb366f10e642781fd",
+      "bytes": 3469
+    },
+    {
+      "path": "evidence/source-reference/AGENTS.md",
+      "sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285",
+      "bytes": 1584
+    },
+    {
+      "path": "evidence/source-reference/testing/DOT-HANDOFF.md",
+      "sha256": "65db09ce7b87f113b0b312eee46a6559f1d0aaba6813f1ef7389b6901ad90319",
+      "bytes": 1859
+    },
+    {
+      "path": "evidence/source-reference/testing/PROTOCOL.md",
+      "sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+      "bytes": 8127
+    },
+    {
+      "path": "evidence/source-reference/testing/report-template.json",
+      "sha256": "8ffef1deec11c581cae798583d79674a62ef766b5e7b642003c0febdb3397701",
+      "bytes": 1507
+    },
+    {
+      "path": "evidence/source-reference/testing/request.json",
+      "sha256": "75b83fe65b776beadba9ae2630e56f56649551d6d339d736ca1dd979df92a59e",
+      "bytes": 28801
+    }
+  ],
+  "limitations": [
+    "No source materialization/build/check/game/import/render/UI/audio execution in this round.",
+    "No new LFS or historical-save acquisition attempt; current local originals unavailable, remote originals not re-audited.",
+    "Built-in cloud provider environment ID is not exposed; environment.id is explicitly a locally observed container hostname identity, not a registered developer-machine ID.",
+    "No environment restoration performed; future changed source requires exact authorized toolchain/source recovery first.",
+    "Original c08 local receipts are missing now, but prior complete publication was confirmed and immutable remote report was read back again."
+  ],
+  "next_action": "保留c08失败基线。下一次关注源码/配置变化时，先恢复并校验独立云端源码与官方精确工具链，再构建和测试；不得静默用Godot4.6.3代替4.7.2mono。",
+  "template_sha256": "8ffef1deec11c581cae798583d79674a62ef766b5e7b642003c0febdb3397701",
+  "agents_sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285",
+  "report_kind": "environment-preflight-only-no-product-test",
+  "last_complete_test_baseline": {
+    "run_id": "20261029T194053Z-281d0cf63c87-c08",
+    "results_commit": "f6fa6fd72d00f9103eb7c6f42abf14cbf503678c",
+    "report_path": "testing/results/dot/20261029T194053Z-281d0cf63c87-c08/report.json",
+    "report_git_blob": "b6627d3f086b17e20220b77618e3f47ba1b8ba57",
+    "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+    "status": "failed",
+    "actual_assertions": {
+      "passed": 918,
+      "failed": 2
+    },
+    "additional_check_compilation_failures": 2,
+    "planned_cases_not_executed": 28,
+    "game_build_errors": 3,
+    "is_historical": true,
+    "failures_closed_by_this_report": false
+  },
+  "baseline_preservation": {
+    "supersedes_prior_test": false,
+    "c08_files_modified": false,
+    "latest_semantics": "Latest points to this new environment report; last_complete_test_baseline remains c08. No c09 product result replaces c08."
+  },
+  "initial_snapshot_note": "initial-preflight.json records the initial metadata-only skip decision at20:38:03 before a separate report was prepared for the newly confirmed environment regression; no project execution occurred before or after that snapshot.",
+  "new_test_process_count": 0,
+  "current_assertion_counts": {
+    "passed": 0,
+    "failed": 0,
+    "meaning": "No assertions executed; zero is not a pass."
+  },
+  "source_materialization": {
+    "performed": false,
+    "local_source_exists": false,
+    "identity_source": "Immutable GitHub commit/tree metadata only"
+  },
+  "deduplication": {
+    "watched_paths_changed": false,
+    "request_revision_changed": false,
+    "material_environment_recovery": false,
+    "new_material_environment_regression": true,
+    "decision": "No repeated project tests; append environment-only blocker report"
+  },
+  "run_timeout_minutes": 50
+}

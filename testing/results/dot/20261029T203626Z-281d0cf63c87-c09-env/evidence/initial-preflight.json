@@ -1,0 +1,63 @@
+{
+  "checked_at": "2026-10-29T20:38:03.336Z",
+  "round_label": "2026-10-29T20:40:00Z",
+  "actual_started_at": "2026-10-29T20:36:26Z",
+  "deadline": "2026-10-29T21:26:00Z",
+  "repository": "AsukaLangrey/Yukkuri",
+  "main": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "source_tree": "b744d40f68c312910e6dcdecf1d291b2e262a612",
+  "results_head": "f6fa6fd72d00f9103eb7c6f42abf14cbf503678c",
+  "latest": {
+    "schema_version": 1,
+    "run_id": "20261029T194053Z-281d0cf63c87-c08",
+    "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+    "report_path": "testing/results/dot/20261029T194053Z-281d0cf63c87-c08/report.json",
+    "status": "failed",
+    "finished_at": "2026-10-29T19:56:18.734168+00:00"
+  },
+  "request_revision": "dot-v15-interaction-depth-I-20261030",
+  "request_blob": "22ef3e60d8ebd400573c2052bdeb15617c15e930",
+  "instruction_blobs": {
+    "AGENTS.md": "c88fc0bbcdbd45949d2dc701deafc62b18cc567a",
+    "testing/PROTOCOL.md": "8a27583fe3d5e51521a646536f6eb9ce52bf913a",
+    "testing/DOT-HANDOFF.md": "ff6d5c0f3435a15abcd4f2c8e405a07bcadc61c2",
+    "testing/report-template.json": "b792bb75b31a03630c9f794384d3a7b451122f11"
+  },
+  "remote_report_blob": "b6627d3f086b17e20220b77618e3f47ba1b8ba57",
+  "remote_report_matches_last_verified_blob": true,
+  "watched_source_changes": false,
+  "material_environment_recovery": false,
+  "status": "skipped-no-watched-change",
+  "reason": "Same immutable source and v15 request already have terminal c08 report. No material environment recovery. Do not repeat known compile/assertion failures.",
+  "environment": {
+    "os": "Debian GNU/Linux13.6;Linux6.18.55;x86_64",
+    "prior_source_path_missing": true,
+    "prior_exact_dotnet_path_missing": true,
+    "prior_exact_godot_mono_path_missing": true,
+    "prior_lock_path_missing": true,
+    "prior_upload_state_files_missing": true,
+    "pending_state_scan": "No upload-state.json/pending-manifest.json/round-lifecycle.json found under current /workspace/shared depth4 before new preflight creation.",
+    "active_process_scan": "No matching own Godot/build/pure-test/engine/lock process seen at20:36:36 UTC.",
+    "on_path_dotnet": false,
+    "on_path_godot": true,
+    "on_path_godot_version_or_mono_capability": "Not verified; must not substitute it for pinned verified toolchain.",
+    "interpretation": "Workspace appears freshly replaced/reset; cause not independently verified. Missing caches are regression, not recovery."
+  },
+  "pending_uploads": {
+    "known_prior_pending": false,
+    "remote_last_c08_verified": true,
+    "local_history_unavailable": true,
+    "note": "c07/c08 were fully uploaded and read back before prior turn completion. Their local cache/receipts are now absent. This observation does not claim recovery of every former local file."
+  },
+  "actions": {
+    "tests_started": false,
+    "game_started": false,
+    "product_files_modified": false,
+    "external_writes": false,
+    "new_report_created": false,
+    "task_schedule_modified": false
+  },
+  "next_action": "On next watched source/config change, materialize a new verified source copy and restore exact authorized official toolchain/cache before testing; do not treat missing local files as a reason to re-run unchanged deterministic failures.",
+  "local_preflight_lock": "New lock file created only after noting previous file absence; exclusive acquired for local preflight save; released after save.",
+  "finished_at": "2026-10-29T20:38:03.514450+00:00"
+}

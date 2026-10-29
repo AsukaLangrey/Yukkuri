@@ -1,0 +1,49 @@
+{
+  "checked_at": "2026-10-29T20:36:36.517Z",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "source_tree": "b744d40f68c312910e6dcdecf1d291b2e262a612",
+  "results_head": "f6fa6fd72d00f9103eb7c6f42abf14cbf503678c",
+  "latest": {
+    "schema_version": 1,
+    "run_id": "20261029T194053Z-281d0cf63c87-c08",
+    "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+    "report_path": "testing/results/dot/20261029T194053Z-281d0cf63c87-c08/report.json",
+    "status": "failed",
+    "finished_at": "2026-10-29T19:56:18.734168+00:00"
+  },
+  "request_revision": "dot-v15-interaction-depth-I-20261030",
+  "request_git_blob": "22ef3e60d8ebd400573c2052bdeb15617c15e930",
+  "baseline_report_git_blob": "b6627d3f086b17e20220b77618e3f47ba1b8ba57",
+  "baseline_report_path": "testing/results/dot/20261029T194053Z-281d0cf63c87-c08/report.json",
+  "baseline_report_url": "https://github.com/AsukaLangrey/Yukkuri/blob/f6fa6fd72d00f9103eb7c6f42abf14cbf503678c/testing/results/dot/20261029T194053Z-281d0cf63c87-c08/report.json",
+  "baseline_status": "failed",
+  "baseline_summary": "完整游戏构建 failed，0警告/3错误；33个项目调用中31个进入用例；实际断言918通过/2失败；另2个编译失败，28个计划案例未执行。构建失败，本轮导入、运行、原生UI、引擎接触/渲染与试听均未执行，无当前图像验收。素材与历史样本仍有缺项，不是整体验收。",
+  "baseline_pure_assertion_totals": {
+    "passed": 918,
+    "failed": 2,
+    "counting_unit": "Actual executed top-level assertions/scenarios only; excludes compiler diagnostics and unexecuted source cases."
+  },
+  "baseline_compile_failures": [
+    {
+      "check_id": "Family.PregnancyBoundaries",
+      "exit_code": 1,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]"
+      ],
+      "source_planned_named_cases_not_executed": 12
+    },
+    {
+      "check_id": "Family.AssistedCare",
+      "exit_code": 1,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Program.cs(152,17): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Family.AssistedCare.csproj]"
+      ],
+      "source_planned_named_cases_not_executed": 16
+    }
+  ],
+  "note": "Historical terminal c08 evidence, read back from immutable results commit. Not new test execution; its failures remain open. c09 does not supersede it.",
+  "main_at_report_check": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "results_head_before_c09": "f6fa6fd72d00f9103eb7c6f42abf14cbf503678c",
+  "final_metadata_checked_at": "2026-10-29T20:42:29.661Z"
+}
