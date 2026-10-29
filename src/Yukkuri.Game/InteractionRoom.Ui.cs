@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 using Yukkuri.Simulation;
+using Expression = Yukkuri.Simulation.Expression;
 
 public partial class InteractionRoom
 {
@@ -69,7 +70,7 @@ public partial class InteractionRoom
         {string id=entry.Item2;_quickTools.AddChild(Button(entry.Item1,()=>SelectGroup(InteractionCatalog.Groups.Single(g=>g.Id==id))));}
         _groupList=Column(toolLists,6);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         left.AddChild(Button("展开 / 收起全部工具",()=>{_browseTools=!_browseTools;RefreshToolBrowser();}));
-        left.AddChild(Text("空手按住轻摸，Shift 托起。\n食水可拿起、递到嘴边或放下。\n右键收手；双击近看。",12,"7c8876"));
+        left.AddChild(Text("右键切回空手。\n按住身体轻拖；Shift＋按住托起。\n空手拿食水、推球；双击近看。",12,"7c8876"));
 
         _rightPanel=Panel(_ui);_rightPanel.AnchorLeft=1;_rightPanel.AnchorRight=1;_rightPanel.AnchorBottom=1;
         _rightPanel.OffsetLeft=-274;_rightPanel.OffsetRight=-14;_rightPanel.OffsetTop=88;_rightPanel.OffsetBottom=-218;
@@ -149,15 +150,13 @@ public partial class InteractionRoom
     private void DisarmTool()
     {
         CancelGesture();_toolArmed=false;
-        _title.Text=Sim?.Selected?.Interaction.Carried==true?"托着 · 先看看它":"空手 · 先看看它";
-        _hint.Text=Sim?.Selected?.Interaction.Carried==true?"托举支撑仍在。在空地上点一下放稳。":"按住身体轻拖，移动越快接触越重。Shift＋按住托起，松开在空地放稳；双击近看。";
         _message=Sim?.Selected?.Interaction.Carried==true?"仍在稳稳托着它。在空地上点一下放稳。":"手已经收回。可以观察它自己生活，也可以直接轻轻接触。";
         foreach(var child in _choiceList.GetChildren())if(child is Button b)
         {b.AddThemeStyleboxOverride("normal",RoomStyle("eae9d9",8,9));b.AddThemeColorOverride("font_color",new Color("405247"));}
         RefreshRoomUi();
     }
     private void SelectOil(string id)
-    {CancelGesture();Sim.State.SelectedId=id;_message="正在看着"+Sim.Selected!.Name+"，把工具移到想接触的位置。";RefreshRoomUi();}
+    {CancelGesture();Sim.State.SelectedId=id;_message="正在观察"+Sim.Selected!.Name+"。";RefreshRoomUi();}
     private void ToggleClose()
     {
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
@@ -175,20 +174,34 @@ public partial class InteractionRoom
     {
         if(_who==null||Sim==null)return;
         var c=Sim.Selected;if(c==null)return;var i=c.Interaction;
+        if(!_toolArmed)
+        {
+            _title.Text=i.Carried?"托着 · 先看看它":"空手 · 先看看它";
+            _hint.Text=i.Carried?"在安全空地点一下放稳；Shift＋按住身体继续托举，按住时可用 Shift＋滚轮调高度。":"按住身体轻拖；Shift＋按住托起，拖到安全空地松开放稳。空手按住食水拿起，递到嘴边或放下；双击近看。";
+        }
         _who.Text=c.Name+(c.IsYoung?" · 小小油":c.Body.SpeciesId=="marisa"?" · 魔理沙":" · 灵梦");
+        string intake=i.NaturalIntakePending?i.EatingKind==IntakeKind.Water?"准备喝这一口":"准备取这一口":
+            i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":i.GroundIntake&&i.GroundIntakeKind==RoomObjectKind.Leaves?"慢慢嚼着叶子":"慢慢嚼着这一口";
+        string activity=i.EatingRemaining>0?intake:i.Resting?"慢慢休息":WorldSimulation.CanSelfMove(c)?c.Activity:"暂时无法自己挪动";
         string state=c.Condition==PhysicalCondition.Dead?"不再回应了":c.Condition==PhysicalCondition.Critical?"身体状态很差，急需护理":
-            i.Carried?"正在被托着":i.Restraint switch{RestraintKind.Box=>"留在关着的箱子里",RestraintKind.Frame=>"被固定具限制着",RestraintKind.Hanging=>"留在悬挂装置上",RestraintKind.Wrap=>"被软布包裹着",RestraintKind.Hand=>"被手按住",_=>i.Supine?"身体翻了过来":WorldSimulation.CanSelfMove(c)?c.Activity:"暂时无法自己挪动"};
-        string needs=c.Fullness<22?"肚子瘪瘪的，常常看着食物。":c.Fullness>90?"肚子圆圆的，暂时不想再吃。":c.Energy<30?"动作慢了，有些疲倦。":"";
-        if(i.Hydration<25)needs+=(needs.Length>0?"\n":"")+"常常抿嘴，正在找水喝。";
-        if(i.Digestion.Symptomatic)needs+=(needs.Length>0?"\n":"")+"肚子不舒服，动作慢下来；留意吃喝和休息。";
-        if(i.PendingConversation.HasValue)needs+=(needs.Length>0?"\n":"")+(i.EatingRemaining>0?"嘴里还有这一口，正在等它咽下再回应。":"已听见你的话，等它慢慢回应。 ");
+            i.Falling?"正在下落":i.Carried?"正在被托着":i.Restraint switch{RestraintKind.Box=>"留在关着的箱子里",RestraintKind.Frame=>"被固定具限制着",RestraintKind.Hanging=>"留在悬挂装置上",RestraintKind.Wrap=>"被软布包裹着",RestraintKind.Hand=>"被手按住",_=>i.Supine?"身体翻了过来":activity};
+        if(c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering&&!i.Falling&&
+            (i.Carried||i.Restraint!=RestraintKind.None||i.Supine)&&(i.EatingRemaining>0||i.Resting))state+=" · "+activity;
+        string needs=c.Fullness<22?"肚子饿了，想吃一点。":c.Fullness>90?"肚子圆圆的，暂时不想再吃。":"";
+        if(c.Energy<30)needs+=(needs.Length>0?"\n":"")+"有些疲倦，需要休息。";
+        if(i.Hydration<25)needs+=(needs.Length>0?"\n":"")+"口渴了，需要喝一点水。";
+        if(i.Digestion.Symptomatic)needs+=(needs.Length>0?"\n":"")+(i.Digestion.CareRemaining>0?"肚子不适已经照护，仍需吃喝和休息。":"肚子不舒服，留意吃喝和休息。");
+        if(i.PendingConversation.HasValue)needs+=(needs.Length>0?"\n":"")+(i.EatingRemaining>0?"等这一口咽下后再回应，不必重复催它。":i.Resting?"正在歇着，等它慢慢回应。":"已听见你的话，等它慢慢回应。");
         foreach(var clue in InteractionSurfaceObservation.Describe(i))needs+=(needs.Length>0?"\n":"")+clue+"。";
-        string mood=c.Fear>60?"看到手靠近，会先缩一下。":!i.HasAccessory?
-            (i.Accessory.BorrowedForCare?"视线跟着借给你整理的饰品，等着戴回去。":"皱着眉，一直留意自己的饰品。"):
-            i.Accessory.Integrity<90?"仍在意饰品上的破损。":c.Resentment>40?"嘴上不服气，还在留意你的动作。":c.Trust>65?"会主动抬脸看向你。":"它正在慢慢熟悉你。";
+        string mood=c.Pain>25||c.Expression==Expression.Hurt?"身体还在疼，需要照护。":
+            c.ReactionRemaining>0&&c.Expression==Expression.Calling?"正在请求帮助，先听听它需要什么。":
+            c.ReactionRemaining>0&&i.ReactionRefused?"这次不愿意继续，先给它一点空间。":
+            c.Fear>60?"它还有些害怕，先留一点距离。":i.Resting?"先让它安静歇一会儿。":!i.HasAccessory?
+            (i.Accessory.BorrowedForCare?"等你整理好饰品，再帮它戴回去。":"还惦记着离开头顶的饰品。"):
+            i.Accessory.Integrity<90?"仍在意饰品上的破损。":c.Resentment>40?"它还有些不满。":c.Trust>65?"它对你比较放心。":"它正在慢慢熟悉你。";
         string accessory=i.HasAccessory?(i.Accessory.Integrity<70?"饰品有破损，仍戴在头上。":"饰品好好地戴着。"):
             i.Accessory.Integrity<=0?"原来的饰品已经损坏。":i.Accessory.Place switch{AccessoryPlace.Stored=>"饰品被收起来了。",AccessoryPlace.Hung=>"饰品挂在高处。",_=>"饰品离开了头顶。"};
-        _condition.Text=state+"\n\n"+mood+(needs.Length>0?"\n"+needs:"")+"\n\n"+accessory+
+        _condition.Text=c.Condition==PhysicalCondition.Dead?state+"\n\n"+accessory:state+"\n\n"+mood+(needs.Length>0?"\n"+needs:"")+"\n\n"+accessory+
             (i.FootIntegrity<70?"\n"+(i.FootTreated?"伤处已经护理，仍需慢慢养好。":"移动部位不舒服，需要看看。") :"");
         _memory.Text=c.PersonalMemories.Count==0?"还没有一起经历很多事。":string.Join("\n\n",c.PersonalMemories.TakeLast(3).Reverse().Select(m=>m.Text));
         _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
@@ -199,7 +212,7 @@ public partial class InteractionRoom
         _forceSlider.Visible=_toolArmed&&InteractionCatalog.UsesForce(_action);
         _forceLabel.Visible=_forceSlider.Visible||_mouseHeld&&_action==InteractionAction.Touch;
         _feedback.Text=_message;
-        _speechLabel.Text=c.ReactionRemaining>0&&c.Speech.Length>0?c.Name+"：「"+c.Speech+"」":c.Name+" · "+(i.Carried?"稳稳托着":state.Length>0?state:"正安静地看着四周");
+        _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&c.Speech.Length>0?c.Name+"：「"+c.Speech+"」":c.Name+" · "+state;
     }
 
     private void OpenModal(string title)
@@ -213,16 +226,15 @@ public partial class InteractionRoom
     private void ShowHelp()
     {
         OpenModal("先慢慢熟悉它");
-        _modalContents.AddChild(Text("1  空手按住身体就能轻摸。移动越快，接触越重；快速移动后在接触中急停，会产生冲击。仅仅把鼠标移过去不会碰它。"));
-        _modalContents.AddChild(Text("2  Shift＋按住可以托起，拖到空地松开放稳。拿起地上的食物或水，按住递到嘴边，等它接下一口；移到空地松开则放下。右键取消会把剩余食水放回原处。"));
-        _modalContents.AddChild(Text("3  空手时双击小油，或按 Tab 近看；使用工具时双击仍是连续操作。近看暂停自然时间，回到小院才能看取食、跟随、休息与伤势恢复。"));
+        _modalContents.AddChild(Text("1  右键或点“空手”收回工具。空手按住身体轻拖就能摸；移动越快，接触越重，快速接触后急停会产生冲击。只把鼠标移过去不会碰它。"));
+        _modalContents.AddChild(Text("2  空手 Shift＋按住身体托起，拖到安全空地松开放稳。落点被占用或看不见时继续托着，在空地再点一下放稳。抱抱工具松开后仍托着，可选“放稳”点落点，或切回空手再放。按住托举时 Shift＋滚轮调高度。"));
+        _modalContents.AddChild(Text("3  空手按住地上的食物或水拿起，递到嘴边等它接一口；移到空地松开则放下。右键把剩余食水放回原处。要让它自己吃，可从“食物与清水”选择放置，再点空地。"));
+        _modalContents.AddChild(Text("4  空手双击小油，或按 Tab 近看；使用工具时双击仍是操作工具。近看暂停自然时间，回到小院才继续自主找食水、跟随、休息和恢复。中键拖动转视角，滚轮调远近，“正面”恢复视角。转镜头会先收手，托举仍保持支撑。"));
+        _modalContents.AddChild(Text("5  空手按住软球，拖动后松开推球。跟随练习时移动鼠标指路，不用操作人类角色。空格暂停；Del 收起指向的可收纳物品，树叶、河水和软垫不能收起。"));
+        _modalContents.AddChild(Text("6  固定具、箱子和悬挂装置要用各自的解除动作；切回空手不会解除装置。脚脚受伤时，把食水放到能吃到的地方，再护理和休息。左右脸可以分别擦洗和护理。"));
         _modalContents.AddChild(Text("招呼、夸奖、安慰不必连点。嘴里有食物时会先咽下再回应，歇着时也可能慢一点；先看它的表情和回应。",13,"78816e"));
-        _modalContents.AddChild(Text("近看时，中键拖动可绕到侧面和背面，滚轮拉近拉远，点“正面”恢复视角。转镜头会先收手，托举仍保留支撑。左右脸可以分别擦洗和护理。",13,"78816e"));
-        _modalContents.AddChild(Text("4  用抱抱工具托起时，松开仍保留支撑；空手 Shift 托起时，在安全空地松开会放稳。落点被占用或看不见时继续托着，在空地再点一下放稳。"));
-        _modalContents.AddChild(Text("5  跟随练习时，移动鼠标给它指路。平时不用操作人类角色。滚轮调整远近，空格暂停，Del 收起指向的物品。"));
-        _modalContents.AddChild(Text("6  固定、箱子、悬挂要用各自的解除动作。解除工具不会抹掉伤势；脚脚受伤后，先把食物放到能吃到的地方，再护理和休息。"));
-        _modalContents.AddChild(Text("工具的基础力度会分别记住，实际接触速度也会影响作用。没必要每次选摸摸：空手就能操作。更多言语、照护和装置在手边物品里。",13,"78816e"));
-        _modalContents.AddChild(Text("树叶和河水可以自己取用，但吃喝后可能生病。它不信任你时更愿意自己找；把干净食水放下并退开，给它一点观察的时间。",13,"78816e"));
+        _modalContents.AddChild(Text("工具的基础力度分别记住，实际接触速度也会影响作用。更多言语、照护和装置在“展开 / 收起全部工具”里。",13,"78816e"));
+        _modalContents.AddChild(Text("不用一直逗它：它会自己找食水、休息和活动。树叶和河水也能自己取用，但吃喝后可能不舒服。把干净食水放下并收手，给它一点时间。",13,"78816e"));
         _modalContents.AddChild(Text("饭饭和护理用品在这个试玩场景中不限量。每分钟自动保存；读档不计算离线时间。",13,"78816e"));
         _modalContents.AddChild(Button("回到小院",CloseModal));
     }
@@ -231,14 +243,18 @@ public partial class InteractionRoom
         OpenModal("存档与设置");
         _modalContents.AddChild(Text("相处小院使用独立存档，保存各自的身体、饰品和经历。",14));
         var slots=Row(_modalContents);for(int n=1;n<=3;n++){int slot=n;slots.AddChild(Button("槽位 "+n,()=>{_slot=slot;ShowSettings();},n==_slot));}
-        var actions=Row(_modalContents);actions.AddChild(Button("保存到槽位 "+_slot,()=>{SaveRoom(_slot);CloseModal();}));actions.AddChild(Button("读取槽位 "+_slot,()=>LoadRoom(_slot)));
+        var actions=Row(_modalContents);actions.AddChild(Button("保存到槽位 "+_slot,()=>{if(SaveRoom(_slot))CloseModal();else ShowModalMessage(_message);}));actions.AddChild(Button("读取槽位 "+_slot,()=>LoadRoom(_slot)));
         _modalContents.AddChild(Button("读取最近的自动存档",()=>LoadRoom(0)));
         _modalContents.AddChild(Button(_muted?"声音：关":"声音：开",()=>{_muted=!_muted;if(_muted)_sound.Stop();ShowSettings();}));
         _modalContents.AddChild(Button(Sim.State.Settings.LethalInjuries?"致命后果：开":"致命后果：关",()=>{Sim.State.Settings.LethalInjuries=!Sim.State.Settings.LethalInjuries;ShowSettings();}));
         _modalContents.AddChild(Button("重新开一间小院",()=>
         {
             OpenModal("重新开始这次相处？");_modalContents.AddChild(Text("当前状态先保存到自动存档，手动槽位保留。新小院的三只油将从初始状态开始。"));
-            _modalContents.AddChild(Button("保存并重新开始",()=>{SaveRoom(0,false);Sim=WorldSimulation.CreateInteractionPlaytest();_recovered=false;_pauseBeforeModal=false;BuildActors();CloseModal();}));
+            _modalContents.AddChild(Button("保存并重新开始",()=>
+            {
+                if(!SaveRoom(0,false)){ShowModalMessage(_message);return;}
+                Sim=WorldSimulation.CreateInteractionPlaytest();_recovered=false;_pauseBeforeModal=false;BuildActors();CloseModal();
+            }));
             _modalContents.AddChild(Button("继续原来的相处",CloseModal));
         }));
         _modalContents.AddChild(Button("回到小院",CloseModal));

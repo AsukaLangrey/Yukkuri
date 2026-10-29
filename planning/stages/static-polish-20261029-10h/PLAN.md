@@ -9,7 +9,7 @@
 - input：`src/Yukkuri.Simulation/ContactMotion.cs`、`src/Yukkuri.Game/ContactStrokeTracker.cs`、`src/Yukkuri.Game/InteractionRoom.Input.cs`，以及本目录 `input.md`。处理真实接触、急停、抽手、切目标与退出边界。
 - life：`src/Yukkuri.Simulation/NaturalLife.cs`、`src/Yukkuri.Simulation/InteractionBehavior.cs`，以及本目录 `life.md`。处理自主需求、目标切换、中断/恢复、信任与求助，避免盲调数值。
 - presentation：`src/Yukkuri.Simulation/InteractionPresentation.cs`、`src/Yukkuri.Simulation/RoomResourceText.cs`、`src/Yukkuri.Game/InteractionRoom.Ui.cs`，以及本目录 `presentation.md`。处理提示、声音选择、状态优先级与操作说明一致性，不在无预览条件下盲调几何。
-- review：源码只读，仅可新增/更新本目录 `review.md`。重点审查存档、结算、状态清理、各任务交界与已有测试覆盖缺口。发现问题提供具体路径、条件及建议。
+- review：源码只读，仅可新增/更新本目录 `review.md`、`review-integration.md`。重点审查存档、结算、状态清理、各任务交界与已有测试覆盖缺口。发现问题提供具体路径、条件及建议。
 - 主对话：其余共享文件、接线、检查源文件、全局文档、测试要求、Git 提交与推送。修改分工内文件前先等任务交回，避免冲突。
 
 ## 每个任务的交付

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v1-20261029",
+  "revision": "dot-v2-static-polish-20261029",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -21,6 +21,14 @@
     "递食饮水位置、自主取食取水及中断",
     "低信任个体的自主解决与求助差异"
   ],
+  "targeted_review_documents": [
+    "planning/stages/static-polish-20261029-10h/input.md",
+    "planning/stages/static-polish-20261029-10h/life.md",
+    "planning/stages/static-polish-20261029-10h/presentation.md",
+    "planning/stages/static-polish-20261029-10h/review.md",
+    "planning/stages/static-polish-20261029-10h/integration.md"
+  ],
+  "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。重点复核保存失败保留进度、损坏主档回退、失焦清理、跟随后自主休息和非选中角色求助声音。",
   "historical_save_fixture": {
     "available_in_repository": false,
     "instruction": "无获准历史样本时报告 blocked，不提交个人存档或伪造历史样本。"

@@ -236,6 +236,19 @@ Check("touch motion measures the contacted surface and cannot be supplied by idl
     tracker.Reset();if(tracker.Sample("a",cheek,new(107,100),new(.12f,0,.5f),1).Distance!=0)return false;
     return tracker.Sample("b",cheek,new(109,100),new(-.3f,0,.5f),1).Distance==0;
 });
+Check("reprojecting a moving pointer separates rubbing from the body's own travel",()=>
+{
+    var tracker=new ContactStrokeTracker();var cheek=Yukkuri.Simulation.BodyPart.Cheek;
+    tracker.Sample("oil",cheek,new(100,100),new(0,0,.5f),1);
+    // The same old pointer now lands at x=.3 because the body/camera moved;
+    // the user's two-pixel motion contributes only the further .02.
+    var stroke=tracker.Sample("oil",cheek,new(102,100),new(.32f,0,.5f),1,
+        previousLocalPoint:new(.3f,0,.5f));
+    if(MathF.Abs(stroke.Distance-.02f)>.00001f)return false;
+    if(tracker.Sample("oil",cheek,new(float.NaN,100),new(.4f,0,.5f),1).Distance!=0)return false;
+    // Invalid input must reseed the next frame, not span the missing sample.
+    return tracker.Sample("oil",cheek,new(104,100),new(.4f,0,.5f),1).Distance==0;
+});
 Check("a camera looking above the horizon cannot place objects behind its ray",()=>
 {
     var origin=new System.Numerics.Vector3(0,1,5);

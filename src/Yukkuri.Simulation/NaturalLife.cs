@@ -143,6 +143,11 @@ public sealed partial class WorldSimulation
                 if(life.Resources.Count>=128)life.Resources.Remove(life.Resources.MinBy(p=>p.Value.SeenAt).Key);
                 life.Resources[obj.Id]=memory=new();
             }
+            if(memory.RegionId!=obj.RegionId||memory.X!=obj.X||memory.Z!=obj.Z)
+            {
+                if(life.ResourceTargetId==obj.Id)ResetNaturalResourceSearch(c);
+                memory.AvoidUntil=0;
+            }
             memory.RegionId=obj.RegionId;memory.Kind=obj.Kind;memory.X=obj.X;memory.Z=obj.Z;
             memory.Available=obj.Portions>0;memory.SeenAt=State.WorldSeconds;
         }
@@ -197,12 +202,17 @@ public sealed partial class WorldSimulation
         var life=c.Interaction;
         bool thirsty=NaturalResources.WantsWater(c),hungry=NaturalResources.WantsFood(c);
         if(life.EatingRemaining>0){c.Activity=life.EatingKind==IntakeKind.Water?"小口喝水":"慢慢嚼这一口";return true;}
-        if(!thirsty&&!hungry){life.ResourceTargetId=null;life.ResourceStuckSeconds=0;return false;}
+        if(!thirsty&&!hungry){ResetNaturalResourceSearch(c);life.HelpWaitingUntil=0;return false;}
         if(life.NaturalBitePause>0){c.Activity="停一小会儿，再看看想吃喝什么";return true;}
         if(!thirsty&&hungry&&DigestiveFoodPause(c))
         {c.Activity="肚子不舒服，歇一会儿再吃";return true;}
         ObserveNaturalResources(c);
         bool hand=SeesHelpingHand(c);
+        if(!hand)
+        {
+            life.HelpWaitingUntil=0;
+            if(life.ReactionPose=="help-look")life.ReactionPoseRemaining=0;
+        }
         double urgent=Math.Min(c.Fullness,life.Hydration);
         if(hand&&State.WorldSeconds-life.LastHelpDecisionAt>=24&&c.ReactionRemaining<=0)
         {
@@ -222,37 +232,47 @@ public sealed partial class WorldSimulation
             }
         }
         if(State.WorldSeconds<life.HelpWaitingUntil&&urgent>=12){c.Activity="看向手，等一小会儿";return true;}
-        ResourceMemory? target=null;double best=double.NegativeInfinity;string? targetId=null;
+        ResourceMemory? target=null;double best=double.NegativeInfinity;string? targetId=null;bool targetUrgent=false;
         foreach(var (id,m) in life.Resources)
         {
             if(m.RegionId!=c.RegionId||!m.Available||m.AvoidUntil>State.WorldSeconds)continue;
             bool water=NaturalResources.IsWater(m.Kind);if(water?!thirsty:!hungry||DigestiveFoodPause(c))continue;
             double need=water?100-life.Hydration:100-c.Fullness;
+            bool urgentNeed=need>85;
             double distance=Distance(c.X,c.Z,m.X,m.Z);
             double score=need*.10-distance*.45-m.Suspicion*.025;
             if(!NaturalResources.IsWild(m.Kind)&&hand&&c.Trust<40&&Distance(m.X,m.Z,State.PlayerX,State.PlayerZ)<1.8)
                 score-=(40-c.Trust)*.15;
             if(id==life.ResourceTargetId)score+=.4;
-            if(score>best){best=score;target=m;targetId=id;}
+            // A less urgent nearby snack must not displace available water (or
+            // food) needed to interrupt rest. Keep normal scoring within a tier.
+            if(target==null||urgentNeed&&!targetUrgent||urgentNeed==targetUrgent&&score>best)
+            {best=score;target=m;targetId=id;targetUrgent=urgentNeed;}
         }
         if(target!=null&&targetId!=null)
         {
-            if(life.ResourceTargetId!=targetId)
+            bool changedTarget=life.ResourceTargetId!=targetId;
+            if(changedTarget)
             {life.ResourceTargetId=targetId;life.ResourceBestDistance=Distance(c.X,c.Z,target.X,target.Z);life.ResourceStuckSeconds=0;c.TargetX=c.X;c.TargetZ=c.Z;}
-            var obj=State.RoomObjects.Find(o=>o.Id==targetId);
+            // The remembered location can guide a search, but looking up its ID
+            // must not reveal a moved source outside current sight or this region.
+            var obj=State.RoomObjects.Find(o=>o.Id==targetId&&o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand&&
+                Distance(c.X,c.Z,o.X,o.Z)<=NaturalResources.SenseRange&&CanSeeResource(c,o));
             double distance=Distance(c.X,c.Z,target.X,target.Z);
             bool distrust=hand&&c.Trust<25&&urgent>=12&&!NaturalResources.IsWild(target.Kind)&&
                 Distance(target.X,target.Z,State.PlayerX,State.PlayerZ)<1.8;
-            if(distrust)
+            if(distrust&&changedTarget)
             {
-                target.AvoidUntil=State.WorldSeconds+3;life.ResourceTargetId=null;
-                c.Activity="先离手远一点，自己找找";return true;
+                // Keep the chosen goal during a brief cautious look. Repeatedly
+                // discarding it would reject the only supply until near starvation.
+                life.HelpWaitingUntil=State.WorldSeconds+1.5;
+                c.Activity="先看一会儿手旁的吃喝";return true;
             }
             if(distance<=NaturalResources.Reach(c)&&obj!=null&&obj.RegionId==c.RegionId&&!obj.Stored&&!obj.HeldByHand&&obj.Portions>0&&
                 Distance(c.X,c.Z,obj.X,obj.Z)<=NaturalResources.Reach(c)&&CanReachRoomFood(c,obj)&&NaturalResources.Consumer(State,obj)==null&&
                 !life.Carried&&!life.Falling&&!life.Supine&&life.Height<=.25)
             {
-                BeginNaturalIntake(c,obj);life.ResourceTargetId=null;life.ResourceStuckSeconds=0;return true;
+                BeginNaturalIntake(c,obj);ResetNaturalResourceSearch(c);return true;
             }
             if(CanSelfMove(c))
             {
@@ -276,10 +296,11 @@ public sealed partial class WorldSimulation
                 else life.ResourceStuckSeconds+=dt;
                 c.Activity=adjusting?"换个站位，试着够到嘴边":NaturalResources.IsWater(target.Kind)?"去找水水":"去找能吃的东西";
                 if(life.ResourceStuckSeconds>=3)
-                {target.AvoidUntil=State.WorldSeconds+30;life.ResourceTargetId=null;life.ResourceStuckSeconds=0;c.Activity="这边过不去，换个地方找";}
+                {target.AvoidUntil=State.WorldSeconds+30;ResetNaturalResourceSearch(c);c.Activity="这边过不去，换个地方找";}
                 return true;
             }
         }
+        if(life.ResourceTargetId!=null)ResetNaturalResourceSearch(c);
         if(!CanSelfMove(c)){c.Activity="想找吃喝，但身体走不开";return false;}
         if(State.WorldSeconds>=life.ExploreUntil||Distance(c.X,c.Z,c.TargetX,c.TargetZ)<.3)
         {
@@ -289,6 +310,26 @@ public sealed partial class WorldSimulation
             c.TargetZ=Math.Clamp(c.Z+Math.Sin(angle)*3.2,-edge,edge);
         }
         RoomMove(c,c.TargetX,c.TargetZ,dt);c.Activity=thirsty?"四处找水水":"四处找能吃的叶子";return true;
+    }
+
+    private static void ResetNaturalResourceSearch(Creature c)
+    {
+        var life=c.Interaction;
+        life.ResourceTargetId=null;life.ResourceBestDistance=100;life.ResourceStuckSeconds=0;
+        life.ExploreUntil=0;
+    }
+
+    private void ResetInterruptedNaturalSearch(Creature c)
+    {
+        var life=c.Interaction;
+        if(!life.Carried&&!life.Falling&&!life.Supine&&life.Restraint==RestraintKind.None&&
+            c.Condition is not (PhysicalCondition.Critical or PhysicalCondition.Dead)&&life.ActiveCue==null&&
+            !(InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy))return;
+        // Also used by presentation: carrying in close-up can relocate the body
+        // without advancing world time. Old approach progress must not survive it.
+        ResetNaturalResourceSearch(c);
+        life.HelpWaitingUntil=0;
+        if(life.ReactionPose=="help-look")life.ReactionPoseRemaining=0;
     }
 
     private bool TryResourceStandingPoint(Creature c,RoomObject source,out (double X,double Z) point)

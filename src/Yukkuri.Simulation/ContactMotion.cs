@@ -51,13 +51,19 @@ public sealed class ContactMotion
         double approachFraction=rawSpeed>0?Math.Clamp(approachSpeed/rawSpeed,0,1):0;
         double effectiveSpeed=rawSpeed*Math.Sqrt(tangentFraction*tangentFraction+Math.Pow(approachFraction*InwardSpeedWeight,2));
         if(!double.IsFinite(effectiveSpeed)){Reset();return default;}
-        Vector3 direction=pointerTravel.LengthSquared()>.000001f?Vector3.Normalize(pointerTravel):Vector3.Zero;
+        Vector3 direction=distance>.000001&&pointerTravel.LengthSquared()>0?Vector3.Normalize(pointerTravel):Vector3.Zero;
         _cooldown=Math.Max(0,_cooldown-seconds);
         double impact=0;
         // Pulling away is not driving into or across the body. Cancel the stroke even
         // while the ray still intersects skin, so its later endpoint cannot become a hit.
-        bool withdrawing=normalSpeed>StoppedSpeed&&normalSpeed>rawSpeed*tangentFraction;
-        if(withdrawing){ClearBrake();_quickSeconds=0;_quickDistance=0;_previousSpeed=0;}
+        bool withdrawing=distance>.000001&&normalSpeed>0&&normalSpeed>rawSpeed*tangentFraction;
+        bool changedDirection=distance>.000001&&_travelDirection.LengthSquared()>.1f&&
+            Vector3.Dot(direction,_travelDirection)<.4f;
+        if(withdrawing||changedDirection)
+        {ClearBrake();_quickSeconds=0;_quickDistance=0;_previousSpeed=0;_travelDirection=Vector3.Zero;}
+        // Even a slow withdrawal breaks the incoming stroke. Its force must not
+        // inherit the filter tail of the preceding fast rub while skin is still hit.
+        if(withdrawing){_forceSpeed=0;effectiveSpeed=0;}
         // A brake is a gesture, not an inference about the user's character or a mouse pressure sensor.
         // It needs an engaged, uninterrupted contact stroke followed by a sharp stop. Release,
         // leaving the body and stalled frames reset the stroke instead of completing a hit.
@@ -84,8 +90,6 @@ public sealed class ContactMotion
         }
         if(rawSpeed>=QuickSpeed&&!withdrawing)
         {
-            if(_travelDirection.LengthSquared()>.1f&&Vector3.Dot(direction,_travelDirection)<.4f)
-            {_quickDistance=0;_quickSeconds=0;}
             _quickSeconds+=seconds;_quickDistance+=distance;_travelDirection=direction;
         }
         else {_quickSeconds=0;_quickDistance=0;}

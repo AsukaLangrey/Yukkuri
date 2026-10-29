@@ -11,6 +11,13 @@ public static class InteractionValidation
         static bool Range(params double[] values) => Finite(values) && values.All(v => v >= 0 && v <= 100);
         Require(s.MilestoneScenario && s.RoomObjects != null && s.InteractionSequence >= 0, "互动世界状态无效");
         var ids = s.Creatures.Select(c => c.Id).ToHashSet();
+        // Validate object structure before pending-intake references inspect its entries.
+        var objectIds = new HashSet<string>();
+        foreach (var o in s.RoomObjects!)
+            Require(o != null && !string.IsNullOrWhiteSpace(o.Id) && objectIds.Add(o.Id) && Enum.IsDefined(o.Kind) &&
+                s.Regions.Any(r => r.Id == o.RegionId) && (o.OwnerId == null || ids.Contains(o.OwnerId)) &&
+                Finite(o.X, o.Z, o.Height, o.VelocityX, o.VelocityZ,o.Contamination) && o.Contamination is >=0 and <=1 && Math.Abs(o.X) <= 9 && Math.Abs(o.Z) <= 9 &&
+                o.Height is >= 0 and <= 5 && o.Portions is >= 0 and <= 1000, "互动场景物品无效");
         var accessoryIds = new HashSet<string>();
         foreach (var c in s.Creatures)
         {
@@ -49,6 +56,7 @@ public static class InteractionValidation
                     learning.Attempts >= 0 && learning.Successes >= 0 && learning.Applications >= 0 &&
                     learning.Successes <= learning.Attempts && learning.Applications <= learning.Successes &&
                     Finite(learning.LastPracticeAt, learning.DemonstrationX, learning.DemonstrationZ), "学习记录无效");
+            Require(i.ActiveCue==null||i.Learning!.ContainsKey(i.ActiveCue.Value),"当前练习缺少学习记录");
             Require(i.Memories!.All(p => !string.IsNullOrWhiteSpace(p.Key) && double.IsFinite(p.Value) && p.Value >= 0 && p.Value <= 100), "互动记忆无效");
             Require(i.SurfaceDirt!=null&&i.SurfaceWetness!=null&&i.SurfaceDirt.Concat(i.SurfaceWetness).All(p=>Enum.IsDefined(p.Key)&&p.Key!=BodyPart.Accessory&&Range(p.Value)),"局部清洁状态无效");
             Require(i.SideDirt!=null&&i.SideWetness!=null&&i.SideDirt.Concat(i.SideWetness).All(p=>InteractionLife.HasPairedSides(p.Key)&&p.Value!=null&&Range(p.Value.Left,p.Value.Right)),"左右清洁状态无效");
@@ -72,11 +80,5 @@ public static class InteractionValidation
                 intake!=null&&double.IsFinite(intake.At)&&intake.At>=0&&intake.At<=s.WorldSeconds+.001&&
                 (intake.SourceId==null||!string.IsNullOrWhiteSpace(intake.SourceId))),"最近吃喝记忆无效");
         }
-        var objectIds = new HashSet<string>();
-        foreach (var o in s.RoomObjects!)
-            Require(o != null && !string.IsNullOrWhiteSpace(o.Id) && objectIds.Add(o.Id) && Enum.IsDefined(o.Kind) &&
-                s.Regions.Any(r => r.Id == o.RegionId) && (o.OwnerId == null || ids.Contains(o.OwnerId)) &&
-                Finite(o.X, o.Z, o.Height, o.VelocityX, o.VelocityZ,o.Contamination) && o.Contamination is >=0 and <=1 && Math.Abs(o.X) <= 9 && Math.Abs(o.Z) <= 9 &&
-                o.Height is >= 0 and <= 5 && o.Portions is >= 0 and <= 1000, "互动场景物品无效");
     }
 }

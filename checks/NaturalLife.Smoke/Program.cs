@@ -66,6 +66,49 @@ Check("a failed follow lesson does not leave permanent following switched on",()
     s.ExecuteInteraction(c.Id,new(InteractionAction.TeachFollow));c.Interaction.CueUnderstood=false;
     Tick(s,2);Require(c.Interaction.ActiveCue==null&&!c.Interaction.FollowPlayer,"failed attempt left a persistent follow order");
 });
+Check("completed follow intent yields to autonomous rest with or without a visible hand",()=>
+{
+    foreach(bool hasHand in new[]{false,true})foreach(bool cushion in new[]{false,true})foreach(bool reload in new[]{false,true})
+    {
+        var s=Fresh();var c=s.Selected!;c.Energy=21;c.Fear=0;c.Pain=0;
+        c.Interaction.FollowPlayer=true;c.Interaction.ActiveCue=null;
+        if(cushion)Source(s,RoomObjectKind.Cushion,0,0);
+        if(reload){s=Reload(s);c=s.Selected!;}
+        for(int n=0;n<100;n++)
+        {
+            if(hasHand)s.SetInteractionHand(2,0,true);
+            Tick(s,.05);
+        }
+        Require(!c.Interaction.FollowPlayer&&c.Interaction.Resting&&c.Energy>21&&
+            c.Interaction.RestRemaining is >0 and <29,"persistent follow prevented actual rest or timer progress");
+    }
+});
+Check("low trust can cautiously use the only supply while the hand remains visible",()=>
+{
+    foreach(var kind in new[]{RoomObjectKind.Meal,RoomObjectKind.Water})
+    {
+        var s=Fresh();var c=s.Selected!;c.Trust=5;c.Fear=0;c.Interaction.LastHelpDecisionAt=0;
+        if(kind==RoomObjectKind.Water)c.Interaction.Hydration=35;else c.Fullness=35;
+        var supply=Source(s,kind,1.5,portions:3);
+        for(int n=0;n<10;n++){s.SetInteractionHand(supply.X,supply.Z,true);Tick(s,.05);}
+        Require(supply.Portions==3,"low trust skipped its initial cautious look");
+        for(int n=0;n<390;n++){s.SetInteractionHand(supply.X,supply.Z,true);Tick(s,.05);}
+        Require(supply.Portions<3&&(kind==RoomObjectKind.Water?c.Interaction.Hydration:c.Fullness)>35,
+            "continuous human presence excluded the only supply indefinitely");
+    }
+});
+Check("immobile intake chooses the urgent need independently of object order",()=>
+{
+    foreach(bool waterFirst in new[]{false,true})
+    {
+        var s=Fresh();var c=s.Selected!;c.Interaction.FootIntegrity=10;c.Fullness=35;c.Interaction.Hydration=10;
+        foreach(var kind in waterFirst?new[]{RoomObjectKind.Water,RoomObjectKind.Meal}:new[]{RoomObjectKind.Meal,RoomObjectKind.Water})
+            Source(s,kind,.5,portions:3);
+        Tick(s,.25);
+        Require(c.Interaction.GroundIntakeKind==RoomObjectKind.Water&&c.Interaction.NaturalIntakePending&&c.X==0&&c.Z==0,
+            "immobile choice followed collection order instead of the more urgent water need");
+    }
+});
 Check("hungry creature discovers reaches and consumes leaves without human input",()=>
 {
     var s=Fresh();var c=s.Selected!;c.Fullness=35;var leaf=Source(s,RoomObjectKind.Leaves,2.5);

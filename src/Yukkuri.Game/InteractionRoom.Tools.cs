@@ -17,7 +17,7 @@ public partial class InteractionRoom
             _landingStem.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
         }
         var c=Sim.Selected;
-        bool visible=c?.Interaction.Carried==true&&!_modalOpen;
+        bool visible=c?.Interaction.Carried==true&&!_modalOpen&&_windowFocused;
         _landingMarker.Visible=visible;_landingStem!.Visible=visible;
         if(!visible)return;
         Vector2 mouse=GetViewport().GetMousePosition();

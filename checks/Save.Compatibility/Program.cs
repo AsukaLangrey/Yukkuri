@@ -54,12 +54,18 @@ foreach(var sourceArgument in args.Skip(1))
         // Continue only the copied scenario, explicitly resuming its clock for this check.
         loaded.State.Settings.Pause=false;loaded.State.Mode=PlayMode.Management;
         var simulation=new WorldSimulation(loaded.State);
-        simulation.Advance(120);
+        // Interactive intake/falling timers use the presentation entry point before
+        // world updates, just like InteractionRoom. A world-only jump misses them.
+        if(loaded.State.InteractionPlaytest)
+            for(int step=0;step<1200;step++)
+            {simulation.AdvanceInteractionPresentation(.1);simulation.Advance(.1);}
+        else simulation.Advance(120);
         SaveStore.Validate(simulation.State);
         store.Save(simulation.State,3);
         store.Load(3);
         if(Hash(source)!=originalHash)throw new IOException("Original historical save changed");
-        results.Add(new{source,source_sha256=originalHash,success=true,all_original_fields_preserved=true,identities,continued_simulated_seconds=120,original_untouched=true});
+        results.Add(new{source,source_sha256=originalHash,success=true,all_original_fields_preserved=true,identities,continued_simulated_seconds=120,
+            continuation_mode=loaded.State.InteractionPlaytest?"presentation-then-world-1200x0.1s":"world-120s",original_untouched=true});
     }
     catch(Exception error)
     {

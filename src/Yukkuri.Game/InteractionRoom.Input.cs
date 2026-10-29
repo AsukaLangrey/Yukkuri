@@ -100,7 +100,7 @@ public partial class InteractionRoom
 
     public override void _Input(InputEvent input)
     {
-        if(!_ready)return;
+        if(!_ready||!_windowFocused)return;
         if(input is InputEventMouseButton {ButtonIndex:MouseButton.Middle,Pressed:false})_orbiting=false;
         if(input is InputEventMouseMotion orbit&&_orbiting)
         {
@@ -133,7 +133,7 @@ public partial class InteractionRoom
 
     public override void _UnhandledInput(InputEvent input)
     {
-        if(!_ready||_modalOpen)return;
+        if(!_ready||!_windowFocused||_modalOpen)return;
         if(input is not InputEventMouseButton mouse||!mouse.Pressed)return;
         if(!IsScenePoint(mouse.Position))return;
         if(mouse.ButtonIndex==MouseButton.Middle&&Sim.State.Mode==PlayMode.CloseUp)
@@ -231,6 +231,7 @@ public partial class InteractionRoom
         {
             var feedback=Sim.BeginInteractionGesture(selected.Id,request);AcceptFeedback(feedback);
             _mouseHeld=Sim.HasInteractionGesture;_gesturePose=feedback.Pose;
+            if(!_mouseHeld)CancelGesture();
         }
         else
         {
@@ -243,12 +244,16 @@ public partial class InteractionRoom
         GetViewport().SetInputAsHandled();
     }
 
+    private void ResetContactMotion()
+    {
+        _strokeTracker.Reset();_contactMotion.Reset();
+        _appliedForce=.12f;_gestureDirection=Vector2.Zero;_gesturePose="idle";
+    }
     private void CancelGesture()
     {
         _tapContact=null;
         _orbiting=false;
-        _strokeTracker.Reset();
-        _contactMotion.Reset();_directGesture=false;_appliedForce=.12f;
+        ResetContactMotion();_directGesture=false;
         if(Sim?.HasInteractionGesture==true)AcceptFeedback(Sim.EndInteractionGesture(true));
         if(_heldSupplyId is { } supply){Sim?.ReleaseSupply(supply);_heldSupplyId=null;}
         _mouseHeld=false;_ballDragId=null;if(_hand!=null)_hand.Visible=false;
@@ -272,18 +277,22 @@ public partial class InteractionRoom
                 AcceptFeedback(Sim.ExecuteInteraction(target,new(InteractionAction.PutDown,X:ground.X,Z:ground.Z)));
             else _message="这里看不到安全落点，仍然托着；在空地上点一下放稳。";
         }
-        _directGesture=false;_contactMotion.Reset();
+        _directGesture=false;ResetContactMotion();
     }
 
     private void ProcessRoomGesture(float dt,double sampleSeconds)
     {
         if(_heldSupplyId!=null){ProcessHeldSupply(dt);return;}
-        if(!_mouseHeld||!Sim.HasInteractionGesture)return;
+        if(!_mouseHeld)return;
+        if(!Sim.HasInteractionGesture){CancelGesture();return;}
         if(!Input.IsMouseButtonPressed(MouseButton.Left)){CancelGesture();return;}
         Vector2 current=GetViewport().GetMousePosition();var contact=IsScenePoint(current)?ContactAt(current):null;
         bool touching=contact!=null&&contact.Id==Sim.InteractionGestureTarget&&CanUseContact(contact);
         var ground=GroundPoint(current);var worldMotion=ground-GroundPoint(_lastPointer);
-        var stroke=SampleStroke(contact,current,touching);
+        bool surfaceMotion=_action is InteractionAction.Stroke or InteractionAction.Nuzzle or InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory or InteractionAction.Rock;
+        bool timelySample=double.IsFinite(sampleSeconds)&&sampleSeconds>0&&sampleSeconds<=ContactMotion.MaximumSampleSeconds;
+        if(!timelySample)_strokeTracker.Reset();
+        ContactStroke stroke=surfaceMotion&&timelySample?SampleStroke(contact,current,touching):default;
         var pointerTravel=ViewMotion(current-_lastPointer);
         var normal=contact?.Normal??Vector3.Up;
         bool bodyMotionContact=touching&&(_action!=InteractionAction.Touch||contact!.Part!=BodyPart.Accessory);
@@ -294,7 +303,6 @@ public partial class InteractionRoom
             InteractionAction.Clean or InteractionAction.Dry or InteractionAction.Press or InteractionAction.Squeeze;
         _appliedForce=_action==InteractionAction.Touch?(float)motionSample.Force:
             speedForce?Math.Max(_force,(float)motionSample.Force):_force;
-        bool surfaceMotion=_action is InteractionAction.Stroke or InteractionAction.Nuzzle or InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory or InteractionAction.Rock;
         Vector2 poseDirection=surfaceMotion?new(stroke.Direction.X,stroke.Direction.Y):(current-_lastPointer).LimitLength(6)/6;
         _gestureDirection=_gestureDirection.Lerp(poseDirection,Mathf.Min(1,dt*16));
         bool aiming=_action is InteractionAction.Push or InteractionAction.Throw or InteractionAction.PlayBall;
@@ -330,7 +338,7 @@ public partial class InteractionRoom
         }
         var feedback=Sim.ContinueInteractionGesture(input,touching);
         _gesturePose=feedback.Pose;AcceptFeedback(feedback,Sim.InteractionGestureTarget);
-        if(!Sim.HasInteractionGesture){_mouseHeld=false;_ballDragId=null;_hand.Visible=false;_lastPointer=current;return;}
+        if(!Sim.HasInteractionGesture){CancelGesture();_lastPointer=current;return;}
         ShowInteractionTool();
         _hand.Visible=(_action is InteractionAction.Tease or InteractionAction.PlayBall||touching)&&(!Sim.InteractionIntakeAccepted||_action is InteractionAction.Drink or InteractionAction.FeedMeal)&&_action is not (InteractionAction.Lift or InteractionAction.Throw);
         if(_toolFood!=null)_toolFood.Visible=!Sim.InteractionIntakeAccepted;
@@ -440,20 +448,32 @@ public partial class InteractionRoom
     {
         if(contact==null||!touching){_strokeTracker.Reset();return new(0,System.Numerics.Vector2.Zero);}
         var actor=_actors[contact.Id];var local=actor.ContactCoordinate(contact.World,contact.Part);
-        return _strokeTracker.Sample(contact.Id,contact.Part,new(pointer.X,pointer.Y),new(local.X,local.Y,local.Z),actor.BodyScale,contact.Side);
+        System.Numerics.Vector3? previousLocal=null;
+        if(pointer!=_lastPointer)
+        {
+            var previous=IsScenePoint(_lastPointer)?ContactAt(_lastPointer):null;
+            if(previous==null||previous.Id!=contact.Id||previous.Part!=contact.Part||previous.Side!=contact.Side||!CanUseContact(previous))
+                _strokeTracker.Reset();
+            else
+            {
+                var point=actor.ContactCoordinate(previous.World,previous.Part);
+                previousLocal=new(point.X,point.Y,point.Z);
+            }
+        }
+        return _strokeTracker.Sample(contact.Id,contact.Part,new(pointer.X,pointer.Y),new(local.X,local.Y,local.Z),actor.BodyScale,contact.Side,previousLocal);
     }
 
     private void UpdatePointer()
     {
         if(_pointer==null)return;
-        Vector2 point=GetViewport().GetMousePosition();bool scene=IsScenePoint(point);
+        Vector2 point=GetViewport().GetMousePosition();bool scene=_windowFocused&&IsScenePoint(point);
         var contact=scene?ContactAt(point):null;
         var roomObject=scene&&(!_toolArmed||_action==InteractionAction.PlayBall)?ObjectAt(point):null;
         _hoverId=contact?.Id;_hoverPart=contact?.Part??BodyPart.Side;
         _hoverLabel.Visible=(contact!=null||roomObject!=null)&&!_modalOpen;
         if(contact!=null)
         {
-            _hoverLabel.Text=ContactName(contact)+(Sim.HasInteractionGesture&&CanUseContact(contact)?
+            _hoverLabel.Text=ContactName(contact)+(Sim.InteractionGestureTarget==contact.Id&&CanUseContact(contact)?
                 " · "+(_appliedForce<.35?"轻触":_appliedForce<.62?"稍重":"用力"):
                 !_toolArmed?" · 按住轻摸 / Shift 托起":"");
             _hoverLabel.Position=point+new Vector2(18,18);

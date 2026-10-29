@@ -91,6 +91,7 @@ public sealed partial class WorldSimulation
         foreach (var c in State.Creatures)
         {
             var i = c.Interaction;
+            ResetInterruptedNaturalSearch(c);
             ValidatePendingConversation(c);
             if(i.GroundIntakeSourceId!=null&&
                 (c.Condition==PhysicalCondition.Dead||i.Carried||i.Falling||i.Supine||i.Height>.25||
@@ -176,6 +177,7 @@ public sealed partial class WorldSimulation
             if (c.Condition == PhysicalCondition.Dead) continue;
             var i = c.Interaction;
             i.Resting=false;
+            ResetInterruptedNaturalSearch(c);
             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
             c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
             i.Hydration = Math.Max(0,i.Hydration-dt*.025);
@@ -200,6 +202,9 @@ public sealed partial class WorldSimulation
                 continue;
             }
             UpdateInteractionRest(c,dt);
+            // Rest takes priority over a completed lesson's persistent follow
+            // order. Otherwise that order prevents UpdateInteractionRest forever.
+            if(i.ActiveCue==null&&i.RestRemaining>0)i.FollowPlayer=false;
             TickDigestiveHealth(c,dt);
             ObserveNaturalResources(c);
             if (i.FootTreated && i.FootIntegrity < 100 && c.Fullness > 25 && c.Energy > 20)
@@ -306,6 +311,8 @@ public sealed partial class WorldSimulation
             if((c.Fullness<15||i.Hydration<15)&&TickNaturalNeeds(c,dt))continue;
             if (i.RestRemaining > 0 || c.Energy < 22 || i.Resting)
             {
+                ResetNaturalResourceSearch(c);
+                i.HelpWaitingUntil=0;
                 ApproachInteractionRest(c,dt);
                 continue;
             }
@@ -406,10 +413,12 @@ public sealed partial class WorldSimulation
         var i = c.Interaction;
         if(i.EatingRemaining>0){c.Activity=i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":"慢慢嚼着这一口";return true;}
         if (i.NaturalBitePause>0 || i.Carried || i.Falling || i.Height > .25 || i.Supine) return false;
-        var food = State.RoomObjects.FirstOrDefault(o => o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand && o.Portions > 0 &&
+        var food = State.RoomObjects.Where(o => o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand && o.Portions > 0 &&
             (NaturalResources.IsWater(o.Kind)?NaturalResources.WantsWater(c):NaturalResources.IsFood(o.Kind)&&
                 NaturalResources.WantsFood(c)&&!DigestiveFoodPause(c))&&
-            Distance(c.X, c.Z, o.X, o.Z) <= NaturalResources.Reach(c) && CanReachRoomFood(c,o)&&NaturalResources.Consumer(State,o)==null);
+            Distance(c.X, c.Z, o.X, o.Z) <= NaturalResources.Reach(c) && CanReachRoomFood(c,o)&&NaturalResources.Consumer(State,o)==null)
+            .OrderBy(o=>NaturalResources.IsWater(o.Kind)?i.Hydration:c.Fullness)
+            .ThenBy(o=>Distance(c.X,c.Z,o.X,o.Z)).FirstOrDefault();
         if (food == null)
         {
             var low=State.RoomObjects.Find(o=>o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand&&o.Portions>0&&
@@ -445,13 +454,14 @@ public sealed partial class WorldSimulation
         foreach(var oil in State.Creatures)
             if(oil.Interaction.GroundIntakeSourceId==id)DetachNaturalIntake(oil);
         if (obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet && !State.UnlimitedResources) State.Food += obj.Portions;
-        foreach (var c in State.Creatures.Where(c => Distance(c.X, c.Z, obj.X, obj.Z) < 2 && c.Condition != PhysicalCondition.Dead))
+        foreach (var c in State.Creatures.Where(c => c.RegionId==obj.RegionId&&Distance(c.X, c.Z, obj.X, obj.Z) < 2 &&
+            c.Condition != PhysicalCondition.Dead&&CanSeeResource(c,obj)))
             Feedback(c, "cold", Expression.Shy, "眼前的东西被收起，它停下来望着你。", "withdraw");
         if(obj.Kind==RoomObjectKind.Treasure)
         {
             obj.Stored=true;
             var owner=State.Creatures.Find(c=>c.Id==obj.OwnerId&&c.Condition!=PhysicalCondition.Dead);
-            if(owner!=null&&owner.RegionId==obj.RegionId&&Distance(owner.X,owner.Z,obj.X,obj.Z)<2)
+            if(owner!=null&&owner.RegionId==obj.RegionId&&Distance(owner.X,owner.Z,obj.X,obj.Z)<2&&CanSeeResource(owner,obj))
             {
                 Distress(owner,1);RecordInteraction(owner,"treasure-away","自己的小石头被收走了。",1);
                 Feedback(owner,"treasure-missing",Expression.Worried,"它看着你收走小石头，还记得那是自己的宝物。","withdraw");

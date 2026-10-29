@@ -59,6 +59,36 @@ sim.State.Creatures[1].Id=sim.State.Creatures[0].Id;Reject(()=>SaveStore.Validat
 var invalid=WorldSimulation.Create().State;invalid.Regions.Add(null!);Reject(()=>SaveStore.Validate(invalid),"null region rejected with controlled invalid-data result");
 invalid=WorldSimulation.Create().State;invalid.Creatures[0].Observation.Notes=null!;Reject(()=>SaveStore.Validate(invalid),"null observations rejected before UI reads them");
 invalid=WorldSimulation.Create().State;invalid.PlayerX=double.PositiveInfinity;Reject(()=>SaveStore.Validate(invalid),"nonfinite player position rejected");
+// Synthetic corruption cases exercise fallback; they are not historical-save compatibility evidence.
+var structureStore=new SaveStore(Path.Combine(root,"structure-corruption"));
+var validInteraction=WorldSimulation.CreateInteractionPlaytest().State;
+structureStore.Save(validInteraction,1);structureStore.Save(validInteraction,1);
+string structureBackup=File.ReadAllText(structureStore.SlotPath(1)+".bak");
+void RecoverStructuralCorruption(WorldState damaged,string description)
+{
+    string damagedJson=Json(damaged);File.WriteAllText(structureStore.SlotPath(1),damagedJson);
+    Reject(()=>SaveStore.Validate(damaged),description+" is rejected as invalid data");
+    var recovered=structureStore.Load(1);
+    Check(recovered.RecoveredBackup&&Json(recovered.State)==Json(validInteraction),description+" falls back to the valid backup");
+    Reject(()=>structureStore.Save(validInteraction,1),description+" cannot replace the good backup");
+    Check(File.ReadAllText(structureStore.SlotPath(1))==damagedJson&&
+        File.ReadAllText(structureStore.SlotPath(1)+".bak")==structureBackup,description+" leaves both files unchanged");
+}
+var pendingWithNull=WorldSimulation.CreateInteractionPlaytest().State;
+var pendingLife=pendingWithNull.Creatures[0].Interaction;
+var pendingSource=pendingWithNull.RoomObjects.First(o=>o.Kind==RoomObjectKind.Leaves);
+pendingSource.Portions--;
+pendingLife.GroundIntake=true;pendingLife.NaturalIntakePending=true;pendingLife.EatingRemaining=1;
+pendingLife.GroundIntakeSourceId=pendingSource.Id;pendingLife.GroundIntakeKind=pendingSource.Kind;
+pendingWithNull.RoomObjects.Insert(0,null!);
+RecoverStructuralCorruption(pendingWithNull,"null object before a pending intake reference");
+var missingLearning=WorldSimulation.CreateInteractionPlaytest().State;
+missingLearning.Creatures[0].Interaction.ActiveCue=LearnedCue.Wait;
+missingLearning.Creatures[0].Interaction.Learning.Clear();
+RecoverStructuralCorruption(missingLearning,"active lesson without its learning record");
+missingLearning.Creatures[0].Interaction.ActiveCue=null;
+SaveStore.Validate(missingLearning);
+Check(missingLearning.Creatures[0].Interaction.Learning.Count==0,"inactive empty learning records remain valid");
 var isolated=WorldSimulation.Create();isolated.Travel("wild");var rescued=isolated.Selected!;isolated.Rescue();isolated.Advance(120);
 Check(rescued.X is >= -7 and <= -4.5&&rescued.Z is >= 4.2 and <= 6.6,"quarantine resident stays within the observation area");
 var crowd=WorldSimulation.Create(100);crowd.Advance(20);

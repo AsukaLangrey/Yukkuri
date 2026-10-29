@@ -21,16 +21,29 @@ public sealed partial class InteractionLife
 
 public static class InteractionPresentation
 {
-    public static string VoiceCue(Creature c)=>c.Interaction.ReactionRefused?"coo-refuse":
-        c.Expression is Expression.Hurt or Expression.Frightened||c.Interaction.ReactionSituation=="stomach-unwell"?"coo-hurt":
-        c.Interaction.ReactionSituation.Contains("nuzzle",StringComparison.Ordinal)?"coo-nuzzle":
-        c.Expression==Expression.Calling?"coo-help":"coo-stroke";
+    public static string VoiceCue(Creature c)
+    {
+        var i=c.Interaction;
+        // Pain and requests for help can also reject an action. Keep their own voice;
+        // an ordinary frightened refusal still uses the refusal cue.
+        if(c.Expression==Expression.Hurt||i.ReactionSituation=="stomach-unwell")return "coo-hurt";
+        if(c.Expression==Expression.Calling)return "coo-help";
+        if(i.ReactionRefused)return "coo-refuse";
+        if(c.Expression==Expression.Frightened)return "coo-hurt";
+        if(i.ReactionSituation.Contains("nuzzle",StringComparison.Ordinal))return "coo-nuzzle";
+        if(i.ReactionSituation is "eat" or "eat-leaves" or "sweet" or "drink" or "mouthful-done")return "feed";
+        if(i.ReactionSituation is "lift" or "lift-low" or "rock")return "coo-hug";
+        return "coo-stroke";
+    }
     public static string Pose(Creature c)
     {
         var i=c.Interaction;
         if(c.Condition==PhysicalCondition.Dead)return "dead";
         if(i.Falling)return "fall";
-        if(i.ReactionPoseRemaining>0&&i.ReactionPose!="idle")return i.ReactionPose;
+        // Eating can finish without a swallow reaction (for example while in pain).
+        // Its short reaction timer must not keep an empty mouth in an intake pose.
+        if(i.ReactionPoseRemaining>0&&i.ReactionPose!="idle"&&
+            (i.ReactionPose is not ("eat" or "sip")||i.EatingRemaining>0))return i.ReactionPose;
         if(i.EatingRemaining>0)return i.EatingKind==IntakeKind.Water?"sip":"eat";
         if(i.Resting)return "rest";
         if(i.Carried)return "carry";

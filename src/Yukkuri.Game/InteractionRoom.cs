@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Yukkuri.Simulation;
+using OilExpression = Yukkuri.Simulation.Expression;
 
 public partial class InteractionRoom : Node3D
 {
@@ -19,7 +20,7 @@ public partial class InteractionRoom : Node3D
     private readonly Dictionary<string,int> _shownFoodPortions=new();
     private readonly Dictionary<string,MeshInstance3D> _groundCupWater=new();
     private AudioStreamPlayer _sound=null!;
-    private bool _ready,_muted,_recovered;
+    private bool _ready,_muted,_recovered,_windowFocused;
     private double _uiClock,_autoClock,_elapsed,_lastSound;
     private int _slot=1;
     private float _force=.25f,_height=.8f,_zoom=16;
@@ -57,7 +58,15 @@ public partial class InteractionRoom : Node3D
             AddChild(new DirectionalLight3D{RotationDegrees=new(-48,-28,0),LightEnergy=.34f,ShadowEnabled=true});
             BuildYard();BuildRoomUi();BuildActors();DisarmTool();
             _sound=new AudioStreamPlayer{VolumeDb=-20};AddChild(_sound);
-            GetWindow().FocusExited+=()=>{CancelGesture();};
+            _windowFocused=GetWindow().HasFocus();
+            GetWindow().FocusEntered+=()=>{_windowFocused=true;};
+            GetWindow().FocusExited+=()=>
+            {
+                _windowFocused=false;CancelGesture();
+                // Focus loss ends live presence immediately; an old follow target is not a hand.
+                Sim.State.InteractionHandPresent=false;Sim.State.InteractionHandUntil=0;
+                Sim.State.InteractionHandRegionId=null;
+            };
             GetTree().AutoAcceptQuit=false;GetWindow().CloseRequested+=QuitRoom;
             UpdateRoomCamera(1);_ready=true;RefreshRoomUi();
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
@@ -150,7 +159,7 @@ public partial class InteractionRoom : Node3D
         float dt=(float)Math.Min(.1,delta);_elapsed+=dt;
         if(!_modalOpen)
         {
-            ProcessRoomGesture(dt,delta);
+            if(_windowFocused)ProcessRoomGesture(dt,delta);
             UpdateInteractionHand();
             Sim.AdvanceInteractionPresentation(dt);Sim.Advance(dt);
         }
@@ -164,7 +173,7 @@ public partial class InteractionRoom : Node3D
             if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
         }
-        if(!paused&&Sim.Selected is { } speaking)PlayReactionVoice(speaking);
+        if(!paused)PlayRoomReactionVoice();
         if(!paused)UpdateTapTool(dt);
         foreach(var obj in Sim.State.RoomObjects)
         {
@@ -217,7 +226,11 @@ public partial class InteractionRoom : Node3D
 
     private void UpdateInteractionHand()
     {
-        if(Sim.State.Settings.Pause||Sim.State.Mode==PlayMode.CloseUp)return;
+        if(!_windowFocused||Sim.State.Settings.Pause||Sim.State.Mode==PlayMode.CloseUp)
+        {
+            // Leaving the window stops live input; the existing short memory may expire naturally.
+            Sim.SetInteractionHand(0,0,false);return;
+        }
         Vector2 point=GetViewport().GetMousePosition();
         bool inScene=IsScenePoint(point);
         // Perception follows the actual tool/support, not its projection onto the floor.
@@ -242,21 +255,45 @@ public partial class InteractionRoom : Node3D
     {
         if(result.Message.Length>0)_message=result.Message;
     }
-    private void PlayReactionVoice(Creature c)
+    private void PlayRoomReactionVoice()
     {
-        if(c.ReactionRemaining<=0||c.Speech.Length==0||c.Condition==PhysicalCondition.Dead)return;
-        if(c.Interaction.ReactionSituation is "prepare-natural-food" or "prepare-natural-water")return;
-        if(_heardReactions.TryGetValue(c.Id,out int serial)&&serial==c.ReactionSerial)return;
-        _heardReactions[c.Id]=c.ReactionSerial;
-        if(_muted||_elapsed-_lastSound<=.65)return;
-        string path="res://Assets/Audio/"+InteractionPresentation.VoiceCue(c)+".wav";
-        if(ResourceLoader.Exists(path)){_lastSound=_elapsed;_sound.Stream=GD.Load<AudioStream>(path);_sound.Play();}
+        if(_muted)
+        {
+            // Muted reactions are intentionally silent, not queued for unmuting.
+            foreach(var c in Sim.State.Creatures)_heardReactions[c.Id]=c.ReactionSerial;
+            return;
+        }
+        if(_elapsed-_lastSound<=.65)return;
+        Creature? speaking=null;string path="";int bestPriority=-1;
+        foreach(var c in Sim.State.Creatures)
+        {
+            if(!_actors.TryGetValue(c.Id,out var actor)||!actor.Visible||c.ReactionRemaining<=0||
+                c.Speech.Length==0||c.Condition==PhysicalCondition.Dead)continue;
+            if(c.Interaction.ReactionSituation is "prepare-natural-food" or "prepare-natural-water")continue;
+            if(_heardReactions.TryGetValue(c.Id,out int serial)&&serial==c.ReactionSerial)continue;
+            int priority=c.Expression is OilExpression.Hurt or OilExpression.Frightened?100:
+                c.Expression==OilExpression.Calling?80:c.Interaction.ReactionRefused?60:20;
+            if(c.Id==Sim.State.SelectedId)priority++;
+            if(priority<=bestPriority)continue;
+            string candidatePath="res://Assets/Audio/"+InteractionPresentation.VoiceCue(c)+".wav";
+            if(!ResourceLoader.Exists(candidatePath))continue;
+            speaking=c;path=candidatePath;bestPriority=priority;
+        }
+        if(speaking==null)return;
+        _sound.Stream=GD.Load<AudioStream>(path);_sound.Play();_lastSound=_elapsed;
+        // Other current reactions remain eligible after the interval, until they expire.
+        _heardReactions[speaking.Id]=speaking.ReactionSerial;
     }
 
-    private void SaveRoom(int slot,bool announce=true)
+    private bool SaveRoom(int slot,bool announce=true)
     {
-        try{CancelGesture();_saves.Save(Sim.State,slot);if(announce)_message=$"已保存到槽位 {slot}。身体、饰品和经历会保留。";}
-        catch(Exception e){_message="保存未成功，原档保留："+e.Message;GD.PushWarning(e.Message);}
+        try
+        {
+            CancelGesture();_saves.Save(Sim.State,slot);
+            if(announce)_message=$"已保存到槽位 {slot}。身体、饰品和经历会保留。";
+            return true;
+        }
+        catch(Exception e){_message="保存未成功，原档保留："+e.Message;GD.PushWarning(e.Message);return false;}
     }
     private void LoadRoom(int slot)
     {
@@ -268,5 +305,18 @@ public partial class InteractionRoom : Node3D
         }
         catch(Exception e){_message="读取未成功："+e.Message;ShowModalMessage(_message);}
     }
-    private void QuitRoom(){CancelGesture();if(!_recovered)SaveRoom(0,false);GetTree().Quit();}
+    private void QuitRoom()
+    {
+        CancelGesture();
+        if(!_recovered&&!SaveRoom(0,false))
+        {
+            OpenModal("退出前没有保存成功");
+            _modalContents.AddChild(Text(_message));
+            _modalContents.AddChild(Text("当前进度仍保留在小院里。可以返回后另存槽位，也可以选择不保存退出。"));
+            _modalContents.AddChild(Button("回到小院",CloseModal));
+            _modalContents.AddChild(Button("仍然退出，不保存",()=>GetTree().Quit()));
+            return;
+        }
+        GetTree().Quit();
+    }
 }

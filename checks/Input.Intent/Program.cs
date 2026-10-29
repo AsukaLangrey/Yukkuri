@@ -220,6 +220,29 @@ Check("a mostly outward diagonal withdrawal stays distinct from a surface stroke
         }
     }
 });
+Check("slow withdrawal after a fast rub clears both impact history and force tail",()=>
+{
+    foreach(int fps in new[]{30,60,144})
+    {
+        double dt=1.0/fps;var t=Tracker();
+        for(int n=0;n<Math.Ceiling(.2/dt);n++)Step(t,5,dt);
+        var withdrawn=t.Sample("oil",Vector3.UnitZ*(float)(.2*dt),Vector3.UnitZ,dt);
+        Require(withdrawn.StopImpact==0&&withdrawn.Force<.13,$"slow exit inherited force at {fps} fps");
+        Require(Stop(t,dt).StopImpact==0,$"slow exit inherited strike at {fps} fps");
+        for(int n=0;n<Math.Ceiling(.2/dt);n++)Step(t,5,dt);
+        Require(Stop(t,dt).StopImpact>0,"later deliberate contact stop was disabled");
+    }
+});
+Check("slow reversal during braking does not complete the previous stroke",()=>
+{
+    foreach(int fps in new[]{30,60,144})
+    {
+        double dt=1.0/fps;var t=Tracker();
+        for(int n=0;n<Math.Ceiling(.2/dt);n++)Step(t,5,dt);
+        Require(Step(t,-.2,dt).StopImpact==0,"reversal completed the incoming hit");
+        Require(Stop(t,dt).StopImpact==0,"reversed stroke left a pending hit");
+    }
+});
 Check("pulling away during stop confirmation cancels the pending hit",()=>
 {
     var t=Tracker();for(int n=0;n<8;n++)Step(t,5);
@@ -325,6 +348,53 @@ Check("a stationary ungripping hand leaves urgent self care and its pose availab
         s.AdvanceInteractionPresentation(.05);s.Advance(.05);
     }
     Require(c.X>.5&&c.Fullness>10&&!s.InteractionGestureOwnsPose,"stationary touch trapped hungry oil or kept the stroke pose");
+});
+Check("idle rubbing tools release autonomous needs after a brief nuzzle invitation",()=>
+{
+    foreach(var action in new[]{InteractionAction.Stroke,InteractionAction.Nuzzle,InteractionAction.Clean,InteractionAction.Dry,InteractionAction.CleanAccessory})
+    {
+        var s=Fresh();var c=s.Selected!;s.State.Creatures.RemoveAll(o=>o.Id!=c.Id);s.State.RoomObjects.Clear();
+        c.Fullness=35;c.Energy=90;c.Fear=0;c.Interaction.Hydration=90;c.X=0;c.Z=0;
+        c.Interaction.NextAutonomyAt=10000;
+        var part=action==InteractionAction.Nuzzle?BodyPart.Cheek:action==InteractionAction.CleanAccessory?BodyPart.Accessory:BodyPart.Head;
+        if(action==InteractionAction.CleanAccessory)c.Interaction.Accessory.Place=AccessoryPlace.Hand;
+        s.State.RoomObjects.Add(new(){Id="meal",Kind=RoomObjectKind.Meal,X=2,Z=0,Portions=5});
+        var input=new InteractionInput(action,part,Force:.2,Duration:.05,Motion:0);
+        Require(s.BeginInteractionGesture(c.Id,input).Success,"could not start stationary tool fixture");
+        bool sawNuzzleReply=false;
+        for(int n=0;n<160;n++)
+        {
+            var reply=s.ContinueInteractionGesture(input,true);
+            if(action==InteractionAction.Nuzzle&&!sawNuzzleReply&&reply.Pose=="nuzzle-ready")
+            {
+                sawNuzzleReply=true;
+                Require(s.InteractionGestureOwnsPose,"first nuzzle response released movement before its body pose");
+            }
+            s.AdvanceInteractionPresentation(.05);s.Advance(.05);
+            if(!s.InteractionGestureOwnsPose)Require(InteractionPresentation.Pose(c) is not ("stroke" or "nuzzle" or "nuzzle-ready" or "wipe"),
+                $"idle {action} left an old body pose over autonomous movement");
+        }
+        Require(action!=InteractionAction.Nuzzle||sawNuzzleReply,"stationary invitation never received its reply");
+        Require(c.X>.5&&c.Fullness>35&&!s.InteractionGestureOwnsPose,$"idle {action} trapped hungry oil");
+    }
+    foreach(var action in new[]{InteractionAction.Hold,InteractionAction.Press,InteractionAction.Lift})
+    {
+        var s=Fresh();var c=s.Selected!;
+        Require(s.BeginInteractionGesture(c.Id,new(action,Force:.2)).Success&&s.InteractionGestureOwnsPose,
+            $"intentional stationary {action} lost support/control");
+    }
+});
+Check("ending rubbing pose does not erase a newer independent reaction",()=>
+{
+    var s=Fresh();var c=s.Selected!;c.Fear=0;c.Fullness=90;c.Interaction.Hydration=90;
+    var moving=new InteractionInput(InteractionAction.Stroke,BodyPart.Head,Force:.2,Duration:.05,Motion:.01);
+    s.BeginInteractionGesture(c.Id,moving);s.ContinueInteractionGesture(moving,true);
+    Require(InteractionPresentation.Pose(c)=="stroke","fixture never produced the rubbing pose");
+    s.ContinueInteractionGesture(moving with {Motion=0},true);
+    Require(InteractionPresentation.Pose(c)!="stroke","idle tool retained the previous rubbing pose");
+    s.ExecuteInteraction(c.Id,new(InteractionAction.Poke,BodyPart.Cheek,Force:.2));
+    s.ContinueInteractionGesture(moving with {Motion=0},true);
+    Require(InteractionPresentation.Pose(c)=="poke","idle cleanup erased a newer independent reaction");
 });
 Check("refusal gives pose ownership back after its actual response settles",()=>
 {

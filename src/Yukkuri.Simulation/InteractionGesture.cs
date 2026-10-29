@@ -30,6 +30,7 @@ public sealed partial class WorldSimulation
     }
 
     private ContactGesture? _interactionGesture;
+    private const double NuzzleReplyHoldSeconds=.35;
     public bool HasInteractionGesture => _interactionGesture != null;
     public string? InteractionGestureTarget => _interactionGesture?.TargetId;
     public string? InteractionGestureObject=>_interactionGesture?.ObjectId;
@@ -38,7 +39,16 @@ public sealed partial class WorldSimulation
     public double InteractionGestureSeconds => _interactionGesture?.Elapsed ?? 0;
     public bool InteractionGestureOwnsPose=>_interactionGesture is { Refused:false } g&&
         (g.ContactActive||g.Input.Action is InteractionAction.Lift or InteractionAction.Throw or InteractionAction.AdjustHanging or InteractionAction.Tease or InteractionAction.Roll)&&
-        (g.Input.Action!=InteractionAction.Touch||g.Input.Motion>.000001);
+        (g.Input.Action switch
+        {
+            InteractionAction.Touch=>g.Input.Motion>.000001,
+            InteractionAction.Stroke or InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory=>g.Input.Motion>.0005,
+            // An invitation has a short stationary contact phase; waiting after
+            // that response is not a grip that can prevent the oil from leaving.
+            InteractionAction.Nuzzle=>g.Input.Motion>.0005||g.Input.Part==BodyPart.Cheek&&
+                (g.ContactElapsed<.45||g.NuzzleWelcomed&&g.Elapsed-g.FeedbackAt<NuzzleReplyHoldSeconds),
+            _=>true
+        });
     private bool InteractionGestureBlocksAutonomy=>InteractionGestureOwnsPose&&CurrentInteractionAction!=InteractionAction.PlayBall;
     public bool InteractionIntakeAccepted=>_interactionGesture is {Applied:true} g&&
         g.Input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
@@ -156,6 +166,14 @@ public sealed partial class WorldSimulation
         double motion = resumedContact?0:Math.Min(input.Motion, dt * 2.5);
         g.Motion += motion;
         var i = c.Interaction;
+        if(!g.Refused&&!InteractionGestureOwnsPose&&g.ReactionSerial==c.ReactionSerial&&
+            input.Action is InteractionAction.Touch or InteractionAction.Stroke or InteractionAction.Nuzzle or
+                InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory)
+        {
+            // Releasing the idle gesture also releases its own body pose, while
+            // preserving a newer autonomous intake, help or injury response.
+            i.ReactionPose="idle";i.ReactionPoseRemaining=0;
+        }
         double force = input.Force;
         // Refusal permits avoidance, but is not immunity to a later physical impact
         // while the hand still actually reaches the body. One impact per held gesture.
@@ -248,8 +266,9 @@ public sealed partial class WorldSimulation
                 if(nuzzle&&!g.NuzzleWelcomed)
                 {
                     g.NuzzleWelcomed=true;g.FeedbackAt=g.Elapsed;
-                    return g.Last=Feedback(c,"nuzzle-ready",c.Trust<35?Expression.Shy:Expression.Curious,
+                    g.Last=Feedback(c,"nuzzle-ready",c.Trust<35?Expression.Shy:Expression.Curious,
                         "它把脸侧轻轻靠过来了。小幅慢慢移动，和它一起蹭蹭。","nuzzle-ready");
+                    g.ReactionSerial=c.ReactionSerial;return g.Last;
                 }
                 if (motion <= .0005) return g.Last = g.Last with {
                     Message = nuzzle?"它还贴着手，等你轻轻回蹭。":"手停在这里，慢慢移动才会继续摸。",
