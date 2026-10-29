@@ -2,6 +2,8 @@
 
 使用 Godot .NET / C# 开发的 3D 油库里养成与互动项目。本仓库保存当前工作源码、必要素材、设计需求、研究索引及开发记录；当前仍在开发，M01 玩法验收尚未通过。
 
+远程测试入口：[交给 dot 的任务说明](testing/DOT-HANDOFF.md)、[协作规范](testing/PROTOCOL.md)、[当前测试要求](testing/request.json)。开发源码在 `main`，dot 每小时检查，结果只写 `codex/dot-test-results` 分支。远程机器尚需由用户配置接入；本仓库没有声称 dot 已开始运行。
+
 ## 当前状态
 
 - 当前工程入口为 `src/Yukkuri.Game/InteractionRoom.tscn`。最新需求与进度先读 `planning/CURRENT.txt` 和 `planning/stages/night-repair-20261029-7h/STATUS.txt`；`START-HERE.txt` 和 `README.txt` 保留历史交接背景，较早状态不能替代最新记录。

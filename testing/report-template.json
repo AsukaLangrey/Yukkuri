@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "template_only": true,
+  "run_id": "REPLACE_UTC-SOURCE12-UNIQUE",
+  "runner": "dot",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_branch": "main",
+  "source_commit": "REPLACE_FULL_40_CHARACTER_COMMIT",
+  "source_tree": "REPLACE_SOURCE_TREE",
+  "request_revision": "dot-v1-20261029",
+  "request_sha256": "REPLACE_REQUEST_FILE_SHA256",
+  "protocol_sha256": "REPLACE_PROTOCOL_FILE_SHA256",
+  "source_worktree_clean": null,
+  "started_at": null,
+  "finished_at": null,
+  "retry_of": null,
+  "supersedes": null,
+  "environment": {
+    "id": "REPLACE_STABLE_ENVIRONMENT_ID",
+    "os": "REPLACE",
+    "cpu": "REPLACE",
+    "gpu": "REPLACE_OR_UNAVAILABLE",
+    "driver": "REPLACE_OR_UNAVAILABLE",
+    "dotnet": "REPLACE_ACTUAL_VERSION",
+    "godot": "REPLACE_ACTUAL_VERSION",
+    "display": "REPLACE_ACTUAL_DISPLAY_CONTEXT",
+    "desktop_observation_authorized": false
+  },
+  "status": "blocked",
+  "summary": "模板，不是实际测试结果；正式报告设置 template_only=false 并填写实际内容。",
+  "checks": [
+    {
+      "id": "REPLACE_CHECK_ID",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "尚未执行",
+      "evidence": []
+    }
+  ],
+  "findings": [],
+  "evidence": [],
+  "limitations": [],
+  "next_action": "REPLACE_ACTUAL_NEXT_ACTION"
+}

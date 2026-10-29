@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "revision": "dot-v1-20261029",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_branch": "main",
+  "results_branch": "codex/dot-test-results",
+  "poll_interval_minutes": 60,
+  "max_concurrent_runs": 1,
+  "run_timeout_minutes": 50,
+  "watched_paths": ["src/", "checks/", "tools/", "assets-source/", "third-party/", "global.json", "NuGet.Config", "toolchain.lock.json", ".gitattributes", "testing/request.json", "testing/PROTOCOL.md", "testing/report-template.json"],
+  "required_checks": [
+    "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
+    "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
+    "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak",
+    "Save.Compatibility", "runtime-smoke", "visual-interaction-review"
+  ],
+  "effect_focus": [
+    "跳跃朝向、腾空与落地衔接",
+    "头部前后外观、饰品和姿态穿插",
+    "鼠标直接接触、速度力度、撤离与急停反馈",
+    "递食饮水位置、自主取食取水及中断",
+    "低信任个体的自主解决与求助差异"
+  ],
+  "historical_save_fixture": {
+    "available_in_repository": false,
+    "instruction": "无获准历史样本时报告 blocked，不提交个人存档或伪造历史样本。"
+  },
+  "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
+  "product_code_changes_allowed": false,
+  "full_product_acceptance": "reserved_for_user"
+}
