@@ -244,7 +244,11 @@ public sealed partial class WorldSimulation
             baby.Family.Peers[father.Id]=new(){Familiarity=10,Affection=15};
             if(p.Method==BirthMethod.Live)
                 foreach(var knowledge in mother.Family.LifeKnowledge.OrderBy(x=>x.Key,StringComparer.Ordinal).Take(2))
+                {
                     baby.Family.LifeKnowledge[knowledge.Key]=knowledge.Value;
+                    if(FamilyRules.KnowledgeName(knowledge.Key).Length>0)
+                        baby.Family.LearningSources[knowledge.Key]=new(){Source=LifeKnowledgeSource.Inherited,FromId=mother.Id,At=State.WorldSeconds};
+                }
             State.Creatures.Add(baby);
             mother.Family.Peers[baby.Id]=new(){Familiarity=20,Affection=30};
             father.Family.Peers[baby.Id]=new(){Familiarity=10,Affection=20};

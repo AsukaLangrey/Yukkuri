@@ -30,7 +30,8 @@ public sealed partial class WorldSimulation
     {
         var i=c.Interaction;
         if(i.PendingConversation.HasValue&&(c.ReactionSerial!=i.ConversationReactionSerial||
-            c.Condition is not (PhysicalCondition.Active or PhysicalCondition.Recovering)||c.RegionId!=State.ActiveRegionId))
+            c.Condition is not (PhysicalCondition.Active or PhysicalCondition.Recovering)||c.RegionId!=State.ActiveRegionId||
+            c.Family.ColdStorage.Stored||FamilyRules.UnderIntervention(c)))
         {i.PendingConversation=null;i.ConversationPraise=null;i.ConversationDelay=0;}
     }
 

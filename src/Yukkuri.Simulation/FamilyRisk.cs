@@ -120,6 +120,9 @@ public sealed partial class WorldSimulation
         State.BreedingMaterials.Remove(material);
         ClearCompanionship(mother);DropCareParcel(mother);mother.Family.CareTargetId=null;
         mother.Interaction.Resting=false;mother.Interaction.RestRemaining=0;
+        mother.Interaction.PendingConversation=null;mother.Interaction.ConversationPraise=null;mother.Interaction.ConversationDelay=0;
+        mother.Interaction.PendingPraise=null;mother.Interaction.PraiseRemaining=0;
+        mother.Interaction.SocialResponseRemaining=0;mother.Interaction.ReactionPose="idle";mother.Interaction.ReactionPoseRemaining=0;
         p.Phase=PregnancyPhase.Preparing;p.Method=method;p.FatherId=fatherId;p.EventId=null;p.PlannedChildren=0;
         p.Forced=true;p.InterventionRemaining=4;p.RecoveryDebt=debt;p.RecoveryRemaining=0;
         p.Elapsed=0;p.WaitingSeconds=0;p.Burden=Math.Min(60,10+debt*.15);p.Outcome="";

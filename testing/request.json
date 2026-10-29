@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v9-interaction-depth-C-20261030",
+  "revision": "dot-v10-interaction-depth-D-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -12,7 +12,7 @@
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak",
-    "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "runtime-smoke", "visual-interaction-review"
+    "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Interaction.StateBoundaries", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
     "跳跃朝向、腾空与落地衔接",
@@ -22,6 +22,12 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/D.txt",
+    "planning/stages/interaction-depth-20261030/D-audit.tsv",
+    "planning/stages/interaction-depth-20261030/D-compatibility.txt",
+    "planning/stages/interaction-depth-20261030/D-care.txt",
+    "planning/stages/interaction-depth-20261030/D-teaching.txt",
+    "planning/stages/interaction-depth-20261030/D-state-audit.txt",
     "planning/stages/interaction-depth-20261030/C.txt",
     "planning/stages/interaction-depth-20261030/aftermath.txt",
     "planning/stages/interaction-depth-20261030/C-body-visual.txt",
@@ -102,6 +108,14 @@
     "茎生幼体危机有概率、预警、实际靠近、他者保护与玩家制止；不能只有强制背景才发生。家庭怨恨触发与退出使用同一种关系事实。受伤幼体实际退避，伤势和死亡走共同规则；分别测致死开/关，不能把取消按钮当关系修复。",
     "实际观察伤痕左右及敷料遮挡、旧M01护理位置、底部受伤跳跃力度、剧痛不开心蹭脸、濒危声音抢占疼痛/普通声音、死亡/冷藏立即停声。纯数据检查不等于像素/听感通过。观察遗体安置后角色/饰品/标记/碰撞都消失而身份记录仍可读；冷藏/已安置个体不挡软球。",
     "家庭面板默认收起特殊干预区，停止干预和保护幼体仍可直接访问；材料显示核对当前身体。原暂停状态、近看选择隐藏个体、遗体取出再安置、长姓名和存读一起检查。开发侧没有编译、运行或截图。"
+  ],
+  "interaction_depth_D_focus": [
+    "v10继续保留所有既有要求及c04 Drink/water原断言和诊断，不把新增检查替代旧检查。开发侧只静态审查，没有本机编译或运行证据。",
+    "Family.Compatibility走六种有向36组合、茎生胎生共72条普通请求→实际接近→准备→受孕入口；跨类以有限固定种子搜索可达性，另用独立固定样本率对照，不把筛选后的成功样本冒充成功率。覆盖不同母体方向失养负担及保存续接，不声称全生产风险已覆盖。",
+    "Family.CareLearning检查真实食水分装、移动、嘴边可达及实际摄入，保留污染和份额；目标抱走/关箱/冷藏/逃离/长大/换区或照护者急需吃喝时释放实际搬运物，不复制、不隔空保暖。非亲代自主接纳及长期养育只增加照护关系，不能改血缘。",
+    "Family.Teaching经实际6秒相处后才学得一条长辈已有判断；有误解和正确理解两个分支，同档不重抽。看见/搬运不能更新知识，实际摄入和不适可修正继承/教导认知；最后一份资源消失仍保留近期吃喝类别。食水需要和休息优先，脚底失能但身体清醒的幼体可原地听课。检查课程时间和双向相处保存不变量。",
+    "Interaction.StateBoundaries检查旧Contact/Feed拒绝暂停与冷藏、投掷积累后暂停或濒危结束不追加冲量；正在强制准备不能唱歌、学习或叠加其他接触，必要护理立即中断并保留材料/信任代价，旧待回应不会继续奖好感。收起宝物不能唤起冷藏者的情绪反应。",
+    "实际界面观察教导按钮、个人判断提示、静止受助者听课、双方靠近/中断；育幼搬运遇遮挡和接手时物品位置/数量、箱中或被抱幼体不隔空保暖。所有实际效果必须独立记录；旧远端v05仍不能覆盖A/B/C/D。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

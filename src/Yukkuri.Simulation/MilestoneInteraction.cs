@@ -7,11 +7,18 @@ public sealed partial class WorldSimulation
         var c=State.Creatures.Find(c=>c.Id==id);
         if(!State.MilestoneScenario||c==null||c.RegionId!=State.ActiveRegionId)
             return new(false,"先选择当前地区的一只油库里。","",Expression.Neutral);
+        if(State.Settings.Pause)return new(false,"先恢复时间，再开始互动。","",Expression.Neutral);
+        if(c.Family.ColdStorage.Stored)return new(false,"它还在冷藏中，先取出再照护。","",Expression.Neutral);
         if(!Enum.IsDefined(request.Action)||!Enum.IsDefined(request.Area)||!Enum.IsDefined(request.Tool)||
            !double.IsFinite(request.Force)||!double.IsFinite(request.Duration)||request.Force is <0 or >1||request.Duration is <.05 or >12)
             return new(false,"接触参数无效。","",Expression.Neutral);
         if(State.Mode==PlayMode.CloseUp&&State.SelectedId!=id)return new(false,"特写中只能接触当前对象。","",Expression.Neutral);
         if(c.Condition==PhysicalCondition.Dead)return new(false,"它已经无法回应了。","没有回应。",Expression.Exhausted);
+        if(FamilyRules.UnderIntervention(c))
+        {
+            if(request.Action!=ContactAction.Treat)return new(false,"繁育干预进行中，先停止或安排必要的护理。","",Expression.Neutral);
+            CancelIntervention(c,"开始伤势护理，繁育干预已停止；已用材料和关系后果保留。");
+        }
         if(request.Action==ContactAction.Treat)return Treat(c,request);
         if(!IsAvailable(c))return new(false,"它现在需要救治，暂时无法参与互动。","虚弱地躺着。",Expression.Hurt);
         double oldTrust=c.Trust;

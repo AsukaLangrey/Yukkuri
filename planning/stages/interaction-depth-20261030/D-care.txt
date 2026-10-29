@@ -1,0 +1,43 @@
+D批次：育幼、真实搬运与生活经验交叉边界
+拥有文件：src/Yukkuri.Simulation/FamilyCare.cs、checks/Family.CareLearning/、本文件。
+保留原有Family.ColdCare和其他检查及断言，仅新增检查源码。未执行编译器、游戏、模拟、检查、项目脚本、截图或Git操作。
+
+静态确认并修正
+1. 原SynchronizeCareParcels仅检查死亡/区域，未阻止幼体长大、被抱起、入箱、冷藏、逃离或失去可见性；现在统一按身体和关系状态中断，清目标，原地放下实际份额，不复制、不归还到原始库存。
+2. 过去没有实物的CareTarget在动作中断后可长期占用；同步现在也清除无包裹的失效照护任务。照护者自身饥渴、休息、跟随、等待、悬空、逃离或伤病优先。
+3. 重复ArrangeCare同一目标直接保留当前任务，不再扔下正在运送的实物并重置进度。不因点击增加照护经验。
+4. 原自主亲代只识别ParentId/CaregiverIds，现在同时认MotherId/FatherId。非亲代仍要求温和耐心、已知亲近关系，且幼体不能正害怕/怨恨照护者。
+5. 照护必须同区、实际可见，加入共用地面视线阻止第三只箱体遮挡；中途失去视线不读取目标在地图上的隐藏位置继续追。
+6. 原暖意只判断1.9距离，现在要求真正近距离接触与无遮挡，箱内/悬空/冷藏/逃离幼体不能被邻近照护者隔空保暖。包裹和垫子自身保暖仍按已有支撑规则。
+7. 食水仍实际从可见且可接触的有限来源扣一份，生成唯一运输物，并保留污染。搬运不增加幼体饱腹/水分，不改生活认知；幼体通过既有自然进食入口实际消费。
+8. 来源近但够不到时尝试共用换站位逻辑，无法接近会超时放弃。送达前再次检查实际接触、放置点视线、支撑高度和幼体嘴部可达；不会把食物穿箱或放在不能取到的位置后宣称已喂养。
+9. 幼体正在吃喝时不再新取一份。长期真实照护累积双向熟悉与感情；60秒照护经验后加入CaregiverIds，非亲代给出养亲反馈。MotherId/FatherId/ParentId不改，对人的Trust不复制。
+10. 所有新机制使用既有保存字段和共用限制，无新增需迁移字段。掉落份额按实际地面/垫子支撑更新高度，已有手持/收起物不会被拉回。
+
+交叉协作
+NaturalLife.cs仅只读，主协调负责来源认知：只看见/搬运不修正旧认知，第一次实际干净且未显症吃喝可以修正；稍后生病仍可能再改变看法。
+主协调另做FamilyLearning.cs的亲代/养亲示范、传述与误解过程；本检查不依赖该新API。
+CaregiverReady、CareTargetAvailable、IsCareParent为本partial私有辅助，可与同类其他文件共享，但不改公开ArrangeCare签名。
+暂无新增必须接线的接口，主Tick/Presentation已调用SynchronizeCareParcels，闲暇段已调用TryFamilyCare，TickFamilies已调用TickYoungLife。
+
+新增14组远端待测
+非亲代自主照护形成养亲但不改血缘/对人信任；仅MotherId/FatherId也能自主照护；邀请无收益与重复任务幂等；真实食水分装/送达/入口消费；目标抱走/入箱/冷藏/长大/逃离/退避/换区/远离中断；照护者逃离/休息/吃喝/跟随优先；箱体/第三方箱体/悬空/远处无保暖；幼体关系拒绝；人类拿走实物；缺资源/收起不生成；污染保留但不泄露；实际干净食水纠正旧认知但不复制给未进食照护者；冷藏/暂停/近看无经验；同档继续确定性。
+检查源码：checks/Family.CareLearning/Family.CareLearning.csproj。
+上述只完成源码静态审查，编译与实际结果未确认。旧Family.ColdCare必须同批继续运行，不以新增检查替换。
+
+边界与未做
+照护60秒门槛与关系增量是沿用/可调初稿，未声称八景原公式。送食成功贡献5秒照护经验，但放下不等于已经吃下。
+没有将养亲写入血缘树，也未扩展家谱界面或完整教学台词。放置受嘴部能力限制时会实际卸下并反馈，未加入强制灌食或隔空治疗。
+
+D教学交叉静态审查（新FamilyLearning/NaturalLife/FamilySocial，仅只读主协调文件）
+正常链路：教学入口要求无CareTarget/CareParcel；BeginCompanionship以后CaregiverReady因已有Companion返回false，但TryFamilyCare只在确有照护目标/包裹时清照护，因此不会误删教学相处。双方可动且吃喝充足时，原TryFamilyActivity逐帧更新实际相处时间，学习只据双方同帧接触累计。
+ClearCompanionship先FinishFamilyLesson再清两边相处目标，没有递归；Finish先置Lesson=null，重复清理不会重结算。未完课程的Belief/Elapsed/StartedAt与世界RandomState均保存，误解只在完成时抽一次。
+NaturalLife的实际入口调用LearnFoodExperience，搬运/观察不调用；RecentIntake新增Kind使最后一份被吃完或地图记忆消失后仍可按近期食物种类怀疑，不读取隐藏污染决定认知，也不把幼体经验复制给照护者。
+
+已向主协调报告、由其修正的确定问题（此处不是已修复声明）
+1. FamilyLearning.ReadyToLearn允许底部完整度<=25但无痛/Active的个体；InteractionBehavior的失能分支TryEatNearby后continue，永远不进入TryFamilyActivity，因此近处失能幼体或成人已接受的课无法积满6秒，只能等相处24秒取消。建议保留吃喝/休息优先，同时允许已有近处同伴的原地交流，不把不能行走当成不能听讲。
+2. ReadyToLearn吃喝55门槛低于自然需求70门槛。55至69时会接受课程，随后持续寻找吃喝，未真实相处，可能空等超时。建议入口与实际动作优先级对齐。
+3. ValidateLearning缺少Lesson与双方Companion的对应检查及Elapsed<=WorldSeconds-StartedAt约束；接受刚开始却已积6秒的损坏档，可能下一次实际接触就完成。建议补交叉时间/目标不变量。正常读档链路未发现上述问题。
+本次没有执行编译或检查，也没有修改FamilyLearning、FamilySocial、NaturalLife或主循环。
+
+主协调整合补记：上述三项已作源码修正。失能分支保留吃喝/休息优先后允许已有近处同伴原地交流；ReadyToLearn改用实际食水需求条件；ValidateLearning增加双向Companion与实际经过时间约束。Family.Teaching已写对应断言，仍未编译或运行，不是验证通过声明。

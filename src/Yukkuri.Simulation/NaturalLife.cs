@@ -32,6 +32,7 @@ public sealed class DigestiveHealth
 public sealed class RecentIntake
 {
     public string? SourceId { get; set; }
+    public RoomObjectKind? Kind { get; set; }
     public double At { get; set; }
 }
 
@@ -160,7 +161,8 @@ public sealed partial class WorldSimulation
 
     private bool CanSeeResource(Creature c,RoomObject obj)
     {
-        return HasGroundSightLine(c,obj.X,obj.Z);
+        return c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&
+            HasGroundSightLine(c,obj.X,obj.Z);
     }
     private bool HasGroundSightLine(Creature c,double x,double z)
     {
@@ -376,7 +378,7 @@ public sealed partial class WorldSimulation
         bool water=NaturalResources.IsWater(obj.Kind);
         c.Fullness=Clamp100(c.Fullness+NaturalResources.FoodValue(obj.Kind));
         life.Hydration=Clamp100(life.Hydration+NaturalResources.WaterValue(obj.Kind));
-        if(!life.Digestion.Symptomatic)c.Family.LifeKnowledge["safe:"+obj.Kind]=true;
+        if(!life.Digestion.Symptomatic)LearnFoodExperience(c,obj.Kind,true);
         if(!water&&life.Digestion.Symptomatic)life.Digestion.NextFoodAt=State.WorldSeconds+6;
         c.Activity=water?obj.Kind==RoomObjectKind.RiverWater?"在岸边小口喝水":"低头喝杯里的水":obj.Kind==RoomObjectKind.Leaves?"慢慢嚼叶子":"慢慢吃饭";
         Feedback(c,water?"drink":obj.Kind==RoomObjectKind.Leaves?"eat-leaves":obj.Kind==RoomObjectKind.Sweet?"sweet":"eat",
@@ -404,7 +406,7 @@ public sealed partial class WorldSimulation
     private void RegisterNaturalExposure(Creature c,RoomObject obj)
     {
         var health=c.Interaction.Digestion;health.Exposures++;
-        RememberRecentIntake(c,obj.Id);
+        RememberRecentIntake(c,obj.Id,obj.Kind);
         double vulnerability=(100-c.Health)/100+(c.IsYoung?.3:0);
         if(obj.Contamination<=0||Next()>=NaturalResources.IllnessChance(obj.Contamination,vulnerability))return;
         double severity=20+obj.Contamination*30;
@@ -420,11 +422,11 @@ public sealed partial class WorldSimulation
     private bool DigestiveFoodPause(Creature c)=>c.Interaction.Digestion.Symptomatic&&c.Fullness>=12&&
         State.WorldSeconds<c.Interaction.Digestion.NextFoodAt;
 
-    private void RememberRecentIntake(Creature c,string? sourceId)
+    private void RememberRecentIntake(Creature c,string? sourceId,RoomObjectKind? kind=null)
     {
         var recent=c.Interaction.Digestion.RecentIntakes;
         recent.RemoveAll(intake=>State.WorldSeconds-intake.At>60);
-        recent.Add(new(){SourceId=sourceId,At=State.WorldSeconds});
+        recent.Add(new(){SourceId=sourceId,Kind=kind,At=State.WorldSeconds});
         if(recent.Count>12)recent.RemoveRange(0,recent.Count-12);
     }
 
@@ -441,8 +443,12 @@ public sealed partial class WorldSimulation
             if(c.Interaction.Resources.TryGetValue(group.Key,out var memory))
             {
                 memory.Suspicion=Math.Min(100,memory.Suspicion+25.0*group.Count()/recent.Length);
-                c.Family.LifeKnowledge["safe:"+memory.Kind]=false;
+                LearnFoodExperience(c,memory.Kind,false);
             }
+        // Preserve the eaten kind even after the last portion or its map memory
+        // disappears. The link is still only a suspicion based on recent meals.
+        foreach(var kind in recent.Where(intake=>intake.Kind.HasValue).Select(intake=>intake.Kind!.Value).Distinct())
+            LearnFoodExperience(c,kind,false);
         if(recent[0].SourceId is { } onlySource&&recent.All(intake=>intake.SourceId==onlySource))
             health.SuspectedSourceId=onlySource;
     }

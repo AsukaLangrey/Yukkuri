@@ -186,6 +186,17 @@ public partial class InteractionRoom
             {
                 string childId=first.IsYoung?firstId:secondId,caregiverId=first.IsYoung?secondId:firstId;
                 _modalContents.AddChild(Button("请成年一方照护幼体",()=>ApplyFamilyCommand(()=>Sim.ArrangeCare(caregiverId,childId))));
+                var teacher=first.IsYoung?second:first;
+                var knowledge=teacher.Family.LifeKnowledge.OrderBy(k=>k.Key,StringComparer.Ordinal)
+                    .Where(k=>FamilyRules.KnowledgeName(k.Key).Length>0).ToArray();
+                _modalContents.AddChild(Text("长辈讲述："+teacher.Name+"。教的是它自己的判断，不保证食水安全；幼体需要靠近听完，也可能误解，之后仍会按亲身经历修正。",13,"78816e"));
+                if(knowledge.Length==0)_modalContents.AddChild(Text("这位长辈还没有可以讲述的食水经验。",13));
+                foreach(var belief in knowledge)
+                {
+                    string key=belief.Key;
+                    _modalContents.AddChild(Button("讲讲"+FamilyRules.KnowledgeName(key)+" · "+(belief.Value?"觉得可以吃喝":"觉得需要小心"),
+                        ()=>ApplyFamilyCommand(()=>Sim.TeachFamilyKnowledge(caregiverId,childId,key))));
+                }
             }
         }
         else _modalContents.AddChild(Text("这里暂时没有另一只可以邀请的油。冷藏中的个体需要先取出。",14));
@@ -257,6 +268,7 @@ public partial class InteractionRoom
         if(aftermath.Length>0)details.Add(aftermath);
         string risk=c.Condition==PhysicalCondition.Dead?"":FamilyRules.DescribeRisk(c);
         if(risk.Length>0)details.Add(risk);
+        if(c.Condition!=PhysicalCondition.Dead)details.Add(FamilyRules.DescribeLearning(c));
         return string.Join("\n",details);
     }
 

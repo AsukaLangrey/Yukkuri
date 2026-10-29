@@ -106,6 +106,8 @@ public sealed partial class WorldSimulation
         RoomObject? ball=input.Action==InteractionAction.PlayBall?State.RoomObjects.FirstOrDefault(o=>o.Kind==RoomObjectKind.Ball&&!o.Stored&&o.RegionId==oil.RegionId&&(input.ObjectId==null||o.Id==input.ObjectId)):null;
         if(input.Action==InteractionAction.PlayBall&&ball==null)return Unavailable("先点到当前小院里可见的软球，再拖动。 ");
         if (input.Action == InteractionAction.Care && !NeedsInteractionCare(oil)) return Unavailable("目前没有需要使用护理包的伤势。 ");
+        if(input.Action==InteractionAction.Care&&FamilyRules.UnderIntervention(oil))
+            CancelIntervention(oil,"开始伤势护理，繁育干预已停止；已用材料和关系后果保留。");
         if(input.Action==InteractionAction.Tease&&!State.UnlimitedResources&&State.Food<=0)return Unavailable("手边没有甜甜，先准备一份食物。 ");
         bool foodAction=input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
         if(foodAction&&input.ObjectId!=null&&OfferedSupply(input,oil)==null)return Unavailable("刚才拿起的食水已经不在手里。 ");
@@ -380,8 +382,11 @@ public sealed partial class WorldSimulation
                 i.FoodSuspicion = Math.Max(0, i.FoodSuspicion - 2);
                 ImproveAffection(c, input.Action == InteractionAction.FeedSweet ? .8 : .5);
                 g.Applied = true;
+                if(!i.Digestion.Symptomatic)LearnFoodExperience(c,drinking?RoomObjectKind.Water:
+                    input.Action==InteractionAction.FeedSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal,true);
                 if(supply!=null)RegisterNaturalExposure(c,supply);
-                else RememberRecentIntake(c,null);
+                else RememberRecentIntake(c,null,input.Action==InteractionAction.Drink?RoomObjectKind.Water:
+                    input.Action==InteractionAction.FeedSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal);
                 return Say(input.Action == InteractionAction.FeedSweet ? "sweet" : input.Action == InteractionAction.Drink ? "drink" : "eat",
                     drinking?Expression.Content:Expression.Delighted, drinking?"它已经抿下一口水，等它咽下；收手不会撤销已经喝到的水。":"这一口已经接下，等它吃完再递下一份。", drinking?"sip":"eat");
             case InteractionAction.Clean:
@@ -515,6 +520,10 @@ public sealed partial class WorldSimulation
         if (c == null) return g.Last;
         if(c.Condition==PhysicalCondition.Dead)
         {NormalizeDeadInteractionSupport(c);cancelled=true;}
+        // Finishing an old gesture is another action boundary. A pause, loss of
+        // body ability or change of view must not release a stored push/throw.
+        if(State.Settings.Pause||c.Family.ColdStorage.Stored||c.Condition==PhysicalCondition.Critical||
+            c.RegionId!=State.ActiveRegionId||State.Mode==PlayMode.CloseUp&&State.SelectedId!=c.Id)cancelled=true;
         var i = c.Interaction;
         if(g.Input.Action==InteractionAction.Roll)i.EndRoll();
         if(g.Input.Action==InteractionAction.Tease)

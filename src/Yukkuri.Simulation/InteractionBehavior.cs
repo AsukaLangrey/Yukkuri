@@ -313,6 +313,11 @@ public sealed partial class WorldSimulation
             {
                 c.Activity = "底部受伤 · 需要辅助生活";
                 bool takingFood=TryEatNearby(c);
+                // A damaged foot prevents travel, not listening to somebody who
+                // is already beside it. Needs and supported rest still go first.
+                if(!takingFood&&i.EatingRemaining<=0&&!NaturalResources.WantsFood(c)&&!NaturalResources.WantsWater(c)&&
+                    i.RestRemaining<=0&&!i.Resting&&c.Energy>=40&&c.Family.CompanionTargetId is { } nearbyId&&
+                    State.Creatures.Find(o=>o.Id==nearbyId) is { } nearby&&FamilyInContact(c,nearby)&&TryFamilyActivity(c,dt))continue;
                 if (!takingFood && State.WorldSeconds - i.LastHelpAt > 18)
                 { i.LastHelpAt = State.WorldSeconds; Feedback(c, "cannot-walk", Expression.Calling, "它想起步，却无法走到远处。近旁食物或搬运能帮助它。", "failed-step"); }
                 if(i.Resting&&!takingFood)c.Activity="护着底部慢慢休息";

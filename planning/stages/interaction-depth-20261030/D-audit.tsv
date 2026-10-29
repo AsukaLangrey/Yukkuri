@@ -1,0 +1,12 @@
+计划项	所需结果	当前源码证据	待执行检查	证明状态	仍缺的证据或范围
+1 共同状态	死亡濒危、身体支撑、进食与当前接触按统一优先级	InteractionReadiness/InteractionBehavior/InteractionInjury；D旧入口和手势结束检查	Interaction.Depth、Injury、StateBoundaries及原Continuity	源码已接；运行未证	当前完整提交构建和所有相关检查；死亡/受伤视觉声音
+2 鼠标接触	方向速度驻留撤离/失焦/完成动作不会重复结算	InteractionGesture/CarryReleaseMotion/InteractionSupply；旧输入与连续性断言保留	Input.Intent、Interaction.Continuity	源码已接；c04明确未解	Drink/water复合断言分量和真实输入实测；不能以D无运行静态替代
+3 人油亲密	安全相处增长信任；伤害留部位警戒，高信任仍拒绝伤处	InteractionBond/InteractionReadiness/ImproveAffection及request-nuzzle自主分支	Interaction.Depth与Interaction.Smoke	源码已接；运行未证	实际长期养成、主动靠近/安慰、声音与动作的体验验收
+4 双向家庭	稳定伴侣/分手再配/例外多伴侣，背叛须有信息来源与真实冲突	FamilySocial/FamilyAftermath；双方意愿、目击转述、伤害共同身体流程	Family.Social、Family.Aftermath	源码已接；运行未证	各事件边界实际运行与多人局面，玩家可见预警和干预效果
+5 两种孕育育幼	固定成熟角色，茎生胎生过程独立、六种兼容、普通/强制分开、恢复与幼体照护	FamilyReproduction/FamilyRisk/FamilyCare/FamilyLearning	Family.Reproduction、Compatibility、Risk、CareLearning、Teaching	源码已接；运行未证	完整长时出生育幼/风险矩阵、遗传分布、真实自主接纳与界面操作
+6 伤残护理	局部持续损伤和不可逆支撑损失，部位护理及能力一致	InteractionInjury/ActorInjuryPresentation/CreatureActor.Injury	Interaction.Injury、Interaction.InjuryPresentation	源码已接；运行与外观未证	实际部位标记、贴面和敷料遮挡；口部器官完整功能与手术仍缺
+7 濒危死亡及事后	救治不刷窗口，死亡停止活动；保留身份亲缘死因并安置	MilestoneInteraction/InteractionInjury/FamilyAftermath/FamilyColdStorage	Interaction.Injury、Family.Aftermath、Family.ColdCare	源码已接；运行未证	完整抢救、家庭知情/悲伤和安置界面；内馅转移仍缺
+8 可理解表现	看得到愿意/疼痛/失能/濒危等区别，声音优先与事实一致	CreatureActor/InteractionPresentation/InteractionRoom.Audio/Family面板	InjuryPresentation及visual-interaction-review	仅源码；像素/音频未证	独立授权机器实际观察及可听音频，旧Dummy声音条件不足
+9 存档确定性与交付	缺字段兼容、坏档拒绝、事件单次、同档同随机续接；分批源码可获取	SaveStore/InteractionValidation/FamilyValidation及A、B、C提交；D待本批提交	全部新增Family检查、Simulation.Smoke、Save.Compatibility	源码有断言；真实验证缺失	独立机器完整SHA结果、获准历史样本、当前构建/运行；Goal不能据此完成
+用户十倍冷藏	有限保存、相关身体过程1/10、不冻结或重置期限	FamilyColdStorage.BiologicalDelta跨上限积分、四槽及复苏；D封旧接口	Family.ColdCare、StateBoundaries	源码已接；运行未证	期限边界/满院到期/救治余量/死亡取出真实操作
+用户保留与八景缺项	本作确认设定不回退，暂不加秘药，八景优势缺项继续记录	requirements-v024至v033及v060；hakkei-coverage-v001.tsv完整保留	逐功能对照及用户体验验收	未宣布八景全覆盖	口部器官、手术/内馅转移、完整物种升级、H2/H3工具/茎生干预等仍缺；秘药是用户暂不采用

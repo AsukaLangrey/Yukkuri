@@ -83,5 +83,6 @@ public static partial class FamilyRules
         ValidateSocial(s);
         ValidateAftermath(s);
         ValidateRisk(s);
+        ValidateLearning(s);
     }
 }

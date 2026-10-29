@@ -90,7 +90,8 @@ public static class InteractionValidation
                 (digestion.Severity>0||digestion.IncubationRemaining==0&&digestion.SymptomsRemaining==0&&digestion.CareRemaining==0),"消化健康状态无效");
             Require(digestion!.RecentIntakes!=null&&digestion.RecentIntakes.Count<=12&&digestion.RecentIntakes.All(intake=>
                 intake!=null&&double.IsFinite(intake.At)&&intake.At>=0&&intake.At<=s.WorldSeconds+.001&&
-                (intake.SourceId==null||!string.IsNullOrWhiteSpace(intake.SourceId))),"最近吃喝记忆无效");
+                (intake.SourceId==null||!string.IsNullOrWhiteSpace(intake.SourceId))&&
+                (!intake.Kind.HasValue||Enum.IsDefined(intake.Kind.Value)&&NaturalResources.IsResource(intake.Kind.Value))),"最近吃喝记忆无效");
         }
     }
 }

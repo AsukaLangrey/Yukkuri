@@ -138,6 +138,8 @@ public sealed partial class WorldSimulation
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
         if(c.Family.ColdStorage.Stored)return "它还在冷藏中，先从家庭照护里取出。";
+        if(FamilyRules.UnderIntervention(c)&&input.Action is not (InteractionAction.Care or InteractionAction.Inspect))
+            return "繁育干预仍在进行，先停止；必要的伤势护理可以直接中断它。";
         if (State.Mode == PlayMode.CloseUp && State.SelectedId != c.Id) return "先退出特写，再选择另一只油。";
         if (c.Condition == PhysicalCondition.Dead) return "它已经无法回应。可以读取此前存档。";
         if (c.Condition == PhysicalCondition.Critical && input.Action is not
@@ -152,6 +154,8 @@ public sealed partial class WorldSimulation
         var c = InteractionTarget(id);
         var invalid = ValidateInteraction(c, input);
         if (invalid != null) return Unavailable(invalid);
+        if(input.Action==InteractionAction.Care&&FamilyRules.UnderIntervention(c!))
+            CancelIntervention(c!,"开始伤势护理，繁育干预已停止；已用材料和关系后果保留。");
         BodyPart? requiredPart=input.Action switch
         {
             InteractionAction.Flick=>BodyPart.Head,

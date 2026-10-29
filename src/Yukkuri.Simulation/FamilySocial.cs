@@ -182,6 +182,8 @@ public sealed partial class WorldSimulation
     private void ClearCompanionship(Creature c)
     {
         var other = State.Creatures.Find(x => x.Id == c.Family.CompanionTargetId);
+        if(c.Family.Lesson!=null)FinishFamilyLesson(c,"相处已中断，没听完的教导没有形成新知识。");
+        if(other?.Family.Lesson?.LearnerId==c.Id)FinishFamilyLesson(other,"相处已中断，没听完的教导没有形成新知识。");
         c.Family.CompanionTargetId = null; c.Family.CompanionUntil = 0;
         c.Family.NextSocialAt = Math.Max(c.Family.NextSocialAt, State.WorldSeconds + 6);
         if (other?.Family.CompanionTargetId == c.Id)

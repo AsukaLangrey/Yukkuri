@@ -11,3 +11,6 @@ A/B/C 分批提交；仅静态阅读审查，所有运行检查只交独立远�
 
 C批细分：关系子代理仅FamilyAftermath.cs、checks/Family.Aftermath与aftermath.txt；身体子代理Game角色/音频表现、InteractionPresentation.cs、checks/Interaction.InjuryPresentation与C-body-visual.txt；界面子代理InteractionRoom家庭面板/列表/选择及checks/Family.Risk、C-family-ui.txt。
 主协调整合FamilyRisk.cs、孕育/普通世界/碰撞/死亡即时清理及所有跨文件修改，静态核对后统一提交。C批交接C.txt，所有运行仍在独立远端。
+
+D批：关系子代理拥有FamilyCare.cs、checks/Family.CareLearning和D-care.txt；界面子代理拥有InteractionRoom.Family.cs、checks/Family.Compatibility、checks/Family.Teaching和对应D交接；身体子代理只写checks/Interaction.StateBoundaries及D-state-audit.txt，其他产品问题交主协调。
+主协调拥有FamilyLearning.cs、相关NaturalLife/保存接线和旧Contact/Feed/手势结束状态修复，以及D-audit.tsv、D.txt、请求和所有Git操作。各子代理已完成本批并停止写入。
