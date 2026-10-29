@@ -78,7 +78,7 @@ public partial class Main
         Action(right,"feed","F  喂食 · 1份",()=>
         {
             if(Sim.State.Mode==PlayMode.CloseUp){_foodInHand=!_foodInHand;Toast("移动食物到嘴部附近，点击喂食。");}
-            else if(Sim.Selected!=null&&Sim.Feed(Sim.Selected.Id))Sound("feed");else Toast("食物不足或未选中个体。");
+            else if(Sim.Selected!=null&&Sim.Feed(Sim.Selected.Id))Sound("feed");else Toast(LegacyFeedFailure());
         });
         Action(right,"rescue","带回乐园观察区",()=>{if(Sim.Rescue()){RebuildRegion();Toast("已安置；返回乐园可继续观察。");}else Toast("在野地选中个体后使用。");});
         Action(right,"admit","结束隔离 · 玩家接纳",()=>{if(Sim.Selected?.Quarantine==true){Sim.Selected.Quarantine=false;Sim.Log("玩家决定接纳"+Sim.Selected.Name);Toast("已接纳，但不会自动获得牌照。");}});
@@ -142,5 +142,14 @@ public partial class Main
                 var button=new Button{Text=resident.Name,FocusMode=Control.FocusModeEnum.None};button.Pressed+=()=>{if(Sim.State.Mode!=PlayMode.CloseUp){Sim.Select(resident.Id);UpdateUi();}};_residents.AddChild(button);
             }
         }
+    }
+    private string LegacyFeedFailure()
+    {
+        var c=Sim.Selected;
+        if(c==null)return "先选择要喂食的油库里。";
+        if(Sim.State.Settings.Pause)return "先继续时间，再喂食。";
+        if(c.Condition is PhysicalCondition.Critical or PhysicalCondition.Dead)return "当前身体状态无法进食。";
+        if(c.Interaction.EatingRemaining>0)return "上一口还没咽下，稍等一会儿再递食。";
+        return "暂时无法喂食，请检查食物库存与身体状态。";
     }
 }

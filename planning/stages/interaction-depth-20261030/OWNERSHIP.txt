@@ -17,3 +17,6 @@ D批：关系子代理拥有FamilyCare.cs、checks/Family.CareLearning和D-care.
 
 E批：关系子代理拥有FamilySocial.cs、FamilyRisk.cs、FamilyAftermath.cs、新checks/Family.Protection及E-social-audit.txt；界面子代理拥有FamilyState描述、InteractionRoom.Ui/Family及关闭按钮文案、新checks/Family.Presentation和E-ui-audit.txt。
 身体子代理只写E-mouth-audit.txt、新checks/Interaction.HumanCompany和E-human-company.txt，不改口部产品规则。主协调拥有HumanCompanionship、相处/伤害/死亡/冷藏接线、验证规则、油话与安慰工具的场景静候入口，并整合所有Git操作。各检查仅交独立远端执行。
+
+F批：身体子代理拥有InteractionMouth.cs、checks/Interaction.Mouth与F-mouth.txt；关系子代理拥有FamilySocial/Aftermath/Learning的讲述门槛、新checks/Family.MouthCommunication与F-communication.txt；界面子代理拥有InteractionPresentation/InteractionWorld的唱歌、MilestoneWorld的台词和旧转述、InteractionRoom.Ui、新checks/Interaction.MouthPresentation与F-presentation.txt。
+主协调拥有MouthIntake、旧Feed与吞咽时钟/手势接线、旧Main界面与连续喂食夹具、旧侵入行动占用、请求/交接及所有Git操作。所有检查未运行，只交独立远端。

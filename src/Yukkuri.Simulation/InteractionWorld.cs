@@ -273,6 +273,8 @@ public sealed partial class WorldSimulation
                 return GiveInteractionTreasure(oil);
             case InteractionAction.Sing:
             case InteractionAction.Stretch:
+                if(input.Action==InteractionAction.Sing&&!MouthFunction.CanSpeakClearly(oil))
+                    return Feedback(oil,"mouth-limited",Expression.Worried,"嘴边活动受限，暂时唱不清小调；仍能听你说话，用声音和动作回应。","idle",false,true);
                 if (oil.Energy < 18 || oil.Fear > 65) return Feedback(oil, "too-tired", Expression.Exhausted, "现在不想参与，先让它休息。", "withdraw", false, true);
                 ImproveAffection(oil, .4);
                 return Feedback(oil, input.Action == InteractionAction.Sing ? "sing" : "stretch", Expression.Content,

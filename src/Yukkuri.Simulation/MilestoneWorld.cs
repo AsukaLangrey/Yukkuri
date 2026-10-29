@@ -40,7 +40,8 @@ public sealed partial class WorldSimulation
         if(c.Condition==PhysicalCondition.Critical){expression=Expression.Exhausted;speech="……";}
         else if(c.Pain>=40&&expression is Expression.Content or Expression.Delighted){expression=Expression.Hurt;speech="还疼着……";}
         else if(c.Fear>=68&&expression is Expression.Content or Expression.Delighted){expression=Expression.Frightened;speech="先别靠近……";}
-        c.Expression=expression;c.Speech=speech;c.LastReaction=reaction;c.ReactionSerial++;c.ReactionRemaining=seconds;
+        c.Expression=expression;c.Speech=c.Condition==PhysicalCondition.Critical?speech:MouthFunction.FormatSpeech(c,speech);
+        c.LastReaction=reaction;c.ReactionSerial++;c.ReactionRemaining=seconds;
     }
     private void Remember(Creature c,Incident incident,string text,double weight)
     {
@@ -123,6 +124,9 @@ public sealed partial class WorldSimulation
             State.SocialTimer-=12;
             foreach(var speaker in State.Creatures.Where(IsAvailable))
             {
+                // A mouth injury affects telling a fact, not hearing one. Finishing a
+                // mouthful also takes precedence over a complete spoken account.
+                if(!MouthFunction.CanSpeakClearly(speaker)||speaker.Interaction.EatingRemaining>0)continue;
                 var fact=speaker.Knowledge.LastOrDefault(k=>k.KnowsActor);
                 if(fact==null)continue;
                 var incident=State.Incidents.Find(e=>e.Id==fact.IncidentId);if(incident==null)continue;

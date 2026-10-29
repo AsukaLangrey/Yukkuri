@@ -155,9 +155,10 @@ public sealed partial class WorldSimulation
         if (speaker == null || listener == null || deceased == null || speaker == listener ||
             speaker.RegionId != State.ActiveRegionId || deceased.Condition != PhysicalCondition.Dead ||
             !speaker.Family.KnownLosses.ContainsKey(deceasedId) || !ReadyForLossConversation(speaker) || !ReadyForLossConversation(listener) ||
+            !MouthFunction.CanSpeakClearly(speaker) ||
             speaker.Family.CompanionTargetId != null && speaker.Family.CompanionTargetId != listener.Id ||
             listener.Family.CompanionTargetId != null && listener.Family.CompanionTargetId != speaker.Id ||
-            !FamilyInContact(speaker, listener)) return "需要已经知情的油和另一只在近处、愿意交流时说起这件事。";
+            !FamilyInContact(speaker, listener)) return "需要已经知情的油能清楚讲述，并和另一只在近处、愿意交流时说起这件事。";
         if (listener.Family.KnownLosses.ContainsKey(deceasedId)) return "它已经知道这次离世，不会重复承受同一消息。";
         if (State.WorldSeconds < speaker.Family.NextLossConversationAt) return "刚刚谈过离世的消息，先留一点时间消化和陪伴。";
         LearnFamilyLoss(listener, deceased, KnowledgeSource.Told, speaker);
@@ -234,7 +235,7 @@ public sealed partial class WorldSimulation
             // which that mode cannot perform. Manual nearby conversation remains usable.
             if (!State.InteractionPlaytest) continue;
             if (!ReadyForLossConversation(observer)) continue;
-            if (receivingCompany && State.WorldSeconds >= f.NextLossConversationAt)
+            if (receivingCompany && MouthFunction.CanSpeakClearly(observer) && State.WorldSeconds >= f.NextLossConversationAt)
             {
                 var listener = State.Creatures.Find(c => c.Id == f.CompanionTargetId);
                 if (listener != null && ReadyForLossConversation(listener) && FamilyInContact(observer, listener))

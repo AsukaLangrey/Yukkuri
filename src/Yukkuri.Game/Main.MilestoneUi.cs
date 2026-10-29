@@ -251,7 +251,7 @@ public partial class Main
         {Toast("当前无法喂食。重伤需先用护理包稳定，已经离去的油库里无法回应。");return;}
         if(Sim.State.Mode==PlayMode.CloseUp){_gestureActive=false;_foodInHand=!_foodInHand;Toast("把食物移到嘴部附近，点击喂食。");}
         else if(Sim.Selected!=null&&Sim.Feed(Sim.Selected.Id)){Sound("feed");Toast("它记住了这次照护。");}
-        else Toast("无法喂食，检查食物库存与身体状态。");
+        else Toast(LegacyFeedFailure());
     }
     private void ShowResult(InteractionResult result)
     {
@@ -281,7 +281,8 @@ public partial class Main
             PhysicalCondition.Recovering=>$"伤势已稳定；按当前营养，还需休养约 {Math.Ceiling(c.RecoveryRemaining/(c.Fullness>35?1:.3))} 秒。",
             _=>c.Familiarity==0?"还不熟悉，先看看它的反应。":c.Fear>55?"它显得不安，动作也很谨慎。":c.Trust>50?"它愿意主动靠近你。":c.Trust>25?"它正在慢慢熟悉你。":"它仍在观察你的举动。"
         };
-        _reaction.Text=c==null?"":c.Speech.Length>0?$"「{c.Speech}」":c.LastReaction;
+        string speech=c==null?"":c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
+        _reaction.Text=c==null?"":speech.Length>0?$"「{speech}」":c.LastReaction;
         _observation.Text=c==null?"":$"{c.Observation.Hypothesis}\n{c.Observation.Notes.LastOrDefault()??"尚未记录它的行为。"}";
         Buttons["close"].Text=close?"E  回到场景":"E  靠近与互动";Buttons["feed"].Text=close?(_foodInHand?"F  放回食物":"F  拿取食物 · 1份"):"F  喂食 · 1份";
         Buttons["rescue"].Disabled=close||c==null||c.RegionId=="home";Buttons["admit"].Disabled=close||c?.Quarantine!=true;

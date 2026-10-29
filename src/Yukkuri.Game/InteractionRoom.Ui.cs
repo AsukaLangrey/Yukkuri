@@ -227,6 +227,7 @@ public partial class InteractionRoom
             i.Accessory.Integrity<=0?"原来的饰品已经损坏。":i.Accessory.Place switch{AccessoryPlace.Stored=>"饰品被收起来了。",AccessoryPlace.Hung=>"饰品挂在高处。",_=>"饰品离开了头顶。"};
         _condition.Text=c.Condition==PhysicalCondition.Dead?state+"\n\n"+accessory:state+"\n\n"+mood+(needs.Length>0?"\n"+needs:"")+"\n\n"+accessory+
             (i.FootIntegrity<70?"\n"+(i.FootTreated?"伤处已经护理，仍需慢慢养好。":"移动部位不舒服，需要看看。") :"");
+        if(c.Condition!=PhysicalCondition.Dead&&MouthFunction.Impairment(c)>20)_condition.Text+="\n\n"+MouthFunction.Describe(c);
         string family=c.Condition==PhysicalCondition.Dead?"":FamilyRules.Describe(c);
         if(family.Length>0)_condition.Text+="\n\n"+family;
         string aftermath=FamilyRules.DescribeAftermath(c);
@@ -242,7 +243,8 @@ public partial class InteractionRoom
         _forceSlider.Visible=_toolArmed&&InteractionCatalog.UsesForce(_action);
         _forceLabel.Visible=_forceSlider.Visible||_mouseHeld&&_action==InteractionAction.Touch;
         _feedback.Text=_message;
-        _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&c.Speech.Length>0?c.Name+"：「"+c.Speech+"」":c.Name+" · "+state;
+        string speech=c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
+        _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
     }
 
     private void OpenModal(string title)
@@ -263,6 +265,7 @@ public partial class InteractionRoom
         _modalContents.AddChild(Text("5  空手按住软球，拖动后松开推球。跟随练习时移动鼠标指路，不用操作人类角色。空格暂停；Del 收起指向的可收纳物品，树叶、河水和软垫不能收起。"));
         _modalContents.AddChild(Text("6  固定具、箱子和悬挂装置要用各自的解除动作；切回空手不会解除装置。脚脚受伤时，把食水放到能吃到的地方，再护理和休息。左右脸可以分别擦洗和护理。"));
         _modalContents.AddChild(Text("招呼、夸奖、安慰不必连点。嘴里有食物时会先咽下再回应，歇着时也可能慢一点；先看它的表情和回应。",13,"78816e"));
+        _modalContents.AddChild(Text("嘴边受伤会让接食和咽下更慢；严重时说话含混，暂时唱不清小调或完整讲述。它仍能听懂，也能用声音和动作表达需要。",13,"78816e"));
         _modalContents.AddChild(Text("工具的基础力度分别记住，实际接触速度也会影响作用。更多言语、照护和装置在“展开 / 收起全部工具”里。",13,"78816e"));
         _modalContents.AddChild(Text("不用一直逗它：它会自己找食水、休息和活动。树叶和河水也能自己取用，但吃喝后可能不舒服。把干净食水放下并收手，给它一点时间。",13,"78816e"));
         _modalContents.AddChild(Text("饭饭和护理用品在这个试玩场景中不限量。每分钟自动保存；读档不计算离线时间。",13,"78816e"));

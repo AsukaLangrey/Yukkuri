@@ -86,6 +86,7 @@ public partial class Main
             await Screenshot("framework-closeup");
             await ClickButton("close");await Wait(.5);
             Assert(Sim.Selected!.Id==candidate.Id&&Sim.State.WorldSeconds>frozenTime&&Sim.State.WorldSeconds<frozenTime+2,"exit retains identity without time catch-up");
+            await Wait(2); // Finish the accepted mouthful before offering the next portion.
             await ClickButton("feed");await ClickButton("observe");int funds=Sim.State.Money;
             await ClickButton("commission");Assert(Sim.State.Money==funds+40,"care commission UI completes earn-and-spend loop");
             await ClickButton("commission");Assert(Sim.State.Money==funds+40,"UI cannot duplicate the same reward");

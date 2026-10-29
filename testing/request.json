@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v11-interaction-depth-E-20261030",
+  "revision": "dot-v12-interaction-depth-F-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -11,7 +11,7 @@
   "required_checks": [
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
-    "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak",
+    "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation",
     "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
@@ -22,6 +22,10 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/F.txt",
+    "planning/stages/interaction-depth-20261030/F-mouth.txt",
+    "planning/stages/interaction-depth-20261030/F-communication.txt",
+    "planning/stages/interaction-depth-20261030/F-presentation.txt",
     "planning/stages/interaction-depth-20261030/E.txt",
     "planning/stages/interaction-depth-20261030/E-human-company.txt",
     "planning/stages/interaction-depth-20261030/E-social-audit.txt",
@@ -129,6 +133,14 @@
     "Family.Presentation核对有限冷藏期限到点时描述，超时被落点阻挡后不再显示十倍延缓。真实界面观察失能幼体听课/陪伴仍显示实际活动、关闭面板不伪称回到小院且不更改原暂停状态。",
     "实际操作安慰工具：普通小院选中安慰，鼠标在身旁停留显示可见手，点击仍是原说话入口；普通空手闲置不产生陪伴。失焦、平移/旋转镜头、离开场景、右键/换工具、模态、暂停/近看不继续提供真实手收益；观察角色靠近和语音/字幕，不把核心直接SetInteractionHand的检查当作真实鼠标体验通过。",
     "E-mouth-audit记录口部损伤未作用于进食节奏/清晰发音的真实缺项，本批未实现；不以新增陪伴和家庭边界代替完整器官、手术或其他八景缺项。"
+  ],
+  "interaction_depth_F_focus": [
+    "v12保留此前全部检查和c04原失败断言/诊断。新增Interaction.Mouth、Family.MouthCommunication、Interaction.MouthPresentation；均只有未运行源码。固定本轮完整提交后构建检查，旧v05不能覆盖本批。",
+    "口部现有Damage与PermanentLoss取较大值影响接食和咽下，轻伤保留原速；严重时食物最低四分之一、水最低四成速度，属于本作初稿而非八景公式。饮食仍可完成，不宣称完整器官缺失或手术。递食入口消费一次，自主预约在实际入口后才获营养；未入口取消归还，存读不重结算，原动画与杯中量使用同一标准进度。",
+    "旧普通管理、M01玩家/员工、食盆、野果与抢食共用忙嘴限制，吞咽只推进一次。旧Feed营养时点与份量不改；自然预约仍沿用实际入口时点。近看只完成已接受的一口，暂停不推进，不能借嘴部表现推进世界、伤口或需求。侵入者嘴忙时不能主动移动/攻击，事件总时限继续；正常吞完后恢复。",
+    "严重口伤者不能清楚讲述关系事实/离世或担任教师，进行中课程中断但安静陪伴可保留；受伤听者仍能理解，不清除记忆、血缘或已知事实。新旧事实传播必须分别验证，保留健康讲者对照、口伤听者对照、读档与时钟案例。",
+    "真实观察口部受伤前后递食入口和张口/吞咽速度、有限食水数量、旧模式重复喂食提示；旧近看持食在被拒后仍在手中，允许放回。严重口伤普通台词含混，唱歌失败没有成功好感，伸展可行；剧痛和濒危求助声音优先。普通非语言声复用现有短音，需试听是否自然，未试听不能算通过。",
+    "连续喂食旧检查只补了实际吞咽等待，未改原断言。Main.MilestoneStates旧状态验证仍有暂停期间护理/喂食夹具与D批禁操作规则的历史冲突，尚需单独修订夹具，不得据此放开暂停产品规则；实际状态回归本批仍未测。完整器官/手术和H2/H3缺项保持，不能用本批有限口部功能替代。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

@@ -25,7 +25,7 @@ Check(c.Trust>30&&c.Attachment>20&&c.PersonalMemories.Count==3,"care changes tru
 sim.Travel("wild");var candidate=sim.Selected!;
 Check(!sim.Contact(candidate.Id,new(ContactAction.Hug,ContactArea.Body)).Success,"unfamiliar wild creature can refuse intimate contact");
 Check(!sim.InviteToSanctuary().Success,"unknown wild creature is not silently teleported into sanctuary");
-for(int i=0;i<3;i++){sim.Feed(candidate.Id);sim.Contact(candidate.Id,new(ContactAction.Stroke,Duration:2));}
+for(int i=0;i<3;i++){sim.Feed(candidate.Id);sim.Contact(candidate.Id,new(ContactAction.Stroke,Duration:2));sim.Advance(2);}
 string candidateId=candidate.Id;
 Check(sim.InviteToSanctuary().Success&&candidate.RegionId=="home"&&candidate.Quarantine&&candidate.Id==candidateId,"earned trust permits invitation and preserves identity");
 sim.Travel("home");sim.Select(candidateId);

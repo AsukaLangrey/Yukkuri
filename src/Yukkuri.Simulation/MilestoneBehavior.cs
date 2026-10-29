@@ -38,6 +38,7 @@ public sealed partial class WorldSimulation
             if(c.RecoveryRemaining<=0){c.Condition=PhysicalCondition.Active;c.Health=Math.Max(25,c.Health);React(c,Expression.Shy,"还能慢慢走……","恢复了活动能力，还需要继续照护。",5);}
             return true;
         }
+        if(c.Interaction.EatingRemaining>0){c.Activity="慢慢咽下嘴里的这一口";return true;}
         if(c.IsIntruder)return true; // The shared encounter director owns these positions.
         if(State.Threat.Phase==ThreatPhase.Intruding&&State.Threat.DefenderId==c.Id)return true;
         if(c.RetreatRemaining>0)
@@ -90,7 +91,7 @@ public sealed partial class WorldSimulation
                     if(State.ActiveRegionId=="home")Log($"{c.Name}这次忍住了抢食，给同伴留出了位置。");
                     return false;
                 }
-                feeder.Stock-=2;c.Fullness=Clamp100(c.Fullness+12);
+                feeder.Stock-=2;c.Fullness=Clamp100(c.Fullness+12);BeginLegacyIntake(c);
                 var e=Emit(IncidentKind.Theft,c,c.Id,$"{c.Name}抢了两份食物，没有给同伴留位置",3);
                 c.CurrentOffenseId=e.Id;c.OffenseRemaining=40;
                 React(c,Expression.Defiant,"先到的就是我的！","鼓着脸，挡在食盆前。",6);
@@ -155,7 +156,9 @@ public sealed partial class WorldSimulation
                     .OrderByDescending(c=>c.GuardSkill+c.Courage*20).FirstOrDefault();
                 if(defender!=null)threat.DefenderId=defender.Id;
             }
-            if(defender!=null&&IsAvailable(defender)&&defender.Health>35&&defender.Energy>15)
+            if(intruder.Interaction.EatingRemaining>0)
+                intruder.Activity="慢慢咽下嘴里的这一口";
+            else if(defender!=null&&IsAvailable(defender)&&defender.Health>35&&defender.Energy>15&&defender.Interaction.EatingRemaining<=0)
             {
                 defender.Activity="守护乐园";intruder.Activity="试图闯过守卫";
                 MoveToward(defender,intruder.X,intruder.Z,dt,1.3);
@@ -191,7 +194,7 @@ public sealed partial class WorldSimulation
             }
             else
             {
-                if(defender!=null)CallForHelp(defender);
+                if(defender!=null&&defender.Interaction.EatingRemaining<=0)CallForHelp(defender);
                 var victim=State.Creatures.FirstOrDefault(c=>c.RegionId=="home"&&!c.IsIntruder&&IsAvailable(c));
                 if(victim!=null)
                 {

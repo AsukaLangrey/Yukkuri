@@ -85,8 +85,16 @@ public sealed partial class WorldSimulation
     // This never advances hunger, age, healing, training, or other passive world time.
     public void AdvanceInteractionPresentation(double delta)
     {
-        if (!State.InteractionPlaytest || State.Settings.Pause || !double.IsFinite(delta) || delta <= 0) return;
+        if (State.Settings.Pause || !double.IsFinite(delta) || delta <= 0) return;
         double dt = Math.Min(delta, .1);
+        if(!State.InteractionPlaytest)
+        {
+            // Old management advances mouths once in its normal tick. Only an
+            // already accepted bite may finish through presentation in close-up.
+            if(State.Mode==PlayMode.CloseUp)
+                foreach(var c in State.Creatures)AdvanceMouthProgress(c,dt);
+            return;
+        }
         SynchronizeCareParcels();
         SettleRoomSupplies();
         foreach (var c in State.Creatures)
@@ -102,13 +110,7 @@ public sealed partial class WorldSimulation
                 i.ReactionPoseRemaining>0&&i.ReactionPose is "slap" or "poke" or "flick" or "push"||
                 !State.RoomObjects.Any(o=>o.Id==i.GroundIntakeSourceId&&o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand)))
                 DetachNaturalIntake(c);
-            bool mouthfulFinishing=i.EatingRemaining>0&&i.EatingRemaining<=dt;
-            i.NaturalBitePause=Math.Max(0,i.NaturalBitePause-dt);
-            i.EatingRemaining = Math.Max(0, i.EatingRemaining - dt);
-            if(i.NaturalIntakePending&&InteractionLife.IntakeDuration(i.EatingKind)-i.EatingRemaining>=NaturalResources.BiteContactSeconds)
-                CompleteNaturalIntake(c);
-            if(mouthfulFinishing&&i.GroundIntake)i.NaturalBitePause=.4;
-            if(i.EatingRemaining<=0)i.GroundIntakeSourceId=null;
+            bool mouthfulFinishing=AdvanceMouthProgress(c,dt);
             i.ReactionPoseRemaining=Math.Max(0,i.ReactionPoseRemaining-dt);
             i.SocialResponseRemaining=Math.Max(0,i.SocialResponseRemaining-dt);
             i.HarshResponseRemaining=Math.Max(0,i.HarshResponseRemaining-dt);
@@ -396,7 +398,7 @@ public sealed partial class WorldSimulation
                     Feedback(c, "treasure", Expression.Delighted, "它把自己的小宝物展示给你看。", "proud");
                 else if (c.Fear < 30 && c.Pain < 20)
                 {
-                    string activity=Next()<.5?"sing":"stretch";
+                    string activity=Next()<.5&&MouthFunction.CanSpeakClearly(c)?"sing":"stretch";
                     Feedback(c,activity,Expression.Content,"没有操作时，它也在自己慢慢来。",activity);
                 }
             }

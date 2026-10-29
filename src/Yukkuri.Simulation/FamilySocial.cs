@@ -315,8 +315,8 @@ public sealed partial class WorldSimulation
         var speaker = State.Creatures.Find(c => c.Id == speakerId); var listener = State.Creatures.Find(c => c.Id == listenerId);
         var e = State.FamilyRelationshipEvents.Find(x => x.Id == eventId);
         if (speaker == null || listener == null || e == null || speaker == listener || !FamilyInContact(speaker, listener) ||
-            !FamilyActionReady(speaker) || !FamilyActionReady(listener) ||
-            !e.KnownBy.TryGetValue(speakerId, out var source) || source != KnowledgeSource.Witness) return "需要亲眼知情者在近处实际转述。";
+            !FamilyActionReady(speaker) || !FamilyActionReady(listener) || !MouthFunction.CanSpeakClearly(speaker) ||
+            !e.KnownBy.TryGetValue(speakerId, out var source) || source != KnowledgeSource.Witness) return "需要亲眼知情者在近处，能够清楚讲述时实际转述。";
         if (e.KnownBy.ContainsKey(listenerId)) return "它已经听说或见过这件事。";
         e.KnownBy[listenerId] = KnowledgeSource.Told;
         listener.Family.LastEvent = $"听{speaker.Name}说起一段伴侣关系，尚未亲自确认";

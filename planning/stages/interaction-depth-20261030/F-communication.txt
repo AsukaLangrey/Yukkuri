@@ -1,0 +1,16 @@
+F批：口部受限与家庭讲述
+本代理修改范围：FamilySocial.TellFamilyRelationship、FamilyAftermath.TellFamilyLoss/自主转述、FamilyLearning.CanTeachChild/TickFamilyLearning、新checks/Family.MouthCommunication与本文件。
+未修改MilestoneWorld、身体功能实现或其他代理源码；仅静态源码读写，未编译、执行检查、模拟、截图或操作Git。
+
+接入规则
+共用身体代理的public MouthFunction.CanSpeakClearly(c)，口伤Damage与PermanentLoss较大值小于60才可清楚讲述。
+- 关系和离世手动转述检查说话者，能力不足返回说明，不给听者写入Told，也不删除说话者已经知道的事实。
+- 实际相处中的自主离世转述使用相同说话者限制，不绕过手动入口规则。
+- 教学入口和自主教学只能由能清楚讲述的教师开始；进行中教师变成严重口伤，下一普通帧停止未完成课程并留30秒消化间隔，不结算新知识或误解抽签。
+- 已保存的课程连同严重口伤可以正常读取，恢复普通时间后按同一条件中断；暂停/近看不暗中推进教学或结算。
+- 听者口伤不当成听不懂。未给ReadyToLearn/ReadyForLossConversation/FamilyActionReady统一加入口伤禁令，普通安静陪伴、听讲、已有知识、亲缘及关系保留。
+- 具体答话的含混表现、旧事件转述由family_ui负责；已协作同步，完整讲述与简单需要表达分别处理。
+
+新增9组检查源码（未执行）
+checks/Family.MouthCommunication：关系手动转述正常/受伤说话者/受伤听者；离世同对照；自主离世同对照且普通相处仍发生；Damage/PermanentLoss的59.99/60/80边界；受伤教师不能手动或自动教知识但可陪伴；正常教师与受伤幼体听讲；中途教师严重口伤及读档中断且保存旧知识；受伤听者中途读档续接确定性；暂停/近看不推进。
+原Family.Social、Family.Aftermath、Family.Teaching及其他检查不改不降断言。编译、远端执行、画面和声音结果未确认。

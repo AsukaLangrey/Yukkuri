@@ -76,6 +76,7 @@ public sealed partial class WorldSimulation
             TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickFamilySocial(dt);
             TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);return;
         }
+        foreach(var c in State.Creatures)AdvanceMouthProgress(c,dt);
         if(State.MilestoneScenario) TickMilestoneWorld(dt);
         // An autonomous arrival/retreat may move the selected creature to another region.
         // Keep the authoritative state saveable before any UI refresh or autosave runs.
@@ -96,6 +97,7 @@ public sealed partial class WorldSimulation
                     else c.Health = Math.Max(1, c.Health - dt * 0.15);
                 }
                 if(State.MilestoneScenario && TickMilestoneCreature(c,region,dt)) continue;
+                if(c.Interaction.EatingRemaining>0){c.Activity="慢慢咽下嘴里的这一口";continue;}
                 c.DecisionIn -= dt;
                 if (c.DecisionIn <= 0)
                 {
@@ -123,9 +125,11 @@ public sealed partial class WorldSimulation
                 else
                 {
                     var food = region.Facilities.FirstOrDefault(f => f.Kind == FacilityKind.Feeder && f.Stock > 0 && Distance(c.X,c.Z,f.X,f.Z)<0.9);
-                    if (food != null && c.Fullness < 75) { food.Stock--; c.Fullness = Math.Min(100,c.Fullness+Config.FeedGain); c.Activity="进食"; }
+                    if (food != null && c.Fullness < 75 && CanAcceptLegacyIntake(c))
+                    { food.Stock--; c.Fullness = Math.Min(100,c.Fullness+Config.FeedGain); BeginLegacyIntake(c); c.Activity="进食"; }
                     if (c.Activity is "寻找睡床" or "原地休息" or "休息") { c.Energy = Math.Min(100,c.Energy+dt*6); c.Activity="休息"; }
-                    if (region.Kind == RegionKind.Wilderness && c.Fullness < 70 && Next() < dt * 0.08) { c.Fullness += 10; c.Activity="找到了野果"; }
+                    if (region.Kind == RegionKind.Wilderness && c.Fullness < 70 && CanAcceptLegacyIntake(c) && Next() < dt * 0.08)
+                    { c.Fullness += 10; BeginLegacyIntake(c,recordMealExperience:false); c.Activity="找到了野果"; }
                 }
             }
             // Deterministic local separation for the prototype's <= 100 residents.
@@ -192,9 +196,10 @@ public sealed partial class WorldSimulation
     public bool Feed(string id, bool staff = false)
     {
         var c = State.Creatures.Find(c=>c.Id==id);
-        if (State.Settings.Pause || c==null || c.Family.ColdStorage.Stored || FamilyRules.UnderIntervention(c) || c.Condition is PhysicalCondition.Critical or PhysicalCondition.Dead || (!staff && c.RegionId!=State.ActiveRegionId) || (!State.UnlimitedResources && State.Food<=0)) return false;
+        if (State.Settings.Pause || c==null || !CanAcceptLegacyIntake(c) || (!staff && c.RegionId!=State.ActiveRegionId) || (!State.UnlimitedResources && State.Food<=0)) return false;
         if (!State.UnlimitedResources) State.Food--;
         c.Fullness=Math.Min(100,c.Fullness+Config.FeedGain); c.Trust=Math.Min(100,c.Trust+2); c.Activity=c.Condition==PhysicalCondition.Recovering?"休养中接受喂食":"接受喂食";
+        BeginLegacyIntake(c);
         if (!staff)
         {
             c.Observation.FeedingEvidence++;
@@ -202,7 +207,6 @@ public sealed partial class WorldSimulation
             c.Memories.Add("被玩家喂食"); if (c.Memories.Count>20) c.Memories.RemoveAt(0);
         }
         if(State.MilestoneScenario) OnMilestoneFeed(c,staff);
-        if(!c.Interaction.Digestion.Symptomatic)LearnFoodExperience(c,RoomObjectKind.Meal,true);
         Log($"{(staff?"员工":"你")}喂食了{c.Name}。"); return true;
     }
     public bool Observe()

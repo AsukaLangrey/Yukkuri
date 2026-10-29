@@ -99,7 +99,7 @@ public partial class Main
             Assert(Sim.State.ActiveRegionId=="wild","travel button opens wilderness");
             await Screenshot("m01-wilderness");
             var wild=Sim.Selected!;
-            for(int i=0;i<6;i++)await ClickButton("feed");
+            for(int i=0;i<6;i++){await ClickButton("feed");await Wait(2);}
             await ClickButton("rescue");await Wait(.5);
             Assert(wild.RegionId=="home"&&wild.Quarantine,"invitation UI moves trusted creature to observation area");
             await ClickButton("home");await Wait(.5);

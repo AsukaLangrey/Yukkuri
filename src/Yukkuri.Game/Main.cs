@@ -98,7 +98,9 @@ public partial class Main : Node3D
     {
         if(!_ready)return;
         // A stall is not offline progress. Simulation time advances only while the app is running.
-        float dt=(float)Math.Min(delta,.1);Sim.Advance(dt*(Sim.State.MilestoneScenario?Sim.State.Settings.Speed:1));
+        float dt=(float)Math.Min(delta,.1);
+        Sim.AdvanceInteractionPresentation(dt);
+        Sim.Advance(dt*(Sim.State.MilestoneScenario?Sim.State.Settings.Speed:1));
         if(Sim.State.MilestoneScenario)ProcessMilestone(dt);
         bool close=Sim.State.Mode==PlayMode.CloseUp;
         foreach(var c in Sim.State.Creatures.Where(c=>c.RegionId==Sim.State.ActiveRegionId))

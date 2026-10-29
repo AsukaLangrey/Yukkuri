@@ -59,7 +59,7 @@ public partial class Main
             if(_foodInHand)
             {
                 if(point.DistanceTo(mouse.Position)<90&&Sim.Feed(Sim.Selected.Id)){_foodInHand=false;Sound("feed");Toast("食物已接触嘴部，消耗一份。");}
-                else Toast("将食物移到嘴部附近再点击。");
+                else Toast(point.DistanceTo(mouse.Position)<90?LegacyFeedFailure():"将食物移到嘴部附近再点击。");
                 return;
             }
             if(Camera.UnprojectPosition(actor.GlobalPosition).DistanceTo(mouse.Position)<110)

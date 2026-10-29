@@ -192,7 +192,11 @@ public sealed partial class WorldSimulation
             InteractionAction.Care=>CanCareAt(c,input.Part,input.Side),
             _=>true
         };
-        g.ContactElapsed=validPart?(careLocationChanged?dt:g.ContactElapsed+dt):0;
+        double contactProgress=dt;
+        if(input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink)
+            contactProgress*=MouthFunction.IntakeRate(c,input.Action==InteractionAction.Drink?IntakeKind.Water:
+                input.Action==InteractionAction.FeedSweet?IntakeKind.Sweet:IntakeKind.Meal);
+        g.ContactElapsed=validPart?(careLocationChanged?contactProgress:g.ContactElapsed+contactProgress):0;
         double motion = resumedContact?0:Math.Min(input.Motion, dt * 2.5);
         g.Motion += motion;
         var i = c.Interaction;

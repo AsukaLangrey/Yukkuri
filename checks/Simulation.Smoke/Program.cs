@@ -22,7 +22,7 @@ Check(sim.State.WorldSeconds==time+0.25,"exit has no catch-up");
 sim.Travel("wild");double before=initial.InnerAgeSeconds;sim.Advance(2);sim.Travel("home");
 Check(initial.InnerAgeSeconds==before+2&&initial.Id==id&&initial.Body.Id==body&&initial.Registration.IdentityId==identity,"inactive region advances and stable identities survive travel");
 sim.Select(id);initial.TrueDisposition="greedy";sim.Observe();string guessed=initial.Observation.Hypothesis;
-sim.Feed(id);sim.Feed(id);sim.Observe();
+sim.Feed(id);sim.Advance(2);sim.Feed(id);sim.Observe();
 Check(guessed!=initial.Observation.Hypothesis&&initial.TrueDisposition=="greedy","new evidence corrects uncertain observation, not the true trait");
 Check(!System.Text.Json.JsonSerializer.Serialize(sim.View(initial)).Contains("greedy"),"UI projection does not expose true trait");
 int earned=sim.State.Money;Check(sim.CompleteCareRecord()&&sim.State.Money==earned+40,"care evidence and wellbeing earn one commission reward");

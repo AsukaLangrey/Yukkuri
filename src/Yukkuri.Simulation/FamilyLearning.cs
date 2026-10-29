@@ -71,7 +71,7 @@ public sealed partial class WorldSimulation
     private bool ReadyToLearn(Creature c)=>FamilyActionReady(c)&&!NaturalResources.WantsFood(c)&&
         !NaturalResources.WantsWater(c)&&c.Energy>=40;
     private bool CanTeachChild(Creature teacher,Creature child)=>!teacher.IsYoung&&child.IsYoung&&
-        ReadyToLearn(teacher)&&ReadyToLearn(child)&&FamilyVisible(teacher,child,4)&&
+        ReadyToLearn(teacher)&&ReadyToLearn(child)&&MouthFunction.CanSpeakClearly(teacher)&&FamilyVisible(teacher,child,4)&&
         (child.Family.MotherId==teacher.Id||child.Family.FatherId==teacher.Id||child.ParentId==teacher.Id||
          child.Family.CaregiverIds.Contains(teacher.Id)||teacher.Patience>=.65&&teacher.Aggression<=.25&&
          teacher.Family.Peers.TryGetValue(child.Id,out var caring)&&caring.Affection>=20)&&
@@ -109,7 +109,7 @@ public sealed partial class WorldSimulation
         {
             if(teacher.Family.Lesson is not { } lesson)
             {
-                if(State.WorldSeconds<teacher.Family.NextLessonAt||teacher.IsYoung||!ReadyToLearn(teacher)||
+                if(State.WorldSeconds<teacher.Family.NextLessonAt||teacher.IsYoung||!ReadyToLearn(teacher)||!MouthFunction.CanSpeakClearly(teacher)||
                     teacher.Family.CompanionTargetId is not { } childId||State.Creatures.Find(c=>c.Id==childId) is not { } child||
                     !child.IsYoung||child.Family.CompanionTargetId!=teacher.Id||!FamilyInContact(teacher,child))continue;
                 var unknown=teacher.Family.LifeKnowledge.OrderBy(p=>p.Key,StringComparer.Ordinal)
@@ -121,6 +121,8 @@ public sealed partial class WorldSimulation
                 }
                 continue;
             }
+            if(!MouthFunction.CanSpeakClearly(teacher))
+            {FinishFamilyLesson(teacher,"口部暂时无法清楚讲述，教导中断；可以继续安静陪伴，没听完的内容没有变成新知识。");continue;}
             var learner=State.Creatures.Find(c=>c.Id==lesson.LearnerId);
             if(learner==null||!CanTeachChild(teacher,learner)||teacher.Family.CompanionTargetId!=learner.Id||
                 learner.Family.CompanionTargetId!=teacher.Id||State.WorldSeconds-lesson.StartedAt>45)

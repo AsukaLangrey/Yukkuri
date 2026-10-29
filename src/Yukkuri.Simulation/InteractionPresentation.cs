@@ -35,8 +35,11 @@ public static class InteractionPresentation
         if(i.ReactionRefused)return "coo-refuse";
         if(c.Expression==Expression.Frightened)return "coo-hurt";
         if(c.Expression is Expression.Angry or Expression.Defiant or Expression.Worried)return "coo-refuse";
-        if(i.ReactionSituation.Contains("nuzzle",StringComparison.Ordinal))return "coo-nuzzle";
         if(i.ReactionSituation is "eat" or "eat-leaves" or "sweet" or "drink" or "mouthful-done")return "feed";
+        // Reuse the existing brief descending nonverbal cue. This chooses audio
+        // only; an accepted action must not become a refusal because of injury.
+        if(!MouthFunction.CanSpeakClearly(c))return "coo-refuse";
+        if(i.ReactionSituation.Contains("nuzzle",StringComparison.Ordinal))return "coo-nuzzle";
         if(i.ReactionSituation is "lift" or "lift-low" or "rock")return "coo-hug";
         return "coo-stroke";
     }
