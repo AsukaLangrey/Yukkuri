@@ -14,6 +14,8 @@
 
 ## 每个任务的交付
 
+第二轮限定分工（10:17 +08）：input 对话改为负责 `src/Yukkuri.Simulation/InteractionGesture.cs`、`checks/Interaction.Continuity/Program.cs` 与 `feeding-release.md`，处理一口已咽下后仍按住食水导致自主行动被阻挡的具体问题。主对话在其交回前不改这两个源码文件。review 的切区/近看只读补充交接为 `review-transitions.md`；审查结论是不在本轮扩改未接入默认小院的公共切区行为。
+
 记录读到的问题及具体触发条件、修改文件与理由、静态核对依据、尚未运行的远程验证案例。不能仅报告检查数量。跨文件需求只建议，不自行侵入别人负责范围。不得修改历史快照。
 
 ## 远程测试与整合
