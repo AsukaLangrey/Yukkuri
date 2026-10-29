@@ -1,0 +1,130 @@
+{
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "failures": [
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "a completed held meal sweet or drink releases needs after its actual swallowing response",
+      "passed": false,
+      "error": "Drink/water: holding the finished tool trapped the oil or skipped swallowing; diagnostics={\"accepted\":true,\"sawSwallow\":true,\"moved\":true,\"sawNaturalIntake\":true,\"endX\":-0.30000062845401326,\"endZ\":-0.7917167814584771,\"peakX\":1.2079999999999997,\"maxDistanceFromStart\":1.2079999999999997,\"totalTravel\":3.1880000000000006,\"closestDestination\":0.7920000000000003,\"sawDestinationIntake\":true,\"returnedAfterDestination\":true,\"destinationId\":\"destination\",\"destinationX\":2,\"destinationZ\":0,\"destinationPortions\":4,\"targetX\":-0.3862521514355943,\"targetZ\":-0.9512650943138317,\"Activity\":\"\\u6162\\u6162\\u6765\",\"Fullness\":79.70000000000027,\"Energy\":89.76000000000022,\"Hydration\":71.70000000000014,\"EatingRemaining\":0,\"GroundIntake\":true,\"GroundIntakeSourceId\":null,\"NaturalIntakePending\":false,\"lastDisplayedPose\":\"idle\",\"ReactionPose\":\"idle\",\"ReactionPoseRemaining\":0,\"ReactionSituation\":\"mouthful-done\",\"ReactionRefused\":false,\"HasInteractionGesture\":true,\"InteractionGestureTarget\":\"interaction-oil-0\",\"CurrentInteractionAction\":12,\"InteractionGestureOwnsPose\":false,\"InteractionIntakeAccepted\":true,\"Carried\":false,\"Falling\":false,\"Restraint\":0,\"excretionActive\":false,\"Resting\":false}",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:297"
+      ]
+    },
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "an autonomous invitation supplies the same body pose used by the renderer",
+      "passed": false,
+      "error": "autonomous invitation lacks a pose or matching speech: idle, ",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:604"
+      ]
+    },
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "voice intent follows the oil's actual response instead of the last selected tool group",
+      "passed": false,
+      "error": "autonomous nuzzle request has no matching sound intent",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:661"
+      ]
+    },
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "stored treasure keeps ownership through save and cannot be displayed as present",
+      "passed": false,
+      "error": "saving lost ownership or autonomy displayed a stored object",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:1305"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "accepted": true,
+    "sawSwallow": true,
+    "moved": true,
+    "sawNaturalIntake": true,
+    "endX": -0.30000062845401326,
+    "endZ": -0.7917167814584771,
+    "peakX": 1.2079999999999997,
+    "maxDistanceFromStart": 1.2079999999999997,
+    "totalTravel": 3.1880000000000006,
+    "closestDestination": 0.7920000000000003,
+    "sawDestinationIntake": true,
+    "returnedAfterDestination": true,
+    "destinationId": "destination",
+    "destinationX": 2,
+    "destinationZ": 0,
+    "destinationPortions": 4,
+    "targetX": -0.3862521514355943,
+    "targetZ": -0.9512650943138317,
+    "Activity": "慢慢来",
+    "Fullness": 79.70000000000027,
+    "Energy": 89.76000000000022,
+    "Hydration": 71.70000000000014,
+    "EatingRemaining": 0,
+    "GroundIntake": true,
+    "GroundIntakeSourceId": null,
+    "NaturalIntakePending": false,
+    "lastDisplayedPose": "idle",
+    "ReactionPose": "idle",
+    "ReactionPoseRemaining": 0,
+    "ReactionSituation": "mouthful-done",
+    "ReactionRefused": false,
+    "HasInteractionGesture": true,
+    "InteractionGestureTarget": "interaction-oil-0",
+    "CurrentInteractionAction": 12,
+    "InteractionGestureOwnsPose": false,
+    "InteractionIntakeAccepted": true,
+    "Carried": false,
+    "Falling": false,
+    "Restraint": 0,
+    "excretionActive": false,
+    "Resting": false
+  },
+  "no_failure_retry": true,
+  "root_cause_confirmed": false,
+  "continuity_assertion_location": "checks/Interaction.Continuity/Program.cs:339",
+  "compound_assertion": "accepted && sawSwallow && moved && c.X > .5",
+  "subcase_execution": {
+    "applies_if_held_drink_water_failure": true,
+    "counting_unit": "One named top-level check, not nine nested combinations. Seven previous subcombinations completed by fixed control flow only; no extra aggregate passes.",
+    "not_executed_after_failure": [
+      "Drink/water next natural-intake completion assertion at line 347",
+      "Drink/water cancellation and explicit put-down assertions at lines 348-351",
+      "Drink/rest next combination"
+    ]
+  },
+  "interpretation": "If accepted/sawSwallow/moved and sawDestinationIntake/returnedAfterDestination are true while endX<=.5, the recorded conjunction failed on terminal X, not absence of swallowing/movement. Product correctness as a whole still unconfirmed; diagnostic instrumentation is not a fix.",
+  "other_failure_boundaries": [
+    {
+      "check": "autonomous invitation body pose",
+      "failed_assertion": "Program.cs:610",
+      "not_executed": [
+        "pause freezes reaction at lines611-612",
+        "close-up response window expiry at lines613-614"
+      ]
+    },
+    {
+      "check": "voice intent",
+      "failed_assertion": "Program.cs:665",
+      "not_executed": [
+        "coo-refuse at lines666-668",
+        "coo-hurt at lines669-670"
+      ]
+    },
+    {
+      "check": "stored treasure",
+      "failed_assertion": "Program.cs:1312",
+      "compound_components": "Stored+OwnerId existence AND ReactionSituation==treasure-missing; current error does not identify which component failed."
+    }
+  ],
+  "static_hypothesis": {
+    "confirmed_root_cause": false,
+    "description": "Fresh() retains three default creatures. Family care/activity is evaluated before older autonomous invitation/treasure paths. A successful family activity may consume the short test window, producing neither old invite nor expected treasure reaction. This is a static hypothesis only, not a rerun or per-frame confirmation; treasure ownership loss is not established.",
+    "source_locations": [
+      "src/Yukkuri.Simulation/InteractionBehavior.cs:338",
+      "src/Yukkuri.Simulation/InteractionBehavior.cs:363-385",
+      "src/Yukkuri.Simulation/FamilySocial.cs:389-408"
+    ]
+  }
+}

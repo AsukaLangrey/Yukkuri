@@ -1,0 +1,21 @@
+{
+  "reviewed_at": "2026-10-29T18:04:22Z",
+  "kind": "actual rendered image inspection, separate from native interaction",
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "files": [
+    "render/01-yard.png",
+    "render/02-close.png",
+    "render/03-feeding-controls.png",
+    "render/04-force-controls.png",
+    "render/05-help.png"
+  ],
+  "observed": "Courtyard with3actors, close-up adult, feeding buttons, force controls/slider and scrollable help text render legibly; no obvious overlap in these5fixedframes. Help content intentionally extends into scrollable area. All10bottomFits/forceSingleLine booleans true.",
+  "not_proven": [
+    "all resolutions",
+    "long names/newborn list",
+    "full interactions",
+    "audible sound",
+    "general hardware performance"
+  ],
+  "performance_scope": "180 process-frame intervals only; median45.151ms p95 51.625ms max83.725ms on cloud llvmpipe, not general hardware benchmark."
+}

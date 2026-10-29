@@ -1,0 +1,2251 @@
+{
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "source_tree": "79c54b3c949fd772bf11a2fa13317ff7c81b4e39",
+  "verified_at": "2026-10-29T17:45:42.903543+00:00",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "git_blob_sha": "78969fad79473419fc4318b092290febb3e1f1a1",
+      "sha256": "d71d8ba0236a1fe3df1cc4c3f803c35c8de848e115fe572d5a0f7964001323c5",
+      "bytes": 379,
+      "lfs_restored": false
+    },
+    {
+      "path": "AGENTS.md",
+      "git_blob_sha": "c88fc0bbcdbd45949d2dc701deafc62b18cc567a",
+      "sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285",
+      "bytes": 1584,
+      "lfs_restored": false
+    },
+    {
+      "path": "NuGet.Config",
+      "git_blob_sha": "5c598e395c3673f5587f2de35fc7f6c24eb9f291",
+      "sha256": "338e57d24cd5c6fe90f0b71b3a3cf16ee21ef8ac3711fe72c37dc1fe4365fad5",
+      "bytes": 305,
+      "lfs_restored": false
+    },
+    {
+      "path": "README.md",
+      "git_blob_sha": "253edce12c0a6273fa4c35cf4b6df560bd915887",
+      "sha256": "91ed7dc0bc95890d39b51536b496412276072bcc6375aa946ad443de9ad390cc",
+      "bytes": 4413,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/M01-assets.txt",
+      "git_blob_sha": "56e82d65326afe9e499b83e56831c9126727e2eb",
+      "sha256": "7f1190d43b3800fd7761daa6df00a0d0e957c25f4a31dc742d811cdaa8cadc07",
+      "bytes": 2465,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/art-polish-20261029.txt",
+      "git_blob_sha": "592274e23992e8b077a192ad3bec636cefcc14c7",
+      "sha256": "1211c655819a7c71d28d77fcae0a6c5719bf76d6ae24f1243f9e44c354055a5f",
+      "bytes": 5590,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/asset-manifest.json",
+      "git_blob_sha": "df9feb7ece31931d2c98ced915c92ce88b5722ec",
+      "sha256": "b65f8e9341195e9b35960ad2745119432dd67b7603d5379c58d508964e71c0b5",
+      "bytes": 11349,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/audio-polish-20261029.txt",
+      "git_blob_sha": "0c4b245ebed433f4c6b60b45f3ab25b536d50f51",
+      "sha256": "da56f04977bbc1bfb238dd188f5f2f87ca77f6ae2428f821b3daf50922125b2a",
+      "bytes": 3078,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/README.txt",
+      "git_blob_sha": "a9808269930786e343b4f5259d638c8f6e548e9f",
+      "sha256": "05fbd8ef486c881e3e2516eb58857bff2e0d83db3eeba7cddc664b66197bb9f6",
+      "bytes": 2042,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/asan-only-source.patch",
+      "git_blob_sha": "fee6a0b0d3bb469b8df84c949b970d0f348593f8",
+      "sha256": "0c5e1819f9b1e4edde07f6598afc711b78ae3b2c604744b49415ddac6c09fec4",
+      "bytes": 992,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/binary-identity.json",
+      "git_blob_sha": "10d21ba1136c10771d4a8342307657df3cbc770e",
+      "sha256": "5cac0335a2631d31c12467c71f18eeb1eea1404f586b77fc2177774b8f870f61",
+      "bytes": 411,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/build-request.json",
+      "git_blob_sha": "005c2cceff6223e855288c558ebaf328ab87c153",
+      "sha256": "1a14b35d978940a3488086cf48de51c3d0b79e4ad9b5b16fc1666249a196e660",
+      "bytes": 633,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/build-result.json",
+      "git_blob_sha": "78df9f2fc8647faf438db72ff3f5a91a1aa9fefc",
+      "sha256": "b171561d3b2ac58f3cb7ccd20b0ed717978c887951d264fb8ca6b28b93992247",
+      "bytes": 72,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/godot-source-provenance.json",
+      "git_blob_sha": "0e63a80131091d9b96b3de84c24acf2028798943",
+      "sha256": "4a25e9d0c9a41006eaeea9e3ff30937b8819ddc354412c1addd5f9772219e891",
+      "bytes": 241,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/llvm-provenance.json",
+      "git_blob_sha": "a8f819cb846ad64e9c86b0c967529d6a92b80ee0",
+      "sha256": "0ff666ccc10f13f163e0022bca2e057290bbe0f11b68483f62417d922d0bd32d",
+      "bytes": 278,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/engine-provenance/original-allocator-headers.json",
+      "git_blob_sha": "8fdaca805727a085bc392ad7e9a1548797b2ee94",
+      "sha256": "d770fe872e3218433918b4dc9f99b98d963db990d400cd3e2351c479dfeff564",
+      "bytes": 844,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/pipeline-probe.blend",
+      "git_blob_sha": "58c91fc1e9928ee2ed22ee046d0877cd155eae23",
+      "sha256": "c90a1e42c7524f7335b0f072fb07b46bf048723ca2141468cf2273fad811caa2",
+      "bytes": 131,
+      "lfs_restored": false
+    },
+    {
+      "path": "assets-source/sanctuary-morning-prompt.txt",
+      "git_blob_sha": "ccbdbf23f55572fb796c53db7296158080edb20d",
+      "sha256": "64c7fba452a6bc7dde5e5ac08e1711cad35653abbb919c01d147f77ee5e8d835",
+      "bytes": 785,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/ActorArt.Preview/ActorArt.Preview.csproj",
+      "git_blob_sha": "6cbf8b53fc8a2363925257fb5e7d3db71f2bba8b",
+      "sha256": "772ae4b4d70971f9190b1069e5aeac1c0743e6b6c38d6fb2f3ce5dea05154ae4",
+      "bytes": 1432,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/ActorArt.Preview/Program.cs",
+      "git_blob_sha": "43a47e1df8ec0a0c97dcc989b4ea8eaabe27b842",
+      "sha256": "ceac01bd6c1ff17132a6805922958fd8882935908c9b4c99319cd6e09cf3efe7",
+      "bytes": 19620,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj",
+      "git_blob_sha": "ba4b9cf05722855e530828207b80dca11739daee",
+      "sha256": "6cdf2cd9228450627461743c3ef1fab5f168b412e4575b407f9fb25874a248bb",
+      "bytes": 2678,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/HopIntakeAudit.cs",
+      "git_blob_sha": "c89d8e356be810e2f9c947838fbf8a16832abfdc",
+      "sha256": "99d89451399d90232d5c08d218a591ec042cf68e7b0ed856a8b2a0d45f473880",
+      "bytes": 3670,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/IntakeCombinationAudit.cs",
+      "git_blob_sha": "d0f85baa2f0bf7f54c0f10a30683b8edf2668060",
+      "sha256": "fb13a863de4f4d2a9285aac95548438ee595ad233c5c8b4c10061844319b7242",
+      "bytes": 7762,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/Program.cs",
+      "git_blob_sha": "50457b33d029886b5451f34199777ffa507a89ce",
+      "sha256": "7d42d979ed9cf53c3a1c0644dcfbed8aced43a9a43625eb54af64a04421614d7",
+      "bytes": 93604,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/ActorGeometry.Smoke/WoodlandOcclusionAudit.cs",
+      "git_blob_sha": "0d0f3912052e9aa76f5b34280a293485ef20e966",
+      "sha256": "a90fe9c987baa0faf94e6400b02f6cf4f8483bd1daf982fcaa0ed138680f238c",
+      "bytes": 3045,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.ColdCare/Family.ColdCare.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.ColdCare/Program.cs",
+      "git_blob_sha": "7260b26bf6618f9b93519767e3f9f9aee4199a13",
+      "sha256": "09660a5121efcfe613ba3582f9f457c3e9bf2b4c80d99a4b1a5a820f41421f97",
+      "bytes": 11186,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.ColdCare/README.txt",
+      "git_blob_sha": "e35a687723c96a7247093a3964aab8089ffe7fe2",
+      "sha256": "2d7af75dd3c4f238487fcc3035c49fcd7f68d95a4af1b1ebb1d88c69803792c9",
+      "bytes": 1164,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.Reproduction/Family.Reproduction.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.Reproduction/Program.cs",
+      "git_blob_sha": "db2d7a4ed234ad32b15bf3a83664ad1dd5a37955",
+      "sha256": "373218e804ca6e81ec3e03f9d8e426d1fc52d77c751893e964881dc4d9191c92",
+      "bytes": 12171,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.Reproduction/README.txt",
+      "git_blob_sha": "ce2ad55e6eb173086631e31b3e8760d5f9da6617",
+      "sha256": "33b0dca6727f7533c0855bc6abad529fa34cd3e86f8b43867bc4c29e49e810e6",
+      "bytes": 1388,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.Social/Family.Social.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Family.Social/Program.cs",
+      "git_blob_sha": "925c67c05153cdf0ae7564153672adeed74df312",
+      "sha256": "7aebd0cb39571d867fde968995dd946dc881f6a688b989edbdf92fc389c16bd3",
+      "bytes": 20605,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Input.Intent/Input.Intent.csproj",
+      "git_blob_sha": "cbe05f15d557566dd3670b6ffb0882cbaa685e35",
+      "sha256": "ecb37f1c1d9a8bd4cbd2b8b927fae3ade4be7b54ef7ff4afe83c546d70e2bb91",
+      "bytes": 532,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Input.Intent/Program.cs",
+      "git_blob_sha": "c6b85b8d47ce7143c65dc8596dddb492d8845bf6",
+      "sha256": "e8e1b89ecb5b0f1c34794fe07462cedb2df1c161ba1f5ab4217be18d9ff55232",
+      "bytes": 34531,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Input.Intent/fixtures/contact-traces.json",
+      "git_blob_sha": "d8073b10f85ff5bd850df9e45e8fbb64dbbab1d0",
+      "sha256": "ad8ff07ccaa4e85a627f0511fce96ea85e7940d6f3390b5052ea454a38f8ae93",
+      "bytes": 1548,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Continuity/Interaction.Continuity.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Continuity/Program.cs",
+      "git_blob_sha": "2cd4e1f4347b7d93445cd82627c0a1a20dca107c",
+      "sha256": "609dd27339c848263dbcb83edf1af0be5e6707e8183d290aa97177eab145466c",
+      "bytes": 117232,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Depth/Interaction.Depth.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Depth/Program.cs",
+      "git_blob_sha": "34ab9524317eff255f38b1d1797b8d162dac1bcb",
+      "sha256": "a4b838fbe88c12c3b03f0f0bd499f31cbcc08c77acd3edec24d120d9a7e244bb",
+      "bytes": 3060,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Injury/Interaction.Injury.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Injury/Program.cs",
+      "git_blob_sha": "ce354693909c585cf5bab31cf67182a3a1bf1bd2",
+      "sha256": "1fd345b7aa96f9301b6427f99ad3eb13e153333ea47773032b9c2ae565542ae9",
+      "bytes": 11818,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Smoke/Interaction.Smoke.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Interaction.Smoke/Program.cs",
+      "git_blob_sha": "e1e1cfbaadec3fce5d8cfdfeb7d2a2904a1cd7f0",
+      "sha256": "d74f2c50a3e8a125067e89bfcf2bf44c3e9f32ba30025c944b2226020bf9df3f",
+      "bytes": 28431,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/InteractionProp.Preview/InteractionProp.Preview.csproj",
+      "git_blob_sha": "c5289725a284c82f492404c04519e1fbfd41b88a",
+      "sha256": "c12cc89311c023433a5d5f1060311eb08f8488747d76c76bcbcf43355f14dc0f",
+      "bytes": 933,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/InteractionProp.Preview/Program.cs",
+      "git_blob_sha": "c9f625aaf84cd83e88d858258080386a54cb10a2",
+      "sha256": "580f38b2f3118bb5932a96e1efe9be860faecd85716b9703d06d25595df1522d",
+      "bytes": 7715,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Milestone.Exploration/Milestone.Exploration.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Milestone.Exploration/Program.cs",
+      "git_blob_sha": "abd382e3db3829f700b4b9fec3c26b44fe29a94c",
+      "sha256": "dc127c3e8741ac5c1c2f960d4937f2c905639a26d6d9e9ff1e4587e257a64b22",
+      "bytes": 5650,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Milestone.Smoke/Milestone.Smoke.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Milestone.Smoke/Program.cs",
+      "git_blob_sha": "b54c7363bb392c58ab7fc10039f07e318bcc75c8",
+      "sha256": "fb873da203ce313ea6d4c9af0a5cccd3c92bfd4c70af1ad96a0e94568c8d47e3",
+      "bytes": 21440,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/NaturalLife.Smoke/Program.cs",
+      "git_blob_sha": "0df4796312af8c007f0f865fcf25aeeb2405343e",
+      "sha256": "33b78862b532cb853a227b8c2022bf608a1d947f7d93ecb252374c673e91302b",
+      "bytes": 78189,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/NaturalLife.Soak/NaturalLife.Soak.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/NaturalLife.Soak/Program.cs",
+      "git_blob_sha": "38a949d2d784314d050905af31c98333cc22cb13",
+      "sha256": "67da49126e24c40cd7d06b7c0c68bf5a80c5985afa6d778abc6f9ed411401ef1",
+      "bytes": 7298,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe/Probe.cs",
+      "git_blob_sha": "798fecf889067c2fea26d489c436f14f665f5a93",
+      "sha256": "aca342398bd922d84e7083b608986c84a1089adc48e0fd5eba3f169fb6a664b9",
+      "bytes": 2725,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe/Probe.tscn",
+      "git_blob_sha": "2ce9cfeece80759671b25e70ec21c61400abd6b4",
+      "sha256": "1773f534271e1f49cb93ed8a35ae38e460cff04dd1ff8b37223350b1d8eddcf4",
+      "bytes": 151,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe/Renderer.Probe.csproj",
+      "git_blob_sha": "f67de05df90945fdf36bd969b4ef70ae35b21605",
+      "sha256": "251268f991885d3d6d82ce17f971329fc82b744b476bda627c6094fdf5130091",
+      "bytes": 436,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe/project.godot",
+      "git_blob_sha": "e1ac22352ec17da5a1ba18165ddd955d26b3e872",
+      "sha256": "c79affbe1ef29131d5ebd7d3ede091f2bdb9029bbfed37c1f6e3636a04b39292",
+      "bytes": 243,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe461/Probe.cs",
+      "git_blob_sha": "2ae0ee6c281842fa87cac8c011b92472e73a4974",
+      "sha256": "c457c2c52eafab41100e9cd0e305715f98cf22bd44b313402b8a77a7f7b6ece0",
+      "bytes": 1779,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe461/Probe.tscn",
+      "git_blob_sha": "2ce9cfeece80759671b25e70ec21c61400abd6b4",
+      "sha256": "1773f534271e1f49cb93ed8a35ae38e460cff04dd1ff8b37223350b1d8eddcf4",
+      "bytes": 151,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe461/Renderer.Probe.csproj",
+      "git_blob_sha": "28d1b8cf937b73760188a800b6eb4125b9789bc6",
+      "sha256": "c6fcd4d10e5231d77c46442e815b78840f72b2e17a03d1ba78add669d7c70a87",
+      "bytes": 437,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Renderer.Probe461/project.godot",
+      "git_blob_sha": "e1ac22352ec17da5a1ba18165ddd955d26b3e872",
+      "sha256": "c79affbe1ef29131d5ebd7d3ede091f2bdb9029bbfed37c1f6e3636a04b39292",
+      "bytes": 243,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Save.Compatibility/Program.cs",
+      "git_blob_sha": "92df23fd618e770e628a9e6c601b950a4f9f963a",
+      "sha256": "d7609fca7b293edc92d2bfc2439ce5a30060e7e1df54ba25c04e95e6c741a8b6",
+      "bytes": 4517,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Save.Compatibility/Save.Compatibility.csproj",
+      "git_blob_sha": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+      "bytes": 326,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Simulation.Smoke/Program.cs",
+      "git_blob_sha": "3360b72877a850f7d40e4947a236c3563fdb479c",
+      "sha256": "fe7a75407dc7bf14d11d20e60d59004041f4cdf30c093ef609abdd532242a594",
+      "bytes": 21995,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Simulation.Smoke/Simulation.Smoke.csproj",
+      "git_blob_sha": "ed7b61782864a46e67f4b0a435335aa9f4cd9b3c",
+      "sha256": "fa5a375fc8191331fffe02c9a330cadd37f22f144b2b53af98602cc37585b972",
+      "bytes": 325,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Woodland.Preview/Program.cs",
+      "git_blob_sha": "8dc4e2ffa0292695e0284c90ce4a1d3fefb77587",
+      "sha256": "eee4428a8f21d564ba8a6c40970f1f4b442f093395b70dc3ae775b4db60301cf",
+      "bytes": 4363,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/Woodland.Preview/Woodland.Preview.csproj",
+      "git_blob_sha": "5cb199721e9d4c969e08e16fac13b21261bd373f",
+      "sha256": "fd633a7a73dae7ff818cb5546ddc5a11aa8666ec5b4696a76ab50d0e82b8bf62",
+      "bytes": 536,
+      "lfs_restored": false
+    },
+    {
+      "path": "checks/verify-launcher-offline.ps1",
+      "git_blob_sha": "517ab525b1b65f6551db984887955070dc6a83a8",
+      "sha256": "3f6360a2103a276a3bacb5cf7ccde46cfbe1b77d23e022183949e682349f4f47",
+      "bytes": 1994,
+      "lfs_restored": false
+    },
+    {
+      "path": "global.json",
+      "git_blob_sha": "e8a91cbf7506d4f30d2f278f1efdd6fce4156686",
+      "sha256": "81ae2087dbfb46027fd94748351fb4b1ab24145fbb52544a2822bf128e2e48f1",
+      "bytes": 105,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/art.md",
+      "git_blob_sha": "918b8d73c3f0965a3ed068abe44ec279ca8aa587",
+      "sha256": "b995a271267f02d26d2285796338ba7ef3c2063b4bc2014d34a6107d932cef5c",
+      "bytes": 7324,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/audio.md",
+      "git_blob_sha": "69bf337d495bd6a35b1bfbb369757d4adf5aadbf",
+      "sha256": "26434010b3ca69f2f59ed0a24291016ecd7abc6c72f80686ea0fb7f988cb6ea9",
+      "bytes": 14491,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/contact.md",
+      "git_blob_sha": "8b44f63ac98b301a223154f066552a4c443ad452",
+      "sha256": "b55e7f6cd833b0e7c3a6824ccc113c68da48f5719b419315193d323892b1394f",
+      "bytes": 6305,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/death-support.md",
+      "git_blob_sha": "04ab64c3e615e873059b6b0a1fe0e1ef7a9dad27",
+      "sha256": "64d0eb4349cf618ca87df66f820fcb0f82decac2dadd44af8a235399a94e69f3",
+      "bytes": 4041,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/feedback.md",
+      "git_blob_sha": "2e919fceee9c843a6533d0cf81231f8b2017d2ca",
+      "sha256": "a0e4e7241d584655c67d0c5ab086091d49556ad48f81ed0318eb24c3bc706e6a",
+      "bytes": 5794,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/life.md",
+      "git_blob_sha": "6ce741f821c57d92ff0e09040bb03ad8180f0172",
+      "sha256": "2437a7613262673b20aef6d7991d902ec41dab9600ab9d4c62158bb9c3afb563",
+      "bytes": 10395,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/review.md",
+      "git_blob_sha": "5a72d7c8dc8c5e3897c5cec61573c65318b8aaac",
+      "sha256": "437ec911eb82c4b3e2ba1ff10e7b81576a93de5d9fb977c5e9e7c54cb6757426",
+      "bytes": 30206,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint-20261029-20m/save.md",
+      "git_blob_sha": "f0489b9e9d794fd5ea13920b08e5b0c81dd5c0c9",
+      "sha256": "b4763ea8e8ef5c576d9ed07f66d1243696919a7dd78fd9d59dc0d344e9d55bac",
+      "bytes": 5597,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/SUMMARY.md",
+      "git_blob_sha": "8da82ab60a40f2a430b8901761cdc8d4d629f0f9",
+      "sha256": "5afe8741501664d335fba7d579ce64ab2bbbb6a85eac4ec59cf3e75a211b2753",
+      "bytes": 4904,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/actor-review.md",
+      "git_blob_sha": "ffbe1acdf7eff26a33eabfc848910de46c896230",
+      "sha256": "4feedb75d1ed020140a5d739a08d68c63a4321fca343cbf53eb576524f352367",
+      "bytes": 11901,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/art.md",
+      "git_blob_sha": "8ee19a3b1d1e3867e6c77df2aada31f78428c8ee",
+      "sha256": "e949ead2be4b0b758279599b89bcb6e41884122eb2390acf596b21d0098b50b2",
+      "bytes": 10218,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/audio.md",
+      "git_blob_sha": "8a18750a11705cc6d392dd09c9565ef661f6ce47",
+      "sha256": "720833a260c284dac1a897d882d5f933255a7d906d63917fe21d1a87363cc55f",
+      "bytes": 7884,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/contact.md",
+      "git_blob_sha": "67007fd5dada2483553d3134313b8d224d092a09",
+      "sha256": "7e866dddd0fb765ca893d57f878554b4cd614a6a6ccd98f5bf33c14eb99248b2",
+      "bytes": 9353,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/life.md",
+      "git_blob_sha": "788ce7d3d1a83cf36f413a916a6ef91c41441810",
+      "sha256": "54bf0d315a5018fe47ffdd372f0c31627946be66a8d718861df02927c2291f26",
+      "bytes": 7181,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/physiology-review.md",
+      "git_blob_sha": "805251ddbe562c60ce6769de6705746c6ee9590b",
+      "sha256": "a2257de7ed606a833aa9fa05bf57d24152b8cdabbd037b8a7b5183f6b5b1a3bc",
+      "bytes": 15300,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/physiology.md",
+      "git_blob_sha": "99d805f68998916448ab9651293b38777b0eca58",
+      "sha256": "8881c618f9024744127f5628427b1e4f7115982f2f733d0a96f7aa3765051fa6",
+      "bytes": 8916,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/review.md",
+      "git_blob_sha": "2ed253291b6c37ed9b3d8db5b3b20963fc3d9270",
+      "sha256": "82dba5058440b5c9abd6adf9bae9d736d1677c438604a8ed456cbf6f6a75fbc0",
+      "bytes": 22017,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/core-sprint2-20261030-20m/save.md",
+      "git_blob_sha": "85acdf145c523c544fa05d2396d69cb9aa16f5f7",
+      "sha256": "fc8f0affd52c2f8b7d5d05675c77764aee0ab1ac7b3a0c79df661cde18ac7799",
+      "bytes": 8352,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/interaction-depth-20261030/A.txt",
+      "git_blob_sha": "159be967440a699448f7d32295774b7771255f48",
+      "sha256": "e1766c34cbe07ecd59347b1c7cdb8978aee9c692bd1e4eed0582ea82fdd4b7e5",
+      "bytes": 1240,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/interaction-depth-20261030/B.txt",
+      "git_blob_sha": "8637a81e7a806e929b32300eea571a62bbdc2f48",
+      "sha256": "401c27993ad99527afa95fe1d41a38244ef2a91580fb1bb15524e9182590fca8",
+      "bytes": 3265,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/interaction-depth-20261030/body.txt",
+      "git_blob_sha": "4bcc8f46f74dcf7c401030eb83bf3594380e8bca",
+      "sha256": "c1b8799f19532e3e98cfdb0d9157b5ddfcaeb64c380446c17bf36596df9142f8",
+      "bytes": 6627,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/interaction-depth-20261030/family-ui.txt",
+      "git_blob_sha": "f0f52f97744a36173305cd148e751245c7519d66",
+      "sha256": "752c9237c16bf6ebc29e1cfd4ccef2655a9de86399562d53dda8b9c8f0f8ff0c",
+      "bytes": 4969,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/interaction-depth-20261030/social.txt",
+      "git_blob_sha": "04a7a1e5ce5c0889de03f3cba0bdadc84cdda21c",
+      "sha256": "802564914fa4f56a7c7481a0e569b993e1e3224f6988d020f07634c9f2cbeae5",
+      "bytes": 6084,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/feeding-release.md",
+      "git_blob_sha": "e754bb9d7335df48bac89316ca4b6462892850bf",
+      "sha256": "dcc7adf2632e735cb10ea48fbc496fce1e9f0cddc681ad6f4e2389751c1399b8",
+      "bytes": 7230,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/input.md",
+      "git_blob_sha": "2902ed4e2971573038bb8ee98c6b3bff8838c9a1",
+      "sha256": "c675e762486d0b13d6617faf58f83b418e44f60f530be57ea6847872fc02d318",
+      "bytes": 8624,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/integration.md",
+      "git_blob_sha": "73956508a4d5dd63a23fc6616165b472f9dd3865",
+      "sha256": "1eb919c2b523241e053a15200d0ec423c12455d22b2186a1419a03bae5e5c4e4",
+      "bytes": 8683,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/life.md",
+      "git_blob_sha": "6a077e8103c5f777a4802d9f6eaf2db602df9189",
+      "sha256": "8ef994dfe7c25edd493a7facbf753cff8d2ee9a23027fd46a51771f5502c6bcc",
+      "bytes": 9774,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/presentation.md",
+      "git_blob_sha": "66c8c7bd044a8fdecbe34600812061f5f3736c44",
+      "sha256": "c104ab0f9b3506a12acf990faaabcf616295d6573a7c47549217e6e4083eec34",
+      "bytes": 8715,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review-completion.md",
+      "git_blob_sha": "f70b34aafbbf800af8eea83db37fba9f71dfebfd",
+      "sha256": "aeba4906e8142e7a117c25ec09039a642ae7cf24019a01e9c2c3914e4ab8e044",
+      "bytes": 16913,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review-input-switches.md",
+      "git_blob_sha": "baf91e80e9060ef4e50c9a96f81acdbf07aaa6d7",
+      "sha256": "38b5067d704672584c686b5c4f8fa43bafe971bd1cba46bb84fd6be269dcbe7f",
+      "bytes": 7447,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review-resource-scene.md",
+      "git_blob_sha": "3a09cdbe1755baf1b0477d81242e1917f16b7eda",
+      "sha256": "2c4dfd6db969354d7435dd774bc48c623f86cc0d7dc7b09d812a85a04a725a49",
+      "bytes": 8037,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review-resource-sharing.md",
+      "git_blob_sha": "fc2f8fa51e464437f96e5ae67a4150aa4fb14acd",
+      "sha256": "914df6da5610f6174641bdb0c7ec7690ffc5f53c43ec2183ef3b1acde05f0028",
+      "bytes": 7478,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review-scene-integration.md",
+      "git_blob_sha": "11db1e0208a017bc84225eed4d8b4d2a7d117436",
+      "sha256": "aa4f9fd9adf2e5e11fc3e6490bf35212f11a6e38c9f1a5a331326da31bf06e8c",
+      "bytes": 7688,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review-swallow.md",
+      "git_blob_sha": "f3d27f53e3b73b2459a37bf36380aacc071ba13c",
+      "sha256": "0b1803aa1dfc0c4f9a0034cf3932fe5ffe2a7678709725ba9d1302829bc33127",
+      "bytes": 21095,
+      "lfs_restored": false
+    },
+    {
+      "path": "planning/stages/static-polish-20261029-10h/review.md",
+      "git_blob_sha": "8b6c9642681cd6a5943cd8ba1a9751af047160ca",
+      "sha256": "87ed1f5dcacffdaec530ee376fb4b94eac45d484e8aa731a63327fd06fc61a51",
+      "bytes": 17813,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessoryPlacement.cs",
+      "git_blob_sha": "8b647ea8e6502703414720b8e6235beb9d8cc95b",
+      "sha256": "f04742365c623b0cc7389c5f22ace840008fb3bc612afe0887d1539670ccf285",
+      "bytes": 2575,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessorySupport.cs",
+      "git_blob_sha": "82d9f3fac767f95b1dc8136faa7d6517c3f646c4",
+      "sha256": "89fe6ce2f840f04f9e6f22fb5ff2eec823da7f450a4b4f747106acc7aa4e3f00",
+      "bytes": 2657,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessorySurface.cs",
+      "git_blob_sha": "97bcc4e666dccbc26bc3cd004ed395243b21962a",
+      "sha256": "6975b0cd5c1db69bd494e68e298583038cc6ad2a6f8e6b1e9a7c741d39647c8e",
+      "bytes": 2871,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorAccessoryWear.cs",
+      "git_blob_sha": "8012b84cf38da57e4399b4a4c9a9b43eeb911c8c",
+      "sha256": "b0a6fe613f6b964022ba0f8774a220ed58e16cdcbce607083a7c265a486efbd2",
+      "bytes": 752,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorBodyBounds.cs",
+      "git_blob_sha": "6cd8a418546aad4a1cc0e683b12313c2fe8f230c",
+      "sha256": "0186fc1d6a59d2a2470502150a31f215d205200956ed9a4fc6efb8d6036918de",
+      "bytes": 1203,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorBrowSurface.cs",
+      "git_blob_sha": "fbfc01016a1ff6ab4b7c2807ba6de2d262f08d54",
+      "sha256": "1f55b0b53b19217a6d238934c04cdcb2dcdf0a081156f0b9ada181aca8a23a35",
+      "bytes": 722,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorCradleSurface.cs",
+      "git_blob_sha": "77580a03a17c7c04ebb8c09e288e5a5ae4551a74",
+      "sha256": "08296b7a1c4822b9cab35b49480b6b05596c2fb6b1a1b33caab0b0381f441502",
+      "bytes": 642,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorCushionSurface.cs",
+      "git_blob_sha": "af116ee20a5d36b4e12bbdfe446b0b9adbef5bba",
+      "sha256": "cb91de21bee30fa896fd3b5652b817f945291e86dd78b5be445c0ac9ef81c95c",
+      "bytes": 6046,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorDressingSurface.cs",
+      "git_blob_sha": "2a5d830ba129f77ff55a72d89b3f8c39fbbb65a2",
+      "sha256": "ce5e88cdf7bb153f1ff107dbad9d9b1596b8784a9536c49480e4755cf79ccc0c",
+      "bytes": 2717,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorEyeSurface.cs",
+      "git_blob_sha": "a794c5c5ec3cf9b97a24c09ae90ecda4497a3899",
+      "sha256": "70cb04748eda104a702974bf9b92bfbe2eb0ecd714837c829098b24093fd1bdd",
+      "bytes": 1716,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorFaceSurface.cs",
+      "git_blob_sha": "6b6378311e879f6f7e63302304cde1f4509d1521",
+      "sha256": "c53712632cd666f853b4713b7ff56b05ef58743b1e31d1ebd46167194ffc5957",
+      "bytes": 1481,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorFaceSurface.cs.uid",
+      "git_blob_sha": "f82676a742213865518ce8f61f35b463fa5c4ae6",
+      "sha256": "34105cdbe520007521d92d4fd3e33a66308b58f04882a615bf901e89343b6ac7",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorHairSurface.cs",
+      "git_blob_sha": "a628fd02fb2dd36f42ef70c9d79b83a5f4c2c251",
+      "sha256": "97070962868f2c36c513b89243bb4712b31305030aacbe8f29ac20c251b7d7cb",
+      "bytes": 6364,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorHarnessSurface.cs",
+      "git_blob_sha": "9e13ee15c29e471993018bdd960349825624465c",
+      "sha256": "903f100140a88a0c56d7d334b51039d3106d835f076d31b5b3a2fd8165953dc1",
+      "bytes": 2009,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorHopMotion.cs",
+      "git_blob_sha": "79803d1e1295e08d7c7cd4ff504d3bdb749c09f8",
+      "sha256": "b5fca37ead2950bba147f97b9a049ac01772704a2c29f420f7093a43680fc30c",
+      "bytes": 3642,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorIntakeMouthSurface.cs",
+      "git_blob_sha": "9dabceccca390c78be8cb6802059f84ef6298c83",
+      "sha256": "1651fc8bc6d8c15234463b08168098fa6bb52e672a8a80088d16ebb8a24fe190",
+      "bytes": 1573,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorIntakePresentation.cs",
+      "git_blob_sha": "bcdfa75e19aac784d9e8c113fde60fc4cf26a412",
+      "sha256": "694d232628c3fa4854708004931cdaca8e9cfe47ac9aec55f0ddb402cd5b3ea8",
+      "bytes": 1072,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorMeshSupport.cs",
+      "git_blob_sha": "af7e4029a90ba97b814a49753e4183893f42845a",
+      "sha256": "cb82451b3853f4923eff9b90a4904b8df69a9e5d0efe5558f25900c1b678f9a3",
+      "bytes": 514,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorMouthSurface.cs",
+      "git_blob_sha": "2c864bc7440242ee25a4e45ab25f48666c56bfca",
+      "sha256": "aa82e4a05a8273c7f5da12973b98a22a06395d748161e960700eb229da7d2c0a",
+      "bytes": 1181,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorNaturalPose.cs",
+      "git_blob_sha": "c39d9255a050bf190e2e24324683aa90c31304d4",
+      "sha256": "764951ac57a304e317f2526ef9f12a4643f6a09ccb4adc6f62421c15885e032d",
+      "bytes": 6440,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorNaturalSupport.cs",
+      "git_blob_sha": "985c44b85b5381a9f2d87875f0af16030219f16b",
+      "sha256": "b6bf9cbfffe17fb09d0036b2c5b495a4fe1f7525c99ce76f15a8ed71a2961b4d",
+      "bytes": 5206,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorPoseClock.cs",
+      "git_blob_sha": "0e899f7729fca7d829ef6ba19caf4d0999fab86d",
+      "sha256": "866d0614baba54fcfd752b011e1b44af1d95dc000547017e86578a4d1d4f2857",
+      "bytes": 521,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorPoseSmoothing.cs",
+      "git_blob_sha": "23fa55e93c0468367d51097f999126d32ffbe859",
+      "sha256": "1e868b109589ed208251e7e4abbcd3cd6cd381f28169776490b52632995e2003",
+      "bytes": 1241,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorReactionMotion.cs",
+      "git_blob_sha": "6796f2abad90d3f3ea4d1bb049511db39c786060",
+      "sha256": "1ecd92722cd1bce214e3c5c1dc6b8133a2ca715b5b952cecf594d851af232126",
+      "bytes": 3950,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorSurfaceMarks.cs",
+      "git_blob_sha": "463c8c976a3ae071cca81c0d3f54d43891eb61ca",
+      "sha256": "3c86cd8583f7b5f87c6148dc31e6d3f1ff6bbf3b8594af70ab937954255489c8",
+      "bytes": 4400,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorTearSurface.cs",
+      "git_blob_sha": "9c497763f41ffa652b0b2b779381afba02091163",
+      "sha256": "1ca9292abc4b5fc24cf15b097c0708c1ecf161fee08de68319b9fbd368047d8e",
+      "bytes": 748,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorTouchShape.cs",
+      "git_blob_sha": "bc6644997855cc5b25ab604da6a5d810902b21be",
+      "sha256": "17a373963a719b090197a62ecdf776e804fe12ffac2da5e3c41bee6e7b384210",
+      "bytes": 603,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "git_blob_sha": "cf0f5bb8a8a6d4a6795f886bcdedcef7691156e3",
+      "sha256": "9af6ad7ee2d24803ea07a0ee4c35d6fe79dabf5d567d6a4c701697732450fef6",
+      "bytes": 132,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png.import",
+      "git_blob_sha": "3804ad290925411bca2eb852a294ab2c1107116a",
+      "sha256": "ecb2e298d27e8080f2aa20005dd2e3e0c5f167628e2f22ce7078f1034ee179e0",
+      "bytes": 965,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/audio-analysis.json",
+      "git_blob_sha": "39dd8b85be8023b1f8969944ae3d1162e769c91b",
+      "sha256": "92e6336301280da3cb22049d82357ab58a26d9042c1d83b3ea88db9a172a479a",
+      "bytes": 859,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/build.wav",
+      "git_blob_sha": "bf3919c6aed6ff80ad15cefd371b0a9110f78aea",
+      "sha256": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "bytes": 22094,
+      "lfs_restored": true,
+      "lfs_oid": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "lfs_size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/build.wav.import",
+      "git_blob_sha": "65977dc6adcfc5bc9e43527cae5edc910eb926fe",
+      "sha256": "1946fc443bfe6c0b65dc740af6847f2f45b6bef9561232218836b6caf22911b1",
+      "bytes": 486,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-help.wav",
+      "git_blob_sha": "278de052f080f1bfdaeca3adbbef658fbd613734",
+      "sha256": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "bytes": 48554,
+      "lfs_restored": true,
+      "lfs_oid": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "lfs_size": 48554
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-help.wav.import",
+      "git_blob_sha": "903df157660b2f0fcffd3033fd937cb61fe8a115",
+      "sha256": "42fa7da44182a77c80e780c6849b416054a6c54d1703a27ae01a9903a98e6556",
+      "bytes": 495,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav",
+      "git_blob_sha": "526f8534f80a42156ed53b32068241aefe84b282",
+      "sha256": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav.import",
+      "git_blob_sha": "7621cf484ddbd271e34919994ad38a9381e67070",
+      "sha256": "d23fd6d21427b980259283969a363892cb54e404d14c85875fa8b125e782f371",
+      "bytes": 492,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav",
+      "git_blob_sha": "015c0af8ab79a3dc92b9163320ec22683de8036c",
+      "sha256": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav.import",
+      "git_blob_sha": "499230376a07cac927b0ef13abec643df13f8c52",
+      "sha256": "349bee5138c0598e563affeff6fef5a3cca7d43e7ff489e8c34d669081e44419",
+      "bytes": 495,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav",
+      "git_blob_sha": "a0faa124d8510fb2e717af35ce01766b0ee5de33",
+      "sha256": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav.import",
+      "git_blob_sha": "22ad3b7b23b6caca00b91ce300ebc805e696ac64",
+      "sha256": "5fc4c9f7358b18893301ede71af1d2ac051f8efb45af300551dc2e2ac71c9341",
+      "bytes": 501,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav",
+      "git_blob_sha": "9d4205706afa7cd4f1c1b529d4217be195cffd01",
+      "sha256": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav.import",
+      "git_blob_sha": "1ef0d9b682904e3d0cf7c50ca89023a7d42296aa",
+      "sha256": "b322bc90a1b8faa7cac26db45205b90f123bd2d1e7c990b3302c68c2e6e3f2aa",
+      "bytes": 500,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav",
+      "git_blob_sha": "2903c65036dca7bfa753d206a48b4da20181a8f6",
+      "sha256": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav.import",
+      "git_blob_sha": "d107b382a400c0e12db5b3f7b08c8d911e59a028",
+      "sha256": "33f5c5be24cadf477bfcd970f18807ec395753e67fd8dad4bc9ec07ff7f84f4f",
+      "bytes": 499,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/feed.wav",
+      "git_blob_sha": "9d0de2d836f5d43b95721fa2da321e2b71bbdcf6",
+      "sha256": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "bytes": 22094,
+      "lfs_restored": true,
+      "lfs_oid": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "lfs_size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/feed.wav.import",
+      "git_blob_sha": "1f7acee5693ade6cc2a0e9b0bcfaf8162dc3f745",
+      "sha256": "1591932cfaa6af559e35815211a5ea20dc52ddff4728fc500545d48c398f1ac5",
+      "bytes": 482,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/m01-audio-analysis.json",
+      "git_blob_sha": "33ee5770406ebf46666ee2a37348e63202ea8ab0",
+      "sha256": "55257e71d37458967f8a861308e98166113d3b263a09f5fd8feadb4497bdf5cc",
+      "bytes": 2384,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav",
+      "git_blob_sha": "8149529212b7773233867262e561cd466d05a74a",
+      "sha256": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "bytes": 1058444,
+      "lfs_restored": true,
+      "lfs_oid": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "lfs_size": 1058444
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav.import",
+      "git_blob_sha": "daf5e2a439aae046326a984c58c28517fbd27819",
+      "sha256": "865a696565cfe4e96e92b3f90e3f5d0cbfa2c1ac022a803e67ebebcfa8e2b729",
+      "bytes": 513,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/select.wav",
+      "git_blob_sha": "736557e8c558bab39069da7a1e88f7281ea29fdb",
+      "sha256": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "bytes": 22094,
+      "lfs_restored": true,
+      "lfs_oid": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "lfs_size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/select.wav.import",
+      "git_blob_sha": "36b60ed5e705cc9d744fa26e577af6dd64d2e2c5",
+      "sha256": "8225b6d61809414811b45226d8cf0efdaad4728348413642de310e7a83bd72e5",
+      "bytes": 489,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav",
+      "git_blob_sha": "5100cd2055b4c807dae4b68b8605c31ff5aa3d53",
+      "sha256": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "bytes": 1058444,
+      "lfs_restored": true,
+      "lfs_oid": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "lfs_size": 1058444
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav.import",
+      "git_blob_sha": "d4b6d3ccaf1a05a9e1b360ceb2f2cf1cae49f4cf",
+      "sha256": "49156feebfe0828a41de41c14bcecaec7b2bc8d9dc9949e66474ae047713abc4",
+      "bytes": 512,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf",
+      "git_blob_sha": "b80cf067a32aff52cc930db8be85894f525ab4ac",
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "bytes": 17772300,
+      "lfs_restored": true,
+      "lfs_oid": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "lfs_size": 17772300
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf.import",
+      "git_blob_sha": "6e0bdfd292b4ed86097733a5cfc374286e22e7a7",
+      "sha256": "314106103e2ddc51c1630d54c75a8fc1869d2721e5dd2be47db22e89a070ff6b",
+      "bytes": 768,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/food.svg",
+      "git_blob_sha": "9a0da1fe937b004b06a59a0978d334ead4f55099",
+      "sha256": "e6d3a4c4a096763db5fb45db50b2c9b7c985233fa0aa2807e7acddf810a243a3",
+      "bytes": 292,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/food.svg.import",
+      "git_blob_sha": "dc3a0bd8937e21208ffb585b078f613ad9a2e3d9",
+      "sha256": "83516c3f82383679bda6cf2d44ef7d2cb21900df8c2b0887a9e31c9e114567d4",
+      "bytes": 1026,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/hand.svg",
+      "git_blob_sha": "91a1437e30c6f63432ea5a1853abff66b3912bfd",
+      "sha256": "2d74d0f4561ff951c237a8b67d28645096e401efc244fbe32617870b65b4ec24",
+      "bytes": 310,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/hand.svg.import",
+      "git_blob_sha": "fffde43baa5008bed08b610d30b5df92c9e4bc8b",
+      "sha256": "1a582f81c8702d4d8cdf41177f0082d345dabee52f0f614fb898fd98161042d7",
+      "bytes": 1025,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/home.svg",
+      "git_blob_sha": "edb2b2ebb1fb9ae6034d086c5cfd5a212345d195",
+      "sha256": "c016f58330d1806dfd61f4c4459d5430bf9c33a9fe81c8211c1034632aa860b5",
+      "bytes": 247,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/home.svg.import",
+      "git_blob_sha": "197e23292fda669ff15b3d71785a23b8da731132",
+      "sha256": "7fa7b669a9a90344e09ca96e5b199581d13ceb1d5da07ee71985bde8c2aa3c4c",
+      "bytes": 1025,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/observe.svg",
+      "git_blob_sha": "5193502617087a5de445811336bafd82405254c3",
+      "sha256": "a69a74f49be5de4c79e4f45711023e70b4c16b6dd4d297479f4d9ffbdd6a6539",
+      "bytes": 278,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/observe.svg.import",
+      "git_blob_sha": "045c9ff9cb53ad8a0816844b3723a657049b70db",
+      "sha256": "9f7d41cbb876cace7ffe15171e6a34b64d5ac86686a5a6806ddbec2f5acbbee2",
+      "bytes": 1035,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "git_blob_sha": "02ea76885440093787ed85177f67715b827dfa27",
+      "sha256": "32f54da3bba25dd6615ee8b450c64a8e5fa867f99545882a37e5ccb6b508e2e2",
+      "bytes": 130,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb.import",
+      "git_blob_sha": "143352bd7e2f41a9a44c34c950ada871f5939966",
+      "sha256": "a333b27a4f5de253d45775a1f4224adadc01ca675862fe5f25385592585f1cca",
+      "bytes": 1164,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/ContactStrokeTracker.cs",
+      "git_blob_sha": "809cd843ee49b5b5ca3e0c80fcfa674866a148c0",
+      "sha256": "81a25c98de934d25f85794468e99336cbee2952d6b9ee847ddfa61459213fcd0",
+      "bytes": 1770,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Accessory.cs",
+      "git_blob_sha": "652b58018ece3d870fe22b9266e4fb19fbecbbfd",
+      "sha256": "b98c5e2ad7b2ffc3d1500c6ff51d9376a385aa1cbcb64b799b5c8e4bd0c09d8f",
+      "bytes": 3642,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Accessory.cs.uid",
+      "git_blob_sha": "108535933913643a524ab897c8af04e4659fb95a",
+      "sha256": "5fa4a6e392ed50f1f9691fd30b2cc49e2c3a973225f3340ab84f7653c75448d4",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Contact.cs",
+      "git_blob_sha": "260255d9c090bf0be43f7002e02c4d8e5fad90fd",
+      "sha256": "c7b07b3f39a30bdb149f7ec55e258d2bc30db8473006b4c0bc4d7e9bd607e294",
+      "bytes": 4917,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Dressing.cs",
+      "git_blob_sha": "86d3eb67f89fe58b7959a8db1b7b9f7864418c55",
+      "sha256": "07df5036db5e6437dc5973ed2942a5aa5bd4bfe60c5875b0f56cc567b5d96838",
+      "bytes": 1341,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Face.cs",
+      "git_blob_sha": "62fe25b7d13901f4bbc5d51fd227c2a130f9f34c",
+      "sha256": "c78078c85892dc3bdfadd02e2a7fc6af4243ab2c19dd52eee30db7da16067a58",
+      "bytes": 7021,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Face.cs.uid",
+      "git_blob_sha": "3732a9baa10f9f97f246dcdab40c6044cbaf7a34",
+      "sha256": "e2b2d7dc0348a35004fb3bc08beccdcbc053cbfe1e024139f2d2550b0a32c5e8",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Harness.cs",
+      "git_blob_sha": "42feecd8df46e521bf8e3edc0a246f8346243c9d",
+      "sha256": "736819c544522fa52b43a7c04deea99ae6cd52bb096330e73cad6a9f3449bee7",
+      "bytes": 1318,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Intake.cs",
+      "git_blob_sha": "f1029fb9711bdf4e73b0263355fb041fd4912347",
+      "sha256": "7219f33afd4fb2f720730381ceed4543a4f0d9cad7fd2d875fe3bbfd63af1dd2",
+      "bytes": 1210,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Interaction.cs",
+      "git_blob_sha": "b25aaa3001e4e28d8542ef71a6b08cbb504d1866",
+      "sha256": "7b02c454c46ca6df78be284d8d485da4e402f1e1d543497ed8555a1b16bd6488",
+      "bytes": 23603,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Interaction.cs.uid",
+      "git_blob_sha": "3505b8e3cfe10233c8b3de54093143a8c9225ec1",
+      "sha256": "24b52e23d5143c02c64e5342c791d32675cc553291e593c48a6bb5fab36113ed",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Sculpt.cs",
+      "git_blob_sha": "cc05b32f2189bf6a9b5799d1d260a07b97635ded",
+      "sha256": "c4b69c15bc809bd29a2fa4cacdc93659c199c86b0f1129d8357abeb62539e034",
+      "bytes": 8491,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Sculpt.cs.uid",
+      "git_blob_sha": "5ba20b379e2d27b107616a2f608deaa9f09fd4b2",
+      "sha256": "7239d29e51b882c0cf47ab092d90546c19c8f7d070a82e1923e2a06a49c3b0e5",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Support.cs",
+      "git_blob_sha": "839c698478e8cfec303d4e6297982340b226ca7c",
+      "sha256": "3e81322c4164c1986435b163922ab8ed5269e9cbea4be9017560062e0e5df533",
+      "bytes": 3686,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Support.cs.uid",
+      "git_blob_sha": "2e1295fbe0e558a10e8d90af944374718b829cd2",
+      "sha256": "ec92a8d9b63c1f610a8598b94af68f8b6f1eacc7b4699e0be33f63247d24b76f",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.SurfaceMarks.cs",
+      "git_blob_sha": "8972ffe5af9c8ff0348e82efeed87ae1470da5ae",
+      "sha256": "4446702da89cc427352f4dde388291725c80a5f47176dbf15103aeeba1abc2f5",
+      "bytes": 1516,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Tears.cs",
+      "git_blob_sha": "bc1faceacb8ed36bbab98564bc3fe82b410201e2",
+      "sha256": "21210cf4be30c232fc8f04e1350e453877fb61466f76fe0c7440ae16b2405c32",
+      "bytes": 1207,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.cs",
+      "git_blob_sha": "4705472b3a9d987af07d6663f2a4ee8f0a27e278",
+      "sha256": "e9def26492113791ba0c04951d6d7675f4bc8ab97c3909587612cb6e6d01cf19",
+      "bytes": 13824,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.cs.uid",
+      "git_blob_sha": "2467bf27e44452657735953d856554342616b02f",
+      "sha256": "1fe3deabb7f7d72f2c4fa188fee55389a5e222721dd3ab20be8672bde0f370d7",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Data/simulation.json",
+      "git_blob_sha": "f04ddf201b7e107603dcbfb7e05e02a9a6178815",
+      "sha256": "cde295670c07287b734a711b8f1153a9d6607b5acc1489110c2ad8bcf586d505",
+      "bytes": 178,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Data/species-routes.json",
+      "git_blob_sha": "2a09b13907e28d7222e2d6bf6ad0c16b06f9e312",
+      "sha256": "70ce92a81ac2489d61ec45a25c0226b8bc8a381b64c533f451fe1bb9826f3b40",
+      "bytes": 221,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionBallSurface.cs",
+      "git_blob_sha": "625c90950c760793bc94b3fb37856638e043fb59",
+      "sha256": "181634ae9f7ef0aa470039e0e27854c16f354aa75c96ed2a33c1cb4a53ec6ddd",
+      "bytes": 1660,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionCameraOrbit.cs",
+      "git_blob_sha": "cc65829fc3ae3f2ddaee7e2641863a5cbca84961",
+      "sha256": "6261aa5ba5ec87508a27867bfc2d484301cf324733d6fd3d00b4ae9d0dbe581b",
+      "bytes": 2268,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionCareSurface.cs",
+      "git_blob_sha": "1cdd16b082267cb56f20b2653d82e7363d93b78a",
+      "sha256": "be42864de4b674f63bf95a4fc4a608cf944b5ce108bcde6ebeb0f8b3f5cf85f8",
+      "bytes": 1452,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionFixtureArt.cs",
+      "git_blob_sha": "78fb32cde4249188e716c34322d8487a6b670137",
+      "sha256": "aa73f6a9dedb627782d6a3f569dd4afad8ed97019f1b81bd311b02ceb43d0617",
+      "bytes": 1300,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionFixtureSurface.cs",
+      "git_blob_sha": "29c1499e4f2399b8aa03cc76d3c17768472bdd37",
+      "sha256": "a0edaf47573300fd3a6baacbf2ecf45be9aedf8995784cbbcf2ecef915d8dd0f",
+      "bytes": 1143,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionFoodArt.cs",
+      "git_blob_sha": "6099a47929fae101f172ef56764c0d1403e77a78",
+      "sha256": "cb3481760bcfe125cfe813d0429f7656eba5a3f019e94e7cdf7186756d64a8cf",
+      "bytes": 4049,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionFoodSurface.cs",
+      "git_blob_sha": "dee3a2750237a5c474ddf84468f30b52daa99200",
+      "sha256": "e143004f676b9fe938e53fc4d82aa9679eadbf13c75d19ad10ac01e7e05fe547",
+      "bytes": 4909,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionPropContact.cs",
+      "git_blob_sha": "6d40743bbbd0ac9096553c42a10bab94e08c5465",
+      "sha256": "8378edf6055e95c97f9a57da5b4843fb17ce1954f13a141f79ed198994026df2",
+      "bytes": 2207,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Audio.cs",
+      "git_blob_sha": "9ed4ac134556418e63306fc2b3679e8afb9e3e82",
+      "sha256": "fa8f974564fb75a76a19078baa8ea56a0cffb8741c23948bd46c5a6c256e5e37",
+      "bytes": 5164,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.ContactVerification.cs",
+      "git_blob_sha": "de502fea70eedc931fc8911403c3cfa3ab36c3d3",
+      "sha256": "7b6e66e628e5cdf788f5e518b8ae396f017610e53a052aaf6d8ed451b61c1315",
+      "bytes": 2503,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Family.cs",
+      "git_blob_sha": "ad2147cd09f93edfd57bdafe63e11d38294d8a35",
+      "sha256": "caffc29053542fe96ee03a6f49b5b33db45a0519312dd6db93435ca7221a8c5c",
+      "bytes": 13233,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Input.cs",
+      "git_blob_sha": "318dc380e868dee4268cd3b180a1670b6d109acb",
+      "sha256": "f8b39d568d099ab70b7c8e5bda1e23434a071f9c30701d469a5619116f72228b",
+      "bytes": 36491,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Input.cs.uid",
+      "git_blob_sha": "bc3ee1ca0246b2fb2abe5fb8009538a1c14bf5e0",
+      "sha256": "20308d41f4e2b675d886abd455d00401669e32ce61cba5ef795168c90fddd75a",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Tools.cs",
+      "git_blob_sha": "dd9b13ba9e9d93da9f8b61f0eb04afa419dad4bd",
+      "sha256": "33b816bf488aed9e186b70a029b44bbd706e43b6ffe225e97e5b2fe639c03274",
+      "bytes": 5000,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Tools.cs.uid",
+      "git_blob_sha": "db0ac4c1dd5313d04f7bc3e2d8ada464cd6993f6",
+      "sha256": "122f4e27b76af307b41b26d1147432380b37f2eca9aa156f5250782115e9bab7",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+      "git_blob_sha": "822801445418939d1125c0e4a32cbe9754f27f7e",
+      "sha256": "03c050ba0e41e572f3a993c6edd470c11e7d77d1d28d159304630726aedb978c",
+      "bytes": 25361,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs.uid",
+      "git_blob_sha": "1fa2d4afc1ef38176a474106a8edd6ae4523dc3f",
+      "sha256": "ffc9596bde720750d1eeeae719e8a289181d570e61fd066460f17535e7f46a1a",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Verification.cs",
+      "git_blob_sha": "f50ead2fdce1b3729919f64225c7d55394e4c2cb",
+      "sha256": "2cbfb3a8188edfa6bf3442a55c6cb8234b8083dfed4577fddff56a124bba877a",
+      "bytes": 7512,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Verification.cs.uid",
+      "git_blob_sha": "70542c7a9a570540fe287ee494f1ded6e71c79b0",
+      "sha256": "b97838167a53241498946560923f9cd3ef44366f57d17695989ac4e63a5ca767",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Vitals.cs",
+      "git_blob_sha": "d2d609cdd6d2c179b5351d9974e8b41079d7b62a",
+      "sha256": "3ecb3e5067162982d42a10da26cd4e37225243f3dd70a35edd205a0b33b985c0",
+      "bytes": 2636,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "git_blob_sha": "dbb1f0dc92736546e211ea9604d2089833217f6f",
+      "sha256": "3b66590413b1748e13673930a019e2a2748ef8cc2051c690f3f666d2fcfe2539",
+      "bytes": 16488,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs.uid",
+      "git_blob_sha": "5f88be7aaa38760df6af1fd3bc4a7c4852a80192",
+      "sha256": "8bdca823069c011e60e25557fd739ab3ee21614f9449b7b80493b34fcc406aed",
+      "bytes": 19,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.tscn",
+      "git_blob_sha": "1c2282141dd2d1b49ddcc276f0357d52a991c56d",
+      "sha256": "b94c5555bfcaac9f62fce37d5816c6fcb92af33a3db44eb9fac954a580c91aa9",
+      "bytes": 173,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionToolArt.cs",
+      "git_blob_sha": "95e282c5e0cf35aab4ec92e03bca694a95f18ebc",
+      "sha256": "dd5e7e925ba780877431e45704d1e55ddcb6852475a49ff9e1e5407deaa8981c",
+      "bytes": 5034,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionToolSurface.cs",
+      "git_blob_sha": "24293245b92748c0016d0e36dc8b1ee41f8660c6",
+      "sha256": "87c28d0e88cf5799373d81e6ab9f228378f34ef5a4ddfa0241367ba2a48bd7a0",
+      "bytes": 1267,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionTreasureSurface.cs",
+      "git_blob_sha": "bbf3a14f164ffbc6c79938a4bb130bbff4400d5f",
+      "sha256": "0f931f00fe19c9de29d479f5dfb149c6b7ffcf1c2ee5342bfb61bb7b245d4645",
+      "bytes": 606,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Input.cs",
+      "git_blob_sha": "aabdfaaae626fe8af20be458b1f0a71ac3037aa1",
+      "sha256": "6d61a5a08d341e030717c72a5f0550f115963ce805edb7af9ab26addd4833fe7",
+      "bytes": 5018,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Input.cs.uid",
+      "git_blob_sha": "56b099f39cdd402697e2b403f87c98bb02f0e8d4",
+      "sha256": "e738e1e1e3af4dfec81d783f509f27ffa0edb5a3ff4cbb6da90774f765bc4662",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Lifecycle.cs",
+      "git_blob_sha": "79027c0cd06cbc2e70ca3ad158d735725ac6c014",
+      "sha256": "4fcc9a142e68db227ade2fca159f187618894cd20445407cc76f2d5a9832f706",
+      "bytes": 982,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Lifecycle.cs.uid",
+      "git_blob_sha": "b98c73274e63b4fa5b0e74e308c2cac85e7bedc2",
+      "sha256": "7e8f7ad24debb4308a5fef4ded0acd8a271a1296c59e548c32558327aa1c2a02",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneArt.cs",
+      "git_blob_sha": "8e7e2b349e58e1c87249899509e57df834bda70a",
+      "sha256": "7bc068124050a0c51d48abdd6cf20f981cc7d4c59bcb596ede0c65e0adb3b6f5",
+      "bytes": 6835,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneArt.cs.uid",
+      "git_blob_sha": "95ed2b60fbf617c47c8b8439a76b7da21a63c316",
+      "sha256": "afb3384b805331e1506a74b2c84658c27a043e1b2d13f498f45d2762ed48432c",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneAudio.cs",
+      "git_blob_sha": "44aa294838ce3c645551f6cacc5079f3d87b754a",
+      "sha256": "efbd42a67487ca33c42c3bc2e2c832708d57590fbe8878602b0efa8f45f1bf6c",
+      "bytes": 5535,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneAudio.cs.uid",
+      "git_blob_sha": "0c416e65d287640289dbccc370c60530b19784ae",
+      "sha256": "ac54dab093659cc060d297540c671fb26d4f0aa73d735e7a2a828362494001e7",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneAutosave.cs",
+      "git_blob_sha": "571b7315014b0f4272fe43d1bb0cbbf91435d5bb",
+      "sha256": "849e060e10568bb854e235c232cd9552bccb851c532760a0396ede26b4f4f5f4",
+      "bytes": 2498,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneAutosave.cs.uid",
+      "git_blob_sha": "8f5efd02de7da9bcc7250c2f707769e20a399cc3",
+      "sha256": "fcba3ff3b30e808e5e5864118dd07dbfe339317f0d8851f380e1567db923cf2d",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneHelp.cs",
+      "git_blob_sha": "32b6a838f258a6de16a3b933aedc22dd921eb91a",
+      "sha256": "348109f6b01f8aa43f61f886540af3bf8d4b97a4b4e94eea362879127e9761a5",
+      "bytes": 4567,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneHelp.cs.uid",
+      "git_blob_sha": "16b3d74c40dc5a19829503071c1aaec17007cc80",
+      "sha256": "0749e3c60627ef70cb7e6d33264c235ba9f9397a7bd57a7992a2d1abf9b3d43e",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneInput.cs",
+      "git_blob_sha": "8ef6cf4fc8419ee445acc18eb0506cd26ac3e41a",
+      "sha256": "846a3d7962f6b21f45795dae35ad581b9aa30afe4f64ef984a28554d87e6e293",
+      "bytes": 8276,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneInput.cs.uid",
+      "git_blob_sha": "37d9056b7902744c7ddca9cacfcad367135b4846",
+      "sha256": "d254e700bb63b2cef805251b848e4a67e4e819ab99083710cb4842419742ab8d",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneSoak.cs",
+      "git_blob_sha": "d9060aaaa76c40fee803de0336edf44314399b25",
+      "sha256": "1b008d2fb14709e3e11f9bbf82f9e9dae47a2f05ab380b9db1b6675a7b47bbf4",
+      "bytes": 6341,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneSoak.cs.uid",
+      "git_blob_sha": "e07f95d75ab561269e4108ded6c792074ab5e0ea",
+      "sha256": "b817f65a98652a9f9ecc60f38345705ae46f97ca207d2304160de599b07ad1e5",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneStates.cs",
+      "git_blob_sha": "de2bbc1fe53bd86949a1a5e31e85fb9a4753a3d7",
+      "sha256": "5efc7db86acb90cfd6c005a3a8802c809f41feaeac8a54c69cf5092777ff718b",
+      "bytes": 11774,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneStates.cs.uid",
+      "git_blob_sha": "b77557ec8c325a7d5d139b4d54a5018b72c81dac",
+      "sha256": "0d5414f7b7de80fd6ebb48c3e905c3d1e4fab6a68ec45e2fda24043c275eab96",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneStress.cs",
+      "git_blob_sha": "8739dcc842029c690cc3e2b6a5be62161e21bce9",
+      "sha256": "6f7e61d1debe8f942c5683724022eef3153601f4d287b64fd6bbeb920d5f1cfa",
+      "bytes": 2093,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneStress.cs.uid",
+      "git_blob_sha": "1fcfea2ce6a223e4c1fdb6af0982e465c622a12f",
+      "sha256": "77e0deecd7b7bf4f472b67033f3dd0c4295c68aef96b8b9731d2b6c097be3c56",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneUi.cs",
+      "git_blob_sha": "7858b9d867186dcf12c4fd8d546afde53afcc0fd",
+      "sha256": "66cc42dcd9180bd9b4b85f5debdeff12d28c4d3c7d5cfad4df50789c6fbdfe25",
+      "bytes": 27747,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneUi.cs.uid",
+      "git_blob_sha": "6353811092e9cb0601fdc7f3f90cfdf952fb9216",
+      "sha256": "fdcc632b99bad0b3c2c683fa70b2457fa0160e6ee08e540bb5f1345235db61a3",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneVerification.cs",
+      "git_blob_sha": "92942ce2a461f0565b176f3daa0b64a65566827f",
+      "sha256": "5da4b8f3fb8b88b4bd9c5a84081088d94eeaeb96d38e098ee8aa2657c353fa03",
+      "bytes": 16024,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneVerification.cs.uid",
+      "git_blob_sha": "d4f4b1fbe1030a82025b8157efce44b9423c14b8",
+      "sha256": "1c1898d62cc7e1b532f80bdfb0e7ba399d0f77c1dfeaca8f3d4b807d08816214",
+      "bytes": 19,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.RegionPresentation.cs",
+      "git_blob_sha": "be6f91f468d4439393017515827bcfa0dfa23bff",
+      "sha256": "e600c1e28a04958b293d5bc4fdfba087c821ee3d4c13ac200ecda084d0731d67",
+      "bytes": 3669,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.RegionPresentation.cs.uid",
+      "git_blob_sha": "9c1099083c2e39b69fe28564d10c4390755370ad",
+      "sha256": "260d8a78015e90aa56f19b39792f16b7388af682496eb3fdae359bed2b74e1f5",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Ui.cs",
+      "git_blob_sha": "0df1f5b334411b0c99fcf429eddb20b055e8878f",
+      "sha256": "be16a3e598f757f3f2c9828471d2c7f9950118a7b277884be88d2effecaeb316",
+      "bytes": 13127,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Ui.cs.uid",
+      "git_blob_sha": "78ab9b1fe8d617b5f8b720820dc80f4c3c4edb6f",
+      "sha256": "dd4938c3e4c18045d43829e72724be68a2968e50968ba3d4521653b73e3200a8",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Verification.cs",
+      "git_blob_sha": "b40af2bf442f4973107da0e925fcf1dc5eeeb917",
+      "sha256": "56293927d3a54584995a87f9ae69bf20ecd7a2cd82e4f622eb6a09689f3fe361",
+      "bytes": 9143,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.Verification.cs.uid",
+      "git_blob_sha": "5f87bab2f14e0d0486574f45ea6fa8581515befc",
+      "sha256": "fcf9611d77b86f451bae020b1f49a0f09ee4210154d3dc6f5e2f26ba80cba79d",
+      "bytes": 19,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.cs",
+      "git_blob_sha": "77af7ce05675e5c9a6d021f501230d82553ccf95",
+      "sha256": "b89daf3fef6985628219ed4d77cf5eca2ed04411b1585efc67d11e93ac1ebcc8",
+      "bytes": 18425,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.cs.uid",
+      "git_blob_sha": "cb9a9822b1ec5238470cdcfb9c92aab1bfd97bb4",
+      "sha256": "6c97295691a6107a02ccedefed927cbe388cd42028c0eeebf5f476d03bc14384",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.tscn",
+      "git_blob_sha": "cf4fc9e846f47ff04b49924a31200fa3994999d2",
+      "sha256": "ae5e71d60c21f2f9916bdc453a871af982583aea436ed9bec4ec4bc5b53a7810",
+      "bytes": 173,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/RoomBallActor.cs",
+      "git_blob_sha": "b9083841497c3b8b13d6fc97dd31f0be7d063d66",
+      "sha256": "f7345a4959a4e7a7c32c55990d07bbccc24a32309128929634b8ea7ed404a9e4",
+      "bytes": 2050,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/SceneArt.cs",
+      "git_blob_sha": "7055b09b305ff757bf4453111f374112b7c57bdc",
+      "sha256": "67302733d3282407f6041059c84bbad745da34079383e5bd80448fa44ee38f76",
+      "bytes": 7218,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/SceneArt.cs.uid",
+      "git_blob_sha": "ddbb46710636a4e946768ad0cde723f059f182e5",
+      "sha256": "71f6a5339f75b71133811825f44a0643b1315cc8e2e35ce66873fd4ff9932099",
+      "bytes": 20,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/WoodlandArt.cs",
+      "git_blob_sha": "511f1864269ba36088252b6acd1dbd23e5689c1a",
+      "sha256": "8b029053a8ddc63960432200a2c2dbb166b87eef6d62896cbbd3a5a4228066b8",
+      "bytes": 654,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/WoodlandOcclusion.cs",
+      "git_blob_sha": "acf8eb8840368dec6e7b24679fbbb1b505ca048e",
+      "sha256": "39444dda2c20e5cc3d2e043943bcf47fecc3e6811a7146b1572c8acf2e23b1f8",
+      "bytes": 3468,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/WoodlandSurface.cs",
+      "git_blob_sha": "b29620b367cb215cbe59bb636c7d5f27467eb7fc",
+      "sha256": "5524f4b3f8f5668cd9794a5f4b171eb23bde162648045b49d2dc75b83bf010e1",
+      "bytes": 4424,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Yukkuri.Game.csproj",
+      "git_blob_sha": "0219bdd74bbc450b3e977ffc9f25378df6a008bd",
+      "sha256": "c7170ae043b84703c08875b601dd743f309a1a9a4cfb4e8b3d813f54933c8716",
+      "bytes": 702,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Yukkuri.Game.sln",
+      "git_blob_sha": "3a7cb2658ed4d4f4b41e9d01197515b0c316a04b",
+      "sha256": "f444028b09b0a180962f73f2bdd3426629d2dd0eedc3c9df904f1bec38066189",
+      "bytes": 2822,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/export_presets.cfg",
+      "git_blob_sha": "e924000839b6eca407e730702850cae99b260f27",
+      "sha256": "ae20f32cc7686914c0e5bfa2533987cd612d476546eaa483e3277e943fc5d292",
+      "bytes": 827,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Game/project.godot",
+      "git_blob_sha": "85b61c6005842e5e34ed687bb46961148c352ce0",
+      "sha256": "6fbd5f3ec5a0cbf1e6f3cc548702e1a4ea0f4b9879fa1687f1df01bf78a298ac",
+      "bytes": 777,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/BodyContactGeometry.cs",
+      "git_blob_sha": "b360e7987f4fc4086432dfec75c674f1fed2bf05",
+      "sha256": "0531c6716f35e6aed6d1914d379f6c9eb4efa7bdf0245ef174be5f7d02e60d4d",
+      "bytes": 2436,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CarryReleaseMotion.cs",
+      "git_blob_sha": "06008033a9b84053edb1999eea0733f5c18eda1b",
+      "sha256": "589033f115682bca2253f4fd22f77b630c5074262c764078a926706287e08679",
+      "bytes": 3077,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ContactMotion.cs",
+      "git_blob_sha": "30873be183a7c1f85485abb84d67be2429979cac",
+      "sha256": "a77b5dce6776aefcc56e0717634452cc549954533a17e8bde141923a4aa13b80",
+      "bytes": 7403,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CreatureAppearance.cs",
+      "git_blob_sha": "720aaa3f38f5a337c48cbea7335167ce924f5a63",
+      "sha256": "6d1eb277d20deec106127748092170584fdc303b5706f3a399933c4eb547da4b",
+      "bytes": 384,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CushionGeometry.cs",
+      "git_blob_sha": "31e8e91dc64a58afeedcc3083ae7359cae955a33",
+      "sha256": "a8077965aa815d7ffacf400543aca890c5e8a664c98f352f131cb920cfde2df0",
+      "bytes": 2653,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyCare.cs",
+      "git_blob_sha": "db12961d7e72926115a912454ca81707a9bee558",
+      "sha256": "641ae73a5b28a4f16ab3036a7c37a7272a98358f1040fe151b11627c917058e1",
+      "bytes": 9953,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyColdStorage.cs",
+      "git_blob_sha": "29fb73cfee85c7a01374d7b5302a95e89a64e8c7",
+      "sha256": "4daff8855861189cfd6f10ab0c25565046598e5a63087e350f38b93ec5f8ece5",
+      "bytes": 5072,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyReproduction.cs",
+      "git_blob_sha": "cb98db0eefaf466e4d44b23692de12f763057f8a",
+      "sha256": "9fb567ad531a06e0b8b3aec329ec7fb70ca5e09cc3903480017ee20e38af78d6",
+      "bytes": 17088,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilySocial.cs",
+      "git_blob_sha": "ed2fea29e28c25cf2131244913eea4896a65f119",
+      "sha256": "dc89cc71ca6f25c6878ce5910cef7ba874dfcf95d8760d07ee08768f2a781734",
+      "bytes": 36052,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyState.cs",
+      "git_blob_sha": "dc19565107a83440d13f672458314a805db58600",
+      "sha256": "acc43161bb8444eff98c04bb1699e5c30041d17141fd682f2b81072020e49756",
+      "bytes": 5008,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyValidation.cs",
+      "git_blob_sha": "0fc3e638cbd1ad2abfdf8348989cf95991b48649",
+      "sha256": "5bc802e6afa3a259e44f2ed227c31e051fc365eca2f442ebaeef4981b043e68f",
+      "bytes": 6911,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+      "git_blob_sha": "6ce1cc74cd61ad3c5ee2852b6f66b6981521e7b1",
+      "sha256": "bbf6d0a80408c1f9a588b55d4b36abeb9c84fe375365852d51111dd3bafb4033",
+      "bytes": 6910,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+      "git_blob_sha": "abbb001d176f375e6ad0831e8b89c4c51853a78b",
+      "sha256": "bda1792b5f08359c2491f42cdd224bda4492755797c39396cd82af2e242184ac",
+      "bytes": 31743,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBond.cs",
+      "git_blob_sha": "5cc2b4c1c73392144b09ce762ac4c918a7a9de85",
+      "sha256": "fee49d640bde104f51b01b384d5927b3d5db2206035949a487897b0b81923882",
+      "bytes": 3062,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionCatalog.cs",
+      "git_blob_sha": "a51354bfcb6c016a49fe938d18d8250078ac5a70",
+      "sha256": "14242a60bbb9af4c2c5fc3cea88a6b23d6da33375ba3a30f37b6ce4b440287ce",
+      "bytes": 10745,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionConversation.cs",
+      "git_blob_sha": "e57755c4bdb261bcc31fca13977a08f4604d53c9",
+      "sha256": "ec6f1895b30666826cc320d603c5dac03321a2dca4082775bc46ed3f3f37d5f0",
+      "bytes": 4125,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionDressings.cs",
+      "git_blob_sha": "4a303de2ec8b07782a668d14ff17896d83b6ca0a",
+      "sha256": "45b8df122b1a07cd950dede51b8f3951a54f882e6ec2bbeb5eb5d0b0c0888dc2",
+      "bytes": 3409,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionFixtureGeometry.cs",
+      "git_blob_sha": "49e7c193ef0ba7307277494773735077344ca0b1",
+      "sha256": "9caa19fa04f9167b711636d67ed493012ac7dad97807d9699761e3480f695878",
+      "bytes": 1876,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionGesture.cs",
+      "git_blob_sha": "15bb8a9937dc1ae2bf8214c4b939b5862fcba4fd",
+      "sha256": "b24fd7ff3c2578d990913a26a007f7a2bb401caf0a6e17a326acde30d280e09d",
+      "bytes": 48983,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionHarshSpeech.cs",
+      "git_blob_sha": "3642b1c2116cae0dcd8762191fd8ae4f10e52ccd",
+      "sha256": "5e4e029765f21091c3bcb8f66190f7c89430be2d4f8f52cf867141c209fca24f",
+      "bytes": 2805,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionInjury.cs",
+      "git_blob_sha": "9cd612456d85907a3b90778988fa83cc03a6bda3",
+      "sha256": "566f80c64e6eacaa8402c3ed92355c2209bf8741629006cb5b86b84f1f014c7f",
+      "bytes": 10928,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionLowering.cs",
+      "git_blob_sha": "fea8030ea23f22edf3177164795213be5043235c",
+      "sha256": "ffa0db8bcb0f689a48ba7918d8c50881183034b0e5f201548012f3ae8b07702a",
+      "bytes": 954,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionPhysiology.cs",
+      "git_blob_sha": "8f9f4a7f9f61ac8ce10b7464d3795116f8dc81fe",
+      "sha256": "3f5064b3d430a4164926d068606fa1794b7fda905965b713899c818b1e1a311a",
+      "bytes": 6862,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionPresentation.cs",
+      "git_blob_sha": "6407af45250ac39f47e70bd34a4949d93ffe7486",
+      "sha256": "fbe3f436575fc39fcd9b068d20a282bb40902b6202a880b8805dc489be849398",
+      "bytes": 2920,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionRest.cs",
+      "git_blob_sha": "de1ea4d083fbcddd21764913cb07d2f33bd9a5e3",
+      "sha256": "b843f6636c39ea80f0291c14b704b2173498ebeefca2d4088a1b06fe9587e85a",
+      "bytes": 3707,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionRolling.cs",
+      "git_blob_sha": "33339be2cf557145cbe8b4ef0c447f0c10f3c12d",
+      "sha256": "d05146f27ea76b392d7f848a053fd041ae220d96212ab01bf185695a56ea07be",
+      "bytes": 1081,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSensitivity.cs",
+      "git_blob_sha": "155f7a5209fa8635921706a013e81600fc973a45",
+      "sha256": "6fec77a4c7c91e0fe89f659190c2949df798467395f4990079c64c2ce4dffb32",
+      "bytes": 1206,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+      "git_blob_sha": "981691cfd419105d70be1ebe29cce03e4b99f579",
+      "sha256": "7128364ad6e01e464761bd250d066bb67a3b79576bbda320184a6cea5bbe9ae3",
+      "bytes": 3836,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionState.cs",
+      "git_blob_sha": "9de68755a5324a8777a03e801a3e04c99e7e651a",
+      "sha256": "5b5655d0c768e779a2e7fbedc14b221eeef3492b4e6bcc6222f19da2dd6d6306",
+      "bytes": 7734,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSupply.cs",
+      "git_blob_sha": "72898037e848482fc32ed059146610a643cb437c",
+      "sha256": "17b2dd47a992b1babece6bf32959a7e8ca8844991ab44045ca7a63ca6a143d86",
+      "bytes": 2721,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSurface.cs",
+      "git_blob_sha": "9896239402565bd7a5d2d27e0f6b01fdc1151f1f",
+      "sha256": "4d825e18bdeae2757d16635b0d068cf166e5eb914fe42500f109a4730cc1b058",
+      "bytes": 4004,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSurfaceObservation.cs",
+      "git_blob_sha": "1519bd938295debcc325370f060f77e6ee9b504a",
+      "sha256": "58c8675f5eadb7dc127fcf267d7df56a549bba9f109dedd4c067bd45fefe36f2",
+      "bytes": 1582,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionTreasure.cs",
+      "git_blob_sha": "a8e45c2ead0867f7862465c03a38f77f107292ed",
+      "sha256": "106dac74c91134664281c53d60a13e3f5ea0d75ac338a0ff5ed53eba7bf83438",
+      "bytes": 1758,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionValidation.cs",
+      "git_blob_sha": "f926458e433f504a20b61b200fb32658036d61b9",
+      "sha256": "900372436e8c78504ddd1f40e5acb8c75a09be2e913634482ab0e242c9a6bdfc",
+      "bytes": 9454,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "git_blob_sha": "9c5aeeb56b44170c23bdc6beb9a33efd9460bf32",
+      "sha256": "df2fdbdbc4f112b74db08b82bce14ff7d4e3b9364d3044828bbd818ba241c8ed",
+      "bytes": 30434,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneBehavior.cs",
+      "git_blob_sha": "c98a02c36e386cf1272f24218566d621784ffb6e",
+      "sha256": "98d72356d4605a5bad982dca529b7a3961ec18c24df9f5d2238cc64ba48d19fc",
+      "bytes": 19207,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneInteraction.cs",
+      "git_blob_sha": "3b25807727998f7e0a7b1a712dcddb9110c31e83",
+      "sha256": "c3ffaa7a11e91d48cc6e3cc7323d1c7f45b1a7aed19a01edbc1a80428ede9b19",
+      "bytes": 18788,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneState.cs",
+      "git_blob_sha": "9433225825b17f031f625ff690a3512976b8ed9a",
+      "sha256": "f96843024aeecc743cef4dd6225ed4af64ee7e4ccd4bfa63b853262a00b13dbc",
+      "bytes": 6178,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneValidation.cs",
+      "git_blob_sha": "ac70093fd3c2ee69bef8c535e97682cffd9e8a46",
+      "sha256": "aa3d0cd98f2190910ccf52fbd4f6e169ea381b9d2ba9e4df18839db8d14363bc",
+      "bytes": 3761,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+      "git_blob_sha": "1617c9e65dd5d82808b011750e87993b17330f79",
+      "sha256": "f6a1a124ac7735b80ce27dafebf9de31c0f9ac3dcc387f0c5b5068a3156e0df9",
+      "bytes": 12835,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+      "git_blob_sha": "742eb968f62bc13a0cb845c3226fc0c6ab0ddd02",
+      "sha256": "63b466fa21a3d2c313087eef7e03283c63003a41a9b5d6d170b3d2d8c70e3719",
+      "bytes": 4265,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/NaturalLife.cs",
+      "git_blob_sha": "1ba0f475cd535bd70330a2a15224fbd0d0ae61d1",
+      "sha256": "3f5b9635f816f99cb733fa4b7851b4a62b99eb393adcb350c7b9dcdb8272a0ca",
+      "bytes": 27788,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/OilDialogue.cs",
+      "git_blob_sha": "af11cb8af7faca50804cb9b8470a7183ded17ba8",
+      "sha256": "1a3e79c3fbff365217e1620e6c27c5e4b6d5a49cbb01db2a594a1004a41e3697",
+      "bytes": 21411,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/RoomBallEnvironment.cs",
+      "git_blob_sha": "6c2cf20dc4607859e97a8a73cbe5a4db0d67dad3",
+      "sha256": "4b3af34b5cc225a82df3be025e103d6da435b0a87c716cbc75c994559dc070ae",
+      "bytes": 817,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/RoomResourceText.cs",
+      "git_blob_sha": "8982277999ec76887fced798502da4759954b048",
+      "sha256": "431113245f55a7dd83f04c2d1f9f1832832820ab453262fad3b5fbca55dbe85b",
+      "bytes": 2376,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/SaveStore.cs",
+      "git_blob_sha": "e2fefbe27a0145ff905dac386c4b74d1e2a4421d",
+      "sha256": "de3a4d50120cc877a674459f83bb9a543a3b653fe39181fce20f974cf14a9d3f",
+      "bytes": 6173,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+      "git_blob_sha": "9cea030b0e067d7edfe852ca65330951d47d7f61",
+      "sha256": "ae9d3250c5128ea3f5b513c50321b1f6372d6486a508f89d191d4e120bbe4993",
+      "bytes": 1495,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WorldSimulation.cs",
+      "git_blob_sha": "74ff976ad88bc338391eb445fe77d98510f98484",
+      "sha256": "dd2fe843c942e8ce4dcded8d0e48cc80781c34d24fb02b8f23e0f8263ddcc3ae",
+      "bytes": 15903,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WorldState.cs",
+      "git_blob_sha": "d976eaeb79369eb76f2c2a15331263b634c3879d",
+      "sha256": "61a3f5205b3466d58e90c44e4b1f316144baf681f20a546cc5a60e9910942549",
+      "bytes": 5402,
+      "lfs_restored": false
+    },
+    {
+      "path": "src/Yukkuri.Simulation/Yukkuri.Simulation.csproj",
+      "git_blob_sha": "07669f7d0bb89c5477d131404aefa8c9c7fdb534",
+      "sha256": "1fc90d506731c455296ea51c8b13f75aa2f7ebe9e5a9f2bcb7b0bd88d4c7c359",
+      "bytes": 1684,
+      "lfs_restored": false
+    },
+    {
+      "path": "testing/DOT-HANDOFF.md",
+      "git_blob_sha": "ff6d5c0f3435a15abcd4f2c8e405a07bcadc61c2",
+      "sha256": "65db09ce7b87f113b0b312eee46a6559f1d0aaba6813f1ef7389b6901ad90319",
+      "bytes": 1859,
+      "lfs_restored": false
+    },
+    {
+      "path": "testing/PROTOCOL.md",
+      "git_blob_sha": "8a27583fe3d5e51521a646536f6eb9ce52bf913a",
+      "sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+      "bytes": 8127,
+      "lfs_restored": false
+    },
+    {
+      "path": "testing/report-template.json",
+      "git_blob_sha": "b792bb75b31a03630c9f794384d3a7b451122f11",
+      "sha256": "8ffef1deec11c581cae798583d79674a62ef766b5e7b642003c0febdb3397701",
+      "bytes": 1507,
+      "lfs_restored": false
+    },
+    {
+      "path": "testing/request.json",
+      "git_blob_sha": "215645c9c06f4134cc396d64e897c348f03f39fe",
+      "sha256": "80f3fbf3a441ccbcffd36f32cc5aa5a8541994967ddfc41a29112ca872f6ade3",
+      "bytes": 11755,
+      "lfs_restored": false
+    },
+    {
+      "path": "testing/reviews/20261029T154437Z-8238c6e6380f-c04.md",
+      "git_blob_sha": "cdaa939eaa14738e83655623195ee1a2b2e0ec32",
+      "sha256": "90ec69efd49854e9aa7756275838bcca86eb308be2521e781e62219324180c06",
+      "bytes": 3247,
+      "lfs_restored": false
+    },
+    {
+      "path": "testing/reviews/20261029T162613Z-8238c6e6380f-v05.md",
+      "git_blob_sha": "06868eb4b9e3ce1b8fa19f594be9d8ed6b673d7a",
+      "sha256": "53b1ce8523d6d8cb55acf484bafed05558c0aa0c37ca73ed8cc4ee82b991b486",
+      "bytes": 1357,
+      "lfs_restored": false
+    },
+    {
+      "path": "toolchain.lock.json",
+      "git_blob_sha": "755cd024437f393ad3941e0af3cfca06eed84639",
+      "sha256": "757032e50d135a6bb3e44d666758cca92a2d23d3954523e33208de2e6b161789",
+      "bytes": 2003,
+      "lfs_restored": false
+    }
+  ],
+  "complete_git_checkout": false
+}

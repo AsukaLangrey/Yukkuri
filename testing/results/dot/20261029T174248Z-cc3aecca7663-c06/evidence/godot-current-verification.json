@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-10-29T17:49:39.041061+00:00",
+  "package": "/workspace/shared/yukkuri-visual-path-20261029T0845/toolchain/Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+  "sha256": "129f82db7bafd54ae14bb5bb284041c73860e8c7a009a3a026ca5e946cbff247",
+  "bytes": 107698034,
+  "actual_version": "4.7.2.stable.mono.official.ed1daf0bf",
+  "actual_sdk": [
+    ".NET SDK:",
+    " Version:           10.0.402",
+    " Commit:            a8dd0577c5",
+    " Workload version:  10.0.400-manifests.da132f47",
+    " MSBuild version:   18.9.15+a8dd0577c",
+    ""
+  ]
+}

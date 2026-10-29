@@ -1,0 +1,56 @@
+[
+  {
+    "id": "engine-contact",
+    "status": "passed",
+    "command": "bash /workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/run-engine-checks.sh",
+    "working_directory": "/workspace",
+    "project_path": "/workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/source/src/Yukkuri.Game",
+    "started_at": "2026-10-29T18:02:32Z",
+    "finished_at": "2026-10-29T18:02:45Z",
+    "exit_code": 0,
+    "passed_count": 4,
+    "failed_count": 0,
+    "timeout_seconds": 300,
+    "required": false,
+    "seeds": [],
+    "reason": "Engine authored ray/contact geometry only; not native mouse acceptance. Each engine check logs 2 ObjectDB instances leaked at exit; zero exit and assertions pass do not mean warning-free exit.",
+    "evidence": [
+      "evidence/engine-contact-start.txt",
+      "evidence/engine-contact-end.txt",
+      "evidence/engine-contact-exit.txt",
+      "evidence/engine-contact.txt",
+      "evidence/contact.json"
+    ],
+    "exit_warning": "2 ObjectDB instances leaked at exit",
+    "phase": "contact",
+    "invocation_note": "One wrapper invocation; script runs contact then render sequentially. Phase is descriptive metadata, not a command argument.",
+    "driver_warning": "V-Sync mode changing unsupported by graphics driver"
+  },
+  {
+    "id": "engine-layout",
+    "status": "passed",
+    "command": "bash /workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/run-engine-checks.sh",
+    "working_directory": "/workspace",
+    "project_path": "/workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/source/src/Yukkuri.Game",
+    "started_at": "2026-10-29T18:02:45Z",
+    "finished_at": "2026-10-29T18:03:08Z",
+    "exit_code": 0,
+    "passed_count": 10,
+    "failed_count": 0,
+    "timeout_seconds": 300,
+    "required": false,
+    "seeds": [],
+    "reason": "5 rendered images, 10 fixed-layout boolean assertions; all 5 PNGs visually inspected. Not exhaustive UI/native interaction validation. Each engine check logs 2 ObjectDB instances leaked at exit; zero exit and assertions pass do not mean warning-free exit.",
+    "evidence": [
+      "evidence/engine-render-start.txt",
+      "evidence/engine-render-end.txt",
+      "evidence/engine-render-exit.txt",
+      "evidence/engine-render.txt",
+      "evidence/render-checks.json"
+    ],
+    "exit_warning": "2 ObjectDB instances leaked at exit",
+    "phase": "render",
+    "invocation_note": "One wrapper invocation; script runs contact then render sequentially. Phase is descriptive metadata, not a command argument.",
+    "driver_warning": "V-Sync mode changing unsupported by graphics driver"
+  }
+]

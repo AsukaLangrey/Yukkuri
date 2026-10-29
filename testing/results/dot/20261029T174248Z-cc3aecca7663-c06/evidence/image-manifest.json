@@ -1,0 +1,192 @@
+{
+  "run_id": "20261029T174248Z-cc3aecca7663-c06",
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "created_at": "2026-10-29T18:04:22Z",
+  "files": [
+    {
+      "path": "images/01-startup.jpg",
+      "sha256": "ffb2dfb5a39327af3e124f0b6e7412e98dd4bf3de44a6c3f3c0a5e5c83305456",
+      "bytes": 131152
+    },
+    {
+      "path": "images/02-family-panel-open.jpg",
+      "sha256": "1e02a973ee9d24d75047a2ee651f0cb9e2dc6d168815a44c1ace0812f2426b80",
+      "bytes": 131603
+    },
+    {
+      "path": "images/03-family-panel-visible.jpg",
+      "sha256": "64d368e4de4f64c30e87266cf898841d6ecbd9d377f81ba891f1bdf0e593e1d4",
+      "bytes": 114196
+    },
+    {
+      "path": "images/04-adult-pregnancy-request.jpg",
+      "sha256": "c41ea9646acb585af6c644b53cf647bf68faf0fe1d8872541057a20de112353b",
+      "bytes": 114374
+    },
+    {
+      "path": "images/05-adult-pregnancy-feedback.jpg",
+      "sha256": "d8678825e608cf9245514c423b48214a2a98cbb9174690d8e7f3f433b7929ca3",
+      "bytes": 131512
+    },
+    {
+      "path": "images/06-family-before-invite.jpg",
+      "sha256": "c5bcf085d220aeb00d9432d7e90ab99c9548c4791bf6359da877ab42f7fa5491",
+      "bytes": 114845
+    },
+    {
+      "path": "images/07-invite-feedback.jpg",
+      "sha256": "8f5774b669ed4bc85a1c2bf260600ab773fb46bb4de4b1f4b952fb9f65971949",
+      "bytes": 128917
+    },
+    {
+      "path": "images/08-paused-before-family.jpg",
+      "sha256": "3a310b2c4ebfd82faa4b86e6818bdaf95c83b4878902009f06f71b67fa44cebf",
+      "bytes": 128711
+    },
+    {
+      "path": "images/09-family-retains-pause.jpg",
+      "sha256": "3cfc6fe76f194285dcf551948419822ba46e4a13ca7e5773573d5805ba943057",
+      "bytes": 118022
+    },
+    {
+      "path": "images/10-paused-invite-refused-still-paused.jpg",
+      "sha256": "049305529593bfe85d2e43f01a0d15399f679e90662b30d74ae9378b80e31dc7",
+      "bytes": 128633
+    },
+    {
+      "path": "images/11-family-before-cold-scroll.jpg",
+      "sha256": "64a4fc4036a12137ee8d659f3b21fac22806993dd9fd7e878f1dd6a663c4099a",
+      "bytes": 114696
+    },
+    {
+      "path": "images/12-cold-storage-panel-controls.jpg",
+      "sha256": "ac3a0ec7bdcea43fc372d0e0f0e181638ab5ad4f843d77e68ca1b608f15953f7",
+      "bytes": 114235
+    },
+    {
+      "path": "images/13-cold-storage-entered.jpg",
+      "sha256": "89599f99a43b6fa8bce495a340d38307ce6dd1aa25aafac69b7931f24a28f0cc",
+      "bytes": 132761
+    },
+    {
+      "path": "images/14-cold-near-look-refused.jpg",
+      "sha256": "f23f0c2af431ad297ae716acf9c1a0d94738f171befea91995b328efd908d05d",
+      "bytes": 131974
+    },
+    {
+      "path": "images/15-cold-retrieve-panel.jpg",
+      "sha256": "dc3d9f9f0135272dd5cf09ed1f08aff2aac15a5d4068a7099dc228a912cf9843",
+      "bytes": 116679
+    },
+    {
+      "path": "images/16-cold-retrieved.jpg",
+      "sha256": "49b58779be68cf17eeb5e0255ff912d8aff70a16e06d7935267ddb91ab701851",
+      "bytes": 116569
+    },
+    {
+      "path": "images/17-cold-retrieval-settled.jpg",
+      "sha256": "7e4ff3355f63cacd2f8464cdbed8f0095fbfbddb2ca5ac43f41435250e0c20d3",
+      "bytes": 131120
+    },
+    {
+      "path": "images/18-recovery-panel.jpg",
+      "sha256": "3152bbbd4a9b1f8c971b6f795e2011afeb78253dcad72ce1f67ce00746646539",
+      "bytes": 114181
+    },
+    {
+      "path": "images/19-re-cold-refused.jpg",
+      "sha256": "dc4108697098d30efae6f5bd9888fda8f6948abb8f1c3580e35c40c582d4ec75",
+      "bytes": 132714
+    },
+    {
+      "path": "images/20-adult-near-look.jpg",
+      "sha256": "e73321be87bb8f396aff6940d12f502d0f4acfc5cff32ffc6c132f1cf3968997",
+      "bytes": 121890
+    },
+    {
+      "path": "images/21-food-water-tools.jpg",
+      "sha256": "ea0e0d60283f86b5e37a7678f6957d460d6470218136b6c903aa4d8f59cf4290",
+      "bytes": 119243
+    },
+    {
+      "path": "images/22-water-mouth-before.jpg",
+      "sha256": "7e09e8fcaab0bb799d90c270ebf035a1e6e9fa48a8d6289b4bb5451ef8501de6",
+      "bytes": 119404
+    },
+    {
+      "path": "images/23-water-contact-result.jpg",
+      "sha256": "a2e0fd28b3a2f9df5852bb21c8f84a216eb05bc49b7e52a2617949cff7a464c6",
+      "bytes": 118962
+    },
+    {
+      "path": "images/24-character-list.jpg",
+      "sha256": "f3cbe3ff1cc62ce0cdda8032b8baf397c38a3acfe2245ce8afa3163029df3a56",
+      "bytes": 119450
+    },
+    {
+      "path": "images/25-juvenile-selected.jpg",
+      "sha256": "942ccd1a8f6c216c59c3950180d1a50dcd467922f127587033a18ba32750f90d",
+      "bytes": 112132
+    },
+    {
+      "path": "images/26-help-open.jpg",
+      "sha256": "2c2c436ad007d45c7558614594b6edb6b1334df734573935c8239f360a02fb49",
+      "bytes": 134761
+    },
+    {
+      "path": "images/27-return-courtyard.jpg",
+      "sha256": "b30a71e075cb9d715f204fe36c4a22a28a75b5b808b00650947879c80bacd91b",
+      "bytes": 132765
+    },
+    {
+      "path": "render/01-yard.png",
+      "sha256": "d6e7a88913f69e4903bf48a7eac04720601d56f2a7199317cb6db0718d70f17a",
+      "bytes": 213164
+    },
+    {
+      "path": "render/02-close.png",
+      "sha256": "3aa5e0c9c79c06ba7add3ccfad0225f7f5c6a891f60cebdbd0c8e7528376d4a5",
+      "bytes": 197032
+    },
+    {
+      "path": "render/03-feeding-controls.png",
+      "sha256": "09b35d6faaf76bb2b9fcedc84325cc7ae02d63255cedb867beece65caef218fe",
+      "bytes": 189493
+    },
+    {
+      "path": "render/04-force-controls.png",
+      "sha256": "eff1747cb608f2f4e7418167ba4ee4c68c4366af70fd4a9aed29ec43df7bac2f",
+      "bytes": 184245
+    },
+    {
+      "path": "render/05-help.png",
+      "sha256": "73eba7b2585a3eb4f2115700e4ce2981e455c0408108bafed0b2325184936cae",
+      "bytes": 325298
+    },
+    {
+      "path": "render/render-checks.json",
+      "sha256": "558675e325b4db337711cd464a81731fdfd4127dafc0b858c58efb3caf6539c0",
+      "bytes": 2017
+    },
+    {
+      "path": "evidence/native-observation.json",
+      "sha256": "51a343a4ebf1a136519b74ed95fc648a14fab53e9c2c97c9f23fb7d668fb4a45",
+      "bytes": 5500
+    },
+    {
+      "path": "evidence/native-actions.jsonl",
+      "sha256": "855653e5ec25a5baeb5d312291a3c30b9279fa0f3c24e300f187f7ed074853b6",
+      "bytes": 1745
+    },
+    {
+      "path": "evidence/render-visual-observation.json",
+      "sha256": "921cdd0a9050fa84a9c0a3bb525609956448f6124680ac3d0bf8fc3c48957445",
+      "bytes": 947
+    }
+  ],
+  "image_count": 32,
+  "native_images": 27,
+  "engine_render_images": 5,
+  "privacy": "Only authorized own-cloud game desktop, no browser personal content or saves.",
+  "retention": "Local workspace until removed; private Library copy metadata will be recorded separately."
+}

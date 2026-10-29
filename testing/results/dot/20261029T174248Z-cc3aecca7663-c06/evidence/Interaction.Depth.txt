@@ -1,0 +1,6 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Depth/Interaction.Depth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/source
+PASS 高信任不盖过疼痛和局部失能
+PASS 近看重复安慰不能刷满关系或清空恐惧
+PASS 受伤部位警戒存读档后不重抽
+PASS 显式空相处记忆拒绝，旧档缺字段有默认值

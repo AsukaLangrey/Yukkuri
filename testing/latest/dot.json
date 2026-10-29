@@ -1,12 +1,8 @@
 {
   "schema_version": 1,
-  "run_id": "20261029T162613Z-8238c6e6380f-v05",
-  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
-  "report_path": "testing/results/dot/20261029T162613Z-8238c6e6380f-v05/report.json",
-  "status": "partial",
-  "finished_at": "2026-10-29T17:12:31.308700+00:00",
-  "scope": "manual_visible_replay",
-  "eligible_as_full_test_baseline": false,
-  "last_full_rule_run": "20261029T154437Z-8238c6e6380f-c04",
-  "pending_source_commit": "c400a4c5eedc236d779b1e28142b5c8f6ca5014d"
+  "run_id": "20261029T174248Z-cc3aecca7663-c06",
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "report_path": "testing/results/dot/20261029T174248Z-cc3aecca7663-c06/report.json",
+  "status": "failed",
+  "finished_at": "2026-10-29T18:09:36.952759+00:00"
 }

@@ -1,0 +1,7 @@
+import pathlib,fcntl,time,json,datetime
+b=pathlib.Path('/workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc');l=open('/workspace/shared/yukkuri-cloud-20261029/run.lock','r');fcntl.flock(l,fcntl.LOCK_EX|fcntl.LOCK_NB)
+now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+r={'run_id':'20261029T174248Z-cc3aecca7663-c06','source_commit':'cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d','source_tree':'79c54b3c949fd772bf11a2fa13317ff7c81b4e39','started_at':'2026-10-29T17:42:48Z','lock_acquired_at':now(),'finished_at':None,'status':'running','deadline':'2026-10-29T18:32:00Z','exclusive_lock':'/workspace/shared/yukkuri-cloud-20261029/run.lock'}
+p=b/'evidence/round-lifecycle.json';p.write_text(json.dumps(r,indent=2));print('exclusive lock acquired',flush=True)
+while not (b/'finish-lock').exists() and datetime.datetime.now(datetime.timezone.utc)<datetime.datetime.fromisoformat(r['deadline']):time.sleep(1)
+r['finished_at']=now();r['status']='completed' if (b/'finish-lock').exists() else 'timeout';p.write_text(json.dumps(r,indent=2));print(r['status'],flush=True)

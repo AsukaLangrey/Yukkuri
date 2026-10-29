@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-29T17:46:09Z",
+  "action": "CUA/Sky list_windows filtered to own game/terminal/project-manager titles",
+  "target": "Alice own cloud desktop",
+  "status": "denied",
+  "reason": "Auto-review: testing authorization does not automatically grant window-state reading; separate current authorization required.",
+  "no_bypass": true,
+  "unaffected_work": "Pinned source materialization and build/pure checks continue.",
+  "needed_action": "Explicit user authorization for this round own-cloud window inspection, game UI operation and screenshot capture.",
+  "resolution": {
+    "at": "2026-10-29T17:47:33Z",
+    "status": "authorized-same-action-retry-succeeded",
+    "new_evidence": "Parent supplied direct user08:46UTC instruction去补after asking why actual visual acceptance was missing, plus standing hourly own-cloud testing requirement.",
+    "same_action_retried_once": true,
+    "alternate_route_used": false
+  }
+}

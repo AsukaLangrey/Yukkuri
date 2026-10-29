@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-29T18:04:22Z",
+  "main_commit": "6ae81c9a45bac2cf003132f16bfd6984b6a4a8df",
+  "tested_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "same_as_tested": false,
+  "note": "New main not covered; do not mix into current pinned run."
+}

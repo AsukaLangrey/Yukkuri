@@ -1,0 +1,30 @@
+{
+  "operation": "create_library_file",
+  "status": "succeeded",
+  "path": "/Yukkuri-c06-cc3aecc-actual-ui-evidence.zip",
+  "file_id": "file_000000001200823091909e5d8472ab15",
+  "library_file_id": "libfile_6a67eb948128819192bc778da9e8ff51",
+  "file_name": "Yukkuri-c06-cc3aecc-actual-ui-evidence.zip",
+  "current_version_number": 0,
+  "restored_from_version_number": null,
+  "xattrs": [
+    {
+      "name": "user.library-file-version",
+      "value": "0"
+    }
+  ],
+  "directory_id": "libdir_69d8843864fc8191a4b6c25e74d26443",
+  "mime_type": "application/zip",
+  "library_artifact_type": "report",
+  "file_size_bytes": 3256418,
+  "external_connectors_accessed": false,
+  "local_path": "/workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/Yukkuri-c06-cc3aecc-actual-ui-evidence.zip",
+  "archive_sha256": "2642e6df2d007975bb8f91f84a3eff38d88cb5236206e483314db19fc5884af7",
+  "archive_bytes": 3256418,
+  "created_at": "2026-10-29T18:05:08Z",
+  "local_identity_xattrs_persisted": true,
+  "permission": "Private user Library; repository collaborators do not automatically have access",
+  "public_share_created": false,
+  "expiry": null,
+  "expiry_note": "No separate expiration returned. Retention user-controlled; not guaranteed permanent."
+}

@@ -1,0 +1,33 @@
+{
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "status": "passed",
+  "status_scope": "Only enumerated finite observed interactions, not full visual-interaction-review",
+  "started_at": "2026-10-29T17:50:42Z",
+  "finished_at": "2026-10-29T18:01:48Z",
+  "summary": "本轮在 Alice 自己云桌面实际操作 cc3aecc：家庭面板可读；默认成年角色孕育/邀请不满足条件时显示拒绝；面板保留原暂停且暂停时不安排活动；小铃短时入冷藏后隐藏，近看被拒，取回后恢复显示并禁止恢复期立即再冷藏；近看实际饮水完成，口渴 45→17/100；选择现有幼体豆豆显示幼体标签及较小体型；帮助打开、Esc 关闭、Tab 返回小院。随后正常关窗，退出码0。未把这些有限观察或纯规则当作完整 v8 验收。",
+  "command": "CUA/Sky own-cloud native window actions; screenshots and UTC action records retained",
+  "display": "Alice cloud Linux desktop, 1364x1024; game client at (92,120), 1180x812",
+  "window_id": 41943043,
+  "profile": "cloud1742-c06",
+  "passed_count": null,
+  "failed_count": null,
+  "observations": [
+    {"id":"startup","observed_at":"2026-10-29T17:50:52.014Z","image":"images/01-startup.jpg","result":"Actual courtyard with 3 default characters and new family/vitals UI; no startup crash."},
+    {"id":"family-pregnancy-refusal","observed_at":"2026-10-29T17:51:43.974Z","images":["images/03-family-panel-visible.jpg","images/05-adult-pregnancy-feedback.jpg"],"result":"Clicked stem pregnancy for default adults. Visible feedback: 双方还没有都愿意；先照顾需要，让它们有安稳相处的机会。 No successful pregnancy/birth observed."},
+    {"id":"invite-refusal","observed_at":"2026-10-29T17:52:44.803Z","image":"images/07-invite-feedback.jpg","result":"Clicked invitation; visible feedback: 先让两只油在同一区域能看见彼此的位置。 Autonomous movement before click does not establish accepted invitation."},
+    {"id":"pause-preservation","observed_at":"2026-10-29T17:53:56.038Z","images":["images/08-paused-before-family.jpg","images/09-family-retains-pause.jpg","images/10-paused-invite-refused-still-paused.jpg"],"result":"Space paused; family panel explains original pause; invitation dismisses panel but retains pause and says 小院仍暂停着。先继续时间，再安排活动。 Then unpaused."},
+    {"id":"cold-enter-and-near-refusal","observed_at":"2026-10-29T17:58:35.210Z","images":["images/12-cold-storage-panel-controls.jpg","images/13-cold-storage-entered.jpg","images/14-cold-near-look-refused.jpg","images/15-cold-retrieve-panel.jpg"],"result":"Placed 小铃 in cold around17:54:46; settled cold tag and only2 courtyard actors; close-up refused with 它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。 Family modal pauses world, so wall-clock duration is not simulation exposure time."},
+    {"id":"cold-retrieve-recovery","observed_at":"2026-10-29T17:59:43.321Z","images":["images/17-cold-retrieval-settled.jpg","images/19-re-cold-refused.jpg"],"result":"Clicked retrieve at17:58:47; cold tag removed, character returned and recovery note visible. Re-opened modal and attempted cold again; rejected: 取出后还需要恢复，不能立即反复冷藏。 Did not test expiry, risk injury, capacity or deceased retrieval."},
+    {"id":"adult-near-look-drink","observed_at":"2026-10-29T18:00:50.805Z","images":["images/20-adult-near-look.jpg","images/22-water-mouth-before.jpg","images/23-water-contact-result.jpg"],"result":"Actual near-look front view. Selected 饮水, hovered actual mouth tooltip 嘴边, held left button5s at observed mouth. Thirst visibly45→17/100; sidebar 经历了饮水; bottom 这一口已经咽好了。先松开，再递下一份。 Not a complete all-tools/continuous-intake regression."},
+    {"id":"existing-juvenile-selector","observed_at":"2026-10-29T18:01:31.594Z","images":["images/24-character-list.jpg","images/25-juvenile-selected.jpg"],"result":"Dropdown lists 小铃、松果、豆豆·灵梦·幼体. Selected existing 豆豆; title/selector updated and visibly smaller close-up body. This is default juvenile, not newborn/birth persistence validation."},
+    {"id":"help-and-return","observed_at":"2026-10-29T18:01:48.056Z","images":["images/26-help-open.jpg","images/27-return-courtyard.jpg"],"result":"Help visibly opens with readable current text; Esc closes; Tab returns to courtyard. No exhaustive scroll/long-text coverage."},
+    {"id":"normal-exit","observed_at":"2026-10-29T18:01:48Z","result":"Clicked own game titlebar close only. Runtime end/exit files confirm0. Subsequent window list contains terminal, no own game. Other apps not closed."}
+  ],
+  "limitations": [
+    "No successful natural invitation, social bond, pregnancy, birth, newborn growth or parental care observed; rejected default-condition requests are not successful-flow passes.",
+    "Cold exposure was brief and modal-paused for much of wall time. No 300s risk/600s expiry/capacity/deceased extraction validation.",
+    "No long-name or newly born dynamic-list/save roundtrip visual validation, and no full v2-v8 injury/tool interaction coverage.",
+    "Audio driver fell back to Dummy; no audible music or voice acceptance.",
+    "Screenshot captures sometimes occur before clicked frame settles. Conclusions use later settled frames, not labels alone. Native action JSONL timestamps identify capture completion, not exact input onset."
+  ]
+}

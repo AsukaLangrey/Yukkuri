@@ -1,0 +1,13 @@
+{
+  "finished_at": "2026-10-29T18:04:22Z",
+  "test_processes_finished": true,
+  "test_processes_finished_at": "2026-10-29T18:03:08Z",
+  "status": "failed",
+  "native_game_exit_code": 0,
+  "engine_contact_exit_code": 0,
+  "engine_render_exit_code": 0,
+  "pure_suites_complete": 13,
+  "pure_passed": 669,
+  "pure_failed": 4,
+  "all_render_images_visually_inspected_at": "2026-10-29T18:04:22Z"
+}
