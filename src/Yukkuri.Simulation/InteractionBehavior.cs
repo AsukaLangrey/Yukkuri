@@ -316,6 +316,9 @@ public sealed partial class WorldSimulation
             {
                 c.Activity = "底部受伤 · 需要辅助生活";
                 bool takingFood=TryEatNearby(c);
+                // A damaged foot prevents travel, not caring for someone already
+                // within reach. The care path checks needs and actual contact.
+                if(!takingFood&&i.EatingRemaining<=0&&TryFamilyCare(c,dt))continue;
                 // A damaged foot prevents travel, not listening to somebody who
                 // is already beside it. Needs and supported rest still go first.
                 if(!takingFood&&i.EatingRemaining<=0&&!NaturalResources.WantsFood(c)&&!NaturalResources.WantsWater(c)&&

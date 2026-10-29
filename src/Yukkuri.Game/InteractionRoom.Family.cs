@@ -10,6 +10,8 @@ public partial class InteractionRoom
     private readonly List<string> _selectorIds=new();
     private string _selectorSignature="";
     private string? _familyFirstId,_familySecondId;
+    private string _familyCareFeedback="";
+    private string _familyCareSelection="";
     private bool _breedingInterventionExpanded;
     private readonly Dictionary<string,FamilyStatusMarker> _familyMarkers=new();
 
@@ -155,7 +157,19 @@ public partial class InteractionRoom
             _familySecondId=second.Id;
             AddFamilyChoice("另一只油",otherOils,_familySecondId,id=>{_familySecondId=id;ShowFamily();});
             string secondId=second.Id;
+            string careSelection=firstId+"\n"+secondId;
+            if(_familyCareSelection!=careSelection){_familyCareSelection=careSelection;_familyCareFeedback="";}
             _modalContents.AddChild(Text(FamilySummary(second),14));
+            if(_familyCareFeedback.Length>0)
+                _modalContents.AddChild(Text("上次照护安排："+_familyCareFeedback,14,"8a624e"));
+            if(first.IsYoung!=second.IsYoung)
+                AddFamilyCareChoice(first.IsYoung?second:first,first.IsYoung?first:second);
+            else if(!first.IsYoung&&!second.IsYoung)
+            {
+                _modalContents.AddChild(Text("伤残家人的食水照护：由有余力的一方递送实际食水。成年人接受帮助不会改变血缘或成为养子女。",13,"78816e"));
+                AddFamilyCareChoice(first,second);
+                AddFamilyCareChoice(second,first);
+            }
             if(second.Family.Pregnancy.InterventionRemaining>0)
                 _modalContents.AddChild(Button("停止另一只的繁育干预",()=>ApplyFamilyCommand(()=>Sim.InterruptPregnancyIntervention(secondId))));
             if(second.Family.ChildThreat.TargetId!=null)
@@ -185,7 +199,6 @@ public partial class InteractionRoom
             if(first.IsYoung!=second.IsYoung)
             {
                 string childId=first.IsYoung?firstId:secondId,caregiverId=first.IsYoung?secondId:firstId;
-                _modalContents.AddChild(Button("请成年一方照护幼体",()=>ApplyFamilyCommand(()=>Sim.ArrangeCare(caregiverId,childId))));
                 var teacher=first.IsYoung?second:first;
                 var knowledge=teacher.Family.LifeKnowledge.OrderBy(k=>k.Key,StringComparer.Ordinal)
                     .Where(k=>FamilyRules.KnowledgeName(k.Key).Length>0).ToArray();
@@ -251,8 +264,74 @@ public partial class InteractionRoom
             choice.AddItem(OilListName(oils[n]));
             if(oils[n].Id==selected)choice.Select(n);
         }
-        choice.ItemSelected+=index=>{if(index>=0&&index<oils.Length)select(oils[(int)index].Id);};
+        choice.ItemSelected+=index=>{if(index>=0&&index<oils.Length){_familyCareFeedback="";select(oils[(int)index].Id);}};
         _modalContents.AddChild(choice);
+    }
+
+    private void AddFamilyCareChoice(Creature caregiver,Creature recipient)
+    {
+        string caregiverId=caregiver.Id,recipientId=recipient.Id;
+        _modalContents.AddChild(Text(caregiver.Name+" → 照护 → "+recipient.Name,14));
+        string? reason=Sim.FamilyCareReason(caregiverId,recipientId);
+        string available=recipient.IsYoung?
+            (WorldSimulation.CanSelfMove(caregiver)?
+                "目前可以提出照护。需要实际靠近；送来的食水也要由幼体接食，持续照顾才会留下关系。":
+                "可以在已经贴近的幼体旁陪护保暖。它的身体走不开，食水仍需要你或能移动的家人递近。"):
+            "目前可以请求食水帮助。照护者需要找到真实食水并送到它能接食的位置。";
+        _modalContents.AddChild(Text(reason==null?
+            available:
+            "当前阻碍："+reason,13,reason==null?"78816e":"8a624e"));
+        if(_pauseBeforeModal)_modalContents.AddChild(Text("先关闭面板并继续时间，再回来提出安排。",13,"8a624e"));
+        var button=Button("提出这项照护",()=>ApplyFamilyCareCommand(caregiverId,recipientId));
+        button.TooltipText="请"+caregiver.Name+"照护"+recipient.Name;
+        _modalContents.AddChild(button);
+    }
+
+    private void ApplyFamilyCareCommand(string caregiverId,string recipientId)
+    {
+        // The panel pauses simulation, but the read-only reason checks the actual
+        // pair. A refusal keeps both choices visible; only care uses this flow.
+        string? reason=_pauseBeforeModal?"小院原本处于暂停中。请先关闭面板、继续时间，再安排照护。":
+            Sim.FamilyCareReason(caregiverId,recipientId);
+        if(reason!=null){_familyCareFeedback=reason;ShowFamily();return;}
+        CloseModal();
+        string result=Sim.ArrangeCare(caregiverId,recipientId);
+        var caregiver=Sim.State.Creatures.FirstOrDefault(c=>c.Id==caregiverId);
+        if(caregiver?.Family.CareTargetId!=recipientId)
+        {
+            _familyCareFeedback=result;ShowFamily();return;
+        }
+        _familyCareFeedback="";_message=result;RefreshRoomUi();
+    }
+
+    private string FamilyCareSummary(Creature c)
+    {
+        string NameFor(string id)=>Sim.State.Creatures.FirstOrDefault(o=>o.Id==id)?.Name??"这位家人";
+        string Delivery(Creature caregiver)
+        {
+            var parcel=Sim.State.RoomObjects.FirstOrDefault(o=>o.Id==caregiver.Family.CareParcelId&&
+                o.CarrierId==caregiver.Id&&!o.Stored&&!o.HeldByHand);
+            return parcel==null?"已安排照护，目前没有搬送中的食水":parcel.Kind switch
+            {
+                RoomObjectKind.Water=>"正在搬送一份水",
+                RoomObjectKind.Sweet=>"正在搬送一份甜甜",
+                _=>"正在搬送一份食物"
+            };
+        }
+        var details=new List<string>();
+        if(c.Family.CareTargetId is { } target)
+        {
+            string? reason=Sim.FamilyCareReason(c.Id,target);
+            details.Add("当前照护："+c.Name+" → "+NameFor(target)+"；"+
+                (reason==null?Delivery(c):"目前受阻："+reason));
+        }
+        foreach(var caregiver in Sim.State.Creatures.Where(o=>o.Id!=c.Id&&o.Family.CareTargetId==c.Id).OrderBy(o=>o.Id,StringComparer.Ordinal))
+        {
+            string? reason=Sim.FamilyCareReason(caregiver.Id,c.Id);
+            details.Add("正在照护它："+caregiver.Name+"；"+
+                (reason==null?Delivery(caregiver):"目前受阻："+reason));
+        }
+        return string.Join("\n",details);
     }
 
     private string FamilySummary(Creature c)
@@ -261,7 +340,15 @@ public partial class InteractionRoom
         var details=new List<string>{c.Name+" · "+(c.Body.ReproductionRole==ReproductionRole.Maternal?"母体角色":"父体角色")};
         if(c.Family.MotherId!=null||c.Family.FatherId!=null)details.Add("母亲："+NameFor(c.Family.MotherId)+"；父亲："+NameFor(c.Family.FatherId));
         if(c.Family.PartnerIds.Count>0)details.Add("伴侣："+string.Join("、",c.Family.PartnerIds.OrderBy(id=>id).Select(id=>NameFor(id))));
-        if(c.Family.CaregiverIds.Count>0)details.Add("照护者："+string.Join("、",c.Family.CaregiverIds.Select(id=>NameFor(id))));
+        if(c.Family.CaregiverIds.Count>0)
+        {
+            var parents=c.Family.CaregiverIds.Where(id=>id==c.Family.MotherId||id==c.Family.FatherId||id==c.ParentId).ToArray();
+            var foster=c.Family.CaregiverIds.Except(parents).ToArray();
+            if(parents.Length>0)details.Add("亲代照护者："+string.Join("、",parents.Select(id=>NameFor(id))));
+            if(foster.Length>0)details.Add("持续照顾后认下的养亲："+string.Join("、",foster.Select(id=>NameFor(id))));
+        }
+        string care=FamilyCareSummary(c);
+        if(care.Length>0)details.Add(care);
         string situation=c.Condition==PhysicalCondition.Dead?"":FamilyRules.Describe(c);
         if(situation.Length>0)details.Add(situation);
         string aftermath=FamilyRules.DescribeAftermath(c);

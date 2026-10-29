@@ -387,7 +387,7 @@ public sealed partial class WorldSimulation
         foreach(var other in State.Creatures.Where(c=>c!=unavailable))
         {
             if(other.Family.CareTargetId==unavailable.Id)
-            {DropCareParcel(other);other.Family.CareTargetId=null;other.Family.CareApproachSeconds=0;other.Family.CareBestDistance=100;}
+                CancelFamilyCare(other,reason:"照护对象的状态改变，递送已中断；如有已取份额，已经留在身旁。");
             if(other.Family.Conflict.TargetId==unavailable.Id)
                 StopFamilyConflict(other,"当前对象已经无法继续接触，停止冲突；既有后果保留");
             if(other.Family.ChildThreat.TargetId==unavailable.Id)
@@ -412,7 +412,7 @@ public sealed partial class WorldSimulation
             c.Family.NextSocialAt = State.WorldSeconds + 12;
             var candidate = State.Creatures.Where(x => x != c && FamilyActionReady(x) && x.Family.CompanionTargetId == null &&
                 !AutomaticCompanionShouldWait(x) &&
-                FamilyVisible(c, x, 4) && (!x.IsYoung || FamilyRules.IsCloseFamily(c, x)) &&
+                FamilyVisible(c, x, 4) && CanStartCompanionshipWithChild(c, x) &&
                 (!c.Family.Peers.TryGetValue(x.Id, out var own) || own.Fear < 40 && own.Resentment < 35 && State.WorldSeconds >= own.NextInvitationAt) &&
                 (!x.Family.Peers.TryGetValue(c.Id, out var theirs) || theirs.Fear < 40 && theirs.Resentment < 35 && State.WorldSeconds >= theirs.NextInvitationAt))
                 .OrderByDescending(x => c.Family.PartnerIds.Contains(x.Id)).ThenBy(x => Distance(c.X, c.Z, x.X, x.Z))
@@ -437,6 +437,19 @@ public sealed partial class WorldSimulation
                 "一起慢慢来。", $"留在{companion.Name}身旁，轻轻回应。", 3);
         }
         return true;
+    }
+
+    private bool CanStartCompanionshipWithChild(Creature adult, Creature candidate)
+    {
+        if(!candidate.IsYoung)return true;
+        // Blood relationship and established upbringing remain separate facts.
+        // This gate permits a first conversation, never an instant adoption.
+        if(FamilyRules.IsCloseFamily(adult,candidate)||candidate.Family.CaregiverIds.Contains(adult.Id))return true;
+        if(adult.IsYoung||adult.Patience<.65||adult.Aggression>.25||
+            NaturalResources.WantsFood(adult)||NaturalResources.WantsWater(adult)||adult.Energy<40||
+            NaturalResources.WantsFood(candidate)||NaturalResources.WantsWater(candidate)||candidate.Energy<40)return false;
+        return (!adult.Family.Peers.TryGetValue(candidate.Id,out var own)||own.Fear<25&&own.Resentment<25)&&
+            (!candidate.Family.Peers.TryGetValue(adult.Id,out var child)||child.Fear<25&&child.Resentment<25);
     }
 
     private void TickFamilySocial(double dt)

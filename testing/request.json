@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v14-interaction-depth-H-20261030",
+  "revision": "dot-v15-interaction-depth-I-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -12,7 +12,7 @@
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "Interaction.AutonomyPriority", "Interaction.CompletedNeeds", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
-    "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
+    "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Family.AdoptionJourney", "Family.AssistedCare", "Family.Growth", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
     "跳跃朝向、腾空与落地衔接",
@@ -22,6 +22,12 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/I.txt",
+    "planning/stages/interaction-depth-20261030/I-audit.tsv",
+    "planning/stages/interaction-depth-20261030/I-adoption.txt",
+    "planning/stages/interaction-depth-20261030/I-assisted-care.txt",
+    "planning/stages/interaction-depth-20261030/I-care-ui.txt",
+    "planning/stages/interaction-depth-20261030/I-growth.txt",
     "planning/stages/interaction-depth-20261030/H.txt",
     "planning/stages/interaction-depth-20261030/H-autonomy.txt",
     "planning/stages/interaction-depth-20261030/H-intake.txt",
@@ -166,6 +172,14 @@
     "原held完成9组合仍保留240帧及末态X>.5等全部断言。只在该夹具延后闲逛决定，并在首次真实目标摄入后清理旧闲逛目的地；新增实际坐标/需求/份量不变断言和隔离时点诊断。Interaction.CompletedNeeds另走不隔离的真实饮水全程，确认喝够、吞完后仍正常移动且两份水各消费一次。不能把夹具隔离说成产品吞咽修复，c06原始证据保持。",
     "FamilyValidation为既有抛错Require声明失败不返回，去掉三处旧空值抑制，保留完整坏档校验和异常。c06的6个CS8602是旧B结果，本批是否消除需以新构建日志为准，不预报零警告。",
     "实际界面观察多人环境里的自主邀请姿态/台词/声音与后续结伴、收纳宝物后惦记而不显示实体、饮水结束恢复生活。没有音频或图形条件的项单列未测，不用纯规则替代。"
+  ],
+  "interaction_depth_I_focus": [
+    "v15承接所有旧检查和c06未关闭失败；固定包含本批的完整提交先构建，再执行Family.AdoptionJourney、Family.AssistedCare、Family.Growth及原Family.ColdCare/CareLearning/Social/Teaching。开发侧没有编译、运行或预览。",
+    "自主接纳从陌生非亲代和幼体开始，不得预写亲近度/养亲结果冒充流程。真实相处使关系发展，实际有限食水或近处保暖积累照护，随后形成养亲；不改血缘。个性、恐惧、怨恨和本体需要影响接受；既有养亲能继续日常相处和教导。",
+    "成年行动不便或恢复中的亲近对象可获得真实食水递送，经过寻找来源、扣一份、搬运、嘴边放下和自己入口。吃饱不能治好脚伤，不给健康陌生成年前馈，不把成年互助记成收养；濒危先救治，手持/箱内/高处等不可隔空送入口。脚伤照护者只在实际贴近时给幼体保暖，不取得行走或运输能力；稳定地面包裹幼体可接食水。",
+    "原默认/旧档幼体即使没有BirthEventId也按身体年龄和原营养/健康/保暖条件成长，不虚构出生事件、不重置身份、累计年龄或固定繁殖角色。冷藏成长仍为0.1身体时间，暂停/近看不成长。Family.ColdCare中明确要保持幼体的夹具改为幼体年龄0，原断言全部保留；不能依赖旧永久幼年缺陷维持夹具。",
+    "实际家庭面板观察两方向照护入口、具体当前阻碍、失败后仍能看到双方、正在搬送的真实份额和亲代/养亲区别。原暂停保持且不能在暂停中安排；不要把只读原因说明当作完成照护。真实Wrap幼体吃喝、脚伤亲代保暖、成年伤残对象受助及长大后模型/名单衔接均需实际图形观察，缺条件列未测。",
+    "本批没有实现外部茎附着/摘取/断茎、完整器官/手术/内馅转移、六种全部模型和升级，仍见I-audit.tsv。不能用新增检查数量宣称这些范围完成，也不能把B版c06结果套到本批。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

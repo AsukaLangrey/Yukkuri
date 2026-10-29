@@ -27,3 +27,6 @@ G补充分工：身体子代理接管InteractionInjury.cs即时濒危清理、�
 
 H批：关系子代理拥有FamilySocial.cs、InteractionBehavior.cs、新checks/Interaction.AutonomyPriority与H-autonomy.txt；身体子代理仅修改Continuity原held完成9组合、新checks/Interaction.CompletedNeeds与H-intake.txt；界面子代理拥有FamilyValidation.cs与H-validation.txt。
 主协调仅在Continuity添加独立诊断函数和另三处失败消息，负责总交接/请求/阶段记录及全部Git操作。各子代理无运行、编译和Git权限，原始c06证据不动。分工依据用户已授权的适当并行。
+
+I批：关系子代理拥有FamilySocial.cs、新checks/Family.AdoptionJourney与I-adoption/I-family-gap；身体子代理拥有FamilyCare.cs、新checks/Family.AssistedCare与I-assisted-care/I-body-gap；界面子代理拥有InteractionRoom.Family.cs与I-care-ui/I-ui-gap。
+主协调拥有InteractionBehavior失能入口接线、新checks/Family.Growth、原ColdCare幼体年龄夹具、请求与总交接；各子代理停写后整合FamilySocial.ClearFamilyTargetsTo取消原因。全部Git由主协调操作，所有检查源码只交独立远端运行。

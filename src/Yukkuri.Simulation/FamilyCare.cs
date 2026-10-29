@@ -2,28 +2,122 @@ namespace Yukkuri.Simulation;
 
 public sealed partial class WorldSimulation
 {
-    private bool CaregiverReady(Creature adult) => !adult.IsYoung && FamilyRules.WillSocialize(adult) && CanSelfMove(adult) &&
+    // Being unable to travel does not remove the ability to warm a child already
+    // alongside. Transport checks CanSelfMove separately at every carrying step.
+    private bool CaregiverReady(Creature adult) => !adult.IsYoung && FamilyRules.WillSocialize(adult) &&
         adult.Family.Conflict.TargetId==null && adult.Family.FlightRemaining<=0 && adult.RetreatRemaining<=0 &&
         adult.Family.CompanionTargetId==null && !adult.Interaction.Resting && adult.Interaction.RestRemaining<=0 &&
-        !adult.Interaction.FollowPlayer && adult.Interaction.WaitRemaining<=0 && adult.Interaction.Height<=.25 &&
+        !adult.Interaction.FollowPlayer && adult.Interaction.WaitRemaining<=0 && adult.Interaction.Height<=.05 && !adult.Interaction.Lowering &&
         InteractionGestureTarget!=adult.Id && !NaturalResources.WantsFood(adult) && !NaturalResources.WantsWater(adult);
 
     private static bool IsCareParent(Creature adult,Creature child) => child.ParentId==adult.Id ||
         child.Family.MotherId==adult.Id || child.Family.FatherId==adult.Id;
 
-    private bool CareTargetAvailable(Creature adult,Creature child) => child!=adult && child.IsYoung &&
-        child.Condition!=PhysicalCondition.Dead && child.RegionId==adult.RegionId && !child.Family.ColdStorage.Stored &&
-        !child.Interaction.Carried && !child.Interaction.Falling && child.Interaction.Height<=.25 &&
-        child.Interaction.Restraint==RestraintKind.None && InteractionGestureTarget!=child.Id &&
+    private static bool NeedsAssistedIntake(Creature c) => !c.IsYoung &&
+        (c.Condition==PhysicalCondition.Recovering||UsesGroundFoot(c)&&c.Interaction.FootIntegrity<=25) &&
+        (c.Fullness<55||c.Interaction.Hydration<55);
+
+    private static bool CareRelationshipSafe(Creature a,Creature b) =>
+        (!a.Family.Peers.TryGetValue(b.Id,out var ab)||ab.Fear<40&&ab.Resentment<35) &&
+        (!b.Family.Peers.TryGetValue(a.Id,out var ba)||ba.Fear<40&&ba.Resentment<35);
+
+    private static bool AdultCareRelationship(Creature a,Creature b) => FamilyRules.IsCloseFamily(a,b) ||
+        a.Family.PartnerIds.Contains(b.Id)&&b.Family.PartnerIds.Contains(a.Id) ||
+        a.Family.CaregiverIds.Contains(b.Id)||b.Family.CaregiverIds.Contains(a.Id) ||
+        a.Family.Peers.TryGetValue(b.Id,out var ab)&&ab.Affection>=35&&ab.Familiarity>=30&&
+        b.Family.Peers.TryGetValue(a.Id,out var ba)&&ba.Affection>=35&&ba.Familiarity>=30;
+
+    private bool CareTargetAvailable(Creature adult,Creature child) => child!=adult && (child.IsYoung||NeedsAssistedIntake(child)) &&
+        child.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering && child.RegionId==adult.RegionId &&
+        !child.Family.ColdStorage.Stored && !FamilyRules.UnderIntervention(child) &&
+        !child.Interaction.Carried && !child.Interaction.Falling && !child.Interaction.Lowering && !child.Interaction.Supine && child.Interaction.Height<=.05 &&
+        child.Interaction.Restraint is RestraintKind.None or RestraintKind.Wrap && InteractionGestureTarget!=child.Id &&
+        !child.Interaction.Physiology.Active &&
         child.Family.FlightRemaining<=0 && child.RetreatRemaining<=0 && child.Family.Conflict.TargetId==null &&
-        (!adult.Family.Peers.TryGetValue(child.Id,out var a)||a.Fear<40&&a.Resentment<35) &&
-        (!child.Family.Peers.TryGetValue(adult.Id,out var b)||b.Fear<40&&b.Resentment<35) &&
+        child.Family.ChildThreat.TargetId==null && CareRelationshipSafe(adult,child) &&
+        (child.IsYoung||AdultCareRelationship(adult,child)) &&
         FamilyVisible(adult,child,6) && HasGroundSightLine(adult,child.X,child.Z);
 
-    private void CancelFamilyCare(Creature adult,double cooldown=12)
+    private bool CanContinueFamilyCare(Creature adult,Creature recipient) => CaregiverReady(adult)&&CareTargetAvailable(adult,recipient)&&
+        (CanSelfMove(adult)||recipient.IsYoung&&FamilyInContact(adult,recipient));
+
+    // This is also read by a paused management modal. Do not create bonds,
+    // update messages or apply the command's Pause gate while explaining it.
+    public string? FamilyCareReason(string caregiverId,string recipientId)
     {
+        var adult=State.Creatures.Find(c=>c.Id==caregiverId);var recipient=State.Creatures.Find(c=>c.Id==recipientId);
+        if(!State.InteractionPlaytest||adult==null||recipient==null||adult.RegionId!=State.ActiveRegionId||recipient.RegionId!=adult.RegionId)
+            return "先选择当前小院里能看见彼此的两只油。";
+        return FamilyCareReasonCore(adult,recipient);
+    }
+
+    private string? FamilyCareReasonCore(Creature adult,Creature recipient)
+    {
+        if(adult.RegionId!=recipient.RegionId)return "照护对象已经离开这个地区，递送需在同一区域重新安排。";
+        if(adult==recipient||adult.IsYoung)return "需要另一只成熟油承担照护。";
+        if(adult.Condition!=PhysicalCondition.Active)return "照护者自身还需要救治或恢复，请先照顾它或换一位家人。";
+        if(adult.Family.ColdStorage.Stored)return "照护者正在冷藏，请先安全取出。";
+        if(adult.Family.ColdStorage.RecoveryRemaining>0)return "照护者刚取出冷藏，先等身体复苏。";
+        if(FamilyRules.UnderIntervention(adult))return "照护者正处于繁育干预中，先停止干预并照顾身体。";
+        if(adult.Interaction.Carried||adult.Interaction.Falling||adult.Interaction.Lowering||adult.Interaction.Height>.05)
+            return "照护者还未稳稳落地，先放稳再安排。";
+        if(adult.Interaction.Restraint!=RestraintKind.None||adult.Interaction.Supine)
+            return "照护者受到限制或正翻着身体，先解除限制并帮助它放稳。";
+        if(adult.Pain>=25||adult.Fear>=55||adult.Interaction.Digestion.Symptomatic)
+            return "照护者正在疼痛、害怕或肚子不适，先处理它自身的不适。";
+        if(NaturalResources.WantsFood(adult))return "照护者自己还饿，先给它准备食物，或换另一位家人。";
+        if(NaturalResources.WantsWater(adult))return "照护者自己还渴，先给它准备水，或换另一位家人。";
+        if(adult.Energy<=25||adult.Interaction.Resting||adult.Interaction.RestRemaining>0)
+            return "照护者需要休息，先让它休养或换另一位有余力的家人。";
+        if(adult.Interaction.EatingRemaining>0)return "照护者正在吃喝，等它咽下当前一口再安排。";
+        if(adult.Interaction.Physiology.Active)return "照护者正在排泄，等当前身体动作结束再安排。";
+        if(adult.Family.CompanionTargetId!=null)return "照护者正在陪伴另一只油，先结束这段相处或选择另一位家人。";
+        if(adult.Family.Conflict.TargetId!=null||adult.Family.ChildThreat.TargetId!=null||adult.Family.FlightRemaining>0||adult.RetreatRemaining>0)
+            return "照护者正在冲突或躲避，先处理危险并让它安定下来。";
+        if(InteractionGestureTarget==adult.Id)return "照护者正接受手部操作，先收手并结束当前操作。";
+        if(adult.Interaction.ActiveCue!=null||adult.Interaction.FollowPlayer||adult.Interaction.WaitRemaining>0)
+            return "照护者正在接受指令或教学，先结束当前指令。";
+        if(!CaregiverReady(adult))return "照护者暂时没有余力，先照顾它的身体需要。";
+        if(recipient.Condition is PhysicalCondition.Critical or PhysicalCondition.Dead)
+            return recipient.Condition==PhysicalCondition.Critical?"它正处于濒危，需要先救治稳定，不能直接送入口。":"它已经离世，不能再接食水。";
+        if(!recipient.IsYoung&&!NeedsAssistedIntake(recipient))return "成年对象目前能自行生活，或暂时不需要补充食水。";
+        if(recipient.Family.ColdStorage.Stored)return "对象仍在冷藏中，先安全取出再安排食水。";
+        if(FamilyRules.UnderIntervention(recipient))return "对象仍在繁育干预中，先停止干预并放稳身体。";
+        if(recipient.Interaction.Carried)return "对象还被手托着，先放稳再安排送食水。";
+        if(recipient.Interaction.Falling)return "对象正在下落，先帮助它安全落稳。";
+        if(recipient.Interaction.Lowering)return "对象正在放下，等放稳后再安排。";
+        if(recipient.Interaction.Height>.05)return "对象还在高处，先安置到地面稳定支撑处。";
+        if(recipient.Interaction.Restraint is not (RestraintKind.None or RestraintKind.Wrap)||recipient.Interaction.Supine)
+            return "对象正在箱内、悬挂或其他受限姿势中，先解除限制并放稳；地面柔软包裹可以保留。";
+        if(InteractionGestureTarget==recipient.Id||recipient.Interaction.Physiology.Active)
+            return "对象正接受手部操作或正在排泄，先结束当前动作。";
+        if(recipient.Family.FlightRemaining>0||recipient.RetreatRemaining>0||recipient.Family.Conflict.TargetId!=null||recipient.Family.ChildThreat.TargetId!=null)
+            return "对象正在冲突或躲避，先处理危险再靠近照护。";
+        if(!CareRelationshipSafe(adult,recipient))return "双方仍有害怕或怨恨，先安全相处缓解关系，或选择另一位家人。";
+        if(!recipient.IsYoung&&!AdultCareRelationship(adult,recipient))return "双方还不够亲近，先安全相处，或选择已有信任关系的家人。";
+        if(adult.Quarantine!=recipient.Quarantine)return "双方处在不同隔离范围，先按实际安置安排同处。";
+        if(Distance(adult.X,adult.Z,recipient.X,recipient.Z)>6)return "双方相距太远，先让它们来到彼此可见的近处。";
+        if(!HasGroundSightLine(adult,recipient.X,recipient.Z)||!FamilyVisible(adult,recipient,6))
+            return "双方之间看不清或有遮挡，先腾开通路、调整安置位置。";
+        if(!CareTargetAvailable(adult,recipient))return "对象暂时无法接受照护，先检查它的身体状态与安置。";
+        if(!CanSelfMove(adult)&&(!recipient.IsYoung||!FamilyInContact(adult,recipient)))
+            return "照护者现在走不开，只能照看已经贴近的幼体；送食水请选另一位能走动的家人。";
+        if(recipient.IsYoung&&!IsCareParent(adult,recipient)&&!recipient.Family.CaregiverIds.Contains(adult.Id)&&
+            (!adult.Family.Peers.TryGetValue(recipient.Id,out var relation)||relation.Affection<20||adult.Aggression>.65))
+            return "它还没有愿意接纳这只幼体，先让双方有安全相处的机会。";
+        return null;
+    }
+
+    private void CancelFamilyCare(Creature adult,double cooldown=12,string reason="这次照护已停止，先处理身体状态或眼前的需要。")
+    {
+        if(adult.Family.CareTargetId==null&&adult.Family.CareParcelId==null)return;
+        var recipient=State.Creatures.Find(c=>c.Id==adult.Family.CareTargetId);
         DropCareParcel(adult);adult.Family.CareTargetId=null;adult.Family.CareApproachSeconds=0;
         adult.Family.CareBestDistance=100;adult.Family.NextCareAt=Math.Max(adult.Family.NextCareAt,State.WorldSeconds+cooldown);
+        adult.Family.LastEvent=reason;
+        if(recipient!=null&&recipient.Condition!=PhysicalCondition.Dead)
+            recipient.Family.LastEvent=$"{adult.Name}的照护已中断：{reason}";
+        if(adult.Condition==PhysicalCondition.Active)adult.Activity=reason;
     }
 
     public string ArrangeCare(string caregiverId,string childId)
@@ -31,16 +125,12 @@ public sealed partial class WorldSimulation
         var adult=State.Creatures.Find(c=>c.Id==caregiverId);var child=State.Creatures.Find(c=>c.Id==childId);
         var error=FamilyCommandError(adult)??FamilyCommandError(child);
         if(error!=null)return error;
-        if(adult!.Id==child!.Id||adult.IsYoung||!child.IsYoung)return "需要一只成熟油照看幼体。";
-        if(!CaregiverReady(adult)||!CareTargetAvailable(adult,child))
-            return "照护者现在没有余力，或幼体暂时无法接近。";
-        bool parent=IsCareParent(adult,child);
-        if(!parent&&!child.Family.CaregiverIds.Contains(adult.Id)&&
-            (!adult.Family.Peers.TryGetValue(child.Id,out var relationship)||relationship.Affection<20||adult.Aggression>.65))
-            return "它还没有愿意接纳这只幼体，先让双方有安全相处的机会。";
-        if(adult.Family.CareTargetId==child.Id)return "已经在照看这只幼体，给实际靠近和递送留一点时间。";
-        DropCareParcel(adult);adult.Family.CareTargetId=child.Id;adult.Family.CareApproachSeconds=0;adult.Family.CareBestDistance=100;
-        return State.LastActionMessage="已提出照护安排。它会在自己有余力时靠近、保暖，并寻找实际食水送过去。";
+        error=FamilyCareReason(caregiverId,childId);if(error!=null)return error;
+        if(adult!.Family.CareTargetId==child!.Id)return "已经在照护这个对象，给实际靠近和递送留一点时间。";
+        DropCareParcel(adult);adult.Family.CareTargetId=child!.Id;adult.Family.CareApproachSeconds=0;adult.Family.CareBestDistance=100;
+        adult.Family.LastEvent=!CanSelfMove(adult)?"留在已贴近的幼体旁照看；身体走不开，无法搬运食水。":
+            child.IsYoung?"已安排照看幼体，会在有余力时靠近保暖并寻找实际食水。":"已安排为行动不便的亲近对象送食水，需要实际取到并送达。";
+        return State.LastActionMessage=adult.Family.LastEvent;
     }
 
     private void TickYoungLife(Creature c,double dt)
@@ -51,16 +141,16 @@ public sealed partial class WorldSimulation
         {
             bool supported=c.Interaction.Restraint==RestraintKind.Wrap||HasCushionedRestSupport(c);
             bool warmAdult=State.Creatures.Any(a=>CaregiverReady(a)&&CareTargetAvailable(a,c)&&
-                f.CaregiverIds.Contains(a.Id)&&FamilyInContact(a,c));
+                (f.CaregiverIds.Contains(a.Id)||IsCareParent(a,c))&&FamilyInContact(a,c));
             f.Warmth=Math.Clamp(f.Warmth+dt*(supported||warmAdult ? .18 : -.025),0,100);
             if(f.Warmth<15)Hurt(c,dt*.025,"幼体持续失温",null);
             if(c.Condition==PhysicalCondition.Dead)return;
             if(c.Condition==PhysicalCondition.Active&&f.Warmth<35&&c.ReactionRemaining<=0)
                 React(c,Expression.Calling,"冷冷……陪陪……","幼体缩着身体，寻找温暖和陪伴。",5);
         }
-        // Legacy young residents keep their age semantics; newly born individuals
-        // have a recorded birth and grow only through ordinary biological time.
-        if(f.BirthEventId!=null&&c.Body.AgeSeconds>=FamilyRules.YoungSeconds&&c.Fullness>35&&c.Health>50&&f.Warmth>40)
+        // Birth provenance is optional in old saves, but real body age is not.
+        // Growing up must not fabricate a birth event or reset age/role/history.
+        if(c.Body.AgeSeconds>=FamilyRules.YoungSeconds&&c.Fullness>35&&c.Health>50&&f.Warmth>40)
         {c.IsYoung=false;f.LastEvent="已经长大，开始学习独立生活。";RecordInteraction(c,"grown",f.LastEvent,3);}
     }
 
@@ -72,6 +162,8 @@ public sealed partial class WorldSimulation
             parcel.CarrierId=null;
             if(!parcel.HeldByHand&&!parcel.Stored)
             {parcel.RegionId=adult.RegionId;parcel.X=adult.X;parcel.Z=adult.Z;parcel.Height=RoomSupplySupport.Height(State,parcel.RegionId,parcel.X,parcel.Z,parcel.Kind);}
+            if(adult.Condition is not (PhysicalCondition.Critical or PhysicalCondition.Dead))
+                f.LastEvent="搬运已中止，原来的一份食水留在身旁，尚未送达。";
         }
         f.CareParcelId=null;
     }
@@ -83,12 +175,13 @@ public sealed partial class WorldSimulation
             var f=adult.Family;
             if(f.CareParcelId==null&&f.CareTargetId==null)continue;
             var child=State.Creatures.Find(c=>c.Id==f.CareTargetId);
-            if(child==null||!CaregiverReady(adult)||!CareTargetAvailable(adult,child))
-            {CancelFamilyCare(adult);continue;}
+            if(child==null||!CanContinueFamilyCare(adult,child)||f.CareParcelId!=null&&!CanSelfMove(adult))
+            {CancelFamilyCare(adult,reason:child==null?"照护对象已不在这里，这次递送已停止。":
+                FamilyCareReasonCore(adult,child)??"照护者已经不能搬运，原来的一份食水已留在身旁。");continue;}
             if(f.CareParcelId==null)continue;
             var parcel=State.RoomObjects.Find(o=>o.Id==f.CareParcelId);
             if(parcel==null||parcel.CarrierId!=adult.Id||parcel.HeldByHand||parcel.Stored||parcel.Portions!=1)
-            {CancelFamilyCare(adult);continue;}
+            {CancelFamilyCare(adult,reason:"原来搬运的一份食水已被拿走或改变，这次递送已停止。");continue;}
             parcel.RegionId=adult.RegionId;parcel.X=adult.X+Math.Sin(adult.Interaction.Facing)*.65;
             parcel.Z=adult.Z+Math.Cos(adult.Interaction.Facing)*.65;parcel.Height=.45;
         }
@@ -98,38 +191,55 @@ public sealed partial class WorldSimulation
     {
         var f=adult.Family;
         if(!CaregiverReady(adult))
-        {if(f.CareTargetId!=null||f.CareParcelId!=null)CancelFamilyCare(adult);return false;}
-        var child=State.Creatures.Find(c=>c.Id==f.CareTargetId&&CareTargetAvailable(adult,c));
+        {
+            var previous=State.Creatures.Find(c=>c.Id==f.CareTargetId);
+            if(f.CareTargetId!=null||f.CareParcelId!=null)CancelFamilyCare(adult,reason:previous==null?
+                "照护对象已不在这里，这次递送已停止。":FamilyCareReasonCore(adult,previous)??"照护者已没有余力，这次递送先停止。");
+            return false;
+        }
+        var child=State.Creatures.Find(c=>c.Id==f.CareTargetId&&CanContinueFamilyCare(adult,c));
         if(child==null)
         {
             DropCareParcel(adult);f.CareTargetId=null;
             if(State.WorldSeconds<f.NextCareAt)return false;
-            child=State.Creatures.Where(c=>CareTargetAvailable(adult,c)&&
-                (c.Family.CaregiverIds.Contains(adult.Id)||IsCareParent(adult,c)||adult.Aggression<=.25&&adult.Patience>=.65&&
+            child=State.Creatures.Where(c=>CanContinueFamilyCare(adult,c)&&
+                (!c.IsYoung||c.Family.CaregiverIds.Contains(adult.Id)||IsCareParent(adult,c)||adult.Aggression<=.25&&adult.Patience>=.65&&
                     f.Peers.TryGetValue(c.Id,out var known)&&known.Affection>=20&&known.Fear<25&&known.Resentment<25)&&
                 Distance(adult.X,adult.Z,c.X,c.Z)<5&&FamilyVisible(adult,c,5)&&
-                (c.Fullness<55||c.Interaction.Hydration<55||c.Family.Warmth<60))
-                .OrderBy(c=>Math.Min(c.Fullness,Math.Min(c.Interaction.Hydration,c.Family.Warmth)))
+                (c.Fullness<55||c.Interaction.Hydration<55||c.IsYoung&&c.Family.Warmth<60))
+                .OrderBy(c=>Math.Min(c.Fullness,Math.Min(c.Interaction.Hydration,c.IsYoung?c.Family.Warmth:100)))
                 .ThenBy(c=>c.Id,StringComparer.Ordinal).FirstOrDefault();
             if(child==null)return false;
             f.CareTargetId=child.Id;f.CareBestDistance=100;f.CareApproachSeconds=0;
+            f.LastEvent=$"正在留意{child.Name}的食水与照护需要。";
+        }
+        // A stationary caregiver can share warmth at real contact only. It must
+        // not reserve even a nearby portion and later teleport it to a child.
+        if(!CanSelfMove(adult))
+        {
+            if(f.CareParcelId!=null)DropCareParcel(adult);
+            if(!child.IsYoung||!FamilyInContact(adult,child))
+            {CancelFamilyCare(adult,reason:"身体走不开，无法赶到对象身旁照护。");return false;}
+            return StayBesideChild(adult,child,dt,stationary:true);
         }
         if(f.CareParcelId is { } parcelId&&State.RoomObjects.Find(o=>o.Id==parcelId&&o.CarrierId==adult.Id) is { } parcel)
         {
             double distance=Distance(adult.X,adult.Z,child.X,child.Z);
             if(!FamilyInContact(adult,child))
-            {RoomMove(adult,child.X,child.Z,dt);adult.Activity="把食水送到宝宝旁边";return CareProgress(adult,distance,dt);}
+            {RoomMove(adult,child.X,child.Z,dt);adult.Activity=f.LastEvent=$"正在把一份食水送到{child.Name}身旁。";return CareProgress(adult,distance,dt);}
             double dx=adult.X-child.X,dz=adult.Z-child.Z,d=Math.Max(.01,distance);
             var offered=new RoomObject{Id="care-placement-probe",Kind=parcel.Kind,RegionId=child.RegionId,
                 X=child.X+dx/d*NaturalResources.Reach(child)*.9,Z=child.Z+dz/d*NaturalResources.Reach(child)*.9};
             offered.Height=RoomSupplySupport.Height(State,offered.RegionId,offered.X,offered.Z,offered.Kind);
             if(!HasGroundSightLine(adult,offered.X,offered.Z)||!CanReachRoomFood(child,offered))
-            {CancelFamilyCare(adult);adult.Activity="这里不方便接食水，先放下再找办法";return false;}
+            {CancelFamilyCare(adult,reason:"这里不方便接食水，原来的一份已放下，需要换个安全落点。");return false;}
             parcel.CarrierId=null;parcel.Height=offered.Height;parcel.X=offered.X;parcel.Z=offered.Z;
             f.CareParcelId=null;f.NextCareAt=State.WorldSeconds+8;f.CareTargetId=null;
             adult.Energy=Math.Max(0,adult.Energy-.5);RegisterFamilyCare(adult,child,5);
-            adult.Activity="把一份食水放到幼体嘴边";
-            React(adult,Expression.Content,"饭饭在这里，慢慢吃。","送来的份量已经放下，幼体需要自己接这一口。",4);
+            adult.Activity=f.LastEvent=$"已把一份食水放到{child.Name}嘴边，等待它实际取用。";
+            child.Family.LastEvent=$"{adult.Name}送来的一份食水已经放在可达处，还需要自己接这一口。";
+            React(adult,Expression.Content,NaturalResources.IsWater(parcel.Kind)?"水水在这里，慢慢喝。":"饭饭在这里，慢慢吃。",
+                "送来的份量已经放下，对方需要自己接这一口。",4);
             return true;
         }
         bool canTake=child.Interaction.EatingRemaining<=0&&!child.Interaction.NaturalIntakePending;
@@ -148,23 +258,35 @@ public sealed partial class WorldSimulation
                 {
                     var target=(X:source.X,Z:source.Z);
                     if(distance<=NaturalResources.Reach(adult)&&TryResourceStandingPoint(adult,source,out var standing))target=standing;
-                    RoomMove(adult,target.X,target.Z,dt);adult.Activity=water?"寻找能送给宝宝的水":"寻找能送给宝宝的食物";
+                    RoomMove(adult,target.X,target.Z,dt);adult.Activity=f.LastEvent=water?$"正在寻找能送给{child.Name}的水。":$"正在寻找能送给{child.Name}的食物。";
                     return CareProgress(adult,Distance(adult.X,adult.Z,target.X,target.Z),dt);
                 }
                 string id=NewFamilyId("supply");source.Portions--;
                 var portion=new RoomObject{Id=id,Kind=source.Kind,RegionId=adult.RegionId,OwnerId=adult.Id,CarrierId=adult.Id,
                     X=adult.X,Z=adult.Z,Height=.45,Portions=1,Contamination=source.Contamination};
                 State.RoomObjects.Add(portion);f.CareParcelId=id;f.CareBestDistance=100;f.CareApproachSeconds=0;
-                adult.Activity="取好一份，准备送给幼体";return true;
+                adult.Activity=f.LastEvent=$"已取好一份，准备送给{child.Name}。";return true;
             }
+            if(!child.IsYoung){CancelFamilyCare(adult,reason:"附近没有可取用的合适食水，这次递送先停下；准备物资后可再安排。");return false;}
+            f.LastEvent="附近没有可取用的合适食水，先去幼体旁陪护，不能凭空补充食水。";
         }
+        if(!child.IsYoung)
+        {CancelFamilyCare(adult,reason:canTake?"对象暂时不需要继续送食水。":"对象还在咽下当前一口，暂缓下一次递送。");return false;}
         double gap=Distance(adult.X,adult.Z,child.X,child.Z);
         if(!FamilyInContact(adult,child)){RoomMove(adult,child.X,child.Z,dt);adult.Activity="靠近需要陪伴的幼体";return CareProgress(adult,gap,dt);}
+        return StayBesideChild(adult,child,dt,stationary:false);
+    }
+
+    private bool StayBesideChild(Creature adult,Creature child,double dt,bool stationary)
+    {
+        var f=adult.Family;
         RegisterFamilyCare(adult,child,dt);
         child.Family.Warmth=Clamp100(child.Family.Warmth+dt*.16);
-        adult.Energy=Math.Max(0,adult.Energy-dt*.01);adult.Activity="留在幼体旁边照看";
+        adult.Energy=Math.Max(0,adult.Energy-dt*.01);
+        adult.Activity=f.LastEvent=stationary?"留在已贴近的幼体旁保暖；身体走不开，无法搬运食水。":"留在幼体旁边照看。";
         f.CareApproachSeconds+=dt;
-        if(f.CareApproachSeconds>12){f.CareTargetId=null;f.NextCareAt=State.WorldSeconds+12;}
+        if(f.CareApproachSeconds>12)
+        {f.CareTargetId=null;f.NextCareAt=State.WorldSeconds+12;f.LastEvent="这一段近旁陪护已完成，先歇一会儿再留意需要。";}
         return true;
     }
 
@@ -174,8 +296,7 @@ public sealed partial class WorldSimulation
         if(distance<f.CareBestDistance-.03){f.CareBestDistance=distance;f.CareApproachSeconds=0;}
         else f.CareApproachSeconds+=dt;
         if(f.CareApproachSeconds<10)return true;
-        DropCareParcel(adult);f.CareTargetId=null;f.NextCareAt=State.WorldSeconds+20;
-        adult.Activity="暂时过不去，停下来寻求帮助";return false;
+        CancelFamilyCare(adult,20,"暂时过不去，递送已停下；如有取出的份额，已经留在身旁。");return false;
     }
 
     private void RegisterFamilyCare(Creature adult,Creature child,double seconds)
@@ -185,7 +306,7 @@ public sealed partial class WorldSimulation
         a.CareSeconds=Math.Min(1000000,a.CareSeconds+seconds);b.CareSeconds=Math.Min(1000000,b.CareSeconds+seconds);
         a.Familiarity=Clamp100(a.Familiarity+seconds*.03);b.Familiarity=Clamp100(b.Familiarity+seconds*.03);
         a.Affection=Clamp100(a.Affection+seconds*.025);b.Affection=Clamp100(b.Affection+seconds*.035);
-        if(a.CareSeconds>=60&&!child.Family.CaregiverIds.Contains(adult.Id))
+        if(child.IsYoung&&a.CareSeconds>=60&&!child.Family.CaregiverIds.Contains(adult.Id))
         {child.Family.CaregiverIds.Add(adult.Id);child.Family.LastEvent=IsCareParent(adult,child)?
             $"与{adult.Name}逐渐建立了稳定照护关系。":$"经过持续照顾，把{adult.Name}当作了养亲；血缘记录仍然保留。";
             RecordInteraction(child,"caregiver-"+adult.Id,child.Family.LastEvent,2);}

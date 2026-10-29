@@ -29,7 +29,8 @@ WorldSimulation Reload(WorldSimulation sim)
 (WorldSimulation Sim,Creature Adult,Creature Child,RoomObject Source) CareFixture(bool water)
 {
     var sim=Fixture();var adult=sim.State.Creatures[0];var child=sim.State.Creatures[2];
-    child.IsYoung=true;child.ParentId=adult.Id;child.Family.MotherId=adult.Id;child.Family.CaregiverIds.Add(adult.Id);
+    child.IsYoung=true;child.Body.AgeSeconds=child.InnerAgeSeconds=0;
+    child.ParentId=adult.Id;child.Family.MotherId=adult.Id;child.Family.CaregiverIds.Add(adult.Id);
     child.Interaction.FootIntegrity=20; // A dependent child cannot walk over and fetch its own supply.
     child.Fullness=water?100:20;child.Interaction.Hydration=water?20:100;
     var source=new RoomObject{Id=water?"care-source-water":"care-source-food",Kind=water?RoomObjectKind.Water:RoomObjectKind.Meal,
