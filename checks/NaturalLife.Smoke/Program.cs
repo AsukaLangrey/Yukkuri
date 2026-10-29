@@ -457,12 +457,55 @@ Check("old save without natural fields gains empty memory and healthy defaults",
     var s=Fresh();var json=JsonNode.Parse(JsonSerializer.Serialize(s.State,SaveStore.JsonOptions))!;
     var life=json["Creatures"]![0]!["Interaction"]!.AsObject();life.Remove("Resources");life.Remove("Digestion");
     life.Remove("GroundIntakeKind");life.Remove("GroundIntakeDistance");life.Remove("GroundIntakeSourceHeight");
-    life.Remove("GroundIntakeSourceId");life.Remove("NaturalBitePause");
+    life.Remove("GroundIntakeSourceId");life.Remove("NaturalBitePause");life.Remove("NaturalIntakePending");
     var state=JsonSerializer.Deserialize<WorldState>(json.ToJsonString(),SaveStore.JsonOptions)!;SaveStore.Validate(state);
     Require(state.Creatures[0].Interaction.Resources.Count==0&&state.Creatures[0].Interaction.Digestion.Severity==0,"old defaults unsafe");
     Require(state.Creatures[0].Interaction.GroundIntakeKind==null&&state.Creatures[0].Interaction.GroundIntakeDistance==.792&&
         state.Creatures[0].Interaction.GroundIntakeSourceHeight==0&&state.Creatures[0].Interaction.GroundIntakeSourceId==null&&
-        state.Creatures[0].Interaction.NaturalBitePause==0,"old mouthful geometry defaults unsafe");
+        state.Creatures[0].Interaction.NaturalBitePause==0&&!state.Creatures[0].Interaction.NaturalIntakePending,"old mouthful geometry defaults unsafe");
+});
+Check("missing pending field resumes an already accepted mouthful without replaying its portion",()=>
+{
+    // Synthetic legacy shape, not an authorized historical-save fixture. Only
+    // remove the flag after acceptance; a reserved modern bite is not old data.
+    foreach(var kind in new[]{RoomObjectKind.Meal,RoomObjectKind.Water})
+    foreach(bool omitGeometry in new[]{false,true})
+    foreach(bool close in new[]{false,true})
+    {
+        var original=Fresh();var oil=original.Selected!;
+        oil.Fullness=kind==RoomObjectKind.Meal?65:90;
+        oil.Interaction.Hydration=kind==RoomObjectKind.Water?60:90;
+        var source=Source(original,kind,.5,portions:1);
+        Tick(original,.75);
+        Require(!oil.Interaction.NaturalIntakePending&&oil.Interaction.EatingRemaining>0&&
+            oil.Interaction.Digestion.Exposures==1&&source.Portions==0,"fixture did not accept exactly one unfinished mouthful");
+        double fullness=oil.Fullness,hydration=oil.Interaction.Hydration;
+        double remaining=oil.Interaction.EatingRemaining;
+        var json=JsonNode.Parse(JsonSerializer.Serialize(original.State,SaveStore.JsonOptions))!;
+        var life=json["Creatures"]![0]!["Interaction"]!.AsObject();
+        life.Remove("NaturalIntakePending");
+        if(omitGeometry)
+            foreach(string field in new[]{"GroundIntakeKind","GroundIntakeDistance","GroundIntakeSourceHeight","GroundIntakeSourceId","NaturalBitePause"})life.Remove(field);
+        var state=JsonSerializer.Deserialize<WorldState>(json.ToJsonString(),SaveStore.JsonOptions)!;
+        SaveStore.Validate(state);var loaded=new WorldSimulation(state);var resumed=loaded.Selected!;
+        loaded.State.Mode=close?PlayMode.CloseUp:PlayMode.Management;
+        Require(!resumed.Interaction.NaturalIntakePending&&resumed.Interaction.EatingRemaining==remaining&&
+            resumed.Fullness==fullness&&resumed.Interaction.Hydration==hydration&&resumed.Interaction.Digestion.Exposures==1,
+            "loading changed accepted intake or turned it back into a reservation");
+        for(int frame=0;frame<80;frame++)
+        {
+            loaded.AdvanceInteractionPresentation(.05);loaded.Advance(.05);
+            Require(resumed.Fullness<=fullness&&resumed.Interaction.Hydration<=hydration&&
+                resumed.Interaction.Digestion.Exposures==1&&
+                loaded.State.RoomObjects.Where(o=>NaturalResources.IsResource(o.Kind)).Sum(o=>o.Portions)==0,
+                "continuation granted nutrition, repeated exposure, or restored the swallowed portion");
+        }
+        Require(resumed.Interaction.EatingRemaining==0&&!resumed.Interaction.NaturalIntakePending,
+            "accepted legacy mouthful did not finish");
+        if(close)Require(resumed.Fullness==fullness&&resumed.Interaction.Hydration==hydration,
+            "close-up continuation advanced passive needs");
+        SaveStore.Validate(loaded.State);
+    }
 });
 Check("save rejects invalid natural mouthful geometry",()=>
 {

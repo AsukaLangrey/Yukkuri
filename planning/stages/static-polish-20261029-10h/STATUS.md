@@ -64,3 +64,5 @@ GitHub 迁移对话 `01a18539-9975-74d2-bd88-c913357dc3d0` 已建立每小时读
 切区审查已交回 `review-transitions.md`。默认小院近看入口先取消手势和归还食水，托举按设计保持；公共 Travel 的残留需要直接调用 API 或未来接入才能触发。本轮不改这些入口，不假定跨区托举规则。
 
 主对话静态阅读发现另一个实际手喂边界：FeedMeal/FeedSweet/Drink 在 `g.Applied` 后只返回“已经咽好”，但仍由 `InteractionGestureOwnsPose` 占用自主动作；因此持续按住会阻挡咽完后的生活行为。原连续性检查只推进表现时间、验证不重复扣份量，没有推进世界验证自主恢复。已派 input 对话限定修补，并要求保留一手势一口、已吃不退、持物显式归还和后续自主动作不被旧手势夺回。未运行复现，不把该静态推导写成实机观察。
+
+第二轮补充：Care 完成和 RepairAccessory 完整修补后同样继续占用自主动作，已交同一实现任务处理；修补的 Applied 只代表有过进度，完成须看完整性/RepairFinished，不能提前释放。主对话另补 NaturalLife.Smoke 的旧式已入口状态缺 pending 字段续接检查（8 个组合），没有运行；独立审查已写 `review-completion.md`，未发现该合成案例需先修的构造/断言问题，动作实现仍待最终复核。新增文件归属：主对话负责上述检查和 integration.md，review 只写 review-completion.md。当前未提交的第二批不能归入首轮云报告的通过范围。
