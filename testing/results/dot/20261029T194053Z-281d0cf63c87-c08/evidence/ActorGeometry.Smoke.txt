@@ -1,0 +1,118 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/ActorGeometry.Smoke.json
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS old flat eye cannot preserve face clearance across its whole shape
+PASS new eye surface maintains clearance through blinks
+PASS mirrored eyes have matched depth
+PASS old underside spot intersects skin instead of remaining outside
+PASS underside markings follow the same continuous skin with positive clearance
+PASS bow inset trim follows the actual folded cloth without sinking into it
+PASS hat crown closes to a single point rather than an open ring
+PASS hat brim closes its seam and keeps the rolled edge inside its thickness
+PASS press and squeeze deform opposite axes without inversion at any force
+PASS intake stages distinguish offer chewing sipping swallowing and finished
+PASS repair progressively closes tears and lays stitches instead of showing every stitch at once
+PASS every cleanable surface has marks whose entire footprint matches the real anatomical hit region
+PASS localized water and dirt stay visible until that region is actually dried or cleaned
+PASS landing absorbs impact and settles without inversion or runaway motion
+PASS repeated impacts replay their response while speech during a held motion does not restart its cycle
+PASS fringe tips close without burying the visible end in the skin
+PASS close-up orbit reaches front side and back while staying above the floor at every supported height
+PASS touch motion measures the contacted surface and cannot be supplied by idle animation or a gap between regions
+PASS reprojecting a moving pointer separates rubbing from the body's own travel
+PASS a camera looking above the horizon cannot place objects behind its ray
+PASS hanging support follows the outer skin and hair rather than ending behind an unsupported body
+PASS the former stretched hat could enter the former box roof
+PASS hat shape remains rigid and fits the box through pressure, damaged tilt and small reactions
+PASS carry support tracks the deformed and turned underside instead of using the idle body's height
+PASS left and right visual patches use the corresponding saved surface state
+PASS towel thickness closes continuously and the drinking water stays inside the open cup
+Supine hat maximum sampled horizontal radius: 1.1397367
+PASS a supine hat extends beyond the former standing-only footprint
+PASS former absolute carry projection shifts the oil when only height changes
+Placement hat envelopes: standing 0.71726876, turning 1.2919935
+PASS standing and turned placement envelopes contain the hat through deformation and its turning path
+PASS relative support drag stays still under reframing and remains bounded at shallow and upward angles
+PASS support drag matches orthographic ground projection at ordinary downward viewing angles
+PASS eye color layers and highlights remain inside the actual face-conforming lid at every supported expression
+PASS relaxed joy and sleep eyelids have distinct readable curves without moving the eye corners
+PASS the lined cradle closes underneath and stays outside the skin and hair envelope
+PASS wrapped support stays above the floor while rocking at every body size
+PASS the tufted cushion is closed and its support height matches its authored top surface
+PASS cushion support lifts the posed body clear instead of intersecting it during rest or a turn
+PASS cushion support does not allocate managed objects during repeated body and cradle calculations
+PASS the soft wrapping also clears the cushion instead of hiding its lower cloth inside it
+PASS a turned hat and its hair cap clear the cushion as well as the skin
+PASS a fingertip contact leaves the palm above the surface instead of burying its larger heel
+Bow knot: former hidden front samples 1992, current minimum hair-normalized radius squared 1.1256382
+PASS the central ribbon knot is readable above the hair instead of burying its front surface
+PASS dressing tape and gauze follow the selected skin or hair with a closed taper at each edge
+Dressing samples that skin-only support missed: 7217
+PASS visible care dressings clear the cushion under a resting or rolled body
+PASS tap response moves away from the touched surface and mirrors with the contact direction
+PASS tear tracks conform to the cheeks and remain below the eyes
+PASS tear traces build and fade continuously and freeze when presentation is paused
+PASS soft ball panels stay inside their contact radius with outward front faces
+PASS ball rotation follows displacement and reverses without spinning during a hold
+PASS ball picking follows the visible sphere instead of a fixed screen-distance shortcut
+PASS cookie edges close and the hand portion rests above the spoon's inner surface
+PASS offered spoon and cookie meet the mouth without burying their rims in the face
+PASS care cloth is closed and its underside stays above the contact plane
+PASS repair needle reaches the exact tip while its shaft eye and thread clear the cloth plane
+PASS pebble and its mineral vein stay above ground inside the prop pick bounds
+PASS beveled fixture panels preserve their authored bounds and outward unit normals
+PASS rounded fixture faces share closed edges and use Godot clockwise outward winding
+PASS box panels meet without overlapping coplanar strips at posts back or floor
+PASS hop has a visible ballistic clearance and plants its underside through squash
+PASS hop finishes on stopping, never bobs at rest, and supports quarter-second simulation updates
+PASS hop freezes on pause and resets cleanly on carry restraint or teleport
+PASS paused camera changes preserve an airborne hop but not a real support loss
+PASS hop faces every actual flight direction and turns only while planted
+PASS midair target changes wait until landing and paused turns keep their heading
+PASS rear hair covers the skin continuously and closes its lower hem inside the body
+PASS hat bow front backing tails and knot clear the crown rather than intersecting it
+PASS visible hat brim clears the crown hair during hops pressure and damaged tilt
+PASS new rear hair remains clear of the cushion when tilted or rolled
+PASS head ribbon wings and tails clear the hair without collapsing their front and backing
+PASS crown and rear form a single round profile without a pinched horizontal join
+PASS ground eating and drinking lower the mouth toward the actual source heading
+PASS sickness and resting poses stay bounded and have continuous gentle breathing
+PASS direct contact deformation follows force without turning a soft touch into collapse
+PASS accessory attention cannot turn the mouth away during intake or direct manipulation
+PASS ground preparation opens a steady mouth before the portion enters and then starts chewing
+PASS every live intake mouth frame follows the continuous face surface
+PASS supported mouth reaches leaves river meals sweets and cup rims across body sizes
+PASS intake bends into contact and returns smoothly using its saved mouthful progress
+PASS rotated hair support uses actual vertices instead of empty bounding box corners
+PASS a natural appeal turns toward the perceived hand and stays gently raised
+Hop-to-intake transitions: 1296, maximum contact gap 0.000672, former instantaneous offset removal up to 0.455707
+PASS airborne and planted hop phases hand over to intake without discarding their visible pose
+PASS live pose smoothing reaches intake contact consistently across frame schedules
+Maximum supported intake gap 0.000596
+PASS supported intake reaches raised supplies on box floors cushions and soft wrapping
+PASS simulation source contacts match the actual leaves food and cup geometry
+Wrapped reach 0.73/Leaves: allowed=True, gap=0.000196, lowerBound=0.052080
+Wrapped reach 0.73/RiverWater: allowed=False, gap=0.030614, lowerBound=0.052391
+Wrapped reach 0.73/Meal: allowed=True, gap=0.000284, lowerBound=0.052080
+Wrapped reach 0.73/Sweet: allowed=True, gap=0.000244, lowerBound=0.052080
+Wrapped reach 0.73/Water: allowed=True, gap=0.000211, lowerBound=0.052391
+Wrapped reach 1/Leaves: allowed=True, gap=0.000286, lowerBound=0.071342
+Wrapped reach 1/RiverWater: allowed=False, gap=0.049704, lowerBound=0.071769
+Wrapped reach 1/Meal: allowed=True, gap=0.000290, lowerBound=0.071342
+Wrapped reach 1/Sweet: allowed=True, gap=0.000264, lowerBound=0.071342
+Wrapped reach 1/Water: allowed=True, gap=0.000292, lowerBound=0.071769
+Wrapped reach 1.03/Leaves: allowed=True, gap=0.001393, lowerBound=0.073483
+Wrapped reach 1.03/RiverWater: allowed=False, gap=0.051825, lowerBound=0.073922
+Wrapped reach 1.03/Meal: allowed=True, gap=0.000290, lowerBound=0.073483
+Wrapped reach 1.03/Sweet: allowed=True, gap=0.000289, lowerBound=0.073483
+Wrapped reach 1.03/Water: allowed=True, gap=0.000275, lowerBound=0.073922
+PASS permitted wrapped intake reaches its source while low river water remains physically out of reach
+PASS tree picking blocks actual trunks and crowns but leaves their empty corners open
+PASS tree picking preserves props in front and occludes props behind the visible trunk
+Tree picking CPU: 4096 rays, 0.05351 ms/ray, 0 bytes after warmup; checksum 1328.259. Not native frame timing.
+PASS cached tree picking performs repeated rays without per-query allocations
+PASS woodland water banks and flow traces face upward while tree trunks face outward
+PASS river flow ribbons have a consistent cross-stream width instead of folding along themselves
+PASS tree ball collisions cover the actual leaning trunk at every sphere cross section
+PASS a floating ball stays supported by the curved bank and its picking sphere follows its visible height
+Maximum original/optimized cushion support difference 2.086E-007
+PASS optimized cushion support matches the full original surface scan across varied body poses

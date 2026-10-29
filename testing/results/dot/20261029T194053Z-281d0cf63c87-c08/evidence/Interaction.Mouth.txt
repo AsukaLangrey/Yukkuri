@@ -1,0 +1,19 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Mouth/Interaction.Mouth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 健康与轻伤保持原速，严重口伤有有限功能而非全部禁食
+PASS 暂时与永久伤取较大值，恢复总血量不能覆盖永久口部限制
+PASS 严重受限只影响表达清晰度，不凭空生成空台词或抹知识
+PASS 实际主食甜食饮水均延长接食等待且每次只消费一份
+PASS 手喂已入口后慢速吞咽不可覆盖，也不因收手退款
+PASS 口伤等待接食时收手不消费，重新递来不能借旧停留时间
+PASS 自主取食在真实口部接触前保持预约且取消只返还一次
+PASS 慢速自主入口读档续接只消费一次，几何进度不被加长成负年龄
+PASS 临时口伤通过真实护理和普通时间改善，近看不会修好
+PASS 慢速嘴内动作仍受暂停和冷藏入口约束
+PASS 慢速自主预约在真实死亡时清理且保留未吃份量
+PASS 单独底部永久失能不干扰口部速度和嘴边自主取食
+PASS 两种模式玩家与员工旧Feed都拒绝忙嘴连喂且不额外消费
+PASS 旧模式普通时间只推进一次嘴内动作，健康保留标准时长
+PASS 旧模式近看能完成真实嘴内动作且不推进世界或伤口恢复
+PASS 入侵与守护真实喂食暂停主动行动但不冻结事件，咽完后恢复
+Mouth: 0 failure(s)

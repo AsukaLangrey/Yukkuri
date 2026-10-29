@@ -1,0 +1,16 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Risk/Family.Risk.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 材料有实际父体和身体来源，一次只收一份且会过期
+PASS 采集尊重父体成熟身体意愿，强制也不绕母体成熟与角色
+PASS 材料不能冒用另一具身体或不存在的来源
+PASS 普通安排仍拒绝，强制独立绕过意愿但非立即孕育且只扣一次
+PASS 恢复不足可以强行开始但保留欠下的负担，停止不退材料
+PASS 胎生恢复不足强改茎生，停止与存读都保留原恢复负担
+PASS 同档干预继续抽签一致且方式固定，既有孕育不能用停止按钮取消
+PASS 危险胎生可主动自保或坚持保胎，决定分别记录且存读不重抽
+PASS 生理性吸收与主动自保分开，不凭空记录主动选择
+PASS 非强制茎生后代也可能出现危机，但不是每次压力都必然伤害
+PASS 吃饱健康但存在家庭怨恨，危险预警不会下一帧误消失
+PASS 危机有实际预警与公开干预，制止不清空长期后果
+PASS 危机必须真正靠近才能伤害，抱走幼体会中断
+PASS 实际近身伤害走共同身体流程，致死开关分别生效

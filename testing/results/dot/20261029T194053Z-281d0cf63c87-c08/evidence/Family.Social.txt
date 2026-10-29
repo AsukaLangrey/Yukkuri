@@ -1,0 +1,24 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Social/Family.Social.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 邀请不凭空增加感情，重复点击不刷人油信任
+PASS 单方喜欢不能形成伴侣，身体与需求可以拒绝
+PASS 可见但远距离不会隔空形成伴侣，邀请会实际靠近
+PASS 双方关系成立且不凭空生成宝宝
+PASS 关闭繁育仍可结伴，但不能开始孕育
+PASS 通常守承诺，少数违背承诺但远处原伴侣不会全图知情
+PASS 亲眼知情可难过但不必动手，转述不能冒充目击
+PASS 多伴侣必须明确双方接受，不替其他伴侣同意
+PASS 背叛冲突有伴侣、子油和第三者分支，也保留不动手分支
+PASS 撤回只约束未来，分手保留亲缘并有再次相处的间隔
+PASS 跨捕食类别关系更难建立，但双方成熟仍有可能
+PASS 暂停与近看不推进关系，暂停不接受关系变更
+PASS 吃喝学习休息占用期间，不靠相邻位置偷偷涨感情
+PASS 受伤后需要亲见持续安全才能慢慢修复，远处等待不抹记忆
+PASS 冷藏、抱起与失能不能继续靠近攻击
+PASS 家庭暴力有可干预预警，口头制止不要求隐藏玩家移动
+PASS 护伴或照护者必须实际在近处才能隔开冲突
+PASS 冲突伤害进入共同身体流程，致死设置分别生效
+PASS 同档继续推进，警告与伤害不会重抽或重复
+PASS 旧档缺新增字段有默认，显式空和未知冲突依据拒绝
+PASS 历史关系淘汰保留正在冲突的依据，编号不覆盖旧事件
+PASS 已有伴侣仍不能在休息或失能时绕过准备条件

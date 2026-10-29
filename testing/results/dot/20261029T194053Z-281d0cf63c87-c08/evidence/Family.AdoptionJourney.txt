@@ -1,0 +1,8 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.AdoptionJourney/Family.AdoptionJourney.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 陌生非亲代从实际相处到照护养亲再到后续教导
+PASS 认识后食物仍须真实搬运和入口消费，点击或关系不生成营养
+PASS 冷淡高攻击或任一方向的恐惧怨恨拒绝初次接纳
+PASS 自己的饥渴疲劳优先，不靠陌生幼体刷出关系
+PASS 已形成养亲后即使性格变冷也保留养育事实和自动相处入口
+PASS 初识过程暂停不增长，存读继续得到同样照护与养亲事实

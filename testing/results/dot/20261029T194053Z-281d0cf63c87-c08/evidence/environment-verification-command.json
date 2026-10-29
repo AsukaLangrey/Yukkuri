@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-29T19:53:00.671637+00:00",
+  "command": "python3 /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/verify-environment.py",
+  "working_directory": "/workspace/scratch/31f78fd1d54c",
+  "exit_code": 0,
+  "note": "Independent identity verification after failed game build; no game/editor/renderer launch. Actual Godot --version and dotnet --info used. Godot version invocation printed repeated Fontconfig error: No writable cache directories to tool stderr; full raw stderr was not separately retained. The version/identity probe nevertheless returned zero and exact package/binary payload verification passed. This is not a successful game startup."
+}

@@ -1,0 +1,19 @@
+{
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "blocks": [
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",
+      "start_line": 1422,
+      "end_line": 1432,
+      "source": "1422: Check(\"an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it\",()=>\n1423: {\n1424:     var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;c.Fullness=90;\n1425:     sim.SetInteractionHand(3,0,true);c.Interaction.FollowPlayer=true;c.Interaction.Hydration=90;\n1426:     var input=new InteractionInput(InteractionAction.Press,BodyPart.Side,Force:.3,Duration:.1);\n1427:     sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);double health=c.Health;\n1428:     sim.ContinueInteractionGesture(input,false);\n1429:     for(int frame=0;frame<15;frame++){sim.SetInteractionHand(3,0,true);Tick(sim,1);}\n1430:     Require(c.X>.1&&c.Health>=health&&InteractionPresentation.Pose(c)!=\"pressure\",$\"empty mouse hold froze movement or continued pressure: X={c.X}, health={c.Health}/{health}, pose={InteractionPresentation.Pose(c)}\");\n1431:     sim.EndInteractionGesture();\n1432: });"
+    },
+    {
+      "check_id": "Family.Protection",
+      "name": "保护者远离时不消除危险，实际走近后才能保护",
+      "start_line": 88,
+      "end_line": 98,
+      "source": "88: Check(\"保护者远离时不消除危险，实际走近后才能保护\",()=>\n89: {\n90:     foreach(bool maternal in new[]{false,true})\n91:     {\n92:         var sim=Fixture(maternal);var protector=sim.State.Creatures[1];\n93:         protector.X=protector.TargetX=-5;protector.Z=protector.TargetZ=-5;Tick(sim,.25);\n94:         Require(HasThreat(sim.State.Creatures[0],maternal),\"远处亲友自动保护\");\n95:         protector.X=protector.TargetX=maternal?.75:.825;protector.Z=protector.TargetZ=maternal?1.4:1.43;\n96:         Tick(sim,.25);Require(!HasThreat(sim.State.Creatures[0],maternal),\"实际在近处仍不保护\");\n97:     }\n98: });"
+    }
+  ]
+}

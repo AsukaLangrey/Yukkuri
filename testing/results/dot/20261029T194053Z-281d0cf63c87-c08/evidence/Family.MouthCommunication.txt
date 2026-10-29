@@ -1,0 +1,11 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.MouthCommunication/Family.MouthCommunication.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 关系转述要求说话者能清楚说话，正常与受伤听者均可听懂
+PASS 离世手动转述只限制说话者，不限制受伤听者的理解
+PASS 自主陪伴中的离世转述使用同一口部条件，安静陪伴仍可发生
+PASS 伤势与持续功能损失都在60边界限制完整讲述
+PASS 教师口部严重受限不能新教导，但保留知识与陪伴
+PASS 正常教师能完整教导，幼体口伤不妨碍听懂并记知识
+PASS 课程中途严重口伤及读档会停止未讲完内容，不重抽也不删已有知识
+PASS 受伤听者的中途课程可读档续接，完成理解不重新抽取
+PASS 暂停与近看不暗中推进或结算口伤课程

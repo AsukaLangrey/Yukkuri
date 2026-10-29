@@ -1,0 +1,19 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Protection/Family.Protection.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 正常地面近处有余力者可以护伴和护幼
+PASS 吃喝、训练、手占用、逃离等状态不能同时保护
+FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String reason) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 6
+   at Program.<>c.<<Main>$>b__0_8() in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 96
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 8
+PASS 悬挂高处目标不能被地面冲突或母体攻击命中
+PASS 同样距离的地面目标仍会受到共用伤害流程处理
+PASS 第三方箱体遮挡死亡，绕开以后才记后来发现
+PASS 第三方箱体遮挡亲近时不能据此获知背叛
+PASS 母体受到攻击正在逃离时先停下伤幼行为
+PASS 近看中目标死亡立即清其他照护、冲突和伤幼引用，不推进时钟
+PASS 安置旧遗体也清残留伤幼引用，不补造远处目击
+PASS 死亡清引用只影响死者，不删除其他仍有效目标
+PASS 冷藏打断双方危险状态，暂停近看不推进预警和出手间隔
+PASS 同档继续的保护和危险结算一致
+PASS 孕育中的母体离世即时停止孕育，现有亲缘与身份仍保留

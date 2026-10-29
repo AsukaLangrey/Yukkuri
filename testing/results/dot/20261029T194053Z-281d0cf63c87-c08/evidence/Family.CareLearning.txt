@@ -1,0 +1,16 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.CareLearning/Family.CareLearning.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 非亲代自主照护逐步形成养亲，血缘与对人信任不被重写
+PASS 只有MotherId或FatherId的亲代也会自主照护
+PASS 邀请本身不形成养亲，重复安排保留正在搬运的唯一份额
+PASS 食水先取出搬运，只有幼体实际入口才增加需求并消费份额
+PASS 目标被抱走、入箱、冷藏、长大或逃离立即解除搬运
+PASS 照护者逃离、休息或急需吃喝时卸下份额并释放自身动作
+PASS 隔着箱体、第三只箱体或悬空不能保暖或刷照护
+PASS 幼体害怕或怨恨照护者时不强行靠近
+PASS 用户拿走运输物后照护者不能夺回或复制
+PASS 没有资源或资源已经收起时不凭空造食水
+PASS 分装保留污染但不读取隐藏污染来修改生活认知
+PASS 看见与搬运不纠正旧认知，实际干净吃喝后才改变
+PASS 冷藏、暂停和近看不凭空增加照护经验
+PASS 搬运中读档继续一致，照护历史与养亲引用独立保存

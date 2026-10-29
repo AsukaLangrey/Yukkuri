@@ -1,0 +1,739 @@
+{
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "source_lines": {
+    "Simulation.Smoke": [
+      {
+        "line": 64,
+        "text": "var validInteraction=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 77,
+        "text": "var pendingWithNull=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 85,
+        "text": "var missingLearning=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 92,
+        "text": "var nullSpeech=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 140,
+        "text": "var inconsistentPhysiology=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 180,
+        "text": "var wasteState=WorldSimulation.CreateInteractionPlaytest().State;"
+      },
+      {
+        "line": 206,
+        "text": "    var pendingState=WorldSimulation.CreateInteractionPlaytest().State;"
+      }
+    ],
+    "Milestone.Smoke": [
+      {
+        "line": 10,
+        "text": "    var s=WorldSimulation.CreateMilestone();s.State.Settings.Invasions=false;"
+      },
+      {
+        "line": 44,
+        "text": "    var careCase=WorldSimulation.CreateMilestone();"
+      },
+      {
+        "line": 128,
+        "text": "WorldSimulation SharingScene(ulong seed,bool trained,bool parentNearby,int sessions=0)"
+      },
+      {
+        "line": 130,
+        "text": "    var w=New();w.State.RandomState=unchecked(seed*0x9E3779B97F4A7C15UL);"
+      },
+      {
+        "line": 140,
+        "text": "for(ulong seed=1;seed<=40;seed++)"
+      },
+      {
+        "line": 142,
+        "text": "    var w=SharingScene(seed,false,true);var child=w.State.Creatures[2];var parent=w.State.Creatures[0];"
+      },
+      {
+        "line": 151,
+        "text": "for(ulong seed=1;seed<=120;seed++)"
+      },
+      {
+        "line": 153,
+        "text": "    if(SharingScene(seed,false,false).State.Incidents.Any(e=>e.Kind==IncidentKind.Theft))baselineThefts++;"
+      },
+      {
+        "line": 154,
+        "text": "    if(SharingScene(seed,false,false,6).State.Incidents.Any(e=>e.Kind==IncidentKind.Theft))practicedThefts++;"
+      },
+      {
+        "line": 156,
+        "text": "Check(practicedThefts<baselineThefts*.75&&practicedThefts>0,\"six real training sessions reduce actual theft across matched seeds without guaranteeing instant perfection\");"
+      },
+      {
+        "line": 215,
+        "text": "var movingSelection=WorldSimulation.CreateMilestone();movingSelection.Travel(\"wild\");"
+      }
+    ],
+    "Interaction.Smoke": [
+      {
+        "line": 25,
+        "text": "WorldSimulation Fresh() => WorldSimulation.CreateInteractionPlaytest();"
+      }
+    ],
+    "Input.Intent": [
+      {
+        "line": 26,
+        "text": "WorldSimulation Fresh(){var s=WorldSimulation.CreateInteractionPlaytest();s.Selected!.Trust=60;return s;}"
+      }
+    ],
+    "NaturalLife.Smoke": [
+      {
+        "line": 19,
+        "text": "WorldSimulation Fresh(ulong seed=20261029)"
+      },
+      {
+        "line": 21,
+        "text": "    var s=WorldSimulation.CreateInteractionPlaytest(seed);var c=s.Selected!;"
+      },
+      {
+        "line": 148,
+        "text": "            var box=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];box.X=1.5;box.Z=0;"
+      },
+      {
+        "line": 287,
+        "text": "    var s=WorldSimulation.CreateInteractionPlaytest();s.State.Creatures.RemoveAt(2);s.State.RoomObjects.Clear();"
+      },
+      {
+        "line": 338,
+        "text": "        loaded.Selected.Fullness==food+7&&loaded.State.RandomState==s.State.RandomState&&"
+      },
+      {
+        "line": 436,
+        "text": "    var s=Fresh();var original=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];original.X=1.5;original.Z=0;original.Interaction.Restraint=RestraintKind.Box;"
+      },
+      {
+        "line": 456,
+        "text": "    for(ulong seed=1;seed<=20;seed++)"
+      },
+      {
+        "line": 458,
+        "text": "        var s=Fresh(seed);var c=s.Selected!;c.Trust=100;c.Fear=0;c.Fullness=40;s.SetInteractionHand(1,2,true);"
+      },
+      {
+        "line": 472,
+        "text": "    for(ulong seed=1;seed<=20;seed++)"
+      },
+      {
+        "line": 474,
+        "text": "        var s=Fresh(seed);var c=s.Selected!;c.Trust=100;c.Fear=0;c.Fullness=8;s.SetInteractionHand(1,2,true);"
+      },
+      {
+        "line": 482,
+        "text": "    int low=0,high=0;var rng=new Random(1009);"
+      },
+      {
+        "line": 485,
+        "text": "        ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+      },
+      {
+        "line": 488,
+        "text": "            var s=Fresh(seed);var c=s.Selected!;c.Trust=trusting?90:5;c.Fullness=40;Source(s,RoomObjectKind.Leaves,1);"
+      },
+      {
+        "line": 505,
+        "text": "    int dirty=0,clean=0;var rng=new Random(779);const int samples=400;"
+      },
+      {
+        "line": 508,
+        "text": "        ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+      },
+      {
+        "line": 511,
+        "text": "            var s=Fresh(seed);s.Selected!.Fullness=30;Source(s,RoomObjectKind.Leaves,.4,contamination:polluted?1:0,portions:1);"
+      },
+      {
+        "line": 535,
+        "text": "    var s=WorldSimulation.CreateInteractionPlaytest();s.State.RoomObjects.Clear();"
+      },
+      {
+        "line": 551,
+        "text": "    Require(JsonSerializer.Serialize(loaded.Selected!.Interaction.Digestion)==before&&loaded.State.RandomState==s.State.RandomState,\"saved exposure rerolled\");"
+      },
+      {
+        "line": 556,
+        "text": "    Require(Math.Abs(s.Selected!.Health-loaded.Selected!.Health)<.00001&&s.State.RandomState==loaded.State.RandomState,\"reloaded future diverged\");"
+      },
+      {
+        "line": 1021,
+        "text": "    int single=0,repeated=0,samples=400;var random=new Random(292107);"
+      },
+      {
+        "line": 1024,
+        "text": "        ulong seed=(ulong)random.NextInt64(1,long.MaxValue);"
+      },
+      {
+        "line": 1027,
+        "text": "            var s=Fresh(seed);s.Selected!.Fullness=5;Source(s,RoomObjectKind.Leaves,.4,contamination:1,portions:portions);Tick(s,8);"
+      },
+      {
+        "line": 1111,
+        "text": "        var box=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];box.X=1.5;box.Z=0;box.Interaction.Restraint=RestraintKind.Box;s.State.Creatures.Add(box);"
+      },
+      {
+        "line": 1148,
+        "text": "    const int samples=80;int lowWild=0,highWild=0,absentWild=0;var rng=new Random(291044);"
+      },
+      {
+        "line": 1151,
+        "text": "        ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+      },
+      {
+        "line": 1154,
+        "text": "            var s=Fresh(seed);var c=s.Selected!;c.Trust=group==\"high\"?90:5;c.Fullness=40;"
+      }
+    ],
+    "Interaction.Continuity": [
+      {
+        "line": 12,
+        "text": "WorldSimulation Fresh()=>WorldSimulation.CreateInteractionPlaytest();"
+      },
+      {
+        "line": 1499,
+        "text": "Check(\"fixed-seed mixed gestures keep saves valid and leave no ghost hands across cancellation and pause\",()=>"
+      },
+      {
+        "line": 1502,
+        "text": "    for(int seed=1;seed<=12;seed++)"
+      },
+      {
+        "line": 1504,
+        "text": "        var random=new Random(71000+seed);var sim=Fresh();"
+      },
+      {
+        "line": 1532,
+        "text": "            catch(Exception e){throw new Exception($\"seed {seed}, step {step}, action {action}: {e.Message}\");}"
+      },
+      {
+        "line": 1536,
+        "text": "    Console.WriteLine($\"Mixed audit: {attempted} attempts, {accepted} accepted; 12 fixed seeds. This is not native play or full action coverage.\");"
+      }
+    ],
+    "Interaction.AutonomyPriority": [
+      {
+        "line": 19,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();sim.State.RoomObjects.Clear();var c=sim.Selected!;"
+      },
+      {
+        "line": 107,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      }
+    ],
+    "Interaction.CompletedNeeds": [
+      {
+        "line": 7,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(20261028);var c=sim.Selected!;"
+      }
+    ],
+    "ActorGeometry.Smoke": [
+      {
+        "line": 9,
+        "text": "        var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];c.X=c.Z=0;c.Body.SpeciesId=species;"
+      },
+      {
+        "line": 1276,
+        "text": "        var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];"
+      },
+      {
+        "line": 1325,
+        "text": "        var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];"
+      },
+      {
+        "line": 1403,
+        "text": "    var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;float radius=InteractionBallSurface.Radius;"
+      },
+      {
+        "line": 1421,
+        "text": "    var random=new Random(20261029);float maximum=0;"
+      }
+    ],
+    "NaturalLife.Soak": [
+      {
+        "line": 8,
+        "text": "var seeds=args.Length>2?new[]{ulong.Parse(args[2])}:new ulong[]{72341,592813,1597331,20261029};"
+      },
+      {
+        "line": 12,
+        "text": "foreach(ulong seed in seeds)"
+      },
+      {
+        "line": 14,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(seed);"
+      },
+      {
+        "line": 91,
+        "text": "    scenarios.Add(new{scenario,seed,seconds=sim.State.WorldSeconds,passed=errors.Count==0,errors,measures=measures.Values,snapshots});"
+      },
+      {
+        "line": 93,
+        "text": "    Console.WriteLine($\"{scenario}/{seed}: \"+string.Join(\"; \",measures.Values.Select(m=>$\"{m.Name} food={m.FinalFullness:F1} water={m.FinalWater:F1} energy={m.FinalEnergy:F1} restStarts={m.RestStarts} maxBedSearch={m.LongestBedSearch:F0}s sick={m.SickSeconds:F0}s\")));"
+      }
+    ],
+    "Interaction.Mouth": [
+      {
+        "line": 11,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 156,
+        "text": "        Require(sim.State.RandomState==copy.State.RandomState,\"同档续接额外结算了污染或其他摄入随机事件\");"
+      },
+      {
+        "line": 206,
+        "text": "        var sim=oldMode?WorldSimulation.CreateMilestone():Create();var c=sim.Selected!;"
+      },
+      {
+        "line": 225,
+        "text": "        var sim=WorldSimulation.CreateMilestone();var c=sim.Selected!;"
+      },
+      {
+        "line": 239,
+        "text": "    var sim=WorldSimulation.CreateMilestone();var c=sim.Selected!;"
+      },
+      {
+        "line": 252,
+        "text": "        var world=WorldSimulation.CreateMilestone();world.State.Settings.Invasions=true;"
+      }
+    ],
+    "Family.MouthCommunication": [
+      {
+        "line": 13,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(20261102);sim.State.RoomObjects.Clear();"
+      }
+    ],
+    "Interaction.MouthPresentation": [
+      {
+        "line": 11,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(301030);"
+      },
+      {
+        "line": 28,
+        "text": "    var sim=WorldSimulation.CreateMilestone(seed:301030);var s=sim.State;"
+      }
+    ],
+    "Family.PregnancyBoundaries": [
+      {
+        "line": 13,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(20261103);sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAt(2);"
+      }
+    ],
+    "Interaction.EmergencyIntervention": [
+      {
+        "line": 8,
+        "text": "WorldSimulation Preparing(double debt=0,ulong seed=20261028,double health=100)"
+      },
+      {
+        "line": 10,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(seed);sim.State.UnlimitedResources=false;"
+      },
+      {
+        "line": 30,
+        "text": "    for(ulong seed=1;seed<=64;seed++)"
+      },
+      {
+        "line": 32,
+        "text": "        var sim=Preparing(seed:seed);sim.Advance(4);"
+      }
+    ],
+    "Interaction.Depth": [
+      {
+        "line": 20,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 29,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 37,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 47,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();"
+      }
+    ],
+    "Interaction.Injury": [
+      {
+        "line": 25,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 39,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 50,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;sim.State.UnlimitedResources=false;"
+      },
+      {
+        "line": 62,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;sim.State.UnlimitedResources=false;"
+      },
+      {
+        "line": 72,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 82,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 93,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var i=c.Interaction;"
+      },
+      {
+        "line": 105,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;sim.State.Settings.LethalInjuries=false;"
+      },
+      {
+        "line": 113,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 119,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();"
+      },
+      {
+        "line": 132,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var p=c.Interaction.Physiology;"
+      },
+      {
+        "line": 143,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var p=c.Interaction.Physiology;"
+      },
+      {
+        "line": 154,
+        "text": "    var sim=WorldSimulation.CreateMilestone();var c=sim.Selected!;"
+      },
+      {
+        "line": 162,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var i=c.Interaction;"
+      },
+      {
+        "line": 171,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      }
+    ],
+    "Family.Social": [
+      {
+        "line": 18,
+        "text": "WorldSimulation Fixture(ulong seed = 912345)"
+      },
+      {
+        "line": 20,
+        "text": "    var sim = WorldSimulation.CreateInteractionPlaytest(seed);"
+      },
+      {
+        "line": 156,
+        "text": "    for (ulong seed = 1; seed <= 1024 && (targets.Count < 3 || !peaceful); seed++)"
+      },
+      {
+        "line": 158,
+        "text": "        var sim = Fixture(unchecked(seed * 11400714819323198485UL)); var original = sim.State.Creatures[0]; var partner = sim.State.Creatures[1]; var rival = sim.State.Creatures[2];"
+      }
+    ],
+    "Family.Reproduction": [
+      {
+        "line": 14,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(72381);"
+      }
+    ],
+    "Family.ColdCare": [
+      {
+        "line": 14,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(138731);sim.State.RoomObjects.Clear();"
+      }
+    ],
+    "Family.Aftermath": [
+      {
+        "line": 20,
+        "text": "    var sim = WorldSimulation.CreateInteractionPlaytest(20261030);"
+      }
+    ],
+    "Family.Risk": [
+      {
+        "line": 11,
+        "text": "WorldSimulation Fixture(ulong seed=1)"
+      },
+      {
+        "line": 13,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(unchecked(seed*11400714819323198485UL));"
+      },
+      {
+        "line": 42,
+        "text": "WorldSimulation PregnancyDanger(ulong seed,bool physiological=false)"
+      },
+      {
+        "line": 44,
+        "text": "    var sim=Fixture(seed);var m=sim.State.Creatures[0];var f=sim.State.Creatures[1];"
+      },
+      {
+        "line": 53,
+        "text": "WorldSimulation MaternalFixture(ulong seed,bool lethal=true)"
+      },
+      {
+        "line": 55,
+        "text": "    var sim=Fixture(seed);var m=sim.State.Creatures[0];var f=sim.State.Creatures[1];"
+      },
+      {
+        "line": 69,
+        "text": "    for(ulong seed=1;seed<=256;seed++)"
+      },
+      {
+        "line": 71,
+        "text": "        var sim=MaternalFixture(seed,lethal);Tick(sim,.25);"
+      },
+      {
+        "line": 155,
+        "text": "    for(ulong seed=1;seed<=256&&(!foundSuccess||!foundFailure);seed++)"
+      },
+      {
+        "line": 157,
+        "text": "        var sim=Fixture(seed);Force(sim,BirthMethod.Live);Tick(sim,1);var copy=Reload(sim);"
+      },
+      {
+        "line": 173,
+        "text": "    for(ulong seed=1;seed<=256&&(!self||!protect);seed++)"
+      },
+      {
+        "line": 175,
+        "text": "        var sim=PregnancyDanger(seed);Tick(sim,.25);var m=sim.State.Creatures[0];var p=m.Family.Pregnancy;"
+      },
+      {
+        "line": 203,
+        "text": "    for(ulong seed=1;seed<=256&&(!threatening||!peaceful);seed++)"
+      },
+      {
+        "line": 205,
+        "text": "        var sim=MaternalFixture(seed);Tick(sim,.25);var m=sim.State.Creatures[0];var child=sim.State.Creatures[2];"
+      },
+      {
+        "line": 218,
+        "text": "    for(ulong seed=1;seed<=256;seed++)"
+      },
+      {
+        "line": 220,
+        "text": "        var sim=MaternalFixture(seed);var m=sim.State.Creatures[0];var child=sim.State.Creatures[2];"
+      }
+    ],
+    "Interaction.InjuryPresentation": [
+      {
+        "line": 62,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var a=sim.State.Creatures[0];var b=sim.State.Creatures[1];"
+      }
+    ],
+    "Family.Compatibility": [
+      {
+        "line": 8,
+        "text": "var successful=new Dictionary<(string Mother,string Father,BirthMethod Method),(WorldSimulation Sim,ulong Seed)>();"
+      },
+      {
+        "line": 17,
+        "text": "WorldSimulation Fixture(string maternal,string paternal,ulong seed=1)"
+      },
+      {
+        "line": 19,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(unchecked(seed*11400714819323198485UL));"
+      },
+      {
+        "line": 80,
+        "text": "        for(ulong seed=1;seed<=(cross?1024UL:1UL);seed++)"
+      },
+      {
+        "line": 82,
+        "text": "            var sim=Fixture(maternal,paternal,seed);bool begun=Attempt(sim,method);"
+      },
+      {
+        "line": 83,
+        "text": "            if(begun&&!successful.ContainsKey(key))successful.Add(key,(sim,seed));"
+      },
+      {
+        "line": 84,
+        "text": "            if(!begun&&!unsuccessful.ContainsKey(key))unsuccessful.Add(key,seed);"
+      },
+      {
+        "line": 89,
+        "text": "        Console.WriteLine($\"  reached seed={successful[key].Seed}\"+(cross?$\", failed seed={unsuccessful[key]}\":\"\"));"
+      },
+      {
+        "line": 101,
+        "text": "            for(ulong seed=1;seed<=samples;seed++)if(Attempt(Fixture(pair.Item1,pair.Item2,seed),method))count++;"
+      },
+      {
+        "line": 171,
+        "text": "        var seeds=new List<ulong>{entry.Value.Seed};"
+      },
+      {
+        "line": 172,
+        "text": "        if(unsuccessful.TryGetValue(key,out ulong failedSeed))seeds.Add(failedSeed);"
+      },
+      {
+        "line": 173,
+        "text": "        foreach(ulong seed in seeds)"
+      },
+      {
+        "line": 175,
+        "text": "            var sim=Fixture(key.Mother,key.Father,seed);Request(sim,key.Method);Tick(sim,3);"
+      },
+      {
+        "line": 180,
+        "text": "            Require(sim.State.RandomState==restored.State.RandomState&&sim.Next()==restored.Next(),\"存读后下一个随机决策已偏离\");"
+      },
+      {
+        "line": 182,
+        "text": "            var phase=m.Family.Pregnancy.Phase;string? eventId=m.Family.Pregnancy.EventId;ulong random=restored.State.RandomState;"
+      },
+      {
+        "line": 185,
+        "text": "                restored.State.RandomState==random,\"已有孕育或失败冷却被点击改方式/重抽\");"
+      }
+    ],
+    "Family.CareLearning": [
+      {
+        "line": 13,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(20261031);sim.State.RoomObjects.Clear();"
+      }
+    ],
+    "Family.Teaching": [
+      {
+        "line": 11,
+        "text": "WorldSimulation Fixture(ulong seed=1,BirthMethod method=BirthMethod.Stem,bool belief=false,double distance=1.45)"
+      },
+      {
+        "line": 13,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(unchecked(seed*11400714819323198485UL));"
+      },
+      {
+        "line": 52,
+        "text": "WorldSimulation Understood(bool belief,ulong firstSeed=1)"
+      },
+      {
+        "line": 54,
+        "text": "    for(ulong seed=firstSeed;seed<firstSeed+128;seed++)"
+      },
+      {
+        "line": 56,
+        "text": "        var sim=Fixture(seed,belief:belief);Start(sim);Finish(sim);"
+      },
+      {
+        "line": 126,
+        "text": "    ulong random=complete.State.RandomState;bool belief=child.Family.LifeKnowledge[key];double learnedAt=child.Family.LearningSources[key].At;"
+      },
+      {
+        "line": 128,
+        "text": "    Require(teacher.Family.Lesson==null&&complete.State.RandomState==random&&child.Family.LifeKnowledge[key]==belief&&"
+      },
+      {
+        "line": 136,
+        "text": "        for(ulong seed=1;seed<=256&&(!right||!wrong);seed++)"
+      },
+      {
+        "line": 138,
+        "text": "            var sim=Fixture(seed,method);Start(sim);Tick(sim,3);var restored=Reload(sim);Finish(sim);Finish(restored);"
+      },
+      {
+        "line": 182,
+        "text": "    for(ulong seed=1;seed<=128&&!observed;seed++)"
+      },
+      {
+        "line": 184,
+        "text": "        var sim=Fixture(seed,belief:true);Start(sim);Finish(sim);var child=sim.State.Creatures[1];"
+      }
+    ],
+    "Family.AdoptionJourney": [
+      {
+        "line": 15,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(20261104);sim.State.RoomObjects.Clear();sim.State.UnlimitedResources=false;"
+      }
+    ],
+    "Family.AssistedCare": [
+      {
+        "line": 19,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(20261031);sim.State.RoomObjects.Clear();sim.State.UnlimitedResources=false;"
+      }
+    ],
+    "Family.Growth": [
+      {
+        "line": 13,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var child=sim.State.Creatures.Single(c=>c.IsYoung);"
+      }
+    ],
+    "Interaction.StateBoundaries": [
+      {
+        "line": 10,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();sim.State.UnlimitedResources=false;"
+      },
+      {
+        "line": 14,
+        "text": "{Creature=c,sim.State.Food,sim.State.Medicine,sim.State.RandomState},SaveStore.JsonOptions);"
+      }
+    ],
+    "Interaction.HumanCompany": [
+      {
+        "line": 10,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;"
+      },
+      {
+        "line": 204,
+        "text": "                var father=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];sim.State.Creatures.Add(father);"
+      }
+    ],
+    "Family.Protection": [
+      {
+        "line": 13,
+        "text": "    var sim=WorldSimulation.CreateInteractionPlaytest(20261101);sim.State.RoomObjects.Clear();"
+      }
+    ],
+    "Family.Presentation": [],
+    "src/Yukkuri.Simulation/InteractionWorld.cs": [
+      {
+        "line": 5,
+        "text": "    public static WorldSimulation CreateInteractionPlaytest(ulong seed = 20261028)"
+      },
+      {
+        "line": 9,
+        "text": "            MilestoneScenario = true, InteractionPlaytest = true, RandomState = seed == 0 ? 20261028 : seed,"
+      }
+    ],
+    "src/Yukkuri.Simulation/MilestoneWorld.cs": [
+      {
+        "line": 6,
+        "text": "    public static WorldSimulation CreateMilestone(bool sandbox=false, ulong seed=20261027)"
+      },
+      {
+        "line": 10,
+        "text": "        s.MilestoneScenario=true;s.RandomState=seed==0?20261027:seed;s.Money=160;s.Food=35;"
+      }
+    ],
+    "src/Yukkuri.Simulation/WorldSimulation.cs": [
+      {
+        "line": 48,
+        "text": "        ulong x = State.RandomState;"
+      },
+      {
+        "line": 50,
+        "text": "        State.RandomState = x;"
+      }
+    ],
+    "src/Yukkuri.Simulation/WorldState.cs": [
+      {
+        "line": 76,
+        "text": "    public ulong RandomState { get; set; } = 92137;"
+      }
+    ]
+  },
+  "interpretation": "Exact pinned source seed expressions retained, including defaults and generated fixed ranges. Soak scenario seeds also remain in its JSON. Not new tests or generated runtime values."
+}

@@ -1,0 +1,297 @@
+{
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "request_revision": "dot-v15-interaction-depth-I-20261030",
+  "reviewed_at": "2026-10-29T19:50:00Z",
+  "kind": "Read-only static preparation, not test/compile/UI results",
+  "source_status": "All 20 new suite Program/csproj local files independently match pinned GitHub blob IDs. This is a targeted verification, not a full checkout or test result.",
+  "suites": [
+    {
+      "id": "Family.AdoptionJourney",
+      "source_git_blob": "9e7ca5c53bae6eaf15a258e563f27c4b809379f5",
+      "statically_declared_top_level_cases": 6,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Family.AssistedCare",
+      "source_git_blob": "70471192f59f7e842ab1b74ab6a94e93d7966298",
+      "statically_declared_top_level_cases": 16,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Family.Growth",
+      "source_git_blob": "9bdd4eea16b6d200bb0567ce3ed8fdbbc669a86a",
+      "statically_declared_top_level_cases": 5,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Family.MouthCommunication",
+      "source_git_blob": "8df65b105c17ff688c54238c4c9d54303256e26c",
+      "statically_declared_top_level_cases": 9,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Family.PregnancyBoundaries",
+      "source_git_blob": "ca94ed70304a51454cfdfb2b9f4fe3fc88208632",
+      "statically_declared_top_level_cases": 12,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Interaction.AutonomyPriority",
+      "source_git_blob": "05f906772a1089ca41ea24e707679c8c2bf3cda1",
+      "statically_declared_top_level_cases": 12,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Interaction.CompletedNeeds",
+      "source_git_blob": "bcdbcc1c816e824d8d2dce3e53e2149be2dd366a",
+      "statically_declared_top_level_cases": 1,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Interaction.EmergencyIntervention",
+      "source_git_blob": "af7e5a9f4ef4f09e074a24c5c2af7ef646bf0fbf",
+      "statically_declared_top_level_cases": 6,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Interaction.Mouth",
+      "source_git_blob": "d1486b2e8c21dbe4f47aea4e38929120b8528d77",
+      "statically_declared_top_level_cases": 16,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    },
+    {
+      "id": "Interaction.MouthPresentation",
+      "source_git_blob": "9231efd3ef5914d30fdf7bff654b47e6bb12d217",
+      "statically_declared_top_level_cases": 10,
+      "actual_result": null,
+      "output": "stdout PASS/FAIL, no JSON output argument",
+      "exit": "0 all passed; 1 if any caught failure",
+      "independent_of_other_suite_results": true
+    }
+  ],
+  "safety": {
+    "new_suite_count": 10,
+    "statically_declared_cases": 93,
+    "all_projects": "Microsoft.NET.Sdk net10.0 executable, sole project reference Yukkuri.Simulation",
+    "external_side_effects": "No new suite source uses Process, network APIs, File/Directory APIs, external credentials or other suite artifacts. Serialization checks are in-memory JSON plus validation. No independent execution performed.",
+    "reflection_boundary": "Family.PregnancyBoundaries Program.cs:50-51 calls private TryDeliverFamily reflectively for isolated birth boundaries. Public ordinary-time examples also exist; do not label all twelve as end-to-end.",
+    "output_counting": "Count actual anchored PASS or FAIL records, not nested Require/foreach branches or source Check literals. Regex ^PASS(?::|\\s|$), ^FAIL(?::|\\s|$). CompletedNeeds has a single outer try/catch and no Check wrapper. Summary 'failure(s)' is not another case.",
+    "old_suite_boundary": "Original requested independent suites remain; Save.Compatibility stays blocked without authorized historic fixture. Existing JSON suites require both exit status and JSON results; stdout-only new suites should not receive fabricated JSON paths."
+  },
+  "scope_notes": [
+    "H changes held nine-combination Continuity fixture: delays DecisionIn initially; only after real destination intake is observed, sets idle Target to actual coordinates. Preserves 240 frames, final X>.5 and all previous assertions, adds isolation invariance diagnostics. Any pass is a changed-fixture result, not evidence of a product swallowing fix.",
+    "Interaction.CompletedNeeds independently keeps ordinary idle DecisionIn/targets after setup, observes actual held+destination drinking and movement after needs satisfied. It does not require terminal positive X.",
+    "H changes automatic family selection priority for executable due short responses; diagnostic additions retain default three residents and 0.5-second old invitation/voice/treasure assertions. Whether fixed must come from current logs.",
+    "H FamilyValidation adds DoesNotReturnIf(false) rather than disabling validation; do not predeclare removal of six previous CS8602 warnings.",
+    "I removes BirthEventId as a growth prerequisite. Family.ColdCare fixture now initializes Body/Inner age 0 to stay juvenile. Changed fixture is disclosed, not copied old pass.",
+    "F mouth checks use explicit starting wound data; impaired speech does not mean impaired hearing. MouthPresentation voice-cue strings are not audible verification.",
+    "AdoptionJourney starts without positive peer/caregiver values but includes explicit prior foot impairment and an absent biological parent in another registered region. Growth cases use near-age-boundary fixtures; neither proves full native long-duration life."
+  ],
+  "native_route_max_minutes": 7,
+  "native_route": [
+    {
+      "minutes": "0–1.5",
+      "action": "Fresh native ordinary courtyard → 同伴、家庭与照护. Default 小铃/松果 adult pair: capture two directional care rows, each 当前阻碍 and 提出这项照护.",
+      "expected_static": "InteractionRoom.Family.cs:165-172 adds both directions. Buttons remain present even if invalid; reason text should be specific. Default adults are not injured/recovering, so no delivery success assumed."
+    },
+    {
+      "minutes": "1.5–3",
+      "action": "Click one refused adult-direction 提出这项照护 twice; verify panel stays open, both selected names remain, 上次照护安排 shows reason.",
+      "expected_static": "Family.cs:290-303 refuses in current modal and preserves selection; only success closes before actual ArrangeCare. Do not mistake displayed reason for executed care."
+    },
+    {
+      "minutes": "3–4.5",
+      "action": "Select 小铃→豆豆 and then swap 这只油/另一只油 to 豆豆→小铃; capture care direction.",
+      "expected_static": "Family.cs:165-166 always chooses adult as caregiver when one juvenile; child must not become carrier just because first selection changes. Unfamiliar/no-needs/current-busy refusal can be expected depending on live state."
+    },
+    {
+      "minutes": "4.5–5.5",
+      "action": "Close modal, explicitly pause courtyard, reopen same pair, click 提出这项照护; capture pause-specific feedback and retained panel; close to verify pause retained.",
+      "expected_static": "Family.cs:294 has _pauseBeforeModal first; does not invoke command or resume. Modal-only automatic pause must not be confused with an originally paused courtyard."
+    },
+    {
+      "minutes": "5.5–7 optional",
+      "action": "Resume explicitly, optionally near-look→family→refused care→close; observe view and clock preservation. Alternatively direct normal drinking and return to activity.",
+      "expected_static": "Only record actual visible state. Do not introduce injuries, inject saves, accelerated simulation or custom scene to manufacture care success."
+    }
+  ],
+  "default_constraints": [
+    "Latest InteractionWorld.cs:16-35 gives default 小铃 trust38/fullness55/hydration58/patience.72/aggression.08; 松果 trust48/fullness63/hydration67/patience.42/aggression.42; 豆豆 juvenile/fullness71/hydration76. Live needs may change before viewing.",
+    "FamilyRules.YoungSeconds=1800 (FamilyState.cs:66); seven minutes does not cover ordinary default childhood to adulthood. Full growth native observation remains untested.",
+    "Default residents lack prebuilt positive adoption relationships and adult disability. Stranger recognition/actual sixty-second care/adoption/teaching cannot be guaranteed within a short default UI visit; failure to spontaneously deliver is not automatically a product fail.",
+    "Gestation constants stem240/live480 plus actual approach/preparation, acceptance and healthy bodies. Do not substitute a short default panel review for successful pregnancy or birth.",
+    "Special intervention, surgery/organs/filling transfer, external stem handling, all six models/upgrades are not newly complete by virtue of 93 added assertions."
+  ],
+  "no_project_execution": true,
+  "actual_results_pending": false,
+  "local_new_suite_files_verified_at": "2026-10-29T19:51:06.141512+00:00",
+  "local_new_suite_files_verification": [
+    {
+      "path": "checks/Family.AdoptionJourney/Program.cs",
+      "git_blob": "9e7ca5c53bae6eaf15a258e563f27c4b809379f5",
+      "expected_git_blob": "9e7ca5c53bae6eaf15a258e563f27c4b809379f5",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.AdoptionJourney/Family.AdoptionJourney.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.AssistedCare/Program.cs",
+      "git_blob": "70471192f59f7e842ab1b74ab6a94e93d7966298",
+      "expected_git_blob": "70471192f59f7e842ab1b74ab6a94e93d7966298",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.AssistedCare/Family.AssistedCare.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.Growth/Program.cs",
+      "git_blob": "9bdd4eea16b6d200bb0567ce3ed8fdbbc669a86a",
+      "expected_git_blob": "9bdd4eea16b6d200bb0567ce3ed8fdbbc669a86a",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.Growth/Family.Growth.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.MouthCommunication/Program.cs",
+      "git_blob": "8df65b105c17ff688c54238c4c9d54303256e26c",
+      "expected_git_blob": "8df65b105c17ff688c54238c4c9d54303256e26c",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.MouthCommunication/Family.MouthCommunication.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.PregnancyBoundaries/Program.cs",
+      "git_blob": "ca94ed70304a51454cfdfb2b9f4fe3fc88208632",
+      "expected_git_blob": "ca94ed70304a51454cfdfb2b9f4fe3fc88208632",
+      "matches": true
+    },
+    {
+      "path": "checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.AutonomyPriority/Program.cs",
+      "git_blob": "05f906772a1089ca41ea24e707679c8c2bf3cda1",
+      "expected_git_blob": "05f906772a1089ca41ea24e707679c8c2bf3cda1",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.CompletedNeeds/Program.cs",
+      "git_blob": "bcdbcc1c816e824d8d2dce3e53e2149be2dd366a",
+      "expected_git_blob": "bcdbcc1c816e824d8d2dce3e53e2149be2dd366a",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.CompletedNeeds/Interaction.CompletedNeeds.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.EmergencyIntervention/Program.cs",
+      "git_blob": "af7e5a9f4ef4f09e074a24c5c2af7ef646bf0fbf",
+      "expected_git_blob": "af7e5a9f4ef4f09e074a24c5c2af7ef646bf0fbf",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.EmergencyIntervention/Interaction.EmergencyIntervention.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.Mouth/Program.cs",
+      "git_blob": "d1486b2e8c21dbe4f47aea4e38929120b8528d77",
+      "expected_git_blob": "d1486b2e8c21dbe4f47aea4e38929120b8528d77",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.Mouth/Interaction.Mouth.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.MouthPresentation/Program.cs",
+      "git_blob": "9231efd3ef5914d30fdf7bff654b47e6bb12d217",
+      "expected_git_blob": "9231efd3ef5914d30fdf7bff654b47e6bb12d217",
+      "matches": true
+    },
+    {
+      "path": "checks/Interaction.MouthPresentation/Interaction.MouthPresentation.csproj",
+      "git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "expected_git_blob": "f5a305261fbc1233052936f658f7b61e53b68edd",
+      "matches": true
+    }
+  ],
+  "native_route_execution_status": "NOT RUN: current game build failed before native startup; planned route is retained only as static advice. No current native/engine proof.",
+  "build_observed": {
+    "status": "failed",
+    "exit_code": 1,
+    "warning_count": 0,
+    "error_count": 3,
+    "evidence": "game-build.txt",
+    "locations": [
+      "src/Yukkuri.Game/Main.MilestoneStates.cs:103:56",
+      "src/Yukkuri.Game/Main.MilestoneStates.cs:112:40",
+      "src/Yukkuri.Game/Main.MilestoneStates.cs:115:89"
+    ],
+    "diagnostic": "CS1061 Dictionary<string,int> has no accessible GetValueOrDefault extension method",
+    "static_explanation": "The file imports Godot, System, IO, Linq, Text.Json and Simulation, but not System.Collections.Generic. Game csproj does not enable ImplicitUsings and no Game global generic-collections using was found. Installed net10.0 reference XML declares the intended method as System.Collections.Generic.CollectionExtensions.GetValueOrDefault. These observations strongly support a missing namespace import at the new calls; no source edit or confirming rebuild performed.",
+    "reference_xml": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.13/ref/net10.0/System.Collections.xml:231,242",
+    "scope": "Build blocks whole Game assembly regardless of whether default courtyard enters the old Main verification route. Simulation compilation and pure suites are independent; current game/engine/native skipped, not substituted with older binaries."
+  },
+  "updated_at": "2026-10-29T19:51:53.549615+00:00",
+  "actual_results_pointer": "readonly-failure-review.json",
+  "execution_outcome_note": "Game build failed and no native route ran. Eight new suites ran65cases successfully; PregnancyBoundaries and AssistedCare failed compilation before28source-declared cases."
+}

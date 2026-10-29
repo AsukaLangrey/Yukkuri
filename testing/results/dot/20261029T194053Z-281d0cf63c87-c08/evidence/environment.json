@@ -1,0 +1,26 @@
+{
+  "id": "dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe",
+  "checked_at": "2026-10-29T19:51:33.484978+00:00",
+  "os": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "logical_processors": 9,
+  "gpu": "Not probed this round; prior c07 observed Mesa llvmpipe LLVM19.1.7 / Mesa25.0.7. No current graphics execution because game build failed.",
+  "driver": "Not re-observed this round; prior c07 OpenGL4.5 Core Mesa25.0.7-2+deb13u1",
+  "dotnet": "10.0.402",
+  "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+  "display": "No current native window: dependency game-build failed. Own cloud desktop previously verified, not user development PC.",
+  "audio": "Not tested this round; no game/audio launch. Prior c07 ALSA unavailable/Dummy fallback is historical only.",
+  "desktop_observation_authorized": true,
+  "profile": "cloud1940-c08 (allocated but not launched)",
+  "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+  "limitations": [
+    "Linux authorized same-version package is not locked Windows platform acceptance.",
+    "No current runtime, visual or audible acceptance."
+  ],
+  "current_verification": [
+    "godot-current-verification.json",
+    "nuget-current-verification.json",
+    "dotnet-info.txt",
+    "environment-raw.txt"
+  ]
+}

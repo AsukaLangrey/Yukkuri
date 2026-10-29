@@ -1,0 +1,102 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/NaturalLife.Smoke.json
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS excretion keeps digestive care and injury recovery advancing in ordinary time
+PASS boxed excretion retains restraint time and fear without repeating help over the body action
+PASS excretion suspends sleep benefits and then resumes the pending rest
+PASS urgent nearby food and water resume after excretion for free and boxed creatures
+PASS close-up cancels interrupted excretion without advancing or satisfying its needs
+PASS ordinary world updates cancel stale excretion before choosing the active mouthful activity
+PASS following uses a currently perceived hand rather than saved human coordinates
+PASS a follow lesson cannot gain travel while its guiding hand is out of sight
+PASS a failed follow lesson does not leave permanent following switched on
+PASS completed follow intent yields to autonomous rest with or without a visible hand
+PASS low trust can cautiously use the only supply while the hand remains visible
+PASS immobile intake chooses the urgent need independently of object order
+PASS hungry creature discovers reaches and consumes leaves without human input
+PASS thirsty creature walks to the bank and drinks without filling its stomach
+PASS water supply is finite while a river remains available
+PASS last leaf remains visible until contact without becoming available twice
+PASS last cup presentation survives reload and completes while the world is in close-up
+PASS taking a supply away releases the ground pose but preserves the already taken mouthful
+PASS the last cup can still be picked up while its taken sip finishes
+PASS a moving touch interrupts the source pose and oil can resume its needs afterward
+PASS two creatures take turns at one source without claiming the same serving
+PASS taking food or water before contact returns the reserved portion without intake
+PASS putting away food before or after contact returns only uneaten inventory
+PASS moving touch before contact leaves the food available without exposure
+PASS pending intake survives pause and reload and commits exactly once at contact
+PASS a pending portion is not deleted if its consumer dies before presentation cleanup
+PASS satisfied creature leaves food and water for later
+PASS limited movement does not itself raise appetite or water demand
+PASS placed supplies sit on box and cushion surfaces and remain reachable without walking
+PASS wrapping cannot drink below its mouth but nearby cup water and unwrapping restore access
+PASS wrapped low-source access follows body size and height rather than a blanket resource ban
+PASS changing source support before entry cancels rather than consuming from its old height
+PASS unknown far source is not read through the whole map
+PASS source in another region is neither discovered nor consumed
+PASS empty leaves remain visibly exhausted and are not consumed again
+PASS source hidden by a solid box is not discovered
+PASS immobile oil consumes accessible water but cannot teleport to distant river
+PASS low trust can accept food after the hand retreats
+PASS a natural appeal faces the perceived hand briefly and then gives movement its pose back
+PASS urgent self care can call for aid without keeping a planted appeal over its search
+paired help samples: low=16/150, high=126/150
+PASS high trust increases help requests without removing self care
+PASS no nearby human means no automatic water begging for mobile oil
+dirty incidence 127/400; approx 95% interval [0.272,0.363]; clean=0
+PASS dirty intake is riskier than clean intake and is not guaranteed illness
+PASS illness appears after incubation and clean water does not instantly cure it
+PASS ordinary digestive illness is not transmitted between neighbors
+PASS close-up and pause freeze needs illness and source depletion
+PASS save reload preserves incubation consumed source and random sequence
+PASS old save without natural fields gains empty memory and healthy defaults
+PASS missing pending field resumes an already accepted mouthful without replaying its portion
+PASS save rejects invalid natural mouthful geometry
+PASS self feeding completion does not invent a person holding a cup or spoon
+PASS released full mouthfuls hand swallowing back to following or ball approach on the actual movement frame
+PASS seeking the other urgent resource releases swallowing across different presentation phases
+PASS close-up pause and a clamped movement request preserve a planted swallow
+PASS a newer painful response survives autonomous movement after swallowing
+PASS save rejects impossible illness and contaminated resource data
+PASS interrupting touch then releasing returns to the original life need
+PASS held supply is reserved and cannot be eaten from its old ground location
+PASS feeding held supply consumes that object rather than inventory a second time
+PASS changing offered supply midway cannot reuse the first mouth dwell
+PASS cancelled supply stays at origin and reload releases the transient reservation
+PASS water placement remains distinct from food inventory and can be used independently
+PASS low trust alone can refuse hand feeding without disabling self feeding
+PASS natural drinking access fits the actual dry bank and never heals immersion damage
+PASS young adult and elder can independently reach the river from dry ground
+PASS curved river access works from either direction for all body sizes
+PASS unreachable remembered resource receives retry delay instead of endless pushing
+PASS urgent hunger interrupts rest without granting sleep recovery while walking
+PASS an inaccessible cushion gives way to ground rest without its healing bonus
+PASS carrying interrupts cushion progress in ordinary time and close-up, including after reload
+PASS urgent food and water detours resume the cushion route without reusing its old best distance
+PASS natural rest continues past the tired threshold instead of flickering awake
+PASS a sick well-fed creature can choose restorative rest without a command
+PASS a started mouthful finishes before walking back to a cushion
+PASS production woodland tree trunks block bodies and held supply placement
+PASS the full curved bank footprint stays on dry ground
+PASS symptoms associate recent meals without identifying the hidden true cause
+PASS illness without recent remembered intake does not invent source knowledge
+PASS sick oil pauses between food portions while water remains available
+PASS urgent need can accept matching aid despite low trust and prior food suspicion
+PASS sick but satisfied oil can refuse extra food without refusing needed water
+PASS digestive care improves later recovery without instant cure or repeat rewards
+dose audit: one=144/400, three=284/400
+PASS three dirty portions raise cumulative illness incidence compared with one
+PASS appetite pause and recent intake history survive reload and freeze in close-up
+PASS injured foot help does not replace an active intake preparation
+PASS cushion edge restraint preserves unreachable food and exposes no phantom meal
+PASS a chosen alternate standing point survives reload and enables real intake
+PASS a recurring restraint help request waits until an active mouthful finishes
+PASS a new digestive reaction cancels only a portion that has not entered yet
+PASS hand awareness belongs to the region where the hand was observed
+PASS solid boxes hide an active hand without disabling a visible hand nearby
+PASS woodland trunks occlude food and hand perception at ground level
+PASS a boxed creature can see beyond its front opening without eating distant supplies
+PASS a hidden remembered source is not marked missing until its old location is visible
+First food from wild patch: low=80/80, high=0/80, absent-hand low=0/80
+PASS trust changes first food selection near an engaged hand while absent hands do not impose avoidance
+Natural life: 95/95

@@ -1,0 +1,5 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Simulation.Smoke/Simulation.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+  Determining projects to restore...
+  Restored /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj (in 74 ms).
+  Restored /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Simulation.Smoke/Simulation.Smoke.csproj (in 77 ms).

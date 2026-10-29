@@ -1,0 +1,14 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 默认三油仍能在半秒内发出到期的自主蹭脸回应
+PASS 反转遍历顺序也不能让另一只抢走待回应者
+PASS 短回应窗口完整保留，结束后手仍在也可以自动结伴
+PASS 显式相处及孕育准备保持优先，不被到期短回应拆散
+PASS 普通时间已经开始的相处不会因自主计时到期而被抢断
+PASS 吃喝休息和危险逃离优先于短回应
+PASS 收纳宝物读档后归属仍在且自主惦记真正有机会表达
+PASS 暂停保留短回应窗口，恢复后才轮到后续家庭行为
+PASS 读档不重放已经发出的短回应，但到期未发出的回应仍可发生
+PASS 已有的人油陪伴完成实际相处前不被自动选伴抢走
+PASS 第一颗球很远时第二颗近球不能虚构一个优先球动作
+PASS 真正近处球和水面球使短回应不可执行时不凭空预约回应

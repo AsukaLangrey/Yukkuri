@@ -1,0 +1,505 @@
+{
+  "at": "2026-10-29T19:51:10.5540855+00:00",
+  "scope": "Pure .NET interaction continuity; no game, rendering or native input",
+  "success": false,
+  "failures": 1,
+  "results": [
+    {
+      "name": "carried release speed is frame independent and clears after stopping or interruption",
+      "passed": true
+    },
+    {
+      "name": "carried release uses the latest direction rather than total drag distance",
+      "passed": true
+    },
+    {
+      "name": "slow direct release places at the carried position without a fall",
+      "passed": true
+    },
+    {
+      "name": "fast direct releases preserve direction and scale launch speed",
+      "passed": true
+    },
+    {
+      "name": "invalid or paused direct release keeps hand support",
+      "passed": true
+    },
+    {
+      "name": "physiology produces both kinds of persistent waste and cleaning never refunds food",
+      "passed": true
+    },
+    {
+      "name": "excretion pauses in close-up and interruption preserves the unmet need",
+      "passed": true
+    },
+    {
+      "name": "physiology old missing fields default safely and inconsistent fields are rejected",
+      "passed": true
+    },
+    {
+      "name": "hidden health exposes injury and can recover without showing exact health",
+      "passed": true
+    },
+    {
+      "name": "local foot injury remains visible above the health cutoff and preserves condition priority",
+      "passed": true
+    },
+    {
+      "name": "suspended lowering and sliding bodies retain unmet excretion until grounded and still",
+      "passed": true
+    },
+    {
+      "name": "close-up lifting cancels excretion without advancing or consuming its unmet need",
+      "passed": true
+    },
+    {
+      "name": "refused and completed held tools do not indefinitely block excretion",
+      "passed": true
+    },
+    {
+      "name": "accumulated injury becomes critical then lethal and death stops excretion",
+      "passed": true
+    },
+    {
+      "name": "water relieves thirst without filling the stomach or healing an injured foot",
+      "passed": true
+    },
+    {
+      "name": "satisfied drinking refuses another cup without farming trust",
+      "passed": true
+    },
+    {
+      "name": "sweet food preserves its own intake type and consumes one portion",
+      "passed": true
+    },
+    {
+      "name": "closing the mouth or pausing before acceptance consumes nothing",
+      "passed": true
+    },
+    {
+      "name": "passive thirst freezes in close-up while a started mouthful may finish",
+      "passed": true
+    },
+    {
+      "name": "thirsty immobilized oil can ask for water without pretending it can walk",
+      "passed": true
+    },
+    {
+      "name": "save rejects invalid hydration and intake types at its actual entry",
+      "passed": true
+    },
+    {
+      "name": "older saves acquire safe hydration defaults and keep an existing mouthful",
+      "passed": true
+    },
+    {
+      "name": "accepted food stays consumed after swallowing while the same mouse gesture is held",
+      "passed": true
+    },
+    {
+      "name": "a completed held meal sweet or drink releases needs after its actual swallowing response",
+      "passed": true
+    },
+    {
+      "name": "returning an unaccepted offer waits for pending and accepted autonomous bites without stealing their source",
+      "passed": true
+    },
+    {
+      "name": "completed care keeps its short response then releases food water and rest without repeated medicine",
+      "passed": true
+    },
+    {
+      "name": "completed or already intact repair releases movement without repeating repairs",
+      "passed": true
+    },
+    {
+      "name": "releasing or cancelling completed repair clears only its own body response",
+      "passed": true
+    },
+    {
+      "name": "completed nursing does not replay treatment or erase a newer painful response",
+      "passed": true
+    },
+    {
+      "name": "continuing to wipe a clean cheek cannot farm affection after the first dirt was removed",
+      "passed": true
+    },
+    {
+      "name": "wiping an already clean accessory does not invent another meaningful repair event",
+      "passed": true
+    },
+    {
+      "name": "completing repair records one completion and a new tear resets work but not history",
+      "passed": true
+    },
+    {
+      "name": "repair work cannot be negative in a persisted world",
+      "passed": true
+    },
+    {
+      "name": "a single mouse jump cannot turn a gentle stroke into recorded rough handling",
+      "passed": true
+    },
+    {
+      "name": "one delayed input frame cannot stand in for sustained fast rubbing",
+      "passed": true
+    },
+    {
+      "name": "repeating pain care does not restart an already running foot recovery delay",
+      "passed": true
+    },
+    {
+      "name": "a rest invitation does not display sleep while walking to a distant cushion",
+      "passed": true
+    },
+    {
+      "name": "rest command alone grants no cushioned healing bonus on a bare floor",
+      "passed": true
+    },
+    {
+      "name": "an explicit hurtful interruption wakes the oil and ends the rest action",
+      "passed": true
+    },
+    {
+      "name": "a rest invitation cancels an unfinished exercise without crediting a lesson",
+      "passed": true
+    },
+    {
+      "name": "accepting a new exercise stops the current rest instead of sleeping through practice",
+      "passed": true
+    },
+    {
+      "name": "an autonomous invitation supplies the same body pose used by the renderer",
+      "passed": true
+    },
+    {
+      "name": "releasing an accepted meal keeps chewing while releasing pressure stops deformation",
+      "passed": true
+    },
+    {
+      "name": "a release-triggered push keeps its recoil instead of immediately returning an idle pose",
+      "passed": true
+    },
+    {
+      "name": "save files do not replay an expired held gesture as an active reaction on load",
+      "passed": true
+    },
+    {
+      "name": "dressing records actual completed care at its body part and cannot appear on a cancelled attempt",
+      "passed": true
+    },
+    {
+      "name": "an injured treated foot keeps its dressing after the initial settling time",
+      "passed": true
+    },
+    {
+      "name": "voice intent follows the oil\u0027s actual response instead of the last selected tool group",
+      "passed": true
+    },
+    {
+      "name": "one mouse jump during gentle rocking is a slow-down cue rather than abusive handling",
+      "passed": true
+    },
+    {
+      "name": "sustained harsh rocking prompts refusal while leaving the physical support in place",
+      "passed": true
+    },
+    {
+      "name": "teasing can move food off the body surface and a real withdrawal changes future food trust once",
+      "passed": true
+    },
+    {
+      "name": "holding bait in reach without pulling it away does not continuously invent disappointed experiences",
+      "passed": true
+    },
+    {
+      "name": "wiping the left cheek leaves the right cheek dirty and makes only the left cheek wet",
+      "passed": true
+    },
+    {
+      "name": "drying one side preserves the opposite wet patch and whole-body soiling still reaches both",
+      "passed": true
+    },
+    {
+      "name": "moving care to the opposite cheek restarts the actual treatment dwell and dresses that side",
+      "passed": true
+    },
+    {
+      "name": "switching cheeks requires a fresh nuzzle invitation instead of reusing contact on the other side",
+      "passed": true
+    },
+    {
+      "name": "inspection reports a remaining local wet patch even when the body average is low",
+      "passed": true
+    },
+    {
+      "name": "partial face drying does not claim that the feet or the whole body are already dry",
+      "passed": true
+    },
+    {
+      "name": "a frightened oil can refuse wiping without becoming visibly pleased or losing the dirt",
+      "passed": true
+    },
+    {
+      "name": "local touch sensitivity can receive matching care even after general health recovers",
+      "passed": true
+    },
+    {
+      "name": "turning a hat-wearing oil or placing its frame reserves the changed silhouette",
+      "passed": true
+    },
+    {
+      "name": "ground turning actions do not change posture in midair",
+      "passed": true
+    },
+    {
+      "name": "lifting or righting an oil ends its special upside-down drying period",
+      "passed": true
+    },
+    {
+      "name": "rigid fixtures cannot be assembled through a resting cushion",
+      "passed": true
+    },
+    {
+      "name": "resuming a low carry keeps its existing height instead of lifting it again",
+      "passed": true
+    },
+    {
+      "name": "a height concern follows an actual rise and easing down changes the response without healing or dropping",
+      "passed": true
+    },
+    {
+      "name": "an invitation to sing or stretch waits for the accepted mouthful to finish",
+      "passed": true
+    },
+    {
+      "name": "hanging height controls use the actual body-size limits and reverse immediately at an endpoint",
+      "passed": true
+    },
+    {
+      "name": "inspection and settled expression still expose a sore head or cheek after general pain has faded",
+      "passed": true
+    },
+    {
+      "name": "a thirsty but otherwise healthy oil can explain thirst when inspected",
+      "passed": true
+    },
+    {
+      "name": "care at a second site preserves the first site\u0027s dressing and both cheek sides",
+      "passed": true
+    },
+    {
+      "name": "new bottom damage invalidates only the old bottom treatment without resurrecting it next tick",
+      "passed": true
+    },
+    {
+      "name": "each dressing freezes in close-up and expires only after its site has settled",
+      "passed": true
+    },
+    {
+      "name": "save validation rejects duplicate and invalid per-site dressing data",
+      "passed": true
+    },
+    {
+      "name": "one roll sample cannot teleport across the room or catch up a long frame",
+      "passed": true
+    },
+    {
+      "name": "a roll blocked at the room edge causes no stationary dirt or distress",
+      "passed": true
+    },
+    {
+      "name": "starting a roll reserves turning room before it can overlap a neighbor",
+      "passed": true
+    },
+    {
+      "name": "roll orientation follows signed actual travel and freezes without contact or motion",
+      "passed": true
+    },
+    {
+      "name": "rolling a turned oil interrupts drying and never serializes a held input pose",
+      "passed": true
+    },
+    {
+      "name": "short contact keeps its actual response direction even when physical support prevents displacement",
+      "passed": true
+    },
+    {
+      "name": "a sore cheek can refuse rubbing while the other side remains available",
+      "passed": true
+    },
+    {
+      "name": "care must reach the sore cheek and cannot treat it through the healthy side",
+      "passed": true
+    },
+    {
+      "name": "old cheek sensitivity imports without healing either side and local sides survive saving",
+      "passed": true
+    },
+    {
+      "name": "aiming holds the selected ball and releases only that exact object",
+      "passed": true
+    },
+    {
+      "name": "removing or hiding the held ball cannot redirect the release to another ball",
+      "passed": true
+    },
+    {
+      "name": "a turned oil cannot kick the ball while it cannot orient itself to play",
+      "passed": true
+    },
+    {
+      "name": "a fast soft ball rebounds from the body with a brief reaction and no injury",
+      "passed": true
+    },
+    {
+      "name": "ball collisions respect box walls and the visible yard fence instead of an inner invisible rectangle",
+      "passed": true
+    },
+    {
+      "name": "a ball must be placed in clear space and a cushion absorbs its approach",
+      "passed": true
+    },
+    {
+      "name": "woodland balls rebound from the visible trunk section and cannot be placed inside trees",
+      "passed": true
+    },
+    {
+      "name": "a rolling ball enters the river slows and floats instead of bouncing at an invisible bank",
+      "passed": true
+    },
+    {
+      "name": "river current freezes in pause and does not start passive drift in close-up",
+      "passed": true
+    },
+    {
+      "name": "small presentation steps do not erase gentle river drift",
+      "passed": true
+    },
+    {
+      "name": "oil observes a floating ball without repeatedly chasing it into the river",
+      "passed": true
+    },
+    {
+      "name": "a floating ball can be pushed back toward shore without moving the oil into water",
+      "passed": true
+    },
+    {
+      "name": "practiced ball play returns closer to the player than a beginner\u0027s attempt",
+      "passed": true
+    },
+    {
+      "name": "a finished mouthful acknowledges swallowing once without another portion or passive recovery",
+      "passed": true
+    },
+    {
+      "name": "finishing a mouthful does not replace a newer pain response with cheerful speech",
+      "passed": true
+    },
+    {
+      "name": "releasing the empty spoon does not erase the newer swallowing response",
+      "passed": true
+    },
+    {
+      "name": "conversation waits for swallowing without early affection or repeated invitations",
+      "passed": true
+    },
+    {
+      "name": "a newer painful interaction cancels a waiting conversation",
+      "passed": true
+    },
+    {
+      "name": "timely praise keeps its event while swallowing without rewarding the same event twice",
+      "passed": true
+    },
+    {
+      "name": "resting oil replies gently without waking or granting passive recovery in close-up",
+      "passed": true
+    },
+    {
+      "name": "pause freezes queued conversation and save cannot replay it as a reward",
+      "passed": true
+    },
+    {
+      "name": "verbal comfort refusal describes distance without inventing physical touch",
+      "passed": true
+    },
+    {
+      "name": "a stored treasure returns as the same object without farming a fresh gift",
+      "passed": true
+    },
+    {
+      "name": "treasure placement clears a turned body and stays in its current region",
+      "passed": true
+    },
+    {
+      "name": "stored treasure keeps ownership through save and cannot be displayed as present",
+      "passed": true
+    },
+    {
+      "name": "rapid harsh speech shares a response interval instead of rewriting the relationship on every click",
+      "passed": true
+    },
+    {
+      "name": "scolding interrupts a lesson without recording learning or a completed rule",
+      "passed": true
+    },
+    {
+      "name": "a contextual scold requires a current observed unresolved incident for this oil",
+      "passed": true
+    },
+    {
+      "name": "immobility and a real unanswered request have distinct harsh speech feedback",
+      "passed": true
+    },
+    {
+      "name": "belittling can provoke resistance or hurt without turning either into affection",
+      "passed": true
+    },
+    {
+      "name": "moving the holding hand away releases only the hand restraint and contact can resume",
+      "passed": true
+    },
+    {
+      "name": "push release off the body cannot apply saved force or a reentry pointer jump",
+      "passed": true
+    },
+    {
+      "name": "an off-contact pressed mouse does not freeze the oil\u0027s own movement or keep deforming it",
+      "passed": false,
+      "error": "empty mouse hold froze movement or continued pressure: X=-1.0800000000000005, health=99.99749999999996/99.96, pose=idle"
+    },
+    {
+      "name": "following can reach the rear yard without an invisible inner movement boundary",
+      "passed": true
+    },
+    {
+      "name": "food in another region cannot be eaten through matching coordinates",
+      "passed": true
+    },
+    {
+      "name": "wait practice and placed meals use actual food in the active region",
+      "passed": true
+    },
+    {
+      "name": "changing active region during a gesture still cleans up the original oil\u0027s transient hold",
+      "passed": true
+    },
+    {
+      "name": "unhanging transfers support and lowers continuously without healing or passive time",
+      "passed": true
+    },
+    {
+      "name": "saving during supported lowering preserves support without replaying its transient motion",
+      "passed": true
+    },
+    {
+      "name": "taking manual control of supported lowering does not keep moving or drop on cancellation",
+      "passed": true
+    },
+    {
+      "name": "fixed-seed mixed gestures keep saves valid and leave no ghost hands across cancellation and pause",
+      "passed": true
+    }
+  ]
+}

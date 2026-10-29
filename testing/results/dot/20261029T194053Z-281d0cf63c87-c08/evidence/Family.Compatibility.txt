@@ -1,0 +1,159 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Compatibility/Family.Compatibility.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+  reached seed=1
+PASS 普通入口 reimu母体 × reimu父体 · Stem
+  reached seed=1
+PASS 普通入口 reimu母体 × reimu父体 · Live
+  reached seed=1
+PASS 普通入口 reimu母体 × marisa父体 · Stem
+  reached seed=1
+PASS 普通入口 reimu母体 × marisa父体 · Live
+  reached seed=1
+PASS 普通入口 reimu母体 × alice父体 · Stem
+  reached seed=1
+PASS 普通入口 reimu母体 × alice父体 · Live
+  reached seed=1
+PASS 普通入口 reimu母体 × patchouli父体 · Stem
+  reached seed=1
+PASS 普通入口 reimu母体 × patchouli父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 reimu母体 × remilia父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 reimu母体 × remilia父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 reimu母体 × flandre父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 reimu母体 × flandre父体 · Live
+  reached seed=1
+PASS 普通入口 marisa母体 × reimu父体 · Stem
+  reached seed=1
+PASS 普通入口 marisa母体 × reimu父体 · Live
+  reached seed=1
+PASS 普通入口 marisa母体 × marisa父体 · Stem
+  reached seed=1
+PASS 普通入口 marisa母体 × marisa父体 · Live
+  reached seed=1
+PASS 普通入口 marisa母体 × alice父体 · Stem
+  reached seed=1
+PASS 普通入口 marisa母体 × alice父体 · Live
+  reached seed=1
+PASS 普通入口 marisa母体 × patchouli父体 · Stem
+  reached seed=1
+PASS 普通入口 marisa母体 × patchouli父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 marisa母体 × remilia父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 marisa母体 × remilia父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 marisa母体 × flandre父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 marisa母体 × flandre父体 · Live
+  reached seed=1
+PASS 普通入口 alice母体 × reimu父体 · Stem
+  reached seed=1
+PASS 普通入口 alice母体 × reimu父体 · Live
+  reached seed=1
+PASS 普通入口 alice母体 × marisa父体 · Stem
+  reached seed=1
+PASS 普通入口 alice母体 × marisa父体 · Live
+  reached seed=1
+PASS 普通入口 alice母体 × alice父体 · Stem
+  reached seed=1
+PASS 普通入口 alice母体 × alice父体 · Live
+  reached seed=1
+PASS 普通入口 alice母体 × patchouli父体 · Stem
+  reached seed=1
+PASS 普通入口 alice母体 × patchouli父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 alice母体 × remilia父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 alice母体 × remilia父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 alice母体 × flandre父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 alice母体 × flandre父体 · Live
+  reached seed=1
+PASS 普通入口 patchouli母体 × reimu父体 · Stem
+  reached seed=1
+PASS 普通入口 patchouli母体 × reimu父体 · Live
+  reached seed=1
+PASS 普通入口 patchouli母体 × marisa父体 · Stem
+  reached seed=1
+PASS 普通入口 patchouli母体 × marisa父体 · Live
+  reached seed=1
+PASS 普通入口 patchouli母体 × alice父体 · Stem
+  reached seed=1
+PASS 普通入口 patchouli母体 × alice父体 · Live
+  reached seed=1
+PASS 普通入口 patchouli母体 × patchouli父体 · Stem
+  reached seed=1
+PASS 普通入口 patchouli母体 × patchouli父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 patchouli母体 × remilia父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 patchouli母体 × remilia父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 patchouli母体 × flandre父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 patchouli母体 × flandre父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × reimu父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × reimu父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × marisa父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × marisa父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × alice父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × alice父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × patchouli父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 remilia母体 × patchouli父体 · Live
+  reached seed=1
+PASS 普通入口 remilia母体 × remilia父体 · Stem
+  reached seed=1
+PASS 普通入口 remilia母体 × remilia父体 · Live
+  reached seed=1
+PASS 普通入口 remilia母体 × flandre父体 · Stem
+  reached seed=1
+PASS 普通入口 remilia母体 × flandre父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × reimu父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × reimu父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × marisa父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × marisa父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × alice父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × alice父体 · Live
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × patchouli父体 · Stem
+  reached seed=17, failed seed=1
+PASS 普通入口 flandre母体 × patchouli父体 · Live
+  reached seed=1
+PASS 普通入口 flandre母体 × remilia父体 · Stem
+  reached seed=1
+PASS 普通入口 flandre母体 × remilia父体 · Live
+  reached seed=1
+PASS 普通入口 flandre母体 × flandre父体 · Stem
+  reached seed=1
+PASS 普通入口 flandre母体 × flandre父体 · Live
+  sample reimu × marisa Stem: 256/256
+  sample remilia × flandre Stem: 256/256
+  sample reimu × remilia Stem: 8/256
+  sample remilia × reimu Stem: 8/256
+  sample reimu × marisa Live: 256/256
+  sample remilia × flandre Live: 256/256
+  sample reimu × remilia Live: 8/256
+  sample remilia × reimu Live: 8/256
+PASS 跨类极少受孕，相同条件下显著低于普通种内部与捕食种内部
+PASS 全部跨类方向在相同失养条件下累积负担，普通种母体与捕食种母体分别生效
+PASS 六种的母父角色、双方未成熟和单方陌生均由普通入口拒绝
+PASS 跨类关系门槛高于同类，且双方各自必须愿意
+PASS 普通准备存读保持后续随机流，成功与失败不重抽、不换方式

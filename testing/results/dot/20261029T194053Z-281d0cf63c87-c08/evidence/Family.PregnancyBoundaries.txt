@@ -1,0 +1,5 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]
+
+The build failed. Fix the build errors and run again.

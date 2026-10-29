@@ -1,0 +1,21 @@
+{
+  "finished_at": "2026-10-29T19:53:24.598848+00:00",
+  "test_processes_finished": true,
+  "test_processes_finished_at": "2026-10-29T19:53:24.598848+00:00",
+  "status": "failed",
+  "game_build_exit_code": 1,
+  "native_game_exit_code": null,
+  "engine_contact_exit_code": null,
+  "engine_render_exit_code": null,
+  "pure_project_invocations_terminal": 33,
+  "pure_suites_entered_test_cases": 31,
+  "pure_suites_all_assertions_passed": 29,
+  "pure_suites_assertion_failed": 2,
+  "pure_projects_compile_failed": 2,
+  "pure_passed": 918,
+  "pure_failed": 2,
+  "planned_cases_not_executed_due_compile": 28,
+  "dependency_skip_reason": "Pinned current game failed compilation; no import/runtime/native/engine rendering launched.",
+  "process_scan_at": "2026-10-29T19:53:59Z",
+  "active_test_processes_seen": []
+}

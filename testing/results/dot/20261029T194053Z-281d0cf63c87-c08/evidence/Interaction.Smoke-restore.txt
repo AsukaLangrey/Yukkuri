@@ -1,0 +1,5 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Smoke/Interaction.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+  Determining projects to restore...
+  Restored /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Interaction.Smoke/Interaction.Smoke.csproj (in 75 ms).
+  1 of 2 projects are up-to-date for restore.

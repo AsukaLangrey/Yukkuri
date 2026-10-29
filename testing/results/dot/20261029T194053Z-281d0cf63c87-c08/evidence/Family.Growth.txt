@@ -1,0 +1,7 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Growth/Family.Growth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source
+PASS 默认及旧档幼体用真实身体年龄成长，身份和固定角色保留
+PASS 到龄但失养仍需真实吃到一份食物，成长不代替照护
+PASS 暂停和近看不推进成长，恢复普通时间后才到龄
+PASS 冷藏中成长使用十分之一身体时间而非全局时间
+PASS 到龄前旧档续接一次成长，重新读取不重放或重置年龄

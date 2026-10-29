@@ -1,0 +1,85 @@
+{
+  "checked_at": "2026-10-29T19:50:15.061043+00:00",
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "recovered_objects": [
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/build.wav",
+      "oid": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-help.wav",
+      "oid": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "size": 48554
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav",
+      "oid": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav",
+      "oid": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav",
+      "oid": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav",
+      "oid": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav",
+      "oid": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/feed.wav",
+      "oid": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav",
+      "oid": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "size": 1058444
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/select.wav",
+      "oid": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav",
+      "oid": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "size": 1058444
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf",
+      "oid": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "size": 17772300
+    }
+  ],
+  "missing_original_objects": [
+    {
+      "path": "assets-source/pipeline-probe.blend",
+      "oid": "2d187b80047d24ddd1df7132f2ff4a8a7595e18a420d60e31c0426a6187b4fcb",
+      "size": 641206
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "oid": "1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024",
+      "size": 2846992
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "oid": "8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352",
+      "size": 98908
+    }
+  ],
+  "remote_recovery_retry": false,
+  "reason": "No new supported LFS binary transport or changed assets. Prior c06 acquisition blocker retained, not retried; no inference dev upload failed."
+}

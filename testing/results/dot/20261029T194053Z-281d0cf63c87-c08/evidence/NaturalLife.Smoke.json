@@ -1,0 +1,622 @@
+{
+  "at": "2026-10-29T19:51:04.5793778+00:00",
+  "scope": "Pure .NET natural resources, trust and digestive health; no game or visual acceptance. Intervals are Wilson 95% game sampling diagnostics, not medical estimates.",
+  "success": true,
+  "failures": 0,
+  "observations": {
+    "trust-help": {
+      "seedGenerator": 1009,
+      "samplesPerGroup": 150,
+      "low": 16,
+      "high": 126,
+      "lowInterval95": [
+        0.06672979536363804,
+        0.16624750076432737
+      ],
+      "highInterval95": [
+        0.772958942656478,
+        0.8900606827244333
+      ]
+    },
+    "dirty-versus-clean": {
+      "seedGenerator": 779,
+      "samplesPerGroup": 400,
+      "dirty": 127,
+      "clean": 0,
+      "dirtyInterval95": [
+        0.27380100813055436,
+        0.3646711056883291
+      ],
+      "cleanInterval95": [
+        0,
+        0.009512640599680667
+      ]
+    },
+    "released-swallow-handoffs": [
+      {
+        "worldBefore": 1.75,
+        "worldAfter": 2,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.44999999999999996,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0.25000000000000006,
+        "Activity": "\u548C\u7403\u7403\u73A9"
+      },
+      {
+        "worldBefore": 1.75,
+        "worldAfter": 2,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.44999999999999996,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0.25000000000000006,
+        "Activity": "\u6162\u6162\u8DDF\u7740\u4F60"
+      },
+      {
+        "worldBefore": 1.25,
+        "worldAfter": 1.5,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.5499999999999999,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0.35000000000000003,
+        "Activity": "\u548C\u7403\u7403\u73A9"
+      },
+      {
+        "worldBefore": 1.25,
+        "worldAfter": 1.5,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.5499999999999999,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0.35000000000000003,
+        "Activity": "\u6162\u6162\u8DDF\u7740\u4F60"
+      },
+      {
+        "worldBefore": 2,
+        "worldAfter": 2.25,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.5499999999999999,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u548C\u7403\u7403\u73A9"
+      },
+      {
+        "worldBefore": 2,
+        "worldAfter": 2.25,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.5499999999999999,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u6162\u6162\u8DDF\u7740\u4F60"
+      },
+      {
+        "worldBefore": 1.75,
+        "worldAfter": 2,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.39999999999999997,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u548C\u7403\u7403\u73A9"
+      },
+      {
+        "worldBefore": 1.75,
+        "worldAfter": 2,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.39999999999999997,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u6162\u6162\u8DDF\u7740\u4F60"
+      },
+      {
+        "worldBefore": 2,
+        "worldAfter": 2.25,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.15000000000000002,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u53BB\u627E\u6C34\u6C34"
+      },
+      {
+        "worldBefore": 2,
+        "worldAfter": 2.25,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.10000000000000002,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u53BB\u627E\u6C34\u6C34"
+      },
+      {
+        "worldBefore": 2,
+        "worldAfter": 2.25,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 0.05000000000000002,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u53BB\u627E\u6C34\u6C34"
+      },
+      {
+        "worldBefore": 2,
+        "worldAfter": 2.25,
+        "xBefore": 0,
+        "zBefore": 0,
+        "X": 0.18,
+        "Z": 0,
+        "remainingBefore": 1.3877787807814457E-17,
+        "beforePose": "swallow",
+        "afterPose": "idle",
+        "NaturalBitePause": 0,
+        "Activity": "\u53BB\u627E\u6C34\u6C34"
+      }
+    ],
+    "river_access_by_age": [
+      {
+        "age": "young",
+        "hydration": 81.50000000000031,
+        "X": 5.896004749920287,
+        "Z": 2.634227531489257,
+        "footprint": 0.5693999791145324
+      },
+      {
+        "age": "adult",
+        "hydration": 81.50000000000033,
+        "X": 5.7140350643126885,
+        "Z": 2.749235380588328,
+        "footprint": 0.7799999713897705
+      },
+      {
+        "age": "elder",
+        "hydration": 81.50000000000033,
+        "X": 5.697253844919523,
+        "Z": 2.775679074899686,
+        "footprint": 0.8033999705314636
+      }
+    ],
+    "curved_bank_access_cases": 18,
+    "repeated-dose": {
+      "seedGenerator": 292107,
+      "samplesPerGroup": 400,
+      "single": 144,
+      "repeated": 284,
+      "singleInterval95": [
+        0.31449710298654476,
+        0.40816643638136574
+      ],
+      "repeatedInterval95": [
+        0.6637006149990706,
+        0.7523040759490635
+      ]
+    },
+    "first-food-choice": {
+      "seedGenerator": 291044,
+      "samplesPerGroup": 80,
+      "lowWild": 80,
+      "highWild": 0,
+      "absentWild": 0,
+      "scope": "Matched initial need, one near meal beside a continuously engaged hand, one farther leaf patch in the opposite direction. This controlled layout does not imply all low-trust oil always chooses leaves."
+    }
+  },
+  "results": [
+    {
+      "name": "excretion keeps digestive care and injury recovery advancing in ordinary time",
+      "passed": true
+    },
+    {
+      "name": "boxed excretion retains restraint time and fear without repeating help over the body action",
+      "passed": true
+    },
+    {
+      "name": "excretion suspends sleep benefits and then resumes the pending rest",
+      "passed": true
+    },
+    {
+      "name": "urgent nearby food and water resume after excretion for free and boxed creatures",
+      "passed": true
+    },
+    {
+      "name": "close-up cancels interrupted excretion without advancing or satisfying its needs",
+      "passed": true
+    },
+    {
+      "name": "ordinary world updates cancel stale excretion before choosing the active mouthful activity",
+      "passed": true
+    },
+    {
+      "name": "following uses a currently perceived hand rather than saved human coordinates",
+      "passed": true
+    },
+    {
+      "name": "a follow lesson cannot gain travel while its guiding hand is out of sight",
+      "passed": true
+    },
+    {
+      "name": "a failed follow lesson does not leave permanent following switched on",
+      "passed": true
+    },
+    {
+      "name": "completed follow intent yields to autonomous rest with or without a visible hand",
+      "passed": true
+    },
+    {
+      "name": "low trust can cautiously use the only supply while the hand remains visible",
+      "passed": true
+    },
+    {
+      "name": "immobile intake chooses the urgent need independently of object order",
+      "passed": true
+    },
+    {
+      "name": "hungry creature discovers reaches and consumes leaves without human input",
+      "passed": true
+    },
+    {
+      "name": "thirsty creature walks to the bank and drinks without filling its stomach",
+      "passed": true
+    },
+    {
+      "name": "water supply is finite while a river remains available",
+      "passed": true
+    },
+    {
+      "name": "last leaf remains visible until contact without becoming available twice",
+      "passed": true
+    },
+    {
+      "name": "last cup presentation survives reload and completes while the world is in close-up",
+      "passed": true
+    },
+    {
+      "name": "taking a supply away releases the ground pose but preserves the already taken mouthful",
+      "passed": true
+    },
+    {
+      "name": "the last cup can still be picked up while its taken sip finishes",
+      "passed": true
+    },
+    {
+      "name": "a moving touch interrupts the source pose and oil can resume its needs afterward",
+      "passed": true
+    },
+    {
+      "name": "two creatures take turns at one source without claiming the same serving",
+      "passed": true
+    },
+    {
+      "name": "taking food or water before contact returns the reserved portion without intake",
+      "passed": true
+    },
+    {
+      "name": "putting away food before or after contact returns only uneaten inventory",
+      "passed": true
+    },
+    {
+      "name": "moving touch before contact leaves the food available without exposure",
+      "passed": true
+    },
+    {
+      "name": "pending intake survives pause and reload and commits exactly once at contact",
+      "passed": true
+    },
+    {
+      "name": "a pending portion is not deleted if its consumer dies before presentation cleanup",
+      "passed": true
+    },
+    {
+      "name": "satisfied creature leaves food and water for later",
+      "passed": true
+    },
+    {
+      "name": "limited movement does not itself raise appetite or water demand",
+      "passed": true
+    },
+    {
+      "name": "placed supplies sit on box and cushion surfaces and remain reachable without walking",
+      "passed": true
+    },
+    {
+      "name": "wrapping cannot drink below its mouth but nearby cup water and unwrapping restore access",
+      "passed": true
+    },
+    {
+      "name": "wrapped low-source access follows body size and height rather than a blanket resource ban",
+      "passed": true
+    },
+    {
+      "name": "changing source support before entry cancels rather than consuming from its old height",
+      "passed": true
+    },
+    {
+      "name": "unknown far source is not read through the whole map",
+      "passed": true
+    },
+    {
+      "name": "source in another region is neither discovered nor consumed",
+      "passed": true
+    },
+    {
+      "name": "empty leaves remain visibly exhausted and are not consumed again",
+      "passed": true
+    },
+    {
+      "name": "source hidden by a solid box is not discovered",
+      "passed": true
+    },
+    {
+      "name": "immobile oil consumes accessible water but cannot teleport to distant river",
+      "passed": true
+    },
+    {
+      "name": "low trust can accept food after the hand retreats",
+      "passed": true
+    },
+    {
+      "name": "a natural appeal faces the perceived hand briefly and then gives movement its pose back",
+      "passed": true
+    },
+    {
+      "name": "urgent self care can call for aid without keeping a planted appeal over its search",
+      "passed": true
+    },
+    {
+      "name": "high trust increases help requests without removing self care",
+      "passed": true
+    },
+    {
+      "name": "no nearby human means no automatic water begging for mobile oil",
+      "passed": true
+    },
+    {
+      "name": "dirty intake is riskier than clean intake and is not guaranteed illness",
+      "passed": true
+    },
+    {
+      "name": "illness appears after incubation and clean water does not instantly cure it",
+      "passed": true
+    },
+    {
+      "name": "ordinary digestive illness is not transmitted between neighbors",
+      "passed": true
+    },
+    {
+      "name": "close-up and pause freeze needs illness and source depletion",
+      "passed": true
+    },
+    {
+      "name": "save reload preserves incubation consumed source and random sequence",
+      "passed": true
+    },
+    {
+      "name": "old save without natural fields gains empty memory and healthy defaults",
+      "passed": true
+    },
+    {
+      "name": "missing pending field resumes an already accepted mouthful without replaying its portion",
+      "passed": true
+    },
+    {
+      "name": "save rejects invalid natural mouthful geometry",
+      "passed": true
+    },
+    {
+      "name": "self feeding completion does not invent a person holding a cup or spoon",
+      "passed": true
+    },
+    {
+      "name": "released full mouthfuls hand swallowing back to following or ball approach on the actual movement frame",
+      "passed": true
+    },
+    {
+      "name": "seeking the other urgent resource releases swallowing across different presentation phases",
+      "passed": true
+    },
+    {
+      "name": "close-up pause and a clamped movement request preserve a planted swallow",
+      "passed": true
+    },
+    {
+      "name": "a newer painful response survives autonomous movement after swallowing",
+      "passed": true
+    },
+    {
+      "name": "save rejects impossible illness and contaminated resource data",
+      "passed": true
+    },
+    {
+      "name": "interrupting touch then releasing returns to the original life need",
+      "passed": true
+    },
+    {
+      "name": "held supply is reserved and cannot be eaten from its old ground location",
+      "passed": true
+    },
+    {
+      "name": "feeding held supply consumes that object rather than inventory a second time",
+      "passed": true
+    },
+    {
+      "name": "changing offered supply midway cannot reuse the first mouth dwell",
+      "passed": true
+    },
+    {
+      "name": "cancelled supply stays at origin and reload releases the transient reservation",
+      "passed": true
+    },
+    {
+      "name": "water placement remains distinct from food inventory and can be used independently",
+      "passed": true
+    },
+    {
+      "name": "low trust alone can refuse hand feeding without disabling self feeding",
+      "passed": true
+    },
+    {
+      "name": "natural drinking access fits the actual dry bank and never heals immersion damage",
+      "passed": true
+    },
+    {
+      "name": "young adult and elder can independently reach the river from dry ground",
+      "passed": true
+    },
+    {
+      "name": "curved river access works from either direction for all body sizes",
+      "passed": true
+    },
+    {
+      "name": "unreachable remembered resource receives retry delay instead of endless pushing",
+      "passed": true
+    },
+    {
+      "name": "urgent hunger interrupts rest without granting sleep recovery while walking",
+      "passed": true
+    },
+    {
+      "name": "an inaccessible cushion gives way to ground rest without its healing bonus",
+      "passed": true
+    },
+    {
+      "name": "carrying interrupts cushion progress in ordinary time and close-up, including after reload",
+      "passed": true
+    },
+    {
+      "name": "urgent food and water detours resume the cushion route without reusing its old best distance",
+      "passed": true
+    },
+    {
+      "name": "natural rest continues past the tired threshold instead of flickering awake",
+      "passed": true
+    },
+    {
+      "name": "a sick well-fed creature can choose restorative rest without a command",
+      "passed": true
+    },
+    {
+      "name": "a started mouthful finishes before walking back to a cushion",
+      "passed": true
+    },
+    {
+      "name": "production woodland tree trunks block bodies and held supply placement",
+      "passed": true
+    },
+    {
+      "name": "the full curved bank footprint stays on dry ground",
+      "passed": true
+    },
+    {
+      "name": "symptoms associate recent meals without identifying the hidden true cause",
+      "passed": true
+    },
+    {
+      "name": "illness without recent remembered intake does not invent source knowledge",
+      "passed": true
+    },
+    {
+      "name": "sick oil pauses between food portions while water remains available",
+      "passed": true
+    },
+    {
+      "name": "urgent need can accept matching aid despite low trust and prior food suspicion",
+      "passed": true
+    },
+    {
+      "name": "sick but satisfied oil can refuse extra food without refusing needed water",
+      "passed": true
+    },
+    {
+      "name": "digestive care improves later recovery without instant cure or repeat rewards",
+      "passed": true
+    },
+    {
+      "name": "three dirty portions raise cumulative illness incidence compared with one",
+      "passed": true
+    },
+    {
+      "name": "appetite pause and recent intake history survive reload and freeze in close-up",
+      "passed": true
+    },
+    {
+      "name": "injured foot help does not replace an active intake preparation",
+      "passed": true
+    },
+    {
+      "name": "cushion edge restraint preserves unreachable food and exposes no phantom meal",
+      "passed": true
+    },
+    {
+      "name": "a chosen alternate standing point survives reload and enables real intake",
+      "passed": true
+    },
+    {
+      "name": "a recurring restraint help request waits until an active mouthful finishes",
+      "passed": true
+    },
+    {
+      "name": "a new digestive reaction cancels only a portion that has not entered yet",
+      "passed": true
+    },
+    {
+      "name": "hand awareness belongs to the region where the hand was observed",
+      "passed": true
+    },
+    {
+      "name": "solid boxes hide an active hand without disabling a visible hand nearby",
+      "passed": true
+    },
+    {
+      "name": "woodland trunks occlude food and hand perception at ground level",
+      "passed": true
+    },
+    {
+      "name": "a boxed creature can see beyond its front opening without eating distant supplies",
+      "passed": true
+    },
+    {
+      "name": "a hidden remembered source is not marked missing until its old location is visible",
+      "passed": true
+    },
+    {
+      "name": "trust changes first food selection near an engaged hand while absent hands do not impose avoidance",
+      "passed": true
+    }
+  ]
+}

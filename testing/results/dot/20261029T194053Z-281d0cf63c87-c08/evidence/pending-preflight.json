@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-29T19:52:11.506651+00:00",
+  "states": [
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/publication/upload-state.json",
+      "status": "uploaded-and-verified",
+      "report_commit": "558a641404aa716c9da6adfce6adbe1a49d5cf9f",
+      "run_id": "20261029T174248Z-cc3aecca7663-c06"
+    },
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261029T183752-f911463/publication/upload-state.json",
+      "status": "uploaded-and-verified",
+      "report_commit": "de505d96eda96f2a9fe4d253e1f43195bd645d30",
+      "run_id": "20261029T183752Z-f91146391e2a-c07"
+    },
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/publication/upload-state.json",
+      "status": "uploaded-and-verified",
+      "report_commit": null,
+      "run_id": "20261029T154437Z-8238c6e6380f-c04"
+    }
+  ],
+  "c07_recovery": "de505d96eda96f2a9fe4d253e1f43195bd645d30 with all 131 file contents and blob hashes verified 19:46:17Z"
+}

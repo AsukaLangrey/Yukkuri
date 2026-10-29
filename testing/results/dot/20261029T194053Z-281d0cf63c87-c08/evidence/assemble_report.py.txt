@@ -1,0 +1,472 @@
+#!/usr/bin/env python3
+"""Assemble c08 from this run's evidence only. Does not run tests or publish.
+
+Final inputs: evidence/test-completion.json (or terminal round-lifecycle),
+environment.json, main-at-end.json, native-observation.json and completed runtime
+logs. --draft permits absent terminal inputs, writes template_only=true, and does
+not write testing/latest/dot.json. Re-run without --draft only after tests stop.
+"""
+import argparse
+import copy
+import datetime as dt
+import hashlib
+import json
+import pathlib
+import re
+import shutil
+import zipfile
+
+B = pathlib.Path('/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf')
+SRC, RAW = B / 'source', B / 'evidence'
+RUN_ID = '20261029T194053Z-281d0cf63c87-c08'
+SOURCE = '281d0cf63c87adcbe14d5503d67713e430acba3c'
+TREE = None
+REL = pathlib.Path('testing/results/dot') / RUN_ID
+STAGING = B / 'publication/report-staging'
+OUT, EV = STAGING / REL, STAGING / REL / 'evidence'
+PURE = json.loads((B / 'pure-checks.json').read_text()) if (B/'pure-checks.json').exists() else [n for n in json.loads((SRC/'testing/request.json').read_text())['required_checks'] if n not in {'lfs-integrity','game-build','Save.Compatibility','runtime-smoke','visual-interaction-review'}]
+JSON_CHECKS = {'Interaction.Smoke','Input.Intent','NaturalLife.Smoke','Interaction.Continuity','ActorGeometry.Smoke','NaturalLife.Soak'}
+ALLOWED_STATUSES = {'passed', 'failed', 'blocked', 'skipped', 'not_run', 'timeout', 'interrupted'}
+
+def read(p):
+    return json.loads(pathlib.Path(p).read_text())
+
+def save(p, d):
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+def text(p):
+    return pathlib.Path(p).read_text().strip()
+
+def optional(name, fallback=None):
+    p = RAW / name
+    return read(p) if p.exists() else fallback
+
+def blank(check_id, status, reason, evidence=None):
+    return {'id': check_id, 'status': status, 'command': None,
+            'working_directory': None, 'started_at': None,
+            'finished_at': None, 'exit_code': None, 'passed_count': None,
+            'failed_count': None, 'seeds': [], 'reason': reason,
+            'evidence': evidence or []}
+
+def shell_step(check_id, stem, command, reason, require_ready=False, import_errors=False):
+    names = [stem + '-start.txt', stem + '-end.txt', stem + '-exit.txt', stem + '.txt']
+    if not all((RAW / n).is_file() for n in names):
+        return blank(check_id, 'not_run', '本轮完整开始/结束/退出码证据尚未齐备。')
+    code = int(text(RAW / (stem + '-exit.txt')))
+    log = (RAW / (stem + '.txt')).read_text()
+    status = 'passed' if code == 0 else 'timeout' if code in {124, 137, 143} else 'failed'
+    if require_ready and code == 0 and 'INTERACTION_ROOM_READY' not in log:
+        status = 'failed'
+        reason += ' 日志没有 INTERACTION_ROOM_READY。'
+    if import_errors and re.search(r'(^|\n)ERROR:', log):
+        status = 'blocked'
+    c = blank(check_id, status, reason, ['evidence/' + n for n in names])
+    c.update(command=command, working_directory=str(SRC), started_at=text(RAW / names[0]),
+             finished_at=text(RAW / names[1]), exit_code=code,
+             passed_count=1 if status == 'passed' else None,
+             failed_count=0 if status == 'passed' else None)
+    c['timeout_seconds'] = 300 if stem != 'game-runtime' else 1800
+    return c
+
+def main():
+    global TREE
+    ap=argparse.ArgumentParser();ap.add_argument('--draft',action='store_true');args=ap.parse_args()
+    life=read(RAW/'round-lifecycle.json')
+    run=optional('run.json',dict(source_commit=SOURCE,source_tree=life['source_tree'],steps=[],finished_at=None,status='not_started'))
+    manifest=read(RAW/'materialization-manifest.json');request=read(SRC/'testing/request.json')
+    report=read(SRC/'testing/report-template.json');lfs=read(RAW/'lfs-audit.json')
+    TREE=manifest['source_tree']
+    assert re.fullmatch('[0-9a-f]{40}',TREE)
+    if (B/'source-commit.json').exists():
+        commit_identity=read(B/'source-commit.json');assert commit_identity['sha']==SOURCE and commit_identity['tree']['sha']==TREE
+    assert run['source_commit']==life['source_commit']==manifest['source_commit']==SOURCE
+    assert run['source_tree']==life['source_tree']==manifest['source_tree']==TREE
+    assert request['revision']=='dot-v15-interaction-depth-I-20261030'
+    completion=optional('test-completion.json') or {};native=optional('native-observation.json') or {}
+    env=optional('environment.json');main_end=optional('main-at-end.json') or {}
+    finished=completion.get('finished_at');missing=[]
+    build_failed_early=(RAW/'game-build-exit.txt').exists() and int(text(RAW/'game-build-exit.txt'))!=0
+    for name,value in [('test-completion.json',finished),('environment.json',env),('main-at-end.json',main_end),('native-observation.json',native),('run.json finished_at',run.get('finished_at'))]:
+        if not value and not (name=='native-observation.json' and build_failed_early):missing.append(name)
+    if not args.draft:
+        assert not missing,missing
+        assert completion.get('test_processes_finished') is True
+        for k in ['id','os','cpu','gpu','driver','dotnet','godot','display','desktop_observation_authorized']: assert k in env,k
+    # Only source hashes are read, never execute project code during assembly.
+    source_verification_started=dt.datetime.now(dt.timezone.utc).isoformat()
+    expected={x['path']:x['sha'] for x in read(B/'needed.json')}
+    allowed={'src/Yukkuri.Game/Assets/Art/sanctuary-morning.png.import','src/Yukkuri.Game/Assets/pipeline-probe.glb.import'}
+    changed=[];source_rows=[];exact_lfs=0
+    for f in manifest['files']:
+        p=SRC/f['path'];data=p.read_bytes();sha=digest(data)
+        blob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+        assert f['git_blob_sha']==expected[f['path']]
+        if sha!=f['sha256']:changed.append(f['path'])
+        if f.get('lfs_restored'):
+            assert len(data)==f['lfs_size'] and sha==f['lfs_oid'];exact_lfs+=1
+        elif f['path'] not in allowed:assert blob==expected[f['path']],f['path']
+        source_rows.append(dict(path=f['path'],expected_git_blob_sha=expected[f['path']],actual_git_blob_sha=blob,sha256=sha,lfs_restored=f.get('lfs_restored',False)))
+    assert set(changed)<=allowed,changed
+    assert len(source_rows)==len(manifest['files'])==len(expected) and {x['path'] for x in manifest['files']}==set(expected)
+    assert exact_lfs==len(lfs['recovered_objects']) and len(lfs['missing_original_objects'])==3
+    assert set(PURE)==set(request['required_checks'])-{'lfs-integrity','game-build','Save.Compatibility','runtime-smoke','visual-interaction-review'}
+    source_verification_finished=dt.datetime.now(dt.timezone.utc).isoformat()
+    if run.get('finished_at'):assert run['materialized_sources_unchanged'] is True
+    steps={s['id']:s for s in run['steps']};pure=[];failures=[];seed_lines={}
+    seed_pattern=re.compile(r'CreateInteractionPlaytest|CreateMilestone|RandomState|new Random|\bseed\b|\bseeds\b|Seed\s*=',re.I)
+    for name in PURE:
+        source=(SRC/'checks'/name/'Program.cs').read_text()
+        seed_lines[name]=[{'line':i,'text':line} for i,line in enumerate(source.splitlines(),1) if seed_pattern.search(line)]
+        current=steps.get(name)
+        if not current or not current.get('finished_at'):
+            c=blank(name,'not_run','当前草稿该项尚未有完整结束证据；不计通过。')
+            restore=steps.get(name+'-restore')
+            if restore and restore.get('status') in {'failed','timeout'}:
+                c.update(status='skipped',reason='该项 restore 失败/超时，未执行依赖的规则检查。',restore=copy.deepcopy(restore),evidence=restore['evidence'])
+            pure.append(c);continue
+        c=copy.deepcopy(current);log=(RAW/(name+'.txt')).read_text();p=RAW/(name+'.json')
+        if p.exists():
+            d=read(p);rows=next(d[k] for k in ['checks','results','scenarios'] if isinstance(d.get(k),list))
+            passed=sum(r.get('passed') is True for r in rows);failed=sum(r.get('passed') is False for r in rows)
+            assert d.get('success') is (failed==0)
+            if d.get('failures') is not None:assert d['failures']==failed
+            failures.extend({'check_id':name,**r} for r in rows if r.get('passed') is False)
+        else:
+            passed=len(re.findall(r'^PASS[: ]',log,re.M));failed=len(re.findall(r'^FAIL[: ]',log,re.M))
+            # Preserve entire stderr/exception blocks for text-only checks.
+            blocks=re.findall(r'^FAIL[: ].*?(?=^(?:PASS|FAIL)[: ]|\Z)',log,re.M|re.S)
+            failures.extend({'check_id':name,'name':re.sub(r'^FAIL[: ]+','',block.splitlines()[0]).split(': ',1)[0],'output_header':block.splitlines()[0],'passed':False,'error':block.strip(),'format':'full stdout failure block'} for block in blocks)
+        assert (passed,failed)==(c.get('passed_count'),c.get('failed_count')),(name,passed,failed)
+        if c['status']!='timeout':assert c['status']==('failed' if failed or c['exit_code'] else 'passed'),name
+        c['restore']=copy.deepcopy(steps[name+'-restore']);c['restore']['timeout_seconds']=180
+        c['evidence']+=c['restore']['evidence'];c['timeout_seconds']=1800 if name=='NaturalLife.Soak' else 600
+        c['timeout_policy']='Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.'
+        deadline_match=re.search(r"fromisoformat\('([^']+)'\)",(B/'run_checks.py').read_text())
+        c['runner_deadline_utc']=deadline_match.group(1) if deadline_match else None
+        c['reason']='本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。'
+        c.setdefault('seeds',[])
+        if not c['seeds']:
+            literals=re.findall(r'(?:CreateInteractionPlaytest|new Random)\(\s*(\d+)\s*\)|ulong\s+seed\s*=\s*(\d+)\s*\)',source)
+            c['seeds']=sorted({int(v) for match in literals for v in match if v})
+            if 'CreateInteractionPlaytest()' in source: c['seeds']=sorted(set(c['seeds']+[20261028]))
+            if name=='Simulation.Smoke': c['seeds']=sorted(set(c['seeds']+[92137]))
+            if name=='Milestone.Smoke': c['seeds']=[92137,20261027];c['seed_schedule']='SharingScene input seeds 1..40 and 1..120; RandomState=unchecked(seed*0x9E3779B97F4A7C15UL).'
+            if name=='NaturalLife.Smoke': c['seed_schedule']='Fixed seed loops 1..20; sampled world seeds deterministically generated by listed new Random seeds; exact source lines retained.'
+            if name=='Interaction.Continuity': c['seed_schedule']='Random(71000+seed), seed=1..12; default world seed 20261028.'
+            if name=='Family.Social': c['seed_schedule']='Fixture default 912345; search loop seed=1..1024 with early stop when targets.Count>=3 and peaceful; exact last executed seed not logged.'
+        c['seed_provenance']='evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.'
+        c['json_expected']=name+'.json' in c['command']
+        c['execution_phase']='test'
+        compiler_errors=list(dict.fromkeys(line for line in log.splitlines() if re.search(r': error (?:CS|MSB|NU)',line)))
+        if c['exit_code']!=0 and passed==0 and failed==0 and compiler_errors:
+            c['execution_phase']='compile';c['test_execution']='not_run';c['compiler_errors']=compiler_errors
+            c['source_planned_named_cases']=len(re.findall(r'^Check\(',source,re.M))
+            c['reason']='检查程序集在dotnet run编译阶段失败；没有执行顶层案例。0/0是实际断言计数，不是通过；源码计划案例不算执行或断言失败。'
+        if name=='Family.PregnancyBoundaries':c['scope_note']='Contains reflection-based internal TryDeliverFamily boundary isolation as well as controls; not every case is a normal end-to-end pregnancy/UI flow.'
+        if name=='Interaction.CompletedNeeds':c['scope_note']='One top-level stdout PASS/FAIL emitted by try/catch; counted from execution, not Check-call source occurrences.'
+        if name=='Interaction.Continuity':c['scope_note']='Current H held-completion fixture deliberately delays idle decision and clears prior idle target after real destination intake. If it passes, report current fixture pass, not proof of a product swallowing-bug fix; historical failures remain.'
+        pure.append(c)
+    for name in ['src/Yukkuri.Simulation/InteractionWorld.cs','src/Yukkuri.Simulation/MilestoneWorld.cs','src/Yukkuri.Simulation/WorldSimulation.cs','src/Yukkuri.Simulation/SimulationConfig.cs','src/Yukkuri.Simulation/WorldState.cs']:
+        p=SRC/name
+        if p.exists():seed_lines[name]=[{'line':i,'text':line} for i,line in enumerate(p.read_text().splitlines(),1) if seed_pattern.search(line)]
+    passed=sum(c.get('passed_count') or 0 for c in pure);failed=sum(c.get('failed_count') or 0 for c in pure)
+    assert len(failures)==failed
+    pure_compilation_failures=[{'check_id':c['id'],'exit_code':c['exit_code'],'compiler_errors':c['compiler_errors'],'source_planned_named_cases_not_executed':c['source_planned_named_cases']} for c in pure if c.get('execution_phase')=='compile']
+    if not args.draft:assert all(c['status']!='not_run' for c in pure) or run['status'] in {'timeout','interrupted'} or completion.get('unrun_rule_reason')
+    entered_case_suites=sum(c.get('execution_phase')=='test' and ((c.get('passed_count') or 0)+(c.get('failed_count') or 0)>0) for c in pure)
+    unexecuted_planned_cases=sum(x['source_planned_named_cases_not_executed'] for x in pure_compilation_failures)
+    # All pending evidence remains raw; only this unpublished staging is replaced.
+    if OUT.exists():shutil.rmtree(OUT)
+    EV.mkdir(parents=True)
+    for f in sorted(RAW.rglob('*')):
+        if not f.is_file() or f.suffix not in {'.txt','.json','.md','.jsonl'}:continue
+        if f.name=='readonly-static-inputs.json':continue  # pinned source/reference input, not runtime evidence
+        assert not any(part.lower() in {'saves','profiles','private'} for part in f.relative_to(RAW).parts)
+        dest=EV/f.relative_to(RAW)
+        if f.suffix=='.jsonl':dest=dest.with_name(dest.name+'.txt')
+        dest.parent.mkdir(parents=True,exist_ok=True)
+        if f.name=='NaturalLife.Soak.json':
+            d=read(f);slim={k:v for k,v in d.items() if k!='scenarios'};slim['scenarios']=[]
+            for scenario in d['scenarios']:
+                if scenario.get('passed') is not True:slim['scenarios'].append(scenario)
+                else:
+                    sc={k:v for k,v in scenario.items() if k!='snapshots'};sc['snapshot_count']=len(scenario.get('snapshots',[]));slim['scenarios'].append(sc)
+            slim['_publication']={'derived':True,'omitted_fields':['successful scenarios[].snapshots'],'raw_sha256':digest(f.read_bytes()),'raw_bytes':f.stat().st_size,'raw_retention':'Current cloud workspace only, not a guaranteed durable URL. All failed scenarios, outcomes, errors, seeds, durations and measures retained.'}
+            save(dest,slim)
+        else:dest.write_bytes(f.read_bytes())
+    ui_review_path=B/'readonly-review/comfort-ui-review.json'
+    if ui_review_path.exists():
+        ui_review=read(ui_review_path);assert ui_review['source_commit']==SOURCE
+        save(EV/'readonly-comfort-ui-review.json',ui_review)
+    for name in ['pure-checks.json','run_checks.py','run-build.sh','run-game.sh','run-engine-checks.sh','env.sh','NuGet.offline.Config','NuGet.godot.Config','hold-lock.py']:
+        p=B/name
+        if p.exists():(EV/(name+'.txt')).write_bytes(p.read_bytes())
+    (EV/'assemble_report.py.txt').write_bytes(pathlib.Path(__file__).read_bytes())
+    for name in ['AGENTS.md','testing/request.json','testing/PROTOCOL.md','testing/report-template.json','testing/DOT-HANDOFF.md','testing/reviews/20261029T154437Z-8238c6e6380f-c04.md','global.json','toolchain.lock.json']:
+        p=SRC/name
+        if p.exists():
+            q=EV/'configuration'/name;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(p.read_bytes())
+    for f in sorted((B/'lfs-recovery').rglob('*')):
+        if f.is_file() and f.suffix in {'.json','.txt','.md'}:
+            q=EV/'lfs-recovery'/f.relative_to(B/'lfs-recovery');q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(f.read_bytes())
+    save(EV/'source-verification.json',dict(checked_at=dt.datetime.now(dt.timezone.utc).isoformat(),source_commit=SOURCE,source_tree=TREE,materialized_files_verified=len(source_rows),files=source_rows,generated_tracked_changes=changed,product_code_changes=[],original_lfs_objects_reverified=exact_lfs,complete_git_checkout=False,complete_repository_lfs=False))
+    save(EV/'seed-provenance.json',dict(source_commit=SOURCE,source_lines=seed_lines,interpretation='Exact pinned source seed expressions retained, including defaults and generated fixed ranges. Soak scenario seeds also remain in its JSON. Not new tests or generated runtime values.'))
+    continuity=[f for f in failures if f['check_id']=='Interaction.Continuity' and 'holding the finished tool' in f.get('error','')]
+    diagnostics=None
+    if continuity:
+        error=continuity[0]['error']
+        if '; diagnostics=' in error:diagnostics=json.loads(error.split('; diagnostics=',1)[1])
+    source_failures=[]
+    for f in failures:
+        code=(SRC/'checks'/f['check_id']/'Program.cs').read_text().splitlines()
+        term=f['name'];hits=[i for i,line in enumerate(code,1) if term in line]
+        trace_lines=[int(n) for n in re.findall(r'Program\.cs:line (\d+)',f.get('error',''))]
+        f['source_locations']=[f"checks/{f['check_id']}/Program.cs:{i}" for i in sorted(set(hits+trace_lines))]
+        starts=set(hits)
+        for line in trace_lines:
+            preceding=[i for i in range(min(line,len(code))) if re.match(r'^Check\(',code[i])]
+            if preceding:starts.add(preceding[-1]+1)
+        for line in sorted(starts):
+            end=next((j for j in range(line,len(code)) if re.match(r'^Check\(',code[j])),min(len(code),line+160))
+            source_failures.append({'check_id':f['check_id'],'name':term,'start_line':line,'end_line':end,'source':'\n'.join(f'{n+1}: {code[n]}' for n in range(line-1,end))})
+    failure_extract={'source_commit':SOURCE,'failures':failures,'compilation_failures':pure_compilation_failures,'diagnostics':diagnostics,'no_failure_retry':True,'root_cause_confirmed':False,
+        'interpretation_limit':'Only current JSON/stdout and pinned source are used. A failed compound assertion does not establish which component failed unless diagnostics explicitly record it. Following statements in a failed Check body are not executed; independent Check bodies may continue.'}
+    if continuity:
+        lines=(SRC/'checks/Interaction.Continuity'/'Program.cs').read_text().splitlines()
+        assertion=next((i for i,x in enumerate(lines,1) if 'Require(accepted&&sawSwallow&&moved&&c.X>.5' in x),None)
+        failure_extract['continuity_assertion_location']=f'checks/Interaction.Continuity/Program.cs:{assertion}' if assertion else None
+        failure_extract['compound_assertion']='accepted && sawSwallow && moved && c.X > .5'
+        failure_extract['subcase_execution']={'counting_unit':'One named top-level check; do not add nested combinations to aggregate.',
+            'failed_combination':continuity[0]['error'].split(':',1)[0],
+            'after_failure':'Remaining statements and later nested combinations in this Check body were not executed. Exact case boundary is retained in failed-check-source.json.'}
+    analysis=optional('failure-analysis.json') or optional('readonly-failure-review.json')
+    if analysis:
+        assert analysis.get('source_commit')==SOURCE
+        if 'passed_count' in analysis:assert analysis['passed_count']==passed
+        if 'failed_count' in analysis:assert analysis['failed_count']==failed
+    review_path=B/'readonly-review/failure-review.json'
+    if review_path.exists():
+        review=read(review_path);assert review['source_commit']==SOURCE
+        assert review['passed_count']==passed and review['failed_count']==failed
+        save(EV/'readonly-failure-review.json',review)
+        failure_extract['independent_readonly_review']='evidence/readonly-failure-review.json'
+    context_path=B/'report-preparation/failure-context.json'
+    if context_path.exists():
+        context=read(context_path);assert context['source_commit']==SOURCE
+        current_names={f['name'] for f in failures}
+        context['items']=[x for x in context['items'] if x['applies_to'] in current_names]
+        save(EV/'current-failure-context.json',context)
+        failure_extract['current_readonly_context']=context
+    if analysis:failure_extract['separate_readonly_analysis']=analysis
+    static_review=optional('readonly-static-review.json')
+    if static_review:
+        assert static_review.get('source_commit')==SOURCE
+        failure_extract['current_static_scope_notes']='evidence/readonly-static-review.json'
+    save(EV/'failure-extract.json',failure_extract);save(EV/'failed-check-source.json',{'source_commit':SOURCE,'blocks':source_failures})
+    dotnet='/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet'
+    restore=shell_step('game-restore','game-restore',f'{dotnet} restore src/Yukkuri.Game/Yukkuri.Game.csproj --configfile {B}/NuGet.godot.Config -p:NuGetAudit=false','本轮固定源码，官方准确包身份与隔离缓存 restore。')
+    build=shell_step('game-build','game-build',f'{dotnet} build src/Yukkuri.Game/Yukkuri.Game.csproj --configuration Debug --no-restore -p:UseSharedCompilation=false','当前固定源码 Linux Debug 完整游戏构建。不是 Windows 平台或打包通过。')
+    build['restore']=restore;build['evidence']+=restore['evidence']
+    buildlog=(RAW/'game-build.txt').read_text();warnings=re.findall(r'^\s*(\d+) Warning\(s\)',buildlog,re.M);errors=re.findall(r'^\s*(\d+) Error\(s\)',buildlog,re.M)
+    build['warning_count']=int(warnings[-1]) if warnings else None;build['error_count']=int(errors[-1]) if errors else None
+    build['reason']+=f" {build['warning_count']} warning / {build['error_count']} error。"
+    build_failed=build['status'] in {'failed','timeout'}
+    build_errors=list(dict.fromkeys(line for line in buildlog.splitlines() if ': error ' in line))
+    build['compiler_errors']=build_errors
+    imp=shell_step('asset-import','game-import','$GODOT_BIN --headless --path "$GAME_PATH" --editor --import --quit','退出0但标题PNG/probe GLB原始对象尚未取得造成明确ERROR，完整导入 blocked。',import_errors=True)
+    runtime=shell_step('runtime-smoke','game-runtime',f'bash {B}/run-game.sh (authorized own-cloud CUA terminal)','仅本轮固定源码实际启动/结束；有限 UI 另列，不等于完整验收。',require_ready=True)
+    runtime['working_directory']=text(RAW/'desktop-cwd.txt') if (RAW/'desktop-cwd.txt').exists() else None
+    runtime['working_directory_note']='Use wrapper-recorded pwd if available; otherwise CUA terminal cwd unknown. Project selected with absolute GAME_PATH.'
+    runtime['project_path']=str(SRC/'src/Yukkuri.Game')
+    if (B/'run-game.sh').exists():
+        match=re.search(r'timeout\s+[^\n]*?\s(\d+)\s+"\$GODOT_BIN"',(B/'run-game.sh').read_text())
+        runtime['timeout_seconds']=int(match.group(1)) if match else None
+    if build_failed:
+        dependency_reason='当前完整游戏构建失败，无可运行的当前游戏程序集；按依赖跳过，未借用旧构建或旧画面。'
+        for dependent in [imp,runtime]:
+            dependent.update(status='skipped',reason=dependency_reason,command=None,working_directory=None,started_at=None,finished_at=None,exit_code=None,passed_count=None,failed_count=None,timeout_seconds=None,evidence=['evidence/game-build.txt','evidence/game-build-exit.txt'])
+    lfs_check=blank('lfs-integrity','blocked','已物化原始对象按 LFS OID/字节数重核；3 个原始对象在本云未取得。无新受支持取件通道，本轮没有重复获取失败。不能据此断言开发侧未上传。',['evidence/lfs-audit.json','evidence/source-verification.json'])
+    lfs_check.update(command=f'python {B}/report-preparation/assemble_report.py'+(' --draft' if args.draft else ''),working_directory=str(pathlib.Path.cwd()),command_scope='Non-executing independent hash verification during report assembly; original acquisition audit retained separately.',started_at=source_verification_started,finished_at=source_verification_finished,initial_acquisition_audit_observed_at=lfs.get('checked_at'),exit_code=0,recovered_count=exact_lfs,missing_count=len(lfs['missing_original_objects']),exit_code_scope='审计结束，不表示完整LFS通过。')
+    save_check=blank('Save.Compatibility','blocked','没有获准真实历史样本；合成坏档/缺字段及当前隔离档不是历史 fixture。')
+    visual=blank('visual-interaction-review','not_run','完整 v2-v15 实际界面/手感未覆盖；新家庭/伤势/孕育/育幼/冷藏的纯规则通过不能替代真实画面与听感。',['evidence/native-observation.json'] if native else [])
+    if build_failed:visual.update(status='skipped',reason='当前游戏构建失败，未启动游戏或观察当前画面；完整视觉验收依赖被阻断。',evidence=['evidence/game-build.txt'])
+    mapping={c['id']:c for c in [lfs_check,build,*pure,save_check,runtime,visual]};checks=[mapping[k] for k in request['required_checks']];checks.append(imp)
+    if native:
+        c=blank('native-observed-interaction',native.get('status','not_run'),native.get('summary',native.get('reason','仅实际记录范围。')),['evidence/native-observation.json'])
+        c.update(command=native.get('command','CUA/Sky native interaction, exact sequence recorded in native-observation.json'),working_directory=runtime['working_directory'],project_path=runtime['project_path'],started_at=native.get('started_at'),finished_at=native.get('finished_at'),passed_count=native.get('passed_count'),failed_count=native.get('failed_count'),required=False)
+        if build_failed and c['status']=='skipped':c.update(command=None,working_directory=None,started_at=None,finished_at=None,exit_code=None,passed_count=None,failed_count=None)
+        checks.append(c)
+    if build_failed and not native:
+        skipped_native=blank('native-observed-interaction','skipped','当前完整游戏构建失败，本轮无原生UI操作或图像验收。',['evidence/game-build.txt']);skipped_native['working_directory']=None;checks.append(skipped_native)
+    additional=optional('additional-checks.json',[])
+    if isinstance(additional,dict):additional=additional.get('checks',[])
+    for c in additional:
+        c=copy.deepcopy(c);assert c['status'] in ALLOWED_STATUSES and c['id'] not in {x['id'] for x in checks}
+        for k in ['command','started_at','finished_at','exit_code','evidence','reason']:assert k in c
+        c.setdefault('working_directory',None);c.setdefault('project_path',str(SRC/'src/Yukkuri.Game'));c.setdefault('seeds',[])
+        if c['id']=='engine-contact' and (RAW/'contact.json').exists():
+            d=read(RAW/'contact.json');rows=d['checks'];assert c['passed_count']==sum(x['passed'] is True for x in rows) and c['failed_count']==sum(x['passed'] is False for x in rows)
+        if c['id']=='engine-layout' and (RAW/'render-checks.json').exists():
+            d=read(RAW/'render-checks.json');vals=[x[k] for x in d['results'] for k in ['bottomFits','forceSingleLine']];assert c['passed_count']==sum(x is True for x in vals) and c['failed_count']==sum(x is False for x in vals)
+        checks.append(c)
+    if build_failed:
+        for name in ['engine-contact','engine-layout']:
+            if not any(c['id']==name for c in checks):
+                c=blank(name,'skipped','当前游戏构建失败；引擎接触/布局依赖跳过，无本轮渲染或图像。',['evidence/game-build.txt']);c['working_directory']=None;c['required']=False;checks.append(c)
+    if not any(c['id']=='audio-playback' for c in checks):
+        audio=blank('audio-playback','skipped' if build_failed else 'blocked','当前游戏构建失败，未运行、未试听；不复制旧轮Dummy或音频结论。' if build_failed else '本轮没有有效可听音频证据；未监听不能证明音乐循环、声音抢占或反馈。',['evidence/game-build.txt'] if build_failed else ['evidence/game-runtime.txt'] if (RAW/'game-runtime.txt').exists() else [])
+        audio['working_directory']=None;checks.append(audio)
+    status='failed' if any(c['status']=='failed' for c in checks) else 'timeout' if any(c['status']=='timeout' for c in checks) or completion.get('status')=='timeout' else 'interrupted' if completion.get('status')=='interrupted' else 'partial'
+    test_and_visual_review_finished_at=finished
+    if finished:
+        recorded_ends=[finished]+[c['finished_at'] for c in checks if c.get('finished_at')]
+        finished=max(recorded_ends,key=lambda t:dt.datetime.fromisoformat(t.replace('Z','+00:00')))
+    engine_exit_warnings=[]
+    for stem in ['engine-contact','engine-render']:
+        p=RAW/(stem+'.txt')
+        if p.exists():
+            engine_exit_warnings.extend({'phase':stem,'text':line} for line in p.read_text().splitlines() if line.startswith('WARNING:'))
+    current_main=main_end.get('main_commit') or main_end.get('commit') or main_end.get('sha')
+    if not args.draft:
+        assert re.fullmatch('[0-9a-f]{40}',current_main or '')
+        assert runtime['status']!='not_run' or completion.get('runtime_not_run_reason')
+        assert dt.datetime.fromisoformat(build['finished_at'].replace('Z','+00:00'))<=dt.datetime.fromisoformat(run['started_at'].replace('Z','+00:00'))
+    diag_text=''
+    if diagnostics and all(diagnostics.get(k) is True for k in ['accepted','sawSwallow','moved','sawDestinationIntake','returnedAfterDestination']) and diagnostics.get('endX',1)<=.5:
+        diag_text=f"Drink/water 分量 accepted={diagnostics['accepted']}、sawSwallow={diagnostics['sawSwallow']}、moved={diagnostics['moved']}，endX={diagnostics['endX']}；sawDestinationIntake={diagnostics['sawDestinationIntake']}、returnedAfterDestination={diagnostics['returnedAfterDestination']}、peakX={diagnostics['peakX']}、totalTravel={diagnostics['totalTravel']}。这次记录显示已经吞咽/移动并完成目的地摄取后返回，原复合断言在末态 X>.5 失败；不能再把它解释为未吞咽或完全被困。断言仍失败，新增诊断不是修复。"
+    report.update(template_only=args.draft,run_id=RUN_ID,source_commit=SOURCE,source_tree=TREE,request_revision=request['revision'],request_sha256=digest((SRC/'testing/request.json').read_bytes()),protocol_sha256=digest((SRC/'testing/PROTOCOL.md').read_bytes()),template_sha256=digest((SRC/'testing/report-template.json').read_bytes()),agents_sha256=digest((SRC/'AGENTS.md').read_bytes()),source_worktree_clean=None,
+        started_at=life['started_at'],finished_at=finished,retry_of=None,supersedes=None,environment=env or {'id':'draft-awaiting-current-environment'},status=status,
+        summary=f"完整游戏构建 {build['status']}，{build['warning_count']}警告/{build['error_count']}错误；{len(PURE)}个项目调用中{entered_case_suites}个进入用例；实际断言{passed}通过/{failed}失败；另{len(pure_compilation_failures)}个编译失败，{unexecuted_planned_cases}个计划案例未执行。"+('构建失败，本轮导入、运行、原生UI、引擎接触/渲染与试听均未执行，无当前图像验收。' if build_failed else '真实运行与有限UI按当前证据独立列出。')+'素材与历史样本仍有缺项，不是整体验收。',
+        checks=checks,findings=[{'id':'independent-check-compilation-failures','status':'confirmed' if pure_compilation_failures else 'none-recorded','failures':pure_compilation_failures,'interpretation':'Failed compilation means no test cases executed; source planned counts are not assertion failures.'},{'id':'game-build-compiler-errors','status':build['status'],'warning_count':build['warning_count'],'error_count':build['error_count'],'compiler_errors':build_errors,'evidence':['evidence/game-build.txt'],'interpretation':'Actual current compile result; no source edits or retry performed.'},{'id':'current-rule-failures','status':'confirmed' if failures else 'none-recorded','failures':failures,'diagnostic_interpretation':diag_text,'root_cause_confirmed':False,'evidence':['evidence/failure-extract.json','evidence/failed-check-source.json']},
+        {'id':'lfs-transport-limitation','status':'blocked','description':'本云仍缺3原始对象，未出现新受支持取件通道；本轮不重复已确定的取件阻挡。不能把取件限制误记为开发侧未推送。','evidence':['evidence/lfs-audit.json']},
+        {'id':'build-warnings','status':'observed','warning_count':build['warning_count'],'description':'本轮构建日志中的警告按实际摘要计数；完整位置与类型保留，不将警告自动等同运行错误。','evidence':['evidence/game-build.txt']},
+],
+        limitations=['仅授权自己的云Linux，不是Windows专用平台验证，也未在用户原开发机运行。','本轮物化文件逐个核验；非完整Git checkout，缺3个原始LFS对象。','当前先执行完整游戏构建尝试，再执行独立纯规则；完整游戏编译失败不由纯Simulation检查通过抵消。','历史报告保留；本轮之前完整规则基线为c07，人工复演不作为完整规则基线。','没有获准历史存档样本；合成保存检查与当前档不能替代。','Soak为模拟时长，不是实机连续小时；仅大型成功快照精简，失败全文、结果、度量、种子和原始哈希保留。','完整v2-v15视觉、输入、家庭、孕育、幼体、冷藏、伤势与声音不能用纯规则或局部原生观察证明；未测项见native记录。','产品与断言未修改；确定失败未重跑。']+native.get('limitations',[]),
+        next_action='保留本轮完整失败与诊断后分别定位，不把历史假设直接当本轮根因。补支持的原始LFS传输、历史样本与真实UI/音频覆盖；不要无变化重复确定性失败。',main_at_completion=main_end,
+        source_materialization={'materialized_files':len(source_rows),'full_git_checkout':False,'product_code_changes':[],'generated_tracked_changes':changed,'lfs_original_objects_recovered':exact_lfs,'complete_repository_lfs_verified':False},
+        deduplication={'prior_full_rule_run':'20261029T183752Z-f91146391e2a-c07','prior_full_rule_source':'f91146391e2a1629b86530eff5b82fbf0085ec23','prior_full_rule_report_commit_short':'de505d96','intervening_manual_replay_is_not_full_baseline':'20261029T162613Z-8238c6e6380f-v05','trigger':'New pinned source plus watched source/checks/request changes; v15 request.','key':SOURCE+'|'+request['revision']+'|'+(env or {}).get('id','draft')},
+        run_timeout_minutes=50,test_processes_finished=completion.get('test_processes_finished',False),test_processes_finished_at=completion.get('test_processes_finished_at'),test_execution_evidence_finished_at=test_and_visual_review_finished_at,verification_finished_at=source_verification_finished,finished_at_semantics='Latest of recorded terminal test evidence and every check completion, including non-executing report-time LFS hash verification; original process time retained separately; no visual completion is inferred.',publication_state='draft-not-publishable' if args.draft else 'ready-for-atomic-results-branch-publication',draft_missing_inputs=missing)
+    engine_warning_summary='引擎阶段因游戏编译失败未运行，没有当前引擎日志或警告结论；不沿用旧轮。' if build_failed else '当前engine日志未记录警告，或该阶段尚未完成。'
+    if engine_exit_warnings:
+        report['engine_warnings']=engine_exit_warnings
+        engine_warning_summary='本轮engine警告：'+'；'.join(w['phase']+': '+w['text'] for w in engine_exit_warnings)+'。退出0及断言通过不表示无警告；未为诊断重跑。'
+        report['limitations'].append(engine_warning_summary)
+    report['pure_project_attempts']=len(PURE)
+    report['pure_suites_entered_cases']=entered_case_suites
+    report['pure_compile_planned_cases_not_run']=unexecuted_planned_cases
+    report['pure_assertion_totals']={'passed':passed,'failed':failed,'counting_unit':'Actual executed top-level assertions/scenarios only; excludes compiler diagnostics and unexecuted source cases.'}
+    report['pure_compilation_failures']=pure_compilation_failures
+    report['round_lifecycle_note']='round-lifecycle.json is the acquired-lock/start snapshot. Its running status is not the final test-process status; terminal evidence is test-completion.json. Initial phase published pending c07; no historical test is counted here.'
+    report['source_pinned_at']=life.get('source_pinned_at')
+    if build_failed:report['limitations'].append('本轮Godot --version仅用于独立身份核验，不是游戏启动或导入；该探针的Fontconfig缓存警告不是当前游戏运行结果。GPU/display/audio的旧轮信息仅按environment中的historical标注使用。')
+    raw_source_input=RAW/'readonly-static-inputs.json'
+    if raw_source_input.exists():report['omitted_reference_input']={'path':'local evidence/readonly-static-inputs.json','sha256':digest(raw_source_input.read_bytes()),'bytes':raw_source_input.stat().st_size,'reason':'Bulky pinned source/reference input, not test output. Current focused review and exact source identity retained; raw remains local.'}
+    if (RAW/'readonly-static-review.json').exists():report['static_scope_review']='evidence/readonly-static-review.json'
+    library=optional('render-library.json');library_text='本轮构建失败，未运行图形/截图检查；没有当前图像、渲染或Library图包，不沿用旧轮。' if build_failed else '图片持久存储身份尚未提供；本地路径不等于可供协作者读取的链接。'
+    if build_failed:assert library is None,'Build failed but current image library unexpectedly provided'
+    visual_text='当前完整游戏编译失败；导入、启动、原生UI、接触与渲染均依赖跳过。没有当前画面或听感通过记录。' if build_failed else native.get('summary',native.get('reason','本轮原生观察记录尚未完成。'))
+    build_error_text='\n'.join('- '+line for line in build_errors) if build_errors else '本轮构建未记录编译错误。'
+    check_compile_text='\n'.join('- `'+x['check_id']+'`：编译退出'+str(x['exit_code'])+'；源码'+str(x['source_planned_named_cases_not_executed'])+'个具名案例未执行，实际断言0/0不是通过。\n  '+'\n  '.join(x['compiler_errors']) for x in pure_compilation_failures) or '当前未记录独立检查编译失败。'
+    if library:
+        assert library['status']=='succeeded' and library.get('library_file_id')
+        archive=pathlib.Path(library.get('local_path',B/library['file_name']));assert digest(archive.read_bytes())==library['archive_sha256'] and archive.stat().st_size==library['archive_bytes']
+        im=read(RAW/'image-manifest.json');assert im['run_id']==RUN_ID;count=0
+        with zipfile.ZipFile(archive) as z:
+            for item in im['files']:
+                p=B/item['path'];assert digest(p.read_bytes())==item['sha256'] and p.stat().st_size==item['bytes'];assert digest(z.read(item['path']))==item['sha256'];count+=p.suffix.lower() in {'.png','.jpg','.jpeg'}
+            assert not any('/save' in n.lower() or 'slot1' in n.lower() for n in z.namelist())
+        report['binary_evidence_storage']={**library,'independently_verified_archive_hash':True,'independently_verified_manifest_entries':len(im['files']),'image_count':count,'access_limit':'Private user Library; repository collaborators not automatically granted access. No public share.','retention':'No separate expiry supplied; future retention not guaranteed.'}
+        library_text=f"**{count}张图片及元数据已存私有Library**：`{library['library_file_id']}`，`{library['file_name']}`；ZIP SHA256 `{library['archive_sha256']}`。逐图哈希见image-manifest；仓库协作者不会自动获权，无公开分享，未返回独立到期时间，不保证永久保留。普通Git不含二进制。"
+    report['evidence']=[dict(path='evidence/'+str(f.relative_to(EV)),sha256=digest(f.read_bytes()),bytes=f.stat().st_size) for f in sorted(EV.rglob('*')) if f.is_file()]
+    save(OUT/'report.json',report)
+    table='\n'.join('| '+c['id']+' | '+c['status']+' | '+(str(c['passed_count'])+' / '+str(c['failed_count']) if c.get('passed_count') is not None else '—')+' |' for c in checks)
+    fail_text='\n'.join(f"- `{f['check_id']}`：{f['name']}。完整错误、诊断及源码位置见 failure-extract / 原始日志。" for f in failures) or '当前完整证据中未记录失败；草稿待所有项终止后才可定论。'
+    drift='待核对main。' if not current_main else ('发布前main与被测提交一致。' if current_main==SOURCE else f'**main已推进至 `{current_main}`；本报告不覆盖该新提交。**')
+    summary=f'''# dot 云测试：{status}
+
+**完整游戏构建 {build['status']}：{build['warning_count']}警告、{build['error_count']}错误。** **{len(PURE)}个项目调用中{entered_case_suites}个进入用例；实际断言{passed}通过、{failed}失败；另{len(pure_compilation_failures)}个编译失败，{unexecuted_planned_cases}个计划案例未执行。**构建与纯Simulation检查是不同层次，后者不能抵消游戏编译失败；本轮是否实际运行/观察见下方，不借旧画面或纯规则声称验收。
+
+- 被测提交：`{SOURCE}`；树：`{TREE}`。
+- 请求：`{request['revision']}`；本轮：`{RUN_ID}`。
+- 开始UTC：{life['started_at']}；测试终态记录：{test_and_visual_review_finished_at or '尚未完成'}；报告所含核验全部结束：{finished or '尚未结束，草稿不可发布'}。
+- 测试进程实际结束：{completion.get('test_processes_finished_at') or '待记录'}；报告时独立LFS哈希核验结束：{source_verification_finished}。报告finished_at取所有检查结束时刻的最大值，不回写原始测试时间。
+- {drift}
+- 只在自己的授权云环境执行；未使用原开发机，未改产品或断言。
+
+## 游戏构建错误
+
+{build_error_text}
+
+只保留本轮实际编译结果，不改源码或重复确定失败。
+
+## 独立检查编译失败
+
+{check_compile_text}
+
+上面的编译失败与下方实际运行断言失败分开统计，不把未运行的源码计划案例算成失败或通过。
+
+## 独立规则失败与当前诊断
+
+{fail_text}
+
+{diag_text}
+
+具体分量仅以当前日志和独立只读诊断为依据；不把c07的旧错误、旧分量或静态假设复制为本轮结论。未经逐帧观测不得升格为产品根因。
+
+失败只按实际运行的顶层结果计数，不按源码中Check字面次数，也不把嵌套组合额外计数。异常后的同一Check剩余语句未执行；源码片段、完整诊断和stack trace保留，未凭旧报告预判根因。
+
+
+## 本轮检查
+
+| 检查 | 状态 | 通过 / 失败 |
+|---|---|---:|
+{table}
+
+本轮按各检查实际JSON或stdout顶层PASS/FAIL核验，不数源码字面或把筛选样本当成功率。旧c07及人工复演结果不参与本轮统计。
+
+## 实际画面与范围
+
+{visual_text}
+
+完整visual-interaction-review仍未完成。v2-v15全部未观察场景仍留待实测；声音没有有效监听就不算通过。此轮权限与实际操作只按当前证据陈述，不把旧权限拒绝记作本轮事件。
+
+## 环境、素材与证据
+
+- {len(source_rows)}物化文件独立核验，{exact_lfs}原始LFS对象按OID/大小匹配；3原始对象本云尚未取得。无新受支持通道，不重复已确定的取件失败；不能写成开发侧未上传。导入状态：{imp['status']}，只以本轮实际证据为准。
+- 本轮构建警告/错误数见上表和原始日志，不据警告单独断言运行崩溃。
+- {engine_warning_summary}
+- 无获准历史存档样本；合成保存/恢复和当前隔离档不代替历史兼容。
+- 仅Linux环境，不证明Windows；实际音频与完整视觉均按未测范围保留。
+- Soak成功快照明确派生精简，失败/错误/结果/种子/度量保留，原始哈希和大小可追溯。
+
+{library_text}
+
+下一步先处理游戏编译错误及本轮独立规则失败，再在新源码/配置触发下复测。H完成动作夹具隔离即使通过，也不是产品吞咽缺陷已修复的证据；PregnancyBoundaries包含内部反射边界隔离，不全部代表普通全流程。不能把旧诊断假设或新增检查存在当修复。补齐受支持的LFS原件传输、历史样本和实际UI/听感；整体验收仍由用户决定。
+'''
+    (OUT/'summary.md').write_text(summary)
+    latest=STAGING/'testing/latest/dot.json'
+    if args.draft:
+        if latest.exists():latest.unlink()
+    else:save(latest,dict(schema_version=1,run_id=RUN_ID,source_commit=SOURCE,report_path=str(REL/'report.json'),status=status,finished_at=finished))
+    if not args.draft:
+        parse=lambda t:dt.datetime.fromisoformat(t.replace('Z','+00:00'))
+        for c in checks:
+            for stamp in ['started_at','finished_at']:
+                if c.get(stamp):assert parse(life['started_at'])<=parse(c[stamp])<=parse(finished),(c['id'],stamp,c[stamp],finished)
+    paths={x['path'] for x in report['evidence']}
+    for c in checks:
+        assert c['status'] in ALLOWED_STATUSES,c
+        for p in c.get('evidence',[]):assert p in paths,(c['id'],p)
+    for e in report['evidence']:
+        p=OUT/e['path'];assert digest(p.read_bytes())==e['sha256'] and p.stat().st_size==e['bytes']
+    assert not re.search(r'REPLACE_[A-Z_]+',(OUT/'report.json').read_text())
+    files=[f for f in STAGING.rglob('*') if f.is_file()];assert all(OUT in f.parents or f==latest for f in files)
+    assert all(f.suffix in {'.json','.txt','.md'} for f in files)
+    size=sum(f.stat().st_size for f in files);assert size<5*1024*1024,size
+    validation=dict(validated_at=dt.datetime.now(dt.timezone.utc).isoformat(),draft=args.draft,missing_inputs=missing,status=status,source_commit=SOURCE,run_id=RUN_ID,pure_passed=passed,pure_failed=failed,pure_suites_complete=sum(c.get('finished_at') is not None for c in pure),pure_compilation_failure_count=len(pure_compilation_failures),source_files=len(source_rows),generated_changes=changed,evidence_count=len(report['evidence']),publication_files=len(files),publication_bytes=size,all_evidence_hashes_match=True,out=str(OUT))
+    save(B/'publication/validation.json',validation);print(json.dumps(validation,ensure_ascii=False,indent=2))
+if __name__=='__main__':main()

@@ -1,0 +1,13 @@
+{
+  "run_id": "20261029T194053Z-281d0cf63c87-c08",
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "source_tree": "b744d40f68c312910e6dcdecf1d291b2e262a612",
+  "started_at": "2026-10-29T19:40:53Z",
+  "source_pinned_at": "2026-10-29T19:47:17Z",
+  "status": "tests-completed-publication-pending",
+  "deadline": "2026-10-29T20:30:00Z",
+  "lock_held_by": "/workspace/shared/yukkuri-cloud-20261029T194053-preflight/hold-lock.py",
+  "first_phase": "Published pending c07 and verified 131 files at 19:46:17; no c07 test rerun",
+  "test_commands_finished_at": "2026-10-29T19:53:24.598848+00:00",
+  "updated_at": "2026-10-29T19:56:16.418311+00:00"
+}
