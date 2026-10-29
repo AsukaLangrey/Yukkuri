@@ -4,7 +4,7 @@ public enum BodyPart { Head, Cheek, Side, Bottom, Mouth, Accessory }
 public enum SurfaceSide { Whole, Left, Right }
 public enum RestraintKind { None, Hand, Frame, Box, Hanging, Wrap }
 public enum AccessoryPlace { Worn, Hand, Ground, Stored, Hung }
-public enum RoomObjectKind { Meal, Sweet, Water, Ball, Treasure, Cushion, Leaves, RiverWater }
+public enum RoomObjectKind { Meal, Sweet, Water, Ball, Treasure, Cushion, Leaves, RiverWater, Urine, Feces }
 public enum IntakeKind { Meal, Sweet, Water }
 public enum LearnedCue { Follow, Stop, Wait }
 public enum InteractionAction

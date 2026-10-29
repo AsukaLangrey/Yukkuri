@@ -12,11 +12,18 @@ public partial class InteractionRoom
     private string? _hoverId;
     private BodyPart _hoverPart;
     private bool _mouseHeld;
-    private bool _orbiting;
+    private bool _orbiting,_panning;
+    private MouseButton _orbitButton=MouseButton.Middle;
+    private bool _orbitDragged;
+    private Vector2 _orbitTravel;
+    private InteractionAction? _orbitClickAction;
+    private Vector3 _yardFocus;
     private Contact? _tapContact;
     private float _tapAge;
     private readonly ContactStrokeTracker _strokeTracker=new();
     private readonly ContactMotion _contactMotion=new();
+    private readonly CarryReleaseMotion _carryReleaseMotion=new();
+    private ulong _lastGestureSampleUsec;
     private bool _directGesture;
     private float _appliedForce=.12f;
     private string? _heldSupplyId;
@@ -42,9 +49,14 @@ public partial class InteractionRoom
     }
     private bool TryGroundPoint(Vector2 point,float height,out Vector3 hit)
     {
+        bool valid=TryCameraPlanePoint(point,height,out hit);
+        hit=new(Mathf.Clamp(hit.X,-7.7f,7.7f),height,Mathf.Clamp(hit.Z,-7.7f,7.7f));return valid;
+    }
+    private bool TryCameraPlanePoint(Vector2 point,float height,out Vector3 hit)
+    {
         var start=_camera.ProjectRayOrigin(point);var dir=_camera.ProjectRayNormal(point);
         bool valid=InteractionCameraOrbit.TryPlaneHit(new(start.X,start.Y,start.Z),new(dir.X,dir.Y,dir.Z),height,out var world);
-        hit=new(Mathf.Clamp(world.X,-7.7f,7.7f),height,Mathf.Clamp(world.Z,-7.7f,7.7f));return valid;
+        hit=new(world.X,world.Y,world.Z);return valid;
     }
     private Vector3 ViewMotion(Vector2 pixels)
     {
@@ -97,16 +109,57 @@ public partial class InteractionRoom
     private float SceneOcclusionDistance(Vector3 origin,Vector3 direction)=>WoodlandVisible?
         WoodlandOcclusion.RayDistance(new(origin.X,origin.Y,origin.Z),new(direction.X,direction.Y,direction.Z)):float.PositiveInfinity;
     private static string PartName(BodyPart part,SurfaceSide side=SurfaceSide.Whole)=>part switch{BodyPart.Head=>"头顶",BodyPart.Cheek=>side==SurfaceSide.Left?"左脸":side==SurfaceSide.Right?"右脸":"脸侧",BodyPart.Side=>side==SurfaceSide.Left?"身体左侧":side==SurfaceSide.Right?"身体右侧":"身体侧面",BodyPart.Bottom=>"底部",BodyPart.Mouth=>"嘴边",_=>"饰品"};
+    private static bool IsGroundPlacement(InteractionAction action)=>action is InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater or InteractionAction.PutDown or InteractionAction.GiveBall;
+
+    private void BeginCloseOrbit(MouseButton button)
+    {
+        CancelGesture();_orbiting=true;_orbitButton=button;
+        _message="正在转动观察视角。左键按住环境或中键拖动转视角，左键按住小油进行互动。";
+    }
 
     public override void _Input(InputEvent input)
     {
         if(!_ready||!_windowFocused)return;
-        if(input is InputEventMouseButton {ButtonIndex:MouseButton.Middle,Pressed:false})_orbiting=false;
+        if(input is InputEventMouseButton {Pressed:false} released&&
+            (_panning&&released.ButtonIndex==MouseButton.Middle||_orbiting&&released.ButtonIndex==_orbitButton))
+        {
+            var clickAction=_orbiting&&!_orbitDragged?_orbitClickAction:null;
+            _orbiting=_panning=false;_orbitClickAction=null;
+            // A deliberate placement click still works; dragging the environment never places anything.
+            if(clickAction is { } action&&!_modalOpen&&!Sim.State.Settings.Pause&&Sim.Selected!=null&&IsScenePoint(released.Position))
+            {
+                if(TryGroundPoint(released.Position,0,out var landing))
+                    AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(action,Force:_force,X:landing.X,Z:landing.Z)));
+                else _message="这个视角看不到落点。先把镜头转向地面，再放置；托举仍保持支撑。";
+            }
+            GetViewport().SetInputAsHandled();return;
+        }
+        if(input is InputEventMouseMotion pan&&_panning)
+        {
+            if(!Input.IsMouseButtonPressed(MouseButton.Middle)||Sim.State.Mode==PlayMode.CloseUp||_modalOpen){_panning=false;return;}
+            // Unclamped ground hits keep the point under the cursor attached to the drag,
+            // including at the yard edges and at different zoom/window sizes.
+            if(TryCameraPlanePoint(pan.Position-pan.Relative,0,out var previous)&&TryCameraPlanePoint(pan.Position,0,out var current))
+            {
+                Vector3 shift=previous-current;
+                _yardFocus+=shift;_camera.Position+=shift;
+            }
+            GetViewport().SetInputAsHandled();return;
+        }
         if(input is InputEventMouseMotion orbit&&_orbiting)
         {
-            if(!Input.IsMouseButtonPressed(MouseButton.Middle)||Sim.State.Mode!=PlayMode.CloseUp||_modalOpen){_orbiting=false;return;}
-            _closeYaw=Mathf.Wrap(_closeYaw-orbit.Relative.X*.35f,-180,180);
-            _closePitch=Mathf.Clamp(_closePitch+orbit.Relative.Y*.25f,-25,65);
+            if(!Input.IsMouseButtonPressed(_orbitButton)||Sim.State.Mode!=PlayMode.CloseUp||_modalOpen)
+            {_orbiting=false;_orbitClickAction=null;return;}
+            Vector2 travel=orbit.Relative;
+            if(_orbitButton==MouseButton.Left&&!_orbitDragged)
+            {
+                _orbitTravel+=travel;
+                if(_orbitTravel.Length()<4){GetViewport().SetInputAsHandled();return;}
+                travel=_orbitTravel;
+            }
+            _orbitDragged=true;_orbitClickAction=null;
+            _closeYaw=Mathf.Wrap(_closeYaw-travel.X*.35f,-180,180);
+            _closePitch=Mathf.Clamp(_closePitch+travel.Y*.25f,-25,65);
             GetViewport().SetInputAsHandled();return;
         }
         if(input is InputEventMouseButton {ButtonIndex:MouseButton.Left,Pressed:false}&&_mouseHeld)
@@ -125,7 +178,8 @@ public partial class InteractionRoom
             else if(!_modalOpen&&key.Keycode==Key.Delete&&IsScenePoint(GetViewport().GetMousePosition()))
             {
                 var obj=ObjectAt(GetViewport().GetMousePosition());
-                if(obj!=null)_message=Sim.PutAwayRoomObject(obj.Id)?"已经收起地上的物品。":
+                if(obj!=null&&WorldSimulation.IsWaste(obj.Kind))_message=Sim.CleanRoomWaste(obj.Id)?"已经清理干净。":"这里没有可以清理的排泄物。";
+                else if(obj!=null)_message=Sim.PutAwayRoomObject(obj.Id)?"已经收起地上的物品。":
                     NaturalResources.IsWild(obj.Kind)?"这是野外的资源，不能直接收进物品栏。":"这件物品现在不能收起。";
             }
         }
@@ -136,12 +190,17 @@ public partial class InteractionRoom
         if(!_ready||!_windowFocused||_modalOpen)return;
         if(input is not InputEventMouseButton mouse||!mouse.Pressed)return;
         if(!IsScenePoint(mouse.Position))return;
-        if(mouse.ButtonIndex==MouseButton.Middle&&Sim.State.Mode==PlayMode.CloseUp)
+        if(mouse.ButtonIndex==MouseButton.Middle)
         {
-            CancelGesture();_orbiting=true;
-            _message="正在转动观察视角。松开中键后，可以对准另一处继续接触。";
+            if(Sim.State.Mode==PlayMode.CloseUp)BeginCloseOrbit(MouseButton.Middle);
+            else
+            {
+                CancelGesture();_panning=true;UpdateRoomCamera(1);
+                _message="正在拖动画面。松开中键停止，点“居中”回到小院中央。";
+            }
             GetViewport().SetInputAsHandled();return;
         }
+        if(_panning||_orbiting){GetViewport().SetInputAsHandled();return;}
         if(mouse.ButtonIndex is MouseButton.WheelUp or MouseButton.WheelDown)
         {
             float step=mouse.ButtonIndex==MouseButton.WheelUp?1:-1;
@@ -159,12 +218,23 @@ public partial class InteractionRoom
             GetViewport().SetInputAsHandled();return;
         }
         if(mouse.ButtonIndex!=MouseButton.Left)return;
-        if(Sim.State.Settings.Pause){_message="小院暂停中，先点“继续”或按空格。";return;}
         var contact=ContactAt(mouse.Position);
+        // Decide once at press time. Crossing a creature while orbiting does not touch it,
+        // and dragging off a creature never turns an interaction into a camera drag.
+        if(Sim.State.Mode==PlayMode.CloseUp&&contact==null&&ObjectAt(mouse.Position)==null)
+        {
+            InteractionAction? clickAction=_toolArmed&&IsGroundPlacement(_action)?_action:
+                !_toolArmed&&Sim.Selected?.Interaction.Carried==true?InteractionAction.PutDown:null;
+            BeginCloseOrbit(MouseButton.Left);_orbitClickAction=clickAction;
+            GetViewport().SetInputAsHandled();return;
+        }
+        if(Sim.State.Settings.Pause){_message="小院暂停中，先点“继续”或按空格。";return;}
         if(!_toolArmed&&mouse.DoubleClick&&contact!=null){SelectOil(contact.Id);ToggleClose();return;}
         if(!_toolArmed)
         {
             var obj=ObjectAt(mouse.Position);
+            if(obj!=null&&WorldSimulation.IsWaste(obj.Kind))
+            {_message=WasteLabel(obj);GetViewport().SetInputAsHandled();return;}
             if(obj?.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water)
             {
                 if(Sim.HoldSupply(obj.Id))
@@ -187,13 +257,13 @@ public partial class InteractionRoom
             else if(contact!=null)
             {
                 if(contact.Id!=Sim.State.SelectedId)SelectOil(contact.Id);
-                _action=mouse.ShiftPressed?InteractionAction.Lift:InteractionAction.Touch;
+                _action=InteractionAction.Lift;
             }
             else return;
             _directGesture=true;
         }
         var ground=GroundPoint(mouse.Position);
-        bool placement=_action is InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater or InteractionAction.PutDown or InteractionAction.GiveBall;
+        bool placement=IsGroundPlacement(_action);
         if(placement)
         {
             if(!TryGroundPoint(mouse.Position,0,out ground)){_message="这个视角看不到落点。先把镜头转向地面，再放置；托举仍保持支撑。";return;}
@@ -216,6 +286,7 @@ public partial class InteractionRoom
             _height=(float)selected.Interaction.Height;
         _dragStart=mouse.Position;_lastPointer=mouse.Position;_dragWorldStart=ground;_gestureDirection=Vector2.Zero;
         _strokeTracker.Reset();
+        _carryReleaseMotion.Reset();_lastGestureSampleUsec=Time.GetTicksUsec();
         _contactMotion.Reset();_appliedForce=_directGesture?.12f:_force;
         _contactMotion.Sample(contact?.Id,System.Numerics.Vector3.Zero,System.Numerics.Vector3.UnitY,.01);
         if(contact!=null)SampleStroke(contact,mouse.Position,true);
@@ -247,12 +318,14 @@ public partial class InteractionRoom
     private void ResetContactMotion()
     {
         _strokeTracker.Reset();_contactMotion.Reset();
+        _carryReleaseMotion.Reset();
         _appliedForce=.12f;_gestureDirection=Vector2.Zero;_gesturePose="idle";
     }
     private void CancelGesture()
     {
         _tapContact=null;
-        _orbiting=false;
+        _orbiting=_panning=false;
+        _orbitDragged=false;_orbitTravel=Vector2.Zero;_orbitClickAction=null;
         ResetContactMotion();_directGesture=false;
         if(Sim?.HasInteractionGesture==true)AcceptFeedback(Sim.EndInteractionGesture(true));
         if(_heldSupplyId is { } supply){Sim?.ReleaseSupply(supply);_heldSupplyId=null;}
@@ -260,6 +333,14 @@ public partial class InteractionRoom
     }
     private void EndPointerGesture()
     {
+        // Release can arrive between rendered frames. A UI/outside release is
+        // cancellation, never permission to apply a previously sampled impulse.
+        if(!IsScenePoint(GetViewport().GetMousePosition())){CancelGesture();return;}
+        if(_heldSupplyId==null&&_mouseHeld&&Sim.HasInteractionGesture)
+        {
+            double seconds=(Time.GetTicksUsec()-_lastGestureSampleUsec)/1_000_000.0;
+            if(seconds>0)ProcessRoomGesture((float)Math.Min(.1,seconds),seconds,releasing:true);
+        }
         string? target=Sim.InteractionGestureTarget;
         bool place=_directGesture&&_action==InteractionAction.Lift;
         _mouseHeld=false;_ballDragId=null;AcceptFeedback(Sim.EndInteractionGesture());_hand.Visible=false;
@@ -273,19 +354,21 @@ public partial class InteractionRoom
         if(place&&target!=null)
         {
             Vector2 point=GetViewport().GetMousePosition();
-            if(IsScenePoint(point)&&TryGroundPoint(point,0,out var ground))
-                AcceptFeedback(Sim.ExecuteInteraction(target,new(InteractionAction.PutDown,X:ground.X,Z:ground.Z)));
+            if(IsScenePoint(point))
+                AcceptFeedback(Sim.ReleaseDraggedCreature(target,_carryReleaseMotion.Velocity));
             else _message="这里看不到安全落点，仍然托着；在空地上点一下放稳。";
         }
         _directGesture=false;ResetContactMotion();
     }
 
-    private void ProcessRoomGesture(float dt,double sampleSeconds)
+    private void ProcessRoomGesture(float dt,double sampleSeconds,bool releasing=false)
     {
         if(_heldSupplyId!=null){ProcessHeldSupply(dt);return;}
         if(!_mouseHeld)return;
         if(!Sim.HasInteractionGesture){CancelGesture();return;}
-        if(!Input.IsMouseButtonPressed(MouseButton.Left)){CancelGesture();return;}
+        if(!releasing&&!Input.IsMouseButtonPressed(MouseButton.Left)){CancelGesture();return;}
+        ulong sampleUsec=Time.GetTicksUsec();
+        double gestureSeconds=(sampleUsec-_lastGestureSampleUsec)/1_000_000.0;_lastGestureSampleUsec=sampleUsec;
         Vector2 current=GetViewport().GetMousePosition();var contact=IsScenePoint(current)?ContactAt(current):null;
         bool touching=contact!=null&&contact.Id==Sim.InteractionGestureTarget&&CanUseContact(contact);
         var ground=GroundPoint(current);var worldMotion=ground-GroundPoint(_lastPointer);
@@ -320,7 +403,10 @@ public partial class InteractionRoom
         if(_action is InteractionAction.Lift or InteractionAction.AdjustHanging or InteractionAction.Roll)
         {
             var c=Sim.State.Creatures.Find(o=>o.Id==Sim.InteractionGestureTarget)!;
-            var relative=SupportDrag(current-_lastPointer);
+            // Re-entry establishes a new pointer baseline. A stalled frame also
+            // cannot catch up spatial travel before its release speed is discarded.
+            bool continuous=timelySample&&gestureSeconds>0&&gestureSeconds<=ContactMotion.MaximumSampleSeconds&&IsScenePoint(_lastPointer);
+            var relative=continuous?SupportDrag(current-_lastPointer):Vector3.Zero;
             carriedTarget=new Vector3((float)c.X,_height,(float)c.Z)+relative;
             if(_action==InteractionAction.Roll)worldMotion=relative;
         }
@@ -330,13 +416,26 @@ public partial class InteractionRoom
         // Dragging off the scene never creates force, consumes a dose, or drops a held oil.
         if(!IsScenePoint(current))
         {
-            if(_action==InteractionAction.Tease){CancelGesture();_lastPointer=current;return;}
+            _carryReleaseMotion.Reset();
+            // An aim has a stored release impulse, so it must not survive a trip
+            // through the UI. Cancelling Throw keeps the existing hand support.
+            if(_action is InteractionAction.Tease or InteractionAction.Throw or InteractionAction.PlayBall)
+            {CancelGesture();_lastPointer=current;return;}
             // Tell the simulation that contact really broke, including mouth/care dwell.
             if(_action is not (InteractionAction.Lift or InteractionAction.Throw or InteractionAction.PlayBall or InteractionAction.AdjustHanging))
                 Sim.ContinueInteractionGesture(input,false);
             _gesturePose="idle";_hand.Visible=false;_lastPointer=current;return;
         }
+        var carried=_directGesture&&_action==InteractionAction.Lift?Sim.State.Creatures.Find(c=>c.Id==Sim.InteractionGestureTarget):null;
+        var beforeCarry=carried!=null?new System.Numerics.Vector2((float)carried.X,(float)carried.Z):default;
         var feedback=Sim.ContinueInteractionGesture(input,touching);
+        if(carried!=null)
+        {
+            if(timelySample&&IsScenePoint(_lastPointer))
+                _carryReleaseMotion.Sample(new System.Numerics.Vector2((float)carried.X,(float)carried.Z)-beforeCarry,gestureSeconds);
+            else _carryReleaseMotion.Reset();
+            if(feedback.Success)feedback=feedback with {Message="按住拖动搬运，慢慢松手放下；快速甩动后松手会抛出。Shift＋滚轮调高度。"};
+        }
         _gesturePose=feedback.Pose;AcceptFeedback(feedback,Sim.InteractionGestureTarget);
         if(!Sim.HasInteractionGesture){CancelGesture();_lastPointer=current;return;}
         ShowInteractionTool();
@@ -467,7 +566,7 @@ public partial class InteractionRoom
     private void UpdatePointer()
     {
         if(_pointer==null)return;
-        Vector2 point=GetViewport().GetMousePosition();bool scene=_windowFocused&&IsScenePoint(point);
+        Vector2 point=GetViewport().GetMousePosition();bool scene=_windowFocused&&!_panning&&!_orbiting&&IsScenePoint(point);
         var contact=scene?ContactAt(point):null;
         var roomObject=scene&&(!_toolArmed||_action==InteractionAction.PlayBall)?ObjectAt(point):null;
         _hoverId=contact?.Id;_hoverPart=contact?.Part??BodyPart.Side;
@@ -476,10 +575,10 @@ public partial class InteractionRoom
         {
             _hoverLabel.Text=ContactName(contact)+(Sim.InteractionGestureTarget==contact.Id&&CanUseContact(contact)?
                 " · "+(_appliedForce<.35?"轻触":_appliedForce<.62?"稍重":"用力"):
-                !_toolArmed?" · 按住轻摸 / Shift 托起":"");
+                !_toolArmed?" · 按住抓起 / 松手放下 / 甩手抛出":"");
             _hoverLabel.Position=point+new Vector2(18,18);
         }
-        if(roomObject!=null){_hoverLabel.Text=RoomResourceText.Label(roomObject,Sim.State);_hoverLabel.Position=point+new Vector2(18,18);}
+        if(roomObject!=null){_hoverLabel.Text=WorldSimulation.IsWaste(roomObject.Kind)?WasteLabel(roomObject):RoomResourceText.Label(roomObject,Sim.State);_hoverLabel.Position=point+new Vector2(18,18);}
         _pointer.Point=point;_pointer.Active=scene&&(contact!=null||roomObject!=null);
         _pointer.Rough=_mouseHeld?_appliedForce>.62f:_toolArmed&&_group.Rough;_pointer.Pressed=_mouseHeld;
         _pointer.DragOrigin=_dragStart;_pointer.Aim=_mouseHeld&&_action is InteractionAction.Push or InteractionAction.Throw or InteractionAction.PlayBall;

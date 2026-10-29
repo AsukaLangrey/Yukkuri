@@ -134,6 +134,139 @@ Reject(()=>writeFailureStore.Save(nullSpeech,1),"null speech cannot be saved ove
 Check(File.ReadAllText(writeFailureStore.SlotPath(1))==protectedPrimary&&
     File.ReadAllText(writeFailureStore.SlotPath(1)+".bak")==protectedBackup,
     "invalid candidate preserves both valid save generations");
+
+// Test the actual file boundary: property setters reject some malformed physiology before
+// Validate can run, while Save must also reject inconsistent states built in memory.
+var inconsistentPhysiology=WorldSimulation.CreateInteractionPlaytest().State;
+inconsistentPhysiology.Creatures[0].Interaction.Physiology.Excreting=ExcretionKind.Urine;
+RecoverStructuralCorruption(inconsistentPhysiology,"excretion kind without remaining time");
+Reject(()=>writeFailureStore.Save(inconsistentPhysiology,1),"inconsistent physiology cannot replace a valid save");
+Check(File.ReadAllText(writeFailureStore.SlotPath(1))==protectedPrimary&&
+    File.ReadAllText(writeFailureStore.SlotPath(1)+".bak")==protectedBackup,
+    "physiology validation failure preserves both valid save generations");
+foreach(var (description,physiologyJson) in new (string,string)[]{
+    ("explicit null physiology","null"),
+    ("negative bladder","{\"Bladder\":-1}"),
+    ("bowel above its limit","{\"Bowel\":101}"),
+    ("remaining time above its limit","{\"Excreting\":\"Urine\",\"Remaining\":4.01}"),
+    ("undefined numeric excretion kind","{\"Excreting\":99,\"Remaining\":1}"),
+    ("negative urination count","{\"Urinations\":-1}"),
+    ("overflowing defecation count","{\"Defecations\":2147483648}"),
+    ("remaining time without an excretion kind","{\"Remaining\":1}")})
+{
+    var damaged=System.Text.Json.Nodes.JsonNode.Parse(Json(validInteraction))!;
+    damaged["Creatures"]![0]!["Interaction"]!["Physiology"]=System.Text.Json.Nodes.JsonNode.Parse(physiologyJson);
+    string damagedJson=damaged.ToJsonString();File.WriteAllText(structureStore.SlotPath(1),damagedJson);
+    var recovered=structureStore.Load(1);
+    Check(recovered.RecoveredBackup&&Json(recovered.State)==Json(validInteraction),description+" recovers the valid backup");
+    Reject(()=>structureStore.Save(validInteraction,1),description+" cannot overwrite the good backup");
+    Check(File.ReadAllText(structureStore.SlotPath(1))==damagedJson&&
+        File.ReadAllText(structureStore.SlotPath(1)+".bak")==structureBackup,description+" preserves both files");
+}
+foreach(bool omitWholeObject in new[]{true,false})
+{
+    var oldFields=System.Text.Json.Nodes.JsonNode.Parse(Json(validInteraction))!;
+    foreach(var creature in oldFields["Creatures"]!.AsArray())
+    {
+        var life=creature!["Interaction"]!.AsObject();
+        if(omitWholeObject)life.Remove("Physiology");else life["Physiology"]=new System.Text.Json.Nodes.JsonObject();
+    }
+    File.WriteAllText(structureStore.SlotPath(2),oldFields.ToJsonString());
+    var legacy=structureStore.Load(2);
+    Check(!legacy.RecoveredBackup&&legacy.State.Creatures.All(c=>c.Interaction.Physiology is
+        {Bladder:35,Bowel:20,Excreting:ExcretionKind.None,Remaining:0,Urinations:0,Defecations:0}),
+        (omitWholeObject?"missing physiology object":"missing physiology fields")+" uses idle defaults without backup fallback");
+}
+var wasteState=WorldSimulation.CreateInteractionPlaytest().State;
+var wasteOwner=wasteState.Creatures[0];
+wasteOwner.Interaction.Physiology.Bladder=100;wasteOwner.Interaction.Physiology.Bowel=100;
+wasteOwner.Interaction.Physiology.Urinations=int.MaxValue;wasteOwner.Interaction.Physiology.Defecations=int.MaxValue;
+wasteOwner.Interaction.Physiology.Excreting=ExcretionKind.Feces;wasteOwner.Interaction.Physiology.Remaining=1.25;
+foreach(var kind in new[]{RoomObjectKind.Urine,RoomObjectKind.Feces})
+    for(int n=0;n<64;n++)wasteState.RoomObjects.Add(new(){Id=$"waste-{kind}-{n}",Kind=kind,
+        OwnerId=wasteOwner.Id,RegionId=wasteOwner.RegionId,X=0,Z=0,Portions=1000,Contamination=1});
+var wasteStore=new SaveStore(Path.Combine(root,"physiology-boundary"));
+wasteStore.Save(wasteState,1);var wasteLoaded=wasteStore.Load(1);
+Check(!wasteLoaded.RecoveredBackup&&Json(wasteLoaded.State)==Json(wasteState),
+    "active excretion, saturated counters and both full waste collections survive exact save round-trip");
+var wasteSimulation=new WorldSimulation(wasteLoaded.State);wasteSimulation.State.UnlimitedResources=false;
+int wasteFood=wasteSimulation.State.Food,wasteCount=wasteSimulation.State.RoomObjects.Count;
+string nonWasteBefore=System.Text.Json.JsonSerializer.Serialize(wasteSimulation.State.RoomObjects.Where(o=>!WorldSimulation.IsWaste(o.Kind)),SaveStore.JsonOptions);
+int cleanedWaste=0;
+foreach(var waste in wasteSimulation.State.RoomObjects.Where(o=>WorldSimulation.IsWaste(o.Kind)).ToArray())
+    if(wasteSimulation.CleanRoomWaste(waste.Id))cleanedWaste++;
+Check(cleanedWaste==128&&wasteSimulation.State.Food==wasteFood&&wasteSimulation.State.RoomObjects.Count==wasteCount-128&&
+    System.Text.Json.JsonSerializer.Serialize(wasteSimulation.State.RoomObjects.Where(o=>!WorldSimulation.IsWaste(o.Kind)),SaveStore.JsonOptions)==nonWasteBefore,
+    "cleaning loaded saturated waste refunds no food and preserves every unrelated object");
+SaveStore.Validate(wasteSimulation.State);
+// Automatic production must be reproducible from an actual saved state. Existing
+// non-waste IDs deliberately occupy the first candidates, including a stored object abroad.
+foreach(var kind in new[]{RoomObjectKind.Urine,RoomObjectKind.Feces})foreach(bool saturated in new[]{false,true})
+{
+    var pendingState=WorldSimulation.CreateInteractionPlaytest().State;
+    pendingState.Creatures=[pendingState.Creatures[0]];pendingState.RoomObjects.Clear();
+    var producer=pendingState.Creatures[0];producer.Fullness=90;producer.Energy=90;
+    producer.DecisionIn=10000;producer.Interaction.NextAutonomyAt=10000;
+    int initialCount=saturated?int.MaxValue:7;
+    producer.Interaction.Physiology.Urinations=initialCount;producer.Interaction.Physiology.Defecations=initialCount;
+    pendingState.Regions.Add(new(){Id="waste-id-other",Name="ID collision fixture",Kind=RegionKind.Sanctuary});
+    string candidate=FormattableString.Invariant($"waste:{producer.Id}:{(int)kind}:{(long)initialCount+1}");
+    pendingState.RoomObjects.Add(new(){Id=candidate,Kind=RoomObjectKind.Treasure,RegionId="waste-id-other",Stored=true});
+    pendingState.RoomObjects.Add(new(){Id=candidate+":1",Kind=RoomObjectKind.Cushion,X=6,Z=6});
+    var continuationStore=new SaveStore(Path.Combine(root,$"waste-continuation-{kind}-{saturated}"));
+    // The second completion also checks uniqueness when the completed counter stays saturated.
+    for(int completion=0;completion<2;completion++)
+    {
+        var pending=pendingState.Creatures[0].Interaction.Physiology;
+        pending.Bladder=90;pending.Bowel=90;pending.Excreting=kind==RoomObjectKind.Urine?ExcretionKind.Urine:ExcretionKind.Feces;
+        pending.Remaining=.25;
+        int countBefore=kind==RoomObjectKind.Urine?pending.Urinations:pending.Defecations;
+        var existingIds=pendingState.RoomObjects.Select(o=>o.Id).ToHashSet(StringComparer.Ordinal);
+        string existingObjects=System.Text.Json.JsonSerializer.Serialize(pendingState.RoomObjects,SaveStore.JsonOptions);
+        continuationStore.Save(pendingState,completion+1);
+        var left=new WorldSimulation(continuationStore.Load(completion+1).State);
+        var right=new WorldSimulation(continuationStore.Load(completion+1).State);
+        Check(Json(left.State)==Json(right.State),"waste continuation starts from identical saved branches");
+        for(int step=0;step<3;step++)
+        {
+            left.AdvanceInteractionPresentation(.1);left.Advance(.1);
+            right.AdvanceInteractionPresentation(.1);right.Advance(.1);
+        }
+        Check(Json(left.State)==Json(right.State),$"{kind} completion {completion+1} resumes deterministically with saturated={saturated}");
+        var generated=left.State.RoomObjects.Where(o=>!existingIds.Contains(o.Id)).ToArray();
+        var finished=left.State.Creatures[0].Interaction.Physiology;
+        int countAfter=kind==RoomObjectKind.Urine?finished.Urinations:finished.Defecations;
+        Check(generated.Length==1&&generated[0].Kind==kind&&generated[0].OwnerId==producer.Id&&
+            left.State.RoomObjects.Count==existingIds.Count+1&&
+            left.State.RoomObjects.Select(o=>o.Id).Distinct(StringComparer.Ordinal).Count()==left.State.RoomObjects.Count&&
+            !finished.Active&&countAfter==Math.Min(int.MaxValue-1,countBefore)+1,
+            "automatic waste avoids all existing IDs and completes exactly once at the counter boundary");
+        Check(System.Text.Json.JsonSerializer.Serialize(left.State.RoomObjects.Where(o=>existingIds.Contains(o.Id)),SaveStore.JsonOptions)==existingObjects,
+            "automatic waste ID conflict resolution never renames, replaces or removes existing objects");
+        SaveStore.Validate(left.State);SaveStore.Validate(right.State);
+        pendingState=left.State;
+    }
+}
+foreach(var kind in new[]{RoomObjectKind.Urine,RoomObjectKind.Feces})
+{
+    wasteOwner.Interaction.Physiology.Excreting=kind==RoomObjectKind.Urine?ExcretionKind.Urine:ExcretionKind.Feces;
+    wasteOwner.Interaction.Physiology.Remaining=.25;
+    string cappedObjects=System.Text.Json.JsonSerializer.Serialize(wasteState.RoomObjects,SaveStore.JsonOptions);
+    wasteStore.Save(wasteState,2);
+    var cappedLeft=new WorldSimulation(wasteStore.Load(2).State);
+    var cappedRight=new WorldSimulation(wasteStore.Load(2).State);
+    for(int step=0;step<3;step++)
+    {
+        cappedLeft.AdvanceInteractionPresentation(.1);cappedLeft.Advance(.1);
+        cappedRight.AdvanceInteractionPresentation(.1);cappedRight.Advance(.1);
+    }
+    Check(Json(cappedLeft.State)==Json(cappedRight.State),"full waste collections continue deterministically for "+kind);
+    var cappedPhysiology=cappedLeft.State.Creatures[0].Interaction.Physiology;
+    Check(!cappedPhysiology.Active&&cappedPhysiology.Urinations==int.MaxValue&&cappedPhysiology.Defecations==int.MaxValue&&
+        System.Text.Json.JsonSerializer.Serialize(cappedLeft.State.RoomObjects,SaveStore.JsonOptions)==cappedObjects,
+        "completion at 64 objects and 1000 portions preserves existing IDs, objects and saturated counters");
+    SaveStore.Validate(cappedLeft.State);SaveStore.Validate(cappedRight.State);
+}
 var isolated=WorldSimulation.Create();isolated.Travel("wild");var rescued=isolated.Selected!;isolated.Rescue();isolated.Advance(120);
 Check(rescued.X is >= -7 and <= -4.5&&rescued.Z is >= 4.2 and <= 6.6,"quarantine resident stays within the observation area");
 var crowd=WorldSimulation.Create(100);crowd.Advance(20);

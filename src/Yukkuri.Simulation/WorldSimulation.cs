@@ -70,7 +70,7 @@ public sealed partial class WorldSimulation
     private void Tick(double dt)
     {
         State.WorldSeconds += dt;
-        if (State.InteractionPlaytest) { TickInteractionWorld(dt); return; }
+        if (State.InteractionPlaytest) { TickInteractionWorld(dt); TickPhysiology(dt); return; }
         if(State.MilestoneScenario) TickMilestoneWorld(dt);
         // An autonomous arrival/retreat may move the selected creature to another region.
         // Keep the authoritative state saveable before any UI refresh or autosave runs.

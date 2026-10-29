@@ -25,6 +25,7 @@ public sealed partial class WorldSimulation
     private void UpdateInteractionRest(Creature c,double dt)
     {
         var i=c.Interaction;i.Resting=false;
+        if(i.Physiology.Active)return;
         if(i.RestRemaining<=0)
         {
             bool recovering=i.Digestion.Symptomatic&&c.Energy<55&&c.Fullness>=35&&i.Hydration>=35;

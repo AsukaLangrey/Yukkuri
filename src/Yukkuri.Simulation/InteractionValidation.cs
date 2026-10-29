@@ -23,6 +23,11 @@ public static class InteractionValidation
         {
             var i = c.Interaction;
             Require(i != null && i.Accessory != null && i.Learning != null && i.Memories != null, "互动个体数据缺失");
+            var physiology=i!.Physiology;
+            Require(physiology!=null&&Range(physiology.Bladder,physiology.Bowel)&&
+                double.IsFinite(physiology.Remaining)&&physiology.Remaining is >=0 and <=4&&Enum.IsDefined(physiology.Excreting)&&
+                (physiology.Excreting==ExcretionKind.None)==(physiology.Remaining==0)&&
+                physiology.Urinations>=0&&physiology.Defecations>=0,"排泄状态无效");
             Require(Range(i!.FootIntegrity, i.Dirt, i.Wetness, i.HeadSensitivity, i.CheekSensitivity,
                 i.AffectionSaturation, i.FoodSuspicion, i.FireFear, i.ContainerFear, i.NuzzleFamiliarity,
                 i.WrapFamiliarity, i.ToySkill, i.CareContinuity,i.Hydration), "互动状态数值越界");

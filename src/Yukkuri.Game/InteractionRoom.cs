@@ -137,6 +137,8 @@ public partial class InteractionRoom : Node3D
         if(NaturalResources.IsFood(obj.Kind))_shownFoodPortions[obj.Id]=visibleFood;
         switch(obj.Kind)
         {
+            case RoomObjectKind.Urine:case RoomObjectKind.Feces:
+                BuildWaste(root,obj.Kind);break;
             case RoomObjectKind.Meal:
                 InteractionFoodArt.Meal(root,visibleFood>0);break;
             case RoomObjectKind.Sweet:
@@ -200,7 +202,7 @@ public partial class InteractionRoom : Node3D
         if(_uiClock>.1){_uiClock=0;RefreshRoomUi();}
         // Background saving must wait for the whole pointer operation, including
         // carrying a supply away from a mouth or orbiting without a body gesture.
-        if(_autoClock>60&&!Sim.HasInteractionGesture&&!_mouseHeld&&_heldSupplyId==null&&!_orbiting&&_tapContact==null&&!_modalOpen&&!_recovered)
+        if(_autoClock>60&&!Sim.HasInteractionGesture&&!_mouseHeld&&_heldSupplyId==null&&!_orbiting&&!_panning&&_tapContact==null&&!_modalOpen&&!_recovered)
         {_autoClock=0;SaveRoom(0,false);}
         UpdatePointer();
         UpdateLandingPreview();
@@ -214,10 +216,13 @@ public partial class InteractionRoom : Node3D
         bool hanging=close&&c!.Interaction.Restraint==RestraintKind.Hanging;
         bool carried=close&&c!.Interaction.Carried;
         bool supportGesture=Sim.CurrentInteractionAction is InteractionAction.Lift or InteractionAction.AdjustHanging;
+        // Direct dragging moves the oil under the cursor; following it with the camera
+        // would move the view at the same time and obscure the player's drag.
+        supportGesture&=!(_directGesture&&_mouseHeld&&_action==InteractionAction.Lift);
         float closeSize=box?4.6f:hanging?4.5f:carried?4.3f:3.5f;
         if(close&&(!Sim.HasInteractionGesture||supportGesture))_closeFocus=new((float)c!.X,
             box?.80f:hanging?1.1f:.62f+(float)c.Interaction.Height,(float)c.Z);
-        Vector3 focus=close?_closeFocus:Vector3.Zero;
+        Vector3 focus=close?_closeFocus:_yardFocus;
         var orbit=InteractionCameraOrbit.Offset(_closeYaw,_closePitch,focus.Y);
         Vector3 offset=close?new(orbit.X,orbit.Y,orbit.Z):new(0,11,16);
         float speed=Mathf.Min(1,dt*9);
@@ -229,7 +234,7 @@ public partial class InteractionRoom : Node3D
 
     private void UpdateInteractionHand()
     {
-        if(!_windowFocused||Sim.State.Settings.Pause||Sim.State.Mode==PlayMode.CloseUp)
+        if(!_windowFocused||_panning||Sim.State.Settings.Pause||Sim.State.Mode==PlayMode.CloseUp)
         {
             // Leaving the window stops live input; the existing short memory may expire naturally.
             Sim.SetInteractionHand(0,0,false);return;

@@ -17,6 +17,10 @@ public sealed class ActorHopMotion
     public HopFrame Frame=>_active?Sample(_age):new(Vector3.One,0,0,1);
     public Vector2 Position=>_position;
 
+    // A camera-only change must not discard a hop frozen by pause. The caller
+    // must still apply the current body's eligibility before calling Advance.
+    public static bool AllowsView(bool close,bool paused,bool wasPresented)=>!close||paused&&wasPresented;
+
     public void Reset(Vector2 target)
     { _initialized=true;_active=false;Turning=false;_age=0;_start=_end=_position=target; }
     public void Face(float heading) { if(!_active)Heading=heading; }

@@ -7,7 +7,7 @@
   "source_branch": "main",
   "source_commit": "REPLACE_FULL_40_CHARACTER_COMMIT",
   "source_tree": "REPLACE_SOURCE_TREE",
-  "request_revision": "dot-v5-core-sprint-20261029",
+  "request_revision": "dot-v6-core-sprint2-20261030",
   "request_sha256": "REPLACE_REQUEST_FILE_SHA256",
   "protocol_sha256": "REPLACE_PROTOCOL_FILE_SHA256",
   "source_worktree_clean": null,

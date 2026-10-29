@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v5-core-sprint-20261029",
+  "revision": "dot-v6-core-sprint2-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -41,7 +41,17 @@
     "planning/stages/core-sprint-20261029-20m/review.md",
     "planning/stages/core-sprint-20261029-20m/art.md",
     "planning/stages/core-sprint-20261029-20m/audio.md",
-    "planning/stages/core-sprint-20261029-20m/death-support.md"
+    "planning/stages/core-sprint-20261029-20m/death-support.md",
+    "planning/stages/core-sprint2-20261030-20m/SUMMARY.md",
+    "planning/stages/core-sprint2-20261030-20m/contact.md",
+    "planning/stages/core-sprint2-20261030-20m/physiology.md",
+    "planning/stages/core-sprint2-20261030-20m/life.md",
+    "planning/stages/core-sprint2-20261030-20m/save.md",
+    "planning/stages/core-sprint2-20261030-20m/art.md",
+    "planning/stages/core-sprint2-20261030-20m/audio.md",
+    "planning/stages/core-sprint2-20261030-20m/review.md",
+    "planning/stages/core-sprint2-20261030-20m/actor-review.md",
+    "planning/stages/core-sprint2-20261030-20m/physiology-review.md"
   ],
   "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。保留v2/v3要求：保存失败/失焦保护、自主生活、完成动作释放、重入递食不覆盖自然一口、吞咽到实际移动的姿态衔接，以及旧字段合成续接（不代替真实历史样本）。v4增加实际界面边界：拿着未递出或剩余食水跨自动保存期限、中键观察跨保存期限；近看隐藏树木不再挡住命中且隐藏河水不可选；最后一份甜甜在pending时可见、入口后不留透明命中、手里吃空也隐藏；直接喝水与实物杯相互切换时水位/可见性正确复位。纯逻辑通过或静态赋值链不能代替这些真实界面观察，缺观察条件如实记未测。",
   "historical_save_fixture": {
@@ -57,6 +67,15 @@
     "死亡后残留托举占用已补源码：死亡时及合法旧Dead+Carried读档均归地释放支撑，死者结束手势不追加抛出，其他活体可再次托举/解悬挂，活体取消仍托稳。运行Input.Intent新增两块并按death-support.md补实际界面观察；未提交生理功能不计本轮实现。",
     "美术补核默认小院勺沿内外层封边、空勺侧背面、手持与地面饭团底边；保留已有喂食避让脸部检查。源码几何关系和增加采样不等于实际像素通过。",
     "独立远程具备音频条件时执行改进后的旧M01音频检查：两首音乐越过循环边界、六种一次性反应声结束、零音量/静音、录音溢出与失败清理；缺条件仍记blocked。该检查不覆盖默认小院。另测新接入的默认小院音乐循环和续播、求助声完整播放、受伤声抢占普通声、同级声不截断、设置页静音再恢复不补播旧回应、音量为零及--mute。新Audio partial只完成源码接线，仍须按audio.md实际试听。"
+  ],
+  "second_sprint_focus": [
+    "v6保留v2到v5全部待测要求；把最终固定提交的完整输入、饱渴、排泄、隐性伤势、角色展示和音频集成一起构建验证。旧本机共享工作区编译记录及c03均不证明本轮通过。",
+    "空手抓起、慢松原地放下、快甩按最后速度方向抛出；停住再松不误抛，反向使用新方向，低帧率/失焦/取消/拖出操作区不生成额外冲量。检查近看拖环境与操作个体互不串入，拖镜头不意外放置物品，持物/拖镜头期间不自动保存。",
+    "饱食度显示Fullness，口渴度显示100-Hydration；不显示精确生命值。高Health但底部受伤不能行走时不能显示正常；重伤、恢复中与死亡的优先级正确。",
+    "排尿/排便需求随普通世界时间增加，动作完成各生成一次可清理废物，清理不返还食物；近看和暂停不推进需求及排泄计时。托举、下落、缓降、悬空和滑动中应中断/暂缓，保留未满足需求；近看中抓起/喂食也应及时结束原排泄动作，回普通时间重新开始。",
+    "排泄只暂停自主行为，不暂停疾病、敷料、伤势和恢复计时，也不能同时领取软垫休息收益；与固定装置、进食、练习、低信任求助互相切换后恢复正确。新增NaturalLife.Smoke与Continuity检查必须运行，原长期模拟断言保持。",
+    "新增生理字段缺失时采用默认值，显式null、非法数值/枚举、动作时间矛盾等坏主档受控回退备份；达到每区域每类64份废物时仍可存读，继续排泄合并最近同类，不突破上限或删除其他物品。同一排泄中存档分两份相同推进需得到完整一致状态，自动产物编号不依赖进程外随机源；已有编号碰撞、累计次数最大值及满64合并后仍安全。合成旧状态不替代获准历史存档。",
+    "废物射线范围应贴合实际尿液/双粒粪便模型，不挡旁边可见空地；排泄动作与死亡/伤势/托举的显示优先级、动作结束缩放复位和近看输入分别做实际观察。另测小院跳跃半空暂停后切近看/返回，角色最终世界变换保持，恢复时间后正常衔接；真实死亡/托举等身体变化仍应正确重置。未具备图形/声音环境的项如实记blocked，不借纯规则通过关闭。"
   ],
   "asset_transport_note": "开发侧已静态核对本地标题PNG、旧probe GLB和源blend的SHA256与Git LFS指针一致，并于北京时间2026-10-29 23:55左右完成这3个指定对象的LFS推送，命令退出0。远程仍须自行取得对象并核对完整性/导入日志；此记录不证明远程已接收或导入成功，不重生成替代原件。",
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",

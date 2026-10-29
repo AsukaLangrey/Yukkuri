@@ -33,6 +33,109 @@ WorldSimulation Reload(WorldSimulation s)
     var state=JsonSerializer.Deserialize<WorldState>(JsonSerializer.Serialize(s.State,SaveStore.JsonOptions),SaveStore.JsonOptions)!;
     SaveStore.Validate(state);return new(state);
 }
+Check("excretion keeps digestive care and injury recovery advancing in ordinary time",()=>
+{
+    var s=Fresh();var c=s.Selected!;var i=c.Interaction;c.DecisionIn=10000;
+    c.Condition=PhysicalCondition.Recovering;c.RecoveryRemaining=20;
+    i.FootTreated=true;i.FootIntegrity=50;i.FootRecovery=10;
+    i.Digestion=new(){Exposures=1,Episodes=1,Severity=40,SymptomsRemaining=100,CareRemaining=60};
+    i.Physiology.Bladder=90;Tick(s,.25);Require(i.Physiology.Active,"excretion never began");
+    double symptoms=i.Digestion.SymptomsRemaining,care=i.Digestion.CareRemaining;
+    double foot=i.FootRecovery,recovery=c.RecoveryRemaining,x=c.X,z=c.Z;
+    Tick(s,1);
+    Require(i.Physiology.Active&&!i.Resting&&c.X==x&&c.Z==z,"active excretion moved or gained sleep support");
+    Require(i.Digestion.SymptomsRemaining<symptoms-1.4&&i.Digestion.CareRemaining<care-.9,
+        "excretion froze digestive illness or care time");
+    Require(i.FootRecovery<foot-.9&&c.RecoveryRemaining<recovery-.9,
+        "excretion froze foot treatment or injury recovery");
+});
+Check("boxed excretion retains restraint time and fear without repeating help over the body action",()=>
+{
+    var s=Fresh();var c=s.Selected!;var i=c.Interaction;
+    i.Restraint=RestraintKind.Box;i.RestraintSeconds=20;i.Physiology.Bladder=90;
+    Tick(s,.25);Require(i.Physiology.Active,"boxed excretion never began");
+    i.LastHelpAt=-100;c.ReactionRemaining=0;
+    double restraint=i.RestraintSeconds,fear=c.Fear,containerFear=i.ContainerFear;
+    Tick(s,1);
+    Require(i.Physiology.Active&&i.RestraintSeconds>restraint+.9&&c.Fear>fear&&i.ContainerFear>containerFear,
+        "excretion suspended the effects of the actual restraint");
+    Require(i.LastHelpAt==-100&&i.EatingRemaining==0,"routine help or intake displaced active excretion");
+});
+Check("excretion suspends sleep benefits and then resumes the pending rest",()=>
+{
+    var s=Fresh();var c=s.Selected!;var i=c.Interaction;c.Energy=10;i.Physiology.Bladder=90;
+    Tick(s,.25);Require(i.Physiology.Active,"resting creature never began excretion");
+    Require(!i.Resting,"the first excretion frame retained the previous sleeping state");
+    double energy=c.Energy,remaining=i.RestRemaining;
+    Tick(s,1);
+    Require(i.Physiology.Active&&!i.Resting&&c.Energy<energy&&i.RestRemaining==remaining,
+        "excretion granted sleep recovery or consumed the pending rest duration");
+    Tick(s,3);
+    Require(i.Physiology.Urinations==1&&i.Resting&&c.Energy>energy&&i.RestRemaining<remaining,
+        "completed excretion lost the pending rest");
+});
+Check("urgent nearby food and water resume after excretion for free and boxed creatures",()=>
+{
+    foreach(bool water in new[]{false,true})foreach(bool boxed in new[]{false,true})
+    {
+        var s=Fresh();var c=s.Selected!;var i=c.Interaction;c.Energy=10;
+        if(boxed)i.Restraint=RestraintKind.Box;
+        i.Physiology.Bladder=90;Tick(s,.25);Require(i.Physiology.Active,"excretion never began");
+        if(water)i.Hydration=10;else c.Fullness=10;
+        var supply=Source(s,water?RoomObjectKind.Water:RoomObjectKind.Meal,0,.4,portions:1);
+        i.LastHelpAt=s.State.WorldSeconds;i.LastThirstRequestAt=s.State.WorldSeconds;
+        Tick(s,1);
+        Require(i.Physiology.Active&&i.EatingRemaining==0&&supply.Portions==1,
+            "active excretion also began an autonomous mouthful");
+        Tick(s,5);
+        Require(i.Physiology.Urinations==1&&i.Digestion.Exposures==1&&(water?i.Hydration:c.Fullness)>15,
+            "urgent intake did not resume after the body action completed");
+        Require(c.X==0&&c.Z==0,"reachable nearby intake unexpectedly moved the body");
+    }
+});
+Check("close-up cancels interrupted excretion without advancing or satisfying its needs",()=>
+{
+    foreach(string interruption in new[]{"carry","feed","supine","critical","dead"})
+    {
+        var s=Fresh();var c=s.Selected!;var i=c.Interaction;c.DecisionIn=10000;c.Trust=90;
+        i.Physiology.Bladder=90;Tick(s,.25);Require(i.Physiology.Active,"excretion never began");
+        var p=i.Physiology;double bladder=p.Bladder,bowel=p.Bowel,time=s.State.WorldSeconds;
+        s.State.Mode=PlayMode.CloseUp;
+        if(interruption=="carry")
+        {
+            Require(s.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,Height:.8)).Success,"lift did not begin");
+            s.EndInteractionGesture();
+        }
+        else if(interruption=="feed")
+        {
+            i.Hydration=10;var input=new InteractionInput(InteractionAction.Drink,BodyPart.Mouth,.2,.1);
+            Require(s.BeginInteractionGesture(c.Id,input).Success,"drink did not begin");
+            for(int frame=0;frame<9;frame++)s.ContinueInteractionGesture(input,true);
+            Require(i.EatingRemaining>0,"offered water was not accepted");s.EndInteractionGesture();
+        }
+        else if(interruption=="supine")i.Supine=true;
+        else if(interruption=="critical"){c.Condition=PhysicalCondition.Critical;c.CriticalRemaining=20;}
+        else {c.Condition=PhysicalCondition.Dead;c.Health=0;}
+        Tick(s,.05);
+        Require(!p.Active&&p.Excreting==ExcretionKind.None&&p.Remaining==0,
+            $"{interruption} retained excretion until ordinary time resumed");
+        Require(s.State.WorldSeconds==time&&p.Bladder==bladder&&p.Bowel==bowel&&
+            p.Urinations==0&&p.Defecations==0&&!s.State.RoomObjects.Any(o=>WorldSimulation.IsWaste(o.Kind)),
+            "presentation cancellation advanced physiology or credited a completed excretion");
+    }
+});
+Check("ordinary world updates cancel stale excretion before choosing the active mouthful activity",()=>
+{
+    var s=Fresh();var c=s.Selected!;var i=c.Interaction;i.Physiology.Bladder=90;
+    Tick(s,.25);Require(i.Physiology.Active,"excretion never began");
+    i.BeginIntake(IntakeKind.Water);
+    // Exercise the ordinary entry independently of presentation, as callers may do.
+    s.Advance(.25);
+    Require(!i.Physiology.Active&&c.Activity=="小口喝水"&&i.EatingRemaining>0,
+        "the first interrupted world step still selected the old excretion activity");
+    Require(i.Physiology.Urinations==0&&!s.State.RoomObjects.Any(o=>WorldSimulation.IsWaste(o.Kind)),
+        "intake interruption completed excretion instead of preserving its unmet need");
+});
 Check("following uses a currently perceived hand rather than saved human coordinates",()=>
 {
     foreach(string visibility in new[]{"absent","visible","box","other-region","reloaded"})

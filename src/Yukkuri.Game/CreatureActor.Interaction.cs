@@ -80,16 +80,21 @@ public partial class CreatureActor
         Refresh(c,selected,false,paused?0:delta,0,true,true);
         Freeze=true;
         var life=c.Interaction;
+        // Physiology is an idle posture, not a final override of contact or pain.
+        // In close-up its world timer can stay active while a gesture owns the pose.
+        if(pose=="idle"&&life.Physiology.Active&&c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)
+            &&!life.Carried&&!life.Falling&&!life.Supine&&!life.Rolling&&!life.Resting&&life.EatingRemaining<=0)
+            pose=life.Physiology.Excreting==ExcretionKind.Urine?"urinate":"defecate";
         Position=new((float)c.X,.46f*BodyScale+(float)life.Height,(float)c.Z);
-        bool canHop=!close&&WorldSimulation.CanSelfMove(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine
+        bool canHop=ActorHopMotion.AllowsView(close,paused,_hadHopPresentation)&&WorldSimulation.CanSelfMove(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine
             &&!life.Resting&&life.Restraint==RestraintKind.None&&life.Height<=.001
             &&System.Math.Abs(life.VelocityX)+System.Math.Abs(life.VelocityZ)<.005
             &&pose is "idle" or "guard" or "stomach" or "careful-step";
-        bool naturalHandoff=pose=="help-look"||life.GroundIntake&&life.EatingRemaining>0&&pose is "eat" or "sip";
-        if(!paused&&_hadHopPresentation&&!canHop&&naturalHandoff)
+        bool smoothHandoff=close||life.Physiology.Active||pose=="help-look"||life.GroundIntake&&life.EatingRemaining>0&&pose is "eat" or "sip";
+        if(!paused&&_hadHopPresentation&&!canHop&&smoothHandoff)
         {
-            // Natural intake or a brief appeal can begin during a short hop. Keep the rendered
-            // transform as its starting point, including travel lag and airborne lift.
+            // Close-up or natural intake can interrupt a hop. On resume, hand the
+            // complete rendered transform to smoothing, including travel lag and lift.
             var offset=previousBodyPosition-Position;
             _poseSmoothing.BeginFrom(new(previousBodyScale.X,previousBodyScale.Y,previousBodyScale.Z),
                 new(offset.X,offset.Y,offset.Z),new(previousBodyRotation.X,previousBodyRotation.Y,previousBodyRotation.Z,previousBodyRotation.W));
@@ -131,6 +136,7 @@ public partial class CreatureActor
             }
             switch(pose)
             {
+                case "urinate":case "defecate":_visual.Scale=new Vector3(1.04f,.91f,1.04f)*BodyScale;break;
                 case "stroke":
                     _visual.Scale=AccessoryPoint(ActorTouchShape.DirectContact(force,false))*BodyScale;
                     _visual.RotationDegrees=new(0,0,gestureDirection.X*3);break;
@@ -183,6 +189,10 @@ public partial class CreatureActor
         {
             var rotation=_visual.Rotation;rotation.Y=_hopMotion.Heading;_visual.Rotation=rotation;
         }
+        // Refresh's critical shape was reset above. Preserve it without discarding
+        // the supported/rolling/falling orientation and offset already calculated.
+        if(c.Condition==PhysicalCondition.Critical)
+        {_visual.Scale=new Vector3(1.13f,.63f,1.07f)*BodyScale;PoseTag="critical";}
         Vector3 targetScale=_visual.Scale,targetOffset=_visual.Position;
         Quaternion targetRotation=_visual.Quaternion;
         _poseSmoothing.Advance(new(targetScale.X,targetScale.Y,targetScale.Z),new(targetOffset.X,targetOffset.Y,targetOffset.Z),
@@ -287,7 +297,6 @@ public partial class CreatureActor
         }
         if(_name!=null){_name.Visible=!close;_name.Position=new(0,1.28f*BodyScale,0);}
         if(_speech!=null)_speech.Visible=!close&&c.ReactionRemaining>0&&c.Speech.Length>0;
-        _ring.Visible=selected&&!close;
     }
 
     public Vector3 ContactPoint(BodyPart part, float side = 1)

@@ -91,6 +91,7 @@ public sealed partial class WorldSimulation
         foreach (var c in State.Creatures)
         {
             var i = c.Interaction;
+            SynchronizeInterruptedPhysiology(c);
             ResetInterruptedAutonomySearch(c);
             ValidatePendingConversation(c);
             if(i.GroundIntakeSourceId!=null&&
@@ -174,6 +175,7 @@ public sealed partial class WorldSimulation
         SettleRoomSupplies();
         foreach (var c in State.Creatures)
         {
+            SynchronizeInterruptedPhysiology(c);
             if (c.Condition == PhysicalCondition.Dead) continue;
             var i = c.Interaction;
             i.Resting=false;
@@ -204,7 +206,7 @@ public sealed partial class WorldSimulation
             UpdateInteractionRest(c,dt);
             // Rest takes priority over a completed lesson's persistent follow
             // order. Otherwise that order prevents UpdateInteractionRest forever.
-            if(i.ActiveCue==null&&i.RestRemaining>0)i.FollowPlayer=false;
+            if(!i.Physiology.Active&&i.ActiveCue==null&&i.RestRemaining>0)i.FollowPlayer=false;
             TickDigestiveHealth(c,dt);
             ObserveNaturalResources(c);
             if (i.FootTreated && i.FootIntegrity < 100 && c.Fullness > 25 && c.Energy > 20)
@@ -236,6 +238,19 @@ public sealed partial class WorldSimulation
                 i.SupineRemaining = Math.Max(0, i.SupineRemaining - dt);
                 if (i.SupineRemaining <= 0) i.Supine = false;
             }
+            if (i.Restraint != RestraintKind.None)
+            {
+                i.RestraintSeconds += dt;
+                if (i.Restraint == RestraintKind.Wrap) c.Energy = Clamp100(c.Energy + dt * .15);
+                else if (i.RestraintSeconds > 15) { c.Fear = Clamp100(c.Fear + dt * .035); i.ContainerFear = Clamp100(i.ContainerFear + dt * .02); }
+            }
+            // Excretion occupies the body, not the passage of ordinary time.
+            // Keep illness, care and restraint effects above this autonomy gate.
+            if(i.Physiology.Active)
+            {
+                c.Activity=i.Physiology.Excreting==ExcretionKind.Urine?"正在撒尿":"正在排便";
+                continue;
+            }
             if(!CanSelfMove(c)&&i.Hydration<12&&i.EatingRemaining<=0&&c.ReactionRemaining<=0&&State.WorldSeconds-i.LastThirstRequestAt>24)
             {
                 i.LastThirstRequestAt=State.WorldSeconds;i.LastHelpAt=State.WorldSeconds;
@@ -244,10 +259,7 @@ public sealed partial class WorldSimulation
             }
             if (i.Restraint != RestraintKind.None)
             {
-                i.RestraintSeconds += dt;
                 c.Activity = i.Restraint switch { RestraintKind.Wrap => "包裹里休息", RestraintKind.Box => "在箱内寻找出口", RestraintKind.Hanging => "悬挂中", _ => "活动被限制" };
-                if (i.Restraint == RestraintKind.Wrap) c.Energy = Clamp100(c.Energy + dt * .15);
-                else if (i.RestraintSeconds > 15) { c.Fear = Clamp100(c.Fear + dt * .035); i.ContainerFear = Clamp100(i.ContainerFear + dt * .02); }
                 if (i.EatingRemaining<=0 && State.WorldSeconds - i.LastHelpAt > 24 && i.Restraint != RestraintKind.Wrap)
                 { i.LastHelpAt = State.WorldSeconds; Feedback(c, i.Restraint == RestraintKind.Box ? "box" : i.Restraint == RestraintKind.Hanging ? "hang" : "restrained", Expression.Calling, "它再次请求解除限制。", "help"); }
                 TryEatNearby(c);

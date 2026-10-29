@@ -36,6 +36,191 @@ WorldSimulation CompletionFixture()
     return(reply,pose,Math.Sqrt((c.X-x)*(c.X-x)+(c.Z-z)*(c.Z-z)));
 }
 
+Check("carried release speed is frame independent and clears after stopping or interruption",()=>
+{
+    foreach(int fps in new[]{30,60,144})
+    {
+        var motion=new CarryReleaseMotion();double dt=1.0/fps;
+        for(int n=0;n<fps/2;n++)motion.Sample(new((float)(3*dt),(float)(-2*dt)),dt);
+        Require(System.Numerics.Vector2.Distance(motion.Velocity,new(3,-2))<.001f,$"release velocity differs at {fps} fps");
+        for(int n=0;n<Math.Ceiling(.12*fps);n++)motion.Sample(System.Numerics.Vector2.Zero,dt);
+        Require(motion.Velocity.Length()<.001,"stopping retained old throw speed");
+        motion.Sample(new(.3f,0),.05);motion.Reset();
+        Require(motion.Velocity==System.Numerics.Vector2.Zero,"cancelled carry retained throw speed");
+        motion.Sample(new(.3f,0),.05);motion.Sample(new(1,0),1);
+        Require(motion.Velocity==System.Numerics.Vector2.Zero,"stalled frame produced a throw");
+    }
+});
+Check("carried release uses the latest direction rather than total drag distance",()=>
+{
+    var motion=new CarryReleaseMotion();
+    for(int n=0;n<20;n++)motion.Sample(new(.08f,0),.02);
+    for(int n=0;n<5;n++)motion.Sample(new(-.06f,0),.02);
+    Require(Math.Abs(motion.Velocity.X+3)<.001&&Math.Abs(motion.Velocity.Y)<.001,"earlier travel overrode the final flick direction");
+});
+Check("slow direct release places at the carried position without a fall",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;
+    Require(sim.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,Height:.8)).Success,"lift failed");
+    sim.ContinueInteractionGesture(new(InteractionAction.Lift,Duration:.1,X:1,Z:1,Height:.8),false);
+    sim.EndInteractionGesture();
+    Require(sim.ReleaseDraggedCreature(c.Id,new(.3f,.2f)).Success,"slow release failed");
+    Require(!c.Interaction.Carried&&!c.Interaction.Falling&&c.Interaction.Height==0&&c.X==1&&c.Z==1,"slow release moved to a new point or threw the oil");
+});
+Check("fast direct releases preserve direction and scale launch speed",()=>
+{
+    foreach(float speed in new[]{2f,5f,20f})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;
+        sim.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,Height:.8));sim.EndInteractionGesture();
+        Require(sim.ReleaseDraggedCreature(c.Id,new(-speed,0)).Success,"fast release refused");
+        Require(!c.Interaction.Carried&&c.Interaction.Falling&&c.Interaction.Height==.8,"throw lost height or retained hand support");
+        Require(Math.Abs(c.Interaction.VelocityX+Math.Min(speed,CarryReleaseMotion.MaximumSpeed))<.001&&c.Interaction.VelocityZ==0,"launch speed or direction wrong");
+        Require(c.ActionCounts.GetValueOrDefault("Throw")==1,"throw history missing or duplicated");
+    }
+});
+Check("invalid or paused direct release keeps hand support",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;
+    sim.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,Height:.8));sim.EndInteractionGesture();
+    Require(!sim.ReleaseDraggedCreature(c.Id,new(float.NaN,0)).Success&&c.Interaction.Carried,"invalid speed released the oil");
+    sim.State.Settings.Pause=true;
+    Require(!sim.ReleaseDraggedCreature(c.Id,new(4,0)).Success&&c.Interaction.Carried&&!c.Interaction.Falling,"paused release threw the oil");
+});
+
+Check("physiology produces both kinds of persistent waste and cleaning never refunds food",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;var p=c.Interaction.Physiology;
+    p.Bladder=90;p.Bowel=90;
+    Tick(sim,100);
+    Require(p.Urinations==1&&p.Defecations==1,"full bladder/bowel did not complete exactly once");
+    Require(sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Urine)==1&&sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Feces)==1,"waste was not left in the scene");
+    string json=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    var loaded=JsonSerializer.Deserialize<WorldState>(json,SaveStore.JsonOptions)!;SaveStore.Validate(loaded);
+    Require(loaded.Creatures[0].Interaction.Physiology.Urinations==1&&loaded.RoomObjects.Count==2,"physiology/waste did not survive save round-trip");
+    int food=sim.State.Food;
+    foreach(var waste in sim.State.RoomObjects.ToArray())Require(sim.CleanRoomWaste(waste.Id),"visible waste could not be cleaned");
+    Require(sim.State.Food==food&&sim.State.RoomObjects.Count==0,"cleaning converted waste into food or left a hidden object");
+});
+Check("excretion pauses in close-up and interruption preserves the unmet need",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;var p=c.Interaction.Physiology;
+    p.Bladder=90;Tick(sim,3);Require(p.Active,"excretion did not start");
+    double remaining=p.Remaining,load=p.Bladder;sim.State.Mode=PlayMode.CloseUp;Tick(sim,50);
+    Require(p.Remaining==remaining&&p.Bladder==load&&sim.State.RoomObjects.Count==0,"close-up advanced excretion");
+    sim.State.Mode=PlayMode.Management;sim.State.Settings.Pause=true;Tick(sim,50);
+    Require(p.Remaining==remaining&&p.Bladder==load,"pause advanced excretion");
+    sim.State.Settings.Pause=false;
+    sim.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,Height:.8));Tick(sim,5);
+    Require(!p.Active&&p.Bladder>=load&&p.Urinations==0&&sim.State.RoomObjects.Count==0,"interrupted excretion lost need or created waste");
+    sim.EndInteractionGesture();sim.ReleaseDraggedCreature(c.Id,System.Numerics.Vector2.Zero);Tick(sim,50);
+    Require(p.Urinations==1,"excretion did not resume after putting down");
+});
+Check("physiology old missing fields default safely and inconsistent fields are rejected",()=>
+{
+    var state=JsonNode.Parse(JsonSerializer.Serialize(CompletionFixture().State,SaveStore.JsonOptions))!.AsObject();
+    var life=state["Creatures"]![0]!["Interaction"]!.AsObject();life.Remove("Physiology");
+    var old=JsonSerializer.Deserialize<WorldState>(state.ToJsonString(),SaveStore.JsonOptions)!;
+    Require(!old.Creatures[0].Interaction.Physiology.Active,"missing fields invented ongoing excretion");
+    life["Physiology"]=new JsonObject{["Excreting"]="Urine",["Remaining"]=0};
+    bool refused=false;try{JsonSerializer.Deserialize<WorldState>(state.ToJsonString(),SaveStore.JsonOptions);}catch(JsonException){refused=true;}
+    Require(refused,"inconsistent excretion save silently accepted");
+});
+Check("hidden health exposes injury and can recover without showing exact health",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;
+    sim.Hurt(c,41,"test impact",null);
+    Require(c.HealthStatus==HealthStatus.Injured&&c.Health==59,"damage did not enter injured status");
+    c.Fullness=90;c.Energy=90;c.Interaction.RestRemaining=120;Tick(sim,900);
+    Require(c.Health>60&&c.HealthStatus==HealthStatus.Healthy,"supported gradual recovery did not leave injured status");
+});
+Check("local foot injury remains visible above the health cutoff and preserves condition priority",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;c.Health=92.5;c.Interaction.FootIntegrity=25;
+    Require(c.HealthStatus==HealthStatus.Injured&&!WorldSimulation.CanSelfMove(c),"disabled foot was labelled healthy because general health was high");
+    c.Interaction.FootIntegrity=79.9;
+    Require(c.HealthStatus==HealthStatus.Injured,"foot injury disappeared before its observation threshold");
+    c.Interaction.FootIntegrity=80;
+    Require(c.HealthStatus==HealthStatus.Healthy,"recovered foot remained injured with healthy general health");
+    c.Interaction.FootIntegrity=25;
+    foreach(var condition in new[]{PhysicalCondition.Critical,PhysicalCondition.Recovering,PhysicalCondition.Dead})
+    {
+        c.Condition=condition;
+        var expected=condition==PhysicalCondition.Critical?HealthStatus.Critical:condition==PhysicalCondition.Recovering?HealthStatus.Recovering:HealthStatus.Dead;
+        Require(c.HealthStatus==expected,"local injury hid a higher priority physical condition");
+    }
+});
+Check("suspended lowering and sliding bodies retain unmet excretion until grounded and still",()=>
+{
+    foreach(string situation in new[]{"suspended","lowering","sliding"})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;var p=c.Interaction.Physiology;p.Bladder=100;
+        if(situation=="sliding")c.Interaction.VelocityX=.2;
+        else
+        {
+            Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Hang)).Success,"hanging fixture could not start");
+            if(situation=="lowering")Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Lower)).Success,"supported lowering could not start");
+        }
+        Tick(sim,3);
+        Require(!p.Active&&p.Bladder==100&&p.Urinations==0&&!sim.State.RoomObjects.Any(o=>WorldSimulation.IsWaste(o.Kind)),
+            situation+" started excretion or lost the unmet need while unsupported or moving");
+        if(situation=="suspended")
+            Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Lower)).Success,"suspended body could not be lowered for resumption");
+        Tick(sim,80);
+        Require(!c.Interaction.Carried&&!c.Interaction.Lowering&&c.Interaction.Height==0&&p.Urinations==1&&
+            sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Urine)==1,"settling did not resume and finish exactly one excretion after "+situation);
+    }
+});
+Check("close-up lifting cancels excretion without advancing or consuming its unmet need",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;var p=c.Interaction.Physiology;p.Bladder=90;
+    Tick(sim,3);Require(p.Active,"excretion fixture did not start");
+    double remaining=p.Remaining,load=p.Bladder,time=sim.State.WorldSeconds;
+    sim.State.Mode=PlayMode.CloseUp;Tick(sim,5);
+    Require(p.Active&&p.Remaining==remaining&&p.Bladder==load&&sim.State.WorldSeconds==time,
+        "close-up alone cancelled or advanced the natural action");
+    Require(sim.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,Height:.8)).Success,"close-up lift failed");
+    sim.AdvanceInteractionPresentation(.1);
+    Require(!p.Active&&p.Excreting==ExcretionKind.None&&p.Remaining==0&&p.Bladder==load&&p.Urinations==0&&
+        !sim.State.RoomObjects.Any(o=>WorldSimulation.IsWaste(o.Kind))&&sim.State.WorldSeconds==time,
+        "close-up body interruption retained excretion or consumed its need");
+    sim.EndInteractionGesture();
+    Require(sim.ReleaseDraggedCreature(c.Id,System.Numerics.Vector2.Zero).Success,"close-up putdown failed");
+    Tick(sim,30);
+    Require(!p.Active&&p.Bladder==load&&p.Urinations==0&&sim.State.WorldSeconds==time,"grounded close-up restarted natural time");
+    sim.State.Mode=PlayMode.Management;Tick(sim,3);
+    Require(p.Active&&p.Remaining==2.5&&p.Urinations==0,"resumed excretion reused the interrupted countdown");
+    Tick(sim,30);
+    Require(p.Urinations==1&&sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Urine)==1,"resumed need did not complete exactly once");
+});
+Check("refused and completed held tools do not indefinitely block excretion",()=>
+{
+    foreach(var action in new[]{InteractionAction.Drink,InteractionAction.Care,InteractionAction.FeedMeal})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;var p=c.Interaction.Physiology;p.Bladder=90;
+        c.Interaction.Hydration=100;if(action==InteractionAction.Care)c.Health=80;
+        var input=new InteractionInput(action,action==InteractionAction.Care?BodyPart.Head:BodyPart.Mouth,Force:.2,Duration:.1);
+        Require(sim.BeginInteractionGesture(c.Id,input).Success,"held tool fixture could not start");
+        for(int n=0;n<18;n++)sim.ContinueInteractionGesture(input,true);
+        if(action==InteractionAction.Drink)Require(c.Interaction.ReactionRefused,"full drink fixture did not refuse");
+        else if(action==InteractionAction.Care)Require(c.Interaction.CareContinuity==5,"care fixture did not finish");
+        else Require(sim.InteractionIntakeAccepted,"meal fixture did not accept a bite");
+        for(int n=0;n<120;n++){sim.ContinueInteractionGesture(input,true);Tick(sim,1);}
+        Require(sim.HasInteractionGesture&&!sim.InteractionGestureOwnsPose&&p.Urinations==1&&
+            sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Urine)==1,"held "+action+" kept blocking excretion after its body response");
+    }
+});
+Check("accumulated injury becomes critical then lethal and death stops excretion",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;
+    for(int n=0;n<20;n++)sim.Hurt(c,5,"repeated impacts",null);
+    Require(c.HealthStatus==HealthStatus.Critical,"accumulated damage did not enter critical status");
+    for(int n=0;n<20;n++)sim.Hurt(c,5,"repeated impacts",null);
+    Require(c.HealthStatus==HealthStatus.Dead&&c.Health==0,"continued severe damage did not cause death");
+    c.Interaction.Physiology.Bladder=100;c.Interaction.Physiology.Bowel=100;Tick(sim,100);
+    Require(sim.State.RoomObjects.Count==0&&c.Health==0,"dead creature excreted or regenerated");
+});
+
 Check("water relieves thirst without filling the stomach or healing an injured foot",()=>
 {
     var sim=Fresh();var c=sim.Selected!;sim.State.UnlimitedResources=false;

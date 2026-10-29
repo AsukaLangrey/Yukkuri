@@ -11,7 +11,7 @@ public partial class CreatureActor : RigidBody3D
     public Vector3 VisualMotionOffset=>_visual.Position;
     public float BodyScale {get;private set;}=1;
     private Node3D _visual=null!,_mouth=null!,_brows=null!,_tearRoot=null!,_blushRoot=null!;
-    private MeshInstance3D _ring=null!,_leftEye=null!,_rightEye=null!,_leftBrow=null!,_rightBrow=null!,_bandage=null!;
+    private MeshInstance3D _leftEye=null!,_rightEye=null!,_leftBrow=null!,_rightBrow=null!,_bandage=null!;
     private Label3D _name=null!,_speech=null!;
     private float _phase,_reactionAge,_poseAge,_lastDownSpeed;
     private int _lastSerial=-1;
@@ -63,8 +63,6 @@ public partial class CreatureActor : RigidBody3D
         BuildTears();
         _bandage=FaceStroke(_visual,new(.235f,-.20f),new(.405f,-.14f),.072f,"e7cf9c",.014f);_bandage.Visible=false;
         if(marisa)BuildHat();else BuildRibbon();
-        _ring=SceneArt.Mesh(this,new TorusMesh{InnerRadius=.50f*BodyScale,OuterRadius=.54f*BodyScale,Rings=32,RingSegments=6},new(0,-.39f*BodyScale,0),"edbe68");
-        _ring.Visible=false;
         if(Main.NameplatesEnabled){
         _name=new Label3D{Text=c.Name,Position=new(0,1.25f*BodyScale,0),Font=font,FontSize=38,PixelSize=.005f,
             Billboard=BaseMaterial3D.BillboardModeEnum.Enabled,Modulate=new Color("fff8df"),OutlineModulate=new Color("3c5145"),OutlineSize=9,NoDepthTest=true};
@@ -157,7 +155,6 @@ public partial class CreatureActor : RigidBody3D
         _phase+=delta;_reactionAge+=delta;_poseAge+=delta;
         if(c.ReactionSerial!=_lastSerial){_lastSerial=c.ReactionSerial;_reactionAge=0;}
         DisplayedExpression=c.Expression;
-        _ring.Visible=selected&&!close;
         if(Main.NameplatesEnabled){
         _name.Visible=selected&&!close;_name.Text=c.Name+(c.Condition==PhysicalCondition.Critical?" · 待救":"");
         _speech.Text=c.Speech;_speech.Visible=!close&&c.Speech.Length>0&&_reactionAge<6;

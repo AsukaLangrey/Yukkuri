@@ -897,6 +897,42 @@ Check("hop freezes on pause and resets cleanly on carry restraint or teleport",(
     target=new(5,-3);hop.Advance(target,.016f,true,false);
     return !hop.Active&&hop.Position==target;
 });
+Check("paused camera changes preserve an airborne hop but not a real support loss",()=>
+{
+    var hop=new ActorHopMotion();hop.Reset(System.Numerics.Vector2.Zero);
+    var target=new System.Numerics.Vector2(0,.4f);
+    hop.Advance(target,.1f,true,false);hop.Advance(target,.1f,true,false);
+    var position=hop.Position;var frame=hop.Frame;float heading=hop.Heading;
+    if(!hop.Active||frame.Lift<=.1f||frame.Travel<=0||frame.Travel>=1)return false;
+    // Repeated view toggles must preserve travel, squash, lift, pitch and heading.
+    foreach(bool close in new[]{true,false,true,true,false,true})
+    {
+        hop.Advance(target,.1f,ActorHopMotion.AllowsView(close,true,true),true);
+        if(!hop.Active||hop.Position!=position||hop.Frame!=frame||hop.Heading!=heading)return false;
+    }
+    // The actor hands the final body transform to its existing smoother before
+    // resuming in close-up; the hop must then stop contributing a second offset.
+    var offset=new System.Numerics.Vector3(position.X-target.X,frame.Lift,position.Y-target.Y);
+    var rotation=System.Numerics.Quaternion.CreateFromYawPitchRoll(heading,frame.Pitch*MathF.PI/180,0);
+    var smoothing=new ActorPoseSmoothing();smoothing.BeginFrom(frame.Scale,offset,rotation);
+    hop.Advance(target,.016f,ActorHopMotion.AllowsView(true,false,true),false);
+    if(hop.Active||hop.Position!=target||smoothing.Offset!=offset||smoothing.Scale!=frame.Scale)return false;
+    for(int n=0;n<90;n++)smoothing.Advance(System.Numerics.Vector3.One,System.Numerics.Vector3.Zero,System.Numerics.Quaternion.Identity,1f/60,false);
+    if(smoothing.Offset.Length()>.00001f||System.Numerics.Vector3.Distance(smoothing.Scale,System.Numerics.Vector3.One)>.00001f)return false;
+    // A freshly created close-up actor cannot manufacture a paused hop.
+    if(ActorHopMotion.AllowsView(true,true,false))return false;
+    // Death/carry/restraint still pass allowed=false, even in a paused view.
+    hop.Reset(System.Numerics.Vector2.Zero);
+    hop.Advance(target,.1f,true,false);hop.Advance(target,.1f,true,false);
+    hop.Advance(target,.1f,false,true);
+    if(hop.Active||hop.Position!=target)return false;
+    // Large world-position changes must also retain the original reset rule.
+    hop.Reset(System.Numerics.Vector2.Zero);
+    hop.Advance(target,.1f,true,false);hop.Advance(target,.1f,true,false);
+    var relocated=new System.Numerics.Vector2(5,-3);
+    hop.Advance(relocated,.1f,ActorHopMotion.AllowsView(true,true,true),true);
+    return !hop.Active&&hop.Position==relocated;
+});
 Check("hop faces every actual flight direction and turns only while planted",()=>
 {
     foreach(int fps in new[]{30,60,144})for(int direction=0;direction<8;direction++)

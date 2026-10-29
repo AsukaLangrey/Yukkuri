@@ -51,7 +51,7 @@ public sealed partial class WorldSimulation
 
     public static bool CanSelfMove(Creature c) => c.Condition == PhysicalCondition.Active &&
         c.Interaction.Restraint == RestraintKind.None && !c.Interaction.Carried &&
-        !c.Interaction.Falling && !c.Interaction.Supine &&
+        !c.Interaction.Falling && !c.Interaction.Supine && !c.Interaction.Physiology.Active &&
         (!UsesGroundFoot(c) || c.Interaction.FootIntegrity > 25);
 
     private InteractionFeedback Feedback(Creature c, string situation, Expression expression,
