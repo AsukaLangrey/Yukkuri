@@ -1,0 +1,24 @@
+{
+  "operation": "create_library_file",
+  "status": "succeeded",
+  "path": "/Yukkuri-c6fc7d8-cloud-render-evidence-20261029.zip",
+  "file_id": "file_00000000e64c81f59a419deef71ca794",
+  "library_file_id": "libfile_f98f7edf89748191b6171fe58366e863",
+  "file_name": "Yukkuri-c6fc7d8-cloud-render-evidence-20261029.zip",
+  "current_version_number": 0,
+  "restored_from_version_number": null,
+  "xattrs": [
+    {
+      "name": "user.library-file-version",
+      "value": "0"
+    }
+  ],
+  "directory_id": "libdir_69d8843864fc8191a4b6c25e74d26443",
+  "mime_type": "application/zip",
+  "library_artifact_type": "other",
+  "file_size_bytes": 1006226,
+  "external_connectors_accessed": false,
+  "archive_sha256": "0a8eea7fc3107351b59a69486a4692df59a794136bf8c77e98333607dfb0d74e",
+  "access": "Private ChatGPT Library in user account; repository collaborators do not automatically have access; no public sharing created",
+  "retention": "Persistent Library item; download requires user Library access"
+}

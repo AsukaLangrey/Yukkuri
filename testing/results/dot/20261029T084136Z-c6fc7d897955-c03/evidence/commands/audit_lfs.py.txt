@@ -1,0 +1,14 @@
+from pathlib import Path
+import json, hashlib, datetime
+B=Path('/workspace/shared/yukkuri-visual-path-20261029T0845')
+start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+objects=json.loads((B/'evidence/missing-lfs.json').read_text())['objects']
+objects += [x for x in json.loads((B/'evidence/remaining-original-lfs-objects.json').read_text())['objects'] if x['path'].startswith('assets-source/')]
+rows=[]
+for x in objects:
+    p=B/'source'/x['path']; raw=p.read_bytes() if p.exists() else None
+    actual=hashlib.sha256(raw).hexdigest() if raw is not None else None
+    rows.append(dict(x,exists=p.exists(),actual_bytes=len(raw) if raw is not None else None,actual_sha256=actual,is_lfs_pointer=raw.startswith(b'version https://git-lfs.github.com/spec/v1') if raw is not None else False,matches_original=actual==x['oid_sha256'] and len(raw)==x['size'] if raw is not None else False))
+out={'started_at':start,'finished_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'command':'python '+str(B/'report-preparation/audit_lfs.py'),'audit_exit_code':0,'complete':all(x['matches_original'] for x in rows),'verified_original_objects':sum(x['matches_original'] for x in rows),'unique_original_objects_checked':len(rows),'missing_or_pointer_objects':sum(not x['matches_original'] for x in rows),'objects':rows,'note':'Exit 0 means audit completed, not full LFS success. Unavailable original binaries and pointer-only paths remain blocked.'}
+(B/'evidence/lfs-audit.json').write_text(json.dumps(out,indent=2)+'\n')
+print(json.dumps({k:v for k,v in out.items() if k!='objects'}))

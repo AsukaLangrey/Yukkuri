@@ -1,0 +1,73 @@
+{
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "observer": "Alice own-cloud testing agent through CUA/Sky screenshots and native mouse/keyboard",
+  "started_at": "2026-10-29T08:51:39Z",
+  "finished_at": "2026-10-29T08:58:16Z",
+  "duration_seconds": 397,
+  "scene": "src/Yukkuri.Game/InteractionRoom.tscn",
+  "profile": "cloud0845",
+  "runtime_exit_code": 0,
+  "observations": [
+    {
+      "id": "native-close-up",
+      "repetitions": 1,
+      "status": "passed",
+      "operation": "Clicked close-up control in the running game.",
+      "expected": "Current character and Chinese controls become visible in close-up.",
+      "actual": "Front model, accessory and Chinese UI rendered. No back-angle or comprehensive clipping acceptance claimed."
+    },
+    {
+      "id": "native-water-offer",
+      "repetitions": 1,
+      "hold_ms": 5000,
+      "status": "passed",
+      "operation": "Selected food/water tools, selected water, positioned pointer at mouth, held left mouse button for 5000 ms, then released.",
+      "expected": "Character accepts water and finishes the mouth interaction with visible feedback.",
+      "actual": "Visible smiling expression, completion speech, and history entry 经历了饮水. Audible response not assessed because engine used Dummy audio."
+    },
+    {
+      "id": "native-food-offer",
+      "repetitions": 1,
+      "hold_ms": 5000,
+      "status": "passed",
+      "operation": "After releasing the water gesture, selected hand-feed food and held left mouse at the mouth for 5000 ms, then released.",
+      "expected": "Character finishes eating with visible feedback and permits release.",
+      "actual": "Visible completion/fullness feedback, expression change, history entry 经历了手喂饭饭. Pointer moved away after release; no remaining hand/tool was visible."
+    },
+    {
+      "id": "native-help-dismissal",
+      "repetitions": 1,
+      "status": "passed",
+      "operation": "Opened help, pressed Escape, then inspected the returned scene.",
+      "expected": "Help closes and returns to close-up.",
+      "actual": "Help dismissed and close-up returned."
+    },
+    {
+      "id": "native-clean-quit",
+      "repetitions": 1,
+      "status": "passed",
+      "operation": "Pressed Alt+F4 after checks.",
+      "expected": "Game saves only its isolated test profile and exits cleanly.",
+      "actual": "Process exited 0. Generated current save remains test-only; it is not an historical compatibility fixture."
+    },
+    {
+      "id": "native-direct-touch-response",
+      "repetitions": 3,
+      "status": "blocked",
+      "operation": "One stationary 2000 ms press and two drag attempts were issued.",
+      "expected": "Observable touch response sufficient to judge contact and release.",
+      "actual": "Attempts did not establish sufficient observable response. They are inconclusive and are not reported as passed or as a confirmed product failure.",
+      "status_note": "Input was attempted, but acceptance remains blocked by insufficient observable response; no confirmed product failure is inferred."
+    }
+  ],
+  "not_observed": [
+    "完整跳跃朝向、腾空与落地衔接",
+    "背面角度与全面饰品穿插",
+    "低信任个体对比",
+    "急停与失焦清理",
+    "自主觅食取水完整过程",
+    "声音输出"
+  ],
+  "evidence_boundary": "Screenshots were inspected through CUA. This record describes bounded observations, not a human/full-product acceptance, a long soak, or a test on the original development computer.",
+  "observation_mode": "Process ran for 397 seconds; screenshots and native operations were performed intermittently, not continuous full-session observation."
+}

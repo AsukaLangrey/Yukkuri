@@ -1,0 +1,706 @@
+[
+  {
+    "path": "AGENTS.md",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "c88fc0bbcdbd45949d2dc701deafc62b18cc567a",
+    "size": 1584,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/c88fc0bbcdbd45949d2dc701deafc62b18cc567a"
+  },
+  {
+    "path": "NuGet.Config",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "5c598e395c3673f5587f2de35fc7f6c24eb9f291",
+    "size": 305,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/5c598e395c3673f5587f2de35fc7f6c24eb9f291"
+  },
+  {
+    "path": "README.md",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "253edce12c0a6273fa4c35cf4b6df560bd915887",
+    "size": 4413,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/253edce12c0a6273fa4c35cf4b6df560bd915887"
+  },
+  {
+    "path": "global.json",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "e8a91cbf7506d4f30d2f278f1efdd6fce4156686",
+    "size": 105,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/e8a91cbf7506d4f30d2f278f1efdd6fce4156686"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessoryPlacement.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "8b647ea8e6502703414720b8e6235beb9d8cc95b",
+    "size": 2575,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/8b647ea8e6502703414720b8e6235beb9d8cc95b"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessorySupport.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "82d9f3fac767f95b1dc8136faa7d6517c3f646c4",
+    "size": 2657,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/82d9f3fac767f95b1dc8136faa7d6517c3f646c4"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessorySurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "97bcc4e666dccbc26bc3cd004ed395243b21962a",
+    "size": 2871,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/97bcc4e666dccbc26bc3cd004ed395243b21962a"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessoryWear.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "8012b84cf38da57e4399b4a4c9a9b43eeb911c8c",
+    "size": 752,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/8012b84cf38da57e4399b4a4c9a9b43eeb911c8c"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorBodyBounds.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "6cd8a418546aad4a1cc0e683b12313c2fe8f230c",
+    "size": 1203,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/6cd8a418546aad4a1cc0e683b12313c2fe8f230c"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorBrowSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "fbfc01016a1ff6ab4b7c2807ba6de2d262f08d54",
+    "size": 722,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/fbfc01016a1ff6ab4b7c2807ba6de2d262f08d54"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorCradleSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "77580a03a17c7c04ebb8c09e288e5a5ae4551a74",
+    "size": 642,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/77580a03a17c7c04ebb8c09e288e5a5ae4551a74"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorCushionSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "af116ee20a5d36b4e12bbdfe446b0b9adbef5bba",
+    "size": 6046,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/af116ee20a5d36b4e12bbdfe446b0b9adbef5bba"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorDressingSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "2a5d830ba129f77ff55a72d89b3f8c39fbbb65a2",
+    "size": 2717,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/2a5d830ba129f77ff55a72d89b3f8c39fbbb65a2"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorEyeSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "a794c5c5ec3cf9b97a24c09ae90ecda4497a3899",
+    "size": 1716,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/a794c5c5ec3cf9b97a24c09ae90ecda4497a3899"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorFaceSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "6b6378311e879f6f7e63302304cde1f4509d1521",
+    "size": 1481,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/6b6378311e879f6f7e63302304cde1f4509d1521"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHairSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "a628fd02fb2dd36f42ef70c9d79b83a5f4c2c251",
+    "size": 6364,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/a628fd02fb2dd36f42ef70c9d79b83a5f4c2c251"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHarnessSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "9e13ee15c29e471993018bdd960349825624465c",
+    "size": 2009,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/9e13ee15c29e471993018bdd960349825624465c"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHopMotion.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "96db9539b63c27d2558132153975cd26b5fb6ea8",
+    "size": 3376,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/96db9539b63c27d2558132153975cd26b5fb6ea8"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorIntakeMouthSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "9dabceccca390c78be8cb6802059f84ef6298c83",
+    "size": 1573,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/9dabceccca390c78be8cb6802059f84ef6298c83"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorIntakePresentation.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "bcdfa75e19aac784d9e8c113fde60fc4cf26a412",
+    "size": 1072,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/bcdfa75e19aac784d9e8c113fde60fc4cf26a412"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorMeshSupport.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "af7e4029a90ba97b814a49753e4183893f42845a",
+    "size": 514,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/af7e4029a90ba97b814a49753e4183893f42845a"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorMouthSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "2c864bc7440242ee25a4e45ab25f48666c56bfca",
+    "size": 1181,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/2c864bc7440242ee25a4e45ab25f48666c56bfca"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorNaturalPose.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "c39d9255a050bf190e2e24324683aa90c31304d4",
+    "size": 6440,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/c39d9255a050bf190e2e24324683aa90c31304d4"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorNaturalSupport.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "985c44b85b5381a9f2d87875f0af16030219f16b",
+    "size": 5206,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/985c44b85b5381a9f2d87875f0af16030219f16b"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorPoseClock.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "0e899f7729fca7d829ef6ba19caf4d0999fab86d",
+    "size": 521,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/0e899f7729fca7d829ef6ba19caf4d0999fab86d"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorPoseSmoothing.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "23fa55e93c0468367d51097f999126d32ffbe859",
+    "size": 1241,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/23fa55e93c0468367d51097f999126d32ffbe859"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorReactionMotion.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "6796f2abad90d3f3ea4d1bb049511db39c786060",
+    "size": 3950,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/6796f2abad90d3f3ea4d1bb049511db39c786060"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorSurfaceMarks.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "463c8c976a3ae071cca81c0d3f54d43891eb61ca",
+    "size": 4400,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/463c8c976a3ae071cca81c0d3f54d43891eb61ca"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorTearSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "9c497763f41ffa652b0b2b779381afba02091163",
+    "size": 748,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/9c497763f41ffa652b0b2b779381afba02091163"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorTouchShape.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "bc6644997855cc5b25ab604da6a5d810902b21be",
+    "size": 603,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/bc6644997855cc5b25ab604da6a5d810902b21be"
+  },
+  {
+    "path": "src/Yukkuri.Game/ContactStrokeTracker.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "809cd843ee49b5b5ca3e0c80fcfa674866a148c0",
+    "size": 1770,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/809cd843ee49b5b5ca3e0c80fcfa674866a148c0"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionBallSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "625c90950c760793bc94b3fb37856638e043fb59",
+    "size": 1660,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/625c90950c760793bc94b3fb37856638e043fb59"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionCameraOrbit.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "cc65829fc3ae3f2ddaee7e2641863a5cbca84961",
+    "size": 2268,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/cc65829fc3ae3f2ddaee7e2641863a5cbca84961"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionCareSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "1cdd16b082267cb56f20b2653d82e7363d93b78a",
+    "size": 1452,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/1cdd16b082267cb56f20b2653d82e7363d93b78a"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFixtureSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "29c1499e4f2399b8aa03cc76d3c17768472bdd37",
+    "size": 1143,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/29c1499e4f2399b8aa03cc76d3c17768472bdd37"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFoodSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "a58a6f8d6cc0d10dcdfd9e897b35649de63de47f",
+    "size": 4835,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/a58a6f8d6cc0d10dcdfd9e897b35649de63de47f"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionPropContact.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "4812e5662188fe4247d798914576cb4fa316bf89",
+    "size": 1194,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/4812e5662188fe4247d798914576cb4fa316bf89"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionToolSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "24293245b92748c0016d0e36dc8b1ee41f8660c6",
+    "size": 1267,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/24293245b92748c0016d0e36dc8b1ee41f8660c6"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionTreasureSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "bbf3a14f164ffbc6c79938a4bb130bbff4400d5f",
+    "size": 606,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/bbf3a14f164ffbc6c79938a4bb130bbff4400d5f"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandOcclusion.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "acf8eb8840368dec6e7b24679fbbb1b505ca048e",
+    "size": 3468,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/acf8eb8840368dec6e7b24679fbbb1b505ca048e"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "b29620b367cb215cbe59bb636c7d5f27467eb7fc",
+    "size": 4424,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/b29620b367cb215cbe59bb636c7d5f27467eb7fc"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/BodyContactGeometry.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "b360e7987f4fc4086432dfec75c674f1fed2bf05",
+    "size": 2436,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/b360e7987f4fc4086432dfec75c674f1fed2bf05"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ContactMotion.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "7cb1f04f8f68da6a5018d34434f418f76ece0194",
+    "size": 7040,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/7cb1f04f8f68da6a5018d34434f418f76ece0194"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CreatureAppearance.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "720aaa3f38f5a337c48cbea7335167ce924f5a63",
+    "size": 384,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/720aaa3f38f5a337c48cbea7335167ce924f5a63"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CushionGeometry.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "31e8e91dc64a58afeedcc3083ae7359cae955a33",
+    "size": 2653,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/31e8e91dc64a58afeedcc3083ae7359cae955a33"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "6ce1cc74cd61ad3c5ee2852b6f66b6981521e7b1",
+    "size": 6910,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/6ce1cc74cd61ad3c5ee2852b6f66b6981521e7b1"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "5477462f10cc544351fe1f4a5946760ca636da27",
+    "size": 30316,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/5477462f10cc544351fe1f4a5946760ca636da27"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionCatalog.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "a51354bfcb6c016a49fe938d18d8250078ac5a70",
+    "size": 10745,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/a51354bfcb6c016a49fe938d18d8250078ac5a70"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionConversation.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "40fe0a2f6840cfba7e302237f48dea84280274f0",
+    "size": 4153,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/40fe0a2f6840cfba7e302237f48dea84280274f0"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionDressings.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "7f08fbb9342e7b15c349bbdf46fbb27dde234778",
+    "size": 3058,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/7f08fbb9342e7b15c349bbdf46fbb27dde234778"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionFixtureGeometry.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "49e7c193ef0ba7307277494773735077344ca0b1",
+    "size": 1876,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/49e7c193ef0ba7307277494773735077344ca0b1"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionGesture.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "ca96a6359d905410b8816fd53565ae4a78d0900b",
+    "size": 46566,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/ca96a6359d905410b8816fd53565ae4a78d0900b"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionHarshSpeech.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "3642b1c2116cae0dcd8762191fd8ae4f10e52ccd",
+    "size": 2805,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/3642b1c2116cae0dcd8762191fd8ae4f10e52ccd"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionLowering.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "fea8030ea23f22edf3177164795213be5043235c",
+    "size": 954,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/fea8030ea23f22edf3177164795213be5043235c"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionPresentation.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "64e5daa160d5ae2dd4c87b4b17ecac61e27dc2c5",
+    "size": 2575,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/64e5daa160d5ae2dd4c87b4b17ecac61e27dc2c5"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionRest.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "9c0553598afadb3f7f69733005c3a58039658953",
+    "size": 3421,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/9c0553598afadb3f7f69733005c3a58039658953"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionRolling.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "33339be2cf557145cbe8b4ef0c447f0c10f3c12d",
+    "size": 1081,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/33339be2cf557145cbe8b4ef0c447f0c10f3c12d"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSensitivity.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "155f7a5209fa8635921706a013e81600fc973a45",
+    "size": 1206,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/155f7a5209fa8635921706a013e81600fc973a45"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "1b49726cd1329bc40db326c9b2c009037c75b41b",
+    "size": 3803,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/1b49726cd1329bc40db326c9b2c009037c75b41b"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionState.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "56f95ac32f48227365ac9e80d11a2680605982fb",
+    "size": 7677,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/56f95ac32f48227365ac9e80d11a2680605982fb"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSupply.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "43263e3b356edb95bc2abc3ff417789f412ee2c0",
+    "size": 2382,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/43263e3b356edb95bc2abc3ff417789f412ee2c0"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSurface.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "9896239402565bd7a5d2d27e0f6b01fdc1151f1f",
+    "size": 4004,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/9896239402565bd7a5d2d27e0f6b01fdc1151f1f"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSurfaceObservation.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "1519bd938295debcc325370f060f77e6ee9b504a",
+    "size": 1582,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/1519bd938295debcc325370f060f77e6ee9b504a"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionTreasure.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "a8e45c2ead0867f7862465c03a38f77f107292ed",
+    "size": 1758,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/a8e45c2ead0867f7862465c03a38f77f107292ed"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionValidation.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "2ac01500ec87f641258de59d04c4757fac42be17",
+    "size": 8433,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/2ac01500ec87f641258de59d04c4757fac42be17"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionWorld.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "bc2f707bcdae9250546e8246c689a1ab5757fc2a",
+    "size": 28686,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/bc2f707bcdae9250546e8246c689a1ab5757fc2a"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneBehavior.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "af0ede73dfc65fe7436a1ded4f7df8307113caef",
+    "size": 18991,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/af0ede73dfc65fe7436a1ded4f7df8307113caef"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneInteraction.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "e93f783dbee556cb143d03a94759c70f214d6497",
+    "size": 15820,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/e93f783dbee556cb143d03a94759c70f214d6497"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneState.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "9433225825b17f031f625ff690a3512976b8ed9a",
+    "size": 6178,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/9433225825b17f031f625ff690a3512976b8ed9a"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneValidation.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "ac70093fd3c2ee69bef8c535e97682cffd9e8a46",
+    "size": 3761,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/ac70093fd3c2ee69bef8c535e97682cffd9e8a46"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "b97ca5fb55f517e50e5467e4e86960f157d17756",
+    "size": 12667,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/b97ca5fb55f517e50e5467e4e86960f157d17756"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "742eb968f62bc13a0cb845c3226fc0c6ab0ddd02",
+    "size": 4265,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/742eb968f62bc13a0cb845c3226fc0c6ab0ddd02"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/NaturalLife.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "ad25c59e6d98ef02e87b8e17e6aa6716461f29e9",
+    "size": 27137,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/ad25c59e6d98ef02e87b8e17e6aa6716461f29e9"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/OilDialogue.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "deed80cc47e1140fe3aa973d5b601497128fa351",
+    "size": 20648,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/deed80cc47e1140fe3aa973d5b601497128fa351"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/RoomBallEnvironment.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "6c2cf20dc4607859e97a8a73cbe5a4db0d67dad3",
+    "size": 817,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/6c2cf20dc4607859e97a8a73cbe5a4db0d67dad3"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/RoomResourceText.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "8982277999ec76887fced798502da4759954b048",
+    "size": 2376,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/8982277999ec76887fced798502da4759954b048"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/SaveStore.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "c689dc0653f7733a753688d4b9cf6956f2ce290d",
+    "size": 5877,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/c689dc0653f7733a753688d4b9cf6956f2ce290d"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "9cea030b0e067d7edfe852ca65330951d47d7f61",
+    "size": 1495,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/9cea030b0e067d7edfe852ca65330951d47d7f61"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WorldSimulation.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "e5c27a64b7ae32bb7090bba09966ab344eba0cc0",
+    "size": 15321,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/e5c27a64b7ae32bb7090bba09966ab344eba0cc0"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WorldState.cs",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "d976eaeb79369eb76f2c2a15331263b634c3879d",
+    "size": 5402,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/d976eaeb79369eb76f2c2a15331263b634c3879d"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/Yukkuri.Simulation.csproj",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "07669f7d0bb89c5477d131404aefa8c9c7fdb534",
+    "size": 1684,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/07669f7d0bb89c5477d131404aefa8c9c7fdb534"
+  },
+  {
+    "path": "testing/DOT-HANDOFF.md",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "ff6d5c0f3435a15abcd4f2c8e405a07bcadc61c2",
+    "size": 1859,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/ff6d5c0f3435a15abcd4f2c8e405a07bcadc61c2"
+  },
+  {
+    "path": "testing/PROTOCOL.md",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "8a27583fe3d5e51521a646536f6eb9ce52bf913a",
+    "size": 8127,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/8a27583fe3d5e51521a646536f6eb9ce52bf913a"
+  },
+  {
+    "path": "testing/report-template.json",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "cce0e30300fe00e0eba86bf7041f87128c9f9a98",
+    "size": 1508,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/cce0e30300fe00e0eba86bf7041f87128c9f9a98"
+  },
+  {
+    "path": "testing/request.json",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "923fa655888fcbb5738e071f0c26e9689c5705c1",
+    "size": 2267,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/923fa655888fcbb5738e071f0c26e9689c5705c1"
+  },
+  {
+    "path": "testing/reviews/20261029T013947Z-d729036ccfa4-c01.md",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "bc72a79647a8ab8631cfee3974b6f0d8699f7a0b",
+    "size": 3301,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/bc72a79647a8ab8631cfee3974b6f0d8699f7a0b"
+  },
+  {
+    "path": "toolchain.lock.json",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "755cd024437f393ad3941e0af3cfca06eed84639",
+    "size": 2003,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/755cd024437f393ad3941e0af3cfca06eed84639"
+  },
+  {
+    "path": "tools/build.ps1",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "fe6105b15b4180aa202a4abfe9d3c7f29233df14",
+    "size": 823,
+    "url": "https://api.github.com/repos/AsukaLangrey/Yukkuri/git/blobs/fe6105b15b4180aa202a4abfe9d3c7f29233df14"
+  }
+]

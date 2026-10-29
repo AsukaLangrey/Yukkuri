@@ -1,0 +1,724 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "run_id": "20261029T084136Z-c6fc7d897955-c03",
+  "runner": "dot",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_branch": "main",
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "source_tree": "92a47c07273dc2b592206a15084d2160b72eb170",
+  "request_revision": "dot-v2-static-polish-20261029",
+  "request_sha256": "4e7cdf8d2a4d667143272705f908c0be11022b5ee382aa9b3eed42388bb65e2e",
+  "protocol_sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+  "source_worktree_clean": null,
+  "started_at": "2026-10-29T08:41:36Z",
+  "finished_at": "2026-10-29T09:09:40.778910+00:00",
+  "retry_of": "20261029T024220Z-c6fc7d897955-c02",
+  "supersedes": null,
+  "environment": {
+    "observed_at": "2026-10-29T08:59:17.763260+00:00",
+    "id": "dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe",
+    "machine": "assistant-owned cloud Linux workspace and cloud Xfce desktop; not original development computer",
+    "os": "Debian GNU/Linux 13.6 (trixie); Linux 6.18.55 x86_64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logical_processors_visible": 9,
+    "cpu_scope": "Container-visible CPU inventory; no allocation or native developer hardware inference",
+    "gpu": "Mesa llvmpipe (LLVM 19.1.7, 256 bits), software renderer",
+    "driver": "OpenGL 4.5 Core Profile; Mesa 25.0.7-2+deb13u1; GL Compatibility",
+    "dotnet": "10.0.402",
+    "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+    "display": "Cloud Xfce desktop 1364x1024 via CUA/Sky; desktop terminal DISPLAY=:0; shell DISPLAY empty is not absence of cloud display",
+    "desktop_observation_authorized": true,
+    "audio": "ALSA default device unavailable; Godot fell back to Dummy; audible response not validated",
+    "runtime_config": "Current c6fc7d8 Debug build, InteractionRoom.tscn, isolated profile cloud0845",
+    "evidence": [
+      "game-runtime.txt",
+      "dotnet-info.txt"
+    ],
+    "no_original_developer_computer_access": true
+  },
+  "status": "partial",
+  "summary": "当前源码在云桌面编译并真实运行成功；4 项引擎接触检查、5 个场景的 10 项布局断言通过。实际观察了近看、递水、喂食和帮助关闭。仍非完整效果验收：完整 LFS、声音、历史存档样本及多项动作/信任对比缺项，总状态 partial。",
+  "checks": [
+    {
+      "id": "lfs-integrity",
+      "status": "blocked",
+      "command": "python /workspace/shared/yukkuri-visual-path-20261029T0845/report-preparation/audit_lfs.py",
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845",
+      "started_at": "2026-10-29T09:06:51.137665+00:00",
+      "finished_at": "2026-10-29T09:06:51.163630+00:00",
+      "exit_code": 0,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "12/14 当前工程二进制对象已恢复且 SHA256/字节数与原 LFS 指针完全一致。标题 PNG、旧 probe GLB 仍缺；另缺源 .blend。历史复制引用相同对象，完整仓库 LFS 尚未完成。审计退出 0 只表示审计完成，不表示完整性通过。",
+      "evidence": [
+        "evidence/lfs-audit.json",
+        "evidence/commands/audit_lfs.py.txt",
+        "evidence/missing-lfs.json",
+        "evidence/recovered-lfs.json",
+        "evidence/remaining-original-lfs-objects.json",
+        "evidence/source-verification.json"
+      ],
+      "recovered_count": 12,
+      "current_project_total": 14,
+      "remaining_unique_repository_objects": 3
+    },
+    {
+      "id": "game-build",
+      "status": "passed",
+      "command": "dotnet build src/Yukkuri.Game/Yukkuri.Game.csproj --configuration Debug --no-restore -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": "2026-10-29T08:49:43Z",
+      "finished_at": "2026-10-29T08:49:50Z",
+      "exit_code": 0,
+      "passed_count": 1,
+      "failed_count": 0,
+      "seeds": [],
+      "reason": "准确 Godot.NET.Sdk 4.7.2 + SDK 10.0.402；0 warning / 0 error。Linux Debug 编译，不等于 Windows 完整打包。",
+      "evidence": [
+        "evidence/game-build.txt",
+        "evidence/game-restore-repaired.txt",
+        "evidence/godot-package-identity.json",
+        "evidence/dotnet-info.txt"
+      ],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "asset-import",
+      "status": "blocked",
+      "command": "$GODOT_BIN --headless --path \"$GAME_PATH\" --editor --import --quit",
+      "working_directory": "/workspace/scratch/31f78fd1d54c",
+      "started_at": "2026-10-29T08:51:06Z",
+      "finished_at": "2026-10-29T08:51:11Z",
+      "exit_code": 0,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "退出码 0，但 PNG/GLB 指针无法导入，有明确 ERROR；未将退出 0 冒充全资源成功。当前 InteractionRoom 所用字体/音频已导入。",
+      "evidence": [
+        "evidence/game-import.txt"
+      ],
+      "timeout_seconds": 180
+    },
+    {
+      "id": "Simulation.Smoke",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "Milestone.Smoke",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "Interaction.Smoke",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "Input.Intent",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "NaturalLife.Smoke",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "Interaction.Continuity",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "ActorGeometry.Smoke",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "NaturalLife.Soak",
+      "status": "skipped",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "同源码和请求版本已有 c02 终态结果，按去重不重复跑。此前 493 项及额外 1728 组合属于 c02，不计入本轮新结果。",
+      "evidence": [],
+      "prior_report": "https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T024220Z-c6fc7d897955-c02/report.json"
+    },
+    {
+      "id": "Save.Compatibility",
+      "status": "blocked",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "没有获准历史样本 art03-native-slot1.json；本轮生成的隔离当前存档不是历史兼容样本。",
+      "evidence": []
+    },
+    {
+      "id": "runtime-smoke",
+      "status": "passed",
+      "command": "bash /workspace/shared/yukkuri-visual-path-20261029T0845/run-game.sh (launched through CUA cloud desktop terminal; actual Godot command is preserved in evidence/commands/run-game.sh.txt)",
+      "working_directory": "/workspace",
+      "started_at": "2026-10-29T08:51:39Z",
+      "finished_at": "2026-10-29T08:58:16Z",
+      "exit_code": 0,
+      "passed_count": 1,
+      "failed_count": 0,
+      "seeds": [],
+      "reason": "当前源码产物真实打开相处小院；INTERACTION_ROOM_READY；进程运行 397 秒，期间分段观察和操作，Alt+F4 正常退出 0。",
+      "evidence": [
+        "evidence/game-runtime.txt",
+        "evidence/native-observation.json",
+        "evidence/environment.json"
+      ],
+      "duration_seconds": 397
+    },
+    {
+      "id": "engine-contact-geometry",
+      "status": "passed",
+      "command": "$GODOT_BIN --path \"$GAME_PATH\" --audio-driver Dummy --resolution 1280x800 -- --interaction-test-profile cloud0845-contact --contact-check-output /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/engine-contact.json",
+      "working_directory": "/workspace",
+      "started_at": "2026-10-29T08:58:43Z",
+      "finished_at": "2026-10-29T08:58:56Z",
+      "exit_code": 0,
+      "passed_count": 4,
+      "failed_count": 0,
+      "seeds": [],
+      "reason": "4 个引擎射线/接触几何断言；包含投影误差 0.062px。使用 authored states，不是 native 鼠标手感验收。",
+      "evidence": [
+        "evidence/engine-contact.json",
+        "evidence/engine-contact.txt"
+      ],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "engine-render-layout",
+      "status": "passed",
+      "command": "$GODOT_BIN --path \"$GAME_PATH\" --audio-driver Dummy --resolution 1280x800 -- --interaction-test-profile cloud0845-render --room-render-output /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/render",
+      "working_directory": "/workspace",
+      "started_at": "2026-10-29T08:58:56Z",
+      "finished_at": "2026-10-29T08:59:17Z",
+      "exit_code": 0,
+      "passed_count": 10,
+      "failed_count": 0,
+      "seeds": [],
+      "reason": "5 个场景、每场景 bottomFits/forceSingleLine 两个断言均通过；生成 5 张真实引擎截图。测试代理逐张查看，当前截图中未见明显遮挡裁切。此检查不证明动作或交互手感。",
+      "evidence": [
+        "evidence/render/render-checks.json",
+        "evidence/engine-render.txt",
+        "evidence/image-evidence-index.json",
+        "evidence/render-library.json"
+      ],
+      "scene_count": 5,
+      "performance": {
+        "scope": "180 process-frame intervals in this verification window; not a general hardware benchmark",
+        "samples": 180,
+        "medianMs": 45.68,
+        "p95Ms": 53.108,
+        "maxMs": 76.232,
+        "drawCalls": 185,
+        "renderedObjects": 402,
+        "primitives": 82260
+      },
+      "timeout_seconds": 300
+    },
+    {
+      "id": "native-observed-interaction",
+      "status": "passed",
+      "command": "CUA/Sky native mouse and keyboard sequence described in evidence/native-observation.json",
+      "working_directory": "/workspace",
+      "started_at": "2026-10-29T08:51:39Z",
+      "finished_at": "2026-10-29T08:58:16Z",
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "仅对记录中的有限近看、各一次 5 秒递水/喂食、撤离、帮助打开/关闭、正常退出观察成立。没有充分观察的直接触摸不计通过。",
+      "evidence": [
+        "evidence/native-observation.json"
+      ],
+      "scope": "Bounded observed actions only; no full-product acceptance"
+    },
+    {
+      "id": "audio-playback",
+      "status": "blocked",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "云环境 ALSA 设备不可用，真实运行回退 Dummy；自动引擎检查显式 Dummy，不能验收声音或声画反馈。",
+      "evidence": [
+        "evidence/game-runtime.txt"
+      ]
+    },
+    {
+      "id": "visual-interaction-review",
+      "status": "not_run",
+      "command": null,
+      "working_directory": "/workspace/shared/yukkuri-visual-path-20261029T0845/source",
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "已做有限真实交互和图像观察，但完整跳跃/腾空/落地、背面与全面穿插、鼠标速度力度/急停/失焦、完整自主取食取水、低信任对比尚未建立证据。不得将启动或截图检查等同整体验收。",
+      "evidence": [
+        "evidence/native-observation.json",
+        "evidence/render/render-checks.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "cloud-display-available",
+      "type": "environment-correction",
+      "status": "confirmed",
+      "detail": "Cloud Xfce desktop and actual Godot window were observed. Empty DISPLAY in isolated shell was insufficient to conclude no cloud display."
+    },
+    {
+      "id": "lfs-recovery-exact",
+      "type": "environment-repair",
+      "status": "confirmed",
+      "detail": "12 real binary objects recovered by official upstream download or original deterministic synthesis; every byte count/SHA256 equals original LFS identity, no placeholders."
+    },
+    {
+      "id": "incomplete-import",
+      "type": "environment-limitation",
+      "status": "confirmed",
+      "detail": "Two remaining current-project LFS pointer files cause PNG/glTF import errors. They are not replaced or passed as valid assets."
+    },
+    {
+      "id": "render-performance-scope",
+      "type": "observation",
+      "status": "confirmed",
+      "detail": "Mesa llvmpipe software renderer. 180 process-frame intervals only: median45.68ms, p95 53.108ms, max76.232ms. Not a broad hardware benchmark or user-device performance prediction."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "evidence/asset-recovery/audio-bake_Bake.csproj.txt",
+      "sha256": "17ded73051b12c8e70492328b8a9533547e316da27fca266c631c00c00bbf0a4",
+      "bytes": 175
+    },
+    {
+      "path": "evidence/asset-recovery/audio-bake_M01AudioBake.cs.txt",
+      "sha256": "beb3177867697b0ffcbf1917093636ef9f6a91da13a7d9228adb133cf44acfa0",
+      "bytes": 1324
+    },
+    {
+      "path": "evidence/asset-recovery/audio-bake_Program.cs.txt",
+      "sha256": "f5744a3da30df0a44761af70ddfe0d7a8c4c8fa4795c2e10ff499494739c5ed6",
+      "bytes": 235
+    },
+    {
+      "path": "evidence/asset-recovery/tools_make-audio.py.txt",
+      "sha256": "852fba75fb765284bd13b71ca8de0755468c7075656cad94e87224ef4c4e0630",
+      "bytes": 2210
+    },
+    {
+      "path": "evidence/asset-recovery/tools_make-m01-audio.ps1.txt",
+      "sha256": "7f4929b156ea56f1ca8dfeedef10bcd25e1cdadb124ac93845628387d111ff4f",
+      "bytes": 2897
+    },
+    {
+      "path": "evidence/audio-recovery-dotnet.txt",
+      "sha256": "76f8bc5738a8fd0ffe0d2a419241ae5cf5e1fd17a3fad41c033612a83434023e",
+      "bytes": 150
+    },
+    {
+      "path": "evidence/audio-recovery-python.txt",
+      "sha256": "e907cf0a8af357c8f53729ec31f454f9377b8ce842d66e6ce1653186ae65cd24",
+      "bytes": 730
+    },
+    {
+      "path": "evidence/build-server-shutdown.txt",
+      "sha256": "2881c04b9155892ee7347d20ec6d04062cd809122cb6407ac9124f1d28532a64",
+      "bytes": 156
+    },
+    {
+      "path": "evidence/commands/NuGet.godot.Config.txt",
+      "sha256": "4e7a77570623a696dd2c56311ebaee0365693bdbba0b0fc1767a95aba438107f",
+      "bytes": 285
+    },
+    {
+      "path": "evidence/commands/audit_lfs.py.txt",
+      "sha256": "1b0feabcf52aec4ebb5e770131629baf535bdf55f81c67f93bcb955a7714cb8f",
+      "bytes": 1591
+    },
+    {
+      "path": "evidence/commands/env.sh.txt",
+      "sha256": "83c4163eff628ece0cbf99d93dd2e7aa03af08782c2bc018127c398847e52f3f",
+      "bytes": 1188
+    },
+    {
+      "path": "evidence/commands/run-engine-checks.sh.txt",
+      "sha256": "a8553d48e7288d8b132ec16789dd8a37c9761edc6664b7eacad4fffb17a17b3c",
+      "bytes": 1167
+    },
+    {
+      "path": "evidence/commands/run-game.sh.txt",
+      "sha256": "1103ea7e028f9463b635011c491593023d90cb2b7364d46314c2e6ed38923cd1",
+      "bytes": 639
+    },
+    {
+      "path": "evidence/copied-source-manifest.json",
+      "sha256": "f182e56f58760e177a646017281ec457f00eccb601f0662621b29d11881d3295",
+      "bytes": 25762
+    },
+    {
+      "path": "evidence/dotnet-info.txt",
+      "sha256": "93d3b8fe3c5043e59af5f532d06e6ee146b4633b5cccb018de96ab9d2e77b348",
+      "bytes": 1506
+    },
+    {
+      "path": "evidence/engine-contact-end.txt",
+      "sha256": "f987bad1aeda0c3d675be463443d917632e7ab4b930139c65948117dba076568",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/engine-contact-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/engine-contact-start.txt",
+      "sha256": "5d6b9b2f7f757e0771a60be4f5815f7b00417bc7376d2a8d0d02d5a4b46c0ffd",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/engine-contact.json",
+      "sha256": "e724f13a6db2df8dbbaffcc2fcd6caeaf160228359b8a334fbfa0400961e7b2f",
+      "bytes": 696
+    },
+    {
+      "path": "evidence/engine-contact.txt",
+      "sha256": "91a644a196c1994723b6987c64bf2eb35dfc65a0d6ca0220e62f0ca5e33ef1ce",
+      "bytes": 765
+    },
+    {
+      "path": "evidence/engine-render-end.txt",
+      "sha256": "a8d8be00586a8761f0cba76f362c64e5cafb19b928b6c53cec935ff83d0810f3",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/engine-render-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/engine-render-start.txt",
+      "sha256": "f987bad1aeda0c3d675be463443d917632e7ab4b930139c65948117dba076568",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/engine-render.txt",
+      "sha256": "185017fb70c2eef32717a202f8881093b75bc942070ec0ee6ac349d7bfb6cab7",
+      "bytes": 591
+    },
+    {
+      "path": "evidence/environment.json",
+      "sha256": "493aafd6c275df8406655b6c378f86e89a96d3688fd0cab6951fe17e14341dab",
+      "bytes": 1205
+    },
+    {
+      "path": "evidence/fetched-source-manifest.json",
+      "sha256": "b9175cfcbcca1371772f690b6025944801bb7bd19b51da74bf9673d98b266a74",
+      "bytes": 37072
+    },
+    {
+      "path": "evidence/game-build-end.txt",
+      "sha256": "6f6dafe27d60eec70bd412e47d4e01b7948dea504e4473dafeb55efd05db6255",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-build-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/game-build-start.txt",
+      "sha256": "0a26591d2f039f13e50dfcff7e845827604419364ad1becdf9df33d0afcf9108",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-build.txt",
+      "sha256": "bc9c74b14fedc618990c44a90e86060d3494766ddc506ca808e39e7b089f948a",
+      "bytes": 361
+    },
+    {
+      "path": "evidence/game-import-end.txt",
+      "sha256": "e00a3542c1115e7105eae0897e7e8beb3a68a9d2fb07a8a9a3f5305a93aa6e3a",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-import-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/game-import-start.txt",
+      "sha256": "95f1ecfc04b2e4e89a0efd756a9d78dd6da93aaa20133f7b3bf6d299d5dbbab5",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-import.txt",
+      "sha256": "4ccfbb2f51d18c7d7e37dda9e6fa399628e17f3b98e814c417b0dd9c42f1d83e",
+      "bytes": 7534
+    },
+    {
+      "path": "evidence/game-restore-repaired.txt",
+      "sha256": "d4a09395c15caa9493667a7e39d4407c9a66e500f072bbe5e5b6b91a4f647239",
+      "bytes": 1899
+    },
+    {
+      "path": "evidence/game-restore.txt",
+      "sha256": "e20cef4acc5f458af6a9655ef0e45c34859df62ab5a11c831bbcc83ada9de6dc",
+      "bytes": 1194
+    },
+    {
+      "path": "evidence/game-runtime-end.txt",
+      "sha256": "e0b7952ae42ff922d3d45e724931c47071fe5f62e2f5e29c6d96709c4aa45296",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-runtime-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/game-runtime-start.txt",
+      "sha256": "75d3fdf095d54f38eac0f864204e65a2c0b73feb681614f51d9062ad82266023",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-runtime.txt",
+      "sha256": "6a52107b88218122e4d8bba9f5157b48b572bd2107e87a3e6d182048e5b680ca",
+      "bytes": 1414
+    },
+    {
+      "path": "evidence/godot-package-identity.json",
+      "sha256": "0c946132b519c451590f0568aae7862cdc22bb4fcd447973687919dae01fefa0",
+      "bytes": 868
+    },
+    {
+      "path": "evidence/hourly-preflight.json",
+      "sha256": "e44e5d099eacb509316d58db2bae69471198374b799a7b8336958419aca6f31c",
+      "bytes": 1050
+    },
+    {
+      "path": "evidence/image-evidence-index.json",
+      "sha256": "223e63111ac6fd574d60ece6deba6749fe55248287154b9e1f639415e5860f64",
+      "bytes": 1829
+    },
+    {
+      "path": "evidence/instruction-identities.json",
+      "sha256": "4ee0114d43454f311158926815e75704a5fbbc01a8602d6aeda895b11bb27bd6",
+      "bytes": 2596
+    },
+    {
+      "path": "evidence/lfs-audit.json",
+      "sha256": "86e153a7395145be7a5bafea8c4262fea35e71808f22d1c01fba948e47677d2a",
+      "bytes": 6275
+    },
+    {
+      "path": "evidence/main-at-end.json",
+      "sha256": "8ff1065cb2b3445d308119d2cc2d695c96792803f6671129bbcaa494354509af",
+      "bytes": 246
+    },
+    {
+      "path": "evidence/missing-lfs.json",
+      "sha256": "238678383dd66cf3ade2bd7fb722d3ff4a94852878722da0a9536a221564c677",
+      "bytes": 2617
+    },
+    {
+      "path": "evidence/native-observation.json",
+      "sha256": "a8c7209d966f9bc4ff33b4696773061630585c913e5062fae1d8059ddaa76090",
+      "bytes": 3697
+    },
+    {
+      "path": "evidence/post-import-source-identity.json",
+      "sha256": "e8ecd5df2e3fd71bb3c57452eaa46310f5f9019e8b124fdaa8c5af06b5bb7941",
+      "bytes": 368
+    },
+    {
+      "path": "evidence/recovered-lfs.json",
+      "sha256": "e173b79d19a472b8988b43ad8b8a8d1a8f077e6239fde43e5bd1fa7b19b9c742",
+      "bytes": 4504
+    },
+    {
+      "path": "evidence/remaining-original-lfs-objects.json",
+      "sha256": "c9112a78ab4163cdf4cf20317928b55fda3a54aacd165ec7f497acc45c4279eb",
+      "bytes": 962
+    },
+    {
+      "path": "evidence/render/manifest.json",
+      "sha256": "48594a3ab3262c0c5af01b58705a019fa26633ba5eda185f77f63ae6cf6bcc62",
+      "bytes": 1274
+    },
+    {
+      "path": "evidence/render/render-checks.json",
+      "sha256": "7ef18e0e3755d031143a0874c8e3772c03a53b2c079f05f7191acad85055631a",
+      "bytes": 2016
+    },
+    {
+      "path": "evidence/render-library.json",
+      "sha256": "17e76afe916c77bd8564e262953de2f179176b730adb7d7f4646344044c3ce13",
+      "bytes": 995
+    },
+    {
+      "path": "evidence/source-verification.json",
+      "sha256": "4a4473d03f1001d87fad74703547a894ad94b62808d1789163d51dbade619d53",
+      "bytes": 63352
+    }
+  ],
+  "limitations": [
+    "完整仓库 Git/LFS checkout 未完成；当前工程仍缺 sanctuary-morning.png 和 pipeline-probe.glb；源 .blend/历史副本亦未全面物化。",
+    "项目锁定 Windows x64；本轮为明确授权的同版本 Linux .NET 补充验证，不证明 Windows/原开发机兼容性。",
+    "纯 .NET 规则与 1728 组合没有重复执行；此前通过只属于 c02。",
+    "未提供获准历史存档；本轮隔离存档不冒充历史 fixture，且不上传存档。",
+    "音频 Dummy；未听到实际声音。",
+    "5 张真实引擎 PNG 已保存到用户私有 ChatGPT Library ZIP；仓库协作者不会自动获得访问权，未新增公开分享或上传 PNG 到普通 Git。Library 下载需要该用户 Library 权限；持久项目未返回独立过期时间，不能保证其永久保留。",
+    "完整效果焦点仍缺项；项目最终玩法/手感验收保留给用户。"
+  ],
+  "next_action": "获取余下原始 LFS 对象及获准历史存档；在有效音频输出环境补做声音，并针对未覆盖效果焦点继续有界实际交互验证。不要重跑未变的纯 .NET 套件或操作原开发机。",
+  "main_at_completion": {
+    "checked_at": "2026-10-29T09:03:46Z",
+    "method": "GitHub connector GET git/ref/heads/main",
+    "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+    "main_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+    "behind_main": false
+  },
+  "binary_evidence_storage": {
+    "operation": "create_library_file",
+    "status": "succeeded",
+    "path": "/Yukkuri-c6fc7d8-cloud-render-evidence-20261029.zip",
+    "file_id": "file_00000000e64c81f59a419deef71ca794",
+    "library_file_id": "libfile_f98f7edf89748191b6171fe58366e863",
+    "file_name": "Yukkuri-c6fc7d8-cloud-render-evidence-20261029.zip",
+    "current_version_number": 0,
+    "restored_from_version_number": null,
+    "xattrs": [
+      {
+        "name": "user.library-file-version",
+        "value": "0"
+      }
+    ],
+    "directory_id": "libdir_69d8843864fc8191a4b6c25e74d26443",
+    "mime_type": "application/zip",
+    "library_artifact_type": "other",
+    "file_size_bytes": 1006226,
+    "external_connectors_accessed": false,
+    "archive_sha256": "0a8eea7fc3107351b59a69486a4692df59a794136bf8c77e98333607dfb0d74e",
+    "access": "Private ChatGPT Library in user account; repository collaborators do not automatically have access; no public sharing created",
+    "retention": "Persistent Library item; download requires user Library access"
+  },
+  "deduplication": {
+    "source_unchanged": true,
+    "prior_terminal_report": "20261029T024220Z-c6fc7d897955-c02",
+    "prior_report_commit": "0c8984442e11807d73881ac4ef7a34c7142c41ae",
+    "reason_for_extension": "Explicit user request to fill environment/materialization gaps; exact Godot.NET toolchain, cloud desktop, and 12 exact LFS objects newly available. No unchanged pure .NET suite rerun.",
+    "key": "c6fc7d89795501c26057b991276b4657d62dc122|dot-v2-static-polish-20261029|dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe"
+  },
+  "source_materialization": {
+    "method": "Authorized GitHub connector plus exact-Git-blob-verified cache; all current src text materialized, not a full Git checkout",
+    "tracked_materialized_files": 204,
+    "product_code_changes": [],
+    "generated_tracked_changes": [
+      "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png.import",
+      "src/Yukkuri.Game/Assets/pipeline-probe.glb.import"
+    ],
+    "generated_change_reason": "Godot import failure metadata in test copy only; not a product edit or commit",
+    "lfs_original_objects_recovered": 12,
+    "current_project_lfs_total": 14,
+    "complete_repository_lfs_verified": false,
+    "source_identity_evidence": "evidence/source-verification.json"
+  },
+  "run_timeout_minutes": 50,
+  "test_processes_finished": true
+}

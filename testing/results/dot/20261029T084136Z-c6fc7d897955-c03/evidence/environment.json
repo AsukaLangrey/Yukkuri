@@ -1,0 +1,22 @@
+{
+  "observed_at": "2026-10-29T08:59:17.763260+00:00",
+  "id": "dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe",
+  "machine": "assistant-owned cloud Linux workspace and cloud Xfce desktop; not original development computer",
+  "os": "Debian GNU/Linux 13.6 (trixie); Linux 6.18.55 x86_64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "logical_processors_visible": 9,
+  "cpu_scope": "Container-visible CPU inventory; no allocation or native developer hardware inference",
+  "gpu": "Mesa llvmpipe (LLVM 19.1.7, 256 bits), software renderer",
+  "driver": "OpenGL 4.5 Core Profile; Mesa 25.0.7-2+deb13u1; GL Compatibility",
+  "dotnet": "10.0.402",
+  "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+  "display": "Cloud Xfce desktop 1364x1024 via CUA/Sky; desktop terminal DISPLAY=:0; shell DISPLAY empty is not absence of cloud display",
+  "desktop_observation_authorized": true,
+  "audio": "ALSA default device unavailable; Godot fell back to Dummy; audible response not validated",
+  "runtime_config": "Current c6fc7d8 Debug build, InteractionRoom.tscn, isolated profile cloud0845",
+  "evidence": [
+    "game-runtime.txt",
+    "dotnet-info.txt"
+  ],
+  "no_original_developer_computer_access": true
+}

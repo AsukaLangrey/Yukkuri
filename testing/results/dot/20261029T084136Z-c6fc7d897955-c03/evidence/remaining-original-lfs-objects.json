@@ -1,0 +1,24 @@
+{
+  "current_project_missing": 2,
+  "unique_original_objects_still_missing": 3,
+  "bytes": 3587106,
+  "objects": [
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "oid_sha256": "1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024",
+      "size": 2846992
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "oid_sha256": "8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352",
+      "size": 98908
+    },
+    {
+      "path": "assets-source/pipeline-probe.blend",
+      "oid_sha256": "2d187b80047d24ddd1df7132f2ff4a8a7595e18a420d60e31c0426a6187b4fcb",
+      "size": 641206
+    }
+  ],
+  "historical_copies": "Repository historical source copies point at the same corresponding LFS objects; they do not create alternative binary sources.",
+  "evidence_provenance": "Current-project pointers from pinned GitHub files; .blend pointer identity verified by parent investigation agent."
+}

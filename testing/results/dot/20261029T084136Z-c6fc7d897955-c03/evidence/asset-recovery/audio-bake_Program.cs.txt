@@ -1,0 +1,1 @@
+using System.IO; string[] names={"coo-stroke","coo-hug","coo-nuzzle","coo-hurt","coo-refuse","coo-help"}; Directory.CreateDirectory(args[0]); for(int i=0;i<names.Length;i++) M01AudioBake.Write(Path.Combine(args[0],names[i]+".wav"),i);

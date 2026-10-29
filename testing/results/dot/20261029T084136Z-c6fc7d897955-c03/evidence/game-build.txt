@@ -1,0 +1,8 @@
+  Yukkuri.Simulation -> /workspace/shared/yukkuri-visual-path-20261029T0845/source/src/Yukkuri.Simulation/bin/Debug/net10.0/Yukkuri.Simulation.dll
+  Yukkuri.Game -> /workspace/shared/yukkuri-visual-path-20261029T0845/source/src/Yukkuri.Game/.godot/mono/temp/bin/Debug/Yukkuri.Game.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:06.02

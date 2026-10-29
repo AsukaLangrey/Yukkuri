@@ -1,0 +1,101 @@
+{
+  "kind": "engine-render-not-native-play",
+  "at": "2026-10-29T08:59:17.0633153+00:00",
+  "results": [
+    {
+      "name": "01-yard",
+      "bottomFits": true,
+      "forceSingleLine": true,
+      "viewport": {
+        "X": 1440,
+        "Y": 900
+      },
+      "feedback": {
+        "x": 28,
+        "y": 819,
+        "width": 1384,
+        "height": 23
+      },
+      "action": "Greet",
+      "mode": "Management"
+    },
+    {
+      "name": "02-close",
+      "bottomFits": true,
+      "forceSingleLine": true,
+      "viewport": {
+        "X": 1440,
+        "Y": 900
+      },
+      "feedback": {
+        "x": 28,
+        "y": 819,
+        "width": 1384,
+        "height": 23
+      },
+      "action": "Greet",
+      "mode": "CloseUp"
+    },
+    {
+      "name": "03-feeding-controls",
+      "bottomFits": true,
+      "forceSingleLine": true,
+      "viewport": {
+        "X": 1440,
+        "Y": 900
+      },
+      "feedback": {
+        "x": 28,
+        "y": 819,
+        "width": 1384,
+        "height": 23
+      },
+      "action": "FeedMeal",
+      "mode": "CloseUp"
+    },
+    {
+      "name": "04-force-controls",
+      "bottomFits": true,
+      "forceSingleLine": true,
+      "viewport": {
+        "X": 1440,
+        "Y": 900
+      },
+      "feedback": {
+        "x": 28,
+        "y": 819,
+        "width": 1384,
+        "height": 23
+      },
+      "action": "Squeeze",
+      "mode": "CloseUp"
+    },
+    {
+      "name": "05-help",
+      "bottomFits": true,
+      "forceSingleLine": true,
+      "viewport": {
+        "X": 1440,
+        "Y": 900
+      },
+      "feedback": {
+        "x": 28,
+        "y": 819,
+        "width": 1384,
+        "height": 23
+      },
+      "action": "Squeeze",
+      "mode": "CloseUp"
+    }
+  ],
+  "performance": {
+    "scope": "180 process-frame intervals in this verification window; not a general hardware benchmark",
+    "samples": 180,
+    "medianMs": 45.68,
+    "p95Ms": 53.108,
+    "maxMs": 76.232,
+    "drawCalls": 185,
+    "renderedObjects": 402,
+    "primitives": 82260
+  }
+}

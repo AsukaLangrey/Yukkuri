@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -u
+source /workspace/shared/yukkuri-visual-path-20261029T0845/env.sh
+for mode in contact render; do
+  date -u '+%Y-%m-%dT%H:%M:%SZ' > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/engine-$mode-start.txt
+  if [ "$mode" = contact ]; then
+    timeout 300 "$GODOT_BIN" --path "$GAME_PATH" --audio-driver Dummy --resolution 1280x800 -- --interaction-test-profile cloud0845-contact --contact-check-output /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/engine-contact.json > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/engine-contact.txt 2>&1
+  else
+    timeout 300 "$GODOT_BIN" --path "$GAME_PATH" --audio-driver Dummy --resolution 1280x800 -- --interaction-test-profile cloud0845-render --room-render-output /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/render > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/engine-render.txt 2>&1
+  fi
+  s=$?
+  printf '%s\n' "$s" > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/engine-$mode-exit.txt
+  date -u '+%Y-%m-%dT%H:%M:%SZ' > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/engine-$mode-end.txt
+done
+

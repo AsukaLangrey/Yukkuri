@@ -1,0 +1,62 @@
+[
+  {
+    "path": "AGENTS.md",
+    "git_blob_sha": "c88fc0bbcdbd45949d2dc701deafc62b18cc567a",
+    "expected_git_blob_sha": "c88fc0bbcdbd45949d2dc701deafc62b18cc567a",
+    "sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285"
+  },
+  {
+    "path": "README.md",
+    "git_blob_sha": "253edce12c0a6273fa4c35cf4b6df560bd915887",
+    "expected_git_blob_sha": "253edce12c0a6273fa4c35cf4b6df560bd915887",
+    "sha256": "91ed7dc0bc95890d39b51536b496412276072bcc6375aa946ad443de9ad390cc"
+  },
+  {
+    "path": "testing/DOT-HANDOFF.md",
+    "git_blob_sha": "ff6d5c0f3435a15abcd4f2c8e405a07bcadc61c2",
+    "expected_git_blob_sha": "ff6d5c0f3435a15abcd4f2c8e405a07bcadc61c2",
+    "sha256": "65db09ce7b87f113b0b312eee46a6559f1d0aaba6813f1ef7389b6901ad90319"
+  },
+  {
+    "path": "testing/PROTOCOL.md",
+    "git_blob_sha": "8a27583fe3d5e51521a646536f6eb9ce52bf913a",
+    "expected_git_blob_sha": "8a27583fe3d5e51521a646536f6eb9ce52bf913a",
+    "sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0"
+  },
+  {
+    "path": "testing/request.json",
+    "git_blob_sha": "923fa655888fcbb5738e071f0c26e9689c5705c1",
+    "expected_git_blob_sha": "923fa655888fcbb5738e071f0c26e9689c5705c1",
+    "sha256": "4e7cdf8d2a4d667143272705f908c0be11022b5ee382aa9b3eed42388bb65e2e"
+  },
+  {
+    "path": "testing/report-template.json",
+    "git_blob_sha": "cce0e30300fe00e0eba86bf7041f87128c9f9a98",
+    "expected_git_blob_sha": "cce0e30300fe00e0eba86bf7041f87128c9f9a98",
+    "sha256": "e3e20ff9acb4437209942deb13a4359a601cd42747b01bf63a4bd3a73e2a6f70"
+  },
+  {
+    "path": "global.json",
+    "git_blob_sha": "e8a91cbf7506d4f30d2f278f1efdd6fce4156686",
+    "expected_git_blob_sha": "e8a91cbf7506d4f30d2f278f1efdd6fce4156686",
+    "sha256": "81ae2087dbfb46027fd94748351fb4b1ab24145fbb52544a2822bf128e2e48f1"
+  },
+  {
+    "path": "toolchain.lock.json",
+    "git_blob_sha": "755cd024437f393ad3941e0af3cfca06eed84639",
+    "expected_git_blob_sha": "755cd024437f393ad3941e0af3cfca06eed84639",
+    "sha256": "757032e50d135a6bb3e44d666758cca92a2d23d3954523e33208de2e6b161789"
+  },
+  {
+    "path": "NuGet.Config",
+    "git_blob_sha": "5c598e395c3673f5587f2de35fc7f6c24eb9f291",
+    "expected_git_blob_sha": "5c598e395c3673f5587f2de35fc7f6c24eb9f291",
+    "sha256": "338e57d24cd5c6fe90f0b71b3a3cf16ee21ef8ac3711fe72c37dc1fe4365fad5"
+  },
+  {
+    "path": ".gitattributes",
+    "git_blob_sha": "78969fad79473419fc4318b092290febb3e1f1a1",
+    "expected_git_blob_sha": "78969fad79473419fc4318b092290febb3e1f1a1",
+    "sha256": "d71d8ba0236a1fe3df1cc4c3f803c35c8de848e115fe572d5a0f7964001323c5"
+  }
+]

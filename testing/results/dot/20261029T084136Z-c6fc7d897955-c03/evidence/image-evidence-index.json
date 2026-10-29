@@ -1,0 +1,42 @@
+[
+  {
+    "name": "01-yard.png",
+    "bytes": 200318,
+    "sha256": "6ba17a96430f966d02d39bada1609234343d2ec4b36168cfa3020c8d241ad4f5",
+    "archive_entry": "01-yard.png",
+    "availability": "Preserved in private ChatGPT Library ZIP; repository collaborators have no automatic access",
+    "library_file_id": "libfile_f98f7edf89748191b6171fe58366e863"
+  },
+  {
+    "name": "02-close.png",
+    "bytes": 183397,
+    "sha256": "fb768744d185fc0949a34edd2cbce0c022d25a424ceaeacbdeff8d84b7d7fbf3",
+    "archive_entry": "02-close.png",
+    "availability": "Preserved in private ChatGPT Library ZIP; repository collaborators have no automatic access",
+    "library_file_id": "libfile_f98f7edf89748191b6171fe58366e863"
+  },
+  {
+    "name": "03-feeding-controls.png",
+    "bytes": 175300,
+    "sha256": "f50bb70e15e53af3e51c9c9d854e34a1025a941b6c3d7cc857527a9058e6b218",
+    "archive_entry": "03-feeding-controls.png",
+    "availability": "Preserved in private ChatGPT Library ZIP; repository collaborators have no automatic access",
+    "library_file_id": "libfile_f98f7edf89748191b6171fe58366e863"
+  },
+  {
+    "name": "04-force-controls.png",
+    "bytes": 170199,
+    "sha256": "2f0ab2569367611316c4644163023ef766196fdd955fff10f0897d3ba852410c",
+    "archive_entry": "04-force-controls.png",
+    "availability": "Preserved in private ChatGPT Library ZIP; repository collaborators have no automatic access",
+    "library_file_id": "libfile_f98f7edf89748191b6171fe58366e863"
+  },
+  {
+    "name": "05-help.png",
+    "bytes": 297188,
+    "sha256": "931d0902d51fe0275776233a56a96e3d957de36d159c13e6bf8feb742b785a60",
+    "archive_entry": "05-help.png",
+    "availability": "Preserved in private ChatGPT Library ZIP; repository collaborators have no automatic access",
+    "library_file_id": "libfile_f98f7edf89748191b6171fe58366e863"
+  }
+]

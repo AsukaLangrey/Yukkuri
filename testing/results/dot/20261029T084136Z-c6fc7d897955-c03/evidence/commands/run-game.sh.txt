@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -u
+source /workspace/shared/yukkuri-visual-path-20261029T0845/env.sh
+date -u '+%Y-%m-%dT%H:%M:%SZ' > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/game-runtime-start.txt
+"$GODOT_BIN" --path "$GAME_PATH" --resolution 1280x800 --position 20,70 -- --interaction-test-profile cloud0845 > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/game-runtime.txt 2>&1
+s=$?
+printf '%s\n' "$s" > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/game-runtime-exit.txt
+date -u '+%Y-%m-%dT%H:%M:%SZ' > /workspace/shared/yukkuri-visual-path-20261029T0845/evidence/game-runtime-end.txt
+exit "$s"

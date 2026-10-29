@@ -1,0 +1,163 @@
+{
+  "started_at": "2026-10-29T09:06:51.137665+00:00",
+  "finished_at": "2026-10-29T09:06:51.163630+00:00",
+  "command": "python /workspace/shared/yukkuri-visual-path-20261029T0845/report-preparation/audit_lfs.py",
+  "audit_exit_code": 0,
+  "complete": false,
+  "verified_original_objects": 12,
+  "unique_original_objects_checked": 15,
+  "missing_or_pointer_objects": 3,
+  "objects": [
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "oid_sha256": "1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024",
+      "size": 2846992,
+      "exists": true,
+      "actual_bytes": 132,
+      "actual_sha256": "9af6ad7ee2d24803ea07a0ee4c35d6fe79dabf5d567d6a4c701697732450fef6",
+      "is_lfs_pointer": true,
+      "matches_original": false
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/build.wav",
+      "oid_sha256": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "size": 22094,
+      "exists": true,
+      "actual_bytes": 22094,
+      "actual_sha256": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-help.wav",
+      "oid_sha256": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "size": 48554,
+      "exists": true,
+      "actual_bytes": 48554,
+      "actual_sha256": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav",
+      "oid_sha256": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "size": 27386,
+      "exists": true,
+      "actual_bytes": 27386,
+      "actual_sha256": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav",
+      "oid_sha256": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "size": 27386,
+      "exists": true,
+      "actual_bytes": 27386,
+      "actual_sha256": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav",
+      "oid_sha256": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "size": 27386,
+      "exists": true,
+      "actual_bytes": 27386,
+      "actual_sha256": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav",
+      "oid_sha256": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "size": 27386,
+      "exists": true,
+      "actual_bytes": 27386,
+      "actual_sha256": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav",
+      "oid_sha256": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "size": 27386,
+      "exists": true,
+      "actual_bytes": 27386,
+      "actual_sha256": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/feed.wav",
+      "oid_sha256": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "size": 22094,
+      "exists": true,
+      "actual_bytes": 22094,
+      "actual_sha256": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav",
+      "oid_sha256": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "size": 1058444,
+      "exists": true,
+      "actual_bytes": 1058444,
+      "actual_sha256": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/select.wav",
+      "oid_sha256": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "size": 22094,
+      "exists": true,
+      "actual_bytes": 22094,
+      "actual_sha256": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav",
+      "oid_sha256": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "size": 1058444,
+      "exists": true,
+      "actual_bytes": 1058444,
+      "actual_sha256": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf",
+      "oid_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "size": 17772300,
+      "exists": true,
+      "actual_bytes": 17772300,
+      "actual_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "is_lfs_pointer": false,
+      "matches_original": true
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "oid_sha256": "8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352",
+      "size": 98908,
+      "exists": true,
+      "actual_bytes": 130,
+      "actual_sha256": "32f54da3bba25dd6615ee8b450c64a8e5fa867f99545882a37e5ccb6b508e2e2",
+      "is_lfs_pointer": true,
+      "matches_original": false
+    },
+    {
+      "path": "assets-source/pipeline-probe.blend",
+      "oid_sha256": "2d187b80047d24ddd1df7132f2ff4a8a7595e18a420d60e31c0426a6187b4fcb",
+      "size": 641206,
+      "exists": false,
+      "actual_bytes": null,
+      "actual_sha256": null,
+      "is_lfs_pointer": false,
+      "matches_original": false
+    }
+  ],
+  "note": "Exit 0 means audit completed, not full LFS success. Unavailable original binaries and pointer-only paths remain blocked."
+}

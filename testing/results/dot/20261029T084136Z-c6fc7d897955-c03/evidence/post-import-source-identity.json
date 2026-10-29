@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-29T08:57:52.174397+00:00",
+  "source_commit": "c6fc7d89795501c26057b991276b4657d62dc122",
+  "verified_non_lfs_source_files": 176,
+  "changed_non_lfs_files": [
+    "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png.import",
+    "src/Yukkuri.Game/Assets/pipeline-probe.glb.import"
+  ],
+  "missing_src_files": [],
+  "product_code_changes": []
+}
