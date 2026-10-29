@@ -1,0 +1,16 @@
+{
+  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "run_id": "20261029T162613Z-8238c6e6380f-v05",
+  "requested_at": "2026-10-29T16:25:42Z",
+  "purpose": "User explicitly requested another visible run to watch on Alice own cloud desktop. This is an old-build demonstration, not current-main testing.",
+  "retry_of": "20261029T154437Z-8238c6e6380f-c04",
+  "authorization_limits": [
+    "Own authorized cloud desktop only.",
+    "Do not rerun deterministic failed automated checks.",
+    "New isolated profile/output and exclusive lock.",
+    "Keep window visible until user finishes or stop is agreed; hard round limit50minutes.",
+    "No source/main edits; reports only on authorized results branch."
+  ],
+  "mouse_paused_at": "2026-10-29T16:29:21Z",
+  "mouse_pause_reason": "Parent awaiting user confirmation whether watching or personally controlling; avoid competing with user input."
+}

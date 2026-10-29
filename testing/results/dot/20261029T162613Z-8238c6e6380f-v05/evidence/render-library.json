@@ -1,0 +1,28 @@
+{
+  "operation": "create_library_file",
+  "status": "succeeded",
+  "path": "/yukkuri-v05-8238c6e-visible-replay-images.zip",
+  "file_id": "file_00000000902881f7b3bac2d41b11844f",
+  "library_file_id": "libfile_bd2e21e0c59881919257770c5692e9fd",
+  "file_name": "yukkuri-v05-8238c6e-visible-replay-images.zip",
+  "current_version_number": 0,
+  "restored_from_version_number": null,
+  "xattrs": [
+    {
+      "name": "user.library-file-version",
+      "value": "0"
+    }
+  ],
+  "directory_id": "libdir_69d8843864fc8191a4b6c25e74d26443",
+  "mime_type": "application/zip",
+  "library_artifact_type": "report",
+  "file_size_bytes": 236393,
+  "external_connectors_accessed": false,
+  "archive_sha256": "f922bfed7fc9c915cf488bb8a0f16dbc6ad14d2e229e156bc5a58386f7115251",
+  "archive_bytes": 236393,
+  "created_at": "2026-10-29T17:02:20.514Z",
+  "xattrs_applied_and_verified": true,
+  "access": "Private user Library; repo collaborators not automatically granted access. No public sharing.",
+  "expiration": "No separate expiry supplied; follows user Library retention/deletion.",
+  "scope": "Three existing native desktop images; no private saves, no product binaries."
+}

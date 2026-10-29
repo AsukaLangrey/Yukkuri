@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "run_id": "20261029T162613Z-8238c6e6380f-v05",
+  "runner": "dot",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_branch": "main",
+  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "source_tree": "dc50f13c1d4a9ea2da7c48ae828b942eb612fb7c",
+  "request_revision": "dot-v4-static-polish-20261029",
+  "request_sha256": "2e84e860de896f9396e65356ec9aa7136c45bf6a63bb10a2b1b010be9d870016",
+  "protocol_sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+  "source_worktree_clean": null,
+  "started_at": "2026-10-29T16:26:13Z",
+  "finished_at": "2026-10-29T17:12:31.308700+00:00",
+  "retry_of": "20261029T154437Z-8238c6e6380f-c04",
+  "supersedes": null,
+  "environment": {
+    "id": "dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe",
+    "checked_at": "2026-10-29T16:32:45.092677+00:00",
+    "os": "Debian GNU/Linux 13.6 x86_64; Linux 6.18.55",
+    "cpu": "AMD EPYC 9V74 80-Core Processor; 9 logical processors exposed",
+    "gpu": "Mesa llvmpipe (LLVM 19.1.7, 256 bits), software renderer",
+    "driver": "OpenGL 4.5 Core Profile, Mesa 25.0.7-2+deb13u1",
+    "dotnet": "10.0.402",
+    "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+    "display": "Authorized own cloud CUA/Sky desktop 1364x1024, DISPLAY=:0; actual game client 1180x812; render logical viewport1440x900",
+    "desktop_observation_authorized": true,
+    "audio": "ALSA device absent; engine fell back to Dummy; no audible acceptance",
+    "limitations": [
+      "Not the locked Windows platform.",
+      "V-Sync mode change unsupported by driver.",
+      "lscpu cannot read sandbox CPU sysfs; CPU model from /proc/cpuinfo and count from getconf."
+    ],
+    "identity_note": "Stable environment identity reused after actual toolchain/OS/renderer re-verification; run_id is separate.",
+    "reused_environment_from": "20261029T154437Z-8238c6e6380f-c04",
+    "current_evidence": "Current runtime log repeats exact Godot4.7.2 and llvmpipe identity; desktop snapshot confirms same1364x1024 cloud display. SDK was not invoked again for this reused-build demonstration.",
+    "working_directory": "/workspace",
+    "profile": "cloud1626-visible-v05"
+  },
+  "status": "partial",
+  "summary": "用户要求的旧构建可见复演；仅报告本轮有限实际运行/观察。未重跑构建、自动规则、完整 LFS 或历史存档检查。不是完整验收，也不覆盖新 main。",
+  "checks": [
+    {
+      "id": "lfs-integrity",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "game-build",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "Simulation.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "Milestone.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "Interaction.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "Input.Intent",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "NaturalLife.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "Interaction.Continuity",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "ActorGeometry.Smoke",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "NaturalLife.Soak",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。",
+      "evidence": []
+    },
+    {
+      "id": "Save.Compatibility",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮未执行历史存档检查；此前无获准历史样本的问题未由此次复演解决。",
+      "evidence": []
+    },
+    {
+      "id": "runtime-smoke",
+      "status": "passed",
+      "command": "bash /workspace/shared/yukkuri-visible-20261029T162613-8238c6e/run-game.sh (launched through authorized own-cloud CUA terminal)",
+      "working_directory": "/workspace",
+      "started_at": "2026-10-29T16:28:08Z",
+      "finished_at": "2026-10-29T17:11:30Z",
+      "exit_code": 0,
+      "passed_count": 1,
+      "failed_count": 0,
+      "seeds": [],
+      "reason": "本轮使用已核对身份的 c04 构建启动并结束；只证明这次运行，不是重新构建、规则复试或完整效果验收。",
+      "evidence": [
+        "evidence/game-runtime-start.txt",
+        "evidence/game-runtime-end.txt",
+        "evidence/game-runtime-exit.txt",
+        "evidence/game-runtime.txt"
+      ],
+      "project_path": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Game",
+      "timeout_seconds": 2860,
+      "working_directory_note": "Current wrapper recorded pwd before launching; project selected using absolute GAME_PATH, with isolated cloud1626-visible-v05 profile."
+    },
+    {
+      "id": "visual-interaction-review",
+      "status": "not_run",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "本轮仅有限可见复演，未覆盖完整 v4/既有视觉验收；不能由启动、局部操作或截图替代。",
+      "evidence": []
+    },
+    {
+      "id": "native-observed-interaction",
+      "status": "passed",
+      "command": "CUA/Sky native mouse and keyboard; see exact actions in native-observation.json",
+      "working_directory": "/workspace",
+      "started_at": "2026-10-29T16:28:08Z",
+      "finished_at": "2026-10-29T17:11:39.792Z",
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "用户要求旧8238c6e可视复演。16:28:08实际启动，云桌面前景庭院确认；点击近看后实际观察到角色近景。16:29:21起因用户可能正在操作且未确认，暂停所有鼠标键盘输入并保持窗口。没有执行本轮饮水/帮助/回小院序列，不把c04旧观察充数；也未独立确认用户端确实看见。经主对话确认结束展示后，17:11:30只关闭本次游戏，正常退出0；没有再做玩法交互。",
+      "evidence": [
+        "evidence/native-observation.json"
+      ],
+      "working_directory_note": "Current wrapper recorded pwd before launching; project selected using absolute GAME_PATH, with isolated cloud1626-visible-v05 profile.",
+      "project_path": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Game",
+      "required": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "historical-c04-failure-unresolved",
+      "status": "historical_not_retested",
+      "run_id": "20261029T154437Z-8238c6e6380f-c04",
+      "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+      "is_current_run_failure": false,
+      "description": "c04 的 Interaction.Continuity 有 1 项具名复合断言失败。本轮没有修复或复试该检查，不能把此次可见运行视为修复通过；历史 502/1 不加入本轮统计。根因仍未确认。",
+      "source": "checks/Interaction.Continuity/Program.cs:143",
+      "previous_report_path": "testing/results/dot/20261029T154437Z-8238c6e6380f-c04/report.json"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "evidence/assemble_report.py.txt",
+      "sha256": "1d086c45c899d257f000dfa291f2edfe7fdee2895371fa1a8bbda157196505c8",
+      "bytes": 15518
+    },
+    {
+      "path": "evidence/desktop-cwd.txt",
+      "sha256": "a67305ba049a13201e2e1d6ec2d8c7313800a227675ffb7034b644feaecb1a9c",
+      "bytes": 11
+    },
+    {
+      "path": "evidence/desktop-display.txt",
+      "sha256": "6507e5b11a45b8c59429014967b214c308750c8839b461acc5eff0f7838f7e49",
+      "bytes": 11
+    },
+    {
+      "path": "evidence/environment.json",
+      "sha256": "a7232381947561154bd16b0381530bb7f31625e1776b875a694e0fe3b7847e44",
+      "bytes": 1406
+    },
+    {
+      "path": "evidence/game-runtime-end.txt",
+      "sha256": "0aea541ebb27948a7599808cd0f5565d6b294cdc1aa5c96c0783d455eec22a45",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-runtime-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/game-runtime-start.txt",
+      "sha256": "1035fe44a82a3b44099b38ca702b0ec357ce82354ceb5fb4cca05f15f8658e7a",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-runtime.txt",
+      "sha256": "d1d51894d2487e5886840dc90d917a9e7bc8230da03798e865a91a339e50ec83",
+      "bytes": 1426
+    },
+    {
+      "path": "evidence/hold-monitor.jsonl.txt",
+      "sha256": "b1ea687dca6d0add1afe30b04755679ee8d2add2919ed856c982fbc6bfd20682",
+      "bytes": 438
+    },
+    {
+      "path": "evidence/image-manifest.json",
+      "sha256": "9241eeb8eb96adff2ea119bb7d00a184e0e7d0fcf3531570c03df63f22ddeea2",
+      "bytes": 1360
+    },
+    {
+      "path": "evidence/main-at-end.json",
+      "sha256": "deff5792aabc0fa08acb703a8ca65943912dc4eb390a8c1ddfc955cd0ad70e14",
+      "bytes": 282
+    },
+    {
+      "path": "evidence/native-actions.jsonl.txt",
+      "sha256": "a812fb2d4dd7c9ddaa710a627ae38d279f6b23ec3fbac37611f8dd9d318a2201",
+      "bytes": 416
+    },
+    {
+      "path": "evidence/native-observation.json",
+      "sha256": "23ea58e504b8285cdd9493d61a664a1b424525f6c9bb0a8c490477a36f403039",
+      "bytes": 3739
+    },
+    {
+      "path": "evidence/render-library.json",
+      "sha256": "c7d88f9e17bd4ca55d92a2a65f0d415dddae3b56d29f19da0a4cf3cac0ed6535",
+      "bytes": 1162
+    },
+    {
+      "path": "evidence/replay-scope.json",
+      "sha256": "76b06e4e2c55d4c0ddc4ede5d60c3b5143dfc170154d44d9ea1a9d4f60560744",
+      "bytes": 905
+    },
+    {
+      "path": "evidence/reused-build-files.json",
+      "sha256": "8bdb2b28de2b38f161b9f2f645efaee73ce3198955e78fc7ef49239a089611af",
+      "bytes": 1383
+    },
+    {
+      "path": "evidence/reused-build-identity.json",
+      "sha256": "ba5dd4aa233c0c195a1db5ff342bb23e7b4c840f8b222e296902c6829157c6be",
+      "bytes": 434
+    },
+    {
+      "path": "evidence/reused-source-independent-verification.json",
+      "sha256": "0264d854f9b9d0b6ecc71ccd3dc5adb2ba576b0cd8435dafcd0f20793ce8c86e",
+      "bytes": 42674
+    },
+    {
+      "path": "evidence/round-lifecycle.json",
+      "sha256": "faece270a3e341a2b2e010bf15158d313c09a32da71694797a2b75cdcc75518e",
+      "bytes": 430
+    },
+    {
+      "path": "evidence/run-game.sh.txt",
+      "sha256": "8605cf7dcdf5538699a3229c45ce65c7fbbe5a21d07320b7fe53bbda868bb106",
+      "bytes": 924
+    },
+    {
+      "path": "evidence/source-AGENTS.md",
+      "sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285",
+      "bytes": 1584
+    },
+    {
+      "path": "evidence/source-testing-PROTOCOL.md",
+      "sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+      "bytes": 8127
+    },
+    {
+      "path": "evidence/source-testing-report-template.json",
+      "sha256": "3ada254371b9ae25df7a50e2826338ec36240adb8d695115f1888e3d312d49ff",
+      "bytes": 1508
+    },
+    {
+      "path": "evidence/source-testing-request.json",
+      "sha256": "2e84e860de896f9396e65356ec9aa7136c45bf6a63bb10a2b1b010be9d870016",
+      "bytes": 3318
+    },
+    {
+      "path": "evidence/test-completion.json",
+      "sha256": "30a166e526db96775167bae5f4480904f965ea20f50e7c054f642c022f9f9307",
+      "bytes": 379
+    }
+  ],
+  "limitations": [
+    "未重新 build 或运行八套纯逻辑检查；数量均为 null，而非旧结果复制。",
+    "完整 visual-interaction-review 未执行；只对 native-observation 中有证据的局部操作作结论。",
+    "仅旧提交 8238c6e，不覆盖 f02b0fc 或之后 main；此次 latest 不清除待测关注路径变更。",
+    "此前缺失素材、历史存档样本和有效音频验收未被本次复演消除。",
+    "用户要求可视复演不等于用户已实际看到每帧；只确认云桌面运行与记录，不猜测用户端显示情况。",
+    "本轮使用独立 profile；私人存档、安装包和二进制不提交普通 Git。"
+  ],
+  "next_action": "保留 c04 历史失败；不要把此次 manual_visible_replay 当作完整规则复测基线。后续按协议检查最新 main 的关注路径变化并处理尚未覆盖的新提交；完整验收由用户决定。",
+  "scope": "manual_visible_replay",
+  "manual_replay_authorization": {
+    "user_message_at": "2026-10-29T16:25:42Z",
+    "request": "你再测试一轮我看",
+    "scope": "Own-cloud visible replay only, using pinned old build; does not grant further actions."
+  },
+  "source_materialization_note": "复用 c04 物化源码和构建；239 非导入元数据文件及 DLL 哈希本轮重核，不是完整 Git checkout，未重新构建。",
+  "reused_build": {
+    "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+    "source_verified_files": 239,
+    "reused_from": "20261029T154437Z-8238c6e6380f-c04",
+    "dll": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Game/.godot/mono/temp/bin/Debug/Yukkuri.Game.dll",
+    "dll_sha256": "b3702945417c2638bc63f4e8a49078c45b8e0f0d59a381c4f905845140dc0bf0",
+    "new_build": false,
+    "user_requested_visible_replay": true
+  },
+  "main_at_completion": {
+    "checked_at": "2026-10-29T17:12:31.308700+00:00",
+    "main_commit": "c400a4c5eedc236d779b1e28142b5c8f6ca5014d",
+    "tested_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+    "changed": true,
+    "coverage": "Old-build manual visible replay only; current main still untested."
+  },
+  "coverage_boundary": {
+    "tested_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+    "not_tested_current_main": "c400a4c5eedc236d779b1e28142b5c8f6ca5014d",
+    "eligible_as_full_test_baseline": false,
+    "last_full_rule_run": "20261029T154437Z-8238c6e6380f-c04",
+    "pending_source_commit": "c400a4c5eedc236d779b1e28142b5c8f6ca5014d",
+    "instruction": "latest only points to this manual replay. Scheduled trigger evaluation must still compare watched changes since last full rule run; f02b0fc remains untested by this run."
+  },
+  "test_processes_finished_at": "2026-10-29T17:11:30Z",
+  "binary_evidence_storage": {
+    "render-library.json": {
+      "operation": "create_library_file",
+      "status": "succeeded",
+      "path": "/yukkuri-v05-8238c6e-visible-replay-images.zip",
+      "file_id": "file_00000000902881f7b3bac2d41b11844f",
+      "library_file_id": "libfile_bd2e21e0c59881919257770c5692e9fd",
+      "file_name": "yukkuri-v05-8238c6e-visible-replay-images.zip",
+      "current_version_number": 0,
+      "restored_from_version_number": null,
+      "xattrs": [
+        {
+          "name": "user.library-file-version",
+          "value": "0"
+        }
+      ],
+      "directory_id": "libdir_69d8843864fc8191a4b6c25e74d26443",
+      "mime_type": "application/zip",
+      "library_artifact_type": "report",
+      "file_size_bytes": 236393,
+      "external_connectors_accessed": false,
+      "archive_sha256": "f922bfed7fc9c915cf488bb8a0f16dbc6ad14d2e229e156bc5a58386f7115251",
+      "archive_bytes": 236393,
+      "created_at": "2026-10-29T17:02:20.514Z",
+      "xattrs_applied_and_verified": true,
+      "access": "Private user Library; repo collaborators not automatically granted access. No public sharing.",
+      "expiration": "No separate expiry supplied; follows user Library retention/deletion.",
+      "scope": "Three existing native desktop images; no private saves, no product binaries."
+    }
+  }
+}

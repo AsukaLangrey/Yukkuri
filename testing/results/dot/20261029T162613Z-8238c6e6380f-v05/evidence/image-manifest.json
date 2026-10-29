@@ -1,0 +1,30 @@
+{
+  "run_id": "20261029T162613Z-8238c6e6380f-v05",
+  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "scope": "Existing actual own-cloud desktop screenshots from user-requested visible old-build replay. No offscreen layout renders.",
+  "files": [
+    {
+      "path": "images/01-visible-startup.jpg",
+      "bytes": 127363,
+      "sha256": "4acb4f2be01061e236f3f29378a2ff7128219d072da5f6e1ce87be91d6f06fb9",
+      "file_written_at_utc": "2026-10-29T16:28:17.965518+00:00"
+    },
+    {
+      "path": "images/02-native-closeup.jpg",
+      "bytes": 125709,
+      "sha256": "662dba44574ec60202a3938dc6f330bd662aa80985e15c5ff688ab84fc4ce662",
+      "file_written_at_utc": "2026-10-29T16:28:51.029235+00:00"
+    },
+    {
+      "path": "images/03-closeup-settled.jpg",
+      "bytes": 110130,
+      "sha256": "76703752fd4d7eb879484dd54c19fd36b2becbe87c4910f6b4220a0f88448c71",
+      "file_written_at_utc": "2026-10-29T16:29:07.557138+00:00"
+    }
+  ],
+  "limitations": [
+    "02 is the frame captured immediately after near-look click and still shows yard;03 confirms settled close-up.",
+    "03 shows Greet/response text, but dot only clicked near-look; the origin of the additional input is not confirmed and not counted as a dot-tested interaction.",
+    "No further desktop input from dot after16:29:21UTC while waiting for user confirmation."
+  ]
+}

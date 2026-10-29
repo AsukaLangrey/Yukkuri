@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -u
+source /workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/env.sh
+B=/workspace/shared/yukkuri-visible-20261029T162613-8238c6e
+export XDG_DATA_HOME="$B/data" XDG_CONFIG_HOME="$B/config" XDG_CACHE_HOME="$B/cache" XDG_RUNTIME_DIR="$B/runtime" HOME="$B/home" TMPDIR="$B/temp"
+mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME" "$XDG_RUNTIME_DIR" "$HOME" "$TMPDIR"
+date -u '+%Y-%m-%dT%H:%M:%SZ' > "$B/evidence/game-runtime-start.txt"
+pwd > "$B/evidence/desktop-cwd.txt"
+printf 'DISPLAY=%s\n' "${DISPLAY:-}" > "$B/evidence/desktop-display.txt"
+timeout --signal=TERM --kill-after=5 2860 "$GODOT_BIN" --path "$GAME_PATH" --resolution 1280x800 --position 20,70 -- --interaction-test-profile cloud1626-visible-v05 > "$B/evidence/game-runtime.txt" 2>&1
+s=$?
+printf '%s\n' "$s" > "$B/evidence/game-runtime-exit.txt"
+date -u '+%Y-%m-%dT%H:%M:%SZ' > "$B/evidence/game-runtime-end.txt"
+exit "$s"

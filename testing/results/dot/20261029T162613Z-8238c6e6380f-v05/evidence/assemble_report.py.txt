@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""Assemble v05 manual visible replay only; never run project code or publish.
+--draft accepts pending final inputs and does not create latest. Final assembly
+requires native-observation, test-completion, environment, main-at-end and runtime
+start/end/exit/log. Only this run's B/publication is written.
+"""
+import argparse, copy, datetime as dt, hashlib, json, pathlib, re, shutil, zipfile
+B=pathlib.Path('/workspace/shared/yukkuri-visible-20261029T162613-8238c6e')
+OLD=pathlib.Path('/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e')
+SRC=OLD/'source'; RAW=B/'evidence'; STAGING=B/'publication/report-staging'
+RUN='20261029T162613Z-8238c6e6380f-v05'; PREVIOUS='20261029T154437Z-8238c6e6380f-c04'
+SHA='8238c6e6380fd605ec84cc5267f38de875f6d647'; TREE='dc50f13c1d4a9ea2da7c48ae828b942eb612fb7c'
+KNOWN_NEW_MAIN='f02b0fcfbb3e9649b5f94d35201c4c22661158b9'
+REL=pathlib.Path('testing/results/dot')/RUN; OUT=STAGING/REL; EV=OUT/'evidence'
+ALLOWED={'passed','failed','blocked','skipped','not_run','timeout','interrupted'}
+def read(p): return json.loads(pathlib.Path(p).read_text())
+def digest(p): return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
+def save(p,d):
+ p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+def optional(n,default=None): return read(RAW/n) if (RAW/n).exists() else default
+def txt(n): return (RAW/n).read_text().strip()
+def blank(id,reason):
+ return dict(id=id,status='not_run',command=None,working_directory=None,started_at=None,finished_at=None,exit_code=None,passed_count=None,failed_count=None,seeds=[],reason=reason,evidence=[])
+def main():
+ ap=argparse.ArgumentParser();ap.add_argument('--draft',action='store_true');args=ap.parse_args()
+ life=read(RAW/'round-lifecycle.json');identity=read(RAW/'reused-build-identity.json')
+ request=read(SRC/'testing/request.json');report=read(SRC/'testing/report-template.json')
+ assert life['run_id']==RUN and life['source_commit']==identity['source_commit']==SHA and life['source_tree']==TREE
+ assert identity['reused_from']==PREVIOUS and identity['new_build'] is False
+ assert digest(identity['dll'])==identity['dll_sha256']
+ # Non-executing identity check. Do not mislabel this as a fresh LFS audit/build.
+ manifest=read(OLD/'evidence/materialization-manifest.json'); rows=[]
+ exclusions={'src/Yukkuri.Game/Assets/Art/sanctuary-morning.png.import','src/Yukkuri.Game/Assets/pipeline-probe.glb.import'}
+ for row in manifest['files']:
+  if row['path'] in exclusions: continue
+  f=SRC/row['path']; assert digest(f)==row['sha256'],('source changed',row['path'])
+  rows.append({'path':row['path'],'sha256':digest(f),'bytes':f.stat().st_size})
+ assert len(rows)==identity['source_verified_files']==239
+ needed=['native-observation.json','test-completion.json','environment.json','main-at-end.json','game-runtime-start.txt','game-runtime-end.txt','game-runtime-exit.txt','game-runtime.txt']
+ missing=[n for n in needed if not (RAW/n).is_file()]
+ if not args.draft: assert not missing,('missing final inputs',missing)
+ native=optional('native-observation.json',{});completion=optional('test-completion.json',{})
+ finished=completion.get('finished_at'); main_at_end=optional('main-at-end.json',{})
+ latest_main=main_at_end.get('main_commit',KNOWN_NEW_MAIN)
+ if not args.draft:
+  assert finished and finished>=life['started_at'];assert completion.get('status')!='running'
+  assert re.fullmatch(r'[0-9a-f]{40}',latest_main)
+ environment=optional('environment.json')
+ if environment is None:
+  environment=copy.deepcopy(read(OLD/'evidence/environment.json'))
+  environment['current_replay_verification']='pending: historical environment context only, not a new verification'
+ reason='本轮按用户明确要求，仅复演已构建旧提交的可见游戏；此项未重新执行，不继承 c04 的数量或结论。'
+ checks=[blank(k,reason) for k in request['required_checks']]
+ byid={c['id']:c for c in checks}
+ byid['visual-interaction-review']['reason']='本轮仅有限可见复演，未覆盖完整 v4/既有视觉验收；不能由启动、局部操作或截图替代。'
+ byid['Save.Compatibility']['reason']='本轮未执行历史存档检查；此前无获准历史样本的问题未由此次复演解决。'
+ runtime=byid['runtime-smoke']
+ rfiles=['game-runtime-start.txt','game-runtime-end.txt','game-runtime-exit.txt','game-runtime.txt']
+ runtime['command']=f'bash {B}/run-game.sh (launched through authorized own-cloud CUA terminal)'
+ runtime['project_path']=str(SRC/'src/Yukkuri.Game');runtime['timeout_seconds']=2860
+ runtime['working_directory']=txt('desktop-cwd.txt') if (RAW/'desktop-cwd.txt').exists() else None
+ runtime['working_directory_note']='Current wrapper recorded pwd before launching; project selected using absolute GAME_PATH, with isolated cloud1626-visible-v05 profile.'
+ runtime['evidence']=['evidence/'+n for n in rfiles if (RAW/n).exists()]
+ if all((RAW/n).exists() for n in rfiles):
+  code=int(txt('game-runtime-exit.txt'));log=txt('game-runtime.txt')
+  status='timeout' if code in {124,137,143} else 'failed' if code!=0 or 'INTERACTION_ROOM_READY' not in log else 'passed'
+  runtime.update(status=status,started_at=txt('game-runtime-start.txt'),finished_at=txt('game-runtime-end.txt'),exit_code=code,
+   passed_count=1 if status=='passed' else None,failed_count=0 if status=='passed' else None,
+   reason='本轮使用已核对身份的 c04 构建启动并结束；只证明这次运行，不是重新构建、规则复试或完整效果验收。')
+ else:
+  runtime['reason']='游戏运行尚未获得完整结束/退出码证据；草稿不能作为终态启动通过。'
+  runtime['started_at']=txt('game-runtime-start.txt') if (RAW/'game-runtime-start.txt').exists() else None
+ if native:
+  n=blank('native-observed-interaction',native.get('summary',native.get('reason','仅记录实际观察范围。')))
+  n.update(status=native.get('status','not_run'),command=native.get('command','CUA/Sky native mouse and keyboard; see exact actions in native-observation.json'),
+   working_directory=runtime['working_directory'],working_directory_note=runtime['working_directory_note'],project_path=runtime['project_path'],
+   started_at=native.get('started_at'),finished_at=native.get('finished_at'),exit_code=None,passed_count=native.get('passed_count'),failed_count=native.get('failed_count'),required=False,evidence=['evidence/native-observation.json'])
+  assert n['status'] in ALLOWED;checks.append(n)
+ current_failures=[c['id'] for c in checks if c['status']=='failed']
+ status='failed' if current_failures else 'timeout' if any(c['status']=='timeout' for c in checks) else 'interrupted' if completion.get('status')=='interrupted' else 'partial'
+ if not args.draft: assert finished is not None
+ # Recreate only this unpublished run's local staging files, never any other run.
+ if OUT.exists(): shutil.rmtree(OUT)
+ EV.mkdir(parents=True,exist_ok=True)
+ allowed_ext={'.json','.txt','.md','.jsonl'}
+ for f in sorted(RAW.iterdir()):
+  if f.is_file() and f.suffix in allowed_ext:
+   assert not re.search(r'(save|slot)[-_]?[0-9]|credential|token|secret',f.name,re.I),('unsafe evidence filename',f.name)
+   target=EV/(f.name+'.txt' if f.suffix=='.jsonl' else f.name);shutil.copyfile(f,target)
+ for filename in ['AGENTS.md','testing/PROTOCOL.md','testing/request.json','testing/report-template.json']:
+  shutil.copyfile(SRC/filename,EV/('source-'+filename.replace('/','-')))
+ shutil.copyfile(B/'run-game.sh',EV/'run-game.sh.txt')
+ shutil.copyfile(pathlib.Path(__file__),EV/'assemble_report.py.txt')
+ save(EV/'reused-source-independent-verification.json',{'checked_at':dt.datetime.now(dt.timezone.utc).isoformat(),'source_commit':SHA,'files_verified':len(rows),'files':rows,'excluded_generated_metadata':sorted(exclusions),'dll_sha256':digest(identity['dll']),'scope':'Identity only; no new compilation, automated checks or complete LFS audit.'})
+ report.update(template_only=args.draft,run_id=RUN,source_commit=SHA,source_tree=TREE,request_revision=request['revision'],request_sha256=digest(SRC/'testing/request.json'),protocol_sha256=digest(SRC/'testing/PROTOCOL.md'),
+  source_worktree_clean=None,started_at=life['started_at'],finished_at=finished,retry_of=PREVIOUS,supersedes=None,environment=environment,status=status,checks=checks,
+  summary='用户要求的旧构建可见复演；仅报告本轮有限实际运行/观察。未重跑构建、自动规则、完整 LFS 或历史存档检查。不是完整验收，也不覆盖新 main。',
+  next_action='保留 c04 历史失败；不要把此次 manual_visible_replay 当作完整规则复测基线。后续按协议检查最新 main 的关注路径变化并处理尚未覆盖的新提交；完整验收由用户决定。')
+ report['scope']='manual_visible_replay';report['manual_replay_authorization']={'user_message_at':'2026-10-29T16:25:42Z','request':'你再测试一轮我看','scope':'Own-cloud visible replay only, using pinned old build; does not grant further actions.'}
+ report['source_materialization_note']='复用 c04 物化源码和构建；239 非导入元数据文件及 DLL 哈希本轮重核，不是完整 Git checkout，未重新构建。'
+ report['reused_build']=identity;report['main_at_completion']=main_at_end
+ report['coverage_boundary']={'tested_commit':SHA,'not_tested_current_main':latest_main,'eligible_as_full_test_baseline':False,'last_full_rule_run':PREVIOUS,'pending_source_commit':latest_main,'instruction':'latest only points to this manual replay. Scheduled trigger evaluation must still compare watched changes since last full rule run; f02b0fc remains untested by this run.'}
+ report['test_processes_finished_at']=completion.get('test_processes_finished_at',runtime['finished_at'])
+ report['findings']=[{'id':'historical-c04-failure-unresolved','status':'historical_not_retested','run_id':PREVIOUS,'source_commit':SHA,'is_current_run_failure':False,
+  'description':'c04 的 Interaction.Continuity 有 1 项具名复合断言失败。本轮没有修复或复试该检查，不能把此次可见运行视为修复通过；历史 502/1 不加入本轮统计。根因仍未确认。','source':'checks/Interaction.Continuity/Program.cs:143','previous_report_path':f'testing/results/dot/{PREVIOUS}/report.json'}]
+ report['limitations']=['未重新 build 或运行八套纯逻辑检查；数量均为 null，而非旧结果复制。','完整 visual-interaction-review 未执行；只对 native-observation 中有证据的局部操作作结论。','仅旧提交 8238c6e，不覆盖 f02b0fc 或之后 main；此次 latest 不清除待测关注路径变更。','此前缺失素材、历史存档样本和有效音频验收未被本次复演消除。','用户要求可视复演不等于用户已实际看到每帧；只确认云桌面运行与记录，不猜测用户端显示情况。','本轮使用独立 profile；私人存档、安装包和二进制不提交普通 Git。']
+ # Optional private image identity: copy metadata only, never image bytes to Git.
+ libraries=[(n,optional(n)) for n in ['render-library.json','image-library.json'] if (RAW/n).exists()]
+ if libraries: report['binary_evidence_storage']={n:d for n,d in libraries}
+ report['evidence']=[{'path':'evidence/'+str(f.relative_to(EV)),'sha256':digest(f),'bytes':f.stat().st_size} for f in sorted(EV.rglob('*')) if f.is_file()]
+ save(OUT/'report.json',report)
+ native_summary=native.get('summary',native.get('reason','观察记录尚未完成；当前为草稿。'))
+ table='\n'.join('| '+c['id']+' | '+c['status']+' | '+(str(c['passed_count'])+' / '+str(c['failed_count']) if c['passed_count'] is not None else '未计数')+' |' for c in checks)
+ summary=f'''# 用户可视复演：{status}
+
+**这是旧构建的有限可见复演，不是完整复测或验收通过。** 用户于 16:25:42 UTC 要求“你再测试一轮我看”。本轮仅在自己的 Alice 云桌面复用已核对的 `8238c6e` 构建，使用新隔离 profile；未在用户原开发机运行。
+
+- 本轮：`{RUN}`；关联旧报告：`{PREVIOUS}`（retry_of；不覆盖旧报告）。
+- 被测源码：`{SHA}`；树：`{TREE}`。
+- 开始：{life['started_at']}；结束：{finished or '尚未结束，草稿不可发布'}。
+- **当前已知 main：`{latest_main}`；本报告不覆盖该新提交。**
+- 239 个非导入元数据源文件和已构建 DLL 身份重核；**没有重新编译、没有运行八套规则检查**。
+
+## 实际观察
+
+{native_summary}
+
+完整操作、预期/实际、时长及未覆盖范围见 `evidence/native-observation.json`（如尚未提供则为待补草稿）。用户是否实际看到每帧未独立确认，不把云窗口可见冒充用户端已验收。
+
+## 本轮检查
+
+| 检查 | 状态 | 本轮通过 / 失败 |
+|---|---|---:|
+{table}
+
+## 历史问题仍保留
+
+c04 的 `Interaction.Continuity` 在第143行的复合断言有1项失败，根因未确认。本轮没有修复源码，也没有重跑该确定性检查；不能用一次可见运行消除旧失败。c04 的 **502通过/1失败不计入本轮**。
+
+素材缺口、历史存档样本、有效音频及全部未观察 UI 场景并未被此次复演解决。完整 visual-interaction-review 仍未执行；项目整体验收由用户决定。
+
+## 下一轮与 latest 指针
+
+本报告标为 `manual_visible_replay`，`eligible_as_full_test_baseline=false`。更新 latest 仅表示最新人工复演报告，不表示新 main 已测试。下一轮仍须基于上次完整规则轮次 c04 比较关注路径；`f02b0fc` 及后续新提交不得因此被去重跳过或标为通过。
+
+普通 Git 只保留脱敏文本/JSON；任何私有图片存储若提供，权限、身份与有效期以本轮 evidence 元数据为准。
+'''
+ (OUT/'summary.md').write_text(summary)
+ latest_file=STAGING/'testing/latest/dot.json'
+ if args.draft:
+  if latest_file.exists(): latest_file.unlink()
+ else:
+  save(latest_file,dict(schema_version=1,run_id=RUN,source_commit=SHA,report_path=str(REL/'report.json'),status=status,finished_at=finished,scope='manual_visible_replay',eligible_as_full_test_baseline=False,last_full_rule_run=PREVIOUS,pending_source_commit=latest_main))
+ paths={e['path'] for e in report['evidence']}
+ for c in checks:
+  assert c['status'] in ALLOWED
+  for ref in c['evidence']: assert ref in paths,(c['id'],ref)
+  if c['id'] not in {'runtime-smoke','native-observed-interaction'}: assert c['status']=='not_run' and c['exit_code'] is None and c['passed_count'] is None and c['failed_count'] is None
+ for e in report['evidence']:
+  f=OUT/e['path'];assert digest(f)==e['sha256'] and f.stat().st_size==e['bytes']
+ assert not re.search(r'REPLACE(?:_[A-Z]+)?',json.dumps(report))
+ files=[f for f in STAGING.rglob('*') if f.is_file()]
+ assert all(OUT in f.parents or f==latest_file for f in files)
+ assert all(f.suffix in {'.txt','.md','.json'} for f in files)
+ size=sum(f.stat().st_size for f in files);assert size<5*1024*1024
+ validation=dict(validated_at=dt.datetime.now(dt.timezone.utc).isoformat(),draft=args.draft,missing_inputs=missing,status=status,run_id=RUN,source_commit=SHA,source_files_reverified=len(rows),all_evidence_hashes_match=True,evidence_count=len(report['evidence']),publication_files=len(files),publication_bytes=size,unrun_required_checks_are_not_run=True,historical_results_not_counted=True,eligible_as_full_test_baseline=False,out=str(OUT))
+ save(B/'publication/validation.json',validation);print(json.dumps(validation,ensure_ascii=False,indent=2))
+if __name__=='__main__': main()

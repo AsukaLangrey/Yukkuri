@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "revision": "dot-v4-static-polish-20261029",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_branch": "main",
+  "results_branch": "codex/dot-test-results",
+  "poll_interval_minutes": 60,
+  "max_concurrent_runs": 1,
+  "run_timeout_minutes": 50,
+  "watched_paths": ["src/", "checks/", "tools/", "assets-source/", "third-party/", "global.json", "NuGet.Config", "toolchain.lock.json", ".gitattributes", "testing/request.json", "testing/PROTOCOL.md", "testing/report-template.json"],
+  "required_checks": [
+    "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
+    "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
+    "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak",
+    "Save.Compatibility", "runtime-smoke", "visual-interaction-review"
+  ],
+  "effect_focus": [
+    "跳跃朝向、腾空与落地衔接",
+    "头部前后外观、饰品和姿态穿插",
+    "鼠标直接接触、速度力度、撤离与急停反馈",
+    "递食饮水位置、自主取食取水及中断",
+    "低信任个体的自主解决与求助差异"
+  ],
+  "targeted_review_documents": [
+    "planning/stages/static-polish-20261029-10h/input.md",
+    "planning/stages/static-polish-20261029-10h/life.md",
+    "planning/stages/static-polish-20261029-10h/presentation.md",
+    "planning/stages/static-polish-20261029-10h/review.md",
+    "planning/stages/static-polish-20261029-10h/integration.md",
+    "planning/stages/static-polish-20261029-10h/feeding-release.md",
+    "planning/stages/static-polish-20261029-10h/review-completion.md",
+    "planning/stages/static-polish-20261029-10h/review-swallow.md",
+    "planning/stages/static-polish-20261029-10h/review-input-switches.md",
+    "planning/stages/static-polish-20261029-10h/review-resource-sharing.md",
+    "planning/stages/static-polish-20261029-10h/review-resource-scene.md",
+    "planning/stages/static-polish-20261029-10h/review-scene-integration.md"
+  ],
+  "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。保留v2/v3要求：保存失败/失焦保护、自主生活、完成动作释放、重入递食不覆盖自然一口、吞咽到实际移动的姿态衔接，以及旧字段合成续接（不代替真实历史样本）。v4增加实际界面边界：拿着未递出或剩余食水跨自动保存期限、中键观察跨保存期限；近看隐藏树木不再挡住命中且隐藏河水不可选；最后一份甜甜在pending时可见、入口后不留透明命中、手里吃空也隐藏；直接喝水与实物杯相互切换时水位/可见性正确复位。纯逻辑通过或静态赋值链不能代替这些真实界面观察，缺观察条件如实记未测。",
+  "historical_save_fixture": {
+    "available_in_repository": false,
+    "instruction": "无获准历史样本时报告 blocked，不提交个人存档或伪造历史样本。"
+  },
+  "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
+  "product_code_changes_allowed": false,
+  "full_product_acceptance": "reserved_for_user"
+}

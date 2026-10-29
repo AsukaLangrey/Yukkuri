@@ -1,0 +1,4 @@
+{"at":"2026-10-29T16:28:51.037Z","action":"native-closeup"}
+{"at":"2026-10-29T16:29:07.570Z","action":"closeup-settled"}
+{"at":"2026-10-29T17:10:48.104Z","action":"Alt+F4 owned replay window only after parent confirmed close for deadline/report","window_id":41943043}
+{"at":"2026-10-29T17:11:29.914Z","action":"Clicked owned game window title-bar close after bound Alt+F4 did not close window","window_id":41943043}

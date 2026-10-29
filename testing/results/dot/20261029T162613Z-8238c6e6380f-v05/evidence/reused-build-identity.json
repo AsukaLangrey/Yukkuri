@@ -1,0 +1,9 @@
+{
+  "source_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "source_verified_files": 239,
+  "reused_from": "20261029T154437Z-8238c6e6380f-c04",
+  "dll": "/workspace/shared/yukkuri-cloud-20261029T154437-8238c6e/source/src/Yukkuri.Game/.godot/mono/temp/bin/Debug/Yukkuri.Game.dll",
+  "dll_sha256": "b3702945417c2638bc63f4e8a49078c45b8e0f0d59a381c4f905845140dc0bf0",
+  "new_build": false,
+  "user_requested_visible_replay": true
+}

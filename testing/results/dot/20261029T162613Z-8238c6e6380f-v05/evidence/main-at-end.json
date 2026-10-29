@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-29T17:12:31.308700+00:00",
+  "main_commit": "c400a4c5eedc236d779b1e28142b5c8f6ca5014d",
+  "tested_commit": "8238c6e6380fd605ec84cc5267f38de875f6d647",
+  "changed": true,
+  "coverage": "Old-build manual visible replay only; current main still untested."
+}

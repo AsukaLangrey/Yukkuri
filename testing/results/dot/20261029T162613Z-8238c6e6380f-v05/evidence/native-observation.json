@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "scope": "Only actual visible startup and near-look observation; not full requested interaction sequence or acceptance.",
+  "started_at": "2026-10-29T16:28:08Z",
+  "finished_at": "2026-10-29T17:11:39.792Z",
+  "summary": "用户要求旧8238c6e可视复演。16:28:08实际启动，云桌面前景庭院确认；点击近看后实际观察到角色近景。16:29:21起因用户可能正在操作且未确认，暂停所有鼠标键盘输入并保持窗口。没有执行本轮饮水/帮助/回小院序列，不把c04旧观察充数；也未独立确认用户端确实看见。经主对话确认结束展示后，17:11:30只关闭本次游戏，正常退出0；没有再做玩法交互。",
+  "observations": [
+    {
+      "id": "visible-startup",
+      "status": "observed",
+      "at": "2026-10-29T16:28:19Z",
+      "expected": "Own-cloud game frontmost with courtyard after user requested visible replay.",
+      "actual": "Godot game window41943043 focused=true, courtyard and three characters visible; INTERACTION_ROOM_READY.",
+      "repetitions": 1,
+      "evidence": [
+        "images/01-visible-startup.jpg",
+        "evidence/game-runtime.txt"
+      ]
+    },
+    {
+      "id": "near-look",
+      "status": "observed",
+      "at": "2026-10-29T16:29:08Z",
+      "action": "Dot clicked靠近看看 at absolute1148,357, then observed settled screenshot.",
+      "expected": "Selected character displayed close-up.",
+      "actual": "Close-up rendered. Greet text also appeared but dot did not select Greet; additional input origin unconfirmed, not counted as tested.",
+      "repetitions": 1,
+      "evidence": [
+        "images/03-closeup-settled.jpg",
+        "evidence/native-actions.jsonl.txt"
+      ]
+    },
+    {
+      "id": "hold-for-viewer",
+      "status": "observed-presence-only",
+      "checks": [
+        {
+          "at": "2026-10-29T16:39:29Z",
+          "window_id": 41943043,
+          "focused": true
+        },
+        {
+          "at": "2026-10-29T17:09:15Z",
+          "window_id": 41943043,
+          "focused": true
+        }
+      ],
+      "actual": "Read-only window-list presence/focus and absent exit marker; no further native input after pause. No continuous frame/health assertion or viewer confirmation."
+    },
+    {
+      "id": "close-own-replay",
+      "status": "observed",
+      "started_at": "2026-10-29T17:10:48.105Z",
+      "finished_at": "2026-10-29T17:11:39.792Z",
+      "repetitions": 1,
+      "action": "Bound-window Alt+F4 did not close; fresh desktop inspection confirmed the owned game remained focused. Clicked its title-bar X at17:11:29.915UTC.",
+      "expected": "Close only this owned replay before50-minute limit; preserve other user apps.",
+      "actual": "Runtime end17:11:30UTC, exit0; read-only window list at17:11:39.792 showed replay41943043 absent.",
+      "evidence": [
+        "evidence/game-runtime-end.txt",
+        "evidence/game-runtime-exit.txt",
+        "evidence/native-actions.jsonl.txt"
+      ]
+    }
+  ],
+  "not_run": [
+    "Drinking/help/return-to-yard interaction demonstration in v05 after input pause.",
+    "All automated rule checks and new build.",
+    "Complete v4 visual/input/feeding/save boundary review.",
+    "New main commits after8238c6e."
+  ],
+  "full_review_passed": false,
+  "limitations": [
+    "The user did not confirm viewing completion or whether they were controlling the desktop.",
+    "Do not attribute unobserved user actions as dot-run tests.",
+    "No new test uses old c04 502/1 counts; its unresolved failure remains historical.",
+    "展示结束由主对话在17:10授权正常收尾；用户未确认每帧可见或具体操作。仅关闭本次游戏，不操作其项目管理器/浏览器。"
+  ]
+}

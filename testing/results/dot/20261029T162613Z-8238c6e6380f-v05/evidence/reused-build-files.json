@@ -1,0 +1,46 @@
+{
+  "origin_run": "20261029T154437Z-8238c6e6380f-c04",
+  "reverified_at": "2026-10-29T16:30:50.881221+00:00",
+  "files": [
+    {
+      "name": "GodotSharp.dll",
+      "bytes": 5928960,
+      "sha256": "2afe2686aacfefac36da6601b59aeb05e560f06e4970cd5036100acd2ca4249d"
+    },
+    {
+      "name": "GodotSharpEditor.dll",
+      "bytes": 303104,
+      "sha256": "195c81c1ccb7c05559fc79b4acbb9025154a74ad99ecb9bb3747b5fbfc2ed1d1"
+    },
+    {
+      "name": "Yukkuri.Game.deps.json",
+      "bytes": 1942,
+      "sha256": "e7cb731ca6ddfa182a3f5bbcf59b415eab9a656340c90c35efe66bb8de517c2d"
+    },
+    {
+      "name": "Yukkuri.Game.dll",
+      "bytes": 501760,
+      "sha256": "b3702945417c2638bc63f4e8a49078c45b8e0f0d59a381c4f905845140dc0bf0"
+    },
+    {
+      "name": "Yukkuri.Game.pdb",
+      "bytes": 201668,
+      "sha256": "a611590c2aef4564ea8ebc8142115b0a30ba36d0013e7258cbec90abd70ce25f"
+    },
+    {
+      "name": "Yukkuri.Game.runtimeconfig.json",
+      "bytes": 293,
+      "sha256": "6ab5c474fb3309498f06181cb55f6458d412e070aebd38aa4232bc871aea2f6b"
+    },
+    {
+      "name": "Yukkuri.Simulation.dll",
+      "bytes": 359424,
+      "sha256": "3a60b32c389ab261a94e6aaded96d754107667175f5f607c9bfe93602c36817a"
+    },
+    {
+      "name": "Yukkuri.Simulation.pdb",
+      "bytes": 109200,
+      "sha256": "7fd82985bb5105d552520338174110456b5cac4ab8cd429bc1de4eaa925e363b"
+    }
+  ]
+}

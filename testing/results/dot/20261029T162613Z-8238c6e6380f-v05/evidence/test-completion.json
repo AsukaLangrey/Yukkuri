@@ -1,0 +1,7 @@
+{
+  "finished_at": "2026-10-29T17:12:31.308700+00:00",
+  "test_processes_finished_at": "2026-10-29T17:11:30Z",
+  "test_processes_finished": true,
+  "status": "completed",
+  "reason": "Parent instructed normal close to reserve final publication time within50-minute bound. Only owned replay exited0; no automated checks were rerun. Exclusive lock retained through publication."
+}
