@@ -1,6 +1,6 @@
 # 已入口旧档案例与完成动作交界审查
 
-结论：新增旧档案例符合本次要补的契约，未发现需要修改的夹具或断言问题。它没有把现代“尚未入口的预留”伪装成旧档，也没有放宽原有保存验证。完成喂食/护理/修补后持续按住的实现尚未交回；本次只整理真实入口的核对点，不给未见实现下通过结论，也不空等。
+最新结论（10:50）：已复核落盘的完成动作核心和 Continuity 新案例，在下文最终 blob 范围内未发现仍需修正的实质问题。过程中发现修补松手案例只推进 0.2 秒就断言移动；后续版本已改为 0.3 秒，此误报已静态关闭。没有运行程序、测试或编译。旧档案例原结论保留；下文早期“待实现”内容是 10:24 的历史预审，最新复核见末节。
 
 观察时间：北京时间 2026-10-29 10:24—10:25。HEAD 为 `fc3a77578bd77efa34d964f692aa1d885ae9c157`，当时唯一已跟踪 diff 为 `checks/NaturalLife.Smoke/Program.cs`。关于动作完成的描述基于该提交的现有 `InteractionGesture.cs`、游戏输入和检查辅助函数，不能当作 input 任务最终实现的复核。
 
@@ -84,3 +84,59 @@ Care 不会立即治好脚底或解除 Critical→Recovering 的恢复期。移�
 旧档新增案例：可交主对话保留并进入远端执行，没有本次静态发现要求先修。
 
 完成动作实现：只完成上述预审要点，尚未复核最终差异；本任务按要求到此结束。后续报告应写实际机器与完整源码提交，合成案例通过、真实历史兼容和实机动作效果分开陈述。
+
+## 10:50 补充：完成动作核心与 Continuity 实现复核
+
+结论：对以下最终读到的文件版本，没有未关闭的静态发现。该结论不是编译、测试或实机验证通过，也不覆盖 life 尚在处理的无手势 RoomMove 吞咽收尾。
+
+### 版本边界
+
+本轮观察 HEAD：`c6fc7d89795501c26057b991276b4657d62dc122`。完成动作核心和检查当时均为工作区差异；不能只用 HEAD 代表本次所读实现。最后完整重读差异与 hash 时间为北京时间 2026-10-29 10:50:27。
+
+| 文件 | 最后所读 Git blob hash |
+| --- | --- |
+| src/Yukkuri.Simulation/InteractionGesture.cs | `ae251f6fd7b897a8938d72a13b717e7bddc4e5ae` |
+| checks/Interaction.Continuity/Program.cs | `64b11ebb4a407bf651b0d0ded61084acfc6f0147` |
+| src/Yukkuri.Simulation/InteractionBehavior.cs | `5477462f10cc544351fe1f4a5946760ca636da27` |
+| src/Yukkuri.Simulation/NaturalLife.cs | `ad25c59e6d98ef02e87b8e17e6aa6716461f29e9` |
+| src/Yukkuri.Simulation/InteractionRest.cs | `9c0553598afadb3f7f69733005c3a58039658953` |
+| src/Yukkuri.Simulation/InteractionPresentation.cs | `64e5daa160d5ae2dd4c87b4b17ecac61e27dc2c5` |
+| src/Yukkuri.Simulation/InteractionWorld.cs | `bc2f707bcdae9250546e8246c689a1ab5757fc2a` |
+| src/Yukkuri.Game/InteractionRoom.Input.cs | `ee529eb5acf4c1afa20d88e103ffe78346b8c875` |
+| src/Yukkuri.Game/InteractionRoom.cs | `f0b0b838e678e77654c08ea72c37d10df6569ab6` |
+| src/Yukkuri.Simulation/WorldSimulation.cs | `e5c27a64b7ae32bb7090bba09966ab344eba0cc0` |
+| src/Yukkuri.Simulation/WorldState.cs | `d976eaeb79369eb76f2c2a15331263b634c3879d` |
+
+最初读到核心 `0ba369a2bebb1a842b13ee843b4e93be155beb2a`、检查 `65ba5f8cdc59d42b0b5c382970b408e994006c57`。审查期间发生两个实际变化，均已重读：核心去掉独立 CompletionReactionSerial，改用既有 g.ReactionSerial，并补显式括号；检查 Tick(sim,2) 改为 Tick(sim,3)。因此本报告不沿用“登记两种序号”的旧描述，最终实现只维护一个正确归属的序号。若以上 hash 之后再变更，新增差异尚未由本报告审查。
+
+### 真实帧顺序与后续自主进食
+
+游戏先 ProcessRoomGesture/ProcessHeldSupply，再 UpdateInteractionHand，再 AdvanceInteractionPresentation、Advance，最后根据当前 OwnsPose 选姿态。HeldFrame 对应同样的输入→表现→世界→姿态顺序；其夹具没有模拟鼠标命中与手感知，但没有把这两者声称为已验证。
+
+喂食真正入口后 Applied 保持为 true，OwnsPose 立即为 false，画面读取最新身体表现；自主行为仍由 CompletedGestureStillSettling 暂时阻挡。表现步在 EatingRemaining 到零的同一步建立 swallow/.6 秒，世界步随后查询时仍看到收尾，因此不会在正常完成回应当帧先行走动。计时结束后，第一次查询把 CompletionReleased 锁存为 true，之后即使自主进食再次令 EatingRemaining 大于零，也不会重新被旧手势阻挡。
+
+护理与修补等待自己的反应序号及剩余计时；新疼痛产生新序号后，旧动作不再延长占用。完成后 Continue 返回当前表现，不再强行覆盖旧 nursing/eat/sip。ResetInterruptedNaturalSearch、UpdateInteractionRest 和世界动作分支使用同一阻挡判断；自主开始吃喝之前已经经过释放判断，之后表现步也不会因旧完成动作 OwnsPose 而拆掉新来源。
+
+完成标记仅适用于 FeedMeal/FeedSweet/Drink、Care、RepairAccessory。修补以 RepairFinished 判断，不会因第一段 Applied 就放弃半成品；开始时已经完整的饰品直接标记释放，没有假造修补收益。完成后再损坏也不会复用旧按住手势自动修好。Hold、Press、Lift 仍走原 OwnsPose 分支，完成判断对它们为 false，其手限制、持续施压、托举与松手逻辑未改。
+
+### 未入口、已入口及松手边界
+
+未入口手喂离开嘴时不控制姿态，允许自主找食物。再次接嘴若已有自主预留、已入口的一口或 swallow 收尾，Continue 先等待并清零 ContactElapsed；OwnsPose 同时为 false，故不会在随后表现步调用 DetachNaturalIntake 撤销原来源。原一口和吞咽回应结束后才重新积累 .65 秒驻留。Begin 本来就拒绝嘴里已有一口；本次防线处理的是已存在手势离嘴等待后再返回的真实路径。
+
+已入口手喂保持 Applied，不内部 End/重建手势。ProcessHeldSupply 在 Continue 后读取 InteractionIntakeAccepted 的顺序仍成立，_supplyBiteTaken 能记录一次已接受。实际来源扣一份、库存不重复扣、HeldByHand 不被完成释放顺带清除；只有明确 ReleaseSupply 负责放下剩余容器。取消已入口手势不退食水，取消未入口手喂也没有产生份量扣除。自主预留仍由原来的 DetachNaturalIntake 负责退还，已入口来源只脱离几何引用而不退款。
+
+修补完成直接 Feedback 后，现在更新 g.ReactionSerial，所以立即 End（正常或取消）能够清掉自己的 accessory-watch，后来的 Poke 则因序号不同保留。护理完成 Say 已登记同一序号；完成后换部位 Continue 提前返回，不重复用药也不覆盖新疼痛。手喂立即松开清理自身反应仍由 EatingRemaining 的表现回退保持咀嚼；已生成的 swallow 是更新序号，旧手势结束不会清掉它。离开接触面的通用清理仍只处理自身序号。
+
+### 新案例及发现的误报
+
+初始版本的 `releasing or cancelling completed repair clears only its own body response` 在 Begin/Continue/End 后执行 Tick(sim,2)，即只 Advance 共 .2 秒。Fresh 的 TickRemainder 为零，Config.TickSeconds 默认 .25；这些动作本身不推进世界。因此无新疼痛的两组 c.X>0 必定会在尚未产生世界更新时失败，不能据此判产品仍被锁住。最终版本改为 Tick(sim,3)，.3 秒跨过一个世界步，保留原位置和姿态断言，没有弱化所查契约。此问题已关闭。
+
+其余新增夹具和断言的静态核对：
+
+- 三种手喂动作分别对食物、水、休息需求观察；每帧要求手势仍存在，首次位移检查实际渲染姿态，持续核对已接受标记、手持容器与份量，避免 Feed 辅助函数自动松手掩盖问题。后续自主入口和来源份量下降均有观察。这里证明到达自主取食阶段，不能单凭份量下降声称后续每一口都完成结算。
+- 自主到手喂的 8 组组合先靠实际表现/世界推进抵达 pending=true/false，而非手写预留状态；分别检查地面来源零份、手持仍两份、原来源不脱离、一次暴露。吞咽后先再走 .6 秒不接受，再给最多 .2 秒跨 .65 阈值；此前等待不断清零驻留，所以窗口按现有顺序合理。后续暴露总数为二、手持仅少一份，覆盖重复入口。
+- 护理夹具 Health=80、脚底完整且 Active，确有护理需求又能行走；有限药包只少一份，CareContinuity 只增加 5，不以重伤者立即恢复行走作要求。
+- 修补分别从 90 与 100 开始，区分本次完成一次和没有实际修补；保持进度/次数不重复，再损坏仍不重启。单独立即松开案例与新疼痛案例补上仅观察 12 秒终点不足以覆盖的边界。
+- 12 秒观察窗口内，低食水需求与两米目的地能维持真实自主需求；有限来源五份不会被满足需求所需的几口吃空而导致末尾 Find 空引用。休息夹具能到垫旁并在剩余窗口增能量，没有把站立等候当作休息。
+
+本轮只更新本交接文件，无源码修改、暂存、提交或推送。明确静态复核已完成；远端执行和 life 后续 RoomMove 改动不在上述已审版本结论内。

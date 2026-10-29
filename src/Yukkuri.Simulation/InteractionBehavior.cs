@@ -404,6 +404,13 @@ public sealed partial class WorldSimulation
         double previousX=c.X,previousZ=c.Z;
         double edge=8-InteractionFootprint(c);
         GroundMove(c,Math.Clamp(c.X+dx*step,-edge,edge),Math.Clamp(c.Z+dz*step,-edge,edge),true);
+        var life=c.Interaction;
+        // A finished mouthful may acknowledge swallowing while planted. Once
+        // actual autonomous travel begins, hand its pose back to the walking gait.
+        // Do not clear a newer reaction, the completion speech, or intake results.
+        if((c.X!=previousX||c.Z!=previousZ)&&life.EatingRemaining<=0&&
+            life.ReactionSituation=="mouthful-done"&&life.ReactionPose=="swallow"&&life.ReactionPoseRemaining>0)
+        {life.ReactionPose="idle";life.ReactionPoseRemaining=0;}
         if(Distance(previousX,previousZ,c.X,c.Z)>.005)c.Interaction.LastWalkAt=State.WorldSeconds;
         c.Interaction.Facing = Math.Atan2(dx, dz);
     }

@@ -20,6 +20,8 @@
 
 ## 远程测试与整合
 
+第二轮补充分工（10:43 +08，11:00 收回）：life 对话获准修改 `InteractionBehavior.cs`、`checks/NaturalLife.Smoke/Program.cs` 和 `review-swallow.md`，修正实际自主位移后旧吞咽姿态残留；主对话的旧档缺字段检查此前已提交，不再并行编辑。input 已交回完成动作释放的三份文件，life 也已交回。review 可写 `review-completion.md` 和 `review-swallow.md`，其余源码只读。后续共享整合由主对话负责。
+
 已有私有仓库 `AsukaLangrey/Yukkuri`，源码 `main`，报告分支 `codex/dot-test-results`。沿用 `testing/PROTOCOL.md`、`testing/request.json`、`testing/DOT-HANDOFF.md`。迁移对话已配置每小时读取新报告，不重复建立同类自动任务。远程执行方在原约定中称 dot，用户当前称 Alice；以报告中的实际机器和提交身份为准。
 
 主对话只提交已完成并静态审查过的明确文件集合，不使用全量暂存吞入其他对话进行中的改动。各批次注明未运行本机验证。远程结果按 source_commit 对应；旧提交通过不能覆盖新修改。结果分支只读取，不合并到当前共享工作区。等待外部结果时继续独立审查，不伪造反馈。

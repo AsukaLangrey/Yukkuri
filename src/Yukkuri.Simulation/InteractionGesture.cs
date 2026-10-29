@@ -19,6 +19,7 @@ public sealed partial class WorldSimulation
         public bool RoughTouch;
         public bool StopImpact;
         public bool RepairFinished;
+        public bool CompletionReleased;
         public bool CarryHeightConcern;
         public double FastTouchSeconds;
         public double BaitAnticipation;
@@ -47,11 +48,34 @@ public sealed partial class WorldSimulation
             // that response is not a grip that can prevent the oil from leaving.
             InteractionAction.Nuzzle=>g.Input.Motion>.0005||g.Input.Part==BodyPart.Cheek&&
                 (g.ContactElapsed<.45||g.NuzzleWelcomed&&g.Elapsed-g.FeedbackAt<NuzzleReplyHoldSeconds),
+            InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink=>!g.Applied&&g.Input.Part==BodyPart.Mouth&&
+                State.Creatures.Find(o=>o.Id==g.TargetId) is { } recipient&&!MouthfulStillSettling(recipient),
+            InteractionAction.Care=>!g.Applied,
+            InteractionAction.RepairAccessory=>!g.RepairFinished,
             _=>true
         });
-    private bool InteractionGestureBlocksAutonomy=>InteractionGestureOwnsPose&&CurrentInteractionAction!=InteractionAction.PlayBall;
+    private bool InteractionGestureBlocksAutonomy=>(InteractionGestureOwnsPose&&CurrentInteractionAction!=InteractionAction.PlayBall)||
+        _interactionGesture is { } g&&CompletedGestureStillSettling(g);
     public bool InteractionIntakeAccepted=>_interactionGesture is {Applied:true} g&&
         g.Input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
+
+    private static bool MouthfulStillSettling(Creature c)=>c.Interaction.EatingRemaining>0||
+        c.Interaction.ReactionPoseRemaining>0&&c.Interaction.ReactionPose=="swallow"&&c.Interaction.ReactionSituation=="mouthful-done";
+
+    private bool CompletedGestureStillSettling(ContactGesture g)
+    {
+        bool feeding=g.Input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
+        bool completed=(feeding||g.Input.Action==InteractionAction.Care)?g.Applied:
+            g.Input.Action==InteractionAction.RepairAccessory&&g.RepairFinished;
+        if(!completed||g.CompletionReleased)return false;
+        var c=State.Creatures.Find(o=>o.Id==g.TargetId);
+        bool settling=c!=null&&(feeding?!c.Interaction.GroundIntake&&MouthfulStillSettling(c):
+            c.ReactionSerial==g.ReactionSerial&&c.Interaction.ReactionPoseRemaining>0);
+        // Completion keeps its current body response, not the preceding input frame's
+        // pose. Once that response ends, later autonomous intake cannot reacquire it.
+        if(!settling)g.CompletionReleased=true;
+        return settling;
+    }
 
     public InteractionFeedback BeginInteractionGesture(string id, InteractionInput input)
     {
@@ -84,6 +108,8 @@ public sealed partial class WorldSimulation
         bool foodAction=input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
         if(foodAction&&input.ObjectId!=null&&OfferedSupply(input,oil)==null)return Unavailable("刚才拿起的食水已经不在手里。 ");
         var g = new ContactGesture { TargetId = id, Input = input,ObjectId=foodAction?input.ObjectId:ball?.Id };
+        if(input.Action==InteractionAction.RepairAccessory&&i.Accessory.Integrity>=100)
+        {g.RepairFinished=true;g.CompletionReleased=true;}
         _interactionGesture = g;
         if(input.Action==InteractionAction.Throw)i.Lowering=false;
         i.LastContact = input.Action.ToString();
@@ -312,11 +338,18 @@ public sealed partial class WorldSimulation
             case InteractionAction.FeedSweet:
             case InteractionAction.Drink:
                 bool drinking=input.Action==InteractionAction.Drink;
-                if (input.Part != BodyPart.Mouth) return g.Last = new(true, drinking?"把杯沿递到嘴边。":"把食物递到嘴边。", "", "offer");
                 if (g.Applied) return g.Last=g.Last with {
-                    Message=i.EatingRemaining>0?(drinking?"它还在慢慢咽水，杯子可以收回。":"这一口还在嘴里，等它慢慢咽下。"):
+                    Message=!g.CompletionReleased&&i.EatingRemaining>0?(drinking?"它还在慢慢咽水，杯子可以收回。":"这一口还在嘴里，等它慢慢咽下。"):
                         "这一口已经咽好了。先松开，再递下一份。",
-                    Speech=c.Speech,Pose=i.EatingRemaining>0?(drinking?"sip":"eat"):InteractionPresentation.Pose(c) };
+                    Speech=c.Speech,Pose=InteractionPresentation.Pose(c),Changed=false };
+                if (input.Part != BodyPart.Mouth) return g.Last = new(true, drinking?"把杯沿递到嘴边。":"把食物递到嘴边。", "", InteractionPresentation.Pose(c));
+                if(MouthfulStillSettling(c))
+                {
+                    // The hand may have waited off-mouth while autonomous intake
+                    // started. Do not replace that bite or count its time as an offer.
+                    g.ContactElapsed=0;
+                    return g.Last=new(true,"等它咽下嘴里的这一口，再递过来。",c.Speech,InteractionPresentation.Pose(c));
+                }
                 if(drinking&&i.Hydration>=95)return Refuse("not-thirsty","它已经不渴，偏开脸，不再接水。 ");
                 if (c.Fullness >= (input.Action == InteractionAction.FeedSweet ? 98 : 92) && input.Action != InteractionAction.Drink)
                     return Refuse("full", "它已经吃饱，不再接这一口。 ");
@@ -373,7 +406,11 @@ public sealed partial class WorldSimulation
             case InteractionAction.RepairAccessory:
                 if(input.Part!=BodyPart.Accessory)return g.Last=new(true,"要接触取下的饰品，才能继续修补。","","accessory-watch");
                 if(i.Accessory.Place==AccessoryPlace.Stored)return g.Last=Unavailable("饰品已收起，先拿出来。 ");
-                if (i.Accessory.Integrity >= 100) return g.Last = new(true, "饰品已经整理好了，可以戴回去。", c.Speech, "accessory-watch");
+                if (g.RepairFinished||i.Accessory.Integrity>=100)
+                {
+                    if(!g.RepairFinished){g.RepairFinished=true;g.CompletionReleased=true;}
+                    return g.Last = new(true, "这次修补已经结束，可以戴回；如需继续整理，先松开再操作。", c.Speech, InteractionPresentation.Pose(c));
+                }
                 double integrityBefore=i.Accessory.Integrity;
                 i.Accessory.Integrity = Math.Min(100, i.Accessory.Integrity + dt * 9);
                 i.Accessory.RepairProgress += (i.Accessory.Integrity-integrityBefore)/.75;
@@ -381,13 +418,14 @@ public sealed partial class WorldSimulation
                 if(i.Accessory.Integrity>=100)
                 {
                     i.Accessory.CompletedRepairs=Math.Min(int.MaxValue-1,i.Accessory.CompletedRepairs)+1;g.RepairFinished=true;
-                    return g.Last=Feedback(c,"repair-done",Expression.Curious,"缝补完成了，针脚留在原来的饰品上。可以戴回去。","accessory-watch");
+                    g.Last=Feedback(c,"repair-done",Expression.Curious,"缝补完成了，针脚留在原来的饰品上。可以戴回去。","accessory-watch");
+                    g.ReactionSerial=c.ReactionSerial;return g.Last;
                 }
                 return Say("repair", Expression.Curious, "修补正在进行，松开会保留已经完成的部分。", "accessory-watch");
             case InteractionAction.PlayBall:
                 return g.Last = new(true, "拖出方向后松开，把球推过去。", "", "ball-aim");
             case InteractionAction.Care:
-                if (g.Applied) return g.Last;
+                if (g.Applied) return g.Last=g.Last with {Speech=c.Speech,Pose=InteractionPresentation.Pose(c),Changed=false};
                 if(!CanCareAt(c,input.Part,input.Side))return g.Last=new(true,"这里不是需要处理的伤处。先看看，再把护理包移到相应部位。",c.Speech,"invite");
                 if (g.ContactElapsed < 1.6) return g.Last = new(true, "正在处理伤处……保持接触，松开可中止。", c.Speech, "nursing");
                 if (!State.UnlimitedResources && State.Medicine <= 0) return Refuse("inspect", "护理用品不足。 ");

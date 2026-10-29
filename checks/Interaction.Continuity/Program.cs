@@ -18,6 +18,23 @@ InteractionFeedback Feed(WorldSimulation sim,InteractionAction action,double sec
     sim.EndInteractionGesture();return reply;
 }
 void Tick(WorldSimulation sim,int ticks){for(int n=0;n<ticks;n++){sim.AdvanceInteractionPresentation(.1);sim.Advance(.1);}}
+WorldSimulation CompletionFixture()
+{
+    var sim=Fresh();var c=sim.Selected!;
+    sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();sim.State.UnlimitedResources=false;
+    c.X=0;c.Z=0;c.TargetX=0;c.TargetZ=0;c.Fullness=80;c.Interaction.Hydration=80;c.Energy=90;c.Trust=70;c.Fear=0;
+    c.Interaction.NextAutonomyAt=10000;return sim;
+}
+(InteractionFeedback Reply,string Pose,double Travel) HeldFrame(WorldSimulation sim,InteractionInput input,bool contact=true)
+{
+    var c=sim.Selected!;double x=c.X,z=c.Z;
+    // Match the game: sample input, advance presentation, advance the world, then choose the rendered pose.
+    var reply=sim.ContinueInteractionGesture(input with {Duration=.05},contact);
+    sim.AdvanceInteractionPresentation(.05);sim.Advance(.05);
+    Require(sim.HasInteractionGesture,"completion unexpectedly ended/reopened the held gesture");
+    string pose=sim.InteractionGestureOwnsPose?reply.Pose:InteractionPresentation.Pose(c);
+    return(reply,pose,Math.Sqrt((c.X-x)*(c.X-x)+(c.Z-z)*(c.Z-z)));
+}
 
 Check("water relieves thirst without filling the stomach or healing an injured foot",()=>
 {
@@ -91,6 +108,189 @@ Check("accepted food stays consumed after swallowing while the same mouse gestur
     for(int n=0;n<25;n++){sim.AdvanceInteractionPresentation(.1);sim.ContinueInteractionGesture(input,true);}
     Require(sim.InteractionIntakeAccepted&&sim.State.Food==stock-1&&c.Interaction.EatingRemaining==0,"held gesture recreated or consumed another portion");
     sim.EndInteractionGesture();Require(!sim.InteractionIntakeAccepted,"next offer inherited the previous accepted flag");
+});
+Check("a completed held meal sweet or drink releases needs after its actual swallowing response",()=>
+{
+    foreach(var action in new[]{InteractionAction.FeedMeal,InteractionAction.FeedSweet,InteractionAction.Drink})
+    foreach(string need in new[]{"food","water","rest"})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;
+        if(need=="food")c.Fullness=25;else if(need=="water")c.Interaction.Hydration=20;else c.Energy=10;
+        var destination=new RoomObject{Id="destination",Kind=need=="food"?RoomObjectKind.Meal:need=="water"?RoomObjectKind.Water:RoomObjectKind.Cushion,X=2,Z=0,Portions=5};
+        var held=new RoomObject{Id="held",Kind=action==InteractionAction.Drink?RoomObjectKind.Water:action==InteractionAction.FeedSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal,X=-3,Z=0,Portions=2};
+        sim.State.RoomObjects.Add(destination);sim.State.RoomObjects.Add(held);Require(sim.HoldSupply(held.Id),"could not pick up fixture supply");
+        int stock=sim.State.Food;var input=new InteractionInput(action,BodyPart.Mouth,Force:.2,Duration:.05,ObjectId:held.Id);
+        Require(sim.BeginInteractionGesture(c.Id,input).Success&&sim.InteractionGestureOwnsPose,"mouth invitation lost its contact phase");
+        bool accepted=false,moved=false,sawSwallow=false,sawNaturalIntake=false;
+        for(int n=0;n<240;n++)
+        {
+            var frame=HeldFrame(sim,input);
+            accepted|=sim.InteractionIntakeAccepted;
+            Require(held.HeldByHand&&held.Portions==(accepted?1:2)&&sim.State.Food==stock,"held portion was repeated, refunded or automatically put down");
+            if(accepted)Require(sim.InteractionIntakeAccepted&&!sim.InteractionGestureOwnsPose,"completed food reclaimed body pose or lost acceptance");
+            if(!moved&&frame.Pose=="swallow")sawSwallow=true;
+            if(!moved&&frame.Travel>.000001)
+            {
+                Require(accepted&&frame.Pose is "idle" or "guard" or "stomach" or "careful-step",$"{action}/{need}: first movement kept {frame.Pose}");
+                moved=true;
+            }
+            if(c.Interaction.GroundIntake&&c.Interaction.EatingRemaining>0)
+            {
+                sawNaturalIntake=true;
+                Require(!sim.InteractionGestureOwnsPose,"later autonomous mouthful reacquired the completed feeding gesture");
+            }
+        }
+        Require(accepted&&sawSwallow&&moved&&c.X>.5,$"{action}/{need}: holding the finished tool trapped the oil or skipped swallowing");
+        Require(need=="rest"?c.Interaction.Resting&&c.Energy>10:sawNaturalIntake&&destination.Portions<5,"autonomous need never completed after release");
+        double fullness=c.Fullness,water=c.Interaction.Hydration;
+        sim.EndInteractionGesture(true);
+        Require(!sim.InteractionIntakeAccepted&&held.HeldByHand&&held.Portions==1&&c.Fullness==fullness&&c.Interaction.Hydration==water,"cancellation refunded food or implicitly released the held container");
+        Require(sim.ReleaseSupply(held.Id)&&!held.HeldByHand,"explicit put-down failed after completed feeding");
+    }
+});
+Check("returning an unaccepted offer waits for pending and accepted autonomous bites without stealing their source",()=>
+{
+    foreach(var kind in new[]{RoomObjectKind.Meal,RoomObjectKind.Water})
+    foreach(bool pending in new[]{true,false})foreach(bool offBody in new[]{true,false})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;
+        if(kind==RoomObjectKind.Meal)c.Fullness=30;else c.Interaction.Hydration=30;
+        var source=new RoomObject{Id="ground",Kind=kind,X=.5,Z=0,Portions=1};
+        var held=new RoomObject{Id="held",Kind=kind,X=-3,Z=0,Portions=2};
+        sim.State.RoomObjects.Add(source);sim.State.RoomObjects.Add(held);Require(sim.HoldSupply(held.Id),"could not hold reentry fixture supply");
+        var mouth=new InteractionInput(kind==RoomObjectKind.Meal?InteractionAction.FeedMeal:InteractionAction.Drink,BodyPart.Mouth,Force:.2,Duration:.05,ObjectId:held.Id);
+        var waiting=mouth with {Part=offBody?BodyPart.Mouth:BodyPart.Side};
+        Require(sim.BeginInteractionGesture(c.Id,waiting).Success,"could not start unaccepted offer");
+        for(int n=0;n<100;n++)
+        {
+            HeldFrame(sim,waiting,!offBody);
+            Require(!sim.InteractionGestureOwnsPose&&!sim.InteractionIntakeAccepted,"off-mouth offer held the body or consumed food");
+            if(c.Interaction.EatingRemaining>0&&c.Interaction.NaturalIntakePending==pending)break;
+        }
+        Require(c.Interaction.GroundIntakeSourceId==source.Id&&c.Interaction.EatingRemaining>0&&c.Interaction.NaturalIntakePending==pending,"fixture never reached the requested autonomous bite stage");
+        Require(source.Portions==0&&held.Portions==2,"fixture portions were not separated");
+        for(int n=0;n<60&&c.Interaction.EatingRemaining>0;n++)
+        {
+            HeldFrame(sim,mouth);
+            Require(!sim.InteractionIntakeAccepted&&held.Portions==2&&source.Portions==0,"returning hand replaced or refunded the existing bite");
+            if(c.Interaction.EatingRemaining>0)
+                Require(!sim.InteractionGestureOwnsPose&&c.Interaction.GroundIntakeSourceId==source.Id,"mouth contact detached the autonomous source");
+        }
+        Require(c.Interaction.EatingRemaining==0&&c.Interaction.Digestion.Exposures==1,"autonomous bite was not accepted exactly once");
+        for(int n=0;n<20&&c.Interaction.ReactionPose=="swallow"&&c.Interaction.ReactionPoseRemaining>0;n++)
+        {
+            HeldFrame(sim,mouth);
+            Require(!sim.InteractionIntakeAccepted&&held.Portions==2,"next offer interrupted the swallowing response");
+        }
+        for(int n=0;n<12;n++)
+        {
+            HeldFrame(sim,mouth);
+            Require(!sim.InteractionIntakeAccepted&&held.Portions==2,"old mouthful time counted toward the next offer dwell");
+        }
+        for(int n=0;n<4&&!sim.InteractionIntakeAccepted;n++)HeldFrame(sim,mouth);
+        Require(sim.InteractionIntakeAccepted&&held.Portions==1&&source.Portions==0&&c.Interaction.Digestion.Exposures==2,"fresh offer did not consume exactly its own second bite");
+        for(int n=0;n<80;n++)HeldFrame(sim,mouth);
+        Require(sim.InteractionIntakeAccepted&&held.Portions==1&&c.Interaction.Digestion.Exposures==2,"held offer repeated after autonomous-to-hand transition");
+    }
+});
+Check("completed care keeps its short response then releases food water and rest without repeated medicine",()=>
+{
+    foreach(string need in new[]{"food","water","rest"})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;c.Health=80;
+        if(need=="food")c.Fullness=25;else if(need=="water")c.Interaction.Hydration=20;else c.Energy=10;
+        sim.State.RoomObjects.Add(new(){Id="destination",Kind=need=="food"?RoomObjectKind.Meal:need=="water"?RoomObjectKind.Water:RoomObjectKind.Cushion,X=2,Z=0,Portions=5});
+        var input=new InteractionInput(InteractionAction.Care,BodyPart.Side,Duration:.05);
+        int medicine=sim.State.Medicine;double continuity=c.Interaction.CareContinuity;
+        Require(sim.BeginInteractionGesture(c.Id,input).Success&&sim.InteractionGestureOwnsPose,"care never entered its real dwell phase");
+        bool completed=false,moved=false,sawNursing=false;
+        for(int n=0;n<240;n++)
+        {
+            var frame=HeldFrame(sim,input);
+            completed|=sim.State.Medicine==medicine-1;
+            if(!completed)Require(sim.State.Medicine==medicine&&c.X==0&&c.Z==0,"care applied or released before its dwell completed");
+            else
+            {
+                Require(!sim.InteractionGestureOwnsPose&&sim.State.Medicine==medicine-1&&c.Interaction.CareContinuity==continuity+5,"completed care repeated or reclaimed the body");
+                if(!moved&&frame.Pose=="nursing")sawNursing=true;
+            }
+            if(!moved&&frame.Travel>.000001)
+            {
+                Require(completed&&frame.Pose is "idle" or "guard" or "stomach" or "careful-step",$"first movement kept care pose {frame.Pose}");
+                moved=true;
+            }
+        }
+        Require(completed&&sawNursing&&moved&&c.X>.5,"completed nursing prevented autonomous movement");
+        Require(need=="rest"?c.Interaction.Resting&&c.Energy>10:sim.State.RoomObjects.Find(o=>o.Id=="destination")!.Portions<5,"care never released the requested need");
+        sim.EndInteractionGesture(true);Require(sim.State.Medicine==medicine-1,"cancel refunded completed care");
+    }
+});
+Check("completed or already intact repair releases movement without repeating repairs",()=>
+{
+    foreach(bool intact in new[]{false,true})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;c.Fullness=25;
+        var a=c.Interaction.Accessory;a.Place=AccessoryPlace.Hand;a.Integrity=intact?100:90;
+        sim.State.RoomObjects.Add(new(){Id="destination",Kind=RoomObjectKind.Meal,X=2,Z=0,Portions=5});
+        var input=new InteractionInput(InteractionAction.RepairAccessory,BodyPart.Accessory,Duration:.05);
+        Require(sim.BeginInteractionGesture(c.Id,input).Success,"could not begin repair fixture");
+        Require(sim.InteractionGestureOwnsPose!=intact,"intact accessory held control or unfinished repair released it");
+        bool moved=false,sawFinished=false;double progress=0;
+        for(int n=0;n<240;n++)
+        {
+            var frame=HeldFrame(sim,input);
+            if(a.Integrity==100)
+            {
+                if(!sawFinished){sawFinished=true;progress=a.RepairProgress;}
+                Require(!sim.InteractionGestureOwnsPose&&a.CompletedRepairs==(intact?0:1)&&a.RepairProgress==progress,"completion repeated repair work or held body control");
+            }
+            else Require(sim.InteractionGestureOwnsPose&&a.CompletedRepairs==0,"partial repair was treated as completed");
+            if(!moved&&frame.Travel>.000001)
+            {
+                Require(sawFinished&&frame.Pose is "idle" or "guard" or "stomach" or "careful-step",$"first movement kept repair pose {frame.Pose}");
+                moved=true;
+            }
+        }
+        Require(sawFinished&&moved&&c.X>.5&&sim.State.RoomObjects.Find(o=>o.Id=="destination")!.Portions<5,"completed repair prevented self-feeding");
+        sim.ExecuteInteraction(c.Id,new(InteractionAction.DamageAccessory,BodyPart.Accessory,Force:.2));
+        double damaged=a.Integrity;int repairs=a.CompletedRepairs;
+        for(int n=0;n<20;n++)sim.ContinueInteractionGesture(input,true);
+        Require(sim.HasInteractionGesture&&a.Integrity==damaged&&a.CompletedRepairs==repairs,"finished held repair silently restarted after new damage");
+    }
+});
+Check("releasing or cancelling completed repair clears only its own body response",()=>
+{
+    foreach(bool cancel in new[]{false,true})foreach(bool newerPain in new[]{false,true})
+    {
+        var sim=CompletionFixture();var c=sim.Selected!;var a=c.Interaction.Accessory;
+        a.Place=AccessoryPlace.Hand;a.Integrity=99.5;c.Fullness=25;
+        sim.State.RoomObjects.Add(new(){Id="destination",Kind=RoomObjectKind.Meal,X=2,Z=0,Portions=5});
+        var input=new InteractionInput(InteractionAction.RepairAccessory,BodyPart.Accessory,Duration:.1);
+        sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);
+        Require(a.CompletedRepairs==1&&InteractionPresentation.Pose(c)=="accessory-watch","repair did not reach its completion response");
+        if(newerPain)sim.ExecuteInteraction(c.Id,new(InteractionAction.Poke,BodyPart.Cheek,Force:.2));
+        int serial=c.ReactionSerial;string pose=InteractionPresentation.Pose(c);
+        sim.EndInteractionGesture(cancel);
+        Require(!sim.HasInteractionGesture&&a.CompletedRepairs==1,"release repeated repair or kept the gesture");
+        if(newerPain)Require(c.ReactionSerial==serial&&InteractionPresentation.Pose(c)==pose&&pose=="poke","release cleared a newer pain response");
+        else
+        {
+            Require(InteractionPresentation.Pose(c)!="accessory-watch","release left its own stationary repair response");
+            Tick(sim,3);Require(c.X>0&&InteractionPresentation.Pose(c)!="accessory-watch","released repair slid under its old pose");
+        }
+    }
+});
+Check("completed nursing does not replay treatment or erase a newer painful response",()=>
+{
+    var sim=CompletionFixture();var c=sim.Selected!;c.Health=80;
+    var input=new InteractionInput(InteractionAction.Care,BodyPart.Side,Duration:.1);int medicine=sim.State.Medicine;
+    sim.BeginInteractionGesture(c.Id,input);for(int n=0;n<17;n++)sim.ContinueInteractionGesture(input,true);
+    Require(sim.State.Medicine==medicine-1,"fixture did not finish care");
+    sim.ExecuteInteraction(c.Id,new(InteractionAction.Poke,BodyPart.Cheek,Force:.2));
+    int serial=c.ReactionSerial;double health=c.Health,pain=c.Pain;
+    var reply=sim.ContinueInteractionGesture(input with {Part=BodyPart.Cheek},true);
+    Require(!sim.InteractionGestureOwnsPose&&reply.Pose=="poke"&&c.ReactionSerial==serial&&c.Health==health&&c.Pain==pain&&sim.State.Medicine==medicine-1,"finished care overwrote a new wound or repeated medicine");
+    sim.EndInteractionGesture(true);Require(InteractionPresentation.Pose(c)=="poke","cancel cleared a newer pain response");
 });
 Check("continuing to wipe a clean cheek cannot farm affection after the first dirt was removed",()=>
 {

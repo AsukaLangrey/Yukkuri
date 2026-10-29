@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v2-static-polish-20261029",
+  "revision": "dot-v3-static-polish-20261029",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -26,9 +26,12 @@
     "planning/stages/static-polish-20261029-10h/life.md",
     "planning/stages/static-polish-20261029-10h/presentation.md",
     "planning/stages/static-polish-20261029-10h/review.md",
-    "planning/stages/static-polish-20261029-10h/integration.md"
+    "planning/stages/static-polish-20261029-10h/integration.md",
+    "planning/stages/static-polish-20261029-10h/feeding-release.md",
+    "planning/stages/static-polish-20261029-10h/review-completion.md",
+    "planning/stages/static-polish-20261029-10h/review-swallow.md"
   ],
-  "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。重点复核保存失败保留进度、损坏主档回退、失焦清理、跟随后自主休息和非选中角色求助声音。",
+  "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。保留v2中的保存失败保护、损坏主档回退、失焦、自主休息和声音覆盖；v3新增持续按住时喂食/护理/修补完成后的自主行动、地面一口尚未结束时重新递食的份量与时序、松手后自主走动与吞咽姿态衔接，以及旧式已入口存档缺pending字段的合成续接案例。后者不代替真实历史存档兼容。",
   "historical_save_fixture": {
     "available_in_repository": false,
     "instruction": "无获准历史样本时报告 blocked，不提交个人存档或伪造历史样本。"

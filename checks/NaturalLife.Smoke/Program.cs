@@ -534,6 +534,123 @@ Check("self feeding completion does not invent a person holding a cup or spoon",
         Require(!c.LastReaction.Contains("收回")&&!c.LastReaction.Contains("手")&&!c.LastReaction.Contains("空勺"),"natural feeding requested phantom human action");
     }
 });
+// Reach completion through real intake, with no outstanding gesture or idle walk.
+// Do not manufacture a swallow reaction: the presentation/world boundary is the subject.
+WorldSimulation FinishedMouthful(bool handFed=false,bool water=false)
+{
+    var s=Fresh();var c=s.Selected!;c.DecisionIn=10000;c.Trust=70;c.Fear=0;
+    c.Interaction.ToyInterest=0;c.Fullness=water?90:60;c.Interaction.Hydration=water?60:90;
+    s.State.UnlimitedResources=false;s.State.Food=2;
+    if(handFed)
+    {
+        var input=new InteractionInput(water?InteractionAction.Drink:InteractionAction.FeedMeal,BodyPart.Mouth,.2,.05);
+        Require(s.BeginInteractionGesture(c.Id,input).Success,"could not begin the offered mouthful");
+        for(int n=0;n<30&&c.Interaction.EatingRemaining<=0;n++)
+        {s.ContinueInteractionGesture(input,true);Tick(s,.05);}
+        Require(c.Interaction.EatingRemaining>0,"the offered mouthful never entered");
+        s.EndInteractionGesture();
+    }
+    else Source(s,water?RoomObjectKind.Water:RoomObjectKind.Meal,0,.5,portions:1);
+    for(int n=0;n<100&&c.Interaction.ReactionSituation!="mouthful-done";n++)Tick(s,.05);
+    Require(!s.HasInteractionGesture&&c.Interaction.EatingRemaining==0&&InteractionPresentation.Pose(c)=="swallow"&&
+        c.X==0&&c.Z==0,"fixture did not finish a real mouthful while planted and released");
+    return s;
+}
+var swallowHandoffs=new List<object>();
+(bool Moved,bool Handoff) SwallowAutonomyFrame(WorldSimulation s)
+{
+    var c=s.Selected!;s.AdvanceInteractionPresentation(.05);
+    string beforePose=InteractionPresentation.Pose(c),speech=c.Speech;
+    double x=c.X,z=c.Z,remaining=c.Interaction.ReactionPoseRemaining,world=s.State.WorldSeconds;
+    double fullness=c.Fullness,water=c.Interaction.Hydration,trust=c.Trust;
+    int serial=c.ReactionSerial,stock=s.State.Food,exposures=c.Interaction.Digestion.Exposures;
+    s.Advance(.05);
+    Require(!s.HasInteractionGesture,"a supposedly released mouthful retained a gesture");
+    bool moved=c.X!=x||c.Z!=z,handoff=moved&&beforePose=="swallow";
+    if(handoff)
+    {
+        string afterPose=InteractionPresentation.Pose(c);
+        swallowHandoffs.Add(new{worldBefore=world,worldAfter=s.State.WorldSeconds,xBefore=x,zBefore=z,c.X,c.Z,
+            remainingBefore=remaining,beforePose,afterPose,c.Interaction.NaturalBitePause,c.Activity});
+        Require(afterPose!="swallow"&&c.Interaction.ReactionPoseRemaining==0,
+            "actual autonomous travel retained the finished mouthful's planted pose");
+        Require(c.Speech==speech&&c.ReactionSerial==serial&&c.Trust==trust&&s.State.Food==stock&&
+            c.Interaction.Digestion.Exposures==exposures&&c.Fullness<=fullness&&c.Interaction.Hydration<=water,
+            "pose handoff replayed a reaction, intake, or reward");
+    }
+    return(moved,handoff);
+}
+Check("released full mouthfuls hand swallowing back to following or ball approach on the actual movement frame",()=>
+{
+    foreach(bool handFed in new[]{false,true})foreach(bool water in new[]{false,true})foreach(bool follow in new[]{false,true})
+    {
+        var s=FinishedMouthful(handFed,water);var c=s.Selected!;
+        if(follow)c.Interaction.FollowPlayer=true;
+        else {c.Interaction.ToyInterest=1;Source(s,RoomObjectKind.Ball,2.5);}
+        bool handedOff=false;
+        for(int n=0;n<12&&!handedOff;n++)
+        {
+            if(follow)s.SetInteractionHand(2.5,0,true);
+            handedOff=SwallowAutonomyFrame(s).Handoff;
+        }
+        Require(handedOff,$"no real swallow/movement boundary observed: handFed={handFed}, water={water}, follow={follow}");
+    }
+});
+Check("seeking the other urgent resource releases swallowing across different presentation phases",()=>
+{
+    int handoffs=0;
+    for(int closeFrames=0;closeFrames<=4;closeFrames++)
+    {
+        var s=FinishedMouthful();var c=s.Selected!;c.Interaction.Hydration=10;
+        Source(s,RoomObjectKind.Water,2.5);c.Interaction.NextResourceScanAt=0;
+        // A short real close-up shifts presentation relative to the frozen world
+        // accumulator without assigning either timer or inventing a reaction.
+        s.State.Mode=PlayMode.CloseUp;
+        for(int n=0;n<closeFrames;n++)Tick(s,.05);
+        s.State.Mode=PlayMode.Management;
+        bool moved=false;
+        for(int n=0;n<20;n++)
+        {
+            var frame=SwallowAutonomyFrame(s);moved|=frame.Moved;
+            if(frame.Handoff)handoffs++;
+        }
+        Require(moved&&c.Interaction.ResourceTargetId!=null,"urgent water search stalled after the mouthful");
+    }
+    Require(handoffs>0,"phase cases never exercised movement before the swallow tail expired");
+});
+Check("close-up pause and a clamped movement request preserve a planted swallow",()=>
+{
+    var s=FinishedMouthful();var c=s.Selected!;s.State.Mode=PlayMode.CloseUp;s.State.Settings.Pause=true;
+    double remaining=c.Interaction.ReactionPoseRemaining,world=s.State.WorldSeconds,fullness=c.Fullness,water=c.Interaction.Hydration;
+    Tick(s,.2);Require(c.Interaction.ReactionPoseRemaining==remaining,"pause advanced swallowing");
+    s.State.Settings.Pause=false;Tick(s,.2);
+    Require(InteractionPresentation.Pose(c)=="swallow"&&s.State.WorldSeconds==world&&c.Fullness==fullness&&
+        c.Interaction.Hydration==water&&c.X==0&&c.Z==0,"close-up advanced passive life or erased a planted swallow");
+    s.State.Mode=PlayMode.Management;
+    c.X=8-WorldSimulation.InteractionFootprint(c);c.TargetX=8;c.TargetZ=c.Z;
+    double edge=c.X;Tick(s,.25);
+    Require(s.State.WorldSeconds>world&&c.X==edge&&c.Z==0&&InteractionPresentation.Pose(c)=="swallow",
+        "requesting movement beyond the yard edge erased swallowing without any actual travel");
+});
+Check("a newer painful response survives autonomous movement after swallowing",()=>
+{
+    var s=FinishedMouthful();var c=s.Selected!;
+    Require(s.ExecuteInteraction(c.Id,new(InteractionAction.Flick,BodyPart.Head,Force:.7)).Success,"pain fixture was rejected");
+    int serial=c.ReactionSerial;string speech=c.Speech;
+    Require(c.Interaction.ReactionSituation=="hurt"&&c.Interaction.ReactionPose=="flick","no newer pain response");
+    c.Interaction.FollowPlayer=true;bool moved=false;
+    for(int n=0;n<10&&!moved;n++)
+    {
+        s.SetInteractionHand(2.5,0,true);
+        // The frame helper measures world movement after presentation impulses,
+        // so a recoil alone cannot satisfy this coverage condition.
+        moved=SwallowAutonomyFrame(s).Moved;
+        Require(c.Interaction.ReactionSituation=="hurt"&&InteractionPresentation.Pose(c)=="flick"&&
+            c.ReactionSerial==serial&&c.Speech==speech,"movement cleared or replaced newer pain feedback");
+    }
+    Require(moved,"new pain case never exercised actual autonomous movement");
+});
+observations["released-swallow-handoffs"]=swallowHandoffs;
 Check("save rejects impossible illness and contaminated resource data",()=>
 {
     var s=Fresh();var food=Source(s,RoomObjectKind.Leaves,.4);food.Contamination=double.NaN;
