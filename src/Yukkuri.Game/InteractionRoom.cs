@@ -28,6 +28,7 @@ public partial class InteractionRoom : Node3D
     private bool _toolArmed;
     private Vector3 _closeFocus;
     private string _message="点一下小油打招呼，双击进入近看。按空格可以停一停。";
+    private bool WoodlandVisible=>Sim.State.Mode!=PlayMode.CloseUp&&WoodlandLayout.HasRiver(Sim.State,Sim.State.ActiveRegionId);
 
     public override void _Ready()
     {
@@ -124,6 +125,12 @@ public partial class InteractionRoom : Node3D
         int visible=NaturalResources.VisibleFoodPortions(Sim.State,obj);
         return obj.Kind==RoomObjectKind.Leaves?Math.Min(10,visible):visible>0?1:0;
     }
+    private bool ObjectHasVisibleGeometry(RoomObject obj)=>obj.Kind switch
+    {
+        RoomObjectKind.Sweet=>FoodVisualCount(obj)>0,
+        RoomObjectKind.RiverWater=>WoodlandVisible,
+        _=>true
+    };
     private Node3D MakeObject(RoomObject obj)
     {
         if(obj.Kind==RoomObjectKind.Ball)
@@ -181,24 +188,23 @@ public partial class InteractionRoom : Node3D
             if(NaturalResources.IsFood(obj.Kind)&&_shownFoodPortions.GetValueOrDefault(obj.Id,-1)!=FoodVisualCount(obj))
             {visual.QueueFree();_objects[obj.Id]=visual=MakeObject(obj);}
             if(obj.Kind==RoomObjectKind.Water&&_groundCupWater.TryGetValue(obj.Id,out var water))
-            {
-                float fill=(float)NaturalResources.VisibleWaterFill(Sim.State,obj);
-                float height=InteractionToolSurface.SipWaterHeight(1-fill),radius=InteractionToolSurface.SipWaterRadius(height);
-                water.Visible=fill>0;water.Position=new(0,height,0);water.Scale=new(radius/InteractionToolSurface.WaterRadius,1,radius/InteractionToolSurface.WaterRadius);
-            }
+                SetCupFill(water,(float)NaturalResources.VisibleWaterFill(Sim.State,obj));
             bool nearby=Sim.Selected==null||Math.Pow(obj.X-Sim.Selected.X,2)+Math.Pow(obj.Z-Sim.Selected.Z,2)<4;
-            visual.Visible=!obj.Stored&&!obj.HeldByHand&&obj.RegionId==Sim.State.ActiveRegionId&&(!close||nearby);visual.Position=new((float)obj.X,(float)obj.Height,(float)obj.Z);
+            visual.Visible=!obj.Stored&&!obj.HeldByHand&&obj.RegionId==Sim.State.ActiveRegionId&&(!close||nearby)&&ObjectHasVisibleGeometry(obj);visual.Position=new((float)obj.X,(float)obj.Height,(float)obj.Z);
             if(visual is RoomBallActor ball)ball.Present(obj,paused,RoomBallEnvironment.CenterHeight(Sim.State,obj));
         }
         foreach(var id in _objects.Keys.Where(id=>!Sim.State.RoomObjects.Any(o=>o.Id==id)).ToArray())
         {_objects[id].QueueFree();_objects.Remove(id);_shownFoodPortions.Remove(id);_groundCupWater.Remove(id);}
         _player.Visible=false;
         _yard.Visible=!close;
-        _woodland.Visible=WoodlandLayout.HasRiver(Sim.State,Sim.State.ActiveRegionId);
+        _woodland.Visible=WoodlandVisible;
         _closeFloor.Visible=close;
         _uiClock+=dt;_autoClock+=dt;
         if(_uiClock>.1){_uiClock=0;RefreshRoomUi();}
-        if(_autoClock>60&&!Sim.HasInteractionGesture&&!_modalOpen&&!_recovered){_autoClock=0;SaveRoom(0,false);}
+        // Background saving must wait for the whole pointer operation, including
+        // carrying a supply away from a mouth or orbiting without a body gesture.
+        if(_autoClock>60&&!Sim.HasInteractionGesture&&!_mouseHeld&&_heldSupplyId==null&&!_orbiting&&_tapContact==null&&!_modalOpen&&!_recovered)
+        {_autoClock=0;SaveRoom(0,false);}
         UpdatePointer();
         UpdateLandingPreview();
     }

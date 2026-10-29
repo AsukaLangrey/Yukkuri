@@ -7,6 +7,13 @@ public partial class InteractionRoom
     private MeshInstance3D? _landingMarker,_landingStem;
     private MeshInstance3D? _cupWater;
     private Node3D? _toolFood;
+    private static void SetCupFill(MeshInstance3D water,float fill)
+    {
+        fill=Mathf.Clamp(fill,0,1);
+        float height=InteractionToolSurface.SipWaterHeight(1-fill),radius=InteractionToolSurface.SipWaterRadius(height);
+        water.Visible=fill>0;water.Position=new(0,height,0);
+        water.Scale=new(radius/InteractionToolSurface.WaterRadius,1,radius/InteractionToolSurface.WaterRadius);
+    }
     private void UpdateLandingPreview()
     {
         if(_landingMarker==null)
@@ -46,7 +53,8 @@ public partial class InteractionRoom
             case InteractionAction.FeedMeal:
                 _toolFood=InteractionFoodArt.Spoon(_hand);break;
             case InteractionAction.FeedSweet:case InteractionAction.Tease:
-                InteractionFoodArt.Sweet(_hand,InteractionFoodSurface.SweetHandScale);break;
+                _toolFood=new Node3D();_hand.AddChild(_toolFood);
+                InteractionFoodArt.Sweet(_toolFood,InteractionFoodSurface.SweetHandScale);break;
             case InteractionAction.Drink:
                 _cupWater=InteractionToolArt.Cup(_hand);break;
             case InteractionAction.Care:

@@ -20,6 +20,10 @@
 
 ## 远程测试与整合
 
+第三轮限定静态审查：基于已推送 `ee65c8041f4cfd66eb17f533690358798a13e9ec`，input 只写 `review-input-switches.md`，查持续接触中的切目标/切工具/弹窗与取消时序；life 只写 `review-resource-sharing.md`，查多只争用有限食水与来源中断后的预留/退款/暴露；presentation 只写 `review-resource-scene.md`，查可见资源、鼠标拾取、遮挡和实际取用状态一致性。均可只读相关源码，不改产品或检查，不暂存提交。区分实际接线可达路径与仅可人工构造状态，已修问题不重复列为新问题。发现具体问题后由主对话决定下一步范围。
+
+第三轮实现归属：三份只读报告均已交回，主对话修改 `InteractionRoom.cs`、`InteractionRoom.Input.cs`、`InteractionRoom.Tools.cs` 处理五项确定的保存/显示/命中问题。review 只写 `review-scene-integration.md`，对上述工作区差异独立复核。其余对话保持完成状态，不同时修改共享源码。此次为晚上用户继续后的有限后续工作，不延长原十小时窗口。
+
 第二轮补充分工（10:43 +08，11:00 收回）：life 对话获准修改 `InteractionBehavior.cs`、`checks/NaturalLife.Smoke/Program.cs` 和 `review-swallow.md`，修正实际自主位移后旧吞咽姿态残留；主对话的旧档缺字段检查此前已提交，不再并行编辑。input 已交回完成动作释放的三份文件，life 也已交回。review 可写 `review-completion.md` 和 `review-swallow.md`，其余源码只读。后续共享整合由主对话负责。
 
 已有私有仓库 `AsukaLangrey/Yukkuri`，源码 `main`，报告分支 `codex/dot-test-results`。沿用 `testing/PROTOCOL.md`、`testing/request.json`、`testing/DOT-HANDOFF.md`。迁移对话已配置每小时读取新报告，不重复建立同类自动任务。远程执行方在原约定中称 dot，用户当前称 Alice；以报告中的实际机器和提交身份为准。

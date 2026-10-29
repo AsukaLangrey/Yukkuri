@@ -85,7 +85,7 @@ public partial class InteractionRoom
         float nearest=ContactAt(pointer)?.Distance??SceneOcclusionDistance(origin,direction);RoomObject? result=null;
         foreach(var obj in Sim.State.RoomObjects)
         {
-            if(obj.Stored||obj.RegionId!=Sim.State.ActiveRegionId||!_objects.TryGetValue(obj.Id,out var visual)||!visual.Visible)continue;
+            if(obj.Stored||obj.HeldByHand||obj.RegionId!=Sim.State.ActiveRegionId||!ObjectHasVisibleGeometry(obj)||!_objects.TryGetValue(obj.Id,out var visual)||!visual.Visible)continue;
             bool floating=obj.Kind==RoomObjectKind.Ball&&RoomBallEnvironment.InWater(Sim.State,obj);
             if(!InteractionPropContact.RayHit(obj.Kind,new((float)obj.X,(float)obj.Height,(float)obj.Z),new(origin.X,origin.Y,origin.Z),new(direction.X,direction.Y,direction.Z),out float distance,
                 obj.Kind==RoomObjectKind.Ball?RoomBallEnvironment.CenterHeight(Sim.State,obj):null)||distance>=nearest)continue;
@@ -94,7 +94,7 @@ public partial class InteractionRoom
         }
         return result;
     }
-    private float SceneOcclusionDistance(Vector3 origin,Vector3 direction)=>WoodlandLayout.HasRiver(Sim.State,Sim.State.ActiveRegionId)?
+    private float SceneOcclusionDistance(Vector3 origin,Vector3 direction)=>WoodlandVisible?
         WoodlandOcclusion.RayDistance(new(origin.X,origin.Y,origin.Z),new(direction.X,direction.Y,direction.Z)):float.PositiveInfinity;
     private static string PartName(BodyPart part,SurfaceSide side=SurfaceSide.Whole)=>part switch{BodyPart.Head=>"头顶",BodyPart.Cheek=>side==SurfaceSide.Left?"左脸":side==SurfaceSide.Right?"右脸":"脸侧",BodyPart.Side=>side==SurfaceSide.Left?"身体左侧":side==SurfaceSide.Right?"身体右侧":"身体侧面",BodyPart.Bottom=>"底部",BodyPart.Mouth=>"嘴边",_=>"饰品"};
 
@@ -345,9 +345,10 @@ public partial class InteractionRoom
         if(_action==InteractionAction.Drink&&_cupWater!=null)
         {
             var oil=Sim.State.Creatures.Find(o=>o.Id==Sim.InteractionGestureTarget)!;
-            float progress=Sim.InteractionIntakeAccepted?1-(float)(oil.Interaction.EatingRemaining/InteractionLife.IntakeDuration(IntakeKind.Water)):0;
-            float height=InteractionToolSurface.SipWaterHeight(progress),radius=InteractionToolSurface.SipWaterRadius(height);
-            _cupWater.Position=new(0,height,0);_cupWater.Scale=new(radius/InteractionToolSurface.WaterRadius,1,radius/InteractionToolSurface.WaterRadius);
+            // A completed hand offer must not refill when autonomous intake starts.
+            float fill=!Sim.InteractionIntakeAccepted?1:oil.Interaction.GroundIntake?0:
+                (float)(oil.Interaction.EatingRemaining/InteractionLife.IntakeDuration(IntakeKind.Water));
+            SetCupFill(_cupWater,fill);
         }
         if(_action==InteractionAction.PlayBall&&Sim.State.RoomObjects.Find(o=>o.Id==Sim.InteractionGestureObject) is { } ballObject)
             PlaceContactTool(new(ballObject.Id,BodyPart.Side,new((float)ballObject.X,(float)ballObject.Height+RoomBallEnvironment.CenterHeight(Sim.State,ballObject)+InteractionBallSurface.Radius,(float)ballObject.Z),Vector3.Up,0,false,RestraintKind.None,SurfaceSide.Whole));
@@ -382,7 +383,7 @@ public partial class InteractionRoom
         }
         ShowInteractionTool();_hand.Visible=IsScenePoint(point);
         if(_toolFood!=null)_toolFood.Visible=obj.Portions>0;
-        if(_cupWater!=null)_cupWater.Visible=obj.Portions>0;
+        if(_cupWater!=null)SetCupFill(_cupWater,(float)NaturalResources.VisibleWaterFill(Sim.State,obj));
         if(mouth&&contact!=null)PlaceContactTool(contact);
         else if(TryGroundPoint(point,.6f,out var position)){_hand.GlobalBasis=Basis.Identity;_hand.GlobalPosition=position;}
         else _hand.Visible=false;

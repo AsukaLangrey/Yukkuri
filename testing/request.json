@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v3-static-polish-20261029",
+  "revision": "dot-v4-static-polish-20261029",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -29,9 +29,13 @@
     "planning/stages/static-polish-20261029-10h/integration.md",
     "planning/stages/static-polish-20261029-10h/feeding-release.md",
     "planning/stages/static-polish-20261029-10h/review-completion.md",
-    "planning/stages/static-polish-20261029-10h/review-swallow.md"
+    "planning/stages/static-polish-20261029-10h/review-swallow.md",
+    "planning/stages/static-polish-20261029-10h/review-input-switches.md",
+    "planning/stages/static-polish-20261029-10h/review-resource-sharing.md",
+    "planning/stages/static-polish-20261029-10h/review-resource-scene.md",
+    "planning/stages/static-polish-20261029-10h/review-scene-integration.md"
   ],
-  "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。保留v2中的保存失败保护、损坏主档回退、失焦、自主休息和声音覆盖；v3新增持续按住时喂食/护理/修补完成后的自主行动、地面一口尚未结束时重新递食的份量与时序、松手后自主走动与吞咽姿态衔接，以及旧式已入口存档缺pending字段的合成续接案例。后者不代替真实历史存档兼容。",
+  "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。保留v2/v3要求：保存失败/失焦保护、自主生活、完成动作释放、重入递食不覆盖自然一口、吞咽到实际移动的姿态衔接，以及旧字段合成续接（不代替真实历史样本）。v4增加实际界面边界：拿着未递出或剩余食水跨自动保存期限、中键观察跨保存期限；近看隐藏树木不再挡住命中且隐藏河水不可选；最后一份甜甜在pending时可见、入口后不留透明命中、手里吃空也隐藏；直接喝水与实物杯相互切换时水位/可见性正确复位。纯逻辑通过或静态赋值链不能代替这些真实界面观察，缺观察条件如实记未测。",
   "historical_save_fixture": {
     "available_in_repository": false,
     "instruction": "无获准历史样本时报告 blocked，不提交个人存档或伪造历史样本。"
