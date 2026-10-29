@@ -258,9 +258,8 @@ public sealed partial class WorldSimulation
                     return Refuse("touch-rough","碰得太急，它缩开身体。先收手，给它留一点距离。");
                 }
                 g.FastTouchSeconds=Math.Max(0,g.FastTouchSeconds-dt*2);
-                if(c.Fear>68||c.Trust<12||input.Part==BodyPart.Cheek&&i.CheekSensitivityAt(input.Side)>45||
-                    input.Part==BodyPart.Head&&i.HeadSensitivity>45)
-                    return Refuse("touch-no","它现在不愿被碰，往旁边躲开了。");
+                if(!InteractionReadiness.WillAcceptAffection(c,input.Part,input.Side))
+                    return Refuse(c.Pain>=40?"touch-sore":"touch-no",InteractionReadiness.AffectionRefusal(c,input.Part));
                 if(input.TouchTangentFraction<.1)
                     return g.Last=input.TouchNormalSpeed<-.01?
                         new(true,"手轻轻抵着身体；顺着表面移动才是抚摸。",c.Speech,"touch-press"):
@@ -277,8 +276,8 @@ public sealed partial class WorldSimulation
                     g.NuzzleWelcomed=false;g.FastTouchSeconds=0;
                     return g.Last = new(true, nuzzle ? "靠近脸侧，再邀请它蹭蹭。" : "把手移到头顶，顺着头发摸。", "", "invite");
                 }
-                if (c.Fear > 68 || c.Trust < 12 || (input.Part == BodyPart.Head ? i.HeadSensitivity : i.CheekSensitivityAt(input.Side)) > 45)
-                    return Refuse("touch-no", "它躲开接触，先让它缓一缓。 ");
+                if (!InteractionReadiness.WillAcceptAffection(c,input.Part,input.Side))
+                    return Refuse(c.Pain>=40?"touch-sore":"touch-no",InteractionReadiness.AffectionRefusal(c,input.Part));
                 bool rushing=motion/dt>1.8;
                 g.FastTouchSeconds=rushing?g.FastTouchSeconds+dt:Math.Max(0,g.FastTouchSeconds-dt*2);
                 if(force>.65||g.FastTouchSeconds>=.35)

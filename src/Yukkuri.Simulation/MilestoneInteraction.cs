@@ -144,6 +144,7 @@ public sealed partial class WorldSimulation
     {
         if(!double.IsFinite(amount)||amount<0)throw new ArgumentOutOfRangeException(nameof(amount));
         if(amount==0||c.Condition==PhysicalCondition.Dead)return;
+        if(actor=="player"&&c.Interaction.Enabled)RememberPlayerHarm(c,amount);
         c.Health=Math.Max(0,c.Health-amount);c.Pain=Clamp100(c.Pain+amount*1.5);c.Strain=Clamp100(c.Strain+amount*.7);
         c.InjuryCause=cause;
         if(amount>18)c.FillingIntegrity=Math.Max(0,c.FillingIntegrity-(amount-18)*1.2);

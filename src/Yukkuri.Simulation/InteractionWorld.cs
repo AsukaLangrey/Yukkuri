@@ -72,6 +72,13 @@ public sealed partial class WorldSimulation
             DetachNaturalIntake(c);
             if(preparing)life.NaturalBitePause=Math.Max(life.NaturalBitePause,.6);
         }
+        // Affection never overrides an ongoing physical crisis or severe pain.
+        if (c.Condition == PhysicalCondition.Critical)
+        { expression=Expression.Exhausted; situation="hurt"; pose="help"; }
+        else if (c.Pain >= 40 && expression is Expression.Content or Expression.Delighted)
+        { expression=Expression.Hurt; situation="touch-sore"; }
+        else if (c.Fear >= 68 && expression is Expression.Content or Expression.Delighted)
+        { expression=Expression.Frightened; situation="touch-no"; }
         React(c, expression, OilDialogue.Say(c, situation), description, 4.5);
         c.Interaction.ReactionPose=pose;c.Interaction.ReactionPoseRemaining=2.2;
         c.Interaction.ReactionSituation=situation;c.Interaction.ReactionRefused=refused;
@@ -95,9 +102,13 @@ public sealed partial class WorldSimulation
     private void ImproveAffection(Creature c, double amount)
     {
         amount /= 1 + c.Interaction.AffectionSaturation * .08;
+        var bond = c.Interaction.HumanBond;
+        amount = Math.Min(amount, bond.CareBudget);
+        bond.CareBudget = Math.Max(0, bond.CareBudget - amount);
+        bond.Familiarity = Clamp100(bond.Familiarity + amount * .5);
         c.Trust = Clamp100(c.Trust + amount);
         c.Attachment = Clamp100(c.Attachment + amount * .6);
-        c.Fear = Math.Max(0, c.Fear - amount * .35);
+        c.Fear = Math.Max(0, c.Fear - amount * .15);
         c.Interaction.AffectionSaturation = Clamp100(c.Interaction.AffectionSaturation + amount * .7);
     }
 
@@ -107,6 +118,7 @@ public sealed partial class WorldSimulation
         c.Fear = Clamp100(c.Fear + amount * (1.2 - c.Courage * .5));
         c.Resentment = Clamp100(c.Resentment + amount * .55);
         c.Trust = Clamp100(c.Trust - amount * .45);
+        if (damage <= 0) RememberPlayerHarm(c, amount * .35);
         if (damage > 0) Hurt(c, damage, cause, "player");
     }
 
@@ -366,6 +378,7 @@ public sealed partial class WorldSimulation
     {
         var i = c.Interaction;
         var details = new List<string>();
+        if (c.Condition == PhysicalCondition.Dead) return "已经离世，不再回应。";
         if (c.Condition == PhysicalCondition.Critical) details.Add("重伤，急需稳定伤势");
         if (i.FootIntegrity <= 25 && UsesGroundFoot(c)) details.Add("底部受伤，无法自行走动");
         else if (i.FootIntegrity < 80) details.Add("底部有伤，动作受影响");

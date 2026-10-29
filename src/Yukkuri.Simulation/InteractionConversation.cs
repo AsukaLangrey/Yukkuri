@@ -69,7 +69,7 @@ public sealed partial class WorldSimulation
             default:
                 if(c.Fear>75&&c.Trust<15)
                     return Feedback(c,"comfort-distance",Expression.Frightened,"它还不敢让你靠近，先留一点距离陪着。","withdraw",false,true);
-                ImproveAffection(c,.5);c.Fear=Math.Max(0,c.Fear-2);
+                ImproveAffection(c,.5);
                 return Feedback(c,i.Resting?"comfort-rest":"comfort",i.Resting?Expression.Sleeping:Expression.Shy,
                     i.Resting?"它听见你还在旁边，继续安静歇着。":"安慰让它稍微放松，先陪在旁边。",i.Resting?"rest":"comfort");
         }

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v6-core-sprint2-20261030",
+  "revision": "dot-v7-interaction-depth-A-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -12,7 +12,7 @@
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak",
-    "Save.Compatibility", "runtime-smoke", "visual-interaction-review"
+    "Save.Compatibility", "Interaction.Depth", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
     "跳跃朝向、腾空与落地衔接",
@@ -22,6 +22,7 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/A.txt",
     "planning/stages/static-polish-20261029-10h/input.md",
     "planning/stages/static-polish-20261029-10h/life.md",
     "planning/stages/static-polish-20261029-10h/presentation.md",

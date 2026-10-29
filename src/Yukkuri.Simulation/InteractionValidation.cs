@@ -24,6 +24,11 @@ public static class InteractionValidation
             var i = c.Interaction;
             Require(i != null && i.Accessory != null && i.Learning != null && i.Memories != null, "互动个体数据缺失");
             var physiology=i!.Physiology;
+            var bond=i.HumanBond;
+            Require(bond!=null&&Range(bond.Familiarity,bond.Safety)&&
+                Finite(bond.CareBudget,bond.LastHarmAt)&&bond.CareBudget is >=0 and <=3&&
+                bond.LastHarmAt>=-100&&bond.LastHarmAt<=s.WorldSeconds+.001&&
+                bond.Caution!=null&&bond.Caution.All(p=>Enum.IsDefined(p.Key)&&Range(p.Value)),"人油相处记忆无效");
             Require(physiology!=null&&Range(physiology.Bladder,physiology.Bowel)&&
                 double.IsFinite(physiology.Remaining)&&physiology.Remaining is >=0 and <=4&&Enum.IsDefined(physiology.Excreting)&&
                 (physiology.Excreting==ExcretionKind.None)==(physiology.Remaining==0)&&

@@ -41,6 +41,9 @@ public static class InteractionPresentation
         var i=c.Interaction;
         if(c.Condition==PhysicalCondition.Dead)return "dead";
         if(i.Falling)return "fall";
+        if(i.Carried&&(c.Pain>=40||c.Fear>=60||c.Condition==PhysicalCondition.Critical))return "carry-tense";
+        if(c.Condition==PhysicalCondition.Critical)return "help";
+        if(c.Pain>=40&&i.EatingRemaining<=0)return "guard";
         // Eating can finish without a swallow reaction (for example while in pain).
         // Its short reaction timer must not keep an empty mouth in an intake pose.
         if(i.ReactionPoseRemaining>0&&i.ReactionPose!="idle"&&

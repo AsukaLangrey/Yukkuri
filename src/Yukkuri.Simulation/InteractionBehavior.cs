@@ -181,6 +181,7 @@ public sealed partial class WorldSimulation
             i.Resting=false;
             ResetInterruptedAutonomySearch(c);
             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
+            AdvanceHumanBond(c,dt);
             c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
             i.Hydration = Math.Max(0,i.Hydration-dt*.025);
             i.AdvanceDressings(c,dt);
@@ -376,7 +377,8 @@ public sealed partial class WorldSimulation
                     if (a.Place == AccessoryPlace.Ground && a.Integrity > 0)
                     { c.TargetX = a.X; c.TargetZ = a.Z; }
                 }
-                else if (SeesHelpingHand(c)&&i.NuzzleFamiliarity > 8 && c.Trust > 40 && c.Fear < 35)
+                else if (SeesHelpingHand(c)&&i.NuzzleFamiliarity > 8 && c.Trust > 40 && c.Fear < 35 &&
+                    InteractionReadiness.WillAcceptAffection(c,BodyPart.Cheek,SurfaceSide.Whole))
                 {
                     c.TargetX = State.PlayerX; c.TargetZ = State.PlayerZ;
                     Feedback(c, "request-nuzzle", Expression.Content, "它记得一起蹭脸的经历，主动靠过来。", "invite");
