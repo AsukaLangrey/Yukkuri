@@ -319,15 +319,17 @@ public sealed partial class WorldSimulation
         life.ExploreUntil=0;
     }
 
-    private void ResetInterruptedNaturalSearch(Creature c)
+    private void ResetInterruptedAutonomySearch(Creature c)
     {
         var life=c.Interaction;
         if(!life.Carried&&!life.Falling&&!life.Supine&&life.Restraint==RestraintKind.None&&
             c.Condition is not (PhysicalCondition.Critical or PhysicalCondition.Dead)&&life.ActiveCue==null&&
             !(InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy))return;
         // Also used by presentation: carrying in close-up can relocate the body
-        // without advancing world time. Old approach progress must not survive it.
+        // without advancing world time. Neither resource nor cushion approach
+        // progress may survive a body or lesson interruption.
         ResetNaturalResourceSearch(c);
+        ResetInteractionRestSearch(c);
         life.HelpWaitingUntil=0;
         if(life.ReactionPose=="help-look")life.ReactionPoseRemaining=0;
     }

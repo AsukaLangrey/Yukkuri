@@ -91,7 +91,7 @@ public sealed partial class WorldSimulation
         foreach (var c in State.Creatures)
         {
             var i = c.Interaction;
-            ResetInterruptedNaturalSearch(c);
+            ResetInterruptedAutonomySearch(c);
             ValidatePendingConversation(c);
             if(i.GroundIntakeSourceId!=null&&
                 (c.Condition==PhysicalCondition.Dead||i.Carried||i.Falling||i.Supine||i.Height>.25||
@@ -177,7 +177,7 @@ public sealed partial class WorldSimulation
             if (c.Condition == PhysicalCondition.Dead) continue;
             var i = c.Interaction;
             i.Resting=false;
-            ResetInterruptedNaturalSearch(c);
+            ResetInterruptedAutonomySearch(c);
             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
             c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
             i.Hydration = Math.Max(0,i.Hydration-dt*.025);

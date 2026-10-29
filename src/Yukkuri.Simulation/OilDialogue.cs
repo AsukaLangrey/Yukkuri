@@ -122,7 +122,11 @@ public static class OilDialogue
         };
         // Context wins over style: a brave voice must not invent a working pair of feet.
         if(situation=="mouthful-done")
-            lines=c.Interaction.GroundIntake&&c.Interaction.GroundIntakeKind==RoomObjectKind.Leaves?
+            lines=c.Interaction.Digestion.Symptomatic?
+                c.Interaction.EatingKind==IntakeKind.Water?
+                    ["水水咽好啦……肚肚还是怪怪的。","这一口喝好啦……肚肚还要慢慢歇一歇。"]:
+                    ["这一口咽好啦……肚肚还不舒服。","嚼好咽下去啦……让油慢慢歇一歇。"]:
+                c.Interaction.GroundIntake&&c.Interaction.GroundIntakeKind==RoomObjectKind.Leaves?
                 ["叶叶嚼好啦……油再慢慢找找。","这一口咽下去啦……肚肚好一点了。"]:
                 c.Interaction.EatingKind==IntakeKind.Water?
                 c.Interaction.Hydration<55?["咕嘟……咽好啦。油还想小口喝一点。","水水咽下去啦……嘴嘴还想再润润。"]:["咕嘟……咽好啦，嘴嘴舒服多啦。","这一口喝好啦……慢慢来～"]:
@@ -136,6 +140,10 @@ public static class OilDialogue
                 c.Interaction.CheekSensitivityAt(SurfaceSide.Left)>15?"左边脸脸":"右边脸脸";
             lines=[$"{side}还不舒服……先不要揉呀。",$"{side}想歇一会儿……轻轻看看就好。"];
         }
+        else if(situation=="inspect"&&c.Interaction.Digestion.Symptomatic)
+            lines=c.Interaction.Digestion.CareRemaining>0?
+                ["肚肚已经照顾过啦……还是不舒服，要再歇一歇。","有帮油照顾肚肚了……还要慢慢好起来。"]:
+                ["肚肚还不舒服……帮油看看，好不好？","肚肚怪怪的……油想慢慢歇一歇。"];
         else if(situation=="inspect"&&c.Interaction.Hydration<25&&c.Pain<5&&c.Health>95)
             lines=["嘴嘴干干的……油想喝一口水。","水水先生，递到嘴边好不好……"];
         else if(situation=="inspect"&&c.Pain<5&&c.Health>95&&c.Interaction.FootIntegrity>95)

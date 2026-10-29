@@ -89,6 +89,51 @@ RecoverStructuralCorruption(missingLearning,"active lesson without its learning 
 missingLearning.Creatures[0].Interaction.ActiveCue=null;
 SaveStore.Validate(missingLearning);
 Check(missingLearning.Creatures[0].Interaction.Learning.Count==0,"inactive empty learning records remain valid");
+var nullSpeech=WorldSimulation.CreateInteractionPlaytest().State;
+nullSpeech.Creatures[0].Speech=null!;nullSpeech.Creatures[0].ReactionRemaining=4;
+RecoverStructuralCorruption(nullSpeech,"null speech with a live reaction");
+// Omitting a field is different from explicitly corrupting it with null.
+var omittedSpeech=System.Text.Json.Nodes.JsonNode.Parse(Json(validInteraction))!;
+foreach(var creature in omittedSpeech["Creatures"]!.AsArray())creature!.AsObject().Remove("Speech");
+File.WriteAllText(structureStore.SlotPath(2),omittedSpeech.ToJsonString());
+var defaultSpeech=structureStore.Load(2);
+Check(!defaultSpeech.RecoveredBackup&&defaultSpeech.State.Creatures.All(c=>c.Speech==""),
+    "synthetic missing speech fields retain safe defaults without backup recovery");
+
+// A directory in place of the primary deterministically exercises access-denied file opening,
+// without changing permissions on real saves. These are isolated synthetic fixtures.
+var accessStore=new SaveStore(Path.Combine(root,"inaccessible-primary"));
+string accessPrimary=accessStore.SlotPath(1),accessBackup=accessPrimary+".bak";
+Directory.CreateDirectory(accessPrimary);File.WriteAllText(accessBackup,Json(validInteraction));
+string accessBackupBefore=File.ReadAllText(accessBackup);
+var accessRecovered=accessStore.Load(1);
+Check(accessRecovered.RecoveredBackup&&Json(accessRecovered.State)==Json(validInteraction),
+    "access-denied primary falls back to a valid backup");
+Check(Directory.Exists(accessPrimary)&&File.ReadAllText(accessBackup)==accessBackupBefore,
+    "access-denied fallback leaves the primary path and backup unchanged");
+Directory.CreateDirectory(accessStore.SlotPath(2));Directory.CreateDirectory(accessStore.SlotPath(2)+".bak");
+Reject(()=>accessStore.Load(2),"two access-denied paths produce a controlled load failure");
+Check(Directory.Exists(accessStore.SlotPath(2))&&Directory.Exists(accessStore.SlotPath(2)+".bak"),
+    "failed access-denied load preserves both paths");
+
+var writeFailureStore=new SaveStore(Path.Combine(root,"write-failure"));
+writeFailureStore.Save(validInteraction,1);writeFailureStore.Save(validInteraction,1);
+string protectedPrimary=File.ReadAllText(writeFailureStore.SlotPath(1));
+string protectedBackup=File.ReadAllText(writeFailureStore.SlotPath(1)+".bak");
+using(var lockedTemporary=new FileStream(writeFailureStore.SlotPath(1)+".writing",FileMode.Create,FileAccess.Write,FileShare.None))
+{
+    bool writeFailed=false;
+    try{writeFailureStore.Save(validInteraction,1);}
+    catch(Exception error) when(error is IOException or UnauthorizedAccessException){writeFailed=true;}
+    Check(writeFailed,"locked temporary file refuses save");
+    Check(File.ReadAllText(writeFailureStore.SlotPath(1))==protectedPrimary&&
+        File.ReadAllText(writeFailureStore.SlotPath(1)+".bak")==protectedBackup,
+        "temporary write failure preserves the valid primary and backup");
+}
+Reject(()=>writeFailureStore.Save(nullSpeech,1),"null speech cannot be saved over a valid primary");
+Check(File.ReadAllText(writeFailureStore.SlotPath(1))==protectedPrimary&&
+    File.ReadAllText(writeFailureStore.SlotPath(1)+".bak")==protectedBackup,
+    "invalid candidate preserves both valid save generations");
 var isolated=WorldSimulation.Create();isolated.Travel("wild");var rescued=isolated.Selected!;isolated.Rescue();isolated.Advance(120);
 Check(rescued.X is >= -7 and <= -4.5&&rescued.Z is >= 4.2 and <= 6.6,"quarantine resident stays within the observation area");
 var crowd=WorldSimulation.Create(100);crowd.Advance(20);

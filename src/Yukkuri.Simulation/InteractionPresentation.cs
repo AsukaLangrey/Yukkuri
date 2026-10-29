@@ -26,7 +26,8 @@ public static class InteractionPresentation
         var i=c.Interaction;
         // Pain and requests for help can also reject an action. Keep their own voice;
         // an ordinary frightened refusal still uses the refusal cue.
-        if(c.Expression==Expression.Hurt||i.ReactionSituation=="stomach-unwell")return "coo-hurt";
+        if(c.Expression==Expression.Hurt||i.ReactionSituation is "stomach-unwell" or "stomach-no-food" or "touch-sore"||
+            i.ReactionSituation=="inspect"&&i.Digestion.Symptomatic)return "coo-hurt";
         if(c.Expression==Expression.Calling)return "coo-help";
         if(i.ReactionRefused)return "coo-refuse";
         if(c.Expression==Expression.Frightened)return "coo-hurt";

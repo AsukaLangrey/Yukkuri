@@ -262,6 +262,26 @@ Check("gentle direct pressure cannot farm stroking affection",()=>
     }
     Require(c.Trust==60&&c.Health==100&&last.Pose=="touch-press","direct pressure was counted as petting or injury");
 });
+Check("mostly outward diagonal travel neither pets nor owns the body",()=>
+{
+    foreach(int fps in new[]{30,60,144})foreach(bool outward in new[]{true,false})
+    {
+        var s=Fresh();var c=s.Selected!;var t=Tracker();double dt=1.0/fps;
+        s.BeginInteractionGesture(c.Id,new(InteractionAction.Touch));
+        var direction=Vector3.Normalize(outward?new Vector3(.4f,0,1):new Vector3(1,0,.2f));
+        for(int n=0;n<fps;n++)
+        {
+            var sample=t.Sample("oil",direction*(float)(.3*dt),Vector3.UnitZ,dt);
+            Require(sample.TangentFraction>.1,"fixture accidentally used pure normal travel");
+            s.ContinueInteractionGesture(new(InteractionAction.Touch,Force:sample.Force,Duration:dt,Motion:sample.Distance,
+                StopImpact:sample.StopImpact,TouchTangentFraction:sample.TangentFraction,TouchNormalSpeed:sample.NormalSpeed),true);
+            Require(s.InteractionGestureOwnsPose!=outward,"withdrawal and actual stroking shared pose ownership");
+        }
+        Require(c.Health==100&&(outward?c.Trust==60:c.Trust>60),"diagonal withdrawal earned affection or a real stroke lost it");
+        s.EndInteractionGesture();
+        Require(c.ActionCounts.GetValueOrDefault(nameof(InteractionAction.Touch))==(outward?0:1),"withdrawal recorded a completed petting action");
+    }
+});
 Check("rotating the whole camera-contact basis preserves normal and tangent effects",()=>
 {
     var values=new List<ContactMotionSample>();
@@ -395,6 +415,66 @@ Check("ending rubbing pose does not erase a newer independent reaction",()=>
     s.ExecuteInteraction(c.Id,new(InteractionAction.Poke,BodyPart.Cheek,Force:.2));
     s.ContinueInteractionGesture(moving with {Motion=0},true);
     Require(InteractionPresentation.Pose(c)=="poke","idle cleanup erased a newer independent reaction");
+});
+Check("care and repair at the wrong site leave autonomous feeding available",()=>
+{
+    foreach(var action in new[]{InteractionAction.Care,InteractionAction.RepairAccessory})
+    {
+        var s=Fresh();var c=s.Selected!;s.State.Creatures.RemoveAll(o=>o.Id!=c.Id);s.State.RoomObjects.Clear();
+        s.State.UnlimitedResources=false;c.Fullness=10;c.Energy=90;c.Fear=0;c.Interaction.Hydration=90;
+        c.X=c.TargetX=0;c.Z=c.TargetZ=0;c.Interaction.NextAutonomyAt=10000;
+        c.Interaction.HeadSensitivity=30;c.Interaction.Accessory.Place=AccessoryPlace.Hand;c.Interaction.Accessory.Integrity=80;
+        s.State.RoomObjects.Add(new(){Id="meal",Kind=RoomObjectKind.Meal,RegionId=c.RegionId,X=2,Z=0,Portions=5});
+        int medicine=s.State.Medicine;
+        var wrongSite=new InteractionInput(action,BodyPart.Side,Force:.2,Duration:.05);
+        Require(s.BeginInteractionGesture(c.Id,wrongSite).Success&&!s.InteractionGestureOwnsPose,"wrong site captured the body at begin");
+        for(int n=0;n<160;n++)
+        {
+            s.ContinueInteractionGesture(wrongSite,true);
+            Require(s.HasInteractionGesture&&!s.InteractionGestureOwnsPose,"wrong site trapped the body or silently ended the gesture");
+            s.AdvanceInteractionPresentation(.05);s.Advance(.05);
+        }
+        Require(c.X>.5&&c.Fullness>10,"wrong-site tool blocked autonomous feeding");
+        Require(s.State.Medicine==medicine&&c.Interaction.CareContinuity==0&&c.Interaction.Accessory.Integrity==80,
+            "wrong-site tool consumed care or repaired the accessory");
+    }
+});
+Check("moving care off a local injury resets dwell without losing completed care",()=>
+{
+    var s=Fresh();var c=s.Selected!;s.State.UnlimitedResources=false;c.Interaction.HeadSensitivity=30;
+    var valid=new InteractionInput(InteractionAction.Care,BodyPart.Head,Force:.2,Duration:.05);
+    int medicine=s.State.Medicine;
+    Require(s.BeginInteractionGesture(c.Id,valid).Success&&s.InteractionGestureOwnsPose,"valid care did not own its dwell");
+    for(int n=0;n<16;n++)s.ContinueInteractionGesture(valid,true);
+    s.ContinueInteractionGesture(valid with {Part=BodyPart.Side},true);
+    Require(!s.InteractionGestureOwnsPose,"moving off the injury kept control");
+    for(int n=0;n<16;n++)s.ContinueInteractionGesture(valid,true);
+    Require(s.State.Medicine==medicine&&s.InteractionGestureOwnsPose,"old-site dwell leaked into resumed care");
+    for(int n=0;n<18;n++)s.ContinueInteractionGesture(valid,true);
+    Require(s.State.Medicine==medicine-1&&c.Interaction.CareContinuity==5&&!s.InteractionGestureOwnsPose,"resumed care did not finish exactly once");
+    s.ContinueInteractionGesture(valid with {Part=BodyPart.Side},true);
+    Require(c.Interaction.ReactionPose=="nursing"&&c.Interaction.ReactionPoseRemaining>0,"wrong-site cleanup erased completed care's own response");
+});
+Check("moving off partial repair releases its pose and switching settles it once",()=>
+{
+    var s=Fresh();var c=s.Selected!;c.Interaction.Accessory.Place=AccessoryPlace.Hand;c.Interaction.Accessory.Integrity=80;
+    var valid=new InteractionInput(InteractionAction.RepairAccessory,BodyPart.Accessory,Force:.2,Duration:.05);
+    Require(s.BeginInteractionGesture(c.Id,valid).Success,"partial repair could not start");
+    s.ContinueInteractionGesture(valid,true);double integrity=c.Interaction.Accessory.Integrity;
+    Require(integrity>80&&s.InteractionGestureOwnsPose&&c.Interaction.ReactionPose=="accessory-watch","fixture never repaired");
+    s.ContinueInteractionGesture(valid with {Part=BodyPart.Head},true);
+    Require(!s.InteractionGestureOwnsPose&&c.Interaction.ReactionPoseRemaining==0&&c.Interaction.Accessory.Integrity==integrity,
+        "wrong site kept partial repair's pose or continued repair");
+    s.ExecuteInteraction(c.Id,new(InteractionAction.Poke,BodyPart.Cheek,Force:.2));
+    s.ContinueInteractionGesture(valid with {Part=BodyPart.Head},true);
+    Require(InteractionPresentation.Pose(c)=="poke","wrong-site cleanup erased a newer reaction");
+    s.ContinueInteractionGesture(valid,true);
+    Require(s.InteractionGestureOwnsPose&&c.Interaction.Accessory.Integrity>integrity,"valid contact could not resume partial repair");
+    s.BeginInteractionGesture(c.Id,new(InteractionAction.Touch));
+    Require(c.ActionCounts.GetValueOrDefault(nameof(InteractionAction.RepairAccessory))==1,"switch did not settle partial repair once");
+    s.EndInteractionGesture(true);s.EndInteractionGesture(true);
+    Require(c.ActionCounts.GetValueOrDefault(nameof(InteractionAction.RepairAccessory))==1&&c.Interaction.Accessory.CompletedRepairs==0,
+        "repeated cancellation replayed repair or counted an unfinished repair as complete");
 });
 Check("refusal gives pose ownership back after its actual response settles",()=>
 {

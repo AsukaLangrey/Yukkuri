@@ -30,10 +30,10 @@ public sealed class SaveStore
     {
         string target=SlotPath(slot);
         try { return new(Read(target),false,"已读取存档，不结算离线时间。"); }
-        catch(Exception e) when(e is IOException or JsonException or InvalidDataException)
+        catch(Exception e) when(e is IOException or UnauthorizedAccessException or JsonException or InvalidDataException)
         {
             try { return new(Read(target+".bak"),true,"主档不可用，已读取备份。原主档保留；请另存槽位。"); }
-            catch(Exception b) when(b is IOException or JsonException or InvalidDataException)
+            catch(Exception b) when(b is IOException or UnauthorizedAccessException or JsonException or InvalidDataException)
             {throw new InvalidDataException("主档和备份均不可用；文件未改动。",new AggregateException(e,b));}
         }
     }
@@ -58,6 +58,8 @@ public sealed class SaveStore
         {
             if(c==null || string.IsNullOrWhiteSpace(c.Id) || !ids.Add(c.Id) || c.Body==null || c.Registration==null || !bodies.Add(c.Body.Id) || !identities.Add(c.Registration.IdentityId) || !regions.Contains(c.RegionId) || c.Observation==null || c.Memories==null || c.Relationships==null)throw new InvalidDataException("个体身份或地区无效");
             if(string.IsNullOrWhiteSpace(c.Body.Id)||string.IsNullOrWhiteSpace(c.Registration.IdentityId)||string.IsNullOrWhiteSpace(c.Name)||c.Observation.Notes==null||c.Observation.Samples<0||c.Observation.FeedingEvidence<0||!double.IsFinite(c.Observation.Confidence)||c.Observation.Confidence is < 0 or > 1||!Enum.IsDefined(c.Body.ReproductionRole))throw new InvalidDataException("档案数据无效");
+            // Missing legacy Speech uses its initializer; explicit null must not reach UI Length reads.
+            if(c.Speech==null)throw new InvalidDataException("个体台词数据无效");
             foreach(var value in new[]{c.X,c.Z,c.TargetX,c.TargetZ,c.Fullness,c.Energy,c.Health,c.Trust,c.InnerAgeSeconds,c.Body.AgeSeconds,c.DecisionIn}) if(!double.IsFinite(value))throw new InvalidDataException("个体数值无效");
             if(Math.Abs(c.X)>9 || Math.Abs(c.Z)>9 || c.Fullness is < 0 or > 100 || c.Energy is < 0 or > 100 || c.Health is < 0 or > 100 || c.InnerAgeSeconds<0 || c.Body.AgeSeconds<0)throw new InvalidDataException("个体数值越界");
         }

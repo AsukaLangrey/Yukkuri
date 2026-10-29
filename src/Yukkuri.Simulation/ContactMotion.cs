@@ -29,6 +29,12 @@ public sealed class ContactMotion
 
     private void ClearBrake() { _brakeSpeed=0;_brakeImpulseSpeed=0;_brakeSeconds=0;_stoppedSeconds=0; }
 
+    // With a unit surface normal, outward travel dominates when the tangent
+    // accounts for less than half the squared travel. Share this distinction
+    // with the gesture so an exit cannot still earn stroking affection.
+    internal static bool IsWithdrawing(double normalSpeed,double tangentFraction)=>
+        normalSpeed>0&&tangentFraction*tangentFraction<.5;
+
     public ContactMotionSample Sample(string? target, Vector3 pointerTravel, Vector3 normal,
         double seconds, double bodyScale = 1, bool manipulating = true)
     {
@@ -56,7 +62,7 @@ public sealed class ContactMotion
         double impact=0;
         // Pulling away is not driving into or across the body. Cancel the stroke even
         // while the ray still intersects skin, so its later endpoint cannot become a hit.
-        bool withdrawing=distance>.000001&&normalSpeed>0&&normalSpeed>rawSpeed*tangentFraction;
+        bool withdrawing=distance>.000001&&IsWithdrawing(normalSpeed,tangentFraction);
         bool changedDirection=distance>.000001&&_travelDirection.LengthSquared()>.1f&&
             Vector3.Dot(direction,_travelDirection)<.4f;
         if(withdrawing||changedDirection)

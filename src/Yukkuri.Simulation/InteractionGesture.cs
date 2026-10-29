@@ -42,7 +42,7 @@ public sealed partial class WorldSimulation
         (g.ContactActive||g.Input.Action is InteractionAction.Lift or InteractionAction.Throw or InteractionAction.AdjustHanging or InteractionAction.Tease or InteractionAction.Roll)&&
         (g.Input.Action switch
         {
-            InteractionAction.Touch=>g.Input.Motion>.000001,
+            InteractionAction.Touch=>g.Input.Motion>.000001&&!ContactMotion.IsWithdrawing(g.Input.TouchNormalSpeed,g.Input.TouchTangentFraction),
             InteractionAction.Stroke or InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory=>g.Input.Motion>.0005,
             // An invitation has a short stationary contact phase; waiting after
             // that response is not a grip that can prevent the oil from leaving.
@@ -50,8 +50,9 @@ public sealed partial class WorldSimulation
                 (g.ContactElapsed<.45||g.NuzzleWelcomed&&g.Elapsed-g.FeedbackAt<NuzzleReplyHoldSeconds),
             InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink=>!g.Applied&&g.Input.Part==BodyPart.Mouth&&
                 State.Creatures.Find(o=>o.Id==g.TargetId) is { } recipient&&!MouthfulStillSettling(recipient),
-            InteractionAction.Care=>!g.Applied,
-            InteractionAction.RepairAccessory=>!g.RepairFinished,
+            InteractionAction.Care=>!g.Applied&&State.Creatures.Find(o=>o.Id==g.TargetId) is { } patient&&
+                CanCareAt(patient,g.Input.Part,g.Input.Side),
+            InteractionAction.RepairAccessory=>!g.RepairFinished&&g.Input.Part==BodyPart.Accessory,
             _=>true
         });
     private bool InteractionGestureBlocksAutonomy=>(InteractionGestureOwnsPose&&CurrentInteractionAction!=InteractionAction.PlayBall)||
@@ -193,8 +194,9 @@ public sealed partial class WorldSimulation
         g.Motion += motion;
         var i = c.Interaction;
         if(!g.Refused&&!InteractionGestureOwnsPose&&g.ReactionSerial==c.ReactionSerial&&
-            input.Action is InteractionAction.Touch or InteractionAction.Stroke or InteractionAction.Nuzzle or
-                InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory)
+            (input.Action is InteractionAction.Touch or InteractionAction.Stroke or InteractionAction.Nuzzle or
+                InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory||
+                input.Action==InteractionAction.Care&&!g.Applied||input.Action==InteractionAction.RepairAccessory&&!g.RepairFinished))
         {
             // Releasing the idle gesture also releases its own body pose, while
             // preserving a newer autonomous intake, help or injury response.
@@ -236,6 +238,11 @@ public sealed partial class WorldSimulation
                 }
                 if (motion <= .000001)
                     return g.Last = g.Last with { Message="手轻轻停在这里；慢慢移动才会继续抚摸。",Pose="stroke" };
+                if(ContactMotion.IsWithdrawing(input.TouchNormalSpeed,input.TouchTangentFraction))
+                {
+                    g.FastTouchSeconds=0;
+                    return g.Last=new(true,"手正从身体旁收开。",c.Speech,"idle",Changed:false);
+                }
                 if (force > .62)
                 {
                     g.FastTouchSeconds += dt;

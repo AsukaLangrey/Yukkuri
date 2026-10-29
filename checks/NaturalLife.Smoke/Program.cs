@@ -769,6 +769,54 @@ Check("an inaccessible cushion gives way to ground rest without its healing bonu
     Tick(s,45);Require(c.Energy>18&&c.Interaction.RestOnGroundUntil>0,"tired creature never stopped seeking unreachable bed");
     SaveStore.Validate(s.State);
 });
+Check("carrying interrupts cushion progress in ordinary time and close-up, including after reload",()=>
+{
+    foreach(bool closeUp in new[]{false,true})foreach(bool reload in new[]{false,true})
+    {
+        var s=Fresh();var c=s.Selected!;c.Energy=10;
+        var bed=Source(s,RoomObjectKind.Cushion,3);Tick(s,1);
+        Require(c.Interaction.RestTargetId==bed.Id&&c.X>0,"initial cushion approach never began");
+        double worldTime=s.State.WorldSeconds;
+        c.Interaction.Carried=true;c.Interaction.Height=1;c.X=-4;c.TargetX=-4;
+        if(closeUp)s.State.Mode=PlayMode.CloseUp;
+        Tick(s,.25);
+        if(closeUp)Require(s.State.WorldSeconds==worldTime,"close-up advanced passive rest time");
+        c.Interaction.Carried=false;c.Interaction.Height=0;s.State.Mode=PlayMode.Management;
+        if(reload){s=Reload(s);c=s.Selected!;}
+        Tick(s,4);
+        Require(c.Interaction.RestOnGroundUntil==0&&c.X>-1.2&&!c.Interaction.Resting,
+            "normal return from a new location was mistaken for a blocked cushion");
+        Tick(s,8);
+        Require(c.Interaction.Resting&&Math.Abs(c.X-bed.X)<=.65&&c.Energy>10,
+            "interrupted rest never reached the cushion and resumed recovery");
+    }
+});
+Check("urgent food and water detours resume the cushion route without reusing its old best distance",()=>
+{
+    foreach(bool water in new[]{false,true})
+    {
+        var s=Fresh();var c=s.Selected!;c.Energy=10;
+        var bed=Source(s,RoomObjectKind.Cushion,3);Tick(s,1);
+        Require(c.Interaction.RestTargetId==bed.Id&&c.X>0,"initial cushion approach never began");
+        if(water)c.Interaction.Hydration=10;else c.Fullness=10;
+        Source(s,water?RoomObjectKind.Water:RoomObjectKind.Meal,-2.7,portions:1);
+        c.Interaction.NextResourceScanAt=0;
+        bool resumed=false;
+        for(int frame=0;frame<240;frame++)
+        {
+            Tick(s,.05);
+            if(c.Interaction.Digestion.Exposures==1&&c.Interaction.EatingRemaining<=0&&c.Interaction.RestTargetId==bed.Id)
+            {resumed=true;break;}
+        }
+        Require(resumed&&c.X<-1.5,"urgent need did not actually divert and release the rest route");
+        double startX=c.X;Tick(s,4);
+        Require(c.Interaction.RestOnGroundUntil==0&&c.X>startX+2.5,
+            "an urgent detour left old cushion progress that rejected the normal return");
+        Tick(s,6);
+        Require(c.Interaction.Resting&&Math.Abs(c.X-bed.X)<=.65&&c.Energy>10,
+            "satisfied urgent need did not return to restorative cushion rest");
+    }
+});
 Check("natural rest continues past the tired threshold instead of flickering awake",()=>
 {
     var s=Fresh();var c=s.Selected!;c.Energy=21.9;Source(s,RoomObjectKind.Cushion,0);

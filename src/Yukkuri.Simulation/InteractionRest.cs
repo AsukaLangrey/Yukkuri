@@ -10,6 +10,12 @@ public sealed partial class InteractionLife
 
 public sealed partial class WorldSimulation
 {
+    private static void ResetInteractionRestSearch(Creature c)
+    {
+        var i=c.Interaction;
+        i.RestTargetId=null;i.RestBestDistance=100;i.RestStuckSeconds=0;
+    }
+
     private RoomObject? NearestInteractionCushion(Creature c)=>State.RoomObjects
         .Where(o=>o.Kind==RoomObjectKind.Cushion&&!o.Stored&&o.RegionId==c.RegionId)
         .MinBy(o=>Distance(c.X,c.Z,o.X,o.Z));
@@ -22,11 +28,12 @@ public sealed partial class WorldSimulation
         if(i.RestRemaining<=0)
         {
             bool recovering=i.Digestion.Symptomatic&&c.Energy<55&&c.Fullness>=35&&i.Hydration>=35;
-            if(c.Energy>=22&&!recovering){i.RestTargetId=null;i.RestStuckSeconds=0;return;}
+            if(c.Energy>=22&&!recovering){ResetInteractionRestSearch(c);return;}
             // Finish a short rest rather than oscillating across the tired threshold.
             i.RestRemaining=recovering?45:30;
         }
-        if(CanSelfMove(c)&&(c.Fullness<15||i.Hydration<15))return;
+        if(CanSelfMove(c)&&(c.Fullness<15||i.Hydration<15))
+        {ResetInteractionRestSearch(c);return;}
         if(i.Carried||i.Falling||i.EatingRemaining>0||i.Height>.25||c.Fear>=60||c.Pain>=65||
             i.Restraint is not (RestraintKind.None or RestraintKind.Wrap or RestraintKind.Box)||
             i.ActiveCue!=null||i.FollowPlayer||InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy||Math.Abs(i.VelocityX)+Math.Abs(i.VelocityZ)>.05)return;
@@ -34,6 +41,7 @@ public sealed partial class WorldSimulation
         if(i.RestOnGroundUntil<=State.WorldSeconds&&i.Restraint==RestraintKind.None&&CanSelfMove(c)&&bed!=null&&Distance(c.X,c.Z,bed.X,bed.Z)>.65)return;
         // Bare ground can be rested on, but only a nearby cushion or soft wrapping
         // provides the additional support used by the foot recovery model.
+        ResetInteractionRestSearch(c);
         i.Resting=true;i.RestRemaining=Math.Max(0,i.RestRemaining-dt);
         c.Energy=Clamp100(c.Energy+dt*(HasCushionedRestSupport(c)?.7:.4));
         if(c.ReactionRemaining<=0&&i.EatingRemaining<=0)c.Expression=Expression.Sleeping;

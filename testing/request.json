@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v4-static-polish-20261029",
+  "revision": "dot-v5-core-sprint-20261029",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -33,13 +33,27 @@
     "planning/stages/static-polish-20261029-10h/review-input-switches.md",
     "planning/stages/static-polish-20261029-10h/review-resource-sharing.md",
     "planning/stages/static-polish-20261029-10h/review-resource-scene.md",
-    "planning/stages/static-polish-20261029-10h/review-scene-integration.md"
+    "planning/stages/static-polish-20261029-10h/review-scene-integration.md",
+    "planning/stages/core-sprint-20261029-20m/contact.md",
+    "planning/stages/core-sprint-20261029-20m/save.md",
+    "planning/stages/core-sprint-20261029-20m/feedback.md",
+    "planning/stages/core-sprint-20261029-20m/life.md",
+    "planning/stages/core-sprint-20261029-20m/review.md"
   ],
   "current_change_status": "本轮源码仅静态审查，未在原开发机编译或运行。请先构建固定提交，再执行检查；交接文档中的案例是待测要求，不是通过记录。保留v2/v3要求：保存失败/失焦保护、自主生活、完成动作释放、重入递食不覆盖自然一口、吞咽到实际移动的姿态衔接，以及旧字段合成续接（不代替真实历史样本）。v4增加实际界面边界：拿着未递出或剩余食水跨自动保存期限、中键观察跨保存期限；近看隐藏树木不再挡住命中且隐藏河水不可选；最后一份甜甜在pending时可见、入口后不留透明命中、手里吃空也隐藏；直接喝水与实物杯相互切换时水位/可见性正确复位。纯逻辑通过或静态赋值链不能代替这些真实界面观察，缺观察条件如实记未测。",
   "historical_save_fixture": {
     "available_in_repository": false,
     "instruction": "无获准历史样本时报告 blocked，不提交个人存档或伪造历史样本。"
   },
+  "core_sprint_focus": [
+    "保留v2/v3/v4的全部未测要求。v5仍只有静态源码复核，旧c03不覆盖本轮。先对最终固定提交构建并运行规则检查，不使用共享工作区未提交代码。",
+    "Input.Intent新增斜向抽手与沿表面移动对照、护理和修补错部位时自主取食、回到正确部位重新驻留、部分修补取消只结算一次；真实工具入口另需远程观察。",
+    "Simulation.Smoke新增显式null台词损坏档回退、真正缺字段默认值、主档拒绝访问时读备份、临时写失败保留两代有效档。目录占位是合成错误分支，真实文件权限与读写UI另测。",
+    "NaturalLife.Smoke新增搬运/特写/读档和急需食水绕路后的软垫搜索恢复；保留真实不可达软垫退让地面休息的原断言。",
+    "病中观察、吃喝完成、局部疼痛与病中拒食的对白/声音需区分不适仍在和普通拒绝；不把数字结算通过当听感通过。",
+    "review.md的死亡后残留托举占用属于已发现待分配问题，未修复前不要预设通过；新增生理功能若不在被测提交中不得计为本轮已实现。"
+  ],
+  "asset_transport_note": "开发侧已静态核对本地标题PNG、旧probe GLB和源blend的SHA256与Git LFS指针一致，并于北京时间2026-10-29 23:55左右完成这3个指定对象的LFS推送，命令退出0。远程仍须自行取得对象并核对完整性/导入日志；此记录不证明远程已接收或导入成功，不重生成替代原件。",
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,
   "full_product_acceptance": "reserved_for_user"
