@@ -1,4 +1,9 @@
 
+[2026-10-29 23:23 +08 最新入口]
+先读根目录 START-HERE.txt 和 AGENTS.md，再读 planning/stages/static-polish-20261029-10h/STATUS.md、PLAN.md、integration.md 及 testing/request.json。
+最新源码 f6d98c16a55543a39b30d411e2175aa7552e0e3c 已在 GitHub main，要求为 v4；最新报告仍是旧源码 c6fc7d8 的 c03（partial），不覆盖 v3/v4。当前没有待整合的未提交源码。
+原十小时窗口已结束，不沿用历史 active 状态。本机禁止运行项目及任何编译、测试、模拟、渲染或预览；不执行下文历史启动说明。冻结 art03 不变，M01 玩法仍待返工与验收。
+
 2026-10-28 01:33 人油互动最新检查点：planning/stages/interaction-20261028-8h/checkpoint-20261028-0133.txt。不要将中途预览视为8小时任务完成。
 
 2026-10-28 02:07 人油互动最新检查点：planning/stages/interaction-20261028-8h/checkpoint-20261028-0207.txt。试玩入口 Play Interaction Preview.cmd 已指向 art03；原20组和8小时任务仍进行中。

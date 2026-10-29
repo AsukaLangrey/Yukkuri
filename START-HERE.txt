@@ -1,3 +1,12 @@
+[2026-10-29 23:23 +08 最新接续状态，优先于下文历史状态]
+当前入口：planning/stages/static-polish-20261029-10h/STATUS.md、PLAN.md、integration.md，以及 testing/PROTOCOL.md、testing/request.json。
+已确认本地 HEAD 与 GitHub main 同为 f6d98c16a55543a39b30d411e2175aa7552e0e3c；v4 源码修补已推送，接手时工作区干净。后续仅文档提交不改变此源码基线。
+最新修补包括完成喂食/护理后恢复自主行动、吞咽到移动衔接，以及持物时自动保存、隐藏地景命中、吃空甜甜显示和水杯复用。具体范围见阶段记录；这些修补仅完成静态审查，尚无覆盖 v3/v4 的远程结果。
+本次重新读取结果分支，仍为 e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3，最新 c03 无变化。c03 只覆盖 c6fc7d89795501c26057b991276b4657d62dc122、v2，总状态 partial；正式阅读结论见 testing/reviews/20261029T084136Z-c6fc7d897955-c03.md，不重复播报旧结果。
+原十小时窗口已结束，阶段记录已更正为无活动 Goal；本次不新建 Goal。M01 玩法仍 needs_rework，完整目标和用户验收未完成。冻结 art03 与原启动器保留，旧包不代表最新源码。
+先读根 AGENTS.md：原开发机及本机副本禁止游戏、Godot/headless、测试/验证、模拟、编译、渲染、预览及任何绕过；下文旧启动/验证说明只作历史记录。当前不使用 computer-use、截图、窗口读取或桌面操作。
+继续等待独立远程 Alice/dot 对 v4 的对应报告，按完整源码提交区分已测与未测。已有监控沿用 .local/github-test-watch/state.json 去重；自动任务迁移由原聊天处理，本接续不另建或修改任务。
+
 Yukkuri 乐园：归档后新线程接续入口
 整理日期：2026-10-27，Asia/Shanghai
 项目：D:\Project\Yukkuri
