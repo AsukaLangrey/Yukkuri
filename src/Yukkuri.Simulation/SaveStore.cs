@@ -69,5 +69,6 @@ public sealed class SaveStore
         foreach(var r in s.Regions) if(!double.IsFinite(r.StaffCooldown)||r.Facilities==null || r.Facilities.Any(f=>f==null||string.IsNullOrWhiteSpace(f.Id)||!facilityIds.Add(f.Id)||!Enum.IsDefined(f.Kind)||f.Stock<0||!double.IsFinite(f.X)||!double.IsFinite(f.Z)||Math.Abs(f.X)>9||Math.Abs(f.Z)>9))throw new InvalidDataException("设施数据无效");
         MilestoneValidation.Validate(s);
         InteractionValidation.Validate(s);
+        FamilyRules.ValidateFamily(s);
     }
 }

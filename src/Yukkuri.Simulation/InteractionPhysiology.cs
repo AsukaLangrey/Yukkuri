@@ -51,7 +51,7 @@ public sealed partial class Creature
         PhysicalCondition.Dead=>HealthStatus.Dead,
         PhysicalCondition.Critical=>HealthStatus.Critical,
         PhysicalCondition.Recovering=>HealthStatus.Recovering,
-        _=>Health<=60||Interaction.FootIntegrity<80?HealthStatus.Injured:HealthStatus.Healthy
+        _=>Health<=60||Interaction.FootIntegrity<80||Interaction.Injuries.HasActiveWounds||Interaction.Injuries.Sites.Any(s=>s.PermanentLoss>0)?HealthStatus.Injured:HealthStatus.Healthy
     };
 }
 
@@ -71,6 +71,7 @@ public sealed partial class WorldSimulation
     {
         var i=c.Interaction;
         bool interrupted=(c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical)||
+            c.Family.ColdStorage.Stored||
             i.Carried||i.Falling||i.Lowering||i.Height>.25||i.Supine||
             Math.Abs(i.VelocityX)+Math.Abs(i.VelocityZ)>.05||i.EatingRemaining>0||
             (InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy);
@@ -88,9 +89,12 @@ public sealed partial class WorldSimulation
             var i=c.Interaction;var p=i.Physiology;
             bool interrupted=SynchronizeInterruptedPhysiology(c);
             if(c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical)continue;
+            double bodyDt=BiologicalDelta(c,dt);
             // Intake affects subsequent production rather than turning a fresh drink instantly into urine.
-            p.Bladder=Math.Min(100,p.Bladder+dt*(.10+.12*i.Hydration/100));
-            p.Bowel=Math.Min(100,p.Bowel+dt*(.06+.08*c.Fullness/100+(i.Digestion.Symptomatic?.16:0)));
+            // Stored bodies keep accumulating biological needs at the preservation
+            // rate, but cannot perform an action or leave waste at their old yard position.
+            p.Bladder=Math.Min(100,p.Bladder+bodyDt*(.10+.12*i.Hydration/100));
+            p.Bowel=Math.Min(100,p.Bowel+bodyDt*(.06+.08*c.Fullness/100+(i.Digestion.Symptomatic?.16:0)));
             if(interrupted)continue;
             if(p.Active)
             {

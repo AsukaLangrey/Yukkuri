@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v7-interaction-depth-A-20261030",
+  "revision": "dot-v8-interaction-depth-B-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -12,7 +12,7 @@
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak",
-    "Save.Compatibility", "Interaction.Depth", "runtime-smoke", "visual-interaction-review"
+    "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
     "跳跃朝向、腾空与落地衔接",
@@ -22,6 +22,10 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/B.txt",
+    "planning/stages/interaction-depth-20261030/body.txt",
+    "planning/stages/interaction-depth-20261030/social.txt",
+    "planning/stages/interaction-depth-20261030/family-ui.txt",
     "planning/stages/interaction-depth-20261030/A.txt",
     "planning/stages/static-polish-20261029-10h/input.md",
     "planning/stages/static-polish-20261029-10h/life.md",
@@ -80,6 +84,13 @@
     "废物射线范围应贴合实际尿液/双粒粪便模型，不挡旁边可见空地；排泄动作与死亡/伤势/托举的显示优先级、动作结束缩放复位和近看输入分别做实际观察。另测小院跳跃半空暂停后切近看/返回，角色最终世界变换保持，恢复时间后正常衔接；真实死亡/托举等身体变化仍应正确重置。未具备图形/声音环境的项如实记blocked，不借纯规则通过关闭。"
   ],
   "asset_transport_note": "开发侧已静态核对本地标题PNG、旧probe GLB和源blend的SHA256与Git LFS指针一致，并于北京时间2026-10-29 23:55左右完成这3个指定对象的LFS推送，命令退出0。远程仍须自行取得对象并核对完整性/导入日志；此记录不证明远程已接收或导入成功，不重生成替代原件。",
+  "interaction_depth_focus": [
+    "v8增加家庭、孕育、出生育幼、局部伤势和有限冷藏；开发侧只读写源码和静态审查。先对固定完整提交重新构建，不以A批或旧8238c6e可视复演代表本轮。新增四个检查项目分别执行，即使一个失败仍执行独立项；不得运行原开发机。",
+    "Family.Social覆盖双向意愿、真实相处、稳定伴侣、分手再配、多伴侣明确许可、知情与背叛冲突、预警干预和共同身体结果。Family.Reproduction覆盖茎生胎生完整孕期、血缘与新生独立状态、产地空间整批结算、暂停近看与同档续推。Family.ColdCare覆盖十倍身体时间、保存上限、满院到期、死者取出与真实搬运份额/玩家接手。Interaction.Injury覆盖持续伤势、永久支撑上限、部位护理、防刷及濒危救治余量、死亡清理。均为待执行源码，不是通过记录。",
+    "人工实际观察家庭面板、两只靠近与拒绝、长姓名和新生动态名单/体型、孕育标识、幼体嘴边真实食水及搬运被拿走、存读、原暂停和近看；补冷藏中死亡后的取出、身体反馈与声音。纯逻辑不得代替视觉听感。",
+    "保留c04原Drink/water复合断言与诊断；v05是旧构建有限可视复演，不是完整复测基线，也不能把c400a4c及之后提交去重跳过。每条结果记录机器、完整源码提交及未测范围。",
+    "本批没有秘药；强制繁育、主动吸收/保胎、茎生杀子和完整遗体事后处理仍按原需求记录继续开发，不能因本批普通孕育可用而改成已完成或删除。数值为初稿，非八景原公式。"
+  ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,
   "full_product_acceptance": "reserved_for_user"

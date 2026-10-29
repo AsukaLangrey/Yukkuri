@@ -136,7 +136,7 @@ public sealed partial class WorldSimulation
         life.NextResourceScanAt=State.WorldSeconds+.8;
         foreach(var obj in State.RoomObjects)
         {
-            if(obj.RegionId!=c.RegionId||!NaturalResources.IsResource(obj.Kind)||obj.Stored||obj.HeldByHand||
+            if(obj.RegionId!=c.RegionId||!NaturalResources.IsResource(obj.Kind)||obj.Stored||obj.HeldByHand||obj.CarrierId!=null||
                 Distance(c.X,c.Z,obj.X,obj.Z)>NaturalResources.SenseRange||!CanSeeResource(c,obj))continue;
             if(!life.Resources.TryGetValue(obj.Id,out var memory))
             {
@@ -154,7 +154,7 @@ public sealed partial class WorldSimulation
         // Only forget a missing/moved object when the remembered position is actually inspected.
         foreach(var (id,memory) in life.Resources)
             if(memory.RegionId==c.RegionId&&Distance(c.X,c.Z,memory.X,memory.Z)<1&&HasGroundSightLine(c,memory.X,memory.Z)&&
-                !State.RoomObjects.Any(o=>o.Id==id&&!o.Stored&&!o.HeldByHand&&o.RegionId==c.RegionId&&o.Portions>0&&Distance(o.X,o.Z,memory.X,memory.Z)<.5))
+                !State.RoomObjects.Any(o=>o.Id==id&&!o.Stored&&!o.HeldByHand&&o.CarrierId==null&&o.RegionId==c.RegionId&&o.Portions>0&&Distance(o.X,o.Z,memory.X,memory.Z)<.5))
                 memory.Available=false;
     }
 
@@ -241,6 +241,9 @@ public sealed partial class WorldSimulation
             bool urgentNeed=need>85;
             double distance=Distance(c.X,c.Z,m.X,m.Z);
             double score=need*.10-distance*.45-m.Suspicion*.025;
+            // A remembered belief affects caution, never the source's real safety
+            // or location. New experience can correct inherited misconceptions.
+            if(c.Family.LifeKnowledge.TryGetValue("safe:"+m.Kind,out bool believedSafe))score+=believedSafe?.2:-.4;
             if(!NaturalResources.IsWild(m.Kind)&&hand&&c.Trust<40&&Distance(m.X,m.Z,State.PlayerX,State.PlayerZ)<1.8)
                 score-=(40-c.Trust)*.15;
             if(id==life.ResourceTargetId)score+=.4;
@@ -256,7 +259,7 @@ public sealed partial class WorldSimulation
             {life.ResourceTargetId=targetId;life.ResourceBestDistance=Distance(c.X,c.Z,target.X,target.Z);life.ResourceStuckSeconds=0;c.TargetX=c.X;c.TargetZ=c.Z;}
             // The remembered location can guide a search, but looking up its ID
             // must not reveal a moved source outside current sight or this region.
-            var obj=State.RoomObjects.Find(o=>o.Id==targetId&&o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand&&
+            var obj=State.RoomObjects.Find(o=>o.Id==targetId&&o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand&&o.CarrierId==null&&
                 Distance(c.X,c.Z,o.X,o.Z)<=NaturalResources.SenseRange&&CanSeeResource(c,o));
             double distance=Distance(c.X,c.Z,target.X,target.Z);
             bool distrust=hand&&c.Trust<25&&urgent>=12&&!NaturalResources.IsWild(target.Kind)&&
@@ -268,7 +271,7 @@ public sealed partial class WorldSimulation
                 life.HelpWaitingUntil=State.WorldSeconds+1.5;
                 c.Activity="先看一会儿手旁的吃喝";return true;
             }
-            if(distance<=NaturalResources.Reach(c)&&obj!=null&&obj.RegionId==c.RegionId&&!obj.Stored&&!obj.HeldByHand&&obj.Portions>0&&
+            if(distance<=NaturalResources.Reach(c)&&obj!=null&&obj.RegionId==c.RegionId&&!obj.Stored&&!obj.HeldByHand&&obj.CarrierId==null&&obj.Portions>0&&
                 Distance(c.X,c.Z,obj.X,obj.Z)<=NaturalResources.Reach(c)&&CanReachRoomFood(c,obj)&&NaturalResources.Consumer(State,obj)==null&&
                 !life.Carried&&!life.Falling&&!life.Supine&&life.Height<=.25)
             {
@@ -278,7 +281,7 @@ public sealed partial class WorldSimulation
             {
                 var approach=NaturalResources.Approach(c,target);
                 bool adjusting=false;
-                if(obj!=null&&!obj.Stored&&!obj.HeldByHand&&distance<=NaturalResources.Reach(c)&&NaturalResources.Consumer(State,obj)==null)
+                if(obj!=null&&!obj.Stored&&!obj.HeldByHand&&obj.CarrierId==null&&distance<=NaturalResources.Reach(c)&&NaturalResources.Consumer(State,obj)==null)
                 {
                     // Keep a chosen nearby standing point while approaching it. This
                     // uses remembered world targets, without teleporting or extra save state.
@@ -365,7 +368,7 @@ public sealed partial class WorldSimulation
     private void CompleteNaturalIntake(Creature c)
     {
         var life=c.Interaction;
-        var obj=State.RoomObjects.Find(o=>o.Id==life.GroundIntakeSourceId&&!o.Stored&&!o.HeldByHand&&o.RegionId==c.RegionId);
+        var obj=State.RoomObjects.Find(o=>o.Id==life.GroundIntakeSourceId&&!o.Stored&&!o.HeldByHand&&o.CarrierId==null&&o.RegionId==c.RegionId);
         if(obj==null||obj.Kind!=life.GroundIntakeKind||!CanReachRoomFood(c,obj)||
             Distance(c.X,c.Z,obj.X,obj.Z)>NaturalResources.Reach(c)||Math.Abs(obj.Height-life.GroundIntakeSourceHeight)>.005)
         {DetachNaturalIntake(c);return;}
@@ -373,6 +376,7 @@ public sealed partial class WorldSimulation
         bool water=NaturalResources.IsWater(obj.Kind);
         c.Fullness=Clamp100(c.Fullness+NaturalResources.FoodValue(obj.Kind));
         life.Hydration=Clamp100(life.Hydration+NaturalResources.WaterValue(obj.Kind));
+        if(!life.Digestion.Symptomatic)c.Family.LifeKnowledge["safe:"+obj.Kind]=true;
         if(!water&&life.Digestion.Symptomatic)life.Digestion.NextFoodAt=State.WorldSeconds+6;
         c.Activity=water?obj.Kind==RoomObjectKind.RiverWater?"在岸边小口喝水":"低头喝杯里的水":obj.Kind==RoomObjectKind.Leaves?"慢慢嚼叶子":"慢慢吃饭";
         Feedback(c,water?"drink":obj.Kind==RoomObjectKind.Leaves?"eat-leaves":obj.Kind==RoomObjectKind.Sweet?"sweet":"eat",
@@ -437,6 +441,7 @@ public sealed partial class WorldSimulation
             if(c.Interaction.Resources.TryGetValue(group.Key,out var memory))
             {
                 memory.Suspicion=Math.Min(100,memory.Suspicion+25.0*group.Count()/recent.Length);
+                c.Family.LifeKnowledge["safe:"+memory.Kind]=false;
             }
         if(recent[0].SourceId is { } onlySource&&recent.All(intake=>intake.SourceId==onlySource))
             health.SuspectedSourceId=onlySource;

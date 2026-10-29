@@ -75,12 +75,12 @@ public partial class InteractionRoom
         _rightPanel=Panel(_ui);_rightPanel.AnchorLeft=1;_rightPanel.AnchorRight=1;_rightPanel.AnchorBottom=1;
         _rightPanel.OffsetLeft=-274;_rightPanel.OffsetRight=-14;_rightPanel.OffsetTop=88;_rightPanel.OffsetBottom=-218;
         var right=Column(_rightPanel,10);right.AddChild(Text("正在相处",12,"8b927f"));
-        var selectors=Row(right,4);
-        foreach(var c in Sim.State.Creatures){var id=c.Id;var b=Button(c.Name,()=>SelectOil(id));b.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;selectors.AddChild(b);}
+        BuildOilSelector(right);
         _who=Text("",21);right.AddChild(_who);
         var viewControls=Row(right,5);
         _closeButton=Button("靠近看看 · 双击",ToggleClose);_closeButton.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;viewControls.AddChild(_closeButton);
         _resetViewButton=Button("正面",ResetCloseView);viewControls.AddChild(_resetViewButton);
+        right.AddChild(Button("同伴、家庭与照护",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamily();}));
         var reportScroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(reportScroll);
         var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         BuildVitalMeters(report);
@@ -157,9 +157,11 @@ public partial class InteractionRoom
         RefreshRoomUi();
     }
     private void SelectOil(string id)
-    {CancelGesture();Sim.State.SelectedId=id;_message="正在观察"+Sim.Selected!.Name+"。";RefreshRoomUi();}
+    {CancelGesture();Sim.State.SelectedId=id;_familyFirstId=id;_message="正在观察"+Sim.Selected!.Name+"。";RefreshRoomUi();}
     private void ToggleClose()
     {
+        if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected?.Family.ColdStorage.Stored==true)
+        {_message="它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
         _message=Sim.State.Mode==PlayMode.CloseUp?"近看时自然时间暂停。左键按住环境或中键拖动转视角，左键按住小油进行互动；滚轮拉近拉远。":"回到小院，继续观察它自己会做什么。";
         RefreshRoomUi();
@@ -180,6 +182,7 @@ public partial class InteractionRoom
     private void RefreshRoomUi()
     {
         if(_who==null||Sim==null)return;
+        RefreshOilSelector();
         var c=Sim.Selected;if(c==null)return;var i=c.Interaction;
         RefreshVitalMeters(c);
         if(!_toolArmed)
@@ -187,11 +190,11 @@ public partial class InteractionRoom
             _title.Text=i.Carried?"托着 · 先看看它":"空手 · 先看看它";
             _hint.Text=i.Carried?"按住身体继续搬运，慢慢松手放下；快速甩动后松手会抛出。Shift＋滚轮调高度，也可在空地单击放稳。":"按住身体抓起拖动，慢慢松手放下；快速甩动后松手会抛出。空手拿食水、推球；双击近看。";
         }
-        _who.Text=c.Name+(c.IsYoung?" · 小小油":c.Body.SpeciesId=="marisa"?" · 魔理沙":" · 灵梦");
+        _who.Text=c.Name+" · "+SpeciesName(c.Body.SpeciesId)+(c.IsYoung?"幼体":"");
         string intake=i.NaturalIntakePending?i.EatingKind==IntakeKind.Water?"准备喝这一口":"准备取这一口":
             i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":i.GroundIntake&&i.GroundIntakeKind==RoomObjectKind.Leaves?"慢慢嚼着叶子":"慢慢嚼着这一口";
         string activity=i.EatingRemaining>0?intake:i.Resting?"慢慢休息":WorldSimulation.CanSelfMove(c)?c.Activity:"暂时无法自己挪动";
-        string state=c.Condition==PhysicalCondition.Dead?"不再回应了":c.Condition==PhysicalCondition.Critical?"身体状态很差，急需护理":
+        string state=c.Condition==PhysicalCondition.Dead?"不再回应了":c.Family.ColdStorage.Stored?"冷藏中，需及时取出照护":c.Condition==PhysicalCondition.Critical?"身体状态很差，急需护理":
             i.Physiology.Active?i.Physiology.Excreting==ExcretionKind.Urine?"正在撒尿":"正在排便":
             i.Falling?"正在下落":i.Carried?"正在被托着":i.Restraint switch{RestraintKind.Box=>"留在关着的箱子里",RestraintKind.Frame=>"被固定具限制着",RestraintKind.Hanging=>"留在悬挂装置上",RestraintKind.Wrap=>"被软布包裹着",RestraintKind.Hand=>"被手按住",_=>i.Supine?"身体翻了过来":activity};
         if(c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering&&!i.Falling&&
@@ -212,6 +215,8 @@ public partial class InteractionRoom
             i.Accessory.Integrity<=0?"原来的饰品已经损坏。":i.Accessory.Place switch{AccessoryPlace.Stored=>"饰品被收起来了。",AccessoryPlace.Hung=>"饰品挂在高处。",_=>"饰品离开了头顶。"};
         _condition.Text=c.Condition==PhysicalCondition.Dead?state+"\n\n"+accessory:state+"\n\n"+mood+(needs.Length>0?"\n"+needs:"")+"\n\n"+accessory+
             (i.FootIntegrity<70?"\n"+(i.FootTreated?"伤处已经护理，仍需慢慢养好。":"移动部位不舒服，需要看看。") :"");
+        string family=FamilyRules.Describe(c);
+        if(family.Length>0)_condition.Text+="\n\n"+family;
         _memory.Text=c.PersonalMemories.Count==0?"还没有一起经历很多事。":string.Join("\n\n",c.PersonalMemories.TakeLast(3).Reverse().Select(m=>m.Text));
         _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
         _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";
@@ -245,6 +250,7 @@ public partial class InteractionRoom
         _modalContents.AddChild(Text("工具的基础力度分别记住，实际接触速度也会影响作用。更多言语、照护和装置在“展开 / 收起全部工具”里。",13,"78816e"));
         _modalContents.AddChild(Text("不用一直逗它：它会自己找食水、休息和活动。树叶和河水也能自己取用，但吃喝后可能不舒服。把干净食水放下并收手，给它一点时间。",13,"78816e"));
         _modalContents.AddChild(Text("饭饭和护理用品在这个试玩场景中不限量。每分钟自动保存；读档不计算离线时间。",13,"78816e"));
+        _modalContents.AddChild(Text("右侧“同伴、家庭与照护”可以邀请两只油相处、安排孕育和幼体照护。邀请不保证接受，需要双方成熟、愿意且身体适合。出生后宝宝会出现在小院和个体名单中。冷藏只会有限地十倍延缓，取出后仍需照护。",13,"78816e"));
         _modalContents.AddChild(Text("右侧显示饱食度和口渴度，口渴度越高越需要水。吃喝后会逐渐产生尿意和便意，排泄物留在原地；鼠标指向后按 Del 清理。生命值隐藏，只显示正常、受伤、重伤、恢复中或死亡。跌落和其他伤害会累积；吃饱休息能缓慢恢复，重伤需要及时护理。",13,"78816e"));
         _modalContents.AddChild(Button("回到小院",CloseModal));
     }

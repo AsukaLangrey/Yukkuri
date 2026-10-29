@@ -23,6 +23,8 @@ public static class InteractionValidation
         {
             var i = c.Interaction;
             Require(i != null && i.Accessory != null && i.Learning != null && i.Memories != null, "互动个体数据缺失");
+            BodyInjuryState.Validate(i!.Injuries,s.WorldSeconds);
+            Require(i.FootIntegrity<=100-i.Injuries.PermanentFootLoss+.00001,"底部支撑能力超过永久损伤上限");
             var physiology=i!.Physiology;
             var bond=i.HumanBond;
             Require(bond!=null&&Range(bond.Familiarity,bond.Safety)&&

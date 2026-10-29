@@ -87,10 +87,12 @@ public sealed partial class WorldSimulation
     {
         if (!State.InteractionPlaytest || State.Settings.Pause || !double.IsFinite(delta) || delta <= 0) return;
         double dt = Math.Min(delta, .1);
+        SynchronizeCareParcels();
         SettleRoomSupplies();
         foreach (var c in State.Creatures)
         {
             var i = c.Interaction;
+            if(c.Family.ColdStorage.Stored)continue;
             SynchronizeInterruptedPhysiology(c);
             ResetInterruptedAutonomySearch(c);
             ValidatePendingConversation(c);
@@ -146,7 +148,7 @@ public sealed partial class WorldSimulation
                     i.Height = 0; i.Falling = false; i.VerticalVelocity = 0;
                     ClearLandingOverlap(c);
                     double damage = State.Settings.Accidents ? Math.Max(0, speed - 2.8) * 2.2 : 0;
-                    Distress(c, 2, damage, "跌落碰撞");
+                    Distress(c, 2, damage, "跌落碰撞",BodyPart.Bottom);
                     RecordInteraction(c, "fall", "离开手的支撑后落地，记住了这次经历。", Math.Max(1, damage));
                     Feedback(c, damage > 0 ? "hurt" : "down", damage > 0 ? Expression.Hurt : Expression.Shy,
                         damage > 0 ? "落地受伤，查看身体和后续动作。" : "落地了，仍然受了惊。", "land");
@@ -170,18 +172,19 @@ public sealed partial class WorldSimulation
         PruneConsumedSupplies();
     }
 
-    private void TickInteractionWorld(double dt)
+    private void TickInteractionWorld(double worldDt)
     {
         SettleRoomSupplies();
         foreach (var c in State.Creatures)
         {
             SynchronizeInterruptedPhysiology(c);
             if (c.Condition == PhysicalCondition.Dead) continue;
+            double dt=BiologicalDelta(c,worldDt);
             var i = c.Interaction;
             i.Resting=false;
             ResetInterruptedAutonomySearch(c);
             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
-            AdvanceHumanBond(c,dt);
+            if(!c.Family.ColdStorage.Stored)AdvanceHumanBond(c,dt);
             c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
             i.Hydration = Math.Max(0,i.Hydration-dt*.025);
             i.AdvanceDressings(c,dt);
@@ -193,6 +196,9 @@ public sealed partial class WorldSimulation
             i.PraiseRemaining = Math.Max(0, i.PraiseRemaining - dt);
             if (i.PraiseRemaining == 0) i.PendingPraise = null;
             if (c.Fullness <= 0) Hurt(c, dt * .12, "饥饿", null);
+            if(!c.Family.ColdStorage.Stored&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering)UpdateInteractionRest(c,dt);
+            AdvanceBodyInjuries(c,dt);
+            if(c.Condition==PhysicalCondition.Dead)continue;
             if (c.Condition == PhysicalCondition.Critical)
             {
                 c.CriticalRemaining = Math.Max(0, c.CriticalRemaining - dt);
@@ -204,24 +210,12 @@ public sealed partial class WorldSimulation
                 }
                 continue;
             }
-            UpdateInteractionRest(c,dt);
             // Rest takes priority over a completed lesson's persistent follow
             // order. Otherwise that order prevents UpdateInteractionRest forever.
             if(!i.Physiology.Active&&i.ActiveCue==null&&i.RestRemaining>0)i.FollowPlayer=false;
             TickDigestiveHealth(c,dt);
-            ObserveNaturalResources(c);
-            if (i.FootTreated && i.FootIntegrity < 100 && c.Fullness > 25 && c.Energy > 20)
-            {
-                i.FootRecovery = Math.Max(0, i.FootRecovery - dt);
-                if (i.FootRecovery <= 0)
-                {
-                    bool unableBefore = i.FootIntegrity <= 25;
-                    i.FootIntegrity = Math.Min(100, i.FootIntegrity + dt * (i.Resting&&HasCushionedRestSupport(c) ? .55 : .25));
-                    if (unableBefore && i.FootIntegrity > 25)
-                        Feedback(c, "recovery", Expression.Shy, "底部开始恢复支撑能力，终于能试着走动。", "careful-step");
-                    if (i.FootIntegrity >= 100) i.FootTreated = false;
-                }
-            }
+            if(c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical)continue;
+            if(!c.Family.ColdStorage.Stored)ObserveNaturalResources(c);
             if (c.Condition == PhysicalCondition.Recovering)
             {
                 c.RecoveryRemaining = Math.Max(0, c.RecoveryRemaining - dt * (c.Fullness > 25 ? 1 : .2));
@@ -230,6 +224,7 @@ public sealed partial class WorldSimulation
             }
             if (c.Fullness > 40 && c.Energy > 40 && !i.Digestion.Symptomatic)
             { c.Health = Clamp100(c.Health + dt * .025); c.Pain = Math.Max(0, c.Pain - dt * .06); }
+            if(c.Family.ColdStorage.Stored){c.Activity="冷藏保存中";continue;}
             if(!i.Supine||i.Carried||i.Falling||i.Restraint!=RestraintKind.None)i.WetRestRemaining=0;
             if (i.WetRestRemaining > 0)
             { i.WetRestRemaining = Math.Max(0, i.WetRestRemaining - dt); i.DrySurfaceOverTime(dt*1.2,true); }
@@ -340,6 +335,7 @@ public sealed partial class WorldSimulation
                 RoomMove(c, c.X + (c.X - State.PlayerX), c.Z + (c.Z - State.PlayerZ), dt);
                 c.Activity = "留出一点距离"; continue;
             }
+            if(TryFamilyCare(c,dt)||TryFamilyActivity(c,dt))continue;
             var ball = State.RoomObjects.FirstOrDefault(o => o.Kind == RoomObjectKind.Ball && !o.Stored&&o.RegionId==c.RegionId&&o.Id!=InteractionGestureObject&&!RoomBallEnvironment.InWater(State,o));
             if (ball != null && CanSelfMove(c)&&i.ToyInterest > .4 && c.Fear < 45 && c.Energy > 30 && Distance(c.X, c.Z, ball.X, ball.Z) < 3)
             {
@@ -452,7 +448,7 @@ public sealed partial class WorldSimulation
         return true;
     }
 
-    private bool CanReachRoomFood(Creature c,RoomObject food,double? atX=null,double? atZ=null)=>RoomFoodPathClear(c,food,atX,atZ)&&
+    private bool CanReachRoomFood(Creature c,RoomObject food,double? atX=null,double? atZ=null)=>!c.Family.ColdStorage.Stored&&food.CarrierId==null&&RoomFoodPathClear(c,food,atX,atZ)&&
         NaturalIntakeGeometry.ClearsBodySupport(c,food)&&ActorNaturalPose.CanReachSource(c,food,State.RoomObjects,atX,atZ,
             c.Body.SpeciesId=="prototype-common"?State.Creatures.IndexOf(c):0);
     private bool RoomFoodPathClear(Creature c,RoomObject food,double? atX=null,double? atZ=null)
@@ -472,6 +468,8 @@ public sealed partial class WorldSimulation
     {
         var obj = State.RoomObjects.Find(o => o.Id == id);
         if (obj == null || obj.Stored || obj.HeldByHand || obj.Kind == RoomObjectKind.Cushion || NaturalResources.IsWild(obj.Kind)) return false;
+        if(obj.CarrierId is { } carrierId&&State.Creatures.Find(c=>c.Id==carrierId) is { } carrier)
+        {DropCareParcel(carrier);carrier.Family.CareTargetId=null;carrier.Family.NextCareAt=State.WorldSeconds+12;}
         foreach(var oil in State.Creatures)
             if(oil.Interaction.GroundIntakeSourceId==id)DetachNaturalIntake(oil);
         if (obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet && !State.UnlimitedResources) State.Food += obj.Portions;

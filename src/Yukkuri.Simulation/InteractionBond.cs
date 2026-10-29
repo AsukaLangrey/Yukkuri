@@ -19,7 +19,8 @@ public static class InteractionReadiness
 {
     public static bool WillAcceptAffection(Creature c, BodyPart part, SurfaceSide side) =>
         c.Condition == PhysicalCondition.Active && c.Pain < 40 && c.Fear < 68 && c.Trust >= 12 &&
-        !c.Interaction.Digestion.Symptomatic &&
+        !c.Family.ColdStorage.Stored && !c.Interaction.Digestion.Symptomatic &&
+        (c.Interaction.Injuries.At(part,side)?.Damage??0)<25 &&
         (part != BodyPart.Head || c.Interaction.HeadSensitivity <= 45) &&
         (part != BodyPart.Cheek || c.Interaction.CheekSensitivityAt(side) <= 45) &&
         (part != BodyPart.Bottom || c.Interaction.FootIntegrity > 50) &&

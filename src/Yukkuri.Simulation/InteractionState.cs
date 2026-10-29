@@ -135,6 +135,7 @@ public sealed class RoomObject
     public RoomObjectKind Kind { get; set; }
     public string RegionId { get; set; } = "home";
     public string? OwnerId { get; set; }
+    public string? CarrierId { get; set; }
     public double X { get; set; }
     public double Z { get; set; }
     public double Height { get; set; }

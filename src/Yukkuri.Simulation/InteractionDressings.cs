@@ -40,6 +40,12 @@ public sealed partial class InteractionLife
         for(int index=Dressings.Count-1;index>=0;index--)if(Dressings[index].Part==part)Dressings.RemoveAt(index);
         SyncLegacyDressing();
     }
+    public void RemoveDressing(BodyPart part,SurfaceSide side)
+    {
+        ImportLegacyDressing();side=DressingSiteSide(part,side);
+        Dressings.RemoveAll(d=>d.Part==part&&d.Side==side);
+        SyncLegacyDressing();
+    }
     public void AdvanceDressings(Creature creature,double dt)
     {
         ImportLegacyDressing();
@@ -48,6 +54,8 @@ public sealed partial class InteractionLife
         {
             var dressing=Dressings[index];dressing.Remaining=Math.Max(0,dressing.Remaining-dt);
             bool siteSettled=dressing.Part switch {BodyPart.Bottom=>!FootTreated,BodyPart.Head=>HeadSensitivity<=15,BodyPart.Cheek=>CheekSensitivityAt(dressing.Side)<=15,_=>true};
+            var wound=Injuries.At(dressing.Part,dressing.Side);
+            siteSettled&=wound==null||wound.Damage<=.01;
             if(dressing.Remaining<=0&&settled&&siteSettled)Dressings.RemoveAt(index);
         }
         SyncLegacyDressing();

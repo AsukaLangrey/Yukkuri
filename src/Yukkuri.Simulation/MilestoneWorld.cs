@@ -72,8 +72,9 @@ public sealed partial class WorldSimulation
         }
         foreach(var c in State.Creatures.Where(c=>c.RegionId==target.RegionId&&c.Condition!=PhysicalCondition.Dead))
         {
+            if(State.InteractionPlaytest&&(c.Family.ColdStorage.Stored||target.Family.ColdStorage.Stored))continue;
             double distance=Distance(c.X,c.Z,target.X,target.Z);
-            bool sees=distance<=4.5||c.Id==actorId||c.Id==target.Id;
+            bool sees=(State.InteractionPlaytest?FamilyVisible(c,target):distance<=4.5)||c.Id==actorId||c.Id==target.Id;
             if(sees)Learn(c,incident,KnowledgeSource.Witness,true);
             else if(severity>=4&&distance<=7)Learn(c,incident,KnowledgeSource.Heard,false);
         }

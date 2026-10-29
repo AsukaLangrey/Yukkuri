@@ -1,7 +1,10 @@
 本轮文件归属（2026-10-30）
 本聊天为唯一源码协调与提交者；本轮接管 src/Yukkuri.Simulation、src/Yukkuri.Game、
 checks/Interaction.Depth、testing/request.json 及本阶段文档的必要改动。
-不启动子对话，不修改冻结 art03、启动器、旧失败证据。
+用户最新授权适当多线程；仅使用本聊天子代理，不新建额外用户聊天。
+主协调：FamilyState.cs、繁殖/育幼/冷藏规则、存档整合、检查与请求、阶段文档、所有Git提交推送。
+子代理身体：局部伤势/救治/死亡文件及约定接线；子代理关系：FamilySocial.cs及关系专用检查；子代理界面：Game层家庭入口与表现。具体边界以派发消息为准，冲突改动交主协调整合。
+不修改冻结 art03、启动器、旧失败证据。子代理不暂存、不提交、不切分支、不重置。
 AGENTS.md 的既有本地通信修改及 .local/alice-communication 保持本地，不纳入产品提交。
 A/B/C 分批提交；仅静态阅读审查，所有运行检查只交独立远程 Alice/dot。
-父聊天已报告 Alice 原路线再次遇到 AbsolutePathBuf 错误；未确认测试安排送达。
+原聊天路线错误仅作历史记录；用户后续明确只通过GitHub交接，本轮不继续消息通信或修复应用内部状态。

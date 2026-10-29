@@ -4,6 +4,8 @@ public sealed partial class WorldSimulation
 {
     private bool TickMilestoneCreature(Creature c,RegionState region,double dt)
     {
+        AdvanceBodyInjuries(c,dt);
+        if(c.Condition==PhysicalCondition.Dead)return true;
         c.ReactionRemaining=Math.Max(0,c.ReactionRemaining-dt);
         c.TrainingFatigue=Math.Max(0,c.TrainingFatigue-dt*.08);
         c.Strain=Math.Max(0,c.Strain-dt*.02);
@@ -113,6 +115,8 @@ public sealed partial class WorldSimulation
     }
     private void MoveToward(Creature c,double x,double z,double dt,double speed=1)
     {
+        if(!CanSelfMove(c))return;
+        if(UsesGroundFoot(c))speed*=Math.Clamp(c.Interaction.FootIntegrity/100,.3,1);
         c.TargetX=Math.Clamp(x,-8,8);c.TargetZ=Math.Clamp(z,-8,8);
         double distance=Distance(c.X,c.Z,c.TargetX,c.TargetZ);
         if(distance>.01){double step=Math.Min(distance,Config.MoveSpeed*speed*dt);c.X+=(c.TargetX-c.X)/distance*step;c.Z+=(c.TargetZ-c.Z)/distance*step;}

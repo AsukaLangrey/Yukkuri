@@ -50,6 +50,7 @@ public sealed partial class WorldSimulation
         c.Body.UpgradeRoute is not ("flying" or "body" or "bodied");
 
     public static bool CanSelfMove(Creature c) => c.Condition == PhysicalCondition.Active &&
+        !c.Family.ColdStorage.Stored &&
         c.Interaction.Restraint == RestraintKind.None && !c.Interaction.Carried &&
         !c.Interaction.Falling && !c.Interaction.Supine && !c.Interaction.Physiology.Active &&
         (!UsesGroundFoot(c) || c.Interaction.FootIntegrity > 25);
@@ -112,14 +113,14 @@ public sealed partial class WorldSimulation
         c.Interaction.AffectionSaturation = Clamp100(c.Interaction.AffectionSaturation + amount * .7);
     }
 
-    private void Distress(Creature c, double amount, double damage = 0, string cause = "粗暴接触")
+    private void Distress(Creature c, double amount, double damage = 0, string cause = "粗暴接触", BodyPart? part=null, SurfaceSide side=SurfaceSide.Whole)
     {
         c.Interaction.Resting=false;c.Interaction.RestRemaining=0;
         c.Fear = Clamp100(c.Fear + amount * (1.2 - c.Courage * .5));
         c.Resentment = Clamp100(c.Resentment + amount * .55);
         c.Trust = Clamp100(c.Trust - amount * .45);
         if (damage <= 0) RememberPlayerHarm(c, amount * .35);
-        if (damage > 0) Hurt(c, damage, cause, "player");
+        if (damage > 0) Hurt(c, damage, cause, "player",part,side);
     }
 
     private InteractionFeedback Unavailable(string message) => new(false, message, "", "idle");
@@ -136,6 +137,7 @@ public sealed partial class WorldSimulation
             Math.Abs(input.X) > 8 || Math.Abs(input.Z) > 8 || input.Height is < 0 or > 3)
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
+        if(c.Family.ColdStorage.Stored)return "它还在冷藏中，先从家庭照护里取出。";
         if (State.Mode == PlayMode.CloseUp && State.SelectedId != c.Id) return "先退出特写，再选择另一只油。";
         if (c.Condition == PhysicalCondition.Dead) return "它已经无法回应。可以读取此前存档。";
         if (c.Condition == PhysicalCondition.Critical && input.Action is not
@@ -297,7 +299,7 @@ public sealed partial class WorldSimulation
             case InteractionAction.Flick:
             case InteractionAction.Slap:
                 double severity = input.Action == InteractionAction.Flick ? 1.2 + input.Force * 3 : 3 + input.Force * 7;
-                Distress(oil, severity, Math.Max(0, severity - 1), input.Action == InteractionAction.Flick ? "弹额" : "掌掴");
+                Distress(oil, severity, Math.Max(0, severity - 1), input.Action == InteractionAction.Flick ? "弹额" : "掌掴",input.Part,input.Side);
                 if(input.Action==InteractionAction.Slap)life.ChangeCheekSensitivity(input.Side,severity);
                 else life.HeadSensitivity = Clamp100(life.HeadSensitivity + severity);
                 Impulse(oil, input.DirectionX, input.DirectionZ, severity * .16);
@@ -378,11 +380,17 @@ public sealed partial class WorldSimulation
     {
         var i = c.Interaction;
         var details = new List<string>();
-        if (c.Condition == PhysicalCondition.Dead) return "已经离世，不再回应。";
+        if (c.Condition == PhysicalCondition.Dead) return "已经离世，不再回应。"+(i.Injuries.DeathCause.Length>0?$"记录原因：{i.Injuries.DeathCause}。":"");
         if (c.Condition == PhysicalCondition.Critical) details.Add("重伤，急需稳定伤势");
         if (i.FootIntegrity <= 25 && UsesGroundFoot(c)) details.Add("底部受伤，无法自行走动");
         else if (i.FootIntegrity < 80) details.Add("底部有伤，动作受影响");
         if (i.FootTreated) details.Add("底部已经护理，仍需普通时间休养");
+        if(i.Injuries.PermanentFootLoss>0)details.Add("底部留下了无法靠普通护理消除的损伤");
+        foreach(var wound in i.Injuries.Sites.Where(w=>w.Damage>=.01))
+        {
+            string part=wound.Part switch{BodyPart.Head=>"头部",BodyPart.Cheek=>"脸侧",BodyPart.Bottom=>"底部",BodyPart.Side=>"身体侧面",_=>"身体"};
+            details.Add(part+(wound.CareRemaining>0?"伤势已经护理，仍需恢复":"有持续伤势，需要适用护理"));
+        }
         if (i.Restraint != RestraintKind.None) details.Add("活动受装置或支撑方式限制");
         details.AddRange(InteractionSurfaceObservation.Describe(i));
         if (c.Pain > 15) details.Add("碰到痛处会躲开");

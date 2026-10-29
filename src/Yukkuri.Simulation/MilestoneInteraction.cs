@@ -88,7 +88,7 @@ public sealed partial class WorldSimulation
             if(request.Tool==ContactTool.TrainingPaddle)gain*=.3;
             if(damage>0||refuses)
             {
-                Hurt(c,Math.Max(damage,.5),"过重的接触","player");
+                Hurt(c,Math.Max(damage,.5),"过重的接触","player",request.Area switch{ContactArea.Forehead=>BodyPart.Head,ContactArea.Cheek=>BodyPart.Cheek,_=>BodyPart.Side});
                 c.Trust=Clamp100(c.Trust-3);c.Fear=Clamp100(c.Fear+4);
                 React(c,Expression.Hurt,"太紧了，放开……","挣动着试图躲开，表情变得不安。",5);
                 var e=Emit(IncidentKind.Correction,c,"player",$"过重的接触使{c.Name}不适",Math.Max(4,damage));
@@ -113,7 +113,7 @@ public sealed partial class WorldSimulation
         {
             double damage=Math.Max(0,strain-.28)*16;
             double severity=3+strain*8;
-            Hurt(c,damage,"惩戒接触","player");
+            Hurt(c,damage,"惩戒接触","player",request.Area switch{ContactArea.Forehead=>BodyPart.Head,ContactArea.Cheek=>BodyPart.Cheek,_=>BodyPart.Side});
             c.Fear=Clamp100(c.Fear+severity*.55);c.Resentment=Clamp100(c.Resentment+severity*(justified?.14:.55));
             c.Trust=Clamp100(c.Trust-(justified?.6:severity*.3));
             c.Obedience=Clamp100(c.Obedience+severity*.35);
@@ -140,10 +140,26 @@ public sealed partial class WorldSimulation
         var e=State.Incidents.Find(e=>e.Id==c.CurrentOffenseId);if(e!=null)e.Resolved=true;
         c.CurrentOffenseId=null;c.OffenseRemaining=0;
     }
-    public void Hurt(Creature c,double amount,string cause,string? actor)
+    public void Hurt(Creature c,double amount,string cause,string? actor,BodyPart? part=null,SurfaceSide side=SurfaceSide.Whole)
     {
         if(!double.IsFinite(amount)||amount<0)throw new ArgumentOutOfRangeException(nameof(amount));
         if(amount==0||c.Condition==PhysicalCondition.Dead)return;
+        var injuries=c.Interaction.Injuries;
+        // Systemic illness, starvation and childbirth have no invented contact site.
+        if(part.HasValue)ApplyLocalInjury(c,part.Value,side,amount,cause);
+        else if(actor=="player"&&cause!="底部受伤")
+        {
+            var gesture=_interactionGesture;
+            ApplyLocalInjury(c,gesture?.TargetId==c.Id?gesture.Input.Part:BodyPart.Side,
+                gesture?.TargetId==c.Id?gesture.Input.Side:SurfaceSide.Whole,amount,cause);
+        }
+        if(c.Condition is PhysicalCondition.Critical or PhysicalCondition.Recovering)
+        {
+            if(c.Condition==PhysicalCondition.Critical)
+                injuries.CriticalCareBudget=Math.Min(injuries.CriticalCareBudget,c.CriticalRemaining);
+            injuries.CriticalCareBudget=Math.Max(0,injuries.CriticalCareBudget-amount*.5);
+            if(c.Condition==PhysicalCondition.Critical)c.CriticalRemaining=Math.Min(c.CriticalRemaining,injuries.CriticalCareBudget);
+        }
         if(actor=="player"&&c.Interaction.Enabled)RememberPlayerHarm(c,amount);
         c.Health=Math.Max(0,c.Health-amount);c.Pain=Clamp100(c.Pain+amount*1.5);c.Strain=Clamp100(c.Strain+amount*.7);
         c.InjuryCause=cause;
@@ -151,16 +167,24 @@ public sealed partial class WorldSimulation
         if(c.Condition==PhysicalCondition.Critical)c.FillingIntegrity=Math.Max(0,c.FillingIntegrity-amount);
         if(c.Health<=0&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering)
         {
-            c.Condition=PhysicalCondition.Critical;c.CriticalRemaining=90;c.Stabilized=false;c.Activity="重伤待救 · 90秒";
+            injuries.CriticalEpisode=true;
+            c.Condition=PhysicalCondition.Critical;c.CriticalRemaining=injuries.CriticalCareBudget;c.Stabilized=false;c.Activity="重伤待救";
+            StopIncapacitatedActions(c);
             React(c,Expression.Exhausted,"……","失去行动能力，需要立即护理。",10);
             State.HelpTargetId=c.Id;Log($"{c.Name}重伤倒下。尽快使用护理包稳定伤势。");
         }
-        if(c.FillingIntegrity<=0&&State.Settings.LethalInjuries)Die(c,cause);
+        if((c.FillingIntegrity<=0||c.Condition==PhysicalCondition.Critical&&c.CriticalRemaining<=0)&&State.Settings.LethalInjuries)Die(c,cause);
     }
     private void Die(Creature c,string cause)
     {
         if(c.Condition==PhysicalCondition.Dead)return;
+        if(cause=="错过救治时限"&&!string.IsNullOrWhiteSpace(c.InjuryCause))cause=c.InjuryCause+"，未能及时稳定";
+        c.Interaction.Injuries.DeathCause=cause;
+        c.Interaction.Injuries.DeathAt=State.WorldSeconds;
         c.Condition=PhysicalCondition.Dead;c.Health=0;c.Speech="";c.Expression=Expression.Exhausted;c.Activity="已死亡";
+        c.CriticalRemaining=0;c.RecoveryRemaining=0;c.Stabilized=false;c.ReactionRemaining=0;
+        StopIncapacitatedActions(c);
+        if(InteractionGestureTarget==c.Id)_interactionGesture=null;
         NormalizeDeadInteractionSupport(c);
         RefreshHelpAfterResolution(c);
         c.LastReaction="再也没有回应。";c.ReactionSerial++;
@@ -172,27 +196,28 @@ public sealed partial class WorldSimulation
     private void NormalizeDeadInteractionSupport(Creature c)
     {
         var i=c.Interaction;
-        if(c.Condition!=PhysicalCondition.Dead||!i.Carried&&!i.Lowering)return;
+        if(c.Condition!=PhysicalCondition.Dead)return;
+        bool releasedSupport=i.Carried||i.Lowering||i.Falling||i.Restraint==RestraintKind.Hand;
+        StopIncapacitatedActions(c);
         // Death and loading share support cleanup, without replaying damage or
         // a death incident. Fixed devices remain separate from the player's hand.
-        i.Carried=false;i.Lowering=false;i.Falling=false;i.Height=0;
+        i.Carried=false;i.Lowering=false;i.Falling=false;
+        if(i.Restraint!=RestraintKind.Hanging)i.Height=0;
         i.VerticalVelocity=0;i.VelocityX=0;i.VelocityZ=0;
+        i.EndRoll();i.ReactionPose="dead";i.ReactionPoseRemaining=0;
         if(i.Restraint==RestraintKind.Hand)i.Restraint=RestraintKind.None;
-        ClearLandingOverlap(c);
+        if(releasedSupport)ClearLandingOverlap(c);
         c.TargetX=c.X;c.TargetZ=c.Z;
     }
     private InteractionResult Treat(Creature c,ContactRequest request)
     {
         if(!State.UnlimitedResources&&State.Medicine<=0)return new(false,"护理包不足，可在补给处购买。","",Expression.Neutral);
-        if(c.Health>=98&&c.Pain<3&&c.Condition==PhysicalCondition.Active)return new(false,"目前没有需要护理的伤势。","",Expression.Neutral);
+        BodyPart carePart=request.Area switch{ContactArea.Forehead=>BodyPart.Head,ContactArea.Cheek=>BodyPart.Cheek,_=>BodyPart.Side};
+        var careSite=ChooseGeneralCareSite(c,carePart);
+        if(!NeedsInteractionCare(c))return new(false,c.Interaction.Injuries.CareCooldown>0?"刚做过护理，需要时间观察恢复；重复包扎不能加快愈合。":"目前没有需要护理的伤势。","",Expression.Neutral);
+        if(!ApplyBodyCare(c,careSite.Part,careSite.Side))return new(false,"刚做过护理，需要时间观察恢复；重复包扎不能加快愈合。","",Expression.Neutral);
         if(!State.UnlimitedResources)State.Medicine--;
-        if(c.Condition==PhysicalCondition.Critical)
-        {
-            c.Stabilized=true;c.Condition=PhysicalCondition.Recovering;c.RecoveryRemaining=55;c.Health=8;c.CriticalRemaining=0;c.Activity="休养恢复";
-            RefreshHelpAfterResolution(c);
-        }
-        else c.Health=Clamp100(c.Health+12+Math.Min(6,request.Duration)*2);
-        c.Pain=Math.Max(0,c.Pain-20);c.Trust=Clamp100(c.Trust+3);c.Fear=Math.Max(0,c.Fear-2);
+        c.Trust=Clamp100(c.Trust+3);c.Fear=Math.Max(0,c.Fear-2);
         React(c,Expression.Shy,"轻一点……谢谢。","包扎后慢慢放松，还需要休息。",5);
         var e=Emit(IncidentKind.Care,c,"player",$"为{c.Name}护理伤势");Remember(c,e,"主人照顾了自己的伤。",4);
         State.Progress.CareActions++;State.Progress.Completed.Add("treat");
@@ -200,17 +225,18 @@ public sealed partial class WorldSimulation
     }
     private void StaffCare(Creature c)
     {
-        if(c.Condition==PhysicalCondition.Critical&&State.Medicine>0)
+        var careSite=ChooseGeneralCareSite(c,BodyPart.Side);
+        if(c.Condition==PhysicalCondition.Critical&&(State.Medicine>0||State.UnlimitedResources))
         {
             if(!State.UnlimitedResources)State.Medicine--;
-            c.Condition=PhysicalCondition.Recovering;c.Stabilized=true;c.Health=5;c.RecoveryRemaining=75;c.CriticalRemaining=0;c.Activity="休养恢复";
-            RefreshHelpAfterResolution(c);
+            ApplyBodyCare(c,careSite.Part,careSite.Side);c.RecoveryRemaining=75;
             Log($"雇员小岚为{c.Name}做了紧急稳定处理，正在等待恢复。");
         }
-        else if(c.Condition==PhysicalCondition.Active&&c.Health<70&&State.Medicine>0)
+        else if(c.Condition==PhysicalCondition.Active&&NeedsInteractionCare(c)&&(State.Medicine>0||State.UnlimitedResources))
         {
+            if(!ApplyBodyCare(c,careSite.Part,careSite.Side))return;
             if(!State.UnlimitedResources)State.Medicine--;
-            c.Health=Math.Min(80,c.Health+8);c.Pain=Math.Max(0,c.Pain-8);c.Activity="接受雇员护理";
+            c.Activity="接受雇员护理";
         }
     }
     private void RefreshHelpAfterResolution(Creature treated)
@@ -223,7 +249,7 @@ public sealed partial class WorldSimulation
         var c=State.Creatures.Find(c=>c.Id==id);
         if(c==null||c.Condition==PhysicalCondition.Dead||!State.MilestoneScenario||!State.Settings.Accidents||!double.IsFinite(speed)||speed<=4)return new(false,"","",Expression.Neutral);
         double damage=Math.Min(35,(speed-4)*4);
-        Hurt(c,damage,"跌落碰撞","player");c.Fear=Clamp100(c.Fear+damage*.3);
+        Hurt(c,damage,"跌落碰撞","player",BodyPart.Bottom);c.Fear=Clamp100(c.Fear+damage*.3);
         React(c,Expression.Hurt,"哎哟！","落地后缩起身子，需要检查伤势。",4);
         var e=Emit(IncidentKind.Correction,c,"player",$"{c.Name}跌落受伤",damage);
         Remember(c,e,"被拿起后跌落，感到疼痛。",damage);WitnessCorrection(e,c,damage);

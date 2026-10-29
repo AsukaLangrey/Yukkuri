@@ -112,6 +112,8 @@ public partial class InteractionRoom : Node3D
         int index=0;
         foreach(var c in Sim.State.Creatures)
         {var actor=new CreatureActor();AddChild(actor);actor.Setup(c,index++,_font);_actors[c.Id]=actor;}
+        ResetFamilyPresentation();
+        RefreshOilSelector(true);
         foreach(var obj in _objects.Values)obj.QueueFree();_objects.Clear();
         _shownFoodPortions.Clear();_groundCupWater.Clear();
     }
@@ -171,13 +173,15 @@ public partial class InteractionRoom : Node3D
         }
         bool close=Sim.State.Mode==PlayMode.CloseUp;
         bool paused=Sim.State.Settings.Pause||_modalOpen;
+        SynchronizeFamilyActors();
         UpdateRoomCamera(dt);
         foreach(var c in Sim.State.Creatures)
         {
-            var actor=_actors[c.Id];actor.Visible=c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
+            var actor=_actors[c.Id];actor.Visible=!c.Family.ColdStorage.Stored&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
             string pose=InteractionPresentation.Pose(c);
             if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
+            RefreshFamilyPresentation(c,actor);
         }
         if(!paused)PlayRoomReactionVoice();
         if(!paused)UpdateTapTool(dt);

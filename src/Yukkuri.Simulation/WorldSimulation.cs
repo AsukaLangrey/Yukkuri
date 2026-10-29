@@ -59,7 +59,7 @@ public sealed partial class WorldSimulation
     public void Advance(double delta)
     {
         if (!double.IsFinite(delta) || delta < 0) throw new ArgumentOutOfRangeException(nameof(delta));
-        if (State.Mode == PlayMode.CloseUp || State.MilestoneScenario && State.Settings.Pause) return;
+        if (State.Mode == PlayMode.CloseUp || State.Settings.Pause) return;
         State.TickRemainder += delta;
         while (State.TickRemainder + 1e-9 >= Config.TickSeconds)
         {
@@ -70,7 +70,12 @@ public sealed partial class WorldSimulation
     private void Tick(double dt)
     {
         State.WorldSeconds += dt;
-        if (State.InteractionPlaytest) { TickInteractionWorld(dt); TickPhysiology(dt); return; }
+        if (State.InteractionPlaytest)
+        {
+            SynchronizeCareParcels();
+            TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickFamilySocial(dt);
+            TickAutonomousBreeding();SynchronizeCareParcels();TickColdStorage(dt);return;
+        }
         if(State.MilestoneScenario) TickMilestoneWorld(dt);
         // An autonomous arrival/retreat may move the selected creature to another region.
         // Keep the authoritative state saveable before any UI refresh or autosave runs.
@@ -110,8 +115,10 @@ public sealed partial class WorldSimulation
                 double distance = Distance(c.X, c.Z, c.TargetX, c.TargetZ);
                 if (distance > 0.15)
                 {
-                    double step = Math.Min(distance, Config.MoveSpeed * dt);
+                    double mobility=State.MilestoneScenario?(CanSelfMove(c)?UsesGroundFoot(c)?Math.Clamp(c.Interaction.FootIntegrity/100,.3,1):1:0):1;
+                    double step = Math.Min(distance, Config.MoveSpeed * mobility * dt);
                     c.X += (c.TargetX - c.X) / distance * step; c.Z += (c.TargetZ - c.Z) / distance * step;
+                    if(mobility==0)c.Activity="身体无法自行走动，需要辅助生活";
                 }
                 else
                 {
@@ -144,7 +151,8 @@ public sealed partial class WorldSimulation
                 region.StaffCooldown = 8;
                 var hungry = residents.Where(c => !c.IsIntruder && c.Fullness < 35 && c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering).MinBy(c => c.Fullness);
                 if (hungry != null && State.Food > 0) Feed(hungry.Id, true);
-                var injured = residents.Where(c => !c.IsIntruder && c.Health < 80 && c.Condition!=PhysicalCondition.Dead).MinBy(c => c.Health);
+                var injured = residents.Where(c => !c.IsIntruder && c.Condition!=PhysicalCondition.Dead&&
+                    (State.MilestoneScenario?NeedsInteractionCare(c):c.Health<80)).MinBy(c => c.Health);
                 if (injured != null)
                 {
                     if(State.MilestoneScenario) StaffCare(injured);

@@ -436,22 +436,11 @@ public sealed partial class WorldSimulation
                 if(!CanCareAt(c,input.Part,input.Side))return g.Last=new(true,"这里不是需要处理的伤处。先看看，再把护理包移到相应部位。",c.Speech,"invite");
                 if (g.ContactElapsed < 1.6) return g.Last = new(true, "正在处理伤处……保持接触，松开可中止。", c.Speech, "nursing");
                 if (!State.UnlimitedResources && State.Medicine <= 0) return Refuse("inspect", "护理用品不足。 ");
+                if(!ApplyBodyCare(c,input.Part,input.Side))return g.Last=Unavailable("刚做过护理，需要时间观察恢复；重复包扎不能加快愈合。");
                 if (!State.UnlimitedResources) State.Medicine--;
-                if (c.Condition == PhysicalCondition.Critical)
-                {
-                    c.Condition = PhysicalCondition.Recovering; c.Stabilized = true; c.Health = 8;
-                    c.CriticalRemaining = 0; c.RecoveryRemaining = 55;
-                }
-                else c.Health = Clamp100(c.Health + 12);
-                if (input.Part==BodyPart.Bottom&&i.FootIntegrity < 100&&!i.FootTreated)
-                { i.FootTreated = true; i.FootRecovery = Math.Max(i.FootRecovery, 60); }
-                c.Pain = Math.Max(0, c.Pain - 18);
-                if(input.Part==BodyPart.Head)i.HeadSensitivity = Math.Max(0, i.HeadSensitivity - 10);
-                if(input.Part==BodyPart.Cheek)i.ChangeCheekSensitivity(input.Side,-10);
                 i.CareContinuity = Clamp100(i.CareContinuity + 5);
                 if(i.Digestion.Symptomatic&&input.Part==BodyPart.Side)
                     i.Digestion.CareRemaining=Math.Max(i.Digestion.CareRemaining,60);
-                i.Dress(input.Part,input.Side);
                 ImproveAffection(c, .8); g.Applied = true;
                 return Say("care", Expression.Shy, "护理完成。实际身体恢复需要普通时间、进食与休息。", "nursing");
             case InteractionAction.Block:
@@ -505,9 +494,8 @@ public sealed partial class WorldSimulation
             case InteractionAction.BurnFeet:
                 if (input.Part != BodyPart.Bottom) return g.Last = new(true, "工具还没有接触底部。", c.Speech, "tool-approach");
                 double injury = dt * (2.5 + force * 10);
-                i.FootIntegrity = Math.Max(0, i.FootIntegrity - injury);
-                i.FootTreated = false; i.FootRecovery = 0; i.FireFear = Clamp100(i.FireFear + injury * .6);
-                i.RemoveDressing(BodyPart.Bottom);
+                ApplyLocalInjury(c,BodyPart.Bottom,SurfaceSide.Whole,injury,"底部受伤");
+                i.FireFear = Clamp100(i.FireFear + injury * .6);
                 Distress(c, injury * .5, injury * .1, "底部受伤"); g.Applied = true; g.Effect += injury;
                 return Say("foot-hurt", Expression.Hurt, UsesGroundFoot(c) && i.FootIntegrity <= 25
                     ? "底部已无法支撑自主移动。移开工具后，仍需辅助生活和护理。"
@@ -616,12 +604,12 @@ public sealed partial class WorldSimulation
         gesture.BaitReady=false;gesture.BaitAnticipation=0;gesture.BaitWithdrawals++;
     }
 
-    private static bool NeedsInteractionCare(Creature c) => c.Interaction.Digestion.Symptomatic&&c.Interaction.Digestion.CareRemaining<=0||c.Health < 95 || c.Pain > 5 ||c.Interaction.HeadSensitivity>15||c.Interaction.CheekSensitivity>15||
-        c.Condition == PhysicalCondition.Critical || c.Interaction.FootIntegrity < 100 && !c.Interaction.FootTreated;
+    private static bool NeedsInteractionCare(Creature c) => c.Condition==PhysicalCondition.Critical||
+        c.Interaction.Injuries.CareCooldown<=0&&(c.Health<95||c.Pain>5)||
+        Enum.GetValues<BodyPart>().Any(part=>NeedsLocalBodyCare(c,part,SurfaceSide.Left)||NeedsLocalBodyCare(c,part,SurfaceSide.Right));
     private static bool CanCareAt(Creature c,BodyPart part,SurfaceSide side)=>part!=BodyPart.Accessory&&
-        (c.Interaction.Digestion.Symptomatic&&c.Interaction.Digestion.CareRemaining<=0&&part==BodyPart.Side||c.Condition==PhysicalCondition.Critical||c.Health<95||c.Pain>5||
-         part==BodyPart.Bottom&&c.Interaction.FootIntegrity<100&&!c.Interaction.FootTreated||
-         part==BodyPart.Head&&c.Interaction.HeadSensitivity>15||part==BodyPart.Cheek&&c.Interaction.CheekSensitivityAt(side)>15);
+        (c.Condition==PhysicalCondition.Critical||NeedsLocalBodyCare(c,part,side)||
+         c.Interaction.Injuries.CareCooldown<=0&&!c.Interaction.Injuries.HasActiveWounds&&(c.Health<95||c.Pain>5));
 
     public static string PoseFor(InteractionAction action) => action switch
     {

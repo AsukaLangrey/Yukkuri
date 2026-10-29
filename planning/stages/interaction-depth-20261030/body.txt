@@ -1,0 +1,42 @@
+身体伤势、护理与死亡交接 — 2026-10-30
+
+状态：源码已写入；只做文本静态审查。未编译、未运行任何项目/测试/验证程序、未截图。所有运行结论等待独立 Alice/dot 对应完整 SHA 的 GitHub 报告。
+
+文件归属：InteractionInjury.cs（新增）、MilestoneInteraction.cs、InteractionGesture.cs、InteractionDressings.cs、InteractionPhysiology.cs、checks/Interaction.Injury、本文。没有暂存、提交、推送或修改冻结 art03。
+
+已形成过程
+1. 通过 Hurt 显式身体部位或实际当前接触部位积累局部伤势，左右脸/身体分别记录。系统性伤害（饥饿、孕育）没有凭空的玩家接触部位。
+2. 底部反复重伤有永久功能损失，普通护理恢复到剩余身体能力上限；轻伤只保留可恢复损失。伤势和敷料不被食物、好感或擦洗修复。
+3. 护理需要实际接触；同一护理窗口的全身回血只结算一次，不同未处理部位仍可逐一护理。新伤只拆掉对应部位/侧面的旧敷料。
+4. 护理后的局部伤势需营养、水和普通时间恢复；严重未稳定伤势继续损耗健康。旧 FootRecovery 暂停/普通时间语义保留。普通护理不立刻消除不可逆功能损失。
+5. 危重救治余量随实际危重经过和再次损伤减少；稳定后再濒危沿用剩余额度，不再每次派发90秒。需要健康、无活动创口并正常生活300秒后才结束本次危重阶段；关闭致命后果仍能护理。
+6. 濒危立即结束未入口食物、排泄和学习占用；死亡清理手托、跌落、速度、待回应、目标与摄入状态，保留死因和时刻，死亡事件只结算一次。存档加载只清理状态，不重复发死亡事件。
+
+主线程接线
+- 每只油普通时间调用 AdvanceBodyInjuries(c,biologicalDt) 一次，放在危重分支之前；删除 InteractionBehavior 中原 FootRecovery 恢复块，避免双重恢复。非互动 MilestoneBehavior 也需要接护理冷却和伤势推进。
+- 每只油验证调用 BodyInjuryState.Validate(i.Injuries,s.WorldSeconds)。旧档缺字段默认新状态；显式null及非法范围不得作为旧档吞掉。
+- Hurt 兼容旧参数，增加可选 BodyPart? part=null、SurfaceSide side=Whole；离散 Slap/Flick 和落地接线应传真实部位。BurnFeet 手势已直接写入局部伤势，内部 Hurt 不重复扣底部。
+- 观察说明增加局部伤势、永久功能损失及死因；WillAcceptAffection 增加局部 Damage>=25 拒绝，不能用信任覆盖伤口。
+- 生理/护理时间使用主线程冷藏 BiologicalTimeScale。护理冷却是被动时间，不是鼠标手势时间。
+
+远端新用例：checks/Interaction.Injury，共10组，覆盖不可逆底部损失与存档、轻伤恢复/近看暂停、左右伤势和多部位连续护理、防刷护理、重复危重不重置时限、未入口摄入中断、死亡唯一结算/占用清理、非致命设置、孕育系统性伤害不归因玩家、旧档默认和坏档拒绝。
+旧 Interaction.Smoke / Continuity / Milestone.Smoke 断言未修改。静态逐读了底部恢复、近看暂停、多部位敷料、错误侧护理等原用例，未将其标为通过。
+
+未覆盖：头/脸/口的永久损失目前记录为局部伤残及接触不适，不代表已实现独立口舌截断/失语/强制辅助摄入；没有新增器官手术、尸体安葬入口或血腥表现。营养与恢复数值是可调初稿，需要远端长程过程观察。
+
+第二轮接线：冷藏生理（只做源码静态审查）
+- InteractionPhysiology.SynchronizeInterruptedPhysiology 将ColdStorage.Stored视为动作中断：立即清Excreting/Remaining，不清空膀胱肠道负荷，不产生排泄物，也不增加完成次数。普通循环和表现循环调用它都不推进身体时间。
+- TickPhysiology接收原始世界dt，每个体内部用bodyDt=BiologicalDelta(c,dt)积累膀胱/肠道（主协调新增该接口，将跨600秒边界的一帧拆为有效冷藏时间*.1与超时普通时间）。主循环仍应在TickInteractionWorld(dt)后调用TickPhysiology(dt)一次，不要把已缩放的时间再传入导致百分之一速度。
+- 冷藏达到有限保存上限但因无位置尚未取出时，沿用BiologicalTimeScale返回1：负荷恢复正常速度积累，仍禁止院内排泄。生理负荷100封顶，既有模型没有新增憋尿伤害。
+- 取出后RecoveryRemaining本身不阻止排泄：与既有PhysicalCondition.Recovering仍允许生理动作一致；必须在院内、未被托起/限制身体动作等条件满足才会启动。不会补发冷藏期间的排泄次数或物件。
+- 主协调确定TickColdStorage放在各身体阶段之后，各阶段读取同一Elapsed，以BiologicalDelta精确处理临界帧。尚未修改主循环文件。
+- checks/Interaction.Injury追加2组冷藏生理用例（现共12组）：十分之一负荷积累；冷藏阈值不产物、存读档取出后只完成一次排泄。仅写入，未运行。
+
+第三轮兼容静态审查
+- 主循环现已调用AdvanceBodyInjuries一次；旧FootRecovery块已删除。CriticalCareBudget同步剩余时钟，不另减CriticalRemaining，没有发现同一身体时间双减。互动主循环、生理、家庭均在TickColdStorage更新Elapsed前读BiologicalDelta。
+- 修正死亡清理：固定悬挂装置保留自身支撑高度；地面死亡不做无关位置重排。仅释放手持/下放/正在跌落的支撑时寻找落地空位。读档不再次移动已经安置的遗体。
+- 修正旧M01通用护理/雇员护理部位：没有底部或左右选择器的入口优先选真实需要护理的部位，不再只给健康额头/侧面包扎。精确手势护理仍按实际接触部位。
+- 主协调待处理：M01 MoveToward及基础移动路径需遵守底部失能；雇员选伤者不能只看总Health；M01保存也应验证Injuries，不能只在InteractionPlaytest验证。
+- 原Interaction.Depth四组断言仍有效且未修改。新增3组检查：M01通用护理选底部、死亡保留固定悬挂支撑、冷藏危重时钟只减一次（Injury现共15组）。均未运行。
+- 濒危/死亡立刻释放照护搬运包裹和陪伴目标；已死亡对象加载时不刷新NextSocialAt，保持清理幂等。消化护理时限移入共同ApplyBodyCare，防止旧通用护理入口处理消化不适却不设护理时限。
+- 死亡记忆仅遍历已知情者；已向主协调报告Emit底层Witness判定尚按距离、未过滤冷藏及遮挡，应修共同事件可见性。未在Die里另造全图家庭广播。
