@@ -1,0 +1,428 @@
+{
+  "at": "2026-10-29T01:42:45.6243179+00:00",
+  "scope": "Pure .NET production contact math and simulation; timestamped fixtures are synthetic, not captured user input; no game or native input",
+  "success": true,
+  "failures": 0,
+  "results": [
+    {
+      "name": "unengaged fast motion and its sudden stop never become contact",
+      "passed": true
+    },
+    {
+      "name": "fast engaged travel differs from an abrupt contact stop",
+      "passed": true
+    },
+    {
+      "name": "gradual deceleration does not become an abrupt strike",
+      "passed": true
+    },
+    {
+      "name": "brief pointer jitter has insufficient stroke history to strike",
+      "passed": true
+    },
+    {
+      "name": "leaving body then stopping cannot complete the previous strike",
+      "passed": true
+    },
+    {
+      "name": "release and focus reset discard the pending strike",
+      "passed": true
+    },
+    {
+      "name": "long stalled frame cannot turn into a strike or catch up travel",
+      "passed": true
+    },
+    {
+      "name": "another creature cannot inherit the preceding contact impulse",
+      "passed": true
+    },
+    {
+      "name": "fast moving hand that stays fast only produces sustained rubbing",
+      "passed": true
+    },
+    {
+      "name": "slow and fast-then-stop contact have different persistent consequences",
+      "passed": true
+    },
+    {
+      "name": "identical timed stroke at 30 60 144 fps preserves dose and strike strength",
+      "passed": true
+    },
+    {
+      "name": "matched world-space travel at different zooms gives equal force",
+      "passed": true
+    },
+    {
+      "name": "body motion without pointer motion does not produce force or repeated affection",
+      "passed": true
+    },
+    {
+      "name": "save reload preserves injury but never resumes a pending stop gesture",
+      "passed": true
+    },
+    {
+      "name": "invalid impact and nonfinite motion are rejected without changing health",
+      "passed": true
+    },
+    {
+      "name": "a single missing motion packet followed by continued travel is not a stop",
+      "passed": true
+    },
+    {
+      "name": "sharp braking through an intermediate speed still reaches one endpoint",
+      "passed": true
+    },
+    {
+      "name": "release during stop confirmation discards its pending impact",
+      "passed": true
+    },
+    {
+      "name": "a refused touch does not shield a body that is still actually in contact",
+      "passed": true
+    },
+    {
+      "name": "refusal followed by broken contact cannot apply an impact",
+      "passed": true
+    },
+    {
+      "name": "inward approach tangential rubbing and outward withdrawal remain distinct",
+      "passed": true
+    },
+    {
+      "name": "fast outward withdrawal followed by a stop does not strike",
+      "passed": true
+    },
+    {
+      "name": "withdrawing after a fast rub cancels its pending strike history",
+      "passed": true
+    },
+    {
+      "name": "a mostly outward diagonal withdrawal stays distinct from a surface stroke",
+      "passed": true
+    },
+    {
+      "name": "pulling away during stop confirmation cancels the pending hit",
+      "passed": true
+    },
+    {
+      "name": "gentle direct pressure cannot farm stroking affection",
+      "passed": true
+    },
+    {
+      "name": "rotating the whole camera-contact basis preserves normal and tangent effects",
+      "passed": true
+    },
+    {
+      "name": "irregular sample intervals preserve a timed stroke and its confirmed stop",
+      "passed": true
+    },
+    {
+      "name": "invalid surface components are rejected at the gesture entry",
+      "passed": true
+    },
+    {
+      "name": "timestamped trajectory fixtures replay consistently at fixed and uneven intervals",
+      "passed": true
+    },
+    {
+      "name": "finite but overflowing vector or time scale cannot poison later input",
+      "passed": true
+    },
+    {
+      "name": "a stationary ungripping hand leaves urgent self care and its pose available",
+      "passed": true
+    },
+    {
+      "name": "refusal gives pose ownership back after its actual response settles",
+      "passed": true
+    }
+  ],
+  "replays": [
+    {
+      "name": "slow-stroke",
+      "schedule": [
+        0.03333333333333333
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "slow-stroke",
+      "schedule": [
+        0.016666666666666666
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "slow-stroke",
+      "schedule": [
+        0.006944444444444444
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "slow-stroke",
+      "schedule": [
+        0.009,
+        0.028,
+        0.013,
+        0.021,
+        0.007,
+        0.034
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "fast-hover-and-stop",
+      "schedule": [
+        0.03333333333333333
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "fast-hover-and-stop",
+      "schedule": [
+        0.016666666666666666
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "fast-hover-and-stop",
+      "schedule": [
+        0.006944444444444444
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "fast-hover-and-stop",
+      "schedule": [
+        0.009,
+        0.028,
+        0.013,
+        0.021,
+        0.007,
+        0.034
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "engaged-fast-stop",
+      "schedule": [
+        0.03333333333333333
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.2333333333333333,
+          "StopImpact": 0.7000000248352687
+        }
+      ]
+    },
+    {
+      "name": "engaged-fast-stop",
+      "schedule": [
+        0.016666666666666666
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.2333333333333333,
+          "StopImpact": 0.7000000248352687
+        }
+      ]
+    },
+    {
+      "name": "engaged-fast-stop",
+      "schedule": [
+        0.006944444444444444
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.22916666666666674,
+          "StopImpact": 0.694252912100704
+        }
+      ]
+    },
+    {
+      "name": "engaged-fast-stop",
+      "schedule": [
+        0.009,
+        0.028,
+        0.013,
+        0.021,
+        0.007,
+        0.034
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.261,
+          "StopImpact": 0.6999999960786418
+        }
+      ]
+    },
+    {
+      "name": "leaving-before-stop",
+      "schedule": [
+        0.03333333333333333
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "leaving-before-stop",
+      "schedule": [
+        0.016666666666666666
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "leaving-before-stop",
+      "schedule": [
+        0.006944444444444444
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "leaving-before-stop",
+      "schedule": [
+        0.009,
+        0.028,
+        0.013,
+        0.021,
+        0.007,
+        0.034
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "gradual-braking",
+      "schedule": [
+        0.03333333333333333
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "gradual-braking",
+      "schedule": [
+        0.016666666666666666
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "gradual-braking",
+      "schedule": [
+        0.006944444444444444
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "gradual-braking",
+      "schedule": [
+        0.009,
+        0.028,
+        0.013,
+        0.021,
+        0.007,
+        0.034
+      ],
+      "expected": 0,
+      "hits": 0,
+      "events": []
+    },
+    {
+      "name": "short-packet-gap-then-real-stop",
+      "schedule": [
+        0.03333333333333333
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.3333333333333333,
+          "StopImpact": 0.6527778021163412
+        }
+      ]
+    },
+    {
+      "name": "short-packet-gap-then-real-stop",
+      "schedule": [
+        0.016666666666666666
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.3333333333333333,
+          "StopImpact": 0.7000000248352688
+        }
+      ]
+    },
+    {
+      "name": "short-packet-gap-then-real-stop",
+      "schedule": [
+        0.006944444444444444
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.3333333333333331,
+          "StopImpact": 0.6774074455102284
+        }
+      ]
+    },
+    {
+      "name": "short-packet-gap-then-real-stop",
+      "schedule": [
+        0.009,
+        0.028,
+        0.013,
+        0.021,
+        0.007,
+        0.034
+      ],
+      "expected": 1,
+      "hits": 1,
+      "events": [
+        {
+          "time": 0.3360000000000001,
+          "StopImpact": 0.6859943964025553
+        }
+      ]
+    }
+  ]
+}

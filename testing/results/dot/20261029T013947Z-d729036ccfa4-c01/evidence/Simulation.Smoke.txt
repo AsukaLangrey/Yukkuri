@@ -1,0 +1,38 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Simulation.Smoke/Simulation.Smoke.csproj -p:UseAppHost=false
+CWD: /workspace/shared/yukkuri-cloud-20261029/source
+PASS: clock display floors elapsed minutes instead of rounding at 30 seconds
+PASS: normal simulation consumes food needs
+PASS: all state and random state freeze during close-up
+PASS: direct close-up feeding changes resources once
+PASS: exit has no catch-up
+PASS: inactive region advances and stable identities survive travel
+PASS: new evidence corrects uncertain observation, not the true trait
+PASS: UI projection does not expose true trait
+PASS: care evidence and wellbeing earn one commission reward
+PASS: care reward cannot be claimed twice
+PASS: rescue preserves identity and enters observation area
+PASS: placement consumes actual funds
+PASS: overlapping placement rejected without charging
+PASS: empty inventory cannot feed
+PASS: insufficient funds reject purchases and construction
+PASS: staff supplies a hungry resident without player action
+PASS: staff does not award certification or independent identity
+PASS: nonfinite timestep rejected
+PASS: zero simulation tick rejected
+PASS: save round-trip preserves entire state, no offline time
+PASS: random state and tick remainder continue deterministically after load
+PASS: truncated primary recovers from valid backup
+PASS: corrupt primary cannot overwrite good backup
+PASS: failed save preserves both source files
+PASS: another manual slot remains usable
+PASS: invalid slot rejected
+PASS: unknown schema refused
+PASS: duplicate identity refused
+PASS: null region rejected with controlled invalid-data result
+PASS: null observations rejected before UI reads them
+PASS: nonfinite player position rejected
+PASS: quarantine resident stays within the observation area
+CROWD_CHECK: 0/100 have a neighbor closer than 0.45 world units after 20 seconds.
+PASS: 100-resident feeder crowd avoids near-total body overlap
+CORE_BENCHMARK: 106 total creatures, 600 simulated seconds in 388.3ms; not GPU FPS.
+RESULT: 33 checks passed; test files retained at /workspace/shared/yukkuri-cloud-20261029/temp/yukkuri-checks/507ef3cdbc3c450e8a1dd34dc9dbec6d

@@ -1,0 +1,10 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Continuity/Interaction.Continuity.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false
+CWD: /workspace/shared/yukkuri-cloud-20261029/source
+System.IO.IOException: The system cannot open the device or file specified. : 'NuGet-Migrations'. One or more system calls failed: mkdtemp("/home/agent/.local/run/.dotnet.RsHb9Y") == nullptr; errno == EROFS;
+   at System.Threading.Mutex.CreateMutexCore(Boolean initiallyOwned, String name, NamedWaitHandleOptionsInternal options, Boolean& createdNew)
+   at System.Threading.Mutex..ctor(Boolean initiallyOwned, String name)
+   at NuGet.Common.Migrations.MigrationRunner.Run(String migrationsDirectory, IEnvironmentVariableReader environmentVariableReader)
+   at Microsoft.DotNet.Configurer.DotnetFirstTimeUseConfigurer.Configure()
+   at Microsoft.DotNet.Cli.Program.ConfigureDotNetForFirstTimeUse(IFirstTimeUseNoticeSentinel firstTimeUseNoticeSentinel, IAspNetCertificateSentinel aspNetCertificateSentinel, IFileSentinel toolPathSentinel, Boolean isDotnetBeingInvokedFromNativeInstaller, DotnetFirstRunConfiguration dotnetFirstRunConfiguration, IEnvironmentProvider environmentProvider, Dictionary`2 performanceMeasurements, Boolean skipFirstTimeUseCheck)
+   at Microsoft.DotNet.Cli.Program.ProcessArgs(String[] args, TimeSpan startupTime)
+   at Microsoft.DotNet.Cli.Program.Main(String[] args)

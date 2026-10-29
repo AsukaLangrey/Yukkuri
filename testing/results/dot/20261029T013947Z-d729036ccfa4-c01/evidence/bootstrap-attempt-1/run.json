@@ -1,0 +1,128 @@
+{
+  "started_at": "2026-10-29T01:41:53.854781+00:00",
+  "finished_at": "2026-10-29T01:41:55.211261+00:00",
+  "status": "failed",
+  "source_commit": "d729036ccfa4773c92b2f8794f804e26fc9c02a1",
+  "source_tree": "a031ecb2081ec8ab814c5ee966aa89ea617a1e93",
+  "source_worktree_clean": null,
+  "source_materialization": "108 connector-fetched exact Git blob verified UTF-8 files, dependency closure only; no complete Git checkout; no LFS validation",
+  "scope": "Pure .NET Linux behavior/math checks only; no game launch, runtime, visual or Windows acceptance",
+  "configuration": "Release, UseAppHost=false; external NuGet config with empty package sources; no product source changes",
+  "steps": [
+    {
+      "id": "Simulation.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Simulation.Smoke/Simulation.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:53.983620+00:00",
+      "finished_at": "2026-10-29T01:41:54.148325+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Simulation.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Milestone.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Milestone.Smoke/Milestone.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:54.149127+00:00",
+      "finished_at": "2026-10-29T01:41:54.314655+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Milestone.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Smoke/Interaction.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:54.315173+00:00",
+      "finished_at": "2026-10-29T01:41:54.479947+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Interaction.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Input.Intent-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Input.Intent/Input.Intent.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:54.480340+00:00",
+      "finished_at": "2026-10-29T01:41:54.645343+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Input.Intent-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "NaturalLife.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:54.645766+00:00",
+      "finished_at": "2026-10-29T01:41:54.760480+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/NaturalLife.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Continuity-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Continuity/Interaction.Continuity.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:54.760890+00:00",
+      "finished_at": "2026-10-29T01:41:54.875548+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Interaction.Continuity-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "ActorGeometry.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:54.875998+00:00",
+      "finished_at": "2026-10-29T01:41:55.040802+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/ActorGeometry.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "NaturalLife.Soak-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/NaturalLife.Soak/NaturalLife.Soak.csproj --configfile /workspace/shared/yukkuri-cloud-20261029/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029/source",
+      "started_at": "2026-10-29T01:41:55.041276+00:00",
+      "finished_at": "2026-10-29T01:41:55.206815+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/NaturalLife.Soak-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    }
+  ],
+  "materialized_sources_unchanged": true,
+  "changed_files": [],
+  "duration_seconds": 1.3565065979983046
+}

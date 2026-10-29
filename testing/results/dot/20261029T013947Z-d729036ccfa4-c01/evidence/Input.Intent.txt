@@ -1,0 +1,36 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Input.Intent/Input.Intent.csproj -p:UseAppHost=false -- /workspace/shared/yukkuri-cloud-20261029/evidence/Input.Intent.json
+CWD: /workspace/shared/yukkuri-cloud-20261029/source
+PASS unengaged fast motion and its sudden stop never become contact
+PASS fast engaged travel differs from an abrupt contact stop
+PASS gradual deceleration does not become an abrupt strike
+PASS brief pointer jitter has insufficient stroke history to strike
+PASS leaving body then stopping cannot complete the previous strike
+PASS release and focus reset discard the pending strike
+PASS long stalled frame cannot turn into a strike or catch up travel
+PASS another creature cannot inherit the preceding contact impulse
+PASS fast moving hand that stays fast only produces sustained rubbing
+PASS slow and fast-then-stop contact have different persistent consequences
+PASS identical timed stroke at 30 60 144 fps preserves dose and strike strength
+PASS matched world-space travel at different zooms gives equal force
+PASS body motion without pointer motion does not produce force or repeated affection
+PASS save reload preserves injury but never resumes a pending stop gesture
+PASS invalid impact and nonfinite motion are rejected without changing health
+PASS a single missing motion packet followed by continued travel is not a stop
+PASS sharp braking through an intermediate speed still reaches one endpoint
+PASS release during stop confirmation discards its pending impact
+PASS a refused touch does not shield a body that is still actually in contact
+PASS refusal followed by broken contact cannot apply an impact
+PASS inward approach tangential rubbing and outward withdrawal remain distinct
+PASS fast outward withdrawal followed by a stop does not strike
+PASS withdrawing after a fast rub cancels its pending strike history
+PASS a mostly outward diagonal withdrawal stays distinct from a surface stroke
+PASS pulling away during stop confirmation cancels the pending hit
+PASS gentle direct pressure cannot farm stroking affection
+PASS rotating the whole camera-contact basis preserves normal and tangent effects
+PASS irregular sample intervals preserve a timed stroke and its confirmed stop
+PASS invalid surface components are rejected at the gesture entry
+PASS timestamped trajectory fixtures replay consistently at fixed and uneven intervals
+PASS finite but overflowing vector or time scale cannot poison later input
+PASS a stationary ungripping hand leaves urgent self care and its pose available
+PASS refusal gives pose ownership back after its actual response settles
+Input intent: 33/33

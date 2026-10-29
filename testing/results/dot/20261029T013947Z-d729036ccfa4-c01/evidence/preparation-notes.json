@@ -1,0 +1,23 @@
+{
+  "source_acquisition": {
+    "command": "GIT_TERMINAL_PROMPT=0 git ls-remote https://github.com/AsukaLangrey/Yukkuri.git HEAD",
+    "exit_code": 128,
+    "stderr": "fatal: could not read Username for 'https://github.com': terminal prompts disabled",
+    "fallback": "Supported GitHub connector fetch_file at pinned full commit, fetch recursive Git tree, verify git blob SHA of materialized UTF-8 dependency closure; no credentials read or persisted",
+    "lfs": "Git LFS 3.6.1 present, but no authenticated Git checkout or LFS object retrieval; full integrity not verified"
+  },
+  "platform_adaptations": [
+    "Repository toolchain.lock.json targets windows-x64; tools/setup.ps1 and tools/env.ps1 not executed",
+    "Exact Linux .NET SDK 10.0.402 installed from official release; no different SDK version used",
+    "Pure .NET projects contain no external PackageReference; passed restore uses external empty-source NuGet config with NuGetAudit=false; original NuGet.Config unchanged",
+    "DOTNET_CLI_HOME, NUGET_PACKAGES, TMPDIR and XDG_RUNTIME_DIR point to writable task workspace; telemetry opted out; no system paths, credentials, security policy, or developer machine touched",
+    "Initial restore attempt did not launch product checks: NuGet bootstrap failed creating named mutex in read-only default runtime directory; original evidence retained in bootstrap-attempt-1; after runtime-dir correction one retry succeeded"
+  ],
+  "scope_limits": [
+    "Only 108 exact-source dependency closure files materialized, not a clean complete checkout. source_worktree_clean must remain null",
+    "No Godot game build: pinned Windows Godot4.7.2 .NET toolchain not installed; existing standard Godot4.6.3 identified only with --version and not used for project",
+    "No game launched; no headless game execution, runtime smoke, desktop operation, screenshots, visual or interaction observation",
+    "No historical save compatibility: user-approved historical fixture not in repository; synthetic temporary saves created by Simulation.Smoke only test same-version behavior, not compatibility",
+    "No product source, assertion, or locked config modified; no report upload performed by test runner"
+  ]
+}

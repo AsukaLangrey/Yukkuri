@@ -1,0 +1,458 @@
+{
+  "source_commit": "d729036ccfa4773c92b2f8794f804e26fc9c02a1",
+  "scope": "Seed provenance read from exact pinned source; generated-seed sequences not fabricated or expanded. All test invocations used source defaults with no seed override.",
+  "checks": {
+    "Simulation.Smoke": {
+      "world_seed": 92137
+    },
+    "Milestone.Smoke": {
+      "initial_base_world_seed": 92137,
+      "milestone_seed": 20261027,
+      "sharing_input_seed_ranges": [
+        [
+          1,
+          40
+        ],
+        [
+          1,
+          120
+        ]
+      ],
+      "sharing_state_formula": "unchecked(seed*0x9E3779B97F4A7C15UL)"
+    },
+    "Interaction.Smoke": {
+      "interaction_world_seed": 20261028
+    },
+    "Input.Intent": {
+      "interaction_world_seed": 20261028,
+      "input_traces": "fixed synthetic fixture checks/Input.Intent/fixtures/contact-traces.json"
+    },
+    "NaturalLife.Smoke": {
+      "fresh_default_seed": 20261029,
+      "direct_world_default_seed": 20261028,
+      "fixed_input_seed_ranges": [
+        [
+          1,
+          20
+        ]
+      ],
+      "system_random_seed_generators": [
+        1009,
+        779,
+        292107,
+        291044
+      ]
+    },
+    "Interaction.Continuity": {
+      "interaction_world_seed": 20261028,
+      "mixed_gesture_system_random_seeds": [
+        71001,
+        71002,
+        71003,
+        71004,
+        71005,
+        71006,
+        71007,
+        71008,
+        71009,
+        71010,
+        71011,
+        71012
+      ]
+    },
+    "ActorGeometry.Smoke": {
+      "interaction_world_seed": 20261028,
+      "system_random_seed": 20261029
+    },
+    "NaturalLife.Soak": {
+      "world_seeds": [
+        72341,
+        592813,
+        1597331,
+        20261029
+      ],
+      "scenario_count": 6,
+      "cases": 24,
+      "simulated_seconds_per_case": 3600
+    },
+    "ActorGeometry.IntakeCombinations": {
+      "interaction_world_seed": 20261028,
+      "combinations": 1728,
+      "frame_schedules": [
+        [
+          0.03333333333333333
+        ],
+        [
+          0.016666666666666666
+        ],
+        [
+          0.006944444444444444
+        ],
+        [
+          0.01,
+          0.035,
+          0.008,
+          0.019,
+          0.041
+        ]
+      ]
+    }
+  },
+  "source_excerpts": [
+    {
+      "file": "src/Yukkuri.Simulation/WorldSimulation.cs",
+      "line": 19,
+      "source": "public static WorldSimulation Create(int population = 10, bool sandbox = false, SimulationConfig? config = null)"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/WorldSimulation.cs",
+      "line": 47,
+      "source": "State.RandomState = x;"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/WorldState.cs",
+      "line": 76,
+      "source": "public ulong RandomState { get; set; } = 92137;"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+      "line": 6,
+      "source": "public static WorldSimulation CreateMilestone(bool sandbox=false, ulong seed=20261027)"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+      "line": 10,
+      "source": "s.MilestoneScenario=true;s.RandomState=seed==0?20261027:seed;s.Money=160;s.Food=35;"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "line": 5,
+      "source": "public static WorldSimulation CreateInteractionPlaytest(ulong seed = 20261028)"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "line": 9,
+      "source": "MilestoneScenario = true, InteractionPlaytest = true, RandomState = seed == 0 ? 20261028 : seed,"
+    },
+    {
+      "file": "checks/Simulation.Smoke/Program.cs",
+      "line": 7,
+      "source": "var sim=WorldSimulation.Create();"
+    },
+    {
+      "file": "checks/Simulation.Smoke/Program.cs",
+      "line": 59,
+      "source": "var invalid=WorldSimulation.Create().State;invalid.Regions.Add(null!);Reject(()=>SaveStore.Validate(invalid),\"null region rejected with controlled invalid-data result\");"
+    },
+    {
+      "file": "checks/Simulation.Smoke/Program.cs",
+      "line": 60,
+      "source": "invalid=WorldSimulation.Create().State;invalid.Creatures[0].Observation.Notes=null!;Reject(()=>SaveStore.Validate(invalid),\"null observations rejected before UI reads them\");"
+    },
+    {
+      "file": "checks/Simulation.Smoke/Program.cs",
+      "line": 61,
+      "source": "invalid=WorldSimulation.Create().State;invalid.PlayerX=double.PositiveInfinity;Reject(()=>SaveStore.Validate(invalid),\"nonfinite player position rejected\");"
+    },
+    {
+      "file": "checks/Simulation.Smoke/Program.cs",
+      "line": 62,
+      "source": "var isolated=WorldSimulation.Create();isolated.Travel(\"wild\");var rescued=isolated.Selected!;isolated.Rescue();isolated.Advance(120);"
+    },
+    {
+      "file": "checks/Simulation.Smoke/Program.cs",
+      "line": 64,
+      "source": "var crowd=WorldSimulation.Create(100);crowd.Advance(20);"
+    },
+    {
+      "file": "checks/Simulation.Smoke/Program.cs",
+      "line": 69,
+      "source": "var benchmark=WorldSimulation.Create(100);var watch=System.Diagnostics.Stopwatch.StartNew();benchmark.Advance(600);watch.Stop();"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 10,
+      "source": "var s=WorldSimulation.CreateMilestone();s.State.Settings.Invasions=false;"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 44,
+      "source": "var careCase=WorldSimulation.CreateMilestone();"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 128,
+      "source": "WorldSimulation SharingScene(ulong seed,bool trained,bool parentNearby,int sessions=0)"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 130,
+      "source": "var w=New();w.State.RandomState=unchecked(seed*0x9E3779B97F4A7C15UL);"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 140,
+      "source": "for(ulong seed=1;seed<=40;seed++)"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 142,
+      "source": "var w=SharingScene(seed,false,true);var child=w.State.Creatures[2];var parent=w.State.Creatures[0];"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 151,
+      "source": "for(ulong seed=1;seed<=120;seed++)"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 153,
+      "source": "if(SharingScene(seed,false,false).State.Incidents.Any(e=>e.Kind==IncidentKind.Theft))baselineThefts++;"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 154,
+      "source": "if(SharingScene(seed,false,false,6).State.Incidents.Any(e=>e.Kind==IncidentKind.Theft))practicedThefts++;"
+    },
+    {
+      "file": "checks/Milestone.Smoke/Program.cs",
+      "line": 215,
+      "source": "var movingSelection=WorldSimulation.CreateMilestone();movingSelection.Travel(\"wild\");"
+    },
+    {
+      "file": "checks/Interaction.Smoke/Program.cs",
+      "line": 25,
+      "source": "WorldSimulation Fresh() => WorldSimulation.CreateInteractionPlaytest();"
+    },
+    {
+      "file": "checks/Input.Intent/Program.cs",
+      "line": 26,
+      "source": "WorldSimulation Fresh(){var s=WorldSimulation.CreateInteractionPlaytest();s.Selected!.Trust=60;return s;}"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 19,
+      "source": "WorldSimulation Fresh(ulong seed=20261029)"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 21,
+      "source": "var s=WorldSimulation.CreateInteractionPlaytest(seed);var c=s.Selected!;"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 45,
+      "source": "var box=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];box.X=1.5;box.Z=0;"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 141,
+      "source": "var s=WorldSimulation.CreateInteractionPlaytest();s.State.Creatures.RemoveAt(2);s.State.RoomObjects.Clear();"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 192,
+      "source": "loaded.Selected.Fullness==food+7&&loaded.State.RandomState==s.State.RandomState&&"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 290,
+      "source": "var s=Fresh();var original=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];original.X=1.5;original.Z=0;original.Interaction.Restraint=RestraintKind.Box;"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 310,
+      "source": "for(ulong seed=1;seed<=20;seed++)"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 312,
+      "source": "var s=Fresh(seed);var c=s.Selected!;c.Trust=100;c.Fear=0;c.Fullness=40;s.SetInteractionHand(1,2,true);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 326,
+      "source": "for(ulong seed=1;seed<=20;seed++)"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 328,
+      "source": "var s=Fresh(seed);var c=s.Selected!;c.Trust=100;c.Fear=0;c.Fullness=8;s.SetInteractionHand(1,2,true);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 336,
+      "source": "int low=0,high=0;var rng=new Random(1009);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 339,
+      "source": "ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 342,
+      "source": "var s=Fresh(seed);var c=s.Selected!;c.Trust=trusting?90:5;c.Fullness=40;Source(s,RoomObjectKind.Leaves,1);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 350,
+      "source": "observations[\"trust-help\"]=new{seedGenerator=1009,samplesPerGroup=150,low,high,lowInterval95=Interval(low,150),highInterval95=Interval(high,150)};"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 359,
+      "source": "int dirty=0,clean=0;var rng=new Random(779);const int samples=400;"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 362,
+      "source": "ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 365,
+      "source": "var s=Fresh(seed);s.Selected!.Fullness=30;Source(s,RoomObjectKind.Leaves,.4,contamination:polluted?1:0,portions:1);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 373,
+      "source": "observations[\"dirty-versus-clean\"]=new{seedGenerator=779,samplesPerGroup=samples,dirty,clean,dirtyInterval95=Interval(dirty,samples),cleanInterval95=Interval(clean,samples)};"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 389,
+      "source": "var s=WorldSimulation.CreateInteractionPlaytest();s.State.RoomObjects.Clear();"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 405,
+      "source": "Require(JsonSerializer.Serialize(loaded.Selected!.Interaction.Digestion)==before&&loaded.State.RandomState==s.State.RandomState,\"saved exposure rerolled\");"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 410,
+      "source": "Require(Math.Abs(s.Selected!.Health-loaded.Selected!.Health)<.00001&&s.State.RandomState==loaded.State.RandomState,\"reloaded future diverged\");"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 667,
+      "source": "int single=0,repeated=0,samples=400;var random=new Random(292107);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 670,
+      "source": "ulong seed=(ulong)random.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 673,
+      "source": "var s=Fresh(seed);s.Selected!.Fullness=5;Source(s,RoomObjectKind.Leaves,.4,contamination:1,portions:portions);Tick(s,8);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 679,
+      "source": "observations[\"repeated-dose\"]=new{seedGenerator=292107,samplesPerGroup=samples,single,repeated,singleInterval95=Interval(single,samples),repeatedInterval95=Interval(repeated,samples)};"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 757,
+      "source": "var box=WorldSimulation.CreateInteractionPlaytest().State.Creatures[1];box.X=1.5;box.Z=0;box.Interaction.Restraint=RestraintKind.Box;s.State.Creatures.Add(box);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 794,
+      "source": "const int samples=80;int lowWild=0,highWild=0,absentWild=0;var rng=new Random(291044);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 797,
+      "source": "ulong seed=(ulong)rng.NextInt64(1,long.MaxValue);"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 800,
+      "source": "var s=Fresh(seed);var c=s.Selected!;c.Trust=group==\"high\"?90:5;c.Fullness=40;"
+    },
+    {
+      "file": "checks/NaturalLife.Smoke/Program.cs",
+      "line": 810,
+      "source": "observations[\"first-food-choice\"]=new{seedGenerator=291044,samplesPerGroup=samples,lowWild,highWild,absentWild,"
+    },
+    {
+      "file": "checks/Interaction.Continuity/Program.cs",
+      "line": 12,
+      "source": "WorldSimulation Fresh()=>WorldSimulation.CreateInteractionPlaytest();"
+    },
+    {
+      "file": "checks/Interaction.Continuity/Program.cs",
+      "line": 1063,
+      "source": "Check(\"fixed-seed mixed gestures keep saves valid and leave no ghost hands across cancellation and pause\",()=>"
+    },
+    {
+      "file": "checks/Interaction.Continuity/Program.cs",
+      "line": 1066,
+      "source": "for(int seed=1;seed<=12;seed++)"
+    },
+    {
+      "file": "checks/Interaction.Continuity/Program.cs",
+      "line": 1068,
+      "source": "var random=new Random(71000+seed);var sim=Fresh();"
+    },
+    {
+      "file": "checks/Interaction.Continuity/Program.cs",
+      "line": 1096,
+      "source": "catch(Exception e){throw new Exception($\"seed {seed}, step {step}, action {action}: {e.Message}\");}"
+    },
+    {
+      "file": "checks/ActorGeometry.Smoke/Program.cs",
+      "line": 9,
+      "source": "var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];c.X=c.Z=0;c.Body.SpeciesId=species;"
+    },
+    {
+      "file": "checks/ActorGeometry.Smoke/Program.cs",
+      "line": 1227,
+      "source": "var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];"
+    },
+    {
+      "file": "checks/ActorGeometry.Smoke/Program.cs",
+      "line": 1276,
+      "source": "var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;var c=state.Creatures[0];"
+    },
+    {
+      "file": "checks/ActorGeometry.Smoke/Program.cs",
+      "line": 1354,
+      "source": "var state=Yukkuri.Simulation.WorldSimulation.CreateInteractionPlaytest().State;float radius=InteractionBallSurface.Radius;"
+    },
+    {
+      "file": "checks/ActorGeometry.Smoke/Program.cs",
+      "line": 1372,
+      "source": "var random=new Random(20261029);float maximum=0;"
+    },
+    {
+      "file": "checks/NaturalLife.Soak/Program.cs",
+      "line": 12,
+      "source": "foreach(ulong seed in seeds)"
+    },
+    {
+      "file": "checks/NaturalLife.Soak/Program.cs",
+      "line": 14,
+      "source": "var sim=WorldSimulation.CreateInteractionPlaytest(seed);"
+    },
+    {
+      "file": "checks/NaturalLife.Soak/Program.cs",
+      "line": 91,
+      "source": "scenarios.Add(new{scenario,seed,seconds=sim.State.WorldSeconds,passed=errors.Count==0,errors,measures=measures.Values,snapshots});"
+    },
+    {
+      "file": "checks/NaturalLife.Soak/Program.cs",
+      "line": 93,
+      "source": "Console.WriteLine($\"{scenario}/{seed}: \"+string.Join(\"; \",measures.Values.Select(m=>$\"{m.Name} food={m.FinalFullness:F1} water={m.FinalWater:F1} energy={m.FinalEnergy:F1} restStarts={m.RestStarts} maxBedSearch={m.LongestBedSearch:F0}s sick={m.SickSeconds:F0}s\")));"
+    },
+    {
+      "file": "checks/ActorGeometry.Smoke/IntakeCombinationAudit.cs",
+      "line": 15,
+      "source": "var sim=WorldSimulation.CreateInteractionPlaytest();var state=sim.State;var c=sim.Selected!;"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "source_commit": "d729036ccfa4773c92b2f8794f804e26fc9c02a1",
+  "source_tree": "a031ecb2081ec8ab814c5ee966aa89ea617a1e93",
+  "tree_truncated": false,
+  "remote_tree_entries": 1218,
+  "verified_materialized_blob_count": 108,
+  "git_blob_and_sha256_mismatches": [],
+  "materialized_sources_unchanged_after_execution": true,
+  "complete_checkout": false,
+  "full_lfs_integrity_verified": false,
+  "validation": "Each included file was independently hashed as a Git blob and SHA256 and matched against the pinned remote recursive tree and materialization manifest after tests. This does not verify unmaterialized assets or a clean full worktree."
+}
