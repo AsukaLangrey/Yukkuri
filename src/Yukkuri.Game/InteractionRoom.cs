@@ -239,6 +239,8 @@ public partial class InteractionRoom : Node3D
 
     private void UpdateInteractionHand()
     {
+        bool quietCompany=_toolArmed&&_action==InteractionAction.Comfort&&!_mouseHeld&&_tapContact==null;
+        if(quietCompany)_hand.Visible=false;
         if(!_windowFocused||_panning||Sim.State.Settings.Pause||Sim.State.Mode==PlayMode.CloseUp)
         {
             // Leaving the window stops live input; the existing short memory may expire naturally.
@@ -246,6 +248,15 @@ public partial class InteractionRoom : Node3D
         }
         Vector2 point=GetViewport().GetMousePosition();
         bool inScene=IsScenePoint(point);
+        // Selecting comfort explicitly offers a quiet hand in the scene. Merely
+        // leaving an ordinary cursor over the yard does not create a caregiver.
+        if(quietCompany&&!_orbiting&&inScene&&TryGroundPoint(point,.5f,out var quietPoint)&&
+            Math.Abs(quietPoint.X)<=7.7f&&Math.Abs(quietPoint.Z)<=7.7f)
+        {
+            ShowInteractionTool();_hand.GlobalBasis=Basis.Identity;
+            _hand.GlobalPosition=quietPoint;_hand.Visible=true;
+            Sim.SetInteractionHand(quietPoint.X,quietPoint.Z,true);return;
+        }
         // Perception follows the actual tool/support, not its projection onto the floor.
         // A high held oil and a cup at its mouth can be far from that projected point.
         if(inScene&&(_mouseHeld||_tapContact!=null)&&_hand.Visible)
@@ -296,7 +307,7 @@ public partial class InteractionRoom : Node3D
             OpenModal("退出前没有保存成功");
             _modalContents.AddChild(Text(_message));
             _modalContents.AddChild(Text("当前进度仍保留在小院里。可以返回后另存槽位，也可以选择不保存退出。"));
-            _modalContents.AddChild(Button("回到小院",CloseModal));
+            _modalContents.AddChild(Button("关闭面板",CloseModal));
             _modalContents.AddChild(Button("仍然退出，不保存",()=>GetTree().Quit()));
             return;
         }

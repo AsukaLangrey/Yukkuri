@@ -117,9 +117,11 @@ public sealed partial class WorldSimulation
 {
     public void SetInteractionHand(double x,double z,bool engaged)
     {
+        _interactionHandLive=false;
         if(!State.InteractionPlaytest)return;
         if(engaged&&double.IsFinite(x)&&double.IsFinite(z))
         {
+            _interactionHandLive=true;
             State.PlayerX=Math.Clamp(x,-7.7,7.7);State.PlayerZ=Math.Clamp(z,-7.7,7.7);
             State.InteractionHandPresent=true;State.InteractionHandUntil=State.WorldSeconds+3;
             State.InteractionHandRegionId=State.ActiveRegionId;

@@ -185,6 +185,7 @@ public sealed partial class WorldSimulation
             ResetInterruptedAutonomySearch(c);
             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
             if(!c.Family.ColdStorage.Stored)AdvanceHumanBond(c,dt);
+            if(i.HumanCompany.Until>0&&!CanSeekHumanCompany(c))EndHumanCompany(c);
             c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
             i.Hydration = Math.Max(0,i.Hydration-dt*.025);
             i.AdvanceDressings(c,dt);
@@ -318,6 +319,7 @@ public sealed partial class WorldSimulation
                 if(!takingFood&&i.EatingRemaining<=0&&!NaturalResources.WantsFood(c)&&!NaturalResources.WantsWater(c)&&
                     i.RestRemaining<=0&&!i.Resting&&c.Energy>=40&&c.Family.CompanionTargetId is { } nearbyId&&
                     State.Creatures.Find(o=>o.Id==nearbyId) is { } nearby&&FamilyInContact(c,nearby)&&TryFamilyActivity(c,dt))continue;
+                if(!takingFood&&TryHumanCompany(c,dt))continue;
                 if (!takingFood && State.WorldSeconds - i.LastHelpAt > 18)
                 { i.LastHelpAt = State.WorldSeconds; Feedback(c, "cannot-walk", Expression.Calling, "它想起步，却无法走到远处。近旁食物或搬运能帮助它。", "failed-step"); }
                 if(i.Resting&&!takingFood)c.Activity="护着底部慢慢休息";
@@ -344,6 +346,7 @@ public sealed partial class WorldSimulation
                 c.Activity = "留出一点距离"; continue;
             }
             if(TryFamilyCare(c,dt)||TryFamilyActivity(c,dt))continue;
+            if(TryHumanCompany(c,dt))continue;
             var ball = State.RoomObjects.FirstOrDefault(o => o.Kind == RoomObjectKind.Ball && !o.Stored&&o.RegionId==c.RegionId&&o.Id!=InteractionGestureObject&&!RoomBallEnvironment.InWater(State,o));
             if (ball != null && CanSelfMove(c)&&i.ToyInterest > .4 && c.Fear < 45 && c.Energy > 30 && Distance(c.X, c.Z, ball.X, ball.Z) < 3)
             {

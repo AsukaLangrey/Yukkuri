@@ -196,12 +196,7 @@ public sealed partial class WorldSimulation
         i.ReactionPose = "dead"; i.ReactionPoseRemaining = 0; i.HelpWaitingUntil = 0;
         deceased.Family.Conflict = new(); deceased.Family.FlightRemaining = 0;
         deceased.Family.GriefRemaining = 0; deceased.Family.GrievingForId = null;
-        foreach (var other in State.Creatures.Where(c => c != deceased))
-        {
-            if (other.Family.CareTargetId == id) { DropCareParcel(other); other.Family.CareTargetId = null; }
-            if (other.Family.CompanionTargetId == id) ClearCompanionship(other);
-            if (other.Family.Conflict.TargetId == id) StopFamilyConflict(other, "对象已经离世并安置，冲突停止，既有后果保留");
-        }
+        ClearFamilyTargetsTo(deceased);
         // Keep identity, position, kinship and cause intact. Rendering/collision omit
         // Memorialized individuals; no teleport, fall or new damage is simulated here.
         deceased.Family.Memorialized = true; deceased.Family.MemorializedAt = State.WorldSeconds;

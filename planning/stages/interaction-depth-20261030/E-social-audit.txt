@@ -1,0 +1,33 @@
+E批：家庭冲突、保护、死亡引用及知情审查
+审查起点：D提交7977738745894cf6bbf4022d47b4889d17d1192b。
+初始只读，随后主协调明确授权修FamilySocial.cs、FamilyRisk.cs、FamilyAftermath.cs及新checks/Family.Protection和本文件。
+未执行本机编译、模拟、检查、项目脚本、截图或Git修改。行号为审查起点，后续修复会移动。
+
+确认问题与已写修复
+1. FamilySocial.cs:132-145只挡当事者自身箱体和树，不挡第三个箱体。死亡/发现（FamilyAftermath直接复用）及背叛目击可隔不透明箱体知情。
+   已在保留原树干严格判定前加入HasGroundSightLine，共用地面视线；没有把相处事件改成全图或传闻目击。
+2. FamilyRisk.cs:265-267护幼者仅CanSelfMove/勇气/距离，吃喝、训练、手势占用、正在逃离或强制干预仍可能马上保护。FamilySocial护伴原CanFamilyFight虽较严格，仍未排除强制干预、另一场伤幼或嘴中携物。
+   已新增CanProtectFamily，复用地面活动/疼痛/恐惧/需求/休息/手占用等限制，并排除强制干预、自己的冲突/伤幼及运输物；护伴护幼统一使用。护幼选择按ID排序以保证顺序稳定。
+3. FamilySocial.cs:148-149 FamilyInContact只用XZ，地面攻击者可命中高处悬挂目标；影响Social:491/507和Risk:263/269。
+   已统一加入Height差不大于0.45的垂直接触上限。正常地面和低垫接触保留；双方不在身体可接触高度时只允许看见，不能当作已靠近命中。
+4. MilestoneInteraction.cs:199-211死亡只清死者自身；其他油CareTarget/Conflict/ChildThreat等需等普通Tick。近看手势致死时普通时间冻结，引用可一直残留；LayToRest原来也漏ChildThreat。
+   新private void ClearFamilyTargetsTo(Creature unavailable)按ID清其他油指向该个体的照护、冲突、伤幼和相处引用，释放唯一运输物。仅清对应对象，不改其他有效新目标，不推进WorldSeconds、不补造死亡见证。
+   LayToRest改用该辅助；Die接入由主协调负责，静态读取已见调用。StopChildThreat加空目标幂等，避免致命一击中Die先清后调用者再次清产生重复停止记忆。
+5. FamilyRisk.cs:262-264母体危机早于普通Flight活动，未检查正在逃离。母体被打后即使已有FlightRemaining仍优先伤幼。
+   已加FlightRemaining/RetreatRemaining条件中止伤幼，交回原退避逻辑，不覆盖受伤求助。
+
+已确认的正常链路（仍是静态结论）
+- 伤害统一Hurt并沿用LethalInjuries；预警/间隔/期限在普通世界推进，暂停和近看不推进。
+- 冷藏主体不能移动或接触，目标冷藏会终止追击；保存期限、材料期限使用原世界/生理规则，没有新增无限冻结。
+- 死亡目击先在实际死亡位置结算，再清支撑；后来发现不追认目击，听说独立来源且不会重复施加同次悲伤。
+- Die立即将孕育改None、清恢复/干预测时，并保留MotherId/FatherId/ParentId等身份引用。生产先完整登记出生再Hurt母体，产后死亡不会删已出生子代，也不重复出生。
+- 材料、胎儿与子代没有额外生成/复活路径；本批未改繁育成功率。
+
+新增14组远端检查源码（尚未运行）
+checks/Family.Protection：地面正向护伴护幼；吃喝/训练/等待/逃离/休息/强制干预/手势/冷藏/高处保护者反例；远处与近处保护对照；高挂目标不受地面攻击；地面仍受Hurt；第三方箱体遮挡死亡后绕行发现；第三方箱体遮挡关系知情且双方确有实际相处；母体先逃离不继续伤幼；近看死亡即时清其他目标和运输物且时钟不动；安置旧遗体清伤幼但不赋予远处见证；清死者引用不删其他目标；冷藏/暂停/近看；同档继续一致；母体死亡停止孕育但保留现有亲缘。
+原Family.Social、Family.Aftermath、Family.Risk和其他检查均保留，不以新检查替代。
+
+未作完成声明
+目前没有本批编译/远端运行结果；距离与高度阈值仍为可调初稿，画面、音效和操作体验未确认。
+
+最后接线补记：按主协调授权，在RequestForcedPregnancy消耗材料后，与ClearCompanionship同处调用EndHumanCompany(mother)，强制准备立即结束主动人油陪伴，满足UnderIntervention与HumanCompany互斥保存约束。仅补该行，未运行或操作Git，完成后停止写入。

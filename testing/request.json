@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v10-interaction-depth-D-20261030",
+  "revision": "dot-v11-interaction-depth-E-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -12,7 +12,7 @@
     "lfs-integrity", "game-build", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "ActorGeometry.Smoke", "NaturalLife.Soak",
-    "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Interaction.StateBoundaries", "runtime-smoke", "visual-interaction-review"
+    "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
   ],
   "effect_focus": [
     "跳跃朝向、腾空与落地衔接",
@@ -22,6 +22,11 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/E.txt",
+    "planning/stages/interaction-depth-20261030/E-human-company.txt",
+    "planning/stages/interaction-depth-20261030/E-social-audit.txt",
+    "planning/stages/interaction-depth-20261030/E-ui-audit.txt",
+    "planning/stages/interaction-depth-20261030/E-mouth-audit.txt",
     "planning/stages/interaction-depth-20261030/D.txt",
     "planning/stages/interaction-depth-20261030/D-audit.tsv",
     "planning/stages/interaction-depth-20261030/D-compatibility.txt",
@@ -116,6 +121,14 @@
     "Family.Teaching经实际6秒相处后才学得一条长辈已有判断；有误解和正确理解两个分支，同档不重抽。看见/搬运不能更新知识，实际摄入和不适可修正继承/教导认知；最后一份资源消失仍保留近期吃喝类别。食水需要和休息优先，脚底失能但身体清醒的幼体可原地听课。检查课程时间和双向相处保存不变量。",
     "Interaction.StateBoundaries检查旧Contact/Feed拒绝暂停与冷藏、投掷积累后暂停或濒危结束不追加冲量；正在强制准备不能唱歌、学习或叠加其他接触，必要护理立即中断并保留材料/信任代价，旧待回应不会继续奖好感。收起宝物不能唤起冷藏者的情绪反应。",
     "实际界面观察教导按钮、个人判断提示、静止受助者听课、双方靠近/中断；育幼搬运遇遮挡和接手时物品位置/数量、箱中或被抱幼体不隔空保暖。所有实际效果必须独立记录；旧远端v05仍不能覆盖A/B/C/D。"
+  ],
+  "interaction_depth_E_focus": [
+    "v11保留此前全部检查与c04失败断言/诊断。新增三个检查只写源码，不能以它们的存在宣称当前源码通过。",
+    "Interaction.HumanCompany走真实可见手、主动靠近、连续近处6秒才记一次；低信任、近期伤害、需求或身体不允许时不请求。手退出接触范围后未完成的连续时间重积；收手后3秒位置记忆不能继续获益。暂停/近看不推进，脚底失能可以等手靠近但不获得行走能力。读档续接须重新提供实际输入；非法时间或死亡/濒危/冷藏/强制干预与请求并存必须拒绝。显式伤害和即时弹额的局部警戒记到正确部位。",
+    "Family.Protection保留正常近处护伴/护幼对照，验证吃喝、练习、等待、手占用、逃离、繁育干预期间不能同时保护；第三方箱体阻挡关系/离世目击，高处悬挂者不被地面隔空命中。近看死亡、安置和冷藏立即清其他个体指向该对象的临时目标，不伪造死亡知情或推进时间。",
+    "Family.Presentation核对有限冷藏期限到点时描述，超时被落点阻挡后不再显示十倍延缓。真实界面观察失能幼体听课/陪伴仍显示实际活动、关闭面板不伪称回到小院且不更改原暂停状态。",
+    "实际操作安慰工具：普通小院选中安慰，鼠标在身旁停留显示可见手，点击仍是原说话入口；普通空手闲置不产生陪伴。失焦、平移/旋转镜头、离开场景、右键/换工具、模态、暂停/近看不继续提供真实手收益；观察角色靠近和语音/字幕，不把核心直接SetInteractionHand的检查当作真实鼠标体验通过。",
+    "E-mouth-audit记录口部损伤未作用于进食节奏/清晰发音的真实缺项，本批未实现；不以新增陪伴和家庭边界代替完整器官、手术或其他八景缺项。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

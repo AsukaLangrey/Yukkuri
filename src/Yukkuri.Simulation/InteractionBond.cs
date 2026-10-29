@@ -45,7 +45,7 @@ public sealed partial class WorldSimulation
         b.CareBudget = Math.Min(3, b.CareBudget + dt * .025);
         // Safety must be experienced with a visible, quiet hand. Waiting offscreen
         // does not erase contact memories, and close-up does not refill the budget.
-        if (!SeesHelpingHand(c) || InteractionGestureTarget == c.Id ||
+        if (!_interactionHandLive || !SeesHelpingHand(c) || InteractionGestureTarget == c.Id ||
             Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) > 2.5) return;
         b.Safety = Clamp100(b.Safety + dt * .015);
         foreach (var part in b.Caution.Keys.ToArray())
@@ -53,13 +53,14 @@ public sealed partial class WorldSimulation
         c.Resentment = Math.Max(0, c.Resentment - dt * .004);
     }
 
-    private void RememberPlayerHarm(Creature c, double amount)
+    private void RememberPlayerHarm(Creature c, double amount, BodyPart? injuredPart=null)
     {
         var b = c.Interaction.HumanBond;
         b.LastHarmAt = State.WorldSeconds;
         b.Safety = Math.Max(0, b.Safety - amount);
         b.CareBudget = 0;
-        var part = _interactionGesture?.TargetId == c.Id ? _interactionGesture.Input.Part : BodyPart.Side;
+        EndHumanCompany(c);
+        var part = injuredPart ?? (_interactionGesture?.TargetId == c.Id ? _interactionGesture.Input.Part : BodyPart.Side);
         b.Caution[part] = Clamp100(b.Caution.GetValueOrDefault(part) + amount * 3);
     }
 }

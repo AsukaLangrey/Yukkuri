@@ -135,6 +135,7 @@ public sealed partial class WorldSimulation
             observer.Interaction.Resting || observer.Family.ColdStorage.Stored || observer.Quarantine != target.Quarantine ||
             observer.Interaction.Restraint == RestraintKind.Box || target.Interaction.Restraint == RestraintKind.Box ||
             target.Family.ColdStorage.Stored || target.Family.Memorialized || Distance(observer.X, observer.Z, target.X, target.Z) > range) return false;
+        if (!HasGroundSightLine(observer, target.X, target.Z)) return false;
         if (!WoodlandLayout.HasRiver(State, observer.RegionId)) return true;
         double dx = target.X - observer.X, dz = target.Z - observer.Z, square = dx * dx + dz * dz;
         foreach (var tree in WoodlandLayout.Trees)
@@ -146,7 +147,8 @@ public sealed partial class WorldSimulation
     }
 
     private static double FamilyContactDistance(Creature a, Creature b) => InteractionFootprint(a) + InteractionFootprint(b) + .28;
-    private bool FamilyInContact(Creature a, Creature b) => FamilyVisible(a, b, FamilyContactDistance(a, b));
+    private bool FamilyInContact(Creature a, Creature b) => Math.Abs(a.Interaction.Height-b.Interaction.Height)<=.45 &&
+        FamilyVisible(a, b, FamilyContactDistance(a, b));
 
     public string InviteCompanion(string aId, string bId)
     {
@@ -378,6 +380,22 @@ public sealed partial class WorldSimulation
         c.Family.NextSocialAt = Math.Max(c.Family.NextSocialAt, State.WorldSeconds + 20);
     }
 
+    // Resolve references immediately, including deaths during close-up where the
+    // ordinary world clock is frozen. This is cleanup, not new witnessed knowledge.
+    private void ClearFamilyTargetsTo(Creature unavailable)
+    {
+        foreach(var other in State.Creatures.Where(c=>c!=unavailable))
+        {
+            if(other.Family.CareTargetId==unavailable.Id)
+            {DropCareParcel(other);other.Family.CareTargetId=null;other.Family.CareApproachSeconds=0;other.Family.CareBestDistance=100;}
+            if(other.Family.Conflict.TargetId==unavailable.Id)
+                StopFamilyConflict(other,"当前对象已经无法继续接触，停止冲突；既有后果保留");
+            if(other.Family.ChildThreat.TargetId==unavailable.Id)
+                StopChildThreat(other,"当前对象已经无法继续接触，停止危险行动；既有后果保留",120);
+            if(other.Family.CompanionTargetId==unavailable.Id)ClearCompanionship(other);
+        }
+    }
+
     private bool TryFamilyActivity(Creature c, double dt)
     {
         if (c.Family.FlightRemaining > 0 && CanSelfMove(c) && !c.Family.ColdStorage.Stored &&
@@ -484,6 +502,9 @@ public sealed partial class WorldSimulation
         c.RetreatRemaining <= 0 && c.Interaction.WaitRemaining <= 0 && !c.Interaction.FollowPlayer &&
         c.Interaction.RestRemaining <= 0 && c.Family.FlightRemaining <= 0;
 
+    private bool CanProtectFamily(Creature c) => CanFamilyFight(c) && !FamilyRules.UnderIntervention(c) &&
+        c.Family.Conflict.TargetId==null && c.Family.ChildThreat.TargetId==null && c.Family.CareParcelId==null;
+
     private bool TryFamilyConflict(Creature c, double dt)
     {
         var conflict = c.Family.Conflict;
@@ -492,8 +513,8 @@ public sealed partial class WorldSimulation
             target.Interaction.Carried || target.Family.ColdStorage.Stored || !FamilyVisible(c, target, 7))
         { StopFamilyConflict(c, "双方已经隔开或身体无法继续，停止了冲突"); return false; }
         // A nearby capable companion can interpose before contact; no remote protective magic.
-        var defender = State.Creatures.Where(x => x != c && x != target && !x.IsYoung && CanFamilyFight(x) &&
-            x.Family.Conflict.TargetId == null && x.Courage >= .55 && FamilyVisible(x, c, 2) && FamilyInContact(x, target) &&
+        var defender = State.Creatures.Where(x => x != c && x != target && CanProtectFamily(x) &&
+            x.Courage >= .55 && FamilyVisible(x, c, 2) && FamilyInContact(x, target) &&
             (x.Family.PartnerIds.Contains(target.Id) || FamilyRules.IsCloseFamily(x, target) || target.Family.CaregiverIds.Contains(x.Id)))
             .OrderBy(x => x.Id, StringComparer.Ordinal).FirstOrDefault();
         if (defender != null)

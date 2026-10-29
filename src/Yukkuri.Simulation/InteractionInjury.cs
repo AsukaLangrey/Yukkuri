@@ -184,6 +184,7 @@ public sealed partial class WorldSimulation
     private void StopIncapacitatedActions(Creature c)
     {
         var i = c.Interaction;
+        EndHumanCompany(c);
         DropCareParcel(c);c.Family.CareTargetId=null;
         // Loading an already-dead body must not refresh social deadlines.
         if(c.Family.CompanionTargetId!=null)ClearCompanionship(c);

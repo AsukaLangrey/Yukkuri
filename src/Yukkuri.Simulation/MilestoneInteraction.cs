@@ -153,6 +153,7 @@ public sealed partial class WorldSimulation
         if(amount==0||c.Condition==PhysicalCondition.Dead)return;
         if(part.HasValue||actor!=null)
         {
+            EndHumanCompany(c);
             DetachNaturalIntake(c);DropCareParcel(c);c.Family.CareTargetId=null;
             c.Interaction.Resting=false;c.Interaction.RestRemaining=0;
             c.Interaction.ActiveCue=null;c.Interaction.FollowPlayer=false;c.Interaction.WaitRemaining=0;
@@ -174,7 +175,7 @@ public sealed partial class WorldSimulation
             injuries.CriticalCareBudget=Math.Max(0,injuries.CriticalCareBudget-amount*.5);
             if(c.Condition==PhysicalCondition.Critical)c.CriticalRemaining=Math.Min(c.CriticalRemaining,injuries.CriticalCareBudget);
         }
-        if(actor=="player"&&c.Interaction.Enabled)RememberPlayerHarm(c,amount);
+        if(actor=="player"&&c.Interaction.Enabled)RememberPlayerHarm(c,amount,part);
         c.Health=Math.Max(0,c.Health-amount);c.Pain=Clamp100(c.Pain+amount*1.5);c.Strain=Clamp100(c.Strain+amount*.7);
         c.InjuryCause=cause;
         if(amount>18)c.FillingIntegrity=Math.Max(0,c.FillingIntegrity-(amount-18)*1.2);
@@ -208,6 +209,7 @@ public sealed partial class WorldSimulation
         c.CriticalRemaining=0;c.RecoveryRemaining=0;c.Stabilized=false;c.ReactionRemaining=0;
         StopIncapacitatedActions(c);
         if(InteractionGestureTarget==c.Id)_interactionGesture=null;
+        ClearFamilyTargetsTo(c);
         NormalizeDeadInteractionSupport(c);
         RefreshHelpAfterResolution(c);
         c.LastReaction="再也没有回应。";c.ReactionSerial++;

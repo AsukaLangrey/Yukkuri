@@ -36,10 +36,12 @@ public sealed partial class WorldSimulation
             if(i.EatingRemaining>0)return "先等它咽下这一口。";
             if(FamilyRules.UnderIntervention(c))CancelIntervention(c,"安排冷藏时干预已停止；已用材料和关系后果保留。");
             DropCareParcel(c);DetachNaturalIntake(c);ClearCompanionship(c);c.Family.CareTargetId=null;
+            EndHumanCompany(c);
             i.ActiveCue=null;i.FollowPlayer=false;i.Resting=false;i.RestRemaining=0;
             i.ReactionPose="idle";i.ReactionPoseRemaining=0;i.PendingConversation=null;
             i.VelocityX=0;i.VelocityZ=0;i.Physiology.Excreting=ExcretionKind.None;i.Physiology.Remaining=0;
             cold.Stored=true;cold.Elapsed=0;cold.Sessions=Math.Min(int.MaxValue-1,cold.Sessions)+1;
+            ClearFamilyTargetsTo(c);
             c.TargetX=c.X;c.TargetZ=c.Z;c.Activity="冷藏保存中";c.Speech="";c.ReactionRemaining=0;
             RecordInteraction(c,"cold-storage","进入有限冷藏，生命过程十倍延缓，仍有保存期限。",2);
             return State.LastActionMessage="已放入冷藏。相关过程按正常速度的十分之一推进，需要及时取出。";

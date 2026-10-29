@@ -202,7 +202,9 @@ public partial class InteractionRoom
         _who.Text=c.Name+" · "+SpeciesName(c.Body.SpeciesId)+(c.IsYoung?"幼体":"");
         string intake=i.NaturalIntakePending?i.EatingKind==IntakeKind.Water?"准备喝这一口":"准备取这一口":
             i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":i.GroundIntake&&i.GroundIntakeKind==RoomObjectKind.Leaves?"慢慢嚼着叶子":"慢慢嚼着这一口";
-        string activity=i.EatingRemaining>0?intake:i.Resting?"慢慢休息":WorldSimulation.CanSelfMove(c)?c.Activity:"暂时无法自己挪动";
+        string activity=i.EatingRemaining>0?intake:i.Resting?"慢慢休息":c.Activity;
+        if(!WorldSimulation.CanSelfMove(c)&&(c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering))
+            activity=activity.Length==0?"暂时无法自己挪动":activity+" · 暂时无法自己挪动";
         string state=c.Family.Memorialized?"已经安置，家人与经历仍保留":c.Condition==PhysicalCondition.Dead?
             (c.Family.ColdStorage.Stored?"遗体仍在冷藏中":"不再回应了"):c.Family.ColdStorage.Stored?"冷藏中，需及时取出照护":c.Condition==PhysicalCondition.Critical?"身体状态很差，急需护理":
             i.Physiology.Active?i.Physiology.Excreting==ExcretionKind.Urine?"正在撒尿":"正在排便":
@@ -266,7 +268,7 @@ public partial class InteractionRoom
         _modalContents.AddChild(Text("饭饭和护理用品在这个试玩场景中不限量。每分钟自动保存；读档不计算离线时间。",13,"78816e"));
         _modalContents.AddChild(Text("右侧“同伴、家庭与照护”可以邀请两只油相处、安排孕育和幼体照护。邀请不保证接受，需要双方成熟、愿意且身体适合。出生后宝宝会出现在小院和个体名单中。冷藏只会有限地十倍延缓，取出后仍需照护。",13,"78816e"));
         _modalContents.AddChild(Text("右侧显示饱食度和口渴度，口渴度越高越需要水。吃喝后会逐渐产生尿意和便意，排泄物留在原地；鼠标指向后按 Del 清理。生命值隐藏，只显示正常、受伤、重伤、恢复中或死亡。跌落和其他伤害会累积；吃饱休息能缓慢恢复，重伤需要及时护理。",13,"78816e"));
-        _modalContents.AddChild(Button("回到小院",CloseModal));
+        _modalContents.AddChild(Button("关闭面板",CloseModal));
     }
     private void ShowSettings()
     {
@@ -287,6 +289,6 @@ public partial class InteractionRoom
             }));
             _modalContents.AddChild(Button("继续原来的相处",CloseModal));
         }));
-        _modalContents.AddChild(Button("回到小院",CloseModal));
+        _modalContents.AddChild(Button("关闭面板",CloseModal));
     }
 }

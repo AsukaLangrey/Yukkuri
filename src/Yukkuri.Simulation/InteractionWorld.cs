@@ -119,7 +119,7 @@ public sealed partial class WorldSimulation
         c.Fear = Clamp100(c.Fear + amount * (1.2 - c.Courage * .5));
         c.Resentment = Clamp100(c.Resentment + amount * .55);
         c.Trust = Clamp100(c.Trust - amount * .45);
-        if (damage <= 0) RememberPlayerHarm(c, amount * .35);
+        if (damage <= 0) RememberPlayerHarm(c, amount * .35,part);
         if (damage > 0) Hurt(c, damage, cause, "player",part,side);
     }
 

@@ -82,7 +82,9 @@ public static partial class FamilyRules
     public static string Describe(Creature c)
     {
         var p=c.Family.Pregnancy;
-        if(c.Family.ColdStorage.Stored)return "冷藏保存中 · 生命过程按十倍延缓；需要及时取出";
+        if(c.Family.ColdStorage.Stored)return WorldSimulation.BiologicalTimeScale(c)<1?
+            "冷藏保存中 · 生命过程按十倍延缓；需要及时取出":
+            "冷藏已超时，延缓已结束；需要腾出空位并尽快取出";
         string stage=p.Phase switch
         {
             PregnancyPhase.Preparing => UnderIntervention(c)?"繁育干预进行中，可及时停止":"正在等待双方靠近与接受",

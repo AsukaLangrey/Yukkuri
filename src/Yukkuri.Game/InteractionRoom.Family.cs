@@ -110,7 +110,7 @@ public partial class InteractionRoom
             _modalContents.AddChild(Text("小院原本处于暂停中。关掉面板会保留暂停；请继续时间后，再安排活动。",13,"8a624e"));
         else if(Sim.State.Mode==PlayMode.CloseUp)
             _modalContents.AddChild(Text("近看时可以先提出安排，回到小院后过程才会推进。放入冷藏需要先回到小院。",13,"8a624e"));
-        if(oils.Length==0){_modalContents.AddChild(Button("回到小院",CloseModal));return;}
+        if(oils.Length==0){_modalContents.AddChild(Button("关闭面板",CloseModal));return;}
         AddFamilyChoice("这只油",oils,_familyFirstId,id=>{_familyFirstId=id;ShowFamily();});
         var first=oils.FirstOrDefault(c=>c.Id==_familyFirstId);
         if(first==null)return;
@@ -130,13 +130,13 @@ public partial class InteractionRoom
                 _modalContents.AddChild(Text("安置后遗体会离开小院活动区域，家人记录与死因仍会保留。",14));
                 _modalContents.AddChild(Button("安置遗体",()=>ApplyFamilyCommand(()=>Sim.LayToRest(firstId))));
             }
-            _modalContents.AddChild(Button("回到小院",CloseModal));return;
+            _modalContents.AddChild(Button("关闭面板",CloseModal));return;
         }
         if(first.Family.ColdStorage.Stored)
         {
             _modalContents.AddChild(Text("它正在有限冷藏中。先取出并观察恢复，再安排相处或照护。",14));
             _modalContents.AddChild(Button("取出这只油，观察复苏",()=>ApplyFamilyCommand(()=>Sim.SetColdStorage(firstId,false))));
-            _modalContents.AddChild(Button("回到小院",CloseModal));return;
+            _modalContents.AddChild(Button("关闭面板",CloseModal));return;
         }
         if(first.Family.Pregnancy.InterventionRemaining>0)
             _modalContents.AddChild(Button("停止正在进行的繁育干预",()=>ApplyFamilyCommand(()=>Sim.InterruptPregnancyIntervention(firstId))));
@@ -209,7 +209,7 @@ public partial class InteractionRoom
         bool autonomous=Sim.State.AutonomousBreeding;
         _modalContents.AddChild(Button(autonomous?"自主繁育：开 · 点击关闭":"自主繁育：关 · 点击开启",
             ()=>ApplyFamilyCommand(()=>Sim.SetAutonomousBreeding(!autonomous))));
-        _modalContents.AddChild(Button("回到小院",CloseModal));
+        _modalContents.AddChild(Button("关闭面板",CloseModal));
     }
 
     private void AddBreedingIntervention(Creature first,Creature? other)

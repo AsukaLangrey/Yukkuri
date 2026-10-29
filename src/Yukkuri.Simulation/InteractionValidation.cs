@@ -27,6 +27,10 @@ public static class InteractionValidation
             Require(i.FootIntegrity<=100-i.Injuries.PermanentFootLoss+.00001,"底部支撑能力超过永久损伤上限");
             var physiology=i!.Physiology;
             var bond=i.HumanBond;
+            HumanCompanyState.Validate(i.HumanCompany,s.WorldSeconds);
+            Require(i.HumanCompany.Until==0||c.Family is { ColdStorage:not null, Pregnancy:not null }&&
+                c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)&&
+                !c.Family.ColdStorage.Stored&&!FamilyRules.UnderIntervention(c),"失能、冷藏或干预状态不能保留主动陪伴");
             Require(bond!=null&&Range(bond.Familiarity,bond.Safety)&&
                 Finite(bond.CareBudget,bond.LastHarmAt)&&bond.CareBudget is >=0 and <=3&&
                 bond.LastHarmAt>=-100&&bond.LastHarmAt<=s.WorldSeconds+.001&&

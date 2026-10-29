@@ -27,7 +27,7 @@ public sealed partial class WorldSimulation
                 immobile?"它本来就无法走动，听见喝止后缩了一下；这不代表学会了停下。":reason?"它暂时停住动作，事件和学习结果都没有被自动判定为完成。":"它没有明白缘由，暂时停住看着你。","startle");
         }
         bool belittle=action==InteractionAction.Belittle;
-        bool request=c.ReactionRemaining>0&&i.ReactionSituation is "request-nuzzle" or "thirsty" or "cannot-walk" or "box" or "hang" or "restrained" or "treasure-missing" or "accessory-high" or "accessory-taken";
+        bool request=c.ReactionRemaining>0&&i.ReactionSituation is "request-nuzzle" or "request-company" or "request-comfort" or "thirsty" or "cannot-walk" or "box" or "hang" or "restrained" or "treasure-missing" or "accessory-high" or "accessory-taken";
         Distress(c,belittle?4:1.5);
         RecordInteraction(c,belittle?"belittled":"cold",belittle?"听见了针对自己的贬斥。":request?"刚发出的请求得到了冷淡回应。":"说话时遇到了冷淡的语气。",1);
         bool defiant=belittle&&c.Courage>.6;

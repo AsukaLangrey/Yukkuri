@@ -15,7 +15,7 @@ public static class InteractionCatalog
         new("P01", "打招呼", false, "给它一点回应的时间。夸奖最好跟在刚做好的事情后面。",
             new(InteractionAction.Greet,"招呼","点一下它，等它认出你。"),
             new(InteractionAction.Praise,"夸奖","刚刚做对了什么？它会记得这次夸奖。"),
-            new(InteractionAction.Comfort,"安慰","靠近后轻声安慰；害怕时未必立刻接受。")),
+            new(InteractionAction.Comfort,"安慰","点击轻声安慰；普通时间把手停在身旁可安静陪伴。害怕时未必立刻接受。")),
         new("P02", "摸摸", false, "顺着头顶慢慢摸。停在原地只是接触，躲开就先停一停。",
             new(InteractionAction.Stroke,"摸摸","按住头顶，来回轻拖。",true),
             new(InteractionAction.Touch,"直接接触","空手按住身体轻拖。移动越快，接触越重；Shift＋按住可以托起。",true)),

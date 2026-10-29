@@ -118,7 +118,7 @@ public sealed partial class WorldSimulation
         if(material==null)return "缺少这一父体来源的有效材料。";
         double debt=p.Phase==PregnancyPhase.Recovering?p.RecoveryRemaining:0;
         State.BreedingMaterials.Remove(material);
-        ClearCompanionship(mother);DropCareParcel(mother);mother.Family.CareTargetId=null;
+        ClearCompanionship(mother);EndHumanCompany(mother);DropCareParcel(mother);mother.Family.CareTargetId=null;
         mother.Interaction.Resting=false;mother.Interaction.RestRemaining=0;
         mother.Interaction.PendingConversation=null;mother.Interaction.ConversationPraise=null;mother.Interaction.ConversationDelay=0;
         mother.Interaction.PendingPraise=null;mother.Interaction.PraiseRemaining=0;
@@ -214,6 +214,7 @@ public sealed partial class WorldSimulation
     }
     private void StopChildThreat(Creature c,string outcome,double cooldown=60)
     {
+        if(c.Family.ChildThreat.TargetId==null)return;
         c.Family.ChildThreat=new(){NextCheckAt=State.WorldSeconds+cooldown};c.Family.LastEvent=outcome;
         c.TargetX=c.X;c.TargetZ=c.Z;RecordInteraction(c,"child-threat-ended",outcome,2);
     }
@@ -259,10 +260,11 @@ public sealed partial class WorldSimulation
     {
         var risk=c.Family.ChildThreat;if(risk.TargetId==null)return false;
         var child=State.Creatures.Find(x=>x.Id==risk.TargetId);
-        if(!CanSelfMove(c)||c.Pain>=70||c.Fear>=90||c.Interaction.EatingRemaining>0||c.Interaction.ActiveCue!=null||
+        if(!CanSelfMove(c)||c.Pain>=70||c.Fear>=90||c.Family.FlightRemaining>0||c.RetreatRemaining>0||
+            c.Interaction.EatingRemaining>0||c.Interaction.ActiveCue!=null||
             InteractionGestureTarget==c.Id||child==null||child.Condition==PhysicalCondition.Dead||!FamilyVisible(c,child,5)||child.Interaction.Carried)
         {StopChildThreat(c,"身体做不到或双方已经隔开，危险行动停止。",120);return false;}
-        var protector=State.Creatures.FirstOrDefault(a=>a.Id!=c.Id&&a.Id!=child.Id&&!a.IsYoung&&CanSelfMove(a)&&a.Courage>=.55&&
+        var protector=State.Creatures.OrderBy(a=>a.Id,StringComparer.Ordinal).FirstOrDefault(a=>a.Id!=c.Id&&a.Id!=child.Id&&CanProtectFamily(a)&&a.Courage>=.55&&
             child.Family.CaregiverIds.Contains(a.Id)&&FamilyInContact(a,child)&&FamilyVisible(a,c,2.5));
         if(protector!=null){StopChildThreat(c,$"{protector.Name}及时护住了幼体，双方被隔开。",120);return false;}
         if(risk.WarningRemaining>0){c.Activity="紧盯幼体，显露危险敌意";return true;}
