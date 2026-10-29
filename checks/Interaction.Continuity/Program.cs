@@ -307,9 +307,20 @@ Check("a completed held meal sweet or drink releases needs after its actual swal
         int stock=sim.State.Food;var input=new InteractionInput(action,BodyPart.Mouth,Force:.2,Duration:.05,ObjectId:held.Id);
         Require(sim.BeginInteractionGesture(c.Id,input).Success&&sim.InteractionGestureOwnsPose,"mouth invitation lost its contact phase");
         bool accepted=false,moved=false,sawSwallow=false,sawNaturalIntake=false;
+        double startX=c.X,startZ=c.Z,peakX=c.X,maxDistanceFromStart=0,totalTravel=0;
+        double closestDestination=WorldSimulation.Distance(c.X,c.Z,destination.X,destination.Z);
+        bool sawDestinationIntake=false,returnedAfterDestination=false;
+        string lastDisplayedPose="";
         for(int n=0;n<240;n++)
         {
             var frame=HeldFrame(sim,input);
+            // Diagnostics only: observe the unchanged frame sequence and predicates.
+            peakX=Math.Max(peakX,c.X);totalTravel+=frame.Travel;
+            maxDistanceFromStart=Math.Max(maxDistanceFromStart,WorldSimulation.Distance(startX,startZ,c.X,c.Z));
+            closestDestination=Math.Min(closestDestination,WorldSimulation.Distance(c.X,c.Z,destination.X,destination.Z));
+            sawDestinationIntake|=c.Interaction.GroundIntake&&c.Interaction.EatingRemaining>0&&c.Interaction.GroundIntakeSourceId==destination.Id;
+            returnedAfterDestination|=sawDestinationIntake&&c.X<=.5;
+            lastDisplayedPose=frame.Pose;
             accepted|=sim.InteractionIntakeAccepted;
             Require(held.HeldByHand&&held.Portions==(accepted?1:2)&&sim.State.Food==stock,"held portion was repeated, refunded or automatically put down");
             if(accepted)Require(sim.InteractionIntakeAccepted&&!sim.InteractionGestureOwnsPose,"completed food reclaimed body pose or lost acceptance");
@@ -325,7 +336,14 @@ Check("a completed held meal sweet or drink releases needs after its actual swal
                 Require(!sim.InteractionGestureOwnsPose,"later autonomous mouthful reacquired the completed feeding gesture");
             }
         }
-        Require(accepted&&sawSwallow&&moved&&c.X>.5,$"{action}/{need}: holding the finished tool trapped the oil or skipped swallowing");
+        Require(accepted&&sawSwallow&&moved&&c.X>.5,$"{action}/{need}: holding the finished tool trapped the oil or skipped swallowing; diagnostics="+
+            JsonSerializer.Serialize(new{accepted,sawSwallow,moved,sawNaturalIntake,endX=c.X,endZ=c.Z,peakX,maxDistanceFromStart,totalTravel,
+                closestDestination,sawDestinationIntake,returnedAfterDestination,destinationId=destination.Id,destinationX=destination.X,destinationZ=destination.Z,
+                destinationPortions=destination.Portions,targetX=c.TargetX,targetZ=c.TargetZ,c.Activity,c.Fullness,c.Energy,c.Interaction.Hydration,
+                c.Interaction.EatingRemaining,c.Interaction.GroundIntake,c.Interaction.GroundIntakeSourceId,c.Interaction.NaturalIntakePending,
+                lastDisplayedPose,c.Interaction.ReactionPose,c.Interaction.ReactionPoseRemaining,c.Interaction.ReactionSituation,c.Interaction.ReactionRefused,
+                sim.HasInteractionGesture,sim.InteractionGestureTarget,sim.CurrentInteractionAction,sim.InteractionGestureOwnsPose,sim.InteractionIntakeAccepted,
+                c.Interaction.Carried,c.Interaction.Falling,c.Interaction.Restraint,excretionActive=c.Interaction.Physiology.Active,c.Interaction.Resting}));
         Require(need=="rest"?c.Interaction.Resting&&c.Energy>10:sawNaturalIntake&&destination.Portions<5,"autonomous need never completed after release");
         double fullness=c.Fullness,water=c.Interaction.Hydration;
         sim.EndInteractionGesture(true);
