@@ -21,7 +21,8 @@ public static class InteractionFoodSurface
     }
     public static Vector3 SpoonBowl(float radius,float angle,bool inside)
         =>new(.10f*radius*MathF.Cos(angle),(inside?.008f:.001f)+.022f*radius*radius,.07f*radius*MathF.Sin(angle));
-    public static Vector3 SpoonRim(float angle)=>new(.10f*MathF.Cos(angle),.028f,.07f*MathF.Sin(angle));
+    // The .0035-radius rolled rim must meet both bowl edges, .007 apart.
+    public static Vector3 SpoonRim(float angle)=>(SpoonBowl(1,angle,true)+SpoonBowl(1,angle,false))*.5f;
     public static Vector3 SpoonHandle(float u)=>new(0,.016f-.006f*MathF.Sin(u*MathF.PI),.065f+u*.23f);
     public static Vector3 HandMeal(float radius,float angle,bool bottom=false)
     {

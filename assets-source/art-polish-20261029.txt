@@ -1,0 +1,44 @@
+美术资源静态核对 / 2026-10-29 核心加速轮
+
+结论
+最初分配的四个 SVG、标题图和旧模型探针未发现默认小院可达错误，保持未修改。23:54 扩大源码归属后，已在默认小院实际使用的 InteractionFoodArt.cs、InteractionFoodSurface.cs 修正勺沿与饭团底面的两处几何接缝。没有修改二进制素材或导入设置。
+仅做文件读写、已有报告阅读和 Git 文本审查；没有运行导入器、生成器、项目、测试、编译、渲染或预览，没有看过本轮新画面。
+
+默认小院本轮修补
+1. SpoonBowl 在 radius=1 时内面边缘 y=.030，外面边缘 y=.023。旧 SpoonRim 中心 y=.028，管半径 .0035，最低只有 .0245，与外面边缘之间存在 .0015 高度间隙；代码没有其他封边网格。现在中心取内外边缘的中点（y=.0265），保留原半径与横向轮廓，使管的上下极点分别落在 .030/.023。默认 FeedMeal 以及拿地面饭饭递食均使用该勺构造入口。未改变食物入口、勺柄、接触目标或交互数值。
+2. 手持与盘中饭团的顶面、侧面均为64个角向分段，旧底面只有48个。底面48边形与侧面底边64边形在圆弧方向的直线边不同，不能连续接合。两处底面统一为64段，继续使用原来的底面函数、行数、颜色、翻面参数；每个饭团底面增加256个三角形。没有改动上表面或米粒形状。
+静态复核依据为源码公式、构造采样数与默认调用；没有运行数值检查。既有 ActorGeometry.Smoke 的 offered spoon and cookie 检查会读取新的 SpoonRim，但并未执行，也没有勺沿封边及生产饭团角向分段一致性断言。
+
+用途与入口
+- project.godot 的 run/main_scene 为 InteractionRoom.tscn。InteractionRoom._Ready 默认调用 BuildYard、BuildRoomUi、BuildActors。
+- InteractionRoom.cs:38–39 只有遇到 --m01-*、--integration 或 --legacy 参数才切到 Main.tscn。默认小院按钮由 InteractionRoom.Ui.cs 创建，未加载 Assets/Icons。
+- Main.Ui.cs:46 在 MilestoneScenario 时提前转入 BuildMilestoneUi；四个图标的加载在 :109–110，是更早框架界面的 home、observe、close、feed 按钮。改它们不能算默认小院美术改善。
+- sanctuary-morning.png 由 Main.Ui.cs:104 和 Main.MilestoneUi.cs:158 加载，用于旧界面标题。asset-manifest.json 明确它是项目生成的概念插图，不是游戏截图。
+- pipeline-probe.glb 在当前产品 C# 和场景文本中未找到加载引用；来源表明确它是保留的旧工具链探针，不是现用角色。
+- 默认小院实际使用 CreatureActor、SceneArt、WoodlandArt、InteractionFoodArt、InteractionToolArt 等程序构造资源。23:54 追加了 FoodArt/FoodSurface、ToolArt/ToolSurface、WoodlandArt/WoodlandSurface 六份独占文件；接手时六份均无工作区差异，已逐份阅读，仅修改其中两份 Food 文件。CreatureActor、SceneArt、InteractionRoom 仍只读。
+
+导入文本
+- sanctuary-morning.png.import 的 source_file 对应 Assets/Art/sanctuary-morning.png；path 与 dest_files 相同。
+- pipeline-probe.glb.import 的 source_file 对应 Assets/pipeline-probe.glb；path 与 dest_files 相同，import_script/path 为空，无额外导入脚本路径。
+- 四个 SVG 保持 24×24 尺寸、32×32 viewBox、同色描边；各自 .import 的 source_file 指向对应文件。没有据静态文本认定辨识度或真实像素效果通过。
+- 未修改自动生成缓存路径、UID 或导入参数。未删除旧资源或跳过其导入。
+
+远程素材缺失的原件线索（交协调者处理）
+既有 testing/reviews/20261029T084136Z-c6fc7d897955-c03.md 记录：独立 Debian 云桌面针对 c6fc7d89795501c26057b991276b4657d62dc122 的导入仍缺标题 PNG、旧 probe GLB 和源 .blend，导入退出零但日志有 ERROR。这里引用既有报告，不宣称当前远程状态相同或已修复。
+本轮读取基线 HEAD：8238c6e6380fd605ec84cc5267f38de875f6d647。
+以下 SHA256 和大小来自该 HEAD 的 LFS 指针文本，不是本轮计算的本地内容哈希：
+
+1. D:\Project\Yukkuri\src\Yukkuri.Game\Assets\Art\sanctuary-morning.png
+   预期 SHA256：1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024
+   预期大小：2846992 字节；本地文件长度：2846992 字节。
+2. D:\Project\Yukkuri\src\Yukkuri.Game\Assets\pipeline-probe.glb
+   预期 SHA256：8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352
+   预期大小：98908 字节；本地文件长度：98908 字节。
+3. D:\Project\Yukkuri\assets-source\pipeline-probe.blend
+   预期 SHA256：2d187b80047d24ddd1df7132f2ff4a8a7595e18a420d60e31c0426a6187b4fcb
+   预期大小：641206 字节；本地文件长度：641206 字节。
+
+长度一致只说明存在可供恢复核对的候选原件，不证明内容一致、格式有效或远端已收到。本轮未上传、复制、重生成或修改这些文件。协调者应按既有素材迁移流程处理，远程收件后核对完整身份与导入日志；不得把本地副本称为远程环境，也不应用冻结 art03 替代当前源码。
+
+仍未完成
+勺沿和饭团接缝已做源码修补，实际像素效果、接触与性能未确认。远程应观察空勺与有饭勺的侧面/背面、完整递食与吃完后空勺、盘中饭团，运行既有勺子避让脸部的几何检查并补核两处边界。默认小院角色、饰品、手部与场景的总体美术效果仍需独立远程机器观察；本轮未调整这些造型，也未验收画面。

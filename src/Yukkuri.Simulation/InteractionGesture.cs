@@ -39,6 +39,7 @@ public sealed partial class WorldSimulation
     public InteractionAction? CurrentInteractionAction => _interactionGesture?.Input.Action;
     public double InteractionGestureSeconds => _interactionGesture?.Elapsed ?? 0;
     public bool InteractionGestureOwnsPose=>_interactionGesture is { Refused:false } g&&
+        State.Creatures.Find(o=>o.Id==g.TargetId) is { Condition:not PhysicalCondition.Dead }&&
         (g.ContactActive||g.Input.Action is InteractionAction.Lift or InteractionAction.Throw or InteractionAction.AdjustHanging or InteractionAction.Tease or InteractionAction.Roll)&&
         (g.Input.Action switch
         {
@@ -525,6 +526,8 @@ public sealed partial class WorldSimulation
         // Cleanup belongs to the object on which the gesture began, even if the view changed.
         var c = State.Creatures.Find(o=>o.Id==g.TargetId);
         if (c == null) return g.Last;
+        if(c.Condition==PhysicalCondition.Dead)
+        {NormalizeDeadInteractionSupport(c);cancelled=true;}
         var i = c.Interaction;
         if(g.Input.Action==InteractionAction.Roll)i.EndRoll();
         if(g.Input.Action==InteractionAction.Tease)

@@ -1,3 +1,8 @@
+[2026-10-30 00:07 +08 最新接续入口，优先于下文历史状态]
+本轮八聊天并行收口见 planning/stages/core-sprint-20261029-20m/SUMMARY.md、PLAN.md、review.md；完整策划书见 planning/game-design-20261029.txt。
+第一批源码 8dc072d2c71c33a445d6503d1c5ac865dd444411 已推送；第二批死亡支撑、美术与默认音频接线及策划书随本入口提交。准确版本以包含本入口的 Git 提交和后续日志为准。
+测试请求为 dot-v5-core-sprint-20261029，旧 c03/v2 不覆盖本轮。全部新改动仅静态审查，未在本机编译、运行、测试或预览。原机禁令和冻结 art03 保持。
+既有试玩聊天的托举/视角/生理及界面改动另留工作区，交接 playtest-additions.md；不能声称工作区干净或将其计入本轮提交。M01 玩法仍待返工，完整目标和用户验收未完成。
 
 [2026-10-29 23:23 +08 最新入口]
 先读根目录 START-HERE.txt 和 AGENTS.md，再读 planning/stages/static-polish-20261029-10h/STATUS.md、PLAN.md、integration.md 及 testing/request.json。

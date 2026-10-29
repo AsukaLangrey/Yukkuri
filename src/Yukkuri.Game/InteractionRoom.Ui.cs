@@ -245,7 +245,7 @@ public partial class InteractionRoom
         var slots=Row(_modalContents);for(int n=1;n<=3;n++){int slot=n;slots.AddChild(Button("槽位 "+n,()=>{_slot=slot;ShowSettings();},n==_slot));}
         var actions=Row(_modalContents);actions.AddChild(Button("保存到槽位 "+_slot,()=>{if(SaveRoom(_slot))CloseModal();else ShowModalMessage(_message);}));actions.AddChild(Button("读取槽位 "+_slot,()=>LoadRoom(_slot)));
         _modalContents.AddChild(Button("读取最近的自动存档",()=>LoadRoom(0)));
-        _modalContents.AddChild(Button(_muted?"声音：关":"声音：开",()=>{_muted=!_muted;if(_muted)_sound.Stop();ShowSettings();}));
+        _modalContents.AddChild(Button(_muted?"声音：关":"声音：开",()=>{SetRoomMuted(!_muted);ShowSettings();}));
         _modalContents.AddChild(Button(Sim.State.Settings.LethalInjuries?"致命后果：开":"致命后果：关",()=>{Sim.State.Settings.LethalInjuries=!Sim.State.Settings.LethalInjuries;ShowSettings();}));
         _modalContents.AddChild(Button("重新开一间小院",()=>
         {

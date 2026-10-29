@@ -20,14 +20,15 @@ public static class InteractionFoodArt
         InteractionToolArt.Surface(parent,8,16,(u,v)=>V(InteractionFoodSurface.SpoonHandle(1))+new Vector3(Mathf.Sin(u*Mathf.Pi)*Mathf.Cos(v*Mathf.Tau),Mathf.Cos(u*Mathf.Pi),Mathf.Sin(u*Mathf.Pi)*Mathf.Sin(v*Mathf.Tau))*.014f,"ba9a74");
         var portion=new Node3D();parent.AddChild(portion);
         InteractionToolArt.Surface(portion,14,64,(u,v)=>V(InteractionFoodSurface.HandMeal(u,v*Mathf.Tau)),"e6d3a8");
-        InteractionToolArt.Surface(portion,8,48,(u,v)=>V(InteractionFoodSurface.HandMeal(u,v*Mathf.Tau,true)),"d7c297",true);
+        // Match the side wall's angular vertices so the underside has no gaps.
+        InteractionToolArt.Surface(portion,8,64,(u,v)=>V(InteractionFoodSurface.HandMeal(u,v*Mathf.Tau,true)),"d7c297",true);
         InteractionToolArt.Surface(portion,2,64,(u,v)=>V(InteractionFoodSurface.MealEdge(u,v*Mathf.Tau,true)),"dfcaa0",true);
         Crumbs(portion,false,true);return portion;
     }
     private static void Mound(Node3D parent)
     {
         InteractionToolArt.Surface(parent,14,64,(u,v)=>V(InteractionFoodSurface.Meal(u,v*Mathf.Tau)),"e6d3a8");
-        InteractionToolArt.Surface(parent,8,48,(u,v)=>V(InteractionFoodSurface.Meal(u,v*Mathf.Tau,true)),"d7c297",true);
+        InteractionToolArt.Surface(parent,8,64,(u,v)=>V(InteractionFoodSurface.Meal(u,v*Mathf.Tau,true)),"d7c297",true);
         InteractionToolArt.Surface(parent,2,64,(u,v)=>V(InteractionFoodSurface.MealEdge(u,v*Mathf.Tau)),"dfcaa0",true);
         Crumbs(parent,false);
     }

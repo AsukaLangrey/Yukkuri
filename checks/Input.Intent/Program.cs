@@ -484,6 +484,50 @@ Check("refusal gives pose ownership back after its actual response settles",()=>
     for(int n=0;n<50;n++)s.AdvanceInteractionPresentation(.1);
     Require(InteractionPresentation.Pose(c)!="slap","finished strike kept replaying while button stayed held");
 });
+Check("death during held or released lift frees support without replaying death",()=>
+{
+    foreach(bool held in new[]{false,true})
+    {
+        var s=Fresh();var c=s.Selected!;var other=s.State.Creatures.First(o=>o.Id!=c.Id);
+        for(int n=0;n<10;n++)s.Hurt(c,10,"support regression",null);
+        Require(c.Condition==PhysicalCondition.Critical,"fixture did not enter critical countdown");
+        Require(s.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,Height:2)).Success,"critical creature could not be supported");
+        if(!held)s.EndInteractionGesture();
+        Require(c.Interaction.Carried,"normal live lift release lost support");
+        for(int n=0;n<920;n++){s.AdvanceInteractionPresentation(.1);s.Advance(.1);}
+        int deaths=s.State.Incidents.Count(e=>e.Kind==IncidentKind.Death);
+        Require(c.Condition==PhysicalCondition.Dead&&c.Health==0&&deaths==1,"critical timeout did not produce exactly one death");
+        Require(!c.Interaction.Carried&&!c.Interaction.Falling&&!c.Interaction.Lowering&&c.Interaction.Height==0&&
+            c.Interaction.VerticalVelocity==0&&c.Interaction.VelocityX==0&&c.Interaction.VelocityZ==0&&!s.InteractionGestureOwnsPose,
+            "dead creature retained hand support or aerial motion");
+        s.EndInteractionGesture();s.EndInteractionGesture();s.Hurt(c,10,"repeat",null);
+        Require(s.State.Incidents.Count(e=>e.Kind==IncidentKind.Death)==deaths,"cleanup repeated death");
+        Require(!s.BeginInteractionGesture(c.Id,new(InteractionAction.Lift)).Success,"death cleanup reopened ordinary interaction");
+        Require(s.BeginInteractionGesture(other.Id,new(InteractionAction.Lift)).Success,"dead support blocked another lift");
+        s.EndInteractionGesture(true);
+        Require(other.Interaction.Carried,"cancelling a living lift no longer preserves support");
+        Require(s.ExecuteInteraction(other.Id,new(InteractionAction.PutDown,X:other.X,Z:other.Z)).Success,"living support could not be put down");
+        var hanging=s.State.Creatures.First(o=>o.Id!=c.Id&&o.Id!=other.Id);
+        hanging.Interaction.Restraint=RestraintKind.Hanging;hanging.Interaction.Height=2;
+        Require(s.ExecuteInteraction(hanging.Id,new(InteractionAction.Lower)).Success,"dead support blocked hanging rescue");
+    }
+});
+Check("loading a valid legacy dead carried state normalizes support without new events",()=>
+{
+    var s=Fresh();var c=s.Selected!;s.Hurt(c,200,"legacy fixture",null);
+    Require(c.Condition==PhysicalCondition.Dead,"fixture never died");
+    c.Interaction.Carried=true;c.Interaction.Height=2;c.Interaction.VerticalVelocity=1;c.Interaction.VelocityX=.5;
+    string json=JsonSerializer.Serialize(s.State,SaveStore.JsonOptions);
+    var state=JsonSerializer.Deserialize<WorldState>(json,SaveStore.JsonOptions)!;SaveStore.Validate(state);
+    int incidents=state.Incidents.Count,journal=state.Journal.Count;var loaded=new WorldSimulation(state);var dead=loaded.Selected!;
+    Require(dead.Condition==PhysicalCondition.Dead&&dead.Health==0&&!dead.Interaction.Carried&&dead.Interaction.Height==0&&
+        !dead.Interaction.Falling&&!dead.Interaction.Lowering&&dead.Interaction.VerticalVelocity==0&&dead.Interaction.VelocityX==0,
+        "loading retained support or revived the deceased");
+    _=new WorldSimulation(state);
+    Require(state.Incidents.Count==incidents&&state.Journal.Count==journal,"load cleanup emitted or repeated death events");
+    var other=state.Creatures.First(o=>o.Id!=dead.Id);
+    Require(loaded.BeginInteractionGesture(other.Id,new(InteractionAction.Lift)).Success,"legacy dead support blocked a living lift");
+});
 var report=new{at=DateTimeOffset.UtcNow,scope="Pure .NET production contact math and simulation; timestamped fixtures are synthetic, not captured user input; no game or native input",success=failures==0,failures,results,replays};
 if(args.Length>0){Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(args[0]))!);File.WriteAllText(args[0],JsonSerializer.Serialize(report,new JsonSerializerOptions{WriteIndented=true}));}
 Console.WriteLine($"Input intent: {results.Count-failures}/{results.Count}");return failures==0?0:1;

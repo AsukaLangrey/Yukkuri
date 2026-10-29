@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Yukkuri.Simulation;
-using OilExpression = Yukkuri.Simulation.Expression;
 
 public partial class InteractionRoom : Node3D
 {
@@ -14,14 +13,12 @@ public partial class InteractionRoom : Node3D
     private SaveStore _saves=null!;
     private readonly Dictionary<string,CreatureActor> _actors=new();
     private readonly Dictionary<string,Node3D> _objects=new();
-    private readonly Dictionary<string,int> _heardReactions=new();
     private Node3D _yard=null!,_hand=null!,_player=null!,_closeFloor=null!;
     private Node3D _woodland=null!;
     private readonly Dictionary<string,int> _shownFoodPortions=new();
     private readonly Dictionary<string,MeshInstance3D> _groundCupWater=new();
-    private AudioStreamPlayer _sound=null!;
-    private bool _ready,_muted,_recovered,_windowFocused;
-    private double _uiClock,_autoClock,_elapsed,_lastSound;
+    private bool _ready,_recovered,_windowFocused;
+    private double _uiClock,_autoClock,_elapsed;
     private int _slot=1;
     private float _force=.25f,_height=.8f,_zoom=16;
     private InteractionAction _action=InteractionAction.Greet;
@@ -58,7 +55,7 @@ public partial class InteractionRoom : Node3D
                 AmbientLightColor=new Color("f3ead8"),AmbientLightEnergy=.30f,TonemapMode=Godot.Environment.ToneMapper.Linear}});
             AddChild(new DirectionalLight3D{RotationDegrees=new(-48,-28,0),LightEnergy=.34f,ShadowEnabled=true});
             BuildYard();BuildRoomUi();BuildActors();DisarmTool();
-            _sound=new AudioStreamPlayer{VolumeDb=-20};AddChild(_sound);
+            InitializeRoomAudio();
             _windowFocused=GetWindow().HasFocus();
             GetWindow().FocusEntered+=()=>{_windowFocused=true;};
             GetWindow().FocusExited+=()=>
@@ -261,36 +258,6 @@ public partial class InteractionRoom : Node3D
     {
         if(result.Message.Length>0)_message=result.Message;
     }
-    private void PlayRoomReactionVoice()
-    {
-        if(_muted)
-        {
-            // Muted reactions are intentionally silent, not queued for unmuting.
-            foreach(var c in Sim.State.Creatures)_heardReactions[c.Id]=c.ReactionSerial;
-            return;
-        }
-        if(_elapsed-_lastSound<=.65)return;
-        Creature? speaking=null;string path="";int bestPriority=-1;
-        foreach(var c in Sim.State.Creatures)
-        {
-            if(!_actors.TryGetValue(c.Id,out var actor)||!actor.Visible||c.ReactionRemaining<=0||
-                c.Speech.Length==0||c.Condition==PhysicalCondition.Dead)continue;
-            if(c.Interaction.ReactionSituation is "prepare-natural-food" or "prepare-natural-water")continue;
-            if(_heardReactions.TryGetValue(c.Id,out int serial)&&serial==c.ReactionSerial)continue;
-            int priority=c.Expression is OilExpression.Hurt or OilExpression.Frightened?100:
-                c.Expression==OilExpression.Calling?80:c.Interaction.ReactionRefused?60:20;
-            if(c.Id==Sim.State.SelectedId)priority++;
-            if(priority<=bestPriority)continue;
-            string candidatePath="res://Assets/Audio/"+InteractionPresentation.VoiceCue(c)+".wav";
-            if(!ResourceLoader.Exists(candidatePath))continue;
-            speaking=c;path=candidatePath;bestPriority=priority;
-        }
-        if(speaking==null)return;
-        _sound.Stream=GD.Load<AudioStream>(path);_sound.Play();_lastSound=_elapsed;
-        // Other current reactions remain eligible after the interval, until they expire.
-        _heardReactions[speaking.Id]=speaking.ReactionSerial;
-    }
-
     private bool SaveRoom(int slot,bool announce=true)
     {
         try

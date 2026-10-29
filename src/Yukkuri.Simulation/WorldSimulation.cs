@@ -9,7 +9,10 @@ public sealed partial class WorldSimulation
         State = state; Config = state.InteractionPlaytest ? new() { HungerPerSecond = .025, EnergyPerSecond = .02, MoveSpeed = .72 } : state.MilestoneScenario ? MilestoneConfig() : config ?? new();
         if(state.InteractionPlaytest)
             foreach(var c in state.Creatures)
+            {
                 if(c.Interaction.Restraint==RestraintKind.Hand)c.Interaction.Restraint=RestraintKind.None;
+                NormalizeDeadInteractionSupport(c);
+            }
     }
     public Creature? Selected => State.Creatures.Find(c => c.Id == State.SelectedId);
     public RegionState ActiveRegion => State.Regions.Single(r => r.Id == State.ActiveRegionId);

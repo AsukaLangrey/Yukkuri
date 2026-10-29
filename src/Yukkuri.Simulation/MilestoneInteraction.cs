@@ -160,12 +160,25 @@ public sealed partial class WorldSimulation
     {
         if(c.Condition==PhysicalCondition.Dead)return;
         c.Condition=PhysicalCondition.Dead;c.Health=0;c.Speech="";c.Expression=Expression.Exhausted;c.Activity="已死亡";
+        NormalizeDeadInteractionSupport(c);
         RefreshHelpAfterResolution(c);
         c.LastReaction="再也没有回应。";c.ReactionSerial++;
         var e=Emit(IncidentKind.Death,c,null,$"{c.Name}因{cause}死亡",10);
         foreach(var witness in State.Creatures.Where(w=>w.Id!=c.Id&&Knows(w,e.Id)))
         {witness.Fear=Clamp100(witness.Fear+8);Remember(witness,e,$"目睹{c.Name}离去。",10);}
         Log($"{c.Name}已经无法恢复。你可以继续照顾其他油库里，或读取此前存档。");
+    }
+    private void NormalizeDeadInteractionSupport(Creature c)
+    {
+        var i=c.Interaction;
+        if(c.Condition!=PhysicalCondition.Dead||!i.Carried&&!i.Lowering)return;
+        // Death and loading share support cleanup, without replaying damage or
+        // a death incident. Fixed devices remain separate from the player's hand.
+        i.Carried=false;i.Lowering=false;i.Falling=false;i.Height=0;
+        i.VerticalVelocity=0;i.VelocityX=0;i.VelocityZ=0;
+        if(i.Restraint==RestraintKind.Hand)i.Restraint=RestraintKind.None;
+        ClearLandingOverlap(c);
+        c.TargetX=c.X;c.TargetZ=c.Z;
     }
     private InteractionResult Treat(Creature c,ContactRequest request)
     {
