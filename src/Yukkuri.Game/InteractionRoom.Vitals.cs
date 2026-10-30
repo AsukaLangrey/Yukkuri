@@ -7,6 +7,9 @@ public partial class InteractionRoom
     private Label _fullnessLabel=null!,_thirstLabel=null!,_healthLabel=null!;
     private ProgressBar _fullnessMeter=null!,_thirstMeter=null!;
     private StyleBoxFlat _fullnessFill=null!,_thirstFill=null!;
+    private Label _comfortLabel=null!,_trustLabel=null!,_lifeLabel=null!,_fearLabel=null!,_continuityLabel=null!,_personalityLabel=null!;
+    private ProgressBar _comfortMeter=null!,_trustMeter=null!,_lifeMeter=null!,_fearMeter=null!;
+    private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
     {
         var meters=Column(parent,5);
@@ -15,6 +18,20 @@ public partial class InteractionRoom
         _thirstLabel=Text("口渴度",13);meters.AddChild(_thirstLabel);
         _thirstMeter=NeedMeter(meters,"7cabc0",out _thirstFill);
         _healthLabel=Text("身体状态：正常",14);meters.AddChild(_healthLabel);
+        _personalityLabel=Text("",12,"78816e");meters.AddChild(_personalityLabel);
+        var overview=new GridContainer{Columns=2,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
+        overview.AddThemeConstantOverride("h_separation",10);overview.AddThemeConstantOverride("v_separation",7);meters.AddChild(overview);
+        BuildRelationshipMeter(overview,"馒馒来", "91aa79",out _comfortLabel,out _comfortMeter,out _comfortFill);
+        BuildRelationshipMeter(overview,"信任", "779c9c",out _trustLabel,out _trustMeter,out _trustFill);
+        BuildRelationshipMeter(overview,"生命", "88a877",out _lifeLabel,out _lifeMeter,out _lifeFill);
+        BuildRelationshipMeter(overview,"恐惧", "ae8c74",out _fearLabel,out _fearMeter,out _fearFill);
+        _continuityLabel=Text("",12,"78816e");meters.AddChild(_continuityLabel);
+    }
+    private void BuildRelationshipMeter(Control parent,string name,string color,out Label label,out ProgressBar bar,out StyleBoxFlat fill)
+    {
+        var column=Column(parent,3);column.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        label=Text(name,12);column.AddChild(label);bar=NeedMeter(column,color,out fill);
+        bar.CustomMinimumSize=new(0,7);
     }
     private ProgressBar NeedMeter(Control parent,string color,out StyleBoxFlat fill)
     {
@@ -35,6 +52,26 @@ public partial class InteractionRoom
             HealthStatus.Dead=>"死亡",HealthStatus.Critical=>"重伤 · 急需救治",
             HealthStatus.Recovering=>"恢复中",HealthStatus.Injured=>"受伤",_=>"正常"
         });
+        var personality=c.Personality;
+        _personalityLabel.Text="性情："+(personality.Kindness>=.65?"友善":personality.Kindness<.25?"自私":"随和")+
+            (personality.Carelessness>=.5?" · 粗心":personality.Carelessness<.2?" · 谨慎":"")+
+            (personality.Pride>=.75?" · 傲慢":"");
+        double comfort=Math.Clamp(c.Interaction.Emotion.Manmanlai,0,100),trust=Math.Clamp(c.Trust,0,100);
+        double health=Math.Clamp(c.Health,0,100),fear=Math.Clamp(c.Fear,0,100);
+        _comfortLabel.Text=$"馒馒来 {comfort:0}";_comfortMeter.Value=comfort;
+        _trustLabel.Text=$"信任 {trust:0}";_trustMeter.Value=trust;
+        _lifeLabel.Text=$"生命 {health:0}";_lifeMeter.Value=health;
+        _fearLabel.Text=$"恐惧 {fear:0}";_fearMeter.Value=fear;
+        _comfortFill.BgColor=new Color(comfort<30?"b88a71":"91aa79");
+        _trustFill.BgColor=new Color(trust<20?"a79b87":"779c9c");
+        _lifeFill.BgColor=new Color(health<35?"b86e61":"88a877");
+        _fearFill.BgColor=new Color(fear>50?"b86e61":"ae8c74");
+        var emotion=c.Interaction.Emotion;var water=c.Interaction.Water;
+        _continuityLabel.Text=c.Condition==PhysicalCondition.Dead?"生命已经结束，经历和关系记录仍保留。":
+            WaterEnvironment.IsInWater(Sim.State,c)?$"落水 {water.ExposureSeconds:0} 秒 · 挣扎 {water.Struggle:0}\n拿救援用品点击它，可尝试带回岸上。":
+            water.RecoverySeconds>0?$"已经离水，仍在恢复 · 余下 {water.RecoverySeconds:0} 秒\n先擦干并检查伤势。":
+            emotion.Alarm>=12?$"惊惧余波 {emotion.Alarm:0} · 需要持续安全\n愿意接近食物，也可能仍然害怕。":
+            "0—100：馒馒来是当前心情；信任取决于相处经历。";
     }
     private static string WasteLabel(RoomObject obj)=>obj.Kind==RoomObjectKind.Urine?"尿液 · Del 清理":"粪便 · Del 清理";
     private static void BuildWaste(Node3D root,RoomObjectKind kind)

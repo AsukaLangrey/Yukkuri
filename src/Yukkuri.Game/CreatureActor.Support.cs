@@ -31,7 +31,11 @@ public partial class CreatureActor
     private void RememberSupportMeshes(Node root)
     {
         foreach(var child in root.GetChildren())
-        {if(child is MeshInstance3D m)_supportMeshes.Add(m);RememberSupportMeshes(child);}
+        {
+            // A flexible reproductive stem must not become a rigid floor support.
+            if(child==_gestationPlant)continue;
+            if(child is MeshInstance3D m)_supportMeshes.Add(m);RememberSupportMeshes(child);
+        }
     }
     private void KeepBodyAboveSupport(float floor)
     {

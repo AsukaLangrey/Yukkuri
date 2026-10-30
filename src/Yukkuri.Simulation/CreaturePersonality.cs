@@ -126,11 +126,32 @@ public sealed partial class WorldSimulation
         }
     }
 
+    private void StopHungerAggression(Creature c,string reason)
+    {
+        c.Personality.HungerTargetId=null;
+        c.Personality.NextHungerConflictAt=Math.Max(c.Personality.NextHungerConflictAt,State.WorldSeconds+30);
+        c.TargetX=c.X;c.TargetZ=c.Z;c.Family.LastEvent=reason;
+    }
+
+    // Contact changes during close-up must cancel the intent even while world time is frozen.
+    private void SynchronizeHungerThreat(Creature c)
+    {
+        if(c.Personality.HungerTargetId==null)return;
+        var target=State.Creatures.Find(o=>o.Id==c.Personality.HungerTargetId);
+        if(c.Fullness>=12||c.Personality.Kindness>=.25||!CanSelfMove(c)||c.Family.ColdStorage.Stored||
+            c.Energy<10||c.Interaction.EatingRemaining>0||c.Fear>=65||c.Pain>=40||
+            c.Family.FlightRemaining>0||c.Interaction.Physiology.Active||FamilyRules.UnderIntervention(c)||
+            InteractionGestureTarget==c.Id||target==null||target.Family.ColdStorage.Stored||target.Family.Memorialized||
+            target.Interaction.Carried||!FamilyVisible(c,target,4)||WaterEnvironment.IsInWater(State,target))
+            StopHungerAggression(c,"饥饿袭击被隔开或身体状态打断，已有伤势与记忆仍保留");
+    }
+
     private bool TryHungerAggression(Creature c,double dt)
     {
         var p=c.Personality;
         if(c.Fullness>=12||p.Kindness>=.25||!CanSelfMove(c)||c.Energy<10||
-            c.Interaction.EatingRemaining>0||c.Fear>=65||c.Pain>=40||FamilyRules.UnderIntervention(c))
+            c.Interaction.EatingRemaining>0||c.Fear>=65||c.Pain>=40||FamilyRules.UnderIntervention(c)||
+            c.Family.FlightRemaining>0||c.Family.Conflict.TargetId!=null||c.Family.ChildThreat.TargetId!=null)
         {p.HungerTargetId=null;return false;}
         if(p.HungerTargetId==null)
         {
@@ -151,6 +172,19 @@ public sealed partial class WorldSimulation
         if(target==null||target.Family.ColdStorage.Stored||target.Family.Memorialized||
             target.Interaction.Carried||!FamilyVisible(c,target,4)||WaterEnvironment.IsInWater(State,target))
         {p.HungerTargetId=null;return false;}
+        var protector=target.Condition==PhysicalCondition.Dead?null:State.Creatures
+            .Where(o=>o!=c&&o!=target&&o.Personality.Kindness>=.65&&o.Courage>=.55&&
+                CanProtectFamily(o)&&FamilyInContact(o,target)&&FamilyVisible(o,c,2.5))
+            .OrderBy(o=>o.Id,StringComparer.Ordinal).FirstOrDefault();
+        if(protector!=null)
+        {
+            StopHungerAggression(c,$"{protector.Name}护住了{target.Name}，饥饿袭击被隔开");
+            var safety=FamilyBond(target,protector);
+            safety.Affection=Clamp100(safety.Affection+4);safety.LastEvent="在危险靠近时护住了自己";
+            protector.Family.LastEvent=$"护住{target.Name}，仍需要人类处理饥饿与安全距离";
+            React(protector,Expression.Angry,"不许伤害它！","守在同伴身边，阻止了这次靠近。",5);
+            return true;
+        }
         c.Activity=$"饥饿地逼近{target.Name}";
         if(!FamilyInContact(c,target)){RoomMove(c,target.X,target.Z,dt);return true;}
         if(State.WorldSeconds<p.NextHungerStrikeAt)return true;
@@ -171,7 +205,19 @@ public sealed partial class WorldSimulation
         bond.LastHarmAt=State.WorldSeconds;bond.LastEvent="遭到饥饿中的同伴袭击";
         Emit(IncidentKind.Attack,target,c.Id,$"{c.Name}因极度饥饿袭击了{target.Name}",8);
         State.HelpTargetId=target.Id;
-        if(target.Condition!=PhysicalCondition.Dead)React(target,Expression.Calling,"不要！救救我！","遭到饥饿同伴袭击，试图寻求人类保护。",5);
+        if(target.Condition!=PhysicalCondition.Dead)
+        {
+            React(target,Expression.Calling,"不要！救救我！","遭到饥饿同伴袭击，试图退开并寻求人类保护。",5);
+            if(CanSelfMove(target))
+            {
+                double dx=target.X-c.X,dz=target.Z-c.Z;
+                if(Math.Abs(dx)+Math.Abs(dz)<.001)dx=1;
+                double distance=Math.Sqrt(dx*dx+dz*dz);
+                target.Family.FlightX=Math.Clamp(target.X+dx/distance*3,-7,7);
+                target.Family.FlightZ=Math.Clamp(target.Z+dz/distance*3,-7,7);
+                target.Family.FlightRemaining=5;
+            }
+        }
         return true;
     }
 }

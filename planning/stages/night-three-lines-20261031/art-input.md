@@ -49,3 +49,19 @@
 新增：InteractionRoom.Offering.cs、InteractionRoom.HitFeedback.cs、InteractionRoom.RescueTool.cs、CreatureActor.FaceMotion.cs、CreatureActor.Water.cs、CreatureActor.Heat.cs。
 
 文档：本文件、asset-research.md。候选素材：assets-source/night-20261031/candidates/ 下 grass.glb、rock_largeA.glb、flower_yellowA.glb、Kenney-Nature-License.txt。完整kenney-nature-kit.zip为本地来源存证，不纳入首批Git提交。
+
+## 第二批：孕育本体与材质（01:40）
+
+- 新增 CreatureActor.Gestation.cs：茎生按照模拟的孕育进度长出连接头表面的弯茎、叶片和2—3颗幼芽，芽的大小连续增加；胎生按照进度和Burden缓慢扩张身体、增加负担呼吸和轻微前倾，恢复期渐退。临危、死亡、有效落水身体优先，不叠加胎生形变。
+- 分娩短反馈只在 SynchronizeFamilyActors 发现带有效 BirthEventId 的真实新增幼体时触发；母体短收缩、幼体短落稳。加载存档通过 BuildActors 一起创建，不播放假出生。Recovering本身不会触发分娩，因此失败恢复不会伪装成生产成功。
+- 时序复核：实际生产不清旧ReactionPose，母体短反馈保留最多4秒等待窗口，仅安全settled姿势时消耗1.25秒动作时间；暂停同时冻结窗口和动作，过期不补播，不抢临危/死亡/托举/固定/水中的身体控制。
+- 茎体是随本体运动的表现层，不参与地面支撑判定，不改变现有头/嘴/底部接触表面，也不声称已经提供单独触碰幼芽的交互。落水/临危姿态仍由其原优先级控制。
+- Family面板接已存在的 BreedingInductionReason / InduceBreedingInterest / CourtshipTools；展示兴趣、剩余时间、资格理由和实际用品库存。执行走原关闭临时暂停包装，原本暂停时禁用；购买调用主协调的 ShowCourtshipSupplies。
+- 皮肤保留原 SphereMesh，仅在独立材质上使用纵向奶油色渐变、较高粗糙度和低镜面反射；后发壳增加细微发束明暗，发束根部和末端渐暗。未改变原外轮廓、射线或地面支撑算法。
+- API静态查证：Godot官方 GradientTexture2D 与 BaseMaterial3D 文档；未运行引擎或渲染。头饰与茎叶在各姿态下的可见关系、真实材质色彩、出生动效仍需远机观察，不能据源码宣称画面已通过。
+
+本批文件：修改 CreatureActor.cs、CreatureActor.Interaction.cs、CreatureActor.Support.cs、CreatureActor.Sculpt.cs、InteractionRoom.Family.cs；新增 CreatureActor.Gestation.cs、CreatureActor.Materials.cs；文档为本文件。未改主协调Ui/Debug/Vitals/Supplies，未改Simulation和检查文件。
+
+接口文档来源：
+- https://docs.godotengine.org/en/4.4/classes/class_gradienttexture2d.html
+- https://docs.godotengine.org/en/4.4/classes/class_basematerial3d.html

@@ -54,7 +54,13 @@ public partial class CreatureActor
     private void BuildBackHair(Node3D parent,string color)
     {
         SculptSurface(parent,ActorHairSurface.BackRows,ActorHairSurface.BackSides,
-            (u,v)=>AccessoryPoint(ActorHairSurface.Shell(u,v)),color);
+            (u,v)=>AccessoryPoint(ActorHairSurface.Shell(u,v)),color,(u,v)=>
+            {
+                float ridge=Mathf.Cos(v*Mathf.Tau*14+u*.7f)*.027f;
+                float crown=Mathf.Sin(u*Mathf.Pi)*.07f;
+                float tips=Mathf.SmoothStep(.70f,1,u)*.10f;
+                return new Color(1+ridge+crown-tips,1+ridge+crown*.8f-tips,1+ridge+crown*.6f-tips);
+            });
         SculptSurface(parent,2,ActorHairSurface.BackSides,(u,v)=>
             AccessoryPoint(System.Numerics.Vector3.Lerp(ActorHairSurface.Shell(1,v),ActorHairSurface.Shell(1,v,true),u)),color);
     }
@@ -71,7 +77,8 @@ public partial class CreatureActor
         SculptSurface(parent,20,32,(u,v)=>AccessoryPoint(ActorHairSurface.Point(Section(u),v)),color,(u,v)=>
         {
             float glow=Mathf.Pow(Mathf.Max(0,Mathf.Sin(v*Mathf.Tau)),6)*Mathf.Sin(u*Mathf.Pi)*.17f;
-            return new Color(1+glow,1+glow*.85f,1+glow*.65f);
+            float root=Mathf.Pow(1-u,3)*.07f,tip=Mathf.SmoothStep(.78f,1,u)*.08f;
+            return new Color(1+glow-root-tip,1+glow*.85f-root-tip,1+glow*.65f-root-tip);
         });
         // A restrained highlight follows the lock's direction, rather than painting another round blob.
         var highlight=SceneArt.Mat(color).AlbedoColor.Lightened(.08f).ToHtml(false);

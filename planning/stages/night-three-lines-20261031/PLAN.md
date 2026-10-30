@@ -3,6 +3,8 @@
 用户在本聊天逐条给出以下11项要求，随后明确今晚三条线并行、每15分钟守护，并追加7小时Goal。本轮开始：2026-10-31 01:00:35 +08:00；计划截止：08:00:35 +08:00。Goal已创建active，时间以此记录及工具为准；不能把启动、等待或文档交付说成七小时开发已完成。
 基线：c4f654f267ff36d51ce6c50c44d99c4f63bc478a。已发布源码包不覆盖、不重写。工作区原有AGENTS.md通信记录改动须保留，不能混入本轮提交。
 
+当前代理映射（01:49恢复后）：A=`/root/gameplay_2`，B=`/root/art_input_2`，C=`/root/guardian_2`。原三代理在主协调的权威list_agents中全部缺失，已用同文件归属恢复；下文原角色名称表示职责，守护以本行及实际运行列表为准。不要重启旧名字造成重复写入。
+
 ## 用户要求完整清单
 
 1. 持续提升美术精细度；人类手的样式先不要，聚焦油与其交互；上网找合适低面资源。
@@ -26,7 +28,7 @@
 - 维护本目录 gameplay.md，记录具体修改、公开接口、未覆盖与静态审查。每批20—40分钟形成可交接单元，不得靠只写方案替代已授权开发，不因无本机执行停下。
 
 ### B 美术、物理与手感（art_input 子代理）
-- 拥有 src/Yukkuri.Game/，但排除 InteractionRoom.Ui.cs、InteractionRoom.Vitals.cs、InteractionRoom.Debug.cs及所有新Debug专用文件（主协调专用）。拥有 assets-source/ 本轮资源研究记录和新增已核实可用素材。
+- 拥有 src/Yukkuri.Game/，但排除 InteractionRoom.Ui.cs、InteractionRoom.Vitals.cs、InteractionRoom.Debug.cs、InteractionRoom.Supplies.cs及所有新Debug专用文件（主协调专用）。拥有 assets-source/ 本轮资源研究记录和新增已核实可用素材。
 - 不写 Simulation/ 或 checks/；物理规则改动由A，B负责可见接触/运动/输入接线并明确接口约定。
 - 重点工具+鼠标操作、移除人类手外观但保留直接交互、连续表情与姿态/动作过渡、水域与孕育表现。先完善现有程序化资产系统，外部低面资源先研究兼容性/许可/来源，不擅自付费。
 - 必须真实上网查资源；不能把搜索结果当已下载或已集成，不能因无渲染就声称美术效果已验证。禁止本机Blender/Godot等运行。

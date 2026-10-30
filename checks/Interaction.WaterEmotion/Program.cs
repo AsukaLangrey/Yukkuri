@@ -230,5 +230,45 @@ Check("support migration settles water immediately even in close-up",()=>
     Clone(sim);
 });
 
+Check("human interruption stops hunger pursuit without feeding or healing",()=>
+{
+    var sim=Fresh();var attacker=sim.Selected!;var victim=AddNeighbor(sim,"受害者",1,0);
+    attacker.Personality.Initialized=true;attacker.Personality.Kindness=.05;attacker.Fullness=5;
+    attacker.Personality.HungerTargetId=victim.Id;attacker.Personality.NextHungerStrikeAt=0;
+    double health=victim.Health;
+    sim.State.Settings.Pause=true;sim.InterruptFamilyConflict(attacker.Id);
+    Require(attacker.Personality.HungerTargetId==victim.Id,"paused interruption mutated intent");
+    sim.State.Settings.Pause=false;sim.InterruptFamilyConflict(attacker.Id);
+    Require(attacker.Personality.HungerTargetId==null&&attacker.Personality.NextHungerConflictAt>=30,"spoken intervention failed to leave time to feed or separate");
+    Require(attacker.Fullness==5&&victim.Health==health,"interruption invented food or healing");
+    Seconds(sim,2);Require(victim.Health>=health,"interrupted attacker resumed before grace period");
+});
+
+Check("close-up support change cancels hunger pursuit without ordinary time",()=>
+{
+    var sim=Fresh();var attacker=sim.Selected!;var victim=AddNeighbor(sim,"受害者",1,0);
+    attacker.Personality.Initialized=true;attacker.Personality.Kindness=.05;attacker.Fullness=5;
+    attacker.Personality.HungerTargetId=victim.Id;attacker.Interaction.Carried=true;attacker.Interaction.Height=1;
+    sim.State.Mode=PlayMode.CloseUp;double time=sim.State.WorldSeconds;
+    sim.AdvanceInteractionPresentation(.1);
+    Require(attacker.Personality.HungerTargetId==null&&sim.State.WorldSeconds==time,"carried attacker retained active pursuit while world time was frozen");
+});
+
+Check("nearby capable kind companion blocks starvation assault but distant one cannot",()=>
+{
+    foreach(bool near in new[]{true,false})
+    {
+        var sim=Fresh();var attacker=sim.Selected!;var victim=AddNeighbor(sim,"受害者",.8,0);
+        var protector=AddNeighbor(sim,"保护者",near?1.4:-5,near?.4:5);
+        protector.IsYoung=false;protector.Courage=.9;protector.Pain=protector.Fear=0;
+        attacker.Personality.Initialized=true;attacker.Personality.Kindness=.05;attacker.Fullness=5;
+        attacker.Personality.HungerTargetId=victim.Id;attacker.Personality.NextHungerStrikeAt=0;
+        double health=victim.Health;sim.Advance(.25);
+        Require(near?attacker.Personality.HungerTargetId==null&&victim.Health>=health:victim.Health<health,
+            "protector ignored physical reach or failed to protect at contact");
+        if(!near)Require(victim.Family.FlightRemaining>0&&victim.Interaction.Emotion.Alarm>0,"victim failed to flee or remember danger");
+    }
+});
+
 Console.WriteLine($"Water/emotion checks: {failures} failure(s).");
 return failures==0?0:1;

@@ -138,7 +138,8 @@ public sealed partial class WorldSimulation
     }
 
     private bool InterventionBodyAvailable(Creature c)=>(c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering)&&
-        !c.Family.ColdStorage.Stored&&!c.Interaction.Water.InWater&&!c.Interaction.Carried&&!c.Interaction.Falling&&!c.Interaction.Lowering&&c.Interaction.Height<=.05&&
+        !c.Family.ColdStorage.Stored&&!c.Interaction.Water.InWater&&!WaterEnvironment.IsInWater(State,c)&&
+        !c.Interaction.Carried&&!c.Interaction.Falling&&!c.Interaction.Lowering&&c.Interaction.Height<=.05&&
         c.Interaction.Restraint==RestraintKind.None&&!c.Interaction.Supine&&!c.Interaction.Physiology.Active&&
         c.Interaction.EatingRemaining<=0&&c.Interaction.ActiveCue==null&&c.Family.ColdStorage.RecoveryRemaining<=0&&
         c.Family.Conflict.TargetId==null&&c.Family.ChildThreat.TargetId==null&&InteractionGestureTarget!=c.Id;
@@ -177,6 +178,7 @@ public sealed partial class WorldSimulation
         double chance=FamilyRules.CrossEcology(mother,father)?.02:.65;
         if(Next()>=chance){CancelIntervention(mother,"强制干预没有使孕育开始，身体与关系后果仍在。");return;}
         p.Phase=PregnancyPhase.Gestating;p.EventId=NewFamilyId("birth");p.Elapsed=0;p.WaitingSeconds=0;
+        SettleBreedingInterest(mother,father);
         p.PlannedChildren=p.Method==BirthMethod.Live?1:2+(Next()<.25?1:0);
         p.NextDecisionAt=State.WorldSeconds+30;mother.Family.LastEvent="强制干预后开始孕育，需要密切照护身体与情绪。";
         RecordInteraction(mother,"forced-pregnancy",mother.Family.LastEvent,5);

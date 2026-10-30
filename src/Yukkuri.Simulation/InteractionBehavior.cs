@@ -101,6 +101,7 @@ public sealed partial class WorldSimulation
         {
             var i = c.Interaction;
             SynchronizeWaterSupport(c);
+            SynchronizeHungerThreat(c);
             i.HitRemaining=Math.Max(0,i.HitRemaining-dt);
             if(i.HitRemaining<=0)i.HitCount=0;
             if(CurrentInteractionAction!=InteractionAction.Burn||InteractionGestureTarget!=c.Id||
@@ -192,6 +193,7 @@ public sealed partial class WorldSimulation
             if (c.Condition == PhysicalCondition.Dead) continue;
             double dt=BiologicalDelta(c,worldDt);
             InitializePersonality(c);
+            SynchronizeHungerThreat(c);
             var i = c.Interaction;
             bool inWater=TickWaterExposure(c,dt);
             if(c.Condition==PhysicalCondition.Dead)continue;

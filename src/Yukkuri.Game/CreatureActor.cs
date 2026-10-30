@@ -39,6 +39,7 @@ public partial class CreatureActor : RigidBody3D
         if(marisa)hair="d8ad60";
         _skinContact=SceneArt.Ball(_visual,new(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ),
             new(ActorFaceSurface.RadiusX*2,ActorFaceSurface.RadiusY*2,ActorFaceSurface.RadiusZ*2),"ffeaca");
+        ApplyDoughMaterial(_skinContact);
         _hairContact=new Node3D();_visual.AddChild(_hairContact);
         BuildBackHair(_hairContact,hair);
         foreach(float sign in new[]{-1f,1f})BuildHairLock(_hairContact,ActorHairSurface.Side(sign),hair);

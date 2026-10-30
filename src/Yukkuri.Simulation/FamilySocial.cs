@@ -367,7 +367,13 @@ public sealed partial class WorldSimulation
                 : Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) <= 3);
         if (!canAddress)
             return "先靠近正在冲突的油，再出面制止。";
-        if (c!.Family.Conflict.TargetId == null) return "它现在没有准备动手的家庭冲突。";
+        if(c!.Personality.HungerTargetId!=null)
+        {
+            StopHungerAggression(c,"被人类及时制止饥饿袭击；仍需补充食物或隔开照看");
+            React(c,Expression.Worried,"……好饿。","停止逼近同伴，仍需解决实际饥饿。",5);
+            return "已制止这次饥饿袭击；请喂食或隔开，已有伤势与关系保留。";
+        }
+        if (c.Family.Conflict.TargetId == null) return "它现在没有准备动手的家庭冲突。";
         StopFamilyConflict(c, "被及时制止，暂时退开；受伤的关系仍需处理");
         React(c, Expression.Worried, "……先走开。", "停止靠近，留出了安全距离。", 5);
         return "已阻止这次冲突，伤势、记忆和关系不会被清空。";

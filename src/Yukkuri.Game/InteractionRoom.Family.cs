@@ -80,6 +80,14 @@ public partial class InteractionRoom
             if(!_actors.ContainsKey(c.Id))
             {
                 actor=new CreatureActor();AddChild(actor);actor.Setup(c,index,_font);_actors[c.Id]=actor;
+                // Loaded actors are created together in BuildActors. This path sees only
+                // a new child, never a pregnancy failure that also entered recovery.
+                if(c.IsYoung&&c.Family.BirthEventId is { } birth&&Sim.State.CompletedBirths.Contains(birth))
+                {
+                    actor.BeginNewbornPresentation();
+                    if(c.Family.MotherId is { } mother&&_actors.TryGetValue(mother,out var maternalActor))
+                        maternalActor.BeginBirthPresentation(c.Family.BirthMethod);
+                }
             }
             index++;
         }
@@ -147,6 +155,7 @@ public partial class InteractionRoom
         bool breeding=first.Family.AllowsBreeding;
         _modalContents.AddChild(Button(breeding?"繁殖许可：允许 · 点击禁止":"繁殖许可：禁止 · 点击允许",
             ()=>ApplyFamilyCommand(()=>Sim.SetBreedingPermission(firstId,!breeding))));
+        AddBreedingInduction(first);
 
         Creature? other=null;
         var otherOils=oils.Where(c=>c.Id!=firstId&&c.Condition!=PhysicalCondition.Dead&&HasVisibleFamilyBody(c)).ToArray();
@@ -368,6 +377,20 @@ public partial class InteractionRoom
         LeaveUnavailableCloseup();
         RefreshRoomUi();
     }
+
+    private void AddBreedingInduction(Creature c)
+    {
+        _modalContents.AddChild(Text($"繁育兴趣 {c.Family.BreedingInterest:0} / 100 · 诱导用品 {Sim.State.CourtshipTools} 份",14));
+        if(c.Family.InducedInterestRemaining>0)
+            _modalContents.AddChild(Text($"诱导影响剩余 {c.Family.InducedInterestRemaining:0} 秒；兴趣与信任、伴侣意愿分别判断。",13));
+        string? reason=Sim.BreedingInductionReason(c.Id);
+        _modalContents.AddChild(Text(reason??"身体状态允许使用一份诱导用品。之后仍需安稳相处和双方接受。",13,
+            reason==null?"78816e":"8a624e"));
+        var row=new HBoxContainer();_modalContents.AddChild(row);
+        var use=Button("使用一份诱导用品",()=>ApplyFamilyCommand(()=>Sim.InduceBreedingInterest(c.Id).Message));
+        use.Disabled=reason!=null||_pauseBeforeModal;row.AddChild(use);
+        row.AddChild(Button("购买诱导用品",()=>ShowCourtshipSupplies()));
+    }
 }
 
 // Small status symbols supplement actual expressions and motion. They are not an
@@ -397,6 +420,7 @@ internal partial class FamilyStatusMarker : Node3D
         if(!Visible)return;
         Position=motion+new Vector3(.76f*bodyScale,.80f*bodyScale,-.10f);
         _stem.Visible=p.Method==BirthMethod.Stem;_cradle.Visible=p.Method==BirthMethod.Live;
-        _label.Visible=selected;_label.Text=p.Method==BirthMethod.Stem?"茎生孕育":"胎生孕育";
+        float progress=Mathf.Clamp((float)(p.Elapsed/FamilyRules.GestationSeconds(p.Method)),0,1);
+        _label.Visible=selected;_label.Text=(p.Method==BirthMethod.Stem?"茎生孕育":"胎生孕育")+$" {progress*100:0}%";
     }
 }

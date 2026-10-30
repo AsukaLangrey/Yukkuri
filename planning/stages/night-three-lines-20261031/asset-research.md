@@ -5,7 +5,7 @@
 | 来源 | 已核实内容 | 适用方向 |
 |---|---|---|
 | [Kenney Nature Kit](https://kenney.nl/assets/nature-kit) | 作者页面 CC0；官方包内 License.txt 标注 Nature Kit 2.1、可商用。实际包有329份GLB，同时有OBJ/MTL、FBX、DAE、STL。 | 小院草丛、河岸花草/石头；优先小配件，避免替换整个既有场景。 |
-| [Kenney Food Kit](https://kenney.nl/assets/food-kit) | 作者页面200项、CC0；尚未下载，具体包内格式未核实。 | 丰富地面食物、零食与日后经营道具。 |
+| [Kenney Food Kit](https://kenney.nl/assets/food-kit) | 官方包内许可为 Food Kit 2.0、CC0；各200份GLB、FBX、OBJ/MTL，含PNG颜色图。只保留两个候选和必要颜色图/许可，不保存完整包。 | 饭团与饼干，供当前食物/零食远端选型。 |
 | [Quaternius Ultimate Stylized Nature](https://quaternius.com/packs/ultimatestylizednature.html) | 作者页面63模型，FBX/OBJ/Blend/glTF，CC0，含无缝纹理/法线贴图。未下载。 | 比基础几何丰富的树木与植被；作为需远端比较材质一致性的候选。 |
 | [Quaternius Ultimate Nature](https://quaternius.com/packs/ultimatenature.html) | 作者页面150模型，FBX/OBJ/Blend，CC0。未下载；不能误写为自带glTF。 | 较朴素的低面自然道具。若选用需在授权远端转换，原机不运行Blender。 |
 | [Quaternius Ultimate Food](https://quaternius.com/packs/ultimatefood.html) | 作者页面103模型，FBX/OBJ/Blend，CC0。未下载。 | 食品品类候选，同样先确认远端转换和尺度。 |
@@ -27,3 +27,16 @@
 原压缩包：kenney-nature-kit.zip，10,537,521字节，SHA256 FA7974A0D342BFE63C38664BA9F8EC1A4AAB8EA25F099BDC56870E33588C4D9D。完整包作为本地来源证据；主协调提交时可只选择三个候选、原许可和此记录，避免把全包当成运行依赖。
 
 保留作者许可 Kenney-Nature-License.txt。CC0 不强制署名，本项目仍保留来源记录。当前优先补油自身表现和实际交互，外部资源用于自然道具，不能把素材下载称为油美术精细度已解决。
+
+## 食物候选补充（01:44）
+
+2026-10-31通过作者页面的公开免费官方下载流程读取Food Kit 2.0。只从内存中的压缩包提取下列文件，完整食品包没有留在工作区。网页检索工具本次抓取失败，随后作者网页HTTP读取及其正常下载接口成功。
+
+| 候选 | 来源包路径 | 三角面 | 材质 | 字节 | SHA256 |
+|---|---|---:|---:|---:|---|
+| 饭团 rice-ball.glb | Models/GLB format/rice-ball.glb | 104 | 1 | 6200 | 1C68253D36C0705DA38A63226521BE1F949BD9CE4B7FF8F8529878CD0AAE6E08 |
+| 饼干 cookie.glb | Models/GLB format/cookie.glb | 68 | 1 | 7532 | 7FA0D30C679F9ABC9B884AB10509817D9F0AC813DBB1B36041F05118CA50A68A |
+
+二者放在 candidates/，各有一个外部图片引用 `Textures/colormap.png`；已按原相对路径保留这张必要颜色图（512×512、10715字节，SHA256 75BAF74D9483A0FC56AC21CEBA346FBE16FC24A2A1BF0524C53E6BBE802E1153）。不能只复制GLB而丢掉颜色图。原许可 `Kenney-Food-License.txt` 已保留，允许个人、教育与商业使用，署名非强制。
+
+静态选择依据：作者命名明确、低三角面、单材质，分别对应当前正餐与甜食的小型道具需求；没有接入运行资产、没有转换或渲染，实际颜色、比例与手喂遮挡尚未验证。仍以作者来源页 https://kenney.nl/assets/food-kit 与包内原许可为准。

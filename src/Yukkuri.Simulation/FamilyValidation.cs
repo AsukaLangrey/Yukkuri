@@ -13,12 +13,15 @@ public static partial class FamilyRules
         var creatures=s.Creatures.ToDictionary(c=>c.Id,StringComparer.Ordinal);
         Require(s.FamilySequence>=0&&s.CompletedBirths!=null&&s.CompletedBirths.Count<=10000&&
             s.CompletedBirths.All(id=>!string.IsNullOrWhiteSpace(id)&&id.Length<=128),"出生结算记录无效");
+        Require(s.CourtshipTools is >=0 and <=99&&s.CourtshipToolPurchases>=0,"繁育诱导用品库存无效");
         // Check every structure before following any links to another individual.
         foreach(var c in s.Creatures)
         {
             var f=c.Family;
             Require(f!=null&&f.Peers!=null&&f.PartnerIds!=null&&f.CaregiverIds!=null&&f.Pregnancy!=null&&
                 f.ColdStorage!=null&&f.LifeKnowledge!=null&&f.Conflict!=null&&f.ChildThreat!=null&&f.KnownLosses!=null,"家庭数据缺失");
+            Require(Number(f.BreedingInterest,100)&&Number(f.InducedInterestRemaining,90)&&Number(f.NextInductionAt)&&
+                double.IsFinite(f.LastInterestEventAt)&&f.LastInterestEventAt>=-100&&f.LastInterestEventAt<=s.WorldSeconds+.001,"繁育兴趣或诱导状态无效");
             Require(c.Interaction!=null,"身体数据缺失");
             BodyInjuryState.Validate(c.Interaction.Injuries,s.WorldSeconds);
             WildSelfCareRules.Validate(c,s);

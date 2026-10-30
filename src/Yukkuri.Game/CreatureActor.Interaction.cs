@@ -186,6 +186,7 @@ public partial class CreatureActor
         // the supported/rolling/falling orientation and offset already calculated.
         if(c.Condition==PhysicalCondition.Critical)
         {_visual.Scale=new Vector3(1.13f,.63f,1.07f)*BodyScale;PoseTag="critical";}
+        ApplyPregnancyBodyPose(c,pose,paused?0:delta);
         ApplyHeatBodyPose(c,pose);
         ApplyWaterBodyPose(c,pose,paused?0:delta);
         Vector3 targetScale=_visual.Scale,targetOffset=_visual.Position;
@@ -292,6 +293,7 @@ public partial class CreatureActor
         }
         if(_name!=null){_name.Visible=!close;_name.Position=new(0,1.28f*BodyScale,0);}
         if(_speech!=null)_speech.Visible=!close&&c.ReactionRemaining>0&&c.Speech.Length>0;
+        PresentPregnancyPlant(c,paused?0:delta);
         PresentWaterSurface(c,paused?0:delta);
     }
 

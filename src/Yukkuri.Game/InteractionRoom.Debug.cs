@@ -21,6 +21,7 @@ public partial class InteractionRoom
     private ulong _debugCapturedAt;
     private string _debugSnapshotJson="",_debugCreatureList="";
     private string? _debugSourceId;
+    private WorldState? _debugWorldSource;
     private double _debugWorldSeconds;
     private readonly List<string> _debugCreatureIds=new();
     private readonly List<string> _debugRows=new();
@@ -44,7 +45,11 @@ public partial class InteractionRoom
         _debugPanel.AnchorLeft=1;_debugPanel.AnchorRight=1;_debugPanel.AnchorBottom=1;
         _debugPanel.OffsetLeft=-490;_debugPanel.OffsetRight=-14;
         _debugPanel.OffsetTop=88;_debugPanel.OffsetBottom=-218;_debugPanel.Visible=false;
-        var column=Column(_debugPanel,7);
+        var scroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,
+            SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,SizeFlagsVertical=Control.SizeFlags.ExpandFill};
+        _debugPanel.AddChild(scroll);
+        var column=Column(scroll,7);column.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        column.SizeFlagsVertical=Control.SizeFlags.ExpandFill;
         var heading=Row(column,6);
         var title=Text("调试 · 实时参数",18);title.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;heading.AddChild(title);
         heading.AddChild(Button("关闭 · F3",ToggleDebugPanel));
@@ -99,7 +104,7 @@ public partial class InteractionRoom
         float available=Math.Max(200,_ui.Size.X-28);
         _debugPanel.OffsetLeft=-Math.Min(available,Math.Clamp(_ui.Size.X*.38f,330,520))-14;
         RefreshDebugCreatureSelector();
-        if(_debugSourceId!=Sim.State.SelectedId)
+        if(_debugSourceId!=Sim.State.SelectedId||!ReferenceEquals(_debugWorldSource,Sim.State))
         {
             // Selecting in the scene must not relabel a frozen old creature's
             // values as the newly selected creature.
@@ -108,7 +113,7 @@ public partial class InteractionRoom
         ulong now=Time.GetTicksMsec();
         if(_debugFrozen||!force&&now-_debugCapturedAt<250)return;
         _debugCapturedAt=now;_debugFreezeButton.Text="冻结读数";
-        _debugSourceId=Sim.State.SelectedId;_debugWorldSeconds=Sim.State.WorldSeconds;
+        _debugSourceId=Sim.State.SelectedId;_debugWorldSource=Sim.State;_debugWorldSeconds=Sim.State.WorldSeconds;
         var c=Sim.Selected;
         _debugSummary.Text=c==null?"当前未选中油，可切换到世界范围。":
             $"{c.Name} · {c.Activity}\n生命 {c.Health:0.0}　信任 {c.Trust:0.0}　恐惧 {c.Fear:0.0}　疼痛 {c.Pain:0.0}\n"+
@@ -123,7 +128,10 @@ public partial class InteractionRoom
             {
                 1=>Sim.State,
                 2=>new { Configuration=Sim.Config, Sim.State.Settings, Tool=_action, ToolArmed=_toolArmed,
-                    BaseForce=_force, AppliedForce=_appliedForce, PointerHeld=_mouseHeld, Sim.State.Mode, Sim.State.WorldSeconds },
+                    BaseForce=_force, AppliedForce=_appliedForce, PointerHeld=_mouseHeld, CarryHeight=_height,
+                    RescueToolArmed=_waterRescueToolArmed, ClickOfferTarget=_clickOfferId,
+                    Sim.HasInteractionGesture, GestureTarget=Sim.InteractionGestureTarget, Sim.CurrentInteractionAction,
+                    Sim.InteractionIntakeAccepted, Sim.State.Mode, Sim.State.WorldSeconds },
                 _=>c
             };
             JsonElement snapshot=JsonSerializer.SerializeToElement(source,DebugJsonOptions);
@@ -205,6 +213,9 @@ public partial class InteractionRoom
         "InWater"=>"落水","ExposureSeconds"=>"泡水时间","Struggle"=>"挣扎","RecoverySeconds"=>"恢复时间",
         "Money"=>"金钱","Food"=>"食物库存","UnlimitedResources"=>"测试无限资源","WorldSeconds"=>"世界时间",
         "WaterRescueTools"=>"救援用品库存","WaterRescuePurchases"=>"救援用品购买次数",
+        "CourtshipTools"=>"诱导用品库存","CourtshipToolPurchases"=>"诱导用品购买次数",
+        "BreedingInterest"=>"繁育兴趣","InducedInterestRemaining"=>"诱导剩余时间","NextInductionAt"=>"下次可诱导时间",
+        "HeatTension"=>"灼烧紧绷","HitCount"=>"连续命中","HitRemaining"=>"连击剩余时间",
         "Pause"=>"暂停","LethalInjuries"=>"致命后果","AgeSeconds"=>"身体年龄","InnerAgeSeconds"=>"内在年龄",
         "CareRemaining"=>"护理剩余时间","CareLastEvent"=>"照护记录","EatingRemaining"=>"吞咽剩余时间",
         _=>""

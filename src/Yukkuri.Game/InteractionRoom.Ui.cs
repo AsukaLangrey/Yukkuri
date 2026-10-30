@@ -257,7 +257,8 @@ public partial class InteractionRoom
         string mood=c.Pain>25||c.Expression==Expression.Hurt?"身体还在疼，需要照护。":
             c.ReactionRemaining>0&&c.Expression==Expression.Calling?"正在请求帮助，先听听它需要什么。":
             c.ReactionRemaining>0&&i.ReactionRefused?"这次不愿意继续，先给它一点空间。":
-            c.Fear>60?"它还有些害怕，先留一点距离。":i.Resting?"先让它安静歇一会儿。":!i.HasAccessory?
+            c.Fear>60?"它还有些害怕，先留一点距离。":i.Emotion.Alarm>=12||i.Water.RecoverySeconds>0?
+            "它还记得刚才的惊吓，需要持续安稳地相处。":i.Resting?"先让它安静歇一会儿。":!i.HasAccessory?
             (i.Accessory.BorrowedForCare?"等你整理好饰品，再帮它戴回去。":"还惦记着离开头顶的饰品。"):
             i.Accessory.Integrity<90?"仍在意饰品上的破损。":c.Resentment>40?"它还有些不满。":c.Trust>65?"它对你比较放心。":"它正在慢慢熟悉你。";
         string accessory=i.HasAccessory?(i.Accessory.Integrity<70?"饰品有破损，仍戴在头上。":"饰品好好地戴着。"):

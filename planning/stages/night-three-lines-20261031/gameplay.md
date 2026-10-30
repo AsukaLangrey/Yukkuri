@@ -75,3 +75,36 @@ InteractionAction.Punch; InteractionAction.Burn;
 下一批优先：自主繁育的持续意愿、安全感和深关系条件，非露骨诱导入口；加强饥饿袭击的逃离/同伴保护与跨状态连续性；水域及性格更多远测场景。现有茎生/胎生/强制干预继续沿用，不重造已有孕育结算。B可继续读取现有 Pregnancy.Phase/Method/Elapsed/Burden/PlannedChildren/RecoveryRemaining 做表现；本批没有改变这些字段含义。
 
 仍未完成：外部茎照护完整流程、完整器官/手术、内馅转移/身份延续、六种形态的全套玩法。八景对标沿用研究与覆盖表，不能把本批或11项实现称为全面对齐；真实手感、美术、编译与运行结论待授权远端验证。
+
+## 第二批：安全繁育意愿、普通诱导用品与可干预饥饿冲突
+
+2026-10-31 01:45 提前冻结交接批次。仅修改源码、检查源码和本交接文件；未在本机编译或运行。
+
+### 接口与存档
+
+- `FamilyLife.BreedingInterest`：0—100 的身体繁育兴趣，不替代信任、伴侣关系或接受意愿。安全且关系深的成熟伴侣自然累计；诱导暂时提高累计速度。
+- `FamilyLife.InducedInterestRemaining`（0—90 秒）、`NextInductionAt`、`LastInterestEventAt` 保存剩余作用、冷却与表达节流。
+- `WorldState.CourtshipTools` 初始1、上限99；`CourtshipToolPurchases` 保存购买次数。
+- `WorldSimulation.CourtshipToolPrice = 24`；`bool BuyCourtshipTool()` 可在暂停商店交易。无限资源只免扣钱，不免道具库存消耗。
+- `string? BreedingInductionReason(string id)` 只读资格检查，null 表示可进行；可供暂停面板显示中文原因。`InteractionFeedback InduceBreedingInterest(string id)` 实际执行，暂停拒绝；成熟、健康、没有孕育/恢复、吃喝体力均至少50、身体可接触才可用。每次消耗1份，兴趣+20，持续90秒，冷却180秒，少量消耗饱腹与体力。普通用品，不使用秘药，不凭空建立伴侣或跳过双方意愿。
+- 新字段全部接入 `FamilyRules.ValidateFamily`；旧存档缺字段按默认值兼容，实际旧存档加载仍待远端验证。
+
+### 规则变化
+
+- 自主繁育要求双方持续安全至少45秒、馒馒来度至少60、惊惧低于12、疼痛低于20、恐惧低于30，无落水及落水恢复余波；双方为相互登记的伴侣，双向熟悉/好感均至少70、同伴恐惧/怨恨低于15，兴趣均至少40。附近可见的落水、入侵、冲突或饥饿袭击会阻止自主决定。继续复用普通靠近、接受和孕育流程，不直接生成幼体。
+- 茎生/胎生在水中继续承担生理时间与危险负担，但不在水中生产。救回岸上、有干燥安全空间后可继续原出生事件；死亡、中止和出生防重复仍走已有规则。直接繁育请求、普通诱导与强制干预均检查真实水域几何，不等缓存更新后才拒绝。
+- `InterruptFamilyConflict(id)` 扩展处理饥饿袭击。制止后留下30秒处理窗口，不消除饥饿、不治疗伤势。近看中抓起、喂食、隔离或身体无法继续时也清掉追击目标，不需推进普通时间。
+- 饥饿袭击受害者会求助并退逃。近身、勇敢、有行动能力的好性格成年同伴可护住受害者；不能跨区隔空保护。仍保留喂食、带离和分隔作为人类介入方式。
+- `Pregnancy.Phase/Method/Elapsed/Burden/PlannedChildren/RecoveryRemaining` 含义不变，已通知 B 线继续按真实状态呈现。
+
+### 精确文件范围
+
+新增：`src/Yukkuri.Simulation/FamilyDesire.cs`、`checks/Family.Desire/Family.Desire.csproj`、`checks/Family.Desire/Program.cs`。
+
+修改：`src/Yukkuri.Simulation/FamilyReproduction.cs`、`FamilyRisk.cs`、`FamilyValidation.cs`、`CreaturePersonality.cs`、`InteractionBehavior.cs`、`FamilySocial.cs`；`checks/Interaction.WaterEmotion/Program.cs`；本文件。
+
+### 静态审查与未执行检查
+
+逐段核对新增接口与 UI 读取、消费失败不扣库存、暂停不推进生理、存档范围、双方深关系、自主准备与出生结算、水中风险和救后继续、饥饿追击的早退条件。新增 `Family.Desire` 共9项检查，覆盖暂停购物、有限消耗与意愿独立、身体资格、自然兴趣、安全深关系自主决定、周围可见危险、两种方式的水中延期与救后出生/读档不重复、非法新状态。`Interaction.WaterEmotion` 增加3项，覆盖人类制止、近看抓起打断、同伴保护的实际距离和受害者退逃；累计19项。均只写源码，未执行。
+
+第三批优先：修正连续施害每个输入采样至少增加4点惊惧造成的帧率依赖，并用伤害/持续时间与事件强度累计保留情绪连续性；先向主协调给单次轻/重接触与连续接触的静态恢复窗口。之后继续爱线的安抚/重新接近与性格社会反馈。仍不把外部茎照护、完整器官/手术或内馅转移称为已完成。
