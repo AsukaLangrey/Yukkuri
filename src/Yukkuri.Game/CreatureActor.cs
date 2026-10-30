@@ -173,7 +173,7 @@ public partial class CreatureActor : RigidBody3D
         if(_dressings.Count>0||c.Interaction.Dressings.Count>0||c.Interaction.DressingPart!=null)
         {BuildDressings();RefreshDressings(c.Interaction);}
         RefreshInjuryMarks(c.Interaction);
-        RefreshTears(c.Condition!=PhysicalCondition.Dead&&expression is Expression.Hurt or Expression.Frightened,delta);
+        RefreshTears(c,expression,delta);
         BuildMouth(expression);
         float eyes=1,browLeft=0,browRight=0;
         if(expression is Expression.Content or Expression.Sleeping)eyes=.12f;

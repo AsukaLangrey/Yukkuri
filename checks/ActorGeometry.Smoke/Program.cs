@@ -473,6 +473,44 @@ Check("relaxed joy and sleep eyelids have distinct readable curves without movin
     }
     return true;
 });
+Check("continuous eyelid reveal stays bounded and inner geometry retracts smoothly through closure",()=>
+{
+    foreach(var layer in Enum.GetValues<EyeLayer>())
+    {
+        float previous=-1;
+        for(int step=0;step<=1000;step++)
+        {
+            float open=step/1000f,reveal=ActorEyeSurface.Reveal(layer,open);
+            if(reveal<previous||reveal<0||reveal>1)return false;
+            if(layer!=EyeLayer.Outline&&open<=.20f&&(reveal!=0||ActorEyeSurface.Visible(layer,open)))return false;
+            if(step>0&&layer!=EyeLayer.Outline&&reveal-previous>.008f)return false;
+            previous=reveal;
+            for(int n=0;n<24;n++)
+            {
+                var p=ActorEyeSurface.ProjectedCoordinate(layer,open,1,n*MathF.Tau/24);
+                if(!float.IsFinite(p.LengthSquared())||p.LengthSquared()>1.00001f)return false;
+            }
+        }
+    }
+    return true;
+});
+Check("interpolated eye arcs retain original expression endpoints and fixed outer corners",()=>
+{
+    foreach(float side in new[]{-1f,1f})foreach(var curve in Enum.GetValues<EyeCurve>())
+    {
+        var old=ActorEyeSurface.Point(side,.6f,curve,EyeLayer.Pupil,.8f,1.2f);
+        var continuous=ActorEyeSurface.Point(side,.6f,ActorEyeSurface.Arc(curve),EyeLayer.Pupil,.8f,1.2f);
+        if(System.Numerics.Vector3.Distance(old,continuous)>.000001f)return false;
+    }
+    for(int n=0;n<=100;n++)foreach(float angle in new[]{0f,MathF.PI})
+    {
+        float arc=-.018f+n*.051f/100;
+        var p=ActorEyeSurface.Point(1,.3f,arc,EyeLayer.Outline,1,angle);
+        var endpoint=ActorEyeSurface.Point(1,.3f,0f,EyeLayer.Outline,1,angle);
+        if(System.Numerics.Vector3.Distance(p,endpoint)>.000001f)return false;
+    }
+    return true;
+});
 Check("the lined cradle closes underneath and stays outside the skin and hair envelope",()=>
 {
     var skinCenter=new System.Numerics.Vector3(0,ActorFaceSurface.CenterY,ActorFaceSurface.CenterZ);
@@ -688,6 +726,25 @@ Check("tear traces build and fade continuously and freeze when presentation is p
     if(remaining<=0||remaining>=1)return false;for(int n=0;n<10;n++)tears.Advance(false,0);
     if(tears.Amount!=remaining)return false;for(int n=0;n<30;n++)tears.Advance(false,.1f);
     return tears.Amount==0&&ActorReactionMotion.GuardYaw(70,0)==-ActorReactionMotion.GuardYaw(0,70);
+});
+Check("graded tears preserve lingering alarm, loaded amount and paused time without snapping",()=>
+{
+    float lingering=ActorTearPresentation.Target(0,0,60,false);
+    if(lingering<=0||lingering>=.55f||ActorTearPresentation.Target(100,100,100,true,dead:true)!=0)return false;
+    if(ActorTearPresentation.Target(100,100,100,true,critical:true)>.55f)return false;
+    float previous=0;
+    for(int n=0;n<=100;n++)
+    {
+        float target=ActorTearPresentation.Target(n,0,0,false);
+        if(target<previous||target<0||target>1)return false;previous=target;
+    }
+    var coarse=new ActorTearPresentation();var fine=new ActorTearPresentation();
+    coarse.Initialize(.8f);fine.Initialize(.8f);
+    for(int n=0;n<10;n++)coarse.Advance(lingering,.1f);
+    for(int n=0;n<50;n++)fine.Advance(lingering,.02f);
+    if(MathF.Abs(coarse.Amount-fine.Amount)>.00001f||coarse.Amount<=lingering||coarse.Amount>=.8f)return false;
+    float saved=coarse.Amount;coarse.Advance(0f,0);
+    return coarse.Amount==saved;
 });
 Check("soft ball panels stay inside their contact radius with outward front faces",()=>
 {

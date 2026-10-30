@@ -1,8 +1,11 @@
 using Godot;
+using Yukkuri.Simulation;
+using Expression=Yukkuri.Simulation.Expression;
 
 public partial class CreatureActor
 {
     private readonly ActorTearPresentation _tearPresentation=new();
+    private Creature? _tearOwner;
     private readonly System.Collections.Generic.List<MeshInstance3D> _tearSurfaces=new();
     private void BuildTears()
     {
@@ -17,10 +20,23 @@ public partial class CreatureActor
         }
         _tearRoot.Visible=false;
     }
-    private void RefreshTears(bool crying,float delta)
+    private void RefreshTears(Creature creature,Expression expression,float delta)
     {
-        _tearPresentation.Advance(crying,delta);float amount=_tearPresentation.Amount;
+        bool dead=creature.Condition==PhysicalCondition.Dead;
+        float target=ActorTearPresentation.Target((float)creature.Pain,(float)creature.Fear,
+            (float)creature.Interaction.Emotion.Alarm,expression is Expression.Hurt or Expression.Frightened,
+            creature.Condition==PhysicalCondition.Critical,dead);
+        if(_tearOwner!=creature||dead)
+        {_tearOwner=creature;_tearPresentation.Initialize(target);}
+        else _tearPresentation.Advance(target,delta);
+        float amount=_tearPresentation.Amount;
         _tearRoot.Visible=amount>.002f;
-        for(int index=0;index<_tearSurfaces.Count;index++)SceneArt.SetSurfaceOpacity(_tearSurfaces[index],amount*(index%2==0?.72f:.78f));
+        for(int index=0;index<_tearSurfaces.Count;index++)
+        {
+            // When distress eases, the wet track remains after the bright bead
+            // softens. Food changes neither this memory nor the source emotion.
+            float opacity=index%2==0?amount*.72f:amount*amount*.78f;
+            SceneArt.SetSurfaceOpacity(_tearSurfaces[index],opacity);
+        }
     }
 }

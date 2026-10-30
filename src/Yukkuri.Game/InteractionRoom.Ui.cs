@@ -109,6 +109,7 @@ public partial class InteractionRoom
         _forceLabel=Text("",13);_forceLabel.AutowrapMode=TextServer.AutowrapMode.Off;_forceLabel.CustomMinimumSize=new(90,24);titleRow.AddChild(_forceLabel);
         _forceSlider=new HSlider{MinValue=.1,MaxValue=1,Step=.05,Value=_force,CustomMinimumSize=new(150,24),FocusMode=Control.FocusModeEnum.None};
         _forceSlider.ValueChanged+=v=>{_force=(float)v;_toolForces[_action]=_force;RefreshRoomUi();};titleRow.AddChild(_forceSlider);
+        BuildContactProgress(titleRow);
         _choiceList=new HFlowContainer();_choiceList.AddThemeConstantOverride("h_separation",7);bottom.AddChild(_choiceList);
         _hint=Text("",13,"78816e");bottom.AddChild(_hint);
         _feedback=Text("",15);bottom.AddChild(_feedback);
@@ -298,6 +299,7 @@ public partial class InteractionRoom
         string speech=c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
         RefreshDetachedStemUi();
+        RefreshContactProgress();
     }
 
     private void OpenModal(string title)

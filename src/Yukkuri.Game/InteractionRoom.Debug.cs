@@ -144,6 +144,7 @@ public partial class InteractionRoom
                     RescueToolArmed=_waterRescueToolArmed, ClickOfferTarget=_clickOfferId,
                     SelectedDetachedStem=_selectedDetachedStemEventId, HeldSupply=_heldSupplyId,
                     Sim.CurrentInteractionTargetKind, GestureObject=Sim.InteractionGestureObject,
+                    Sim.InteractionCompletionProgress,
                     Sim.HasInteractionGesture, GestureTarget=Sim.InteractionGestureTarget, Sim.CurrentInteractionAction,
                     Sim.InteractionIntakeAccepted, Sim.State.Mode, Sim.State.WorldSeconds },
                 _=>brood is not null?(object)new { State=brood, Interaction=Sim.DetachedStemStatus(brood.EventId) }:c

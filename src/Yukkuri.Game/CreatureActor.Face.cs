@@ -12,9 +12,10 @@ public partial class CreatureActor
             return new(x,ActorFaceSurface.Bottom(x,z,offset),z);
         },color,flipNormal:true);
     }
-    private readonly Dictionary<(float,EyeCurve),(ArrayMesh left,ArrayMesh right)> _eyeSurfaceCache=new();
+    private const int EyeCacheLimit=96;
+    private readonly Dictionary<(float,float),(ArrayMesh left,ArrayMesh right)> _eyeSurfaceCache=new();
     private float _eyeOpen=-1;
-    private EyeCurve _eyeCurve;
+    private float _eyeArc;
     private readonly Dictionary<(float,float,float),(ArrayMesh left,ArrayMesh right)> _browCache=new();
 
     private ArrayMesh FaceOvalMesh(Vector2 center,Vector2 diameter,float offset,System.Func<float,float,Color>? tint=null)
@@ -111,14 +112,14 @@ public partial class CreatureActor
     }
     private void BuildSurfaceEyes()
     {
-        _leftEye=SceneArt.Mesh(_visual,EyeSurfaceMesh(-1,1,EyeCurve.Open),Vector3.Zero,"ffffff");
-        _rightEye=SceneArt.Mesh(_visual,EyeSurfaceMesh(1,1,EyeCurve.Open),Vector3.Zero,"ffffff");
+        _leftEye=SceneArt.Mesh(_visual,EyeSurfaceMesh(-1,1,0),Vector3.Zero,"ffffff");
+        _rightEye=SceneArt.Mesh(_visual,EyeSurfaceMesh(1,1,0),Vector3.Zero,"ffffff");
         var material=(StandardMaterial3D)SceneArt.Mat("ffffff").Duplicate();material.VertexColorUseAsAlbedo=true;material.Roughness=.38f;
         _leftEye.MaterialOverride=material;_rightEye.MaterialOverride=material;
         _leftEye.CastShadow=_rightEye.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
-        _eyeSurfaceCache[(1,EyeCurve.Open)]=((ArrayMesh)_leftEye.Mesh,(ArrayMesh)_rightEye.Mesh);_eyeOpen=1;
+        _eyeSurfaceCache[(1,0)]=((ArrayMesh)_leftEye.Mesh,(ArrayMesh)_rightEye.Mesh);_eyeOpen=1;
     }
-    private ArrayMesh EyeSurfaceMesh(float side,float openness,EyeCurve curve)
+    private ArrayMesh EyeSurfaceMesh(float side,float openness,float arc)
     {
         using var surface=new SurfaceTool();surface.Begin(Mesh.PrimitiveType.Triangles);
         foreach(EyeLayer layer in System.Enum.GetValues<EyeLayer>())
@@ -128,7 +129,7 @@ public partial class CreatureActor
             Color warmIris=new(_hatAccessory?"c49b60":"a87c57");
             void Vertex(float radius,float angle)
             {
-                var p=ActorEyeSurface.Point(side,openness,curve,layer,radius,angle);var normal=ActorFaceSurface.Normal(p.X,p.Y);
+                var p=ActorEyeSurface.Point(side,openness,arc,layer,radius,angle);var normal=ActorFaceSurface.Normal(p.X,p.Y);
                 Color shade=color;
                 if(layer==EyeLayer.Iris)
                 {
@@ -136,7 +137,18 @@ public partial class CreatureActor
                     float bottom=Mathf.Max(0,-Mathf.Sin(angle))*radius;
                     float edge=Mathf.SmoothStep(.65f,1,radius);
                     shade=color.Lerp(warmIris,bottom*.38f).Darkened(top*.16f+edge*.22f);
+                    float strands=(Mathf.Cos(angle*17)+Mathf.Cos(angle*29)*.4f)*radius*(1-edge)*.018f;
+                    shade=shade.Lightened(Mathf.Max(0,strands)).Darkened(Mathf.Max(0,-strands));
                 }
+                else if(layer==EyeLayer.Outline)
+                {
+                    // A warm lower rim and a darker upper edge give the authored
+                    // lid depth without changing its outline or adding a raised mesh.
+                    float lower=Mathf.Max(0,-Mathf.Sin(angle))*radius;
+                    shade=color.Lerp(new Color("725044"),lower*.28f).Darkened(Mathf.Max(0,Mathf.Sin(angle))*radius*.13f);
+                }
+                else if(layer is EyeLayer.MainLight or EyeLayer.SmallLight)
+                    shade=color.Darkened(radius*radius*.15f);
                 surface.SetNormal(AccessoryPoint(normal));surface.SetColor(shade);surface.AddVertex(AccessoryPoint(p));
             }
             const int rings=5,segments=48;
@@ -149,14 +161,17 @@ public partial class CreatureActor
         }
         surface.Index();return surface.Commit();
     }
-    private void SetSurfaceEyes(float openness,EyeCurve curve=EyeCurve.Open)
+    private void SetSurfaceEyes(float openness,float arc=0)
     {
-        if(Mathf.IsEqualApprox(_eyeOpen,openness)&&_eyeCurve==curve)return;
-        var key=(openness,curve);
+        if(Mathf.IsEqualApprox(_eyeOpen,openness)&&Mathf.IsEqualApprox(_eyeArc,arc))return;
+        var key=(openness,arc);
         if(!_eyeSurfaceCache.TryGetValue(key,out var pair))
         {
-            pair=(EyeSurfaceMesh(-1,openness,curve),EyeSurfaceMesh(1,openness,curve));_eyeSurfaceCache[key]=pair;
+            // Render nodes retain their current meshes while cache references are
+            // released. The cache cannot grow with every intermediate emotion.
+            if(_eyeSurfaceCache.Count>=EyeCacheLimit)_eyeSurfaceCache.Clear();
+            pair=(EyeSurfaceMesh(-1,openness,arc),EyeSurfaceMesh(1,openness,arc));_eyeSurfaceCache[key]=pair;
         }
-        _leftEye.Mesh=pair.left;_rightEye.Mesh=pair.right;_eyeOpen=openness;_eyeCurve=curve;
+        _leftEye.Mesh=pair.left;_rightEye.Mesh=pair.right;_eyeOpen=openness;_eyeArc=arc;
     }
 }

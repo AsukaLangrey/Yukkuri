@@ -9,7 +9,7 @@ public partial class CreatureActor
     private readonly Dictionary<Expression,List<MeshInstance3D>> _mouthFadeMeshes=new();
     private readonly List<MeshInstance3D> _blushFadeMeshes=new();
     private bool _faceReady;
-    private float _smoothEye=1,_smoothBrowLeft,_smoothBrowRight,_smoothBrowHeight,_blushAmount;
+    private float _smoothEye=1,_smoothEyeArc,_smoothBrowLeft,_smoothBrowRight,_smoothBrowHeight,_blushAmount;
 
     private void PrepareMouthFade(Expression expression,Node3D root)
     {
@@ -35,16 +35,18 @@ public partial class CreatureActor
             if(caution>.5f)curve=EyeCurve.Open;
         }
         float height=expression==Expression.Frightened?ActorBrowSurface.FrightHeight:0;
+        float arc=ActorEyeSurface.Arc(curve);
         bool urgent=expression is Expression.Hurt or Expression.Frightened;
         bool initial=!_faceReady;
         float amount=initial?1:dt>0?1-Mathf.Exp(-dt*(urgent?32:15)):0;
         if(!_faceReady)
-        {_smoothEye=eyes;_smoothBrowLeft=left;_smoothBrowRight=right;_smoothBrowHeight=height;_faceReady=true;}
+        {_smoothEye=eyes;_smoothEyeArc=arc;_smoothBrowLeft=left;_smoothBrowRight=right;_smoothBrowHeight=height;_faceReady=true;}
         _smoothEye=Mathf.Lerp(_smoothEye,eyes,amount);
+        _smoothEyeArc=Mathf.Lerp(_smoothEyeArc,arc,amount);
         _smoothBrowLeft=Mathf.Lerp(_smoothBrowLeft,left,amount);_smoothBrowRight=Mathf.Lerp(_smoothBrowRight,right,amount);
         _smoothBrowHeight=Mathf.Lerp(_smoothBrowHeight,height,amount);
         // Quantize the authored surfaces so a long session cannot cache every float blend.
-        SetSurfaceEyes(Mathf.Round(_smoothEye*24)/24,curve);
+        SetSurfaceEyes(Mathf.Floor(_smoothEye*48)/48,Mathf.Round(_smoothEyeArc/.0015f)*.0015f);
         SetSurfaceBrows(Mathf.Round(_smoothBrowLeft/2)*2,Mathf.Round(_smoothBrowRight/2)*2,Mathf.Round(_smoothBrowHeight*200)/200);
         foreach(var pair in _mouthShapes)
         {

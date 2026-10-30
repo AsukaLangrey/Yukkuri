@@ -16,9 +16,24 @@ public static class ActorTearSurface
 public sealed class ActorTearPresentation
 {
     public float Amount {get;private set;}
-    public void Advance(bool crying,float delta)
+    public static float Target(float pain,float fear,float alarm,bool distressed,bool critical=false,bool dead=false)
     {
-        float step=Math.Clamp(delta,0,.1f)*(crying?3:.45f);
-        Amount=crying?MathF.Min(1,Amount+step):MathF.Max(0,Amount-step);
+        if(dead)return 0;
+        float sore=Math.Clamp((pain-15)/65,0,1);
+        float frightened=Math.Clamp((fear-30)/65,0,1);
+        float lingering=Math.Clamp(alarm/100,0,1)*.55f;
+        float target=MathF.Max(distressed?.70f:0,MathF.Max(sore,MathF.Max(frightened,lingering)));
+        return critical?MathF.Min(.55f,target):target;
+    }
+    // Reading a save observes the existing state; it does not replay onset.
+    public void Initialize(float amount)=>Amount=Math.Clamp(amount,0,1);
+    public void Advance(float target,float delta)=>AdvanceTowards(target,delta,.20f);
+    public void Advance(bool crying,float delta)
+        =>AdvanceTowards(crying?1:0,delta,.45f);
+    private void AdvanceTowards(float target,float delta,float fadeSpeed)
+    {
+        target=Math.Clamp(target,0,1);
+        float step=Math.Clamp(delta,0,.1f)*(target>Amount?3:fadeSpeed);
+        Amount=target>Amount?MathF.Min(target,Amount+step):MathF.Max(target,Amount-step);
     }
 }
