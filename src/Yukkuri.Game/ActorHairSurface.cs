@@ -2,10 +2,11 @@ using System;
 using System.Numerics;
 
 public readonly record struct HairLockShape(Vector3 Start,Vector3 End,float Width,float Depth,float Bend,bool Fringe);
-public readonly record struct HairLockSection(Vector3 Center,Vector3 Front,float Width,float Depth);
+public readonly record struct HairLockSection(Vector3 Center,Vector3 Front,float Width,float Depth,float Relief=0,bool Fringe=false);
 public static class ActorHairSurface
 {
     public const int BackRows=32,BackSides=80;
+    public const float FringeRecess=.0025f,SideRecess=.004f;
     private const float BackAngle=1.78f;
     public static bool Contains(Vector3 point)
     {
@@ -102,10 +103,40 @@ public static class ActorHairSurface
             float fade=Math.Clamp((u-.45f)/.35f,0,1);fade=fade*fade*(3-2*fade);
             center.Z+=lift*fade;
         }
-        return new(center,front,shape.Width*profile,shape.Depth*profile);
+        float taper=u<=0||u>=1?0:MathF.Pow(MathF.Sin(u*MathF.PI),2);
+        return new(center,front,shape.Width*profile,shape.Depth*profile,
+            (shape.Fringe?FringeRecess:SideRecess)*taper,shape.Fringe);
     }
-    public static Vector3 Point(HairLockSection section,float v)=>section.Center+
+    // The original smooth section is retained as the exact outer boundary. The
+    // new bundles change only Z on its front, leaving X/Y and the back untouched.
+    public static Vector3 SmoothPoint(HairLockSection section,float v)=>section.Center+
         Vector3.UnitX*(MathF.Cos(v*MathF.Tau)*section.Width)+section.Front*(MathF.Sin(v*MathF.Tau)*section.Depth);
+    public static float Recess(HairLockSection section,float v)
+    {
+        if(section.Relief<=0||v<=0||v>=.5f)return 0;
+        float angle=v*MathF.Tau,front=MathF.Sin(angle);
+        // Two valleys separate the central lock from its shoulders. Both vanish
+        // at the silhouette, the central ridge, the embedded root and the tip.
+        float groove=MathF.Pow(MathF.Sin(MathF.PI*MathF.Cos(angle)),8)*front*front;
+        float depth=MathF.Min(section.Relief*groove,section.Depth*section.Front.Z*front*.18f);
+        if(section.Fringe)
+        {
+            var p=SmoothPoint(section,v);
+            // Never push an existing point outward to enforce a new rule. Only
+            // use clearance already available above the original forehead. This
+            // soft limiter is <= depth and <= clearance/2, with zero slope when
+            // clearance closes, avoiding a hard crease against the skin limit.
+            float clearance=MathF.Max(0,p.Z-ActorFaceSurface.Height(p.X,p.Y,.012f));
+            if(depth>0&&clearance>0)
+            {
+                float ratio=MathF.Min(depth,clearance)/MathF.Max(depth,clearance);
+                depth=clearance>=depth?depth/(1+ratio*ratio):clearance*ratio/(1+ratio*ratio);
+            }
+            else depth=0;
+        }
+        return MathF.Max(0,depth);
+    }
+    public static Vector3 Point(HairLockSection section,float v)=>SmoothPoint(section,v)-Vector3.UnitZ*Recess(section,v);
     public static Vector3 Point(HairLockShape shape,float u,float v)=>Point(Section(shape,u),v);
     public static Vector3 Highlight(HairLockShape shape,float u)
     {

@@ -215,6 +215,42 @@ Check("fringe tips close without burying the visible end in the skin",()=>
     }
     return true;
 });
+Check("hair bundle relief stays inside the old section and preserves roots tips backs and seams",()=>
+{
+    var shapes=Enumerable.Range(0,5).Select(ActorHairSurface.Fringe).Concat(new[]{ActorHairSurface.Side(-1),ActorHairSurface.Side(1)});
+    bool hasRelief=false;
+    foreach(var shape in shapes)for(int row=0;row<=100;row++)for(int n=0;n<=128;n++)
+    {
+        float u=row/100f,v=n/128f;var section=ActorHairSurface.Section(shape,u);
+        var smooth=ActorHairSurface.SmoothPoint(section,v);var p=ActorHairSurface.Point(section,v);
+        float depth=ActorHairSurface.Recess(section,v);
+        if(!float.IsFinite(p.LengthSquared())||!float.IsFinite(depth)||depth<0||p.X!=smooth.X||p.Y!=smooth.Y||p.Z>smooth.Z)return false;
+        if(depth>0)hasRelief=true;
+        if((row==0||row==100||n==0||n>=64)&&(depth!=0||p!=smooth))return false;
+        if(depth>(shape.Fringe?ActorHairSurface.FringeRecess:ActorHairSurface.SideRecess)+.000001f)return false;
+        if(depth>0&&depth>section.Depth*section.Front.Z*MathF.Sin(v*MathF.Tau)*.18f+.000001f)return false;
+        if(shape.Fringe)
+        {
+            float clearance=MathF.Max(0,smooth.Z-ActorFaceSurface.Height(smooth.X,smooth.Y,.012f));
+            if(depth>clearance*.5f+.000001f)return false;
+        }
+        if(System.Numerics.Vector3.Distance(ActorHairSurface.Point(section,0),ActorHairSurface.Point(section,1))>.000001f)return false;
+    }
+    return hasRelief;
+});
+Check("authored hair relief has finite nondegenerate surface tangents at the actual mesh rows",()=>
+{
+    var shapes=Enumerable.Range(0,5).Select(ActorHairSurface.Fringe).Concat(new[]{ActorHairSurface.Side(-1),ActorHairSurface.Side(1)});
+    foreach(var shape in shapes)for(int row=1;row<20;row++)for(int n=0;n<32;n++)
+    {
+        float u=row/20f,v=n/32f,step=.0005f;
+        var down=ActorHairSurface.Point(shape,u+step,v)-ActorHairSurface.Point(shape,u-step,v);
+        var across=ActorHairSurface.Point(shape,u,(v+step)%1)-ActorHairSurface.Point(shape,u,(v-step+1)%1);
+        var normal=System.Numerics.Vector3.Normalize(System.Numerics.Vector3.Cross(across,down));
+        if(!float.IsFinite(normal.LengthSquared())||MathF.Abs(normal.LengthSquared()-1)>.00001f)return false;
+    }
+    return true;
+});
 Check("close-up orbit reaches front side and back while staying above the floor at every supported height",()=>
 {
     foreach(float height in new[]{.62f,.8f,1.1f,2.1f,3.62f})for(int yaw=-180;yaw<=180;yaw+=10)for(int pitch=-25;pitch<=65;pitch+=5)

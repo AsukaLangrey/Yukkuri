@@ -76,13 +76,15 @@ public partial class CreatureActor
         }
         SculptSurface(parent,20,32,(u,v)=>AccessoryPoint(ActorHairSurface.Point(Section(u),v)),color,(u,v)=>
         {
-            float glow=Mathf.Pow(Mathf.Max(0,Mathf.Sin(v*Mathf.Tau)),6)*Mathf.Sin(u*Mathf.Pi)*.17f;
+            float front=Mathf.Max(0,Mathf.Sin(v*Mathf.Tau));
+            float groove=ActorHairSurface.Recess(Section(u),v)/(shape.Fringe?ActorHairSurface.FringeRecess:ActorHairSurface.SideRecess);
+            float glow=front*front*Mathf.Sin(u*Mathf.Pi)*(.12f+.05f*Mathf.Pow(front,4))*(1-groove);
+            float valley=groove*.17f;
             float root=Mathf.Pow(1-u,3)*.07f,tip=Mathf.SmoothStep(.78f,1,u)*.08f;
-            return new Color(1+glow-root-tip,1+glow*.85f-root-tip,1+glow*.65f-root-tip);
+            return new Color(1+glow-root-tip-valley,1+glow*.85f-root-tip-valley,1+glow*.65f-root-tip-valley);
         });
-        // A restrained highlight follows the lock's direction, rather than painting another round blob.
-        var highlight=SceneArt.Mat(color).AlbedoColor.Lightened(.08f).ToHtml(false);
-        SculptTube(parent,u=>AccessoryPoint(ActorHairSurface.Highlight(shape,.17f+u*.455f)),.0035f,highlight,16);
+        // Highlights now belong to the same bundled surface. There is no extra
+        // bright tube for a ray or a support plane to mistake for a hair ridge.
     }
     private void BuildClothBow(Node3D parent,string fabric,string trim,float width=1,Func<Vector3,Vector3>? conform=null)
     {
