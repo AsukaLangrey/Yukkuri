@@ -76,3 +76,13 @@
 - 只读复核了工具选择、目标切换、释放鼠标、移出场景、失焦/暂停调用链：已有 `CancelGesture` / `EndPointerGesture` 负责收尾，本批不额外改变输入语义。单击递一份后释放仍继续递送；换工具/右键仍取消。
 
 本批改动：CreatureActor.WaterConcern.cs（新增）、CreatureActor.cs、CreatureActor.Interaction.cs、CreatureActor.FaceMotion.cs、CreatureActor.Water.cs、InteractionRoom.cs、InteractionRoom.HitFeedback.cs，以及本交接。未改主协调专属文件、Simulation 或 checks。只作源码静态审查，未运行游戏、编译、测试、模拟、渲染、预览、转换或项目脚本；还需授权远端核对实际表情节奏、视线遮挡后渐退、暂停/切换目标的 Hits 以及固定/残障水中姿态。
+
+## 第四批：真实主动陪伴的持续表现
+
+- 新增 CreatureActor.HumanCompany.cs，Room 使用 A 的只读 `HasLiveHumanCompany(c)` 提供真实陪伴有效性。没有从保存的 Until 单独推断正在陪伴，也没有在画面层另写信任/安全/饥渴资格规则。
+- 有效陪伴区分主动靠近、到达后安心相处、寻求安慰。相处放松量读取实际 `ContactSeconds/6`；站稳后朝向人类，增加轻微呼吸、身体放松与缓慢眨眼。移动时保留原起跳朝向和接触支撑。时钟仅在有效表现阶段累积，StartedAt 改变才开始新一轮，不随每帧或短反应重启。
+- `SeekingComfort`、悲伤剩余时间或 `EmotionalReadiness.Settled` 未满足时保持忧虑口型与眼眉。陪伴不是立刻快乐；表现不修改恐惧、信任、伤痛或记忆。
+- 开心/好奇嘴型下的警惕眼眉同时读取 Fear 与 Emotion.Alarm。移除了旧的较大警惕表现起跳阈值，小幅余波也渐变呈现；嘴型允许喜欢食物，眼眉和腮红仍保留警惕，不伪装成完全恢复。
+- 暂停只冻结已经存在的陪伴表现，不从旧存档时间戳新生成表现。近看、本人水中、受伤疼痛、强烈恐惧、逃避、临危死亡、固定托举翻滚、进食排泄和直接操作姿态优先。当前水域求助也优先于普通陪伴。
+
+本批文件：CreatureActor.HumanCompany.cs（新增）、CreatureActor.cs、CreatureActor.Interaction.cs、CreatureActor.FaceMotion.cs、InteractionRoom.cs，以及本交接。未改主协调 Ui/Vitals/Debug/Supplies/Intervention，未改 Simulation/checks，未使用 Git。源码静态核对已覆盖接口存在、调用次序、暂停时钟和身体优先级；未编译或执行。远端需看陪伴起止/转身自然度、悲伤与放松区分、手离开或遮挡后的退出、暂停恢复，以及手喂后惊惧余波的连续表情。

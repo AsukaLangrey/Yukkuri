@@ -147,24 +147,28 @@ public sealed partial class WorldSimulation
     }
 
     // Contact changes during close-up must cancel the intent even while world time is frozen.
+    private bool CanHungerAggress(Creature c) => c.Fullness<12&&c.Personality.Kindness<.25&&CanSelfMove(c)&&
+        !WaterEnvironment.IsInWater(State,c)&&c.Energy>=10&&c.Interaction.EatingRemaining<=0&&c.Fear<65&&c.Pain<40&&
+        c.Family.FlightRemaining<=0&&!c.Interaction.Physiology.Active&&!FamilyRules.UnderIntervention(c)&&
+        InteractionGestureTarget!=c.Id&&c.Family.Conflict.TargetId==null&&c.Family.ChildThreat.TargetId==null;
+
+    private bool CanPursueHungerTarget(Creature c,Creature target) => c!=target&&CanHungerAggress(c)&&
+        !target.Family.ColdStorage.Stored&&!target.Family.Memorialized&&!target.Interaction.Carried&&
+        (target.Condition!=PhysicalCondition.Dead||target.Personality.RemainsNutrition>0)&&
+        FamilyVisible(c,target,4)&&!WaterEnvironment.IsInWater(State,target);
+
     private void SynchronizeHungerThreat(Creature c)
     {
         if(c.Personality.HungerTargetId==null)return;
         var target=State.Creatures.Find(o=>o.Id==c.Personality.HungerTargetId);
-        if(c.Fullness>=12||c.Personality.Kindness>=.25||!CanSelfMove(c)||c.Family.ColdStorage.Stored||
-            c.Energy<10||c.Interaction.EatingRemaining>0||c.Fear>=65||c.Pain>=40||
-            c.Family.FlightRemaining>0||c.Interaction.Physiology.Active||FamilyRules.UnderIntervention(c)||
-            InteractionGestureTarget==c.Id||target==null||target.Family.ColdStorage.Stored||target.Family.Memorialized||
-            target.Interaction.Carried||!FamilyVisible(c,target,4)||WaterEnvironment.IsInWater(State,target))
+        if(target==null||!CanPursueHungerTarget(c,target))
             StopHungerAggression(c,"饥饿袭击被隔开或身体状态打断，已有伤势与记忆仍保留");
     }
 
     private bool TryHungerAggression(Creature c,double dt)
     {
         var p=c.Personality;
-        if(c.Fullness>=12||p.Kindness>=.25||!CanSelfMove(c)||c.Energy<10||
-            c.Interaction.EatingRemaining>0||c.Fear>=65||c.Pain>=40||FamilyRules.UnderIntervention(c)||
-            c.Family.FlightRemaining>0||c.Family.Conflict.TargetId!=null||c.Family.ChildThreat.TargetId!=null)
+        if(!CanHungerAggress(c))
         {p.HungerTargetId=null;return false;}
         if(p.HungerTargetId==null)
         {
@@ -182,8 +186,7 @@ public sealed partial class WorldSimulation
             React(c,Expression.Angry,"饿……吃的……",$"饥饿中的恶劣性格让它盯上了{victim.Name}；现在仍可隔开或喂食。",4);
         }
         var target=State.Creatures.Find(o=>o.Id==p.HungerTargetId);
-        if(target==null||target.Family.ColdStorage.Stored||target.Family.Memorialized||
-            target.Interaction.Carried||!FamilyVisible(c,target,4)||WaterEnvironment.IsInWater(State,target))
+        if(target==null||!CanPursueHungerTarget(c,target))
         {p.HungerTargetId=null;return false;}
         var protector=target.Condition==PhysicalCondition.Dead?null:State.Creatures
             .Where(o=>o!=c&&o!=target&&o.Personality.Kindness>=.65&&o.Courage>=.55&&

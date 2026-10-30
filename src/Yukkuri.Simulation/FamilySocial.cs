@@ -525,12 +525,16 @@ public sealed partial class WorldSimulation
     private bool CanProtectFamily(Creature c) => CanFamilyFight(c) && !FamilyRules.UnderIntervention(c) &&
         c.Family.Conflict.TargetId==null && c.Family.ChildThreat.TargetId==null && c.Family.CareParcelId==null;
 
+    private bool CanPursueFamilyConflict(Creature c,Creature target) => c!=target&&CanFamilyFight(c)&&
+        c.Family.Conflict.Remaining>0&&!FamilyRules.UnderIntervention(c)&&!WaterEnvironment.IsInWater(State,c)&&
+        target.Condition!=PhysicalCondition.Dead&&!target.Interaction.Carried&&
+        !target.Family.ColdStorage.Stored&&FamilyVisible(c,target,7);
+
     private bool TryFamilyConflict(Creature c, double dt)
     {
         var conflict = c.Family.Conflict;
         var target = State.Creatures.Find(x => x.Id == conflict.TargetId);
-        if (!CanFamilyFight(c) || target == null || target.Condition == PhysicalCondition.Dead ||
-            target.Interaction.Carried || target.Family.ColdStorage.Stored || !FamilyVisible(c, target, 7))
+        if (target == null || !CanPursueFamilyConflict(c,target))
         { StopFamilyConflict(c, "双方已经隔开或身体无法继续，停止了冲突"); return false; }
         // A nearby capable companion can interpose before contact; no remote protective magic.
         var defender = State.Creatures.Where(x => x != c && x != target && CanProtectFamily(x) &&

@@ -32,11 +32,16 @@ public sealed partial class WorldSimulation
     // Live input is not saved. The older three-second position memory remains
     // useful for following/searching, but cannot count as present companionship.
     private bool _interactionHandLive;
+    // A saved Until is not a live interaction: the hand, body and current
+    // competing needs still have to be valid, including during close-up.
+    public bool HasLiveHumanCompany(Creature c) => State.InteractionPlaytest&&State.Mode!=PlayMode.CloseUp&&
+        c.Interaction.HumanCompany.Until>State.WorldSeconds&&State.Creatures.Contains(c)&&CanSeekHumanCompany(c);
+
     private bool CanSeekHumanCompany(Creature c)
     {
         var i=c.Interaction;
         return c.Condition==PhysicalCondition.Active&&!c.Quarantine&&!c.IsIntruder&&
-            !c.Family.ColdStorage.Stored&&!FamilyRules.UnderIntervention(c)&&!i.Water.InWater&&
+            !c.Family.ColdStorage.Stored&&!FamilyRules.UnderIntervention(c)&&!i.Water.InWater&&!WaterEnvironment.IsInWater(State,c)&&
             c.Pain<25&&c.Fear<60&&c.Resentment<35&&c.Trust>=60&&c.Attachment>=40&&
             i.HumanBond.Familiarity>=8&&i.HumanBond.Safety>=8&&State.WorldSeconds-i.HumanBond.LastHarmAt>=60&&
             !NaturalResources.WantsFood(c)&&!NaturalResources.WantsWater(c)&&c.Energy>=40&&
@@ -46,6 +51,7 @@ public sealed partial class WorldSimulation
             InteractionGestureTarget!=c.Id&&c.RetreatRemaining<=0&&c.Family.FlightRemaining<=0&&
             c.Family.Conflict.TargetId==null&&c.Family.ChildThreat.TargetId==null&&
             c.Family.CompanionTargetId==null&&c.Family.CareTargetId==null&&c.Family.CareParcelId==null&&
+            !State.Creatures.Any(other=>other!=c&&CurrentInteractionThreatTarget(other)==c)&&
             _interactionHandLive&&SeesHelpingHand(c);
     }
 

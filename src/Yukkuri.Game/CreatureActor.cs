@@ -163,7 +163,7 @@ public partial class CreatureActor : RigidBody3D
         if(Main.SimpleActors){Freeze=!close||suspended;if(!close)Position=new((float)c.X,.46f*BodyScale,(float)c.Z);return;}
         _phase+=delta;_reactionAge+=delta;_poseAge+=delta;
         if(c.ReactionSerial!=_lastSerial){_lastSerial=c.ReactionSerial;_reactionAge=0;}
-        var expression=WaterConcernExpression(ActorInjuryPresentation.ExpressionFor(c));
+        var expression=WaterConcernExpression(CompanyExpression(ActorInjuryPresentation.ExpressionFor(c)));
         DisplayedExpression=expression;
         if(Main.NameplatesEnabled){
         _name.Visible=selected&&!close;_name.Text=c.Name+(c.Condition==PhysicalCondition.Critical?" · 待救":"");

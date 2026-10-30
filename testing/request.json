@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v20-night-three-lines-C-20261031",
+  "revision": "dot-v21-night-three-lines-D-20261031",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -9,7 +9,7 @@
   "run_timeout_minutes": 50,
   "watched_paths": ["src/", "checks/", "tools/", "assets-source/", "third-party/", "global.json", "NuGet.Config", "toolchain.lock.json", ".gitattributes", "testing/request.json", "testing/PROTOCOL.md", "testing/report-template.json"],
   "required_checks": [
-    "lfs-integrity", "game-build", "Interaction.AffectionJourney", "Family.Desire", "Interaction.WaterEmotion", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
+    "lfs-integrity", "game-build", "Interaction.Help", "Interaction.AffectionJourney", "Family.Desire", "Interaction.WaterEmotion", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "Interaction.AutonomyPriority", "Interaction.CompletedNeeds", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
     "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Family.AdoptionJourney", "Family.AssistedCare", "Family.Growth", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
@@ -231,6 +231,13 @@
     "实际图形观察善良者向落水同伴和人类求助、中性观察和有真实事件时的恶劣嘲弄；遮挡、失去行动能力、目标离水或死亡时退出。本人临危/死亡/疼痛/进食/直接操作优先。固定及脚部伤残的落水者保留有限挣扎，不伪装成正常跳逃。",
     "Hits读取模拟每个目标的计数和剩余时间：空点/拒绝不计，切换目标不混链，暂停保持而继续后到期消失。普通观察面板的落水救援入口使用真实用品库存；制止袭击可从施害者或受害者进入，暂停不能执行，终止后仍保留饥饿/伤势/关系。",
     "全部结果绑定包含第三批的完整SHA。未运行项目、编译、测试、模拟或渲染；静态审查与代码新增都不是实测证据。本请求不恢复远程自动计划。"
+  ],
+  "night_three_lines_D_focus": [
+    "v21保留全部旧请求，新增Interaction.Help及HumanCompany追加边界。求助和制止使用模拟共享的实时资格，检查临危/真实水域/威胁排序、旧HelpTargetId不制造危机、不同区域/冷藏/安置/死亡排除、解决后即时退出；查询在暂停和近看也不得推进时间或改变选中对象。",
+    "多个施害者都能从各自面板制止，失效旧目标字段不得遮蔽正在执行的行为。临危受害者仍保留施害者信息；喂饱解除幼体危险后不能再多打一次。暂停实际制止必须拒绝且完整状态不变，制止后已有伤势/饥饿/关系保留。残躯啃食可中止但不对死亡对象发救助请求，也不补回营养或复活。",
+    "顶部求助按钮显示当前真实危机，点击定位对象与小院镜头，不跨区、不解除暂停、不自动使用道具；对象变化后重验。核对多种窗口宽度和较长名字，普通救援/制止入口与调试面板切换仍可用。",
+    "陪伴只读资格必须排除近看、旧手位置记忆、实际入水和新的有效威胁。观察靠近、到达后逐渐放松、持续呼吸/眨眼；悲伤或惊惧余波下寻求安慰仍保留忧虑。暂停不累计相处，危险和直接操作优先，开心嘴型不抹掉警惕眼眉。",
+    "本机仅源码读写与静态审查；所有新检查、实际画面/声音/鼠标反馈均未执行。结果必须对应包含第四批的完整SHA，不用旧报告替代，也不自动恢复远程测试计划。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

@@ -235,5 +235,38 @@ Check("离散弹额真实伤害归于头部且长期记忆不需要连续手势"
     Require(copy.Selected!.Interaction.HumanBond.Caution.GetValueOrDefault(BodyPart.Head)==caution,"弹额记忆没有持久保存");
 });
 
+Check("实时陪伴查询复用资格且切近看不等下一次输入或tick",()=>
+{
+    var sim=Create();var c=sim.Selected!;Start(sim);
+    Require(sim.HasLiveHumanCompany(c),"已经开始的有效陪伴没有可读状态");
+    string before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    Require(sim.HasLiveHumanCompany(c)&&JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before,"只读查询改变了状态");
+    sim.State.Mode=PlayMode.CloseUp;
+    double until=c.Interaction.HumanCompany.Until,time=sim.State.WorldSeconds;
+    Require(!sim.HasLiveHumanCompany(c)&&c.Interaction.HumanCompany.Until==until&&sim.State.WorldSeconds==time,
+        "切近看后旧手位置仍产生有效陪伴，或查询取消了真实记录");
+    sim.State.Mode=PlayMode.Management;sim.State.Settings.Pause=true;
+    Require(sim.HasLiveHumanCompany(c),"暂停不应删除既有有效陪伴状态");
+    sim.SetInteractionHand(0,0,false);
+    Require(!sim.HasLiveHumanCompany(c)&&c.Interaction.HumanCompany.Until==until,"旧三秒手位置记忆冒充实时陪伴");
+});
+
+Check("实际入水和刚出现的危险立即使陪伴表现失效而非靠旧Until",()=>
+{
+    var sim=Create();var c=sim.Selected!;Start(sim);
+    var attacker=new Creature{Name="饥饿逼近者",X=1.8,Z=0,TargetX=1.8,Fullness=5,Energy=90,
+        Body=new(){SpeciesId="marisa"},Interaction=new(){Enabled=true,Hydration=90},
+        Personality=new(){Initialized=true,Kindness=.05,HungerTargetId=c.Id}};
+    sim.State.Creatures.Add(attacker);
+    double until=c.Interaction.HumanCompany.Until,time=sim.State.WorldSeconds;
+    Require(!sim.HasLiveHumanCompany(c)&&c.Interaction.HumanCompany.Until==until&&sim.State.WorldSeconds==time,
+        "逼近中的有效危险没有及时压过安心陪伴，或只读查询改变了世界");
+    sim.InterruptInteractionThreat(attacker.Id);
+    Require(sim.HasLiveHumanCompany(c),"已解除且尚未造成伤害的威胁仍被旧目标字段当作正在发生");
+    sim.State.RoomObjects.Add(new(){Kind=RoomObjectKind.RiverWater,RegionId=c.RegionId,X=7,Z=0});
+    c.X=7.1;sim.SetInteractionHand(7.5,0,true);
+    Require(!c.Interaction.Water.InWater&&!sim.HasLiveHumanCompany(c),"陪伴查询只依赖未更新的入水缓存");
+});
+
 Console.WriteLine($"Human company: {failures} failure(s)");
 return failures==0?0:1;

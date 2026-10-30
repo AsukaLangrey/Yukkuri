@@ -58,6 +58,7 @@ public partial class InteractionRoom
         var header=Row(top,16);var identity=Column(header,0);identity.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         identity.AddChild(Text("慢慢来，相处小院",23));identity.AddChild(Text("人油互动 · 第一批试玩",12,"7c8876"));
         _clockLabel=Text("",13);_clockLabel.CustomMinimumSize=new(190,0);header.AddChild(_clockLabel);
+        BuildYardHelpButton(header);
         _pauseButton=Button("停一停",()=>TogglePause());header.AddChild(_pauseButton);
         header.AddChild(Button("调试 · F3",ToggleDebugPanel));
         header.AddChild(Button("怎么玩",ShowHelp));header.AddChild(Button("存档与设置",ShowSettings));
@@ -210,6 +211,7 @@ public partial class InteractionRoom
         if(_who==null||Sim==null)return;
         RefreshOilSelector();
         RefreshDebugPanel();
+        RefreshYardHelpButton();
         _choiceList.Visible=_toolArmed&&!_directToolMode&&!_waterRescueToolArmed;
         InteractionAction? highlighted=_toolArmed&&!_waterRescueToolArmed?_action:null;
         if(!_directHighlightInitialized||highlighted!=_highlightedDirectTool)
@@ -304,7 +306,7 @@ public partial class InteractionRoom
         OpenModal("先慢慢熟悉它");
         _modalContents.AddChild(Text("1  右键或点“空手”收回工具。空手按住身体抓起，拖动搬运；慢慢松手放下，快速甩动后松手会沿甩动方向抛出，速度越快力度越大。停住后再松手不会沿用之前的甩动速度。"));
         _modalContents.AddChild(Text("2  左侧直接选择手掌、抚摸、拳头、火机或食水。手掌按住身体拖动搬运，松开放下；落点被占用或鼠标离开操作区时继续托着，在空地再点一下放稳。抚摸按住轻轻划过；拳头连续点击；火机按住实际接触部位，松手就停止。按住托举时 Shift＋滚轮调高度。"));
-        _modalContents.AddChild(Text("3  零食、饭饭或清水工具：点油是递到嘴边手喂，点地面是放下一份。它需要时间接食，也可能拒绝，嘴边不能被障碍挡住。空手也能拿起地上的食水：递到嘴边等它接一口，移到空地松开放下；右键把剩余食水放回原处。"));
+        _modalContents.AddChild(Text("3  零食、饭饭或清水工具：点油是递到嘴边手喂，松开鼠标也会递完这一份；点地面是放下一份。它需要时间接食，也可能拒绝，嘴边不能被障碍挡住。换工具、右键、暂停或离开窗口会收回递送。空手也能拿起地上的食水：递到嘴边等它接一口，移到空地松开放下；右键把剩余食水放回原处。"));
         _modalContents.AddChild(Text("4  小院里按住中键拖动画面，滚轮缩放，“居中”回到中央。空手双击小油，或按 Tab 近看；使用工具时双击仍是操作工具。近看暂停自然时间，回到小院才继续自主找食水、跟随、休息和恢复。近看时用中键转视角，空手也可左键按住环境拖动；装备工具时左键按工具规则交互。滚轮调远近，“正面”恢复视角。转镜头时托举仍保持支撑；要放下小油或放置物品，在空地单击后松开，不要拖动。"));
         _modalContents.AddChild(Text("5  空手按住软球，拖动后松开推球。跟随练习时移动鼠标指路，不用操作人类角色。空格暂停；Del 收起指向的可收纳物品，树叶、河水和软垫不能收起。"));
         _modalContents.AddChild(Text("6  固定具、箱子和悬挂装置要用各自的解除动作；切回空手不会解除装置。脚脚受伤时，把食水放到能吃到的地方，再护理和休息。左右脸可以分别擦洗和护理。"));
@@ -315,7 +317,9 @@ public partial class InteractionRoom
         _modalContents.AddChild(Text("不用一直逗它：它会自己找食水、休息和活动。树叶和河水也能自己取用，但吃喝后可能不舒服。把干净食水放下并收手，给它一点时间。",13,"78816e"));
         _modalContents.AddChild(Text("饭饭和护理用品在这个试玩场景中不限量。每分钟自动保存；读档不计算离线时间。",13,"78816e"));
         _modalContents.AddChild(Text("右侧“同伴、家庭与照护”可以邀请两只油相处、安排孕育和幼体照护。邀请不保证接受，需要双方成熟、愿意且身体适合。出生后宝宝会出现在小院和个体名单中。冷藏只会有限地十倍延缓，取出后仍需照护。",13,"78816e"));
-        _modalContents.AddChild(Text("右侧显示饱食度和口渴度，口渴度越高越需要水。吃喝后会逐渐产生尿意和便意，排泄物留在原地；鼠标指向后按 Del 清理。按 F3 或点顶部“调试”可实时查看生命、信任、恐惧、身体与家庭等全部状态，支持筛选和切换个体；关闭后恢复普通观察面板。跌落和其他伤害会累积；吃饱休息能缓慢恢复，重伤需要及时护理。",13,"78816e"));
+        _modalContents.AddChild(Text("右侧的馒馒来是当前心情，信任来自相处经历；生命和恐惧能帮助你判断身体与情绪。吃到好东西可以开心，但不会马上忘掉刚才的伤害。持续安全、吃喝与休息才有助于慢慢恢复；重伤需要及时护理。",13,"78816e"));
+        _modalContents.AddChild(Text("同院出现真实危机时，顶部会显示求助。点击可找到需要帮助的油，暂停设置保持原样。落水时拿救援用品，再点油救起；正在受袭时，可从施害者或受害者的观察面板制止。救助不会直接消除伤势、饥饿或关系问题。",13,"78816e"));
+        _modalContents.AddChild(Text("口渴度越高越需要水。吃喝后会逐渐产生尿意和便意，排泄物留在原地；鼠标指向后按 Del 清理。按 F3 或点顶部“调试”可查看完整状态、筛选参数和切换个体；冻结读数只固定显示，不冻结小院时间。",13,"78816e"));
         _modalContents.AddChild(Button("关闭面板",CloseModal));
     }
     private void ShowSettings()

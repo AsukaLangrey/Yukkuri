@@ -265,13 +265,18 @@ public sealed partial class WorldSimulation
             React(c,Expression.Angry,"离开……！",c.Family.LastEvent,6);RecordInteraction(c,"child-threat",c.Family.LastEvent,4);
         }
     }
+    private bool CanPursueChildThreat(Creature c,Creature child) => c!=child&&CanSelfMove(c)&&
+        c.Family.ChildThreat.Remaining>0&&!FamilyRules.UnderIntervention(c)&&!WaterEnvironment.IsInWater(State,c)&&child.IsYoung&&
+        c.Pain<70&&c.Fear<90&&c.Family.FlightRemaining<=0&&c.RetreatRemaining<=0&&
+        c.Interaction.EatingRemaining<=0&&c.Interaction.ActiveCue==null&&InteractionGestureTarget!=c.Id&&
+        !(c.Fullness>40&&c.Fear<45&&c.Pain<25&&!c.Family.Peers.Values.Any(b=>b.Resentment>55))&&
+        child.Condition!=PhysicalCondition.Dead&&FamilyVisible(c,child,5)&&!child.Interaction.Carried;
+
     private bool TryMaternalCrisis(Creature c,double dt)
     {
         var risk=c.Family.ChildThreat;if(risk.TargetId==null)return false;
         var child=State.Creatures.Find(x=>x.Id==risk.TargetId);
-        if(!CanSelfMove(c)||c.Pain>=70||c.Fear>=90||c.Family.FlightRemaining>0||c.RetreatRemaining>0||
-            c.Interaction.EatingRemaining>0||c.Interaction.ActiveCue!=null||
-            InteractionGestureTarget==c.Id||child==null||child.Condition==PhysicalCondition.Dead||!FamilyVisible(c,child,5)||child.Interaction.Carried)
+        if(child==null||!CanPursueChildThreat(c,child))
         {StopChildThreat(c,"身体做不到或双方已经隔开，危险行动停止。",120);return false;}
         var protector=State.Creatures.OrderBy(a=>a.Id,StringComparer.Ordinal).FirstOrDefault(a=>a.Id!=c.Id&&a.Id!=child.Id&&CanProtectFamily(a)&&a.Courage>=.55&&
             child.Family.CaregiverIds.Contains(a.Id)&&FamilyInContact(a,child)&&FamilyVisible(a,c,2.5));

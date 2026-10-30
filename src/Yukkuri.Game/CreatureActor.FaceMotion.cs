@@ -24,11 +24,12 @@ public partial class CreatureActor
 
     private void PresentFaceTransition(Creature c,Expression expression,float eyes,EyeCurve curve,float left,float right,float dt)
     {
+        CompanyEyes(expression,ref eyes,ref curve,ref left,ref right);
         WaterConcernEyes(expression,ref eyes,ref left,ref right);
         // Food can be welcome while the body is still afraid. Keep the eyes/brows wary
         // independently of the chewing mouth and the latest short-lived response.
-        float caution=Mathf.Clamp((float)(c.Fear-20)/65,0,1);
-        if(caution>.15f&&expression is Expression.Content or Expression.Delighted or Expression.Curious or Expression.Shy)
+        float caution=Mathf.Clamp(Mathf.Max((float)(c.Fear-20)/65,(float)c.Interaction.Emotion.Alarm/100*.85f),0,1);
+        if(caution>.001f&&expression is Expression.Content or Expression.Delighted or Expression.Curious or Expression.Shy)
         {
             eyes=Mathf.Lerp(eyes,.94f,caution);left=Mathf.Lerp(left,14,caution);right=Mathf.Lerp(right,-14,caution);
             if(caution>.5f)curve=EyeCurve.Open;
