@@ -120,3 +120,15 @@
 - 整合修复：A 也在外茎失去接触时释放公开 target。B 原先依赖该 target 判断接触，移开后会无法重新命中。现保存真实起始母体 ID，与 Kind/EventId 同时建立并在 ResetContactMotion 清除；外茎接触使用 HasInteractionGesture + 母体 ID + Kind + EventId 判断，因此移回原窝可从零重新累计。身体/软球仍沿用公开 target，完成支护的模拟占有仍为 null；本地身份不写回模拟。此项仅静态追踪了初始接触→移开→原窝重新接触、另一窝拒绝和取消清理路径，远端仍需实测。
 
 本批文件：CreatureActor.Contact.cs、CreatureActor.Gestation.cs、InteractionRoom.Input.cs、InteractionRoom.Offering.cs、InteractionRoom.Tools.cs、InteractionRoom.cs，以及本交接。未改 Simulation/checks 或主协调专属 Ui/Vitals/Intervention/Debug/Supplies，未使用 Git。仅文件读取、rg 和补丁编辑，未启动项目/编译/测试/模拟/渲染/预览/转换/项目脚本/钩子。静态核对了 A 的精确查询字段、接口范围、接触丢失归零、单手势成功一次及独立损伤路径。远端需核对细茎可点性、遮挡排序、护理垫贴合、移到母体/另窝归零、暂停失焦取消、同次按住不重复扣药、出生/失败后旧命中消失、外茎击打不增加母体 Hits/头部伤害、球位于茎前时仍可推球、支护颜色/萎顿程度及不同体型姿态的附着表现。
+
+## 第八批：跳跃转托举的局部接续与低面草花接入
+
+- 原跳跃的形变与俯仰在通用姿态平滑之后叠加，因此突然抓起时，平滑器没有记住刚显示的最终跳跃形状。现 canHop 转实际 Carried/Falling 时，先接回上一帧最终局部 Scale/Rotation，再沿原平滑器进入托举/落下姿态。没有传入跳跃的水平显示滞后、跳高或上一帧世界位置；根位置和 Height 仍完全由模拟决定。无效固定、翻身、翻滚、入水、临危/死亡不使用此转接。暂停不启动转接，近看原有相机交接保留；已有缓放 settle 和真实跌落 land 回弹不重复添加。
+- 新增 WoodlandDecorations.cs，WoodlandArt.Build 在每棵既有树根添加 Kenney grass / flower_yellowA 的真实导入模型实例。加载使用官方文档中的 ResourceLoader.Exists / Load<PackedScene>、PackedScene.CanInstantiate / Instantiate。导入必须由授权远端执行，本机没有调用加载器、导入器或游戏。模型保留原网格与材质，不强转未知材质类型。
+- 运行时按层级局部变换收集网格包围盒，只接受纯 Node3D 分组与 MeshInstance3D；拒绝额外行为节点、TopLevel 或无效范围。统一缩放、居中及贴地后，草花中心距离约 .176 × tree.Scale，半径 .043 × tree.Scale，内缘约 .133 超过树干基部 .13，外缘约 .219 小于原移动排除半径 .22。没有改变树木、河道、饮水入口、碰撞、可选对象或遮挡规则，未接石头与食品。
+- 资源缺失、尚未导入或模型无效时画程序化草花，每资源仅一次中文 GD.PushWarning，明确外部模型未加载；成功每资源仅一次加载日志，便于远端分辨真实接入与降级。包围盒和降级都只是新增的运行源码，未在本机执行。
+- 原字节复制到 Game/Assets/ThirdParty/KenneyNature：grass.glb（11496 字节）、flower_yellowA.glb（7120 字节）、Kenney-Nature-License.txt（611 字节）。新增 SOURCE.md 记录作者、官方来源、原采集 SHA256、CC0、无修改、运行缩放、导入前提与未验证范围。没有复制整个压缩包、食品、石头或贴图。GLB 沿用 .gitattributes 的 Git LFS 规则，LFS 上传由主协调统一处理。
+- 已读取现有 README/.gitattributes/.gitignore/资源台账脚本源码及导出配置，未运行脚本。现有 Windows 导出非资源过滤项只含 Data JSON；本批补入 KenneyNature 的 .txt/.md，以保留许可及来源。中央 asset-manifest.json 留主协调整合，没有运行 catalog-assets.py 或改写已有历史清单。
+- 整合时主协调发现初稿草花中心位于或贴近实际 .13 树干内部。已仅静态读取原 GLB JSON 中节点变换与 POSITION min/max，草宽/高/深约 .381/.254/.392，花约 .159/.1925/.181；按原宽高比将两者半径收为 .043、中心偏移改为 (±.17,.045)，避免为抬高而拉伸模型。此尺寸下草约 .040、花约 .069 × tree.Scale 高，属于贴地小装饰；实际可见性仍待远端。原GLB未改，没有执行导入、转换或资源检查程序。
+
+本批文件：CreatureActor.Interaction.cs、WoodlandArt.cs、WoodlandDecorations.cs（新增）、export_presets.cfg；Game/Assets/ThirdParty/KenneyNature/grass.glb、flower_yellowA.glb、Kenney-Nature-License.txt、SOURCE.md；本交接与 asset-research.md。工具仅源码/文档读取、官方文档网页读取、补丁编辑、New-Item/Copy-Item 原文件复制及目录元数据读取；没有启动任何项目、编译、测试、模拟、渲染、预览、转换、资源检查程序、导入脚本、Git 或钩子。远端需确认：跳跃上升/顶点/落地压缩时抓起无形变跳变；放下与抛出仍按真实高度/速度；暂停/近看交接；两个真实模型各有成功日志且可见；缺资源时有明确降级日志；四处树根范围、材质、尺度、遮挡；导出包包含原许可与来源且 GLB 已正常导入。实际画面精细度尚未验收。

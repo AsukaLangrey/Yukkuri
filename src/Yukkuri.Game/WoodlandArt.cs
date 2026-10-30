@@ -14,6 +14,9 @@ public static class WoodlandArt
     {
         Add(parent,WoodlandSurface.River());
         foreach(var tree in WoodlandLayout.Trees)
+        {
             Add(parent,WoodlandSurface.Tree(new((float)tree.X,0,(float)tree.Z),(float)tree.Scale));
+            WoodlandDecorations.Add(parent,tree);
+        }
     }
 }

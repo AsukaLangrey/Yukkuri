@@ -84,7 +84,17 @@ public partial class CreatureActor
             &&System.Math.Abs(life.VelocityX)+System.Math.Abs(life.VelocityZ)<.005
             &&pose is "idle" or "guard" or "stomach" or "careful-step";
         bool smoothHandoff=close||life.Physiology.Active||pose=="help-look"||life.GroundIntake&&life.EatingRemaining>0&&pose is "eat" or "sip";
-        if(!paused&&_hadHopPresentation&&!canHop&&smoothHandoff)
+        bool physicalHandoff=(life.Carried||life.Falling)&&!waterBody&&!life.Supine&&!life.Rolling&&
+            life.Restraint==RestraintKind.None&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering;
+        if(!paused&&_hadHopPresentation&&!canHop&&physicalHandoff)
+        {
+            // Capture the final hop's local shape and tilt, which are applied after
+            // the regular smoother. Never carry its travel lag or fake hop height
+            // into a real pickup/fall: simulation position and support stay authoritative.
+            _poseSmoothing.BeginFrom(new(previousBodyScale.X,previousBodyScale.Y,previousBodyScale.Z),
+                _poseSmoothing.Offset,new(previousBodyRotation.X,previousBodyRotation.Y,previousBodyRotation.Z,previousBodyRotation.W));
+        }
+        else if(!paused&&_hadHopPresentation&&!canHop&&smoothHandoff)
         {
             // Close-up or natural intake can interrupt a hop. On resume, hand the
             // complete rendered transform to smoothing, including travel lag and lift.

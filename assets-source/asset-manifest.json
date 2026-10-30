@@ -245,6 +245,30 @@
       "license": "Project-generated geometry; no external mesh or texture",
       "status": "Prototype interpretation, not final approved character art",
       "use": "Character, expression, tree, facility and environment mesh construction"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/grass.glb",
+      "sha256": "260e41d3e5f2472492ed7b475c5b92a30b13ce2bad408535b5ff50574d4575e7",
+      "bytes": 11496,
+      "recorded": "2026-10-31",
+      "status": "Integrated source; remote import and visual review pending",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/nature-kit",
+      "license": "CC0 1.0; original license and source note in the same runtime folder",
+      "modifications": "Original GLB unchanged; placement and uniform scale applied by WoodlandDecorations.cs",
+      "use": "Tree-root grass decoration within existing movement exclusions; not food or a new obstacle"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/flower_yellowA.glb",
+      "sha256": "8a3b08cd2ca411c21f9c581d5bda651d78b13c50cba45ad8fa0389398ead6d1d",
+      "bytes": 7120,
+      "recorded": "2026-10-31",
+      "status": "Integrated source; remote import and visual review pending",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/nature-kit",
+      "license": "CC0 1.0; original license and source note in the same runtime folder",
+      "modifications": "Original GLB unchanged; placement and uniform scale applied by WoodlandDecorations.cs",
+      "use": "Tree-root flower decoration within existing movement exclusions; not food or a new obstacle"
     }
   ]
 }
