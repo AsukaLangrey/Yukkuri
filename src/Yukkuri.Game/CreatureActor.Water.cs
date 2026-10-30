@@ -32,7 +32,8 @@ public partial class CreatureActor
         bool canEscape=WaterEnvironment.CanStruggle(c);
         bool fixedBody=c.Interaction.Restraint!=RestraintKind.None||c.Interaction.Supine;
         float struggle=Mathf.Sin(_waterPhase*(5+effort*4));
-        float reach=canEscape?Mathf.Max(0,Mathf.Sin(_waterPhase*2.5f)):0;
+        float reach=canEscape?WaterAttemptReach(dt):0;
+        if(!canEscape)_waterAttemptPulse=0;
         float sway=fixedBody ? .005f : .025f;
         float bob=fixedBody ? 0 : .025f;
         _visual.Position+=new Vector3(struggle*sway*effort,-.23f+(reach*.09f+Mathf.Abs(struggle)*bob)*effort,0)*BodyScale;
@@ -40,6 +41,7 @@ public partial class CreatureActor
         _visual.Scale*=new Vector3(1-effort*reach*.04f,1+effort*reach*.065f,1);
         PoseTag=c.Condition==PhysicalCondition.Dead?"water-dead":effort<=.12f?"water-exhausted":
             canEscape?"water-struggle":fixedBody?"water-restrained":"water-strain";
+        if(reach>.001f)PoseTag=_waterAttemptBlocked?"water-attempt-blocked":"water-attempt-advance";
     }
 
     private void BuildWaterSurface()
@@ -70,14 +72,14 @@ public partial class CreatureActor
         {
             float phase=Mathf.PosMod(_waterPhase*(.30f+effort*.24f)+n/3f,1);
             _waterRings[n].Scale=new Vector3(1+phase*.85f,1,1+phase*.75f)*BodyScale;
-            SceneArt.SetSurfaceOpacity(_waterRings[n],(1-phase)*(.16f+effort*.42f));
+            SceneArt.SetSurfaceOpacity(_waterRings[n],(1-phase)*(.16f+effort*(.42f+_waterAttemptPulse*.10f)));
         }
         for(int n=0;n<_waterDrops.Length;n++)
         {
             float phase=Mathf.PosMod(_waterPhase*(1.1f+effort)+n/6f,1);
             float angle=n*Mathf.Tau/6+_waterPhase*.3f;
             float distance=(.42f+phase*.22f)*BodyScale;
-            _waterDrops[n].Position=new(Mathf.Cos(angle)*distance,Mathf.Sin(phase*Mathf.Pi)*.16f*effort,Mathf.Sin(angle)*distance);
+            _waterDrops[n].Position=new(Mathf.Cos(angle)*distance,Mathf.Sin(phase*Mathf.Pi)*(.16f+_waterAttemptPulse*.06f)*effort,Mathf.Sin(angle)*distance);
             _waterDrops[n].Visible=effort>.12f;
             SceneArt.SetSurfaceOpacity(_waterDrops[n],(1-phase)*effort*.72f);
         }

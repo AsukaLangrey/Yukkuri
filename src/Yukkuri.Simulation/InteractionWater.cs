@@ -11,6 +11,10 @@ public sealed class WaterExposure
     public double Struggle { get; set; }
     public double RecoverySeconds { get; set; }
     public double NextAttemptAt { get; set; }
+    public long AttemptSequence { get; set; }
+    public string? AttemptGeneration { get; set; }
+    public double AttemptAt { get; set; } = -100;
+    public WaterAttemptOutcome? AttemptOutcome { get; set; }
     public double LastRescueAt { get; set; } = -100;
     public double LastPlayerSubmersionAt { get; set; } = -100;
 }
@@ -98,6 +102,7 @@ public sealed partial class WorldSimulation
         if(w.InWater)return;
         w.InWater=true;w.ExposureSeconds=0;w.NextAttemptAt=State.WorldSeconds+1;
         w.EventId=NewFamilyId("water");w.EnteredAt=State.WorldSeconds;
+        ResetWaterAttempt(w);
         w.PlayerCaused=causedByPlayer;w.HumanRescueCredited=false;
         ClearWaterAftercare(c);
         foreach(var observer in State.Creatures)
@@ -175,13 +180,16 @@ public sealed partial class WorldSimulation
                 double depth=c.X-WoodlandLayout.RiverEdge(c.Z);
                 if(depth<.5&&TryWaterBankSpot(c,out double x,out double z,.7)&&Next()<.35+c.Courage*.3)
                 {
+                    RecordWaterAttempt(c,WaterAttemptOutcome.Escaped);
                     c.X=x;c.Z=z;c.TargetX=x;c.TargetZ=z;LeaveWater(c,false);
                     Feedback(c,"recovery",Expression.Worried,"它挣扎着跳回岸上，仍然湿透并受了惊。","water-recover");
                     return false;
                 }
                 // Each attempt can make real progress toward the bank, but exhaustion/disability matters.
                 double xNext=c.X-Math.Min(.18,.04+c.Energy*.0014);
-                if(CanOccupyRoom(c,xNext,c.Z,allowWater:true))c.X=xNext;
+                bool advanced=CanOccupyRoom(c,xNext,c.Z,allowWater:true);
+                if(advanced)c.X=xNext;
+                RecordWaterAttempt(c,advanced?WaterAttemptOutcome.Advanced:WaterAttemptOutcome.Blocked);
                 c.TargetX=c.X;c.TargetZ=c.Z;
             }
         }

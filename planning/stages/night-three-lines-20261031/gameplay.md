@@ -339,3 +339,15 @@ BuyFood/BuyMedicine 在完整一包放不下 int 合法范围时先拒绝，钱�
 本批新增模拟 `ConsumableInventory.cs`；修改 `InteractionGesture.cs`、`InteractionWorld.cs`、`InteractionBehavior.cs`、`WorldSimulation.cs`、`MilestoneInteraction.cs`、`MilestoneWorld.cs`。新增上述检查项目两文件，修改 `checks/Interaction.AffectionJourney/Program.cs` 和本交接。root 接用品补给/库存/帮助，未由本分工修改 Game。B15/B16 的 ActorGeometry 新增检查单独冻结交 root，不属于库存交付。
 
 只进行源码读写和静态审查，没有运行项目、编译器、检查、测试、渲染或 Git。12 组新检查、长爱线补货和旧物品/照护/自然取食回归均等待独立远程验证；没有把源码检查存在称为运行通过。
+
+## 第十二批：真实水中尝试事实与表现契约（源码冻结）
+
+新增 `WaterAttempts.cs`。WaterExposure 增加 AttemptSequence、AttemptGeneration、AttemptAt（默认 -100）和可空 AttemptOutcome，绑定原 Water.EventId。只有原 CanStruggle 且 Struggle>12 的实际尝试分支才记录：CanOccupyRoom 确实允许向岸位移为 Advanced；实际占位阻止这一步为 Blocked；原近岸落点及随机条件实际成功、走原 LeaveWater 分支才是 Escaped。NextAttemptAt 继续仅为检查日程，固定/失能/无力/翻倒时不能把日程更新冒充动作。没有新增位移、成功概率、救援结算或跳出捷径。
+
+公开 `WaterAttemptOutcome { Advanced, Blocked, Escaped }`、`WaterAttemptView(EventId, Generation, Sequence, At, Outcome)` 和只读 `WaterAttemptStatus(Creature)`。完整身份是落水 EventId、可空代号和序号；long 耗尽时仅给尝试计数换 GUID 代号并从 1 开始，不替换落水因果身份。新一轮真实落水重置尝试字段，旧档缺字段默认没有尝试，不从 NextAttemptAt 推造事件。校验拒绝负序号、无来源结果、未来/非有限时间、无效枚举和错代号。
+
+只读查询限实际当前小院、活着未临危且未冷藏/安置的对象；近看返回空，暂停只读既有事实。只暴露距普通世界时间 1 秒内的记录，水中推进/受阻还重验实际可挣扎资格，Escaped 要求本次已离水并在恢复、未被托起或再次落水。读数不抽随机、不改位置、不推进时钟。B17 首次观察、读档、新落水身份、近看或隐藏状态只建立当前完整身份基线；同一落水事件的新尝试才播放短反馈。死亡记录可以留存，但不会再表现成活着挣扎。普通向岸推进若跨过水线，仍由原支撑同步路径离水，不另伪造一次跳出事件。
+
+新增 `checks/Interaction.WaterAttempts/` 两文件，共 9 组检查源码：实际水中释放及首次推进即时可存；实际身体占位阻挡与移走后推进；固定/底部失能/无力/翻倒只有日程无尝试；真实多种固定种子下原成功落点与恢复、无救援消耗、实际冷藏隐藏；纯查询/暂停/近看/过期；真实救助与再次托起丢入水中不复用身份；序号耗尽安全换代；死亡/跨区及读档；旧档与坏状态。未直接写入成功结果、移动判定或随机结果来通过检查。
+
+本批新增 `WaterAttempts.cs`，修改 `InteractionWater.cs`、`InteractionValidation.cs`，新增上述检查项目两文件及本交接。没有修改 A11 冻结共享源码，没有改 Game 或 Git。9 组新检查与旧水域回归未运行、未编译；B17 接线的实际画面尚待独立远程验证。

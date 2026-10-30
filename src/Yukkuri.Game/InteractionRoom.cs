@@ -190,6 +190,7 @@ public partial class InteractionRoom : Node3D
             var hungerTarget=hungerFeeding!=null?Sim.State.Creatures.Find(target=>target.Id==hungerFeeding.TargetId):null;
             actor.PrepareHungerFeeding(c,hungerFeeding,hungerTarget,pose,paused,close);
             actor.ObserveWaterState(c,WaterEnvironment.IsInWater(Sim.State,c),paused);
+            actor.PrepareWaterAttempt(c,Sim.WaterAttemptStatus(c),Sim.State.WorldSeconds,paused,close);
             actor.PrepareStemPresentation(Sim.StemCareStatus(c.Id));
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
             RefreshFamilyPresentation(c,actor);
