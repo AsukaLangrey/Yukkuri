@@ -17,7 +17,10 @@ void Seconds(WorldSimulation sim,double seconds)
 WorldSimulation Fresh()
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();var target=sim.Selected!;
-    sim.State.Creatures.RemoveAll(c=>c!=target);sim.State.RoomObjects.Clear();
+    sim.State.Creatures.RemoveAll(c=>c!=target);
+    // RiverWater also declares the actual river geometry. Clearing it would
+    // leave X=7.1 on ordinary ground, with no immersion or rescue to observe.
+    sim.State.RoomObjects.RemoveAll(o=>o.Kind!=RoomObjectKind.RiverWater);
     target.X=7.1;target.Z=0;target.TargetX=target.X;target.TargetZ=0;
     // Deep-water component fixture: no ability to self-jump out before rescue.
     target.Interaction.FootIntegrity=0;target.Fullness=90;target.Energy=90;target.Interaction.Hydration=90;
@@ -176,6 +179,116 @@ Check("self escape or peer reception can start shore concern within a tick witho
         }
     }
     Require(escaped,"near-bank escape or peer reception did not occur during real ordinary time");
+});
+
+Check("real thirsty river approach can slip, receive different peer responses, and require actual rescue and drinking",()=>
+{
+    bool completed=false;
+    // Independent bounded component starts, not save/reload rerolls. Keep the
+    // production river source and healthy movement. Initial demand/personality
+    // and peer positions make this a drinking accident scenario. Neighbor's
+    // existing autonomous/social timers isolate its water response; its initial
+    // distance prevents an immediate successful peer reception on the fall tick.
+    for(int seed=1;seed<=128&&!completed;seed++)
+    {
+        var sim=WorldSimulation.CreateInteractionPlaytest(20261031UL+(ulong)seed*7919);
+        var target=sim.Selected!;
+        sim.State.Creatures.RemoveAll(c=>c!=target);
+        sim.State.RoomObjects.RemoveAll(o=>o.Kind!=RoomObjectKind.RiverWater);
+        var source=sim.State.RoomObjects.Single();
+        Require(source.X==WoodlandLayout.DrinkX&&source.Z==WoodlandLayout.BankZ,"default curved-bank source moved");
+        target.X=source.X-2.4;target.Z=source.Z;target.TargetX=target.X;target.TargetZ=target.Z;
+        target.Fullness=90;target.Energy=90;target.Interaction.Hydration=50;
+        target.Personality=new(){Initialized=true,Kindness=.8,Carelessness=1,Pride=.2};
+        var good=Neighbor(sim,.8,source.X-2.3,source.Z+2.2);
+        var mean=Neighbor(sim,.05,source.X-2.3,source.Z-2.2);
+        Require(WorldSimulation.CanSelfMove(target)&&!WaterEnvironment.IsInWater(sim.State,target)&&
+            target.Interaction.Resources.Count==0&&target.Interaction.Water.EventId==null,"journey did not start as an uninformed dry mobile creature");
+        double startX=target.X,initialHydration=target.Interaction.Hydration;
+        double lastHarm=target.Interaction.HumanBond.LastHarmAt;
+        long intake=target.Interaction.IntakeSequence;
+        bool approached=false,discovered=false;
+        for(int n=0;n<120&&target.Personality.NextWaterAccidentAt==0;n++)
+        {
+            Seconds(sim,.25);
+            discovered|=target.Interaction.Resources.ContainsKey(source.Id);
+            if(!target.Interaction.Water.InWater&&target.X>startX+.5)approached=true;
+        }
+        Require(discovered&&approached&&target.Personality.NextWaterAccidentAt>sim.State.WorldSeconds&&
+            Math.Abs(target.Personality.NextWaterAccidentAt-sim.State.WorldSeconds-45)<.000001,
+            "real source observation, walking, or first bounded accident draw did not occur");
+        double attemptAt=sim.State.WorldSeconds;
+        if(!target.Interaction.Water.InWater)
+        {
+            // A non-accident draw must really lead to drinking, without a hidden
+            // water event or repeatedly rerolling the same mouthful.
+            for(int n=0;n<32&&!target.Interaction.Digestion.RecentIntakes.Any(i=>i.SourceId==source.Id);n++)Seconds(sim,.25);
+            Require(target.Interaction.Digestion.RecentIntakes.Any(i=>i.SourceId==source.Id&&i.Kind==RoomObjectKind.RiverWater)&&
+                target.Interaction.Hydration>initialHydration&&target.Interaction.IntakeSequence==intake+1&&
+                target.Interaction.Water.EventId==null&&!WaterEnvironment.IsInWater(sim.State,target)&&
+                Math.Abs(target.Personality.NextWaterAccidentAt-attemptAt-45)<.000001,
+                "non-accident attempt lost real intake, dry footing, or the original draw cooldown");
+            continue;
+        }
+        var water=target.Interaction.Water;string eventId=water.EventId!;
+        Require(!string.IsNullOrWhiteSpace(eventId)&&WaterEnvironment.IsInWater(sim.State,target)&&!water.PlayerCaused&&
+            water.EnteredAt==attemptAt&&water.LastPlayerSubmersionAt<0&&
+            target.Interaction.HumanBond.LastHarmAt==lastHarm&&target.Interaction.Hydration<=initialHydration&&
+            target.Interaction.IntakeSequence==intake&&!target.Interaction.Digestion.RecentIntakes.Any(i=>i.SourceId==source.Id),
+            "natural slip invented a drink or attributed its cause to the player");
+        Require(sim.WaterConcernTarget(good)==target&&sim.WaterSupportStatus(good) is {Phase:WaterSupportPhase.Responding} support&&
+            support.EventId==eventId&&good.Personality.NextWaterResponseAt>attemptAt&&good.Fear>0&&sim.State.HelpTargetId==target.Id,
+            "good peer did not actually begin the water response");
+        Require(mean.Personality.WaterConcernEventId==eventId&&mean.Personality.NextWaterResponseAt>attemptAt&&
+            target.Family.Peers.TryGetValue(mean.Id,out var meanBond)&&meanBond.Resentment>=4&&
+            sim.WaterSupportStatus(mean)==null,"mean peer changed words without its actual relational consequence");
+        double fear=target.Fear,alarm=target.Interaction.Emotion.Alarm,trust=target.Trust;
+        double goodTrust=good.Trust,meanTrust=mean.Trust,hydration=target.Interaction.Hydration;
+        int supplies=sim.State.WaterRescueTools,purchases=sim.State.WaterRescuePurchases,money=sim.State.Money;
+        Require(sim.BuyWaterRescueTool()&&sim.State.WaterRescueTools==supplies+1&&
+            sim.State.WaterRescuePurchases==purchases+1&&sim.State.Money==money,"free testing purchase did not create one real rescue supply");
+        Require(sim.RescueFromWater(target.Id).Success&&sim.State.WaterRescueTools==supplies&&
+            !water.InWater&&!WaterEnvironment.IsInWater(sim.State,target)&&water.EventId==eventId&&water.HumanRescueCredited&&
+            water.RecoverySeconds>0&&target.Interaction.Hydration==hydration&&
+            target.Fear>=fear&&target.Interaction.Emotion.Alarm>=alarm&&target.Trust>trust&&good.Trust>goodTrust&&mean.Trust==meanTrust,
+            "real rescue lost its single cost, observed personality effects, or preserved thirst/fear");
+        Require(!EmotionalReadiness.Settled(target)&&good.Personality.WaterAftercare.EventId==eventId&&
+            mean.Personality.WaterAftercare.TargetId==null,"rescue erased the aftermath or gave the mean peer shore care");
+        string rescued=Snapshot(sim);
+        Require(!sim.RescueFromWater(target.Id).Success&&Snapshot(sim)==rescued,"repeated rescue changed inventory or relationships");
+
+        // The real cup still has to reach the mouth. Rescue itself gives no
+        // hydration. Hold through this mouthful, then release for shore care.
+        var drink=new InteractionInput(InteractionAction.Drink,BodyPart.Mouth,Duration:.1);
+        Require(sim.BeginInteractionGesture(target.Id,drink).Success,"rescued creature could not accept the actual cup");
+        for(int n=0;n<8;n++)
+        {Require(sim.ContinueInteractionGesture(drink,true).Success,"cup lost mouth contact");sim.AdvanceInteractionPresentation(.1);sim.Advance(.1);}
+        Require(target.Interaction.IntakeSequence==intake+1&&target.Interaction.EatingKind==IntakeKind.Water&&
+            target.Interaction.Hydration>hydration&&target.Interaction.Digestion.RecentIntakes.Any(i=>i.Kind==RoomObjectKind.Water&&i.SourceId==null),
+            "post-rescue water was not actually accepted exactly once");
+        for(int n=0;n<50&&(target.Interaction.EatingRemaining>0||target.Interaction.ReactionPose=="swallow"&&target.Interaction.ReactionPoseRemaining>0);n++)
+        {sim.AdvanceInteractionPresentation(.1);sim.Advance(.1);}
+        Require(target.Interaction.EatingRemaining<=0,"actual drink never completed swallowing");
+        sim.EndInteractionGesture();
+        bool watching=false;
+        while(sim.State.WorldSeconds<attemptAt+29)
+        {
+            Seconds(sim,.25);
+            watching|=sim.WaterSupportStatus(good)?.Phase==WaterSupportPhase.Watching;
+            Require(target.Condition==PhysicalCondition.Active&&!water.InWater&&water.EventId==eventId&&
+                target.Interaction.HumanBond.LastHarmAt==lastHarm,"shore recovery lost the real accident's surviving identity");
+        }
+        Require(watching&&good.Personality.WaterAftercare.Remembered&&
+            target.Family.Peers[good.Id].Affection>=2&&target.Family.Peers[mean.Id].Resentment>0&&
+            target.Fear>0&&target.Interaction.Emotion.Alarm>0&&!EmotionalReadiness.Settled(target),
+            "actual short shore contact or continuing fear/peer consequences was missing");
+        double affection=target.Family.Peers[good.Id].Affection;
+        Seconds(sim,2);
+        Require(sim.WaterSupportStatus(good)==null&&target.Family.Peers[good.Id].Affection==affection,
+            "limited shore watching repeated its reward or did not end");
+        Reload(sim);completed=true;
+    }
+    Require(completed,"no natural drinking accident completed within 128 independent bounded starts");
 });
 
 Console.WriteLine($"Failures: {failures}");return failures==0?0:1;
