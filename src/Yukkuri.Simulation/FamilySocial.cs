@@ -201,6 +201,19 @@ public sealed partial class WorldSimulation
         a.Family.LastEvent = $"愿意与{b.Name}相处"; b.Family.LastEvent = $"接受了{a.Name}的陪伴邀请";
     }
 
+    public string EndCompanionship(string id,string companionId)
+    {
+        var a=State.Creatures.Find(c=>c.Id==id);var b=State.Creatures.Find(c=>c.Id==companionId);
+        var error=FamilyCommandError(a)??FamilyCommandError(b);if(error!=null)return error;
+        // The button describes one observed pair. A stale command must not end
+        // either participant's newer companionship or dissolve a partnership.
+        if(a==b||a!.Family.CompanionTargetId!=b!.Id||b.Family.CompanionTargetId!=a.Id)
+            return "这段相处已经结束或对象已改变，请查看当前状态。";
+        ClearCompanionship(a);
+        a.Activity=b.Activity="结束这次相处，留出空间照顾眼前需要";
+        return State.LastActionMessage="已结束这次相处；伴侣、亲缘和过去感情保留，没听完的教导不会变成新知识。";
+    }
+
     private void ClearCompanionship(Creature c)
     {
         var other = State.Creatures.Find(x => x.Id == c.Family.CompanionTargetId);

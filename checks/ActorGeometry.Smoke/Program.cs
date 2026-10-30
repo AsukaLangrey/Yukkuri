@@ -49,6 +49,70 @@ Check("new eye surface maintains clearance through blinks",()=>
     return true;
 });
 Check("mirrored eyes have matched depth",()=>MathF.Abs(ActorFaceSurface.Height(-.23f,.04f)-ActorFaceSurface.Height(.23f,.04f))<.00001f);
+Check("brow relief preserves the original outline and stays between skin clearance and old front",()=>
+{
+    bool recessed=false;
+    foreach(float side in new[]{-1f,1f})foreach(float angle in new[]{-30f,-24f,-17f,0f,17f,24f,30f})
+    foreach(float height in new[]{0f,.005f,ActorBrowSurface.FrightHeight})
+        for(int row=0;row<=ActorBrowSurface.Segments;row++)for(int col=0;col<=ActorBrowSurface.Across;col++)
+        {
+            float u=row/(float)ActorBrowSurface.Segments,v=col/(float)ActorBrowSurface.Across;
+            float radians=angle*MathF.PI/180,sine=MathF.Sin(MathF.PI*u);
+            var along=new System.Numerics.Vector2(MathF.Cos(radians),MathF.Sin(radians));
+            var across=new System.Numerics.Vector2(-along.Y,along.X);
+            var original=new System.Numerics.Vector2(side*.235f,ActorBrowSurface.CenterY+height)+along*((u-.5f)*.18f)+
+                across*((v*2-1)*(.009f*MathF.Sqrt(MathF.Max(0,sine))))+System.Numerics.Vector2.UnitY*(.004f*sine);
+            var p=ActorBrowSurface.Point(side,angle,height,u,v);float depth=ActorBrowSurface.Recess(u,v);
+            float skin=ActorFaceSurface.Height(p.X,p.Y),oldFront=ActorFaceSurface.Height(original.X,original.Y,.011f);
+            if(!float.IsFinite(p.X)||!float.IsFinite(p.Y)||!float.IsFinite(p.Z)||!float.IsFinite(depth))return false;
+            if(MathF.Abs(p.X-original.X)>1e-7f||MathF.Abs(p.Y-original.Y)>1e-7f)return false;
+            if(depth<0||depth>.0015f+1e-7f||p.Z>oldFront+1e-7f||p.Z-skin<.0095f-1e-7f)return false;
+            if(MathF.Abs(oldFront-p.Z-depth)>1e-7f)return false;
+            recessed|=depth>.0014f;
+        }
+    return recessed;
+});
+Check("brow center ridge and both closed tips retain the old surface with symmetric side relief",()=>
+{
+    foreach(float side in new[]{-1f,1f})foreach(float angle in new[]{-24f,0f,24f})
+        for(int n=0;n<=96;n++)
+        {
+            float u=n/96f,v=n/96f;
+            var center=ActorBrowSurface.Point(side,angle,.005f,u,.5f);
+            if(ActorBrowSurface.Recess(u,.5f)!=0||MathF.Abs(center.Z-ActorFaceSurface.Height(center.X,center.Y,.011f))>1e-7f)return false;
+            if(MathF.Abs(ActorBrowSurface.Recess(u,v)-ActorBrowSurface.Recess(u,1-v))>1e-7f)return false;
+            foreach(float tip in new[]{0f,1f})
+            {
+                var p=ActorBrowSurface.Point(side,angle,.005f,tip,v);
+                var closed=ActorBrowSurface.Point(side,angle,.005f,tip,.5f);
+                if(ActorBrowSurface.Recess(tip,v)!=0||System.Numerics.Vector3.Distance(p,closed)>1e-6f||
+                    MathF.Abs(p.Z-ActorFaceSurface.Height(p.X,p.Y,.011f))>1e-7f)return false;
+            }
+        }
+    return ActorBrowSurface.Segments==24&&ActorBrowSurface.Across==4;
+});
+Check("actual brow mesh normals remain finite unit and forward through the full expression angle range",()=>
+{
+    foreach(float side in new[]{-1f,1f})for(int angle=-30;angle<=30;angle+=2)
+    foreach(float height in new[]{0f,.005f,ActorBrowSurface.FrightHeight})
+        for(int row=0;row<=ActorBrowSurface.Segments;row++)for(int col=0;col<=ActorBrowSurface.Across;col++)
+        {
+            float u=row/(float)ActorBrowSurface.Segments,v=col/(float)ActorBrowSurface.Across;
+            var point=ActorBrowSurface.Point(side,angle,height,u,v);
+            var normal=ActorBrowSurface.Normal(side,angle,height,u,v);
+            var support=ActorFaceSurface.Normal(point.X,point.Y);
+            if(!float.IsFinite(normal.X)||!float.IsFinite(normal.Y)||!float.IsFinite(normal.Z)||
+                MathF.Abs(normal.Length()-1)>1e-5f||normal.Z<=0||System.Numerics.Vector3.Dot(normal,support)<=0)return false;
+            if((row==0||row==ActorBrowSurface.Segments)&&System.Numerics.Vector3.Distance(normal,support)>1e-6f)return false;
+            if(row>0&&row<ActorBrowSurface.Segments)
+            {
+                var tangent=ActorBrowSurface.Point(side,angle,height,u,MathF.Min(1,v+.0005f))-
+                    ActorBrowSurface.Point(side,angle,height,u,MathF.Max(0,v-.0005f));
+                if(MathF.Abs(System.Numerics.Vector3.Dot(normal,System.Numerics.Vector3.Normalize(tangent)))>1e-4f)return false;
+            }
+        }
+    return true;
+});
 Check("old underside spot intersects skin instead of remaining outside",()=>
 {
     float OldSpotY(float x,float z)=>-.45f-.009f*MathF.Sqrt(MathF.Max(0,1-x*x/(.15f*.15f)-z*z/(.11f*.11f)));

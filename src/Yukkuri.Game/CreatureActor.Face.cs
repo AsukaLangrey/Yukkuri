@@ -101,7 +101,11 @@ public partial class CreatureActor
         using var surface=new SurfaceTool();surface.Begin(Mesh.PrimitiveType.Triangles);
         void Vertex(float u,float v)
         {
-            var p=ActorBrowSurface.Point(side,angle,height,u,v);surface.SetNormal(AccessoryPoint(ActorFaceSurface.Normal(p.X,p.Y)));surface.AddVertex(AccessoryPoint(p));
+            var p=ActorBrowSurface.Point(side,angle,height,u,v);
+            float shade=1-.14f*ActorBrowSurface.Recess(u,v)/ActorBrowSurface.EdgeRecess;
+            surface.SetColor(new Color(shade,shade,shade));
+            surface.SetNormal(AccessoryPoint(ActorBrowSurface.Normal(side,angle,height,u,v)));
+            surface.AddVertex(AccessoryPoint(p));
         }
         for(int row=0;row<ActorBrowSurface.Segments;row++)for(int column=0;column<ActorBrowSurface.Across;column++)
         {

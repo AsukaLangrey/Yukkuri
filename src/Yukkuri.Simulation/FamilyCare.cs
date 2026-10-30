@@ -18,11 +18,20 @@ public sealed partial class WorldSimulation
     }
     // Being unable to travel does not remove the ability to warm a child already
     // alongside. Transport checks CanSelfMove separately at every carrying step.
-    private bool CaregiverReady(Creature adult) => !adult.IsYoung && FamilyRules.WillSocialize(adult) &&
+    private bool CaregiverBodyReady(Creature adult) => !adult.IsYoung && FamilyRules.WillSocialize(adult) &&
         adult.Family.Conflict.TargetId==null && adult.Family.FlightRemaining<=0 && adult.RetreatRemaining<=0 &&
-        adult.Family.CompanionTargetId==null && !adult.Interaction.Resting && adult.Interaction.RestRemaining<=0 &&
+        !adult.Interaction.Resting && adult.Interaction.RestRemaining<=0 &&
         !adult.Interaction.FollowPlayer && adult.Interaction.WaitRemaining<=0 && adult.Interaction.Height<=.05 && !adult.Interaction.Lowering &&
         InteractionGestureTarget!=adult.Id && !NaturalResources.WantsFood(adult) && !NaturalResources.WantsWater(adult);
+
+    private bool CaregiverReady(Creature adult) => CaregiverBodyReady(adult)&&adult.Family.CompanionTargetId==null;
+
+    // Sharing real body warmth with this child is compatible with talking to
+    // this same child. It neither starts a delivery nor earns care relationship time.
+    private bool CanShareFamilyWarmth(Creature adult,Creature child) => CaregiverBodyReady(adult)&&
+        (adult.Family.CompanionTargetId==null||adult.Family.CompanionTargetId==child.Id&&child.Family.CompanionTargetId==adult.Id)&&
+        CareTargetAvailable(adult,child)&&(child.Family.CaregiverIds.Contains(adult.Id)||IsCareParent(adult,child))&&
+        FamilyInContact(adult,child);
 
     private static bool IsCareParent(Creature adult,Creature child) => child.ParentId==adult.Id ||
         child.Family.MotherId==adult.Id || child.Family.FatherId==adult.Id;
@@ -163,8 +172,7 @@ public sealed partial class WorldSimulation
         if(!f.ColdStorage.Stored)
         {
             bool supported=c.Interaction.Restraint==RestraintKind.Wrap||HasCushionedRestSupport(c);
-            bool warmAdult=State.Creatures.Any(a=>CaregiverReady(a)&&CareTargetAvailable(a,c)&&
-                (f.CaregiverIds.Contains(a.Id)||IsCareParent(a,c))&&FamilyInContact(a,c));
+            bool warmAdult=State.Creatures.Any(a=>CanShareFamilyWarmth(a,c));
             f.Warmth=Math.Clamp(f.Warmth+dt*(supported||warmAdult ? .18 : -.025),0,100);
             if(f.Warmth<15)Hurt(c,dt*.025,"幼体持续失温",null);
             if(c.Condition==PhysicalCondition.Dead)return;

@@ -49,3 +49,16 @@
 - SOURCE.md 随资源保存来源、许可、原采集哈希和无修改声明。Windows 导出配置包含该目录 .txt/.md；GLB 按原 Git LFS 规则保存。
 - WoodlandDecorations.cs 在已有树根移动排除范围内加载真实 PackedScene，按网格层级包围盒统一缩放，不改原材质，不新增碰撞/导航/可食用对象。未加载则显式警告并画程序化替代草花，不能把替代画面当成真实 GLB 已验证。
 - 已核对官方 [PackedScene](https://docs.godotengine.org/en/stable/classes/class_packedscene.html)、[ResourceLoader](https://docs.godotengine.org/en/stable/classes/class_resourceloader.html)、[Mesh](https://docs.godotengine.org/en/stable/classes/class_mesh.html)、[Node3D](https://docs.godotengine.org/en/stable/classes/class_node3d.html)、[3D 导入配置](https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/import_configuration.html) 与[导出资源过滤](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html)。当前项目声明 Godot.NET.Sdk 4.7.2；上述稳定文档是接口依据，不表示本机已导入或编译通过。
+
+## 食品适配复核：继续保留候选，不接运行资源
+
+本次仅读取原 GLB 的 JSON 头与已有源码，未启动模型查看器、导入器、渲染器或验证程序。两个模型都是单节点、单网格、单图元和单材质，节点无额外变换。材质为双面，颜色来自外部 `Textures/colormap.png`；复制时必须保留这一相对依赖。
+
+| 候选 | 原始 POSITION 访问器范围 | 原始宽 × 高 × 深（约） |
+|---|---|---|
+| rice-ball.glb | X ±0.040600；Y 0–0.130935；Z ±0.057602 | 0.081200 × 0.130935 × 0.115204 |
+| cookie.glb | X ±0.109872；Y 0–0.049770；Z ±0.095152 | 0.219744 × 0.049770 × 0.190304 |
+
+这些数值是文件元数据，不是导入后或实机测量。饭团高窄直立，现有正餐却是浅盘饭堆和勺中小份；按现有入口高度等比缩放会明显缩小食物占地，不宜为使用素材而拉伸或摆成多份。饼干形态较接近，但其非圆轮廓、最高点和递送前缘仍需真正网格适配，不能用包围盒最大值代替入口表面。
+
+现有程序饼干已包含较密的贴面拓扑和巧克力碎屑。候选的 68 个三角面只代表较低面数，不足以证明精细度更好。当前自然入口高度（甜食 0.087、正餐 0.107）、手喂前缘以及地面射线包络都与现有几何相连；简单替换会让外观与真实接触不一致。因此两份食品继续留在候选目录，不复制到运行资产，也不新增食品加载系统。已有份额、持物隐藏和自然吃喝流程保持现状，实际观感未验证。

@@ -52,6 +52,9 @@ public partial class CreatureActor : RigidBody3D
         _brows=new Node3D();_visual.AddChild(_brows);
         _leftBrow=SceneArt.Mesh(_brows,FaceBrowMesh(-1,0,0),Vector3.Zero,hair);
         _rightBrow=SceneArt.Mesh(_brows,FaceBrowMesh(1,0,0),Vector3.Zero,hair);
+        // Isolate eyebrow vertex tint from the shared hair/scene material.
+        var browMaterial=(StandardMaterial3D)SceneArt.Mat(hair).Duplicate();browMaterial.VertexColorUseAsAlbedo=true;
+        _leftBrow.MaterialOverride=_rightBrow.MaterialOverride=browMaterial;
         _leftBrow.CastShadow=_rightBrow.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
         _browCache[(0,0,0)]=((ArrayMesh)_leftBrow.Mesh,(ArrayMesh)_rightBrow.Mesh);
         _blushRoot=new Node3D();_visual.AddChild(_blushRoot);

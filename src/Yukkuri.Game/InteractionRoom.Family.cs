@@ -153,6 +153,7 @@ public partial class InteractionRoom
             _modalContents.AddChild(Button("停止正在进行的繁育干预",()=>ApplyFamilyCommand(()=>Sim.InterruptPregnancyIntervention(firstId))));
         if(first.Family.ChildThreat.TargetId!=null)
             _modalContents.AddChild(Button("制止对幼体的伤害",()=>ApplyFamilyCommand(()=>Sim.ProtectFamilyChild(firstId))));
+        AddEndCompanionship(first);
         bool breeding=first.Family.AllowsBreeding;
         _modalContents.AddChild(Button(breeding?"繁殖许可：允许 · 点击禁止":"繁殖许可：禁止 · 点击允许",
             ()=>ApplyFamilyCommand(()=>Sim.SetBreedingPermission(firstId,!breeding))));
@@ -170,6 +171,7 @@ public partial class InteractionRoom
             string careSelection=firstId+"\n"+secondId;
             if(_familyCareSelection!=careSelection){_familyCareSelection=careSelection;_familyCareFeedback="";}
             _modalContents.AddChild(Text(FamilySummary(second),14));
+            if(second.Family.CompanionTargetId!=firstId)AddEndCompanionship(second);
             if(_familyCareFeedback.Length>0)
                 _modalContents.AddChild(Text("上次照护安排："+_familyCareFeedback,14,"8a624e"));
             if(first.IsYoung!=second.IsYoung)
@@ -276,6 +278,17 @@ public partial class InteractionRoom
         }
         choice.ItemSelected+=index=>{if(index>=0&&index<oils.Length){_familyCareFeedback="";select(oils[(int)index].Id);}};
         _modalContents.AddChild(choice);
+    }
+
+    private void AddEndCompanionship(Creature c)
+    {
+        if(c.Family.CompanionTargetId is not { } companionId)return;
+        var companion=Sim.State.Creatures.FirstOrDefault(o=>o.Id==companionId);
+        if(companion?.Family.CompanionTargetId!=c.Id)return;
+        // Capture the displayed pair: a later command must not stop a new partner.
+        string id=c.Id;
+        _modalContents.AddChild(Button("结束"+c.Name+"与"+companion.Name+"这次相处",
+            ()=>ApplyFamilyCommand(()=>Sim.EndCompanionship(id,companionId))));
     }
 
     private void AddFamilyCareChoice(Creature caregiver,Creature recipient)
