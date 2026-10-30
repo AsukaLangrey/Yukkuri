@@ -34,7 +34,11 @@ public partial class DetachedStemActor : Node3D
         SceneArt.Mesh(_plant,new CylinderMesh{TopRadius=.012f,BottomRadius=.018f,Height=.48f,RadialSegments=8},new(0,.24f,0),"91a774");
         for(int n=0;n<3;n++)
         {
-            var branch=SceneArt.Box(_plant,new((n-1)*.085f,.47f,0),new(.018f,.22f,.018f),"91a774");
+            // The tapered round section stays inside the former .018-square
+            // branch; its length, endpoints and actual contact mesh stay aligned.
+            var branch=SceneArt.Mesh(_plant,new CylinderMesh
+                {TopRadius=.005f,BottomRadius=.009f,Height=.22f,RadialSegments=10,CapTop=true,CapBottom=true},
+                new((n-1)*.085f,.47f,0),"91a774");
             _branches[n]=branch;
             branch.RotationDegrees=new(0,0,(n-1)*-45);
             var bud=SceneArt.Ball(_plant,new((n-1)*.17f,.60f+(n==1?.04f:0),0),new(.15f,.13f,.14f),"ebdab6");

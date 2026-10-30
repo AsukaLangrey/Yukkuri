@@ -329,6 +329,11 @@ public sealed partial class WorldSimulation
 
     private void RegisterFamilyCare(Creature adult,Creature child,double seconds)
     {
+        // Food already delivered and real shared warmth still help the body.
+        // CareSeconds is evidence for a trusted caregiver, not the physical
+        // warmth clock: a recent aggressor cannot buy that evidence or affection
+        // while the same object's harm memory still prevents safe company.
+        if(!PeerCompanyMemoryAllows(adult,child))return;
         if(!adult.Family.Peers.TryGetValue(child.Id,out var a))adult.Family.Peers[child.Id]=a=new();
         if(!child.Family.Peers.TryGetValue(adult.Id,out var b))child.Family.Peers[adult.Id]=b=new();
         a.CareSeconds=Math.Min(1000000,a.CareSeconds+seconds);b.CareSeconds=Math.Min(1000000,b.CareSeconds+seconds);

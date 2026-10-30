@@ -9,12 +9,20 @@ public static class ActorReactionMotion
     // travel offset: actual displacement remains entirely in the simulation.
     public static ReactionMotion? SampleGuardedImpact(string impact,float age,Vector2 direction,bool restrained=false)
     {
-        float strength=impact switch {"slap"=>1,"flick"=>.65f,"poke"=>.45f,_=>0};
+        float strength=impact switch {"slap" or "land"=>1,"flick"=>.65f,"poke"=>.45f,_=>0};
         if(strength<=0||!float.IsFinite(age)||age<0||age>=GuardedImpactDuration)return null;
+        float t=age/GuardedImpactDuration;
+        if(impact=="land")
+        {
+            // A resolved landing can still be felt beneath a protective posture.
+            // Compression only: no directional kick, travel or upward rebound.
+            float landingCompression=(restrained?.03f:.06f)*(1-t)*(1-t);
+            return new(new(1+landingCompression*.35f,1-landingCompression,1+landingCompression*.35f),
+                Vector3.Zero,Vector3.Zero);
+        }
         if(!float.IsFinite(direction.X)||!float.IsFinite(direction.Y)||direction.LengthSquared()<.00001f)
             direction=new(0,-1);
         else direction=Vector2.Normalize(direction);
-        float t=age/GuardedImpactDuration;
         float recoil=(1-t)*(1-t)*MathF.Cos(t*MathF.Tau)*strength;
         float compression=recoil*(restrained?.025f:.045f);
         float angle=restrained?0:recoil*5;

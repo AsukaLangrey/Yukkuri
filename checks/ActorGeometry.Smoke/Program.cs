@@ -287,6 +287,41 @@ Check("guarded impact direction changes only recoil and unrelated or invalid eve
         if(ActorReactionMotion.SampleGuardedImpact(pose,0,new(1,0))!=null)return false;
     return true;
 });
+Check("guarded landings compress and release continuously without a rebound or invented displacement",()=>
+{
+    foreach(bool restrained in new[]{false,true})
+    {
+        float previousY=0,previousX=float.PositiveInfinity;
+        for(int n=0;n<220;n++)
+        {
+            var frame=ActorReactionMotion.SampleGuardedImpact("land",n/1000f,new(1,2),restrained)!.Value;
+            var scale=frame.Scale;
+            if(!float.IsFinite(scale.LengthSquared())||scale.Y<(restrained?.969999f:.939999f)||scale.Y>1||
+                scale.X<1||scale.X>1.021001f||scale.Z!=scale.X||scale.Y<previousY||scale.X>previousX||
+                frame.Offset!=System.Numerics.Vector3.Zero||frame.RotationDegrees!=System.Numerics.Vector3.Zero)return false;
+            previousY=scale.Y;previousX=scale.X;
+        }
+        var end=ActorReactionMotion.SampleGuardedImpact("land",ActorReactionMotion.GuardedImpactDuration-.00001f,new(1,2),restrained)!.Value;
+        if(System.Numerics.Vector3.Distance(end.Scale,System.Numerics.Vector3.One)>1e-6f||
+            ActorReactionMotion.SampleGuardedImpact("land",ActorReactionMotion.GuardedImpactDuration,new(1,2),restrained)!=null)return false;
+    }
+    return ActorReactionMotion.SampleGuardedImpact("land",0,new(1,2))!.Value.Scale.Y<
+        ActorReactionMotion.SampleGuardedImpact("land",0,new(1,2),true)!.Value.Scale.Y;
+});
+Check("guarded landing ignores travel direction and rejects stale or invalid event ages",()=>
+{
+    foreach(bool restrained in new[]{false,true})
+    {
+        var sample=ActorReactionMotion.SampleGuardedImpact("land",.07f,System.Numerics.Vector2.Zero,restrained);
+        foreach(var direction in new[]{new System.Numerics.Vector2(1,2),new System.Numerics.Vector2(-1,-2),
+            new System.Numerics.Vector2(float.NaN,0),new System.Numerics.Vector2(0,float.PositiveInfinity),
+            new System.Numerics.Vector2(float.MaxValue,float.MaxValue)})
+            if(ActorReactionMotion.SampleGuardedImpact("land",.07f,direction,restrained)!=sample)return false;
+        foreach(float age in new[]{-.001f,float.NaN,float.NegativeInfinity,float.PositiveInfinity,1f})
+            if(ActorReactionMotion.SampleGuardedImpact("land",age,System.Numerics.Vector2.Zero,restrained)!=null)return false;
+    }
+    return true;
+});
 Check("heat tension is bounded and fades to neutral without inventing translation or a timer",()=>
 {
     foreach(double heat in new[]{-1d,0,double.NaN,double.NegativeInfinity,double.PositiveInfinity})

@@ -23,7 +23,7 @@ public partial class CreatureActor
         bool valid=Visible&&pose=="guard"&&c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)&&
             !life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine&&!life.Resting&&!HasWaterBodyPresentation(c)&&
             !c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&!FamilyRules.UnderIntervention(c)&&
-            life.ReactionPoseRemaining>0&&(life.ReactionPose is "slap" or "flick" or "poke");
+            life.ReactionPoseRemaining>0&&(life.ReactionPose is "slap" or "flick" or "poke" or "land");
         if(!valid||fresh&&paused)
         {_guardedImpactActive=false;return;}
         if(fresh)
