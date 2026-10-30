@@ -231,3 +231,21 @@ A已新增ActorGeometry.Smoke三组纯检查源码，覆盖原XY/旧前包络/�
 仅InteractionRoom.Input.cs与Tools.cs，新增共享CanPlaceWithIdlePalm资格：已选Lift、真实Carried、无鼠标或模拟手势、无持物/救援分流、未暂停失焦或打开面板。修复选中手掌抓起→空格暂停取消手势但保留托举→恢复后点击空地被原“仅未选工具”分支漏掉的实际路径。普通视角空地点放，近看按下预约后仅未转镜头的松开可以执行，并复验空地和真实资格；旧甩速不参与PutDown。
 
 候选落点标记使用相同资格，暂停或拖镜头回实际支撑点；地面/水域保持y=0投影，最终仍由原CanOccupyRoom allowWater裁决并在实际水域EnterWater，不改身体位移/高度/伤害/入水规则。根协调静态核对CancelGesture清预约与运动记录、原食品/独立窝优先分流和暂停/失焦路径。没有输入自动化或渲染实测，远端按键链已写testing请求。
+
+## 第二十五批：火机封口火滴几何
+
+本轮先只读核对拳击与火机输入链，未找到新的漏发、双发或换目标借用证据。拳击为非连续动作，仅按下执行一次，成功Changed才登记；松开和每帧不再结算，hits读取各目标真实HitCount/HitRemaining而非独立累加。火机先核对真实Id/Kind/ObjectId接触，离开清ContactActive；本次Continue返回的姿态在同帧进入Actor，固定与自由切换不依赖台词刷新。暂停/失焦/切工具清手势，火焰显示仍要求实际手势、接触姿态和工具可见。本批不声称修复这些已正确的链路。
+
+实际修改InteractionRoom.Tools.cs，新增纯InteractionLighterSurface.cs。原两个轴向椭球替换为同一封口火滴网格，规范域Y=u-.5、r=2u(1-u)(1-.45u)，腹部偏下，上端连续收尖；因r≤2u(1-u)≤sqrt(u(1-u))，每点仍在原半径.5单位球内。极点为(0,±.5,0)，v=0/1接缝同点；解析法线朝外，极点用±Y。16×16网格跳过两极退化半片，共480非退化三角，两节点共享一个局部ArrayMesh，不加全局缓存。
+
+外层(.027,.065,.027)、内芯(.019,.025,.019)、原位置与材质保持，局部+Y仍是接触方向；现有燃动后外层顶点恒为.0115-.0325*length+.5*.065*length=.0115。没有额外余火、位置、伤害、输入或表现时钟。三角绕序沿Godot官方[SurfaceTool顺时针正面约定](https://docs.godotengine.org/en/stable/classes/class_surfacetool.html)；源码设置法线后再加入顶点，与项目原做法一致。
+
+精确纯接口及包络/封口/法线检查需求已发A，等待其独立检查源码；没有降低原断言。B两代码文件冻结，交接文档随批收取。未运行、编译、检查、渲染、预览或导入；火滴轮廓和两层可辨性、明暗、侧面接触顶点、长按固定/自由对象及松开立即熄灭的实际观感仍待独立远端。
+
+## 第二十六批：泪面浅凸与透明收边
+
+仅ActorTearSurface.cs与CreatureActor.Tears.cs。原XY轮廓和眼下范围不变，主泪面偏移改为.015+.002*max(0,1-|q|²)²；高光先沿原缩放/平移转换到主面的真实q，再取同一偏移+.002。高光q的保守平方半径≤.6032，始终在主泪面域内，同XY间距固定.002；主面最高.017、高光最高不越旧.019。四节点、8×48拓扑、原SculptSurface同源差分法线保持，未加缓存或其它装饰。
+
+主片外圈从规范半径.70、高光从.60开始以平滑函数把顶点alpha降到0，中心保留1。SculptSurface已有tint路径会复制材质并启用VertexColorUseAsAlbedo，随后EnableSurfaceFade复制并启用Alpha；原SetSurfaceOpacity仍只调整该私有材质AlbedoColor.A。[Godot材质源码](https://github.com/godotengine/godot/blob/master/scene/resources/material.cpp)中的顶点色与透明输出乘法支持两层alpha相乘，因此边缘随原Amount同步淡入淡出，不会把整片时间状态覆盖掉，也不污染共享材质。此为官方源码与本项目接线依据，不是本机渲染验收。
+
+ActorTearPresentation的痛/Fear/Alarm来源、初始读档基线、死亡归零和推进函数未改，没有新增情绪重播。原泪面gap .0149..0191及眼下范围断言保持，纯坐标/浅凸/边缘接口已发A，在其A17真实旅程后排队补针对性检查。B两代码文件冻结；未运行、编译、检查、渲染或预览，近看浅凸光照、半透明排序、边缘柔和程度及惊惧后进食余泪仍待独立远端。

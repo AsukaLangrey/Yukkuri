@@ -85,6 +85,9 @@ Check("茎生与胎生都能完整经过孕育出生恢复，时间数量负担�
         Require(sim.State.CompletedBirths.Count==1,"出生未记录唯一结算");
         Require(babies.All(c=>c.IsYoung&&c.Family.BirthMethod==method),"子代年龄或生产方式记录错误");
         Require(babies.All(c=>c.Fullness>0&&c.Interaction.Hydration>0),"出生没有可继续照护的需求状态");
+        // This branch starts from the explicit deep-bond fixture above. Birth,
+        // the whole brood's actual nursery care and recovery use real clocks/actions.
+        FamilyNurseryJourney.Run(sim,m,sim.State.Creatures[1],m.Family.Pregnancy.EventId!);
     }
     Require(FamilyRules.GestationSeconds(BirthMethod.Live)>FamilyRules.GestationSeconds(BirthMethod.Stem),"胎生周期没有更长");
     Require(counts[BirthMethod.Live]<counts[BirthMethod.Stem],"胎生数量没有更少");

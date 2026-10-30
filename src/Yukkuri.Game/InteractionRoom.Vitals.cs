@@ -9,7 +9,7 @@ public partial class InteractionRoom
     private ProgressBar _fullnessMeter=null!,_thirstMeter=null!;
     private StyleBoxFlat _fullnessFill=null!,_thirstFill=null!;
     private Label _comfortLabel=null!,_trustLabel=null!,_lifeLabel=null!,_fearLabel=null!,_continuityLabel=null!,_personalityLabel=null!;
-    private Label _waterSupportLabel=null!,_hungerFeedingLabel=null!;
+    private Label _waterSupportLabel=null!,_hungerFeedingLabel=null!,_familyNeedsLabel=null!;
     private ProgressBar _comfortMeter=null!,_trustMeter=null!,_lifeMeter=null!,_fearMeter=null!;
     private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
@@ -31,6 +31,7 @@ public partial class InteractionRoom
         _continuityLabel=Text("",12,"78816e");meters.AddChild(_continuityLabel);
         _waterSupportLabel=Text("",12,"78816e");meters.AddChild(_waterSupportLabel);
         _hungerFeedingLabel=Text("",12,"a56b55");meters.AddChild(_hungerFeedingLabel);
+        _familyNeedsLabel=Text("",12,"78816e");meters.AddChild(_familyNeedsLabel);
     }
     private void BuildRelationshipMeter(Control parent,string name,string color,out Label label,out ProgressBar bar,out StyleBoxFlat fill)
     {
@@ -82,6 +83,7 @@ public partial class InteractionRoom
             "0—100：馒馒来是当前心情；信任取决于相处经历。";
         RefreshImmediateInterventions(c);
         RefreshHungerFeedingStatus(c);
+        RefreshFamilyNeedsStatus(c);
         var support=Sim.WaterSupportStatus(c);
         var supported=support==null?null:Sim.State.Creatures.Find(other=>other.Id==support.TargetId);
         _waterSupportLabel.Visible=support!=null&&supported!=null;
@@ -95,6 +97,18 @@ public partial class InteractionRoom
                     "\n守候不能代替实际食水和伤势护理。"
             };
     }
+    private void RefreshFamilyNeedsStatus(Creature c)
+    {
+        var pregnancy=c.Family.Pregnancy;
+        _familyNeedsLabel.Visible=c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&
+            (c.IsYoung||pregnancy.Phase==PregnancyPhase.Recovering);
+        if(!_familyNeedsLabel.Visible)return;
+        _familyNeedsLabel.Text=c.IsYoung?
+            $"幼体保暖 {Math.Clamp(c.Family.Warmth,0,100):0}/100"+
+                (c.Family.Warmth<35?" · 正在发冷":"")+"\n吃喝、保暖和陪伴都需要持续照看。":
+            $"孕育恢复尚需 {Math.Ceiling(Math.Max(0,pregnancy.RecoveryRemaining)):0} 秒\n吃喝不足或疼痛时，恢复进度会停住。";
+    }
+
     private void RefreshHungerFeedingStatus(Creature c)
     {
         var feeding=Sim.HungerFeedingStatus(c);

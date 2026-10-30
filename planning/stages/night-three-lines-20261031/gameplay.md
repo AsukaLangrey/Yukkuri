@@ -391,3 +391,15 @@ BuyFood/BuyMedicine 在完整一包放不下 int 合法范围时先拒绝，钱�
 扩展已有 `checks/Family.CareInterruption/Program.cs`，保留原 13 组全部断言，新增 4 组、合计 17 组检查源码：实际安排/取份/递送后主动停止，人类 HoldSupply 捡起同一份 Meal/Water、以 ObjectId 经真实口部接触完成入口和吞咽，来源剩余份额与实际库存/钱不再扣；未取份前停止与重复整状态不变；旧按钮不取消实际改派、错误/非当前区拒绝与对象已离区仍能停止；暂停、携份读档、停止后唯一落物及重复不改记录。继续沿原明确组件夹具，不把初始伤残/亲缘/源物资称为新生成旅程。
 
 本批只改 `src/Yukkuri.Simulation/FamilyCare.cs`、已有 `checks/Family.CareInterruption/Program.cs` 与本交接，共 3 文件，无新增项目。未改 Game，未运行编译、检查、游戏或 Git；17 组及 UI 接手效果仍待独立远程验证。
+
+## 第十七批：真实出生之后的育幼与母体恢复检查尾段（源码冻结）
+
+没有发现需要降低孕育门槛的确定规则断链，本批不改 Simulation。现有 `Interaction.AffectionJourney` 的默认陌生起点→真实人类陪伴→真实双向深关系→自主兴趣与孕育→一次出生保留；出生后接入实际育幼。`Family.Reproduction` 原两方式出生分支也接同一尾段，仍明确其起点是预置深关系的组件夹具，不能冒充两条默认陌生自主孕育旅程。原出生数量、时长、负担等断言和出生当时的比较读数均保留。
+
+新增检查侧共享 `checks/FamilyNurseryJourney.cs`，只由上述两个项目显式链接。对本次实际出生的完整一窝，通过公开 Wrap 给幼体保暖和稳定位置；这是玩家辅助育幼，不声称无人工介入也会如此。通过公开 SetAutonomousBreeding(false) 暂停新的孕育，保留已开始的产后恢复。父母需要真实食水/休息，食物库存不足走真实 BuyFood。供幼体使用的 Meal/Water 通过实际 PlaceMeal/PlaceWater 放下，每次一份、真实库存交易，并要求放置点超出每只宝宝的嘴部可达范围。之后实际 ArrangeCare、取份、搬运、放下，由幼体自己入口。
+
+尾段逐帧记录真实 CarrierId 及份额 ID，再匹配幼体 RecentIntakes 的实际 SourceId/Kind。每只本窝幼体都必须实际吃到父母运输的 Meal 和 Water，并观察所需两口完成吞咽；一口已被接受后该份额不能再消费。之后如果又有真实新一口，不把既有完成证明误称此刻所有嘴部闲置。实际 Wrap 期间保暖读数需增长，原父母亲缘/本窝 IDs/数量和出生结算需保留，真实照护关系记录必须发生。最后公开 Unwrap 可以解除育幼包裹。
+
+恢复严格沿原 180/300 秒普通世界时钟：默认旅程可能在检测出生前完成同次护理循环的几帧，以新生实际身体年龄加当前剩余恢复时间核对原窗口；尾段每帧禁止提前结束剩余时钟，完成时再核对全窗口已过去。终态显式确认母父与本窝均非死亡/临危、母体实际食水/疼痛/Alarm 条件合格、孕育阶段回到 None。没有填写信任、关系、兴趣、伤势、幼体营养、保暖或恢复时间结果。
+
+本批共 6 文件：新增共享尾段，修改 `checks/Interaction.AffectionJourney/{Program.cs,Interaction.AffectionJourney.csproj}`、`checks/Family.Reproduction/{Program.cs,Family.Reproduction.csproj}` 及本交接。共为默认旅程和两方式组件补 3 次尾段调用，没有新增检查项目。仅源码静态审查，未编译、未运行，不声明三条尾段已通过。

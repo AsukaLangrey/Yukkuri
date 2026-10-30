@@ -3,13 +3,33 @@ using System.Numerics;
 
 public static class ActorTearSurface
 {
-    public static Vector3 Point(float side,float radius,float angle,bool glint=false)
+    public static Vector2 SurfaceCoordinate(float radius,float angle,bool glint=false)
     {
         float x=MathF.Cos(angle)*radius,y=MathF.Sin(angle)*radius;
         if(glint){x=x*.16f-.28f;y=y*.34f-.30f;}
+        return new(x,y);
+    }
+    public static float SurfaceOffset(Vector2 coordinate)
+    {
+        float cap=MathF.Max(0,1-coordinate.LengthSquared());
+        return .015f+.002f*cap*cap;
+    }
+    public static float EdgeOpacity(float radius,bool glint=false)
+    {
+        float start=glint?.60f:.70f;
+        float edge=Math.Clamp((radius-start)/(1-start),0,1);
+        return 1-edge*edge*(3-2*edge);
+    }
+    public static Vector3 Point(float side,float radius,float angle,bool glint=false)
+    {
+        var coordinate=SurfaceCoordinate(radius,angle,glint);
+        float x=coordinate.X,y=coordinate.Y;
         float px=side*(.27f+.006f*(1-y))+x*.028f*(.55f-.45f*y);
         float py=-.16f+y*.085f;
-        return new(px,py,ActorFaceSurface.Height(px,py,glint?.019f:.015f));
+        // A glint samples the underlying track at its transformed coordinate,
+        // so its separation remains .002 even away from the track's center.
+        float offset=SurfaceOffset(coordinate)+(glint?.002f:0);
+        return new(px,py,ActorFaceSurface.Height(px,py,offset));
     }
 }
 

@@ -999,6 +999,101 @@ Check("tap response moves away from the touched surface and mirrors with the con
     var vertical=InteractionCameraOrbit.ContactImpulse(System.Numerics.Vector3.UnitY,new(-1,-.3f,0));
     return vertical==new System.Numerics.Vector2(-1,0)&&float.IsFinite(InteractionCameraOrbit.ContactImpulse(System.Numerics.Vector3.UnitY,-System.Numerics.Vector3.UnitY).Length());
 });
+Check("lighter drop stays inside the old sphere with closed tips seam and finite outward normals",()=>
+{
+    for(int row=0;row<=128;row++)for(int side=0;side<=128;side++)
+    {
+        float u=row/128f,v=side/128f;
+        var p=InteractionLighterSurface.Point(u,v);var n=InteractionLighterSurface.Normal(u,v);
+        if(!float.IsFinite(p.X)||!float.IsFinite(p.Y)||!float.IsFinite(p.Z)||p.LengthSquared()>.250001f||
+            MathF.Abs(p.Y-(u-.5f))>1e-7f||!float.IsFinite(n.X)||!float.IsFinite(n.Y)||!float.IsFinite(n.Z)||
+            MathF.Abs(n.Length()-1)>1e-5f||System.Numerics.Vector3.Dot(p,n)<=0)return false;
+        if(row==0&&(p!=new System.Numerics.Vector3(0,-.5f,0)||n!=-System.Numerics.Vector3.UnitY))return false;
+        if(row==128&&(p!=new System.Numerics.Vector3(0,.5f,0)||n!=System.Numerics.Vector3.UnitY))return false;
+        if(side==128&&(p!=InteractionLighterSurface.Point(u,0)||n!=InteractionLighterSurface.Normal(u,0)))return false;
+        if(u>0&&u<.5f)
+        {
+            var upper=InteractionLighterSurface.Point(1-u,v);
+            if(p.X*p.X+p.Z*p.Z<=upper.X*upper.X+upper.Z*upper.Z)return false;
+        }
+    }
+    return true;
+});
+Check("actual lighter mesh has closed edges and only nondegenerate outward clockwise triangles",()=>
+{
+    var edges=new Dictionary<(int,int),int>();var vertices=new HashSet<int>();int triangles=0;
+    int Key(int row,int side)=>row is 0?0:row==InteractionLighterSurface.Rows?
+        InteractionLighterSurface.Rows*InteractionLighterSurface.Sides:row*InteractionLighterSurface.Sides+side%InteractionLighterSurface.Sides;
+    bool Triangle((int Row,int Side) a,(int Row,int Side) b,(int Row,int Side) c)
+    {
+        System.Numerics.Vector3 Point((int Row,int Side) q)=>InteractionLighterSurface.Point(q.Row/(float)InteractionLighterSurface.Rows,q.Side/(float)InteractionLighterSurface.Sides);
+        System.Numerics.Vector3 Normal((int Row,int Side) q)=>InteractionLighterSurface.Normal(q.Row/(float)InteractionLighterSurface.Rows,q.Side/(float)InteractionLighterSurface.Sides);
+        var pa=Point(a);var pb=Point(b);var pc=Point(c);
+        // Godot's exterior winding is clockwise, opposite the usual cross(b-a,c-a).
+        var exterior=System.Numerics.Vector3.Cross(pc-pa,pb-pa);
+        if(!float.IsFinite(exterior.LengthSquared())||exterior.LengthSquared()<1e-12f||
+            System.Numerics.Vector3.Dot(exterior,Normal(a)+Normal(b)+Normal(c))<=0)return false;
+        int ka=Key(a.Row,a.Side),kb=Key(b.Row,b.Side),kc=Key(c.Row,c.Side);
+        foreach(int vertex in new[]{ka,kb,kc})vertices.Add(vertex);
+        foreach(var edge in new[]{(ka,kb),(kb,kc),(kc,ka)})
+        {var key=(Math.Min(edge.Item1,edge.Item2),Math.Max(edge.Item1,edge.Item2));edges[key]=edges.GetValueOrDefault(key)+1;}
+        triangles++;return true;
+    }
+    for(int row=0;row<InteractionLighterSurface.Rows;row++)for(int side=0;side<InteractionLighterSurface.Sides;side++)
+    {
+        if(row<InteractionLighterSurface.Rows-1&&!Triangle((row,side),(row+1,side+1),(row+1,side)))return false;
+        if(row>0&&!Triangle((row,side),(row,side+1),(row+1,side+1)))return false;
+    }
+    return triangles==2*(InteractionLighterSurface.Rows-1)*InteractionLighterSurface.Sides&&
+        edges.Values.All(count=>count==2)&&vertices.Count-edges.Count+triangles==2;
+});
+Check("tear shallow cap preserves original projection and glints stay above their actual underlying coordinate",()=>
+{
+    foreach(bool glint in new[]{false,true})foreach(float side in new[]{-1f,1f})
+        for(int ring=0;ring<=24;ring++)for(int n=0;n<=96;n++)
+        {
+            float radius=ring/24f,angle=n*MathF.Tau/96;
+            float x=MathF.Cos(angle)*radius,y=MathF.Sin(angle)*radius;
+            if(glint){x=x*.16f-.28f;y=y*.34f-.30f;}
+            float originalX=side*(.27f+.006f*(1-y))+x*.028f*(.55f-.45f*y),originalY=-.16f+y*.085f;
+            var q=ActorTearSurface.SurfaceCoordinate(radius,angle,glint);float offset=ActorTearSurface.SurfaceOffset(q);
+            var p=ActorTearSurface.Point(side,radius,angle,glint);
+            if(!float.IsFinite(p.X)||!float.IsFinite(p.Y)||!float.IsFinite(p.Z)||q.LengthSquared()>1.000001f||
+                offset<.015f-1e-7f||offset>.017f+1e-7f||MathF.Abs(p.X-originalX)>1e-7f||MathF.Abs(p.Y-originalY)>1e-7f)return false;
+            if(MathF.Abs(p.Z-ActorFaceSurface.Height(p.X,p.Y)-offset-(glint?.002f:0))>1e-7f)return false;
+            if(glint)
+            {
+                var underlying=ActorTearSurface.Point(side,q.Length(),MathF.Atan2(q.Y,q.X));
+                if(MathF.Abs(p.X-underlying.X)>1e-7f||MathF.Abs(p.Y-underlying.Y)>1e-7f||
+                    MathF.Abs(p.Z-underlying.Z-.002f)>1e-7f)return false;
+            }
+        }
+    return true;
+});
+Check("tear edge alpha fades monotonically to zero independently from the paused whole-trace amount",()=>
+{
+    var trace=new ActorTearPresentation();trace.Initialize(.65f);
+    foreach(bool glint in new[]{false,true})
+    {
+        float previous=1,start=glint?.60f:.70f;
+        if(ActorTearSurface.EdgeOpacity(0,glint)!=1||ActorTearSurface.EdgeOpacity(start,glint)!=1||
+            ActorTearSurface.EdgeOpacity(1,glint)!=0)return false;
+        for(int n=0;n<=200;n++)
+        {
+            float radius=n/200f,alpha=ActorTearSurface.EdgeOpacity(radius,glint);
+            if(!float.IsFinite(alpha)||alpha<0||alpha>1||alpha>previous+1e-7f)return false;
+            float amount=trace.Amount;trace.Advance(0f,0);
+            if(trace.Amount!=amount||alpha*trace.Amount<0||alpha*trace.Amount>trace.Amount)return false;
+            if(radius<=start&&alpha!=1)return false;
+            previous=alpha;
+        }
+        if(MathF.Abs(ActorTearSurface.EdgeOpacity(start+.0001f,glint)-1)>1e-6f||
+            ActorTearSurface.EdgeOpacity(1-.0001f,glint)>1e-6f)return false;
+        float edge=ActorTearSurface.EdgeOpacity(.85f,glint);trace.Advance(0f,.1f);
+        if(ActorTearSurface.EdgeOpacity(.85f,glint)!=edge||trace.Amount>=.65f)return false;
+    }
+    return true;
+});
 Check("tear tracks conform to the cheeks and remain below the eyes",()=>
 {
     foreach(float side in new[]{-1f,1f})foreach(bool glint in new[]{false,true})for(int row=0;row<=24;row++)for(int n=0;n<96;n++)

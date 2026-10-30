@@ -19,6 +19,7 @@
     <Compile Include="../../src/Yukkuri.Game/WoodlandSurface.cs" Link="WoodlandSurface.cs" />
     <Compile Include="../../src/Yukkuri.Game/WoodlandOcclusion.cs" Link="WoodlandOcclusion.cs" />
     <Compile Include="../../src/Yukkuri.Game/InteractionToolSurface.cs" Link="InteractionToolSurface.cs" />
+    <Compile Include="../../src/Yukkuri.Game/InteractionLighterSurface.cs" Link="InteractionLighterSurface.cs" />
     <Compile Include="../../src/Yukkuri.Game/InteractionCareSurface.cs" Link="InteractionCareSurface.cs" />
     <Compile Include="../../src/Yukkuri.Game/InteractionTreasureSurface.cs" Link="InteractionTreasureSurface.cs" />
     <Compile Include="../../src/Yukkuri.Game/InteractionFixtureSurface.cs" Link="InteractionFixtureSurface.cs" />

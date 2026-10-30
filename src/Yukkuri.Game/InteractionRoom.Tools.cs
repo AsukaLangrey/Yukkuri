@@ -95,14 +95,40 @@ public partial class InteractionRoom
         // Local +Y is the flame tip; PlaceContactTool aligns it with the contacted surface.
         InteractionFixtureArt.RoundedBox(root,new(0,-.20f,0),new(.115f,.24f,.075f),"728b84",.012f);
         InteractionFixtureArt.RoundedBox(root,new(0,-.065f,0),new(.12f,.055f,.08f),"a8aaa1",.007f);
-        var flame=SceneArt.Ball(root,new(0,-.021f,0),new(.027f,.065f,.027f),"f5be67");
+        var flameMesh=BuildLighterFlameMesh();
+        var flame=SceneArt.Mesh(root,flameMesh,new(0,-.021f,0),"f5be67");
+        flame.Scale=new(.027f,.065f,.027f);
         var flameMat=(StandardMaterial3D)flame.MaterialOverride.Duplicate();
         flameMat.EmissionEnabled=true;flameMat.Emission=new Color("ffb650");flameMat.EmissionEnergyMultiplier=.65f;
         flame.MaterialOverride=flameMat;flame.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
         _lighterFlame=flame;
-        _lighterCore=SceneArt.Ball(root,new(0,-.045f,0),new(.019f,.025f,.019f),"e9e5b1");
+        _lighterCore=SceneArt.Mesh(root,flameMesh,new(0,-.045f,0),"e9e5b1");
+        _lighterCore.Scale=new(.019f,.025f,.019f);
         _lighterCore.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
         _lighterFlame.Visible=_lighterCore.Visible=false;
+    }
+
+    private static ArrayMesh BuildLighterFlameMesh()
+    {
+        using var surface=new SurfaceTool();surface.Begin(Mesh.PrimitiveType.Triangles);
+        void Vertex(float u,float v)
+        {
+            var point=InteractionLighterSurface.Point(u,v);
+            var normal=InteractionLighterSurface.Normal(u,v);
+            surface.SetNormal(new Vector3(normal.X,normal.Y,normal.Z));
+            surface.AddVertex(new Vector3(point.X,point.Y,point.Z));
+        }
+        for(int row=0;row<InteractionLighterSurface.Rows;row++)
+            for(int side=0;side<InteractionLighterSurface.Sides;side++)
+            {
+                float a=(float)row/InteractionLighterSurface.Rows,b=(float)(row+1)/InteractionLighterSurface.Rows;
+                float x=(float)side/InteractionLighterSurface.Sides,y=(float)(side+1)/InteractionLighterSurface.Sides;
+                // Clockwise outside faces; each pole has one triangle per side,
+                // not a collapsed quad. Both flame layers share this bounded mesh.
+                if(row<InteractionLighterSurface.Rows-1){Vertex(a,x);Vertex(b,y);Vertex(b,x);}
+                if(row>0){Vertex(a,x);Vertex(a,y);Vertex(b,y);}
+            }
+        surface.Index();return surface.Commit();
     }
 
     private static void BuildStemScissors(Node3D root)

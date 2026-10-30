@@ -46,7 +46,9 @@ try
         "autonomous family journey lost its continuous safety prerequisites");
     SaveStore.Validate(sim.State);
     journey.Trace("birth and maternal recovery");
-    Console.WriteLine("PASS default stranger -> trusted company -> reciprocal partnership -> autonomous pregnancy -> birth");
+    FamilyNurseryJourney.Run(sim,mother,father,birthId);
+    journey.Trace("actual nursery care and completed maternal recovery");
+    Console.WriteLine("PASS default stranger -> trusted company -> reciprocal partnership -> autonomous pregnancy -> birth -> actual nursery and maternal recovery");
     return 0;
 }
 catch(Exception error)
