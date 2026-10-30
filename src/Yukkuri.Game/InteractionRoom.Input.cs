@@ -145,6 +145,15 @@ public partial class InteractionRoom
         WoodlandOcclusion.RayDistance(new(origin.X,origin.Y,origin.Z),new(direction.X,direction.Y,direction.Z)):float.PositiveInfinity;
     private static string PartName(BodyPart part,SurfaceSide side=SurfaceSide.Whole)=>part switch{BodyPart.Head=>"头顶",BodyPart.Cheek=>side==SurfaceSide.Left?"左脸":side==SurfaceSide.Right?"右脸":"脸侧",BodyPart.Side=>side==SurfaceSide.Left?"身体左侧":side==SurfaceSide.Right?"身体右侧":"身体侧面",BodyPart.Bottom=>"底部",BodyPart.Mouth=>"嘴边",_=>"饰品"};
     private static bool IsGroundPlacement(InteractionAction action)=>action is InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater or InteractionAction.PutDown or InteractionAction.GiveBall;
+    private void PlaceGroundSupply(InteractionInput input)
+    {
+        // Yard supplies belong to this region, even when no living body is
+        // selected. Close-up retains its original body-based placement rules.
+        if(Sim.State.Mode==PlayMode.Management)
+            AcceptFeedback(Sim.PlaceInteractionSupply(input.Action,input.X,input.Z));
+        else if(Sim.Selected is { } selected)
+            AcceptFeedback(Sim.ExecuteInteraction(selected.Id,input));
+    }
     private bool CanPlaceWithIdlePalm()=>_toolArmed&&_action==InteractionAction.Lift&&
         Sim.Selected?.Interaction.Carried==true&&!_mouseHeld&&!Sim.HasInteractionGesture&&
         _heldSupplyId==null&&!_waterRescueToolArmed&&!Sim.State.Settings.Pause&&_windowFocused&&!_modalOpen;
@@ -290,8 +299,8 @@ public partial class InteractionRoom
             if(contact?.TargetKind==InteractionTargetKind.Stem)
                 AcceptFeedback(Sim.ExecuteInteraction(contact.Id,new(_action,contact.Part,_force,ObjectId:contact.ObjectId,TargetKind:contact.TargetKind)),contact.Id);
             else if(contact!=null)BeginClickOffer(contact);
-            else if(TryGroundPoint(mouse.Position,0,out var foodPoint)&&Sim.Selected!=null)
-                AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(GroundFoodAction(_action),X:foodPoint.X,Z:foodPoint.Z)));
+            else if(TryGroundPoint(mouse.Position,0,out var foodPoint))
+                PlaceGroundSupply(new(GroundFoodAction(_action),X:foodPoint.X,Z:foodPoint.Z));
             GetViewport().SetInputAsHandled();return;
         }
         // Decide once at press time. Crossing a creature while orbiting does not touch it,
@@ -351,7 +360,9 @@ public partial class InteractionRoom
             if(contact?.TargetKind==InteractionTargetKind.Stem)
             {AcceptFeedback(Sim.ExecuteInteraction(contact.Id,new(_action,contact.Part,_force,ObjectId:contact.ObjectId,TargetKind:contact.TargetKind)),contact.Id);return;}
             if(!TryGroundPoint(mouse.Position,0,out ground)){_message="这个视角看不到落点。先把镜头转向地面，再放置；托举仍保持支撑。";return;}
-            if(Sim.Selected!=null)AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(_action,Force:_force,X:ground.X,Z:ground.Z)));
+            if(_action is InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater)
+                PlaceGroundSupply(new(_action,Force:_force,X:ground.X,Z:ground.Z));
+            else if(Sim.Selected!=null)AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(_action,Force:_force,X:ground.X,Z:ground.Z)));
             return;
         }
         bool ball=_action==InteractionAction.PlayBall;

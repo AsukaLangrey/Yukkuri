@@ -59,9 +59,10 @@ public partial class InteractionRoom
         NormalizeDetachedStemSelection();
         var stem=_selectedDetachedStemEventId is { } id?Sim.DetachedStemStatus(id):null;
         bool selected=stem!=null;
-        _detachedStemPanel.Visible=selected;_creatureVitalMeters.Visible=!selected;
-        _condition.Visible=_memory.Visible=_memoryHeading.Visible=!selected;
-        _familyPanelButton.Disabled=selected;_closeButton.Disabled=selected;
+        bool hasCreature=Sim.Selected!=null;
+        _detachedStemPanel.Visible=selected;_creatureVitalMeters.Visible=!selected&&hasCreature;
+        _condition.Visible=_memory.Visible=_memoryHeading.Visible=!selected&&hasCreature;
+        _familyPanelButton.Disabled=selected;_closeButton.Disabled=selected||!hasCreature;
         if(stem==null)return;
         string mother=Sim.State.Creatures.Find(c=>c.Id==stem.MotherId)?.Name??"母体";
         string phase=stem.Phase switch

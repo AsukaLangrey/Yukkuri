@@ -389,18 +389,24 @@ public sealed partial class WorldSimulation
 
     private InteractionFeedback PlaceFood(Creature c, InteractionInput input)
     {
+        var result=PlaceFood(c.RegionId,input);
+        if(result.Success)c.DecisionIn=0;
+        return result;
+    }
+
+    private InteractionFeedback PlaceFood(string regionId, InteractionInput input)
+    {
         bool water=input.Action==InteractionAction.PlaceWater;
-        if(!WoodlandLayout.GroundFits(State,c.RegionId,input.X,input.Z,.2))return Unavailable("这里是河道，找岸边的干燥空地放食水。 ");
-        if(State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
+        if(!WoodlandLayout.GroundFits(State,regionId,input.X,input.Z,.2))return Unavailable("这里是河道，找岸边的干燥空地放食水。 ");
+        if(State.DetachedStemBroods.Any(s=>s.RegionId==regionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
             Distance(s.X,s.Z,input.X,input.Z)<StemVesselRadius+.2))return Unavailable("培养瓶或离体茎占着这里，请把食水放到旁边。 ");
         if (!water&&UsesConsumableStock && State.Food <= 0) return Unavailable("没有食物了。 ");
         if (State.RoomObjects.Count(o => o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water && !o.Stored) >= 24)
             return Unavailable("先收起或吃完地上的食物。 ");
         if (!water&&UsesConsumableStock) State.Food--;
         State.RoomObjects.Add(new() { Kind = water?RoomObjectKind.Water:input.Action == InteractionAction.PlaceSweet ? RoomObjectKind.Sweet : RoomObjectKind.Meal,
-            RegionId=c.RegionId,X = input.X, Z = input.Z,Height=RoomSupplySupport.Height(State,c.RegionId,input.X,input.Z,
+            RegionId=regionId,X = input.X, Z = input.Z,Height=RoomSupplySupport.Height(State,regionId,input.X,input.Z,
                 water?RoomObjectKind.Water:input.Action==InteractionAction.PlaceSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal) });
-        c.DecisionIn = 0;
         return new(true, water?"清水放好了，留一点距离，让它自己决定要不要过来喝。":"一份食物已经放下，位置会影响它能否吃到。", "", "place", Changed: true);
     }
 

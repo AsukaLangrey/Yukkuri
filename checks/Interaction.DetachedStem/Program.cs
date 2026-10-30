@@ -276,4 +276,99 @@ Check("real cleanup removes only terminal physical remnants and preserves all hi
     }
 });
 
+Check("independent bottle receives bought ground supplies after every adult has died, without a selected living body",()=>
+{
+    var sim=Loose();Bottle(sim);var s=Brood(sim);var mother=sim.Selected!;
+    // Retain the original gestation component start. Death, separation, bottle,
+    // placement, pickup, sustained mouth contact and birth use actual commands.
+    var parents=sim.State.Creatures.ToArray();
+    foreach(var c in parents)
+    {
+        sim.Hurt(c,300,"独立瓶养中的亲代致死事件",null,BodyPart.Side);
+        if(c.Condition!=PhysicalCondition.Dead)sim.Hurt(c,300,"独立瓶养中的亲代致死事件",null,BodyPart.Side);
+    }
+    Require(parents.All(c=>c.Condition==PhysicalCondition.Dead)&&s.Phase==DetachedStemPhase.Bottled,
+        "journey still had an available living body or lost the independent brood");
+    string before=Snapshot(sim);
+    Require(!sim.ExecuteInteraction(mother.Id,new(InteractionAction.PlaceWater,X:-5,Z:-5)).Success&&Snapshot(sim)==before,
+        "legacy body path bypassed its original death qualification");
+    int stock=sim.State.Food,money=sim.State.Money;
+    Require(sim.BuyFood()&&sim.State.Food==stock+WorldSimulation.FoodBundleCount&&sim.State.Money==money,
+        "real testing purchase failed to add finite food stock");
+    int meals=0,waters=0;
+    void Give(InteractionAction action)
+    {
+        var kind=action==InteractionAction.Drink?RoomObjectKind.Water:RoomObjectKind.Meal;
+        var placement=kind==RoomObjectKind.Water?InteractionAction.PlaceWater:InteractionAction.PlaceMeal;
+        int food=sim.State.Food;var ids=sim.State.RoomObjects.Select(o=>o.Id).ToHashSet();
+        string bodies=JsonSerializer.Serialize(sim.State.Creatures,SaveStore.JsonOptions);
+        Require(sim.PlaceInteractionSupply(placement,-5,-5).Success,"independent ground supply could not be placed");
+        var source=sim.State.RoomObjects.Single(o=>!ids.Contains(o.Id));
+        Require(source.Kind==kind&&source.RegionId==s.RegionId&&source.Portions==1&&!source.HeldByHand&&
+            source.Height==RoomSupplySupport.Height(sim.State,s.RegionId,-5,-5,kind)&&
+            sim.State.Food==food-(kind==RoomObjectKind.Meal?1:0)&&
+            JsonSerializer.Serialize(sim.State.Creatures,SaveStore.JsonOptions)==bodies,
+            "ground placement changed a corpse or lost its actual portion, stock cost or support");
+        Require(sim.HoldSupply(source.Id),"new physical supply could not be picked up");
+        var input=Input(sim,action,source.Id) with {Part=BodyPart.Mouth};
+        Require(sim.BeginDetachedStemGesture(s.EventId,input).Success,"actual bottle-mouth offer did not begin");
+        double value=kind==RoomObjectKind.Water?s.Hydration:s.Nutrition;
+        for(int n=0;n<15;n++)
+        {Require(sim.ContinueInteractionGesture(input,true).Success,"bottle contact failed");Frame(sim);}
+        Require(source.Portions==1,"source consumed before the original 1.6 second contact");
+        Require(sim.ContinueInteractionGesture(input,true).Success&&source.Portions==0&&
+            (kind==RoomObjectKind.Water?s.Hydration:s.Nutrition)>value,
+            "bottle did not consume its held portion and gain actual nourishment");
+        double accepted=kind==RoomObjectKind.Water?s.Hydration:s.Nutrition;
+        for(int n=0;n<8;n++)Require(sim.ContinueInteractionGesture(input,true).Success,"completed hold failed");
+        Require(source.Portions==0&&(kind==RoomObjectKind.Water?s.Hydration:s.Nutrition)==accepted&&
+            sim.State.Food==food-(kind==RoomObjectKind.Meal?1:0),"continued hold duplicated nourishment or charged inventory twice");
+        sim.EndInteractionGesture();sim.ReleaseSupply(source.Id);
+        if(kind==RoomObjectKind.Water)waters++;else meals++;
+    }
+    double started=sim.State.WorldSeconds;
+    for(int n=0;n<3000&&s.Phase==DetachedStemPhase.Bottled;n++)
+    {
+        Require(parents.All(c=>c.Condition==PhysicalCondition.Dead),"bottle care revived a dead body");
+        if(s.Nutrition<65)Give(InteractionAction.FeedMeal);
+        // After the first actual meal, also cover no selection. The same public
+        // world command must work without borrowing any dead or living identity.
+        if(meals>0)sim.State.SelectedId=null;
+        if(s.Hydration<65)Give(InteractionAction.Drink);
+        Frame(sim);
+    }
+    Require(meals>0&&waters>0&&s.Phase==DetachedStemPhase.Born&&
+        sim.State.WorldSeconds-started>=FamilyRules.GestationSeconds(BirthMethod.Stem)-.001&&
+        sim.State.CompletedBirths.Contains(s.EventId)&&
+        sim.State.Creatures.Count(c=>c.Family.BirthEventId==s.EventId)==s.PlannedChildren&&
+        sim.State.Creatures.Where(c=>c.Family.BirthEventId==s.EventId).All(c=>c.Family.MotherId==s.Mother.Id&&c.Family.FatherId==s.Father.Id),
+        "actual independent supplies did not preserve the original clock, litter and genealogy");
+    var copy=Reload(sim);for(int n=0;n<10;n++)Frame(copy);
+    Require(copy.State.Creatures.Count(c=>c.Family.BirthEventId==s.EventId)==s.PlannedChildren,
+        "loading repeated the independently supplied birth");
+});
+
+Check("independent ground placement retains world gates and failed transactions leave stock and objects unchanged",()=>
+{
+    var sim=Loose();var s=Brood(sim);
+    void Reject(InteractionAction action,double x=-5,double z=-5)
+    {string before=Snapshot(sim);Require(!sim.PlaceInteractionSupply(action,x,z).Success&&Snapshot(sim)==before,"invalid ground placement mutated world state");}
+    sim.State.Settings.Pause=true;Reject(InteractionAction.PlaceWater);sim.State.Settings.Pause=false;
+    sim.State.Mode=PlayMode.CloseUp;Reject(InteractionAction.PlaceWater);sim.State.Mode=PlayMode.Management;
+    sim.State.InteractionPlaytest=false;Reject(InteractionAction.PlaceMeal);sim.State.InteractionPlaytest=true;
+    string region=sim.State.ActiveRegionId;
+    foreach(string invalid in new[]{"","missing-region"}){sim.State.ActiveRegionId=invalid;Reject(InteractionAction.PlaceWater);}
+    sim.State.ActiveRegionId=region;
+    Reject(InteractionAction.FeedMeal);Reject((InteractionAction)int.MaxValue);
+    Reject(InteractionAction.PlaceWater,double.NaN);Reject(InteractionAction.PlaceWater,z:double.PositiveInfinity);
+    Reject(InteractionAction.PlaceWater,8.01);Reject(InteractionAction.PlaceWater,z:-8.01);
+    Reject(InteractionAction.PlaceMeal,s.X,s.Z);
+    int food=sim.State.Food;sim.State.Food=0;Reject(InteractionAction.PlaceMeal);sim.State.Food=food;
+    NaturalResources.AddWoodland(sim.State,region);Reject(InteractionAction.PlaceWater,7.1,0);
+    for(int n=0;n<24;n++)Require(sim.PlaceInteractionSupply(InteractionAction.PlaceWater,-5,-5).Success,"existing ground-object capacity changed");
+    Reject(InteractionAction.PlaceWater);Reject(InteractionAction.PlaceMeal);
+    Require(sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Water)==24&&sim.State.Food==food,
+        "water invented stock costs or the 24 object cap was bypassed");
+});
+
 return failures==0?0:1;

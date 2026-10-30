@@ -2,6 +2,21 @@ namespace Yukkuri.Simulation;
 
 public sealed partial class WorldSimulation
 {
+    // Ground supplies belong to the current yard, not to the selected body.
+    // In particular, a dead parent cannot prevent caring for its living bottle.
+    public InteractionFeedback PlaceInteractionSupply(InteractionAction action,double x,double z)
+    {
+        if(!State.InteractionPlaytest||string.IsNullOrWhiteSpace(State.ActiveRegionId)||
+            !State.Regions.Any(region=>region.Id==State.ActiveRegionId))
+            return Unavailable("先回到有效的小院区域，再放置食水。");
+        if(State.Settings.Pause)return Unavailable("先恢复时间，再放置食水。");
+        if(State.Mode==PlayMode.CloseUp)return Unavailable("先退出特写，再向小院地面放置食水。");
+        if(action is not (InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater)||
+            !double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8||Math.Abs(z)>8)
+            return Unavailable("这个食水种类或放置位置无效。");
+        return PlaceFood(State.ActiveRegionId,new(action,X:x,Z:z));
+    }
+
     private void SettleRoomSupplies()
     {
         foreach(var obj in State.RoomObjects)

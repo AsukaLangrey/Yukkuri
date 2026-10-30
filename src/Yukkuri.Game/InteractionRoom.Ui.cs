@@ -240,8 +240,15 @@ public partial class InteractionRoom
                 SetQuickToolHighlight(pair.Value,highlighted==pair.Key);
             SetQuickToolHighlight(_rescueQuickTool,_waterRescueToolArmed);
         }
-        var c=Sim.Selected;if(c==null)return;var i=c.Interaction;
-        RefreshVitalMeters(c);
+        var c=Sim.Selected;
+        _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
+        _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";
+        _resetViewButton.Text=Sim.State.Mode==PlayMode.CloseUp?"正面":"居中";
+        float shownForce=_mouseHeld?_appliedForce:_force;
+        _forceLabel.Text="接触 · "+(shownForce<.35?"轻":shownForce<.62?"稍重":"用力");
+        _forceSlider.Visible=_toolArmed&&InteractionCatalog.UsesForce(_action);
+        _forceLabel.Visible=_forceSlider.Visible||_mouseHeld&&_action==InteractionAction.Touch;
+        _feedback.Text=_message;
         var heldSupply=_heldSupplyId==null?null:Sim.State.RoomObjects.Find(o=>o.Id==_heldSupplyId&&o.HeldByHand);
         if(_waterRescueToolArmed)
         {
@@ -256,14 +263,28 @@ public partial class InteractionRoom
                 "按住递到嘴边；移到空地松开放下，右键收回。"+
                 (heldSupply.Kind is RoomObjectKind.Meal or RoomObjectKind.Water?"也可对准培养瓶开口，给这一窝补充食水。":"");
         }
-        else if(!_toolArmed)
+        else if(!_toolArmed&&c==null)
         {
-            _title.Text=c.Family.Memorialized?"家人记录":c.Family.ColdStorage.Stored?"冷藏保存":i.Carried?"托着 · 先看看它":"空手 · 先看看它";
+            _title.Text="空手 · 观察小院";
+            _hint.Text="点击油或离体茎查看；拿起地面食水后，可递到培养瓶开口。";
+        }
+        else if(!_toolArmed&&c!=null)
+        {
+            bool carried=c.Interaction.Carried;
+            _title.Text=c.Family.Memorialized?"家人记录":c.Family.ColdStorage.Stored?"冷藏保存":carried?"托着 · 先看看它":"空手 · 先看看它";
             _hint.Text=c.Family.Memorialized?"家庭面板保留名字、亲缘与共同经历。选择小院里的另一只，可以继续相处。":
                 c.Family.ColdStorage.Stored?"从家庭与照护面板取出，才能再次靠近；冷藏只会有限延缓。":
-                i.Carried?"按住身体继续搬运，慢慢松手放下；快速甩动后松手会抛出。Shift＋滚轮调高度，也可在空地单击放稳。":"按住身体抓起拖动，慢慢松手放下；快速甩动后松手会抛出。空手拿食水、推球；双击近看。";
+                carried?"按住身体继续搬运，慢慢松手放下；快速甩动后松手会抛出。Shift＋滚轮调高度，也可在空地单击放稳。":"按住身体抓起拖动，慢慢松手放下；快速甩动后松手会抛出。空手拿食水、推球；双击近看。";
         }
         else _hint.Text=ToolHint(_action);
+        if(c==null)
+        {
+            _who.Text="观察小院";_condition.Text=_memory.Text="";
+            _speechLabel.Text="选择油或离体茎，查看当前状态。";
+            RefreshDetachedStemUi();RefreshContactProgress();return;
+        }
+        var i=c.Interaction;
+        RefreshVitalMeters(c);
         _who.Text=c.Name+" · "+SpeciesName(c.Body.SpeciesId)+(c.IsYoung?"幼体":"");
         string intake=i.NaturalIntakePending?i.EatingKind==IntakeKind.Water?"准备喝这一口":"准备取这一口":
             i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":i.GroundIntake&&i.GroundIntakeKind==RoomObjectKind.Leaves?"慢慢嚼着叶子":"慢慢嚼着这一口";
@@ -307,14 +328,6 @@ public partial class InteractionRoom
         string risk=c.Condition==PhysicalCondition.Dead?"":FamilyRules.DescribeRisk(c);
         if(risk.Length>0)_condition.Text+="\n\n"+risk;
         _memory.Text=c.PersonalMemories.Count==0?"还没有一起经历很多事。":string.Join("\n\n",c.PersonalMemories.TakeLast(3).Reverse().Select(m=>m.Text));
-        _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
-        _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";
-        _resetViewButton.Text=Sim.State.Mode==PlayMode.CloseUp?"正面":"居中";
-        float shownForce=_mouseHeld?_appliedForce:_force;
-        _forceLabel.Text="接触 · "+(shownForce<.35?"轻":shownForce<.62?"稍重":"用力");
-        _forceSlider.Visible=_toolArmed&&InteractionCatalog.UsesForce(_action);
-        _forceLabel.Visible=_forceSlider.Visible||_mouseHeld&&_action==InteractionAction.Touch;
-        _feedback.Text=_message;
         string speech=c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
         RefreshDetachedStemUi();

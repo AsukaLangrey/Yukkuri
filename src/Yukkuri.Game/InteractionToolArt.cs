@@ -60,7 +60,7 @@ public static class InteractionToolArt
     public static void CarePad(Node3D parent)
     {
         Surface(parent,16,64,(u,v)=>V(InteractionCareSurface.Pad(u,v)),"e5dfcd");
-        Surface(parent,12,48,(u,v)=>V(InteractionCareSurface.Pad(u,v,true)),"f0ebdb");
+        Surface(parent,InteractionCareSurface.GauzeRows,InteractionCareSurface.GauzeSides,(u,v)=>V(InteractionCareSurface.Pad(u,v,true)),"f0ebdb");
         Tube(parent,u=>V(InteractionCareSurface.PadSeam(u)),.0015f,"c9c2ad",64);
     }
     public static void RepairNeedle(Node3D parent)

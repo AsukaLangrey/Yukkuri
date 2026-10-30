@@ -1389,14 +1389,29 @@ Check("offered spoon and cookie meet the mouth without burying their rims in the
 });
 Check("care cloth is closed and its underside stays above the contact plane",()=>
 {
+    bool folded=false;
     foreach(bool gauze in new[]{false,true})for(int r=0;r<=32;r++)for(int n=0;n<=96;n++)
     {
         var p=InteractionCareSurface.Pad(r/32f,n/96f,gauze);
         if(!float.IsFinite(p.LengthSquared())||p.Y<InteractionCareSurface.PadBottom-.000001f)return false;
         if(r is 0 or 32&&MathF.Abs(p.X)+MathF.Abs(p.Z)>.00001f)return false;
         if(System.Numerics.Vector3.Distance(InteractionCareSurface.Pad(r/32f,0,gauze),InteractionCareSurface.Pad(r/32f,1,gauze))>.00001f)return false;
+        if(gauze)
+        {
+            // Recover the original smaller gauze shell from the unchanged base
+            // cloth. Only the top Y may recede; lower mesh and poles stay put.
+            var basis=InteractionCareSurface.Pad(r/32f,n/96f);
+            float oldY=.024f+basis.Y*(.006f/.022f);
+            float depth=InteractionCareSurface.GauzeFoldDepth(r/32f,n/96f);
+            if(!float.IsFinite(depth)||depth<0||depth>InteractionCareSurface.GauzeFoldMaximum||
+                MathF.Abs(p.X-basis.X*(.048f/.115f))>.000001f||MathF.Abs(p.Z-basis.Z*(.042f/.075f))>.000001f||
+                MathF.Abs(p.Y-(oldY-depth))>.000001f||p.Y>oldY+.000001f)return false;
+            if((r==0||r>=16)&&depth!=0)return false;
+            if(r==0&&MathF.Abs(p.Y-.03f)>.000001f)return false;
+            folded|=depth>.000001f;
+        }
     }
-    return true;
+    return folded&&MathF.Abs(InteractionCareSurface.Pad(1,0).Y-InteractionCareSurface.PadBottom)<.000001f;
 });
 Check("repair needle reaches the exact tip while its shaft eye and thread clear the cloth plane",()=>
 {
