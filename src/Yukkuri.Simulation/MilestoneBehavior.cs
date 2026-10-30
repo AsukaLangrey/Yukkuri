@@ -4,6 +4,7 @@ public sealed partial class WorldSimulation
 {
     private bool TickMilestoneCreature(Creature c,RegionState region,double dt)
     {
+        SynchronizeWildSelfCare(c);
         AdvanceBodyInjuries(c,dt);
         if(c.Condition==PhysicalCondition.Dead)return true;
         c.ReactionRemaining=Math.Max(0,c.ReactionRemaining-dt);
@@ -51,6 +52,7 @@ public sealed partial class WorldSimulation
             MoveToward(c,Math.Clamp(c.X+dx,-8,8),Math.Clamp(c.Z+dz,-8,8),dt,1.2);
             c.Activity="躲避主人";return true;
         }
+        if(TickWildSelfCare(c,region,dt))return true;
         if(c.RegionId=="wild"&&c.Aggression>.7&&c.BehaviorCooldown<=0)
         {
             var victim=State.Creatures.Where(x=>x.Id!=c.Id&&x.RegionId=="wild"&&IsAvailable(x)&&x.Aggression<.35)

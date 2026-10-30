@@ -14,13 +14,12 @@ public sealed partial class WorldSimulation
         var obj=State.RoomObjects.Find(o=>o.Id==id&&!o.Stored&&o.RegionId==State.ActiveRegionId);
         if(obj==null||obj.Kind is not (RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water))return false;
         if(obj.Portions<=0&&NaturalResources.Consumer(State,obj)==null)return false;
-        if(obj.CarrierId is { } carrierId&&State.Creatures.Find(c=>c.Id==carrierId) is { } carrier)
-        {
-            carrier.Family.CareParcelId=null;carrier.Family.CareTargetId=null;
-            carrier.Family.NextCareAt=State.WorldSeconds+12;
-        }
-        obj.CarrierId=null;
+        // The same portion changes hands. Mark it held before canceling so the
+        // drop helper cannot move it back under the former carrier's body.
         obj.HeldByHand=true;
+        if(obj.CarrierId is { } carrierId&&State.Creatures.Find(c=>c.Id==carrierId&&c.Family.CareParcelId==obj.Id) is { } carrier)
+            CancelFamilyCare(carrier,reason:"搬运中的这一份食水被手接走，递送已中断；份额仍在手里。");
+        obj.CarrierId=null;
         foreach(var c in State.Creatures)
             if(c.Interaction.GroundIntakeSourceId==obj.Id)DetachNaturalIntake(c);
         return true;
@@ -38,6 +37,7 @@ public sealed partial class WorldSimulation
         }
         // Cancel retains its original ground location. Holding itself never consumes a portion.
         obj.HeldByHand=false;
+        obj.Height=RoomSupplySupport.Height(State,obj.RegionId,obj.X,obj.Z,obj.Kind);
         if(obj.Portions<=0)State.RoomObjects.Remove(obj);
         return true;
     }

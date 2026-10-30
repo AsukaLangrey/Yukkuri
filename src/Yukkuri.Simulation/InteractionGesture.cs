@@ -149,6 +149,7 @@ public sealed partial class WorldSimulation
             g.Last = Feedback(oil, "fire-memory", Expression.Frightened, "看见这个工具，它想起了以前的经历。", "guard", false);
         else g.Last = new(true, InteractionCatalog.Choice(input.Action).Hint, oil.Speech, PoseFor(input.Action));
         if(oil.ReactionSerial!=previousReaction)g.ReactionSerial=oil.ReactionSerial;
+        SynchronizeWildSelfCare(oil);
         return g.Last;
     }
 

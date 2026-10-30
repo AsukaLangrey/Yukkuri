@@ -118,7 +118,8 @@ public sealed partial class WorldSimulation
         if(material==null)return "缺少这一父体来源的有效材料。";
         double debt=p.Phase==PregnancyPhase.Recovering?p.RecoveryRemaining:0;
         State.BreedingMaterials.Remove(material);
-        ClearCompanionship(mother);EndHumanCompany(mother);DropCareParcel(mother);mother.Family.CareTargetId=null;
+        CancelWildSelfCare(mother,"开始繁育干预，自行护伤已中断；尚未获得护理效果。");
+        ClearCompanionship(mother);EndHumanCompany(mother);CancelFamilyCare(mother,reason:"开始繁育干预，递送已中断；已取份额留在身旁。");
         mother.Interaction.Resting=false;mother.Interaction.RestRemaining=0;
         mother.Interaction.PendingConversation=null;mother.Interaction.ConversationPraise=null;mother.Interaction.ConversationDelay=0;
         mother.Interaction.PendingPraise=null;mother.Interaction.PraiseRemaining=0;
@@ -254,7 +255,8 @@ public sealed partial class WorldSimulation
             if(target==null)continue;
             double affection=c.Family.Peers.GetValueOrDefault(target.Id)?.Affection??0;
             if(Next()>=Math.Clamp(pressure*c.Aggression*(1-affection*.007),0,.5))continue;
-            ClearCompanionship(c);DropCareParcel(c);c.Family.CareTargetId=null;
+            CancelWildSelfCare(c,"危险冲动打断了自行护伤；尚未获得护理效果。");
+            ClearCompanionship(c);CancelFamilyCare(c,reason:"对幼体显露危险敌意，原来的照护已中断；已取份额留在身旁。");
             c.Family.ChildThreat=new(){TargetId=target.Id,WarningRemaining=8,Remaining=45,NextCheckAt=State.WorldSeconds+120,
                 Cause=c.Fullness<20?"饥饿与求生压力":c.Family.Peers.Values.Any(b=>b.Resentment>55)?"家庭冲突与怨恨":"持续恐惧或疼痛压力"};
             c.Family.LastEvent="对幼体显露危险敌意，尚未动手；可以及时制止或隔开。";

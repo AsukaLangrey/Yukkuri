@@ -103,6 +103,7 @@ public sealed partial class WorldSimulation
             if(c.Family.ColdStorage.Stored)continue;
             SynchronizeInterruptedPhysiology(c);
             ResetInterruptedAutonomySearch(c);
+            SynchronizeWildSelfCare(c);
             ValidatePendingConversation(c);
             if(i.GroundIntakeSourceId!=null&&
                 (c.Condition==PhysicalCondition.Dead||i.Carried||i.Falling||i.Supine||i.Height>.25||
@@ -303,6 +304,8 @@ public sealed partial class WorldSimulation
             }
             i.WaitRemaining = Math.Max(0, i.WaitRemaining - dt);
             if (i.WaitRemaining > 0) continue;
+            var careRegion=State.Regions.Find(r=>r.Id==c.RegionId);
+            if(careRegion!=null&&TickWildSelfCare(c,careRegion,dt))continue;
             if(!i.HasAccessory&&State.WorldSeconds>=i.NextAutonomyAt&&i.EatingRemaining<=0)
             {
                 i.NextAutonomyAt=State.WorldSeconds+14+Next()*12;
@@ -521,7 +524,7 @@ public sealed partial class WorldSimulation
         var obj = State.RoomObjects.Find(o => o.Id == id);
         if (obj == null || obj.Stored || obj.HeldByHand || obj.Kind == RoomObjectKind.Cushion || NaturalResources.IsWild(obj.Kind)) return false;
         if(obj.CarrierId is { } carrierId&&State.Creatures.Find(c=>c.Id==carrierId) is { } carrier)
-        {DropCareParcel(carrier);carrier.Family.CareTargetId=null;carrier.Family.NextCareAt=State.WorldSeconds+12;}
+            CancelFamilyCare(carrier,reason:"递送中的食水被收起，这次照护已中断。");
         foreach(var oil in State.Creatures)
             if(oil.Interaction.GroundIntakeSourceId==id)DetachNaturalIntake(oil);
         if (obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet && !State.UnlimitedResources) State.Food += obj.Portions;

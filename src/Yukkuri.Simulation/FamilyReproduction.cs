@@ -272,6 +272,7 @@ public sealed partial class WorldSimulation
 
     private void YieldActivitiesForDelivery(Creature mother)
     {
+        CancelWildSelfCare(mother,"生产需要占用身体，自行护伤已中断；尚未获得护理效果。");
         var i=mother.Interaction;
         i.ActiveCue=null;i.CueElapsed=0;i.CueTravel=0;i.CueUnderstood=false;i.CueDemonstration=false;
         i.FollowPlayer=false;i.WaitRemaining=0;i.Resting=false;i.RestRemaining=0;

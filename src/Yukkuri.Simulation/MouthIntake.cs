@@ -24,6 +24,7 @@ public sealed partial class WorldSimulation
 
     private void BeginLegacyIntake(Creature c,bool recordMealExperience=true)
     {
+        CancelWildSelfCare(c,"开始咽下食物，自行护伤已中断；尚未获得护理效果。");
         c.Interaction.BeginIntake(IntakeKind.Meal);
         if(recordMealExperience&&!c.Interaction.Digestion.Symptomatic)LearnFoodExperience(c,RoomObjectKind.Meal,true);
     }

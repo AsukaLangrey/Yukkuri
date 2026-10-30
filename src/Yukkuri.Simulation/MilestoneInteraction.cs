@@ -4,6 +4,14 @@ public sealed partial class WorldSimulation
 {
     public InteractionResult Contact(string id,ContactRequest request)
     {
+        var result=ContactCore(id,request);
+        if(result.Success&&State.Creatures.Find(c=>c.Id==id) is { } target)
+            CancelWildSelfCare(target,"与主人接触，自行护伤已中断；这次机会已经用过。");
+        return result;
+    }
+
+    private InteractionResult ContactCore(string id,ContactRequest request)
+    {
         var c=State.Creatures.Find(c=>c.Id==id);
         if(!State.MilestoneScenario||c==null||c.RegionId!=State.ActiveRegionId)
             return new(false,"先选择当前地区的一只油库里。","",Expression.Neutral);
@@ -151,10 +159,11 @@ public sealed partial class WorldSimulation
     {
         if(!double.IsFinite(amount)||amount<0)throw new ArgumentOutOfRangeException(nameof(amount));
         if(amount==0||c.Condition==PhysicalCondition.Dead)return;
+        CancelWildSelfCare(c,"身体再次受到伤害，自行护伤已中断；尚未获得护理效果。");
         if(part.HasValue||actor!=null)
         {
             EndHumanCompany(c);
-            DetachNaturalIntake(c);DropCareParcel(c);c.Family.CareTargetId=null;
+            DetachNaturalIntake(c);CancelFamilyCare(c,reason:"身体受到伤害，递送已中断；已取份额留在身旁。");
             c.Interaction.Resting=false;c.Interaction.RestRemaining=0;
             c.Interaction.ActiveCue=null;c.Interaction.FollowPlayer=false;c.Interaction.WaitRemaining=0;
             if(c.Family.CompanionTargetId!=null)ClearCompanionship(c);

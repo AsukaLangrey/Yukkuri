@@ -151,6 +151,13 @@ public sealed partial class WorldSimulation
 
     public InteractionFeedback ExecuteInteraction(string id, InteractionInput input)
     {
+        var result=ExecuteInteractionCore(id,input);
+        if(InteractionTarget(id) is { } target)SynchronizeWildSelfCare(target);
+        return result;
+    }
+
+    private InteractionFeedback ExecuteInteractionCore(string id, InteractionInput input)
+    {
         var c = InteractionTarget(id);
         var invalid = ValidateInteraction(c, input);
         if (invalid != null) return Unavailable(invalid);

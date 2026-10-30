@@ -228,6 +228,12 @@ public partial class InteractionRoom
         _condition.Text=c.Condition==PhysicalCondition.Dead?state+"\n\n"+accessory:state+"\n\n"+mood+(needs.Length>0?"\n"+needs:"")+"\n\n"+accessory+
             (i.FootIntegrity<70?"\n"+(i.FootTreated?"伤处已经护理，仍需慢慢养好。":"移动部位不舒服，需要看看。") :"");
         if(c.Condition!=PhysicalCondition.Dead&&MouthFunction.Impairment(c)>20)_condition.Text+="\n\n"+MouthFunction.Describe(c);
+        var selfCare=i.Injuries.SelfCare;
+        if(c.Condition!=PhysicalCondition.Dead)
+        {
+            if(selfCare.Active)_condition.Text+="\n\n正在自行护伤，还没有完成。需要安静和时间，也可能失败。";
+            else if(selfCare.LastEvent.Length>0)_condition.Text+="\n\n最近一次自行护伤："+selfCare.LastEvent;
+        }
         string family=c.Condition==PhysicalCondition.Dead?"":FamilyRules.Describe(c);
         if(family.Length>0)_condition.Text+="\n\n"+family;
         string aftermath=FamilyRules.DescribeAftermath(c);

@@ -168,6 +168,7 @@ public sealed partial class WorldSimulation
             return new(false,"它还不够信任你。温和接触、喂食或保护它，再试着邀请。",c.LastReaction,c.Expression);
         }
         var e=Emit(IncidentKind.Rescue,c,"player",$"{c.Name}愿意跟随主角前往乐园观察区");Remember(c,e,"有人愿意带自己去安全的地方。",8);
+        CancelWildSelfCare(c,"接受护送前往乐园，自行护伤已中断；这次机会已经用过。");
         c.RegionId="home";c.Quarantine=true;c.X=-6;c.Z=5;c.TargetX=c.X;c.TargetZ=c.Z;c.Belonging=20;c.Activity="在新环境中观察";
         React(c,Expression.Shy,"这里就是乐园吗？","好奇地张望，仍有一点紧张。",5);
         State.Progress.Rescued++;State.Progress.Completed.Add("rescue");

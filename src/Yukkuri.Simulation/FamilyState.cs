@@ -68,6 +68,7 @@ public static partial class FamilyRules
     public static double RecoverySeconds(BirthMethod method) => method == BirthMethod.Live ? 300 : 180;
     public static bool CommonSpecies(string species) => species is "reimu" or "marisa" or "alice" or "patchouli";
     public static bool WillSocialize(Creature c) => !UnderIntervention(c)&&c.Family.ChildThreat.TargetId==null&&
+        !c.Interaction.Injuries.SelfCare.Active&&
         !c.Family.ColdStorage.Stored && c.Family.ColdStorage.RecoveryRemaining<=0 && c.Condition == PhysicalCondition.Active && c.Pain < 25 &&
         c.Fear < 55 && c.Fullness > 25 && c.Interaction.Hydration > 25 && c.Energy > 25 &&
         !c.Interaction.Digestion.Symptomatic && c.Interaction.Restraint == RestraintKind.None &&

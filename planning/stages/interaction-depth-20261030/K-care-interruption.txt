@@ -1,0 +1,42 @@
+K：家庭照护中断与真实食水份额守恒
+
+范围与状态
+本代理修改 FamilyCare.cs、InteractionSupply.cs，新增 checks/Family.CareInterruption/。只进行了源码和文档静态审查，没有本机编译、模拟、检查程序、脚本、Git 或电脑操作。以下是待远端确认的产品修补与检查源码，不是运行通过报告。
+
+确认的原问题及修补
+1. HoldSupply 接走运输份额原来只清 CareParcelId/CareTargetId，留下 CareApproachSeconds/CareBestDistance，也未告诉原对象照护中断。现在先把原实物标成手持，再走 CancelFamilyCare；DropCareParcel 因已手持不会移它的位置，仍是同一 ID、同一份、原污染状态，不退款、不新造份额。ReleaseSupply 无新落点时在原 XY 的真实支撑高度放下，避免运输的 .45 高度残留。
+2. ArrangeCare 改派对象原来只放下旧份额，旧对象没有中断说明。现在先取消旧任务，写旧对象记录，再建立新任务；重复安排同一对象的早返回仍保留，不反复取份。
+3. CancelFamilyCare 原来无条件覆盖照护者 LastEvent，且对象只排除了死亡，可能覆盖既有孕育/死亡结果。新增 partial FamilyLife.CareLastEvent，默认空、写入最多 512 字符，双方分别记录照护状态。RecordFamilyCareStatus 在死亡/濒危、孕育准备/进行/恢复，或当前 LastEvent 正显示 Pregnancy.Outcome 时不覆盖 LastEvent。独立照护记录仍可查看。普通取消、取份、递送、送达、陪护状态均写这条记录；正常完成继续显示成功，不改成失败。
+4. TryFamilyCare 已有对象不再有效的兜底分支，现在完整取消并执行原冷却，不丢下 ID 后立即忘记旧对象；身体已不能搬运但仍挂有份额时完整取消，实际近旁保暖仍通过下一次有效照护安排进入。正常递送/陪护结束仅归零接近计时和距离，不伪造中断。
+5. DropCareParcel 仅管实物与引用，不再擅自写通用家庭结果。同区中断留在照护者当时 XY；若运输者已换区，保留该份额上次实际记录的原地区和 XY，按原处支撑落下，不能跟随新 RegionId 瞬移。同步也会拒绝运输物与照护者地区不一致的继续递送。
+6. 按 root 的 K 批护伤互斥要求：CareTargetAvailable 排除 recipient.Interaction.Injuries.SelfCare.Active；FamilyCareReasonCore 对双方明确说明正在照顾自身伤口。照护者资格由 root 的 FamilyRules.WillSocialize 同样排除，未另行放宽/缩紧既定关系、需求、距离或接受门槛。
+
+跨文件接线（主对话/body 已负责，不由本代理修改）
+- MilestoneInteraction.Hurt：受外力伤害时改用 CancelFamilyCare。
+- InteractionInjury.StopIncapacitatedActions：濒危/死亡清动作改用取消；body 已接。
+- FamilyColdStorage.SetColdStorage：进入冷藏改用取消。
+- FamilyRisk.RequestForcedPregnancy / 新伤幼威胁开始：改用取消，保留后续干预/危险结果。
+- InteractionBehavior.PutAwayRoomObject：取消运输后只将已存在那一份计入原仓库返还，并移除该实物。
+- FamilySocial.ClearFamilyTargetsTo 原本已用取消；FamilyReproduction.YieldActivitiesForDelivery 原本已用取消，维持正常分娩流程。
+- WildSelfCare 开始护伤由 body 调用相同 CancelFamilyCare 签名。
+- FamilyValidation 已由 root 增 Text(f.CareLastEvent)，最大 512。family_ui 已收到字段与展示说明：这是最近照护记录，不是当前仍在搬运的标志；当前状态继续看两个任务 ID。
+本轮末次静态搜索，DropCareParcel 仅剩 FamilyCare 内部取消入口；其他清目标位置只剩正常完成两处。
+
+新增远端检查源码：13 组
+- 正常食物/饮水实际安排、取份、递送、预留、入口、吞咽，恰好消费一份且完成状态不写中断。
+- 已实际取份后受轻伤或濒危，原份额同地落下，重复清理不改记录或隔空喂食。
+- 真实托举照护者/对象，近看普通时钟冻结仍同步释放运输实物。
+- 真正冷藏任一方，不把口粮也藏进去，读档不丢不复制。
+- 真正采集材料并开始强制准备，清照护、保留一份、材料只消耗一次。
+- 真正 HoldSupply/ReleaseSupply，同 ID 同位置从油的运输改成手持再落下，没有重复分份。
+- PutAwayRoomObject 只返还已存在的那一份，重复收起不能再次退款。
+- 改派实际照护，旧对象收到说明，新任务干净，旧份额当场保留。
+- 实际 Hurt 致死对象，保留死因、身份和亲缘，不虚构送食。
+- 显式地区变化夹具检验双方分区后取消及运输者换区时的原地落物；相处小院没有公开跨区搬运命令，因此不把这组称为完整 UI 路线。
+- 实际取份后设置已有到期孕育夹具，以公开普通 Tick 结算出生并让位搬运；只测试照护与分娩边界，不冒充从受孕开始的全程；记录出生唯一性和产后结果保留。
+- 携物且已有孕育的母体实际死亡，反复清理/读档不覆盖孕育中止或产生未出生子代。
+- 暂停保留唯一运输物，读档后真实手接走，双方记录可再次保存；缺字段 JSON 默认空记录。
+所有检查从 ArrangeCare 和实际取份开始，不注入 CareParcelId、不凭空制造测试运输物；仅明确标注的地区变化和已有孕育为边界夹具。原有 Family.CareLearning/AssistedCare/Protection 等断言未改。
+
+尚待确认
+新增项目需由主对话纳入远端清单；未编译、未执行。UI 展示、远端断言以及原照护组回归均未确认。远端结果必须对应后续完整源码提交，不能沿用 c08 对新代码宣称通过。

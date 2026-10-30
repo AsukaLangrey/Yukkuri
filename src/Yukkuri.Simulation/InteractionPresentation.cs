@@ -59,6 +59,7 @@ public static class InteractionPresentation
         if(i.Resting)return "rest";
         if(i.Carried)return "carry";
         if(i.Digestion.Symptomatic)return "stomach";
+        if(i.Injuries.SelfCare.Active)return "guard";
         return i.HeadSensitivity>45||i.CheekSensitivity>45?"guard":"idle";
     }
 }

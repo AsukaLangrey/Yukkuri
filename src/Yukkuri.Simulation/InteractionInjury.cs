@@ -7,12 +7,14 @@ public sealed class LocalInjury
     public double Damage { get; set; }
     public double PermanentLoss { get; set; }
     public double CareRemaining { get; set; }
+    public bool SelfCareAttempted { get; set; }
     public string Cause { get; set; } = "";
 }
 
 public sealed class BodyInjuryState
 {
     public List<LocalInjury> Sites { get; set; } = [];
+    public WildSelfCareState SelfCare { get; set; } = new();
     public double CareCooldown { get; set; }
     public bool CriticalEpisode { get; set; }
     public double CriticalCareBudget { get; set; } = 90;
@@ -55,10 +57,14 @@ public sealed partial class WorldSimulation
     private void ApplyLocalInjury(Creature c, BodyPart part, SurfaceSide side, double amount, string cause)
     {
         if (amount <= 0 || part == BodyPart.Accessory || c.Condition == PhysicalCondition.Dead) return;
+        CancelWildSelfCare(c,"新的受伤打断了自行护伤；这次未完成的处置没有产生护理效果。");
         var i = c.Interaction; var state = i.Injuries;
         side = InteractionLife.DressingSiteSide(part, side);
         var wound = state.At(part, side);
         if (wound == null) { wound = new() { Part = part, Side = side }; state.Sites.Add(wound); }
+        // Another blow to an unhealed wound cannot buy another random attempt.
+        // Only a completely healed site starts a genuinely new injury episode.
+        if(wound.Damage==0)wound.SelfCareAttempted=false;
         wound.Damage = Clamp100(wound.Damage + amount);
         wound.Cause = cause; wound.CareRemaining = 0;
         // Only substantial accumulated local damage leaves lasting disability.
@@ -136,6 +142,7 @@ public sealed partial class WorldSimulation
 
     private bool ApplyBodyCare(Creature c, BodyPart part, SurfaceSide side)
     {
+        CancelWildSelfCare(c,"外部护理已经接手，自行护伤停止；此前付出的精力不返还。");
         var i = c.Interaction; var state = i.Injuries;
         bool localCare = NeedsLocalBodyCare(c, part, side);
         if (c.Condition != PhysicalCondition.Critical && state.CareCooldown > 0 && !localCare) return false;
@@ -183,6 +190,7 @@ public sealed partial class WorldSimulation
 
     private void StopIncapacitatedActions(Creature c)
     {
+        CancelWildSelfCare(c,"身体已经无法继续自行护伤，未完成的动作已停止。");
         var i = c.Interaction;
         // End an unfinished intervention before rescue actions or a close-up save.
         // A fatal Hurt settles Die immediately after this cleanup; let Die keep
@@ -192,7 +200,7 @@ public sealed partial class WorldSimulation
         if(c.Condition==PhysicalCondition.Critical&&FamilyRules.UnderIntervention(c)&&!deathPending)
             CancelIntervention(c,"母体进入濒危，强制干预立即中止；没有开始新的孕育，已用材料、关系后果与原有恢复负担保留。");
         EndHumanCompany(c);
-        DropCareParcel(c);c.Family.CareTargetId=null;
+        CancelFamilyCare(c,reason:"身体已无法继续照护，递送已中断；已取份额留在身旁。");
         // Loading an already-dead body must not refresh social deadlines.
         if(c.Family.CompanionTargetId!=null)ClearCompanionship(c);
         else c.Family.CompanionUntil=0;

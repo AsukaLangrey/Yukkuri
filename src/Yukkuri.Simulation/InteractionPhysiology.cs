@@ -110,6 +110,7 @@ public sealed partial class WorldSimulation
             }
             else if(p.Bladder>=85||p.Bowel>=85)
             {
+                CancelWildSelfCare(c,"需要先排泄，自行护伤已中断；尚未获得护理效果。");
                 i.Resting=false;
                 p.Excreting=p.Bladder>=85?ExcretionKind.Urine:ExcretionKind.Feces;
                 p.Remaining=p.Excreting==ExcretionKind.Urine?2.5:3.5;

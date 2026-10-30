@@ -70,11 +70,14 @@ public sealed partial class WorldSimulation
     private void Tick(double dt)
     {
         State.WorldSeconds += dt;
+        foreach(var c in State.Creatures)SynchronizeWildSelfCare(c);
         if (State.InteractionPlaytest)
         {
             SynchronizeCareParcels();
             TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickFamilySocial(dt);
-            TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);return;
+            TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);
+            foreach(var c in State.Creatures)SynchronizeWildSelfCare(c);
+            return;
         }
         foreach(var c in State.Creatures)AdvanceMouthProgress(c,dt);
         if(State.MilestoneScenario) TickMilestoneWorld(dt);
@@ -228,6 +231,7 @@ public sealed partial class WorldSimulation
         if(State.MilestoneScenario) return InviteToSanctuary().Success;
         var c=Selected;
         if(c==null || c.RegionId=="home" || State.Mode==PlayMode.CloseUp) return false;
+        CancelWildSelfCare(c,"转移到乐园照护，自行护伤已中断；这次机会已经用过。");
         c.RegionId="home"; c.Quarantine=true; c.X=-6; c.Z=5; c.TargetX=c.X; c.TargetZ=c.Z;
         c.Activity="隔离观察"; Log($"{c.Name}已安置到乐园观察区；接纳由玩家决定。");
         State.SelectedId=State.Creatures.FirstOrDefault(x=>x.RegionId==State.ActiveRegionId)?.Id; return true;
@@ -268,6 +272,7 @@ public sealed partial class WorldSimulation
     {
         if(!double.IsFinite(x)||!double.IsFinite(z))return;
         var c=State.Creatures.Find(c=>c.Id==id);if(c==null)return;
+        CancelWildSelfCare(c,"身体被移动，自行护伤已中断；尚未获得护理效果。");
         c.X=Math.Clamp(x,-8,8);c.Z=Math.Clamp(z,-8,8);c.TargetX=c.X;c.TargetZ=c.Z;
     }
 }

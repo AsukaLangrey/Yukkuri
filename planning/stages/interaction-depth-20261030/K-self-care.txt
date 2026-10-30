@@ -1,0 +1,46 @@
+K 批：野外有限局部自行护伤
+日期：2026-10-30
+
+范围与依据
+本批采用 I-body-gap.txt 中此前未实施的野外自行护伤方向，依据 v014 已确认的野外自行处置及成败差异。I 文档仍是当时未采用提案的历史记录；本文件说明本批实际实现。六秒、三点精力、概率公式和适用表面部位为原型参数，不声称用户确认过这些具体数值。不是完整濒危自救、手术、秘药或内馅转移。
+
+本子任务文件
+src/Yukkuri.Simulation/WildSelfCare.cs（新）
+src/Yukkuri.Simulation/InteractionInjury.cs
+本文件。其余主循环、存档总入口、动作入口、表现和远端检查由主协调及其他代理拥有。
+
+确定接口
+BodyInjuryState.SelfCare: WildSelfCareState，旧档缺省 new()。
+WildSelfCareState: Active(bool), Part(BodyPart?), Side(SurfaceSide), Remaining(double), Success(bool), RegionId(string?), LastEvent(string)。Success 为动作开始时锁存的结果，表现不得在完成前透露；不由时间步或读档重抽。
+LocalInjury.SelfCareAttempted(bool)，旧档缺省 false。
+private bool WorldSimulation.TickWildSelfCare(Creature c,RegionState region,double dt)：普通身体动作入口；true 表示本帧自主动作已占用，包括完成帧。开始帧建立六秒剩余时间；后续普通时间扣除。不得在表现更新中推进。
+private void WorldSimulation.SynchronizeWildSelfCare(Creature c)：仅检查已有 Active 状态，必要时取消。无启动、无计时、无随机，供命令完成后及每帧开头/后段同步。
+private void WorldSimulation.CancelWildSelfCare(Creature c,string reason)：保留局部尝试标记和已付精力，清 Active/Part/Side/Remaining/Success/RegionId，保留简短 LastEvent；无活动时无副作用。
+public static void WildSelfCareRules.Validate(Creature c,WorldState world)：全模式存档校验，须在已有身体/家庭结构合法性检查之后调用。
+公开调参/检查接口：Duration=6、EnergyCost=3、CareSeconds=180；Supports(BodyPart)；SuccessChance(Creature,LocalInjury)。
+
+真实过程
+区域按 RegionKind.Wilderness 判断，检查当前地区引用和角色地区匹配，不硬编码 wild 字符串。允许行动不便者在原地护伤，不要求 CanSelfMove。
+支持头、脸、侧部、底部已有局部表面伤；嘴部伤势不假定可以自行操作，更不等同于器官切除。目标须 Damage>.01、无现存护理时长、本次伤势尚未尝试；按伤势重到轻选一处，左右采用既有规范。
+角色须 Active、稳定地面、未约束/托举/下落/放下/翻倒/翻滚/滑动，无口部/排泄/真实阻塞自主的手势/冷藏复苏/干预/孕育准备/指令/休息/人油陪伴/逃离冲突等占用；离体球或无实际接触的空手不会仅因目标ID相同而阻塞。不在现有入侵事件中承担进攻防守，也不对 IsIntruder 开启。实际食物需求满足，已启用互动生理者还须不渴，起始精力至少40、疼痛低于70、恐惧低于55、无消化症状。进行中精力低于20或其他需要/危险出现会取消。
+开始时取消并真实放下已有家庭运输份额，清自主同伴任务，目标坐标停在本人位置。支付三点精力一次，并按伤势、能量、营养算概率：.65-Damage*.004+(Energy-40)*.002+(Fullness-70)*.001；已启用互动水分时再加(Hydration-70)*.001，限定.2至.85。调用世界 Next() 一次并保存结果。
+六秒完成成功时仅给目标 CareRemaining=180，后续仍依靠原身体更新和食水逐渐恢复局部 Damage；失败仅留下明确结果，不额外虚构伤害。绝不调用 ApplyBodyCare，不加整体健康、不加敷料、不设 FootTreated、不改变永久损失、濒危计时或救治预算。底部只获得有限表面伤护理，支撑能力恢复仍需原正式护理链。
+一次尝试即占用这处尚未愈合伤口的机会，中断也不退还。再次伤害未愈伤口不会刷新机会；只有 Damage 真正归零后发生新的局部伤害才将该部位 SelfCareAttempted 清为 false。原有 PermanentLoss 保留。
+
+已接的伤势钩子
+ApplyLocalInjury：有效新伤先取消当前动作，再按是否完全痊愈判断是否新伤机会。
+ApplyBodyCare：外部护理接手立即取消，不双重产生效果。
+StopIncapacitatedActions：失能立即取消；家庭运输清理由旧 Drop+清目标改为统一 CancelFamilyCare，保留实物及完整任务清理。
+
+主协调接线要求
+1. 两种普通世界更新均在完成身体/生存更新之后、普通自主行动之前调用 TickWildSelfCare，一帧仅推进一次。脚伤早返回分支也要可到达；后台野外角色照常处理，不依赖当前镜头或选中角色。暂停/近看/离线不推进。
+2. 所有可能提前返回的角色更新先 SynchronizeWildSelfCare；家庭/生理/入侵后段新建互斥动作后再同步，避免帧末留下不可存的组合。
+3. 实际成功玩家动作、开始手势、旧模式操作、开始进食、换区、冷藏、强制准备等立即取消或同步，不能等下一普通帧。纯观察若不占身体则不必取消。
+4. Hurt 无局部部位的有效即时伤害也需取消（本子任务 ApplyLocalInjury 仅能覆盖明确局部新伤），注意不要将慢性伤势原本的每帧恶化误作反复新增局部伤口或刷新机会。
+5. 全模式保存验证调用 WildSelfCareRules.Validate，不能只放在 InteractionPlaytest 分支。合法进行状态存读续接，不补抽、不补扣精力。校验不以瞬间饥渴/精力/疼痛阈值判坏档，动态门槛由普通同步取消；必须拒绝错误地区、无目标伤、非规范左右、未标记尝试、超时钟、失能/支撑/嘴忙等硬互斥状态。
+6. 表现读取 Active/Part/Side/Remaining，死亡、濒危及真实手部动作优先。不要用表现更新推进规则，不得画出凭空专业敷料。
+
+静态审查与未测项
+已对照局部伤势、正式护理、失能清理、地区类型、世界随机入口、动作属性可见性。状态结束统一清空，成功结果只在完成后生效；局部重伤/护理/失能不会留下迟到回调。取消只写自行护理 LastEvent，不覆写家庭死亡/孕育结局。
+最终校验补充：所读的身体、家庭及世界子结构显式为空时抛 InvalidDataException；尚未接入此动作时钟的非 MilestoneScenario 标准世界不得保存伪造的 Active 自行护理。静态规则不会把这类档案当成合法续接。
+本子任务仅源码文档静态读写，没有编译、运行测试、验证程序、项目脚本、电脑操作或 Git。远端检查源码由 family_ui 代理拥有；实际编译、两类世界主循环续接、随机成功失败、保存/暂停/后台、动作取消、实际表现效果均待远端完整提交验证，不宣称通过。

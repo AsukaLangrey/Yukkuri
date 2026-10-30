@@ -33,3 +33,7 @@ I批：关系子代理拥有FamilySocial.cs、新checks/Family.AdoptionJourney�
 
 J批（用户十小时续授权）：身体子代理仅PregnancyBoundaries/AssistedCare两检查Program.cs和J-check-build.txt；界面子代理仅Main.MilestoneStates.cs及J-game-build.txt；关系子代理拥有FamilyRisk.cs、checks/Family.Protection/Program.cs和J-protection.txt，跨文件问题先交主协调。
 主协调拥有checks/Interaction.Continuity/Program.cs、FamilyCare.cs原因显示顺序、测试请求、c08/c09证据与阅读记录、总交接及全部Git操作。此分工延续用户已授权的适当并行，各子代理禁止运行和Git。
+
+K批：身体子代理拥有新WildSelfCare.cs、InteractionInjury.cs及K-self-care.txt，负责有限自行护伤状态/规则与局部伤势接线；关系子代理拥有FamilyCare.cs、InteractionSupply.cs、新checks/Family.CareInterruption及K-care-interruption.txt，审查真实口粮与中断记录，跨文件修复交主协调；界面子代理拥有InteractionPresentation.cs、新checks/Interaction.WildSelfCare及K-self-care-checks.txt，检查与可见表现按共用接口接线。
+主协调拥有普通世界/旧模式Tick与动作中断入口、存档验证接线、阶段文档/请求及所有Git操作。自行护伤以v014方向为依据，具体参数为本轮实现方案，不冒充用户已逐项确认；不含秘药、手术或内馅转移。全部子代理只读写源码文档，不执行项目、检查或Git。
+K补充：界面子代理另拥有InteractionRoom.Family.cs和InteractionRoom.Ui.cs的照护历史/自行护伤状态显示；主协调接FamilyState社交互斥、FamilyReproduction生产及InteractionPhysiology紧急排泄中断。关系子代理在FamilyCare内新增CareLastEvent，主协调负责全模式存档字符串验证。

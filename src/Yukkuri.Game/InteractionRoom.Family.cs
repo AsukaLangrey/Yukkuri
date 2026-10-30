@@ -349,6 +349,7 @@ public partial class InteractionRoom
         }
         string care=FamilyCareSummary(c);
         if(care.Length>0)details.Add(care);
+        if(c.Family.CareLastEvent.Length>0)details.Add("照护记录："+c.Family.CareLastEvent);
         string situation=c.Condition==PhysicalCondition.Dead?"":FamilyRules.Describe(c);
         if(situation.Length>0)details.Add(situation);
         string aftermath=FamilyRules.DescribeAftermath(c);

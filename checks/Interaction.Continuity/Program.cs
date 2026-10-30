@@ -1453,7 +1453,7 @@ Check("a harmful press cancels following but an off-contact held mouse preserves
         double x=c.X,z=c.Z;sim.SetInteractionHand(3,0,true);Tick(sim,1);
         travel+=WorldSimulation.Distance(x,z,c.X,c.Z);
     }
-    string diagnostics=JsonSerializer.Serialize(new{c.X,c.Z,c.TargetX,c.TargetZ,c.Activity,c.Health,health,c.Interaction.FollowPlayer,travel,
+    string diagnostics=JsonSerializer.Serialize(new{c.X,c.Z,c.TargetX,c.TargetZ,c.Activity,currentHealth=c.Health,healthAfterContact=health,c.Interaction.FollowPlayer,travel,
         pose=InteractionPresentation.Pose(c),sim.HasInteractionGesture,sim.InteractionGestureOwnsPose});
     Console.WriteLine("OFF_CONTACT_INDEPENDENT "+diagnostics);
     Require(travel>.1&&WorldSimulation.Distance(c.X,c.Z,targetX,targetZ)<initialDistance&&c.X<0,
