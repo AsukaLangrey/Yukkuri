@@ -224,7 +224,7 @@ public partial class InteractionRoom
             GetViewport().SetInputAsHandled();return;
         }
         if(mouse.ButtonIndex!=MouseButton.Left)return;
-        if(_clickOfferId!=null)CancelGesture();
+        if(_clickOfferId!=null||_offerReturnId!=null)CancelGesture();
         var contact=ContactAt(mouse.Position);
         if(_waterRescueToolArmed)
         {
@@ -351,6 +351,7 @@ public partial class InteractionRoom
     {
         _waterRescueToolArmed=false;
         _clickOfferId=null;
+        _offerReturnId=null;
         _tapContact=null;
         _orbiting=_panning=false;
         _orbitDragged=false;_orbitTravel=Vector2.Zero;_orbitClickAction=null;
@@ -617,6 +618,19 @@ public partial class InteractionRoom
         _pointer.Rescue=_waterRescueToolArmed;
         _pointer.Rough=_mouseHeld?_appliedForce>.62f:_toolArmed&&_group.Rough;_pointer.Pressed=_mouseHeld;
         _pointer.DragOrigin=_dragStart;_pointer.Aim=_mouseHeld&&_action is InteractionAction.Push or InteractionAction.Throw or InteractionAction.PlayBall;
+        var releaseVelocity=_carryReleaseMotion.Velocity;
+        bool carryRelease=scene&&_mouseHeld&&_directGesture&&_action==InteractionAction.Lift&&
+            Sim.InteractionGestureTarget is { } carriedId&&Sim.State.Creatures.Find(c=>c.Id==carriedId)?.Interaction.Carried==true;
+        _pointer.CarryThrow=carryRelease&&releaseVelocity.Length()>=CarryReleaseMotion.ThrowSpeed;
+        _pointer.ReleaseVector=Vector2.Zero;
+        if(_pointer.CarryThrow&&Sim.Selected is { } carried)
+        {
+            var origin=new Vector3((float)carried.X,.46f+(float)carried.Interaction.Height,(float)carried.Z);
+            var direction=_camera.UnprojectPosition(origin+new Vector3(releaseVelocity.X,0,releaseVelocity.Y)*.08f)-_camera.UnprojectPosition(origin);
+            // This short screen arrow describes measured release velocity. It is
+            // not a landing prediction and never feeds a new velocity into simulation.
+            _pointer.ReleaseVector=direction.Normalized()*Mathf.Clamp(releaseVelocity.Length()*9,18,44);
+        }
         _pointer.Impact=scene&&_tapContact!=null;
         _pointer.ImpactPoint=_tapContact is { } impact?_camera.UnprojectPosition(impact.World):Vector2.Zero;
         _pointer.ImpactAge=_tapAge;
@@ -626,14 +640,20 @@ public partial class InteractionRoom
 
 public partial class RoomPointer : Control
 {
-    public Vector2 Point,DragOrigin,ImpactPoint;
+    public Vector2 Point,DragOrigin,ImpactPoint,ReleaseVector;
     public float ImpactAge;
-    public bool Active,Rough,Pressed,Aim,Rescue,Impact;
+    public bool Active,Rough,Pressed,Aim,Rescue,Impact,CarryThrow;
     public override void _Draw()
     {
-        var color=new Color(Rescue?"518caa":Rough?"ae6e51":"62846d");
+        var color=new Color(Rescue?"518caa":CarryThrow?"c37b39":Rough?"ae6e51":"62846d");
         if(Active){DrawArc(Point,Pressed?12:9,0,Mathf.Tau,32,color,2,true);DrawCircle(Point,2,color);}
         if(Aim){DrawLine(DragOrigin,Point,color,2,true);DrawCircle(DragOrigin,4,color);}
+        if(CarryThrow&&ReleaseVector.LengthSquared()>1)
+        {
+            Vector2 direction=ReleaseVector.Normalized(),tip=Point+ReleaseVector,side=direction.Orthogonal()*4;
+            DrawLine(Point+direction*13,tip,color,2,true);
+            DrawLine(tip,tip-direction*7+side,color,2,true);DrawLine(tip,tip-direction*7-side,color,2,true);
+        }
         if(Impact)
         {
             float progress=Mathf.Clamp(ImpactAge/.22f,0,1);

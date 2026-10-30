@@ -136,5 +136,74 @@ Check("water rescue changes priority while retaining a still real family attacke
         "actual family interruption did not clear the remaining request");
 });
 
+Check("actual protection changes the rescued personality's relationship and creates one identified event",()=>
+{
+    double gratefulGain=0,entitledGain=0;
+    foreach(bool entitled in new[]{false,true})
+    {
+        var sim=Fixture();var actor=sim.State.Creatures[0];var victim=sim.State.Creatures[1];
+        victim.Personality.Initialized=true;victim.Personality.Kindness=entitled?.05:.8;victim.Personality.Pride=entitled?.9:.2;
+        Hunger(actor,victim);double trust=victim.Trust,safety=victim.Interaction.HumanBond.Safety;
+        sim.InterruptInteractionThreat(actor.Id);
+        var protection=sim.State.Incidents.Single(e=>e.Kind==IncidentKind.Protection&&e.TargetId==victim.Id);
+        Require(victim.PersonalMemories.Count(m=>m.IncidentId==protection.Id)==1&&victim.Trust>trust&&
+            victim.Interaction.HumanBond.Safety>safety,"protection only changed dialogue, without a specific memory or relationship");
+        if(entitled)entitledGain=victim.Trust-trust;else gratefulGain=victim.Trust-trust;
+        string after=Snapshot(sim);sim.InterruptInteractionThreat(actor.Id);
+        Require(Snapshot(sim)==after,"clicking an already stopped attacker manufactured another protection event");
+    }
+    Require(gratefulGain>entitledGain*4,"entitled and grateful personalities had indistinguishable consequences");
+});
+Check("only witnesses who can see both participants gain protection trust",()=>
+{
+    foreach(bool nearby in new[]{false,true})
+    {
+        var sim=Fixture();var actor=sim.State.Creatures[0];var victim=sim.State.Creatures[1];var witness=sim.State.Creatures[2];
+        witness.Personality.Initialized=true;witness.Personality.Kindness=.8;
+        if(!nearby){witness.X=-7;witness.Z=-7;}
+        Hunger(actor,victim);double trust=witness.Trust;sim.InterruptInteractionThreat(actor.Id);
+        Require(nearby?witness.Trust>trust:witness.Trust==trust,"protection gratitude ignored actual observation");
+    }
+});
+Check("player harm followed by interrupting the resulting danger cannot buy gratitude",()=>
+{
+    var sim=Fixture();var actor=sim.State.Creatures[0];var victim=sim.State.Creatures[1];
+    Require(sim.ExecuteInteraction(actor.Id,new(InteractionAction.Punch,BodyPart.Side,0)).Success,"real player harm failed");
+    Hunger(actor,victim);double trust=victim.Trust,safety=victim.Interaction.HumanBond.Safety;
+    sim.InterruptInteractionThreat(actor.Id);
+    Require(victim.Trust==trust&&victim.Interaction.HumanBond.Safety==safety&&
+        victim.PersonalMemories.Any(m=>m.Text.Contains("人类伤害仍然记得")),"manufactured protection erased its cause or granted trust");
+});
+Check("saved protection cooldown prevents successive real interruptions farming a second reward",()=>
+{
+    var sim=Fixture();var actor=sim.State.Creatures[0];var victim=sim.State.Creatures[1];Hunger(actor,victim);
+    sim.InterruptInteractionThreat(actor.Id);SaveStore.Validate(sim.State);
+    var state=JsonSerializer.Deserialize<WorldState>(Snapshot(sim),SaveStore.JsonOptions)!;
+    var restored=new WorldSimulation(state);actor=state.Creatures[0];victim=state.Creatures[1];
+    double trust=victim.Trust,safety=victim.Interaction.HumanBond.Safety;Hunger(actor,victim);
+    restored.InterruptInteractionThreat(actor.Id);
+    Require(victim.Trust==trust&&victim.Interaction.HumanBond.Safety==safety&&
+        state.Incidents.Count(e=>e.Kind==IncidentKind.Protection&&e.TargetId==victim.Id)==2,
+        "a separate intervention should retain its fact without repeating the relationship reward");
+    victim.Interaction.HumanBond.LastProtectionAt=double.NaN;
+    bool rejected=false;try{SaveStore.Validate(state);}catch(InvalidDataException){rejected=true;}
+    Require(rejected,"non-finite saved protection cooldown was accepted");
+});
+
+Check("a visible warning creates continuous caution before injury, and obsolete intent cannot keep renewing it",()=>
+{
+    var sim=Fixture();var actor=sim.State.Creatures[0];var victim=sim.State.Creatures[1];
+    actor.Family.Conflict=new(){TargetId=victim.Id,Remaining=60,WarningRemaining=8};
+    double health=victim.Health;sim.Advance(.25);
+    Require(victim.Health==health&&victim.Interaction.Emotion.Alarm>0&&!EmotionalReadiness.Settled(victim),
+        "a live warning was ignored until the first injury");
+    double alarm=victim.Interaction.Emotion.Alarm,lastThreat=victim.Interaction.Emotion.LastThreatAt;
+    sim.InterruptInteractionThreat(actor.Id);
+    actor.Family.Conflict=new(){TargetId=victim.Id,Remaining=0};
+    sim.Advance(.25);
+    Require(victim.Interaction.Emotion.Alarm==alarm&&victim.Interaction.Emotion.LastThreatAt==lastThreat&&
+        !EmotionalReadiness.Settled(victim),"stopping erased real caution, or stale intent kept renewing the threat");
+});
+
 Console.WriteLine($"Interaction help: {failures} failure(s)");
 return failures==0?0:1;

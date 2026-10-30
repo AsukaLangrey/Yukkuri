@@ -80,7 +80,7 @@ public sealed partial class WorldSimulation
         { expression=Expression.Hurt; situation="touch-sore"; }
         else if ((c.Fear >= 68||c.Interaction.Emotion.Alarm>=25) && expression is Expression.Content or Expression.Delighted)
         { expression=Expression.Frightened; situation="touch-no"; }
-        else if (c.Interaction.Emotion.Alarm>=12&&expression is Expression.Content or Expression.Delighted)
+        else if (!EmotionalReadiness.Settled(c)&&expression is Expression.Content or Expression.Delighted)
         { expression=Expression.Worried; }
         React(c, expression, OilDialogue.Say(c, situation), description, 4.5);
         c.Interaction.ReactionPose=pose;c.Interaction.ReactionPoseRemaining=2.2;
@@ -111,7 +111,7 @@ public sealed partial class WorldSimulation
         bond.Familiarity = Clamp100(bond.Familiarity + amount * .5);
         c.Trust = Clamp100(c.Trust + amount);
         c.Attachment = Clamp100(c.Attachment + amount * .6);
-        c.Fear = Math.Max(0, c.Fear - amount * .15);
+        c.Fear = Math.Max(EmotionalReadiness.FearFloor(c), c.Fear - amount * .15);
         c.Interaction.AffectionSaturation = Clamp100(c.Interaction.AffectionSaturation + amount * .7);
     }
 

@@ -6,12 +6,17 @@ public sealed record InteractionHelpRequest(Creature Target,InteractionHelpKind 
 
 public sealed partial class WorldSimulation
 {
-    public Creature? CurrentInteractionThreatTarget(Creature actor)
+    public Creature? CurrentInteractionThreatTarget(Creature actor) =>
+        actor.RegionId==State.ActiveRegionId?ValidInteractionThreatTarget(actor):null;
+
+    // Ordinary life may also advance outside the currently viewed courtyard.
+    // UI scope must not erase a danger there from the behavioural rules.
+    private Creature? ValidInteractionThreatTarget(Creature actor)
     {
         if(actor.Personality.HungerTargetId==null&&actor.Family.ChildThreat.TargetId==null&&actor.Family.Conflict.TargetId==null)return null;
-        if(!State.InteractionPlaytest||!State.Creatures.Contains(actor)||actor.RegionId!=State.ActiveRegionId||
+        if(!State.InteractionPlaytest||!State.Creatures.Contains(actor)||
             actor.Condition==PhysicalCondition.Dead||actor.Family.ColdStorage.Stored||actor.Family.Memorialized)return null;
-        Creature? Eligible(string? id,bool allowRemains=false) => id==null?null:State.Creatures.Find(c=>c.Id==id&&c!=actor&&c.RegionId==State.ActiveRegionId&&
+        Creature? Eligible(string? id,bool allowRemains=false) => id==null?null:State.Creatures.Find(c=>c.Id==id&&c!=actor&&c.RegionId==actor.RegionId&&
             (c.Condition!=PhysicalCondition.Dead||allowRemains&&c.Personality.RemainsNutrition>0)&&
             !c.Family.ColdStorage.Stored&&!c.Family.Memorialized);
         // Match the ordinary behaviour order, rather than exposing every stale
@@ -53,7 +58,42 @@ public sealed partial class WorldSimulation
             React(actor,Expression.Worried,"……先走开。","停止靠近，留出了安全距离。",5);
             message="已阻止这次冲突，伤势、记忆和关系不会被清空。";
         }
+        if(target.Condition!=PhysicalCondition.Dead)AcknowledgeHumanThreatInterruption(actor,target);
         return State.LastActionMessage=message;
+    }
+
+    private void AcknowledgeHumanThreatInterruption(Creature actor,Creature target)
+    {
+        // Reaching this method requires a real, revalidated danger which the
+        // command has actually stopped. A second click cannot create an event.
+        var attack=State.Incidents.LastOrDefault(e=>e.Kind==IncidentKind.Attack&&e.ActorId==actor.Id&&
+            e.TargetId==target.Id&&State.WorldSeconds-e.At<=120);
+        var incident=Emit(IncidentKind.Protection,target,"player",$"人类及时制止了{actor.Name}对{target.Name}的危险行动",0,attack?.Id);
+        bool RecentHarm(Creature c)=>c.Interaction.HumanBond.LastHarmAt>=0&&
+            State.WorldSeconds-c.Interaction.HumanBond.LastHarmAt<120;
+        bool manufactured=RecentHarm(actor)||RecentHarm(target)||
+            target.Interaction.Water.LastPlayerSubmersionAt>=0&&State.WorldSeconds-target.Interaction.Water.LastPlayerSubmersionAt<120;
+        foreach(var observer in State.Creatures.Where(c=>c!=actor&&c.Condition!=PhysicalCondition.Dead&&
+            !c.Family.ColdStorage.Stored&&(c==target||FamilyVisible(c,target)&&FamilyVisible(c,actor))))
+        {
+            InitializePersonality(observer);
+            bool direct=observer==target;
+            if(!direct&&observer.Personality.Kindness<.25)continue;
+            bool entitled=observer.Personality.Kindness<.25&&observer.Personality.Pride>=.75;
+            string memory=manufactured?"人类制止了眼前的危险，但刚才受到的人类伤害仍然记得。":
+                direct?entitled?"人类替自己挡住了危险，觉得这是理所当然。":"人类替自己挡住了危险，更愿意在不安时寻求帮助。":
+                $"亲眼看见人类保护了{target.Name}，更愿意相信这只手。";
+            Remember(observer,incident,memory,direct?2:1);
+            observer.Family.LastEvent=memory;
+            var bond=observer.Interaction.HumanBond;
+            if(manufactured||RecentHarm(observer)||bond.LastProtectionAt>=0&&State.WorldSeconds-bond.LastProtectionAt<120)continue;
+            // Shared care budget and a saved cooldown bound repeated rescues.
+            // Neither gratitude nor its dialogue removes danger memories.
+            bond.LastProtectionAt=State.WorldSeconds;
+            double budget=bond.CareBudget;
+            ImproveAffection(observer,direct?(entitled?.12:.9):.35);
+            bond.Safety=Clamp100(bond.Safety+(budget-bond.CareBudget)*.6);
+        }
     }
 
     // The courtyard is observed through an overview camera, not a walking

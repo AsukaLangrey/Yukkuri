@@ -268,5 +268,67 @@ Check("实际入水和刚出现的危险立即使陪伴表现失效而非靠旧U
     Require(!c.Interaction.Water.InWater&&!sim.HasLiveHumanCompany(c),"陪伴查询只依赖未更新的入水缓存");
 });
 
+Check("轻伤短反应结束和接下一口甜食之后仍保留警惕与距离",()=>
+{
+    var sim=Create();var c=sim.Selected!;
+    Require(c.Interaction.Emotion.SafeSeconds==0&&EmotionalReadiness.Settled(c),"未受惊的新个体被默认安全计时拦住");
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Punch,BodyPart.Side,0)).Success,"轻击夹具未形成真实伤害");
+    Require(c.Trust>35&&c.Interaction.Emotion.Alarm is >0 and <12&&!EmotionalReadiness.Settled(c),
+        "低于旧门槛的真实惊惧仍被当作已经安定");
+    double alarm=c.Interaction.Emotion.Alarm,fullness=c.Fullness;
+    var offer=new InteractionInput(InteractionAction.FeedSweet,BodyPart.Mouth,Duration:.1);
+    Require(sim.BeginInteractionGesture(c.Id,offer).Success,"受伤后连正常递食入口都被取消");
+    for(int n=0;n<8;n++)sim.ContinueInteractionGesture(offer,true);
+    sim.EndInteractionGesture();
+    Require(c.Fullness>fullness&&c.Interaction.Emotion.Alarm==alarm,"食物没有吸引它，或吃一口清空了惊惧");
+    Step(sim,80,.2);
+    double distance=Math.Sqrt((c.X-.2)*(c.X-.2)+c.Z*c.Z);
+    Require(distance>1.3&&!EmotionalReadiness.Settled(c)&&c.Interaction.HumanCompany.Until==0,
+        "高信任者在轻伤短反应结束后立刻贴手或恢复无忧状态");
+    Require(c.Expression is not (Expression.Content or Expression.Delighted),"刚咽下食物就覆盖了近期伤害表情");
+});
+Check("真实安全时间逐渐缩短距离，无威胁的默认个体不需先等待",()=>
+{
+    var sim=Create();var c=sim.Selected!;
+    Require(sim.PreferredHumanDistance(c)==1.15,"默认未受惊者凭空产生退让距离");
+    var fearful=new Creature{Fear=65,Trust=20};
+    Require(sim.PreferredHumanDistance(fearful)==2.2,"旧档或其他来源的恐惧使用了另一套靠近距离");
+    sim.ExecuteInteraction(c.Id,new(InteractionAction.Punch,BodyPart.Side,0));
+    double distance=sim.PreferredHumanDistance(c),alarm=c.Interaction.Emotion.Alarm;
+    Step(sim,400,showHand:false);
+    Require(c.Interaction.Emotion.SafeSeconds>=15&&c.Interaction.Emotion.Alarm>0&&c.Interaction.Emotion.Alarm<alarm&&
+        EmotionalReadiness.Settled(c)&&sim.PreferredHumanDistance(c)<distance,
+        "连续安全生活没有逐渐恢复，或凭空删掉了全部惊惧");
+});
+Check("受伤后仍可信的手可在保留距离时陪伴，不能把重新接近等同于贴脸",()=>
+{
+    var sim=Create();var c=sim.Selected!;
+    sim.ExecuteInteraction(c.Id,new(InteractionAction.Punch,BodyPart.Side,0));
+    Step(sim,610,showHand:false);
+    double handX=c.X+(c.X>=0?-3:3),handZ=c.Z;
+    Step(sim,160,handX,handZ);
+    double distance=Math.Sqrt((c.X-handX)*(c.X-handX)+(c.Z-handZ)*(c.Z-handZ));
+    Require(Memory(c)==1&&c.Interaction.HumanCompany.Remembered,"真实恢复后没有完成谨慎陪伴");
+    Require(sim.PreferredHumanDistance(c)>1.15&&distance>=sim.PreferredHumanDistance(c)-.1&&
+        c.Interaction.Emotion.Alarm>0&&c.Health<100,"陪伴消除了安全距离、惊惧或身体后果");
+});
+
+Check("跟随的大步终点留在舒适距离外，不在靠近和退避之间来回",()=>
+{
+    var sim=Create();var c=sim.Selected!;
+    sim.ExecuteInteraction(c.Id,new(InteractionAction.Punch,BodyPart.Side,0));
+    // Existing completed follow intent is a fixture; the injury and its
+    // changing distance still come from the real interaction above.
+    c.Interaction.FollowPlayer=true;c.X=sim.PreferredHumanDistance(c)+.04;c.Z=0;
+    double previous=c.X;
+    for(int n=0;n<20;n++)
+    {
+        sim.SetInteractionHand(0,0,true);sim.AdvanceInteractionPresentation(.1);sim.Advance(.25);
+        Require(c.X>=sim.PreferredHumanDistance(c)-.001&&c.X<=previous+.001,
+            "跟随朝手中心跨过了安全圈，或下一步又向外退开");
+        previous=c.X;
+    }
+});
+
 Console.WriteLine($"Human company: {failures} failure(s)");
 return failures==0?0:1;

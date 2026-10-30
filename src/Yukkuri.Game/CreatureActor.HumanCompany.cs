@@ -20,7 +20,7 @@ public partial class CreatureActor
         !_waterConcernActive&&_waterConcernWeight<=.01f&&
         pose is "idle" or "guard" or "careful-step" or "invite";
 
-    public void PrepareHumanCompany(Creature c,bool live,Vector2 player,string pose,bool paused,bool close)
+    public void PrepareHumanCompany(Creature c,bool live,Vector2 player,float comfortableDistance,string pose,bool paused,bool close)
     {
         if(close||!AllowsCompanyBody(c,pose))
         {_companyActive=false;_companyWeight=0;return;}
@@ -33,7 +33,10 @@ public partial class CreatureActor
         if(_companyEpisode!=company.StartedAt)
         {_companyEpisode=company.StartedAt;_companyClock=0;}
         _companyPoint=player;
-        _companyArrived=company.ContactSeconds>0&&player.DistanceSquaredTo(new((float)c.X,(float)c.Z))<=1.15f*1.15f;
+        // Match the simulation's arrival tolerance; real contact can already be
+        // accumulating just outside the nominal comfortable-distance boundary.
+        float arrivalDistance=comfortableDistance+.01f;
+        _companyArrived=company.ContactSeconds>0&&player.DistanceSquaredTo(new((float)c.X,(float)c.Z))<=arrivalDistance*arrivalDistance;
         _companyCalm=Mathf.Clamp((float)company.ContactSeconds/6,0,1);
         _companyComfort=company.SeekingComfort||c.Family.GriefRemaining>0||!EmotionalReadiness.Settled(c);
     }

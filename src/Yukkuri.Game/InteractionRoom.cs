@@ -180,12 +180,14 @@ public partial class InteractionRoom : Node3D
             string pose=InteractionPresentation.Pose(c);
             if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
             actor.PrepareWaterConcern(c,Sim.WaterConcernTarget(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),pose);
-            actor.PrepareHumanCompany(c,Sim.HasLiveHumanCompany(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),pose,paused,close);
+            actor.PrepareHumanCompany(c,Sim.HasLiveHumanCompany(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),(float)Sim.PreferredHumanDistance(c),pose,paused,close);
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
             RefreshFamilyPresentation(c,actor);
         }
         if(!paused)PlayRoomReactionVoice();
         if(!paused)UpdateTapTool(dt);
+        UpdateOfferReturn(dt,paused);
+        UpdateLighterFeedback(dt,paused);
         foreach(var obj in Sim.State.RoomObjects)
         {
             if(!_objects.TryGetValue(obj.Id,out var visual))_objects[obj.Id]=visual=MakeObject(obj);

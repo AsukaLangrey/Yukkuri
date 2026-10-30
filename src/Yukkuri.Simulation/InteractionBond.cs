@@ -7,6 +7,7 @@ public sealed class HumanBond
     public double Safety { get; set; }
     public double CareBudget { get; set; } = 3;
     public double LastHarmAt { get; set; } = -100;
+    public double LastProtectionAt { get; set; } = -100;
     public double LastWitnessThreatAt { get; set; } = -100;
     public double UnreportedHarm { get; set; }
     public Dictionary<BodyPart, double> Caution { get; set; } = new();
@@ -47,8 +48,11 @@ public sealed partial class WorldSimulation
         b.CareBudget = Math.Min(3, b.CareBudget + dt * .025);
         // Safety must be experienced with a visible, quiet hand. Waiting offscreen
         // does not erase contact memories, and close-up does not refill the budget.
+        double distance=Distance(c.X,c.Z,State.PlayerX,State.PlayerZ),comfortable=PreferredHumanDistance(c);
         if (!_interactionHandLive || !SeesHelpingHand(c) || InteractionGestureTarget == c.Id ||
-            Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) > 2.5) return;
+            WaterEnvironment.IsInWater(State,c)||FamilyRules.UnderIntervention(c)||
+            State.Creatures.Any(other=>other!=c&&CurrentInteractionThreatTarget(other)==c)||
+            distance<comfortable-.08&&comfortable>1.15||distance>2.5) return;
         b.Safety = Clamp100(b.Safety + dt * .015);
         foreach (var part in b.Caution.Keys.ToArray())
             b.Caution[part] = Math.Max(0, b.Caution[part] - dt * .012);

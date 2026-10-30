@@ -65,7 +65,7 @@ public partial class InteractionRoom
         _debugScope=new OptionButton{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
         _debugScope.AddItem("选中油 · 全部状态");_debugScope.AddItem("世界 · 全部个体与资源");_debugScope.AddItem("模拟配置与当前输入");
         tools.AddChild(_debugScope);
-        _debugScope.ItemSelected+=_=>{_debugPage=0;_debugFrozen=false;RefreshDebugPanel(true);};
+        _debugScope.ItemSelected+=_=>{_debugPage=0;_debugFrozen=false;ClearDebugComparison();RefreshDebugPanel(true);};
         _debugFreezeButton=Button("冻结读数",()=>
         {
             _debugFrozen=!_debugFrozen;
@@ -74,6 +74,7 @@ public partial class InteractionRoom
         });tools.AddChild(_debugFreezeButton);
         _debugSearch=new LineEdit{PlaceholderText="筛选中文名称、字段路径或当前值",ClearButtonEnabled=true};column.AddChild(_debugSearch);
         _debugSearch.TextChanged+=_=>{_debugPage=0;RenderDebugRows();};
+        BuildDebugComparisonControls(column);
         _debugValues=new TextEdit{Editable=false,SizeFlagsVertical=Control.SizeFlags.ExpandFill,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,
             CustomMinimumSize=new(0,110)};
         _debugValues.AddThemeFontSizeOverride("font_size",13);column.AddChild(_debugValues);
@@ -109,6 +110,7 @@ public partial class InteractionRoom
             // Selecting in the scene must not relabel a frozen old creature's
             // values as the newly selected creature.
             _debugFrozen=false;_debugPage=0;force=true;
+            ClearDebugComparison();
         }
         ulong now=Time.GetTicksMsec();
         if(_debugFrozen||!force&&now-_debugCapturedAt<250)return;
@@ -136,12 +138,15 @@ public partial class InteractionRoom
             };
             JsonElement snapshot=JsonSerializer.SerializeToElement(source,DebugJsonOptions);
             _debugSnapshotJson=snapshot.GetRawText();
-            _debugRows.Clear();AppendDebugRows(snapshot,"",_debugRows);
+            _debugParameters.Clear();CollectDebugParameters(snapshot,"","",_debugParameters);
+            _debugRows.Clear();_debugRows.AddRange(_debugParameters.Values.Select(parameter=>FormatDebugParameter(parameter.Path,parameter.Value)));
+            RefreshDebugComparisonControls();
             RenderDebugRows();
         }
         catch(Exception error) when(error is JsonException or NotSupportedException or InvalidOperationException)
         {
-            _debugRows.Clear();_debugSnapshotJson="";
+            _debugRows.Clear();_debugParameters.Clear();_debugSnapshotJson="";
+            RefreshDebugComparisonControls();
             _debugValues.Text="本次参数快照读取失败："+error.Message;
             _debugPageLabel.Text="未显示旧快照；小院继续运行";
             _debugPrevious.Disabled=_debugNext.Disabled=true;
@@ -162,12 +167,13 @@ public partial class InteractionRoom
 
     private void RenderDebugRows()
     {
-        if(_debugValues==null)return;
+        if(_debugValues==null||_debugSnapshotJson.Length==0)return;
         string search=_debugSearch.Text.Trim();
-        var rows=search.Length==0?_debugRows:_debugRows.Where(row=>row.Contains(search,StringComparison.OrdinalIgnoreCase)).ToList();
+        var sourceRows=_debugChangesOnly?DebugChangedRows():_debugRows;
+        var rows=search.Length==0?sourceRows:sourceRows.Where(row=>row.Contains(search,StringComparison.OrdinalIgnoreCase)).ToList();
         int pages=Math.Max(1,(rows.Count+DebugPageSize-1)/DebugPageSize);
         _debugPage=Math.Clamp(_debugPage,0,pages-1);
-        string content=rows.Count==0?"没有匹配参数。清空筛选可查看全部。":string.Join("\n",rows.Skip(_debugPage*DebugPageSize).Take(DebugPageSize));
+        string content=rows.Count==0?(_debugChangesOnly&&search.Length==0?"与记下的读数相比，当前没有变化。":"没有匹配参数。清空筛选可查看全部。"):string.Join("\n",rows.Skip(_debugPage*DebugPageSize).Take(DebugPageSize));
         if(_debugValues.Text!=content)
         {
             double vertical=_debugValues.ScrollVertical;int horizontal=_debugValues.ScrollHorizontal;
@@ -175,27 +181,6 @@ public partial class InteractionRoom
         }
         _debugPageLabel.Text=$"{_debugPage+1}/{pages} 页 · {rows.Count} 项"+(_debugFrozen?$" · 冻结于 {_debugWorldSeconds:0.0}秒":" · 实时");
         _debugPrevious.Disabled=_debugPage==0;_debugNext.Disabled=_debugPage==pages-1;
-    }
-
-    private static void AppendDebugRows(JsonElement value,string path,List<string> rows)
-    {
-        if(value.ValueKind==JsonValueKind.Object)
-        {
-            var properties=value.EnumerateObject();bool any=false;
-            foreach(var property in properties){any=true;AppendDebugRows(property.Value,path.Length==0?property.Name:path+"."+property.Name,rows);}
-            if(!any)rows.Add(path+" = {}");
-        }
-        else if(value.ValueKind==JsonValueKind.Array)
-        {
-            int index=0;foreach(var item in value.EnumerateArray())AppendDebugRows(item,path+"["+(index++)+"]",rows);
-            if(index==0)rows.Add(path+" = []");
-        }
-        else
-        {
-            string label=string.Join(" / ",path.Split('.').Select(part=>DebugParameterLabel(part.Split('[')[0]))
-                .Where(part=>part.Length>0).Distinct());
-            rows.Add((label.Length>0?label+" · ":"")+path+" = "+value.GetRawText());
-        }
     }
 
     private static string DebugParameterLabel(string name)=>name switch
@@ -206,7 +191,7 @@ public partial class InteractionRoom
         "Alarm"=>"惊惧余波","SafeSeconds"=>"持续安全时间","LastThreatAt"=>"最近威胁时间",
         "Emotion"=>"情绪","HumanBond"=>"对人的记忆","Personality"=>"性格特征","Kindness"=>"善意",
         "Pride"=>"傲慢","Carelessness"=>"粗心","Relationships"=>"关系","PersonalMemories"=>"个人记忆",
-        "LastHarmAt"=>"最近受伤时间","Caution"=>"部位警戒","Condition"=>"身体状态","HealthStatus"=>"伤势状态",
+        "LastHarmAt"=>"最近受伤时间","LastProtectionAt"=>"最近保护收益时间","Caution"=>"部位警戒","Condition"=>"身体状态","HealthStatus"=>"伤势状态",
         "Activity"=>"当前活动","Expression"=>"表情","Speech"=>"台词","ReactionRemaining"=>"反应剩余时间",
         "FootIntegrity"=>"足底功能","FootRecovery"=>"足底恢复","Wetness"=>"潮湿","Damage"=>"损伤",
         "Carried"=>"被托举","Falling"=>"下落中","Restraint"=>"固定方式","Height"=>"高度",

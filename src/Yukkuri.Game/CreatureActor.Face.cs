@@ -17,7 +17,7 @@ public partial class CreatureActor
     private EyeCurve _eyeCurve;
     private readonly Dictionary<(float,float,float),(ArrayMesh left,ArrayMesh right)> _browCache=new();
 
-    private ArrayMesh FaceOvalMesh(Vector2 center,Vector2 diameter,float offset)
+    private ArrayMesh FaceOvalMesh(Vector2 center,Vector2 diameter,float offset,System.Func<float,float,Color>? tint=null)
     {
         using var surface=new SurfaceTool();surface.Begin(Mesh.PrimitiveType.Triangles);
         const int segments=48,rings=5;
@@ -26,6 +26,7 @@ public partial class CreatureActor
             var v=ActorFaceSurface.Point(center.X,center.Y,diameter.X,diameter.Y,r,angle,offset);
             var normal=ActorFaceSurface.Normal(v.X,v.Y);
             surface.SetNormal(new Vector3(normal.X,normal.Y,normal.Z));
+            if(tint!=null)surface.SetColor(tint(r,angle));
             surface.AddVertex(new Vector3(v.X,v.Y,v.Z));
         }
         for(int ring=0;ring<rings;ring++)for(int n=0;n<segments;n++)
@@ -40,6 +41,22 @@ public partial class CreatureActor
     {
         var oval=SceneArt.Mesh(parent,FaceOvalMesh(center,diameter,offset),Vector3.Zero,color);
         oval.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;return oval;
+    }
+    private void FaceMouthOpening(Node3D parent,Vector2 center,Vector2 diameter)
+    {
+        // The same face-conforming vertices and outline gain depth through color,
+        // without adding a lip mesh or changing any contact/support surface.
+        Color cavity=new("503039"),rim=new("a56b5d"),lower=new("a65e57");
+        var mesh=FaceOvalMesh(center,diameter,.009f,(radius,angle)=>
+        {
+            float edge=Mathf.SmoothStep(.58f,1,radius);
+            float warmth=Mathf.Max(0,-Mathf.Sin(angle))*radius*.16f;
+            return cavity.Lerp(rim,edge*.72f).Lerp(lower,warmth);
+        });
+        var opening=SceneArt.Mesh(parent,mesh,Vector3.Zero,"ffffff");
+        var material=(StandardMaterial3D)opening.MaterialOverride.Duplicate();
+        material.VertexColorUseAsAlbedo=true;material.Roughness=.72f;material.MetallicSpecular=.18f;
+        opening.MaterialOverride=material;opening.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
     }
     private ArrayMesh FaceStrokeMesh(Vector2 start,Vector2 end,float width,float offset=.011f)
     {
@@ -108,10 +125,19 @@ public partial class CreatureActor
         {
             if(!ActorEyeSurface.Visible(layer,openness))continue;
             Color color=new(layer switch {EyeLayer.Iris=>_hatAccessory?"84633d":"70503e",EyeLayer.MainLight=>"fff7e7",EyeLayer.SmallLight=>"d8c4a4",_=>"352b2a"});
+            Color warmIris=new(_hatAccessory?"c49b60":"a87c57");
             void Vertex(float radius,float angle)
             {
                 var p=ActorEyeSurface.Point(side,openness,curve,layer,radius,angle);var normal=ActorFaceSurface.Normal(p.X,p.Y);
-                surface.SetNormal(AccessoryPoint(normal));surface.SetColor(color);surface.AddVertex(AccessoryPoint(p));
+                Color shade=color;
+                if(layer==EyeLayer.Iris)
+                {
+                    float top=Mathf.Max(0,Mathf.Sin(angle))*radius;
+                    float bottom=Mathf.Max(0,-Mathf.Sin(angle))*radius;
+                    float edge=Mathf.SmoothStep(.65f,1,radius);
+                    shade=color.Lerp(warmIris,bottom*.38f).Darkened(top*.16f+edge*.22f);
+                }
+                surface.SetNormal(AccessoryPoint(normal));surface.SetColor(shade);surface.AddVertex(AccessoryPoint(p));
             }
             const int rings=5,segments=48;
             for(int ring=0;ring<rings;ring++)for(int n=0;n<segments;n++)

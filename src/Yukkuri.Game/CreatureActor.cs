@@ -134,13 +134,13 @@ public partial class CreatureActor : RigidBody3D
                 Expression.Frightened=>new Vector3(.10f,.12f,.025f),
                 _=>new Vector3(.13f,.19f,.025f)
             };
-            FaceOval(mouthShape,new(0,-.178f),new(size.X,size.Y),"7e4543");
+            FaceMouthOpening(mouthShape,new(0,-.178f),new(size.X,size.Y));
             if(expression==Expression.Delighted)FaceOval(mouthShape,new(0,-.211f),new(.115f,.045f),"dc8d85",.015f);
         }
         else if(expression is Expression.Defiant or Expression.Angry)
             FaceMouthCurve(mouthShape,MouthCurve.Defiant,"8d5047");
         else if(expression==Expression.Curious)
-            FaceOval(mouthShape,new(0,-.17f),new(.055f,.058f),"8d5047");
+            FaceMouthOpening(mouthShape,new(0,-.17f),new(.055f,.058f));
         else if(expression==Expression.Exhausted)
             FaceMouthCurve(mouthShape,MouthCurve.Flat,"9b5c4d");
         else

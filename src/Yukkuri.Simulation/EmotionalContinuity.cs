@@ -17,6 +17,7 @@ public sealed partial class InteractionLife
 public static class EmotionalReadiness
 {
     public static bool Settled(Creature c) => c.Interaction.Emotion.Alarm < 12 &&
+        (c.Interaction.Emotion.Alarm <= 0 || c.Interaction.Emotion.SafeSeconds >= 15) &&
         c.Interaction.Water.RecoverySeconds <= 0 && c.Fear < 35 && c.Pain < 20;
     public static double FearFloor(Creature c) => c.Interaction.Emotion.Alarm * .55;
 }
@@ -94,12 +95,20 @@ public sealed partial class WorldSimulation
     {
         if(dt<=0||c.Family.ColdStorage.Stored)return;
         var e=c.Interaction.Emotion;
+        bool threatened=State.Creatures.Any(other=>other!=c&&other.RegionId==c.RegionId&&
+            ValidInteractionThreatTarget(other)==c&&FamilyVisible(c,other,7));
+        if(threatened)
+        {
+            // Awareness develops while the real warning/pursuit continues,
+            // including before the first strike. No repeated dialogue/event.
+            RememberThreat(c,dt*.6);
+            if(c.Expression is Expression.Content or Expression.Delighted)c.Expression=Expression.Worried;
+        }
         bool safe=c.Pain<25&&!WaterEnvironment.IsInWater(State,c)&&
             c.Interaction.Restraint==RestraintKind.None&&!c.Interaction.Falling&&
             !FamilyRules.UnderIntervention(c)&&State.WorldSeconds-e.LastThreatAt>=15&&
             !State.Creatures.Any(other=>other!=c&&other.Condition==PhysicalCondition.Active&&FamilyVisible(c,other,4)&&
-                (other.Interaction.Water.InWater||other.Personality.HungerTargetId!=null||
-                 other.Family.Conflict.TargetId!=null||other.Family.ChildThreat.TargetId!=null||
+                (WaterEnvironment.IsInWater(State,other)||ValidInteractionThreatTarget(other)!=null||
                  InteractionGestureTarget==other.Id&&CurrentInteractionAction is InteractionAction.Burn or InteractionAction.BurnFeet));
         e.SafeSeconds=safe?Math.Min(600,e.SafeSeconds+dt):0;
         // A bite can attract it immediately. Recovering a feeling of safety takes time.
@@ -109,5 +118,39 @@ public sealed partial class WorldSimulation
         double target=Math.Clamp(65+c.Trust*.15+c.Attachment*.1-c.Pain*.55-c.Fear*.45-
             e.Alarm*.25-Math.Max(0,30-c.Fullness)*.8-Math.Max(0,25-c.Energy)*.5,0,100);
         e.Manmanlai+=Math.Clamp(target-e.Manmanlai,-dt*1.2,dt*.15);
+    }
+
+    // This is a comfortable listening distance, not a reach check for a tool.
+    // Even a trusting creature needs space after harm. An untouched newcomer
+    // has no extra distance merely because its safe-time counter starts at zero.
+    public double PreferredHumanDistance(Creature c)
+    {
+        double sinceHarm=State.WorldSeconds-c.Interaction.HumanBond.LastHarmAt;
+        double recent=c.Interaction.HumanBond.LastHarmAt>=0?Math.Max(0,1-sinceHarm/60)*.8:0;
+        double desired=1.15+Math.Min(1.65,c.Interaction.Emotion.Alarm*.035+recent);
+        return c.Fear>60&&c.Trust<35?Math.Max(2.2,desired):desired;
+    }
+
+    private void ApproachHumanAtDistance(Creature c,double dt,double desired)
+    {
+        double dx=c.X-State.PlayerX,dz=c.Z-State.PlayerZ;
+        double distance=Math.Sqrt(dx*dx+dz*dz);
+        if(distance<=desired+.01)return;
+        // RoomMove caps a step at its destination. Aim at the perimeter so a
+        // large ordinary tick cannot step inside and trigger retreat next tick.
+        RoomMove(c,State.PlayerX+dx/distance*desired,State.PlayerZ+dz/distance*desired,dt);
+    }
+
+    private bool TryKeepHumanDistance(Creature c,double dt)
+    {
+        if(!_interactionHandLive||!SeesHelpingHand(c)||!CanSelfMove(c))return false;
+        double desired=PreferredHumanDistance(c);
+        if(desired<=1.15||Distance(c.X,c.Z,State.PlayerX,State.PlayerZ)>=desired-.08)return false;
+        double dx=c.X-State.PlayerX,dz=c.Z-State.PlayerZ;
+        if(Math.Abs(dx)+Math.Abs(dz)<.001)dx=1;
+        double length=Math.Sqrt(dx*dx+dz*dz);
+        RoomMove(c,State.PlayerX+dx/length*desired,State.PlayerZ+dz/length*desired,dt);
+        c.Activity="仍记得刚才的不安，先留一点距离";
+        return true;
     }
 }

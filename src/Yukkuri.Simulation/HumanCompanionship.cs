@@ -73,7 +73,7 @@ public sealed partial class WorldSimulation
         {
             if(State.WorldSeconds<request.NextRequestAt||c.ReactionRemaining>0)return false;
             request.StartedAt=State.WorldSeconds;request.Until=State.WorldSeconds+20;request.NextRequestAt=State.WorldSeconds+60;
-            request.SeekingComfort=c.Fear>=20||c.Family.GriefRemaining>0;
+            request.SeekingComfort=c.Fear>=20||c.Family.GriefRemaining>0||!EmotionalReadiness.Settled(c);
             Feedback(c,request.SeekingComfort?"request-comfort":"request-company",
                 request.SeekingComfort?Expression.Worried:Expression.Content,
                 request.SeekingComfort?"它认出了熟悉的手，想有人安静陪一会儿。":"它认出了熟悉的手，想靠过来陪一会儿。",
@@ -81,11 +81,11 @@ public sealed partial class WorldSimulation
             return true;
         }
         double distance=Distance(c.X,c.Z,State.PlayerX,State.PlayerZ);
-        if(distance>1.15)
+        if(distance>PreferredHumanDistance(c)+.01)
         {
             if(!request.Remembered)request.ContactSeconds=0;
             if(CanSelfMove(c))
-            {RoomMove(c,State.PlayerX,State.PlayerZ,dt);c.Activity=request.SeekingComfort?"靠近熟悉的手寻求安慰":"主动靠近熟悉的手";}
+            {ApproachHumanAtDistance(c,dt,PreferredHumanDistance(c));c.Activity=request.SeekingComfort?"靠近熟悉的手寻求安慰":"主动靠近熟悉的手";}
             else c.Activity="想有人陪伴，等熟悉的手靠近";
             return true;
         }
@@ -95,7 +95,7 @@ public sealed partial class WorldSimulation
         // Benefits require real proximity and ordinary time, and share the same
         // finite affection budget as care. No body damage is healed by company.
         ImproveAffection(c,dt*.04);
-        c.Fear=Math.Max(0,c.Fear-dt*.035);
+        c.Fear=Math.Max(EmotionalReadiness.FearFloor(c),c.Fear-dt*.035);
         if(request.SeekingComfort&&c.Family.GriefRemaining>0)
         {
             c.Family.GriefRemaining=Math.Max(0,c.Family.GriefRemaining-dt*.08);

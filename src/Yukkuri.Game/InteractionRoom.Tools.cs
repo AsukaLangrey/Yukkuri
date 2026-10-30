@@ -7,6 +7,8 @@ public partial class InteractionRoom
     private MeshInstance3D? _landingMarker,_landingStem;
     private MeshInstance3D? _cupWater;
     private Node3D? _toolFood;
+    private MeshInstance3D? _lighterFlame,_lighterCore;
+    private float _lighterClock;
     private static void SetCupFill(MeshInstance3D water,float fill)
     {
         fill=Mathf.Clamp(fill,0,1);
@@ -44,7 +46,7 @@ public partial class InteractionRoom
     private void ShowInteractionTool()
     {
         if(_shownTool==_action)return;_shownTool=_action;
-        _cupWater=null;_toolFood=null;
+        _cupWater=null;_toolFood=null;_lighterFlame=null;_lighterCore=null;_lighterClock=0;
         foreach(var child in _hand.GetChildren()){_hand.RemoveChild(child);child.QueueFree();}
         _hand.Rotation=Vector3.Zero;
         switch(_action)
@@ -78,7 +80,7 @@ public partial class InteractionRoom
         SceneArt.SetRenderLayer(_hand,SceneArt.InteractionLayer);
     }
 
-    private static void BuildLighterTool(Node3D root)
+    private void BuildLighterTool(Node3D root)
     {
         // Local +Y is the flame tip; PlaceContactTool aligns it with the contacted surface.
         InteractionFixtureArt.RoundedBox(root,new(0,-.20f,0),new(.115f,.24f,.075f),"728b84",.012f);
@@ -87,6 +89,28 @@ public partial class InteractionRoom
         var flameMat=(StandardMaterial3D)flame.MaterialOverride.Duplicate();
         flameMat.EmissionEnabled=true;flameMat.Emission=new Color("ffb650");flameMat.EmissionEnergyMultiplier=.65f;
         flame.MaterialOverride=flameMat;flame.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
-        SceneArt.Ball(root,new(0,-.045f,0),new(.019f,.025f,.019f),"e9e5b1").CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
+        _lighterFlame=flame;
+        _lighterCore=SceneArt.Ball(root,new(0,-.045f,0),new(.019f,.025f,.019f),"e9e5b1");
+        _lighterCore.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
+        _lighterFlame.Visible=_lighterCore.Visible=false;
+    }
+
+    private void UpdateLighterFeedback(float dt,bool paused)
+    {
+        if(_lighterFlame==null||_lighterCore==null)return;
+        bool contact=!paused&&_windowFocused&&_mouseHeld&&_hand.Visible&&_action==InteractionAction.Burn&&
+            Sim.CurrentInteractionAction==InteractionAction.Burn&&Sim.InteractionGestureOwnsPose&&
+            _gesturePose is "burn-flee" or "burn-tense";
+        _lighterFlame.Visible=_lighterCore.Visible=contact;
+        if(!contact){_lighterClock=0;return;}
+        _lighterClock+=dt;
+        float flicker=Mathf.Sin(_lighterClock*23)*.06f+Mathf.Sin(_lighterClock*37)*.035f;
+        float length=1+flicker;
+        _lighterFlame.Scale=new Vector3(.027f,.065f,.027f)*new Vector3(1-flicker*.6f,length,1-flicker*.6f);
+        // Keep the original tip fixed at the actual sampled contact point.
+        _lighterFlame.Position=new(0,.0115f-.0325f*length,0);
+        _lighterCore.Scale=new Vector3(.019f,.025f,.019f)*new Vector3(1+flicker*.25f,1-flicker*.3f,1+flicker*.25f);
+        if(_lighterFlame.MaterialOverride is StandardMaterial3D material)
+            material.EmissionEnergyMultiplier=.48f+_appliedForce*.25f+flicker;
     }
 }

@@ -54,9 +54,10 @@ public static class InteractionValidation
                 c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)&&
                 !c.Family.ColdStorage.Stored&&!FamilyRules.UnderIntervention(c),"失能、冷藏或干预状态不能保留主动陪伴");
             Require(bond!=null&&Range(bond.Familiarity,bond.Safety)&&
-                Finite(bond.CareBudget,bond.LastHarmAt,bond.LastWitnessThreatAt,bond.UnreportedHarm)&&bond.CareBudget is >=0 and <=3&&
+                Finite(bond.CareBudget,bond.LastHarmAt,bond.LastProtectionAt,bond.LastWitnessThreatAt,bond.UnreportedHarm)&&bond.CareBudget is >=0 and <=3&&
                 bond.UnreportedHarm is >=0 and <=40&&bond.LastWitnessThreatAt>=-100&&bond.LastWitnessThreatAt<=s.WorldSeconds+.001&&
                 bond.LastHarmAt>=-100&&bond.LastHarmAt<=s.WorldSeconds+.001&&
+                bond.LastProtectionAt>=-100&&bond.LastProtectionAt<=s.WorldSeconds+.001&&
                 bond.Caution!=null&&bond.Caution.All(p=>Enum.IsDefined(p.Key)&&Range(p.Value)),"人油相处记忆无效");
             Require(physiology!=null&&Range(physiology.Bladder,physiology.Bowel)&&
                 double.IsFinite(physiology.Remaining)&&physiology.Remaining is >=0 and <=4&&Enum.IsDefined(physiology.Excreting)&&

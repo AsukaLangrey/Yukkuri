@@ -139,7 +139,7 @@ public sealed partial class WorldSimulation
                 c.Speech = "";
                 c.Expression = c.Condition == PhysicalCondition.Dead ? Expression.Exhausted :
                     c.Pain > 25 ? Expression.Hurt : c.Fear > 60||i.Emotion.Alarm>=25 ? Expression.Frightened :
-                    i.Emotion.Alarm>=12||i.Water.RecoverySeconds>0?Expression.Worried:
+                    !EmotionalReadiness.Settled(c)?Expression.Worried:
                     i.Resting ? Expression.Sleeping :
                     i.HeadSensitivity>30||i.CheekSensitivity>30?Expression.Worried:
                     !i.HasAccessory ? (i.Accessory.BorrowedForCare ? Expression.Curious : Expression.Worried) :
@@ -306,11 +306,18 @@ public sealed partial class WorldSimulation
                         if(i.CueElapsed>20)CompleteCue(c,false);
                         continue;
                     }
+                    if(TryKeepHumanDistance(c,dt))
+                    {
+                        if(i.CueElapsed>20)CompleteCue(c,false);
+                        continue;
+                    }
                     double beforeX = c.X, beforeZ = c.Z;
-                    if (Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) > 1.1) RoomMove(c, State.PlayerX, State.PlayerZ, dt);
+                    double comfortable=PreferredHumanDistance(c);
+                    double followDistance=comfortable>1.15?comfortable:1.1;
+                    ApproachHumanAtDistance(c,dt,followDistance);
                     i.CueTravel += Distance(beforeX, beforeZ, c.X, c.Z);
                     c.Activity = "试着跟随手势";
-                    if (i.CueTravel > 1 && Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) < 1.3) CompleteCue(c, true);
+                    if (i.CueTravel > 1 && Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) < followDistance+.2) CompleteCue(c, true);
                     else if (i.CueElapsed > 20) CompleteCue(c, false);
                 }
                 else
@@ -361,18 +368,21 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if(TickNaturalNeeds(c,dt))continue;
+            if(TryFamilyCare(c,dt))continue;
+            if(TryKeepHumanDistance(c,dt))continue;
             if (i.FollowPlayer && CanSelfMove(c)&&SeesHelpingHand(c))
             {
-                if (Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) > 1.25) RoomMove(c, State.PlayerX, State.PlayerZ, dt);
+                ApproachHumanAtDistance(c,dt,Math.Max(1.25,PreferredHumanDistance(c)));
                 c.Activity = "慢慢跟着你"; continue;
             }
-            if (SeesHelpingHand(c)&&c.Fear > 60 && c.Trust < 35 && Distance(c.X, c.Z, State.PlayerX, State.PlayerZ) < 2.2)
-            {
-                RoomMove(c, c.X + (c.X - State.PlayerX), c.Z + (c.Z - State.PlayerZ), dt);
-                c.Activity = "留出一点距离"; continue;
-            }
-            if(TryFamilyCare(c,dt)||TryFamilyActivity(c,dt))continue;
+            if(TryFamilyActivity(c,dt))continue;
             if(TryHumanCompany(c,dt))continue;
+            if(!EmotionalReadiness.Settled(c))
+            {
+                c.TargetX=c.X;c.TargetZ=c.Z;
+                c.Activity="留在原处观察，等自己慢慢安定下来";
+                continue;
+            }
             var ball = BallForAutonomousPlay(c);
             if (ball != null)
             {

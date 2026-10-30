@@ -71,7 +71,8 @@ public partial class InteractionRoom
         _continuityLabel.Text=c.Condition==PhysicalCondition.Dead?"生命已经结束，经历和关系记录仍保留。":
             WaterEnvironment.IsInWater(Sim.State,c)?$"落水 {water.ExposureSeconds:0} 秒 · 挣扎 {water.Struggle:0}\n拿救援用品点击它，可尝试带回岸上。":
             water.RecoverySeconds>0?$"已经离水，仍在恢复 · 余下 {water.RecoverySeconds:0} 秒\n先擦干并检查伤势。":
-            emotion.Alarm>=12?$"惊惧余波 {emotion.Alarm:0} · 需要持续安全\n愿意接近食物，也可能仍然害怕。":
+            emotion.Alarm>0?$"惊惧余波 {emotion.Alarm:0.0} · 需要持续安全\n愿意接近食物，也可能仍然害怕；先给它一点空间。":
+            !EmotionalReadiness.Settled(c)?$"疼痛 {c.Pain:0} · 恐惧 {fear:0}\n还没有安定下来，先照顾身体并留出空间。":
             "0—100：馒馒来是当前心情；信任取决于相处经历。";
         RefreshImmediateInterventions(c);
     }

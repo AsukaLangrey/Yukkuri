@@ -86,3 +86,14 @@
 - 暂停只冻结已经存在的陪伴表现，不从旧存档时间戳新生成表现。近看、本人水中、受伤疼痛、强烈恐惧、逃避、临危死亡、固定托举翻滚、进食排泄和直接操作姿态优先。当前水域求助也优先于普通陪伴。
 
 本批文件：CreatureActor.HumanCompany.cs（新增）、CreatureActor.cs、CreatureActor.Interaction.cs、CreatureActor.FaceMotion.cs、InteractionRoom.cs，以及本交接。未改主协调 Ui/Vitals/Debug/Supplies/Intervention，未改 Simulation/checks，未使用 Git。源码静态核对已覆盖接口存在、调用次序、暂停时钟和身体优先级；未编译或执行。远端需看陪伴起止/转身自然度、悲伤与放松区分、手离开或遮挡后的退出、暂停恢复，以及手喂后惊惧余波的连续表情。
+
+## 第五批：眼嘴细节与工具接触反馈
+
+- 眼睛沿用全部原顶点和层次轮廓，只给虹膜原顶点增加上部暗色、下部暖色、较深外缘。嘴腔仍使用原 FaceOvalMesh、原尺寸和偏移，在同一网格上加入中心暗色与暖色嘴缘，保留表情过渡的独立透明材质。未新增眼嘴几何或修改接触/支撑函数，实际近看效果待远端渲染观察。
+- 火机只在真实持续接触、模拟仍占有动作且反馈为 burn-flee / burn-tense 时显示火焰。两层火焰轻微燃动，火尖保持原局部坐标 .0115，不随缩放穿入身体；松手、移开、暂停、失焦或换工具都不延续旧火焰。主协调静态审查指出 SceneArt.Ball 使用单位网格加尺寸Scale，初稿燃动直接赋单位比例会放大火焰；已修为分别乘回 (.027,.065,.027) / (.019,.025,.019) 原尺寸，保留此发现记录。
+- 单击递食先沿已核对无遮挡的嘴外法线接近 .16 秒，再累计真实接触。跨越接近完成的那帧只向模拟传入到嘴之后的时间，接近过程不调用 ContinueInteractionGesture。接受/拒绝清掉点击目标并结束模拟手势一次；成功后空勺/空杯用 .22 秒收回，收回阶段不再调用模拟命令。饼干被接受后从嘴边消失，不绘制人类手。
+- CancelGesture 同时清除接近与收回；右键、换工具、目标切换、再次点击、暂停、失焦按原取消链立即收手，不能续回旧递送。遮挡/死亡/明显移位亦停止。下一次同工具递送会恢复新一份食物或杯水，避免复用前次空工具。
+- 甩动提示只复用 CarryReleaseMotion.Velocity 与 ThrowSpeed：达到原抛出阈值后指针变色并画短方向箭头。不另算速度，不修改松手判定，也不画假落点预测。
+- 同步 A 的 PreferredHumanDistance：陪伴到达判断不再写死1.15，直接读取模拟当前舒适距离；必须已有实际 ContactSeconds 且仍在该范围内，才表现为已到达。整合时同步了 A 到达判定的 .01 距离容差，避免模拟已开始相处而画面仍显示接近。
+
+本批文件：CreatureActor.Face.cs、CreatureActor.cs、CreatureActor.HumanCompany.cs、InteractionRoom.Tools.cs、InteractionRoom.Offering.cs、InteractionRoom.Input.cs、InteractionRoom.cs，以及本交接。未改 Simulation/checks、主协调专属文件，未使用 Git。只作源码审查，未启动项目/编译/测试/模拟/渲染/预览/转换/项目脚本。远端应检查：眼嘴颜色与淡出材质；火焰实际尺寸和贴合；接近期间取消不消耗、接近完成才开始接触；成功仅一份、拒绝不重复；收回期间切换/暂停/失焦不残留；连续同工具递送有新份；慢放/快甩提示与实际松手结果一致。
