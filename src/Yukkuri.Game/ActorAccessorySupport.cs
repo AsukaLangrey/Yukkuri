@@ -33,7 +33,13 @@ public static class ActorAccessorySupport
         for(int row=0;row<=24;row++)for(int n=0;n<64;n++)
         {
             float u=row/24f,angle=n*MathF.Tau/64;
-            points.Add(ActorAccessorySurface.HatCone(u,angle));points.Add(ActorAccessorySurface.HatBrim(u,angle));points.Add(ActorAccessorySurface.HatBrimUnderside(u,angle));
+            points.Add(ActorAccessorySurface.HatCone(u,angle));
+        }
+        // Sample the exact authored brim grid, including its shallow top folds.
+        for(int row=0;row<=ActorAccessorySurface.BrimRows;row++)for(int n=0;n<=ActorAccessorySurface.BrimSides;n++)
+        {
+            float u=row/(float)ActorAccessorySurface.BrimRows,angle=n/(float)ActorAccessorySurface.BrimSides*MathF.Tau;
+            points.Add(ActorAccessorySurface.HatBrim(u,angle));points.Add(ActorAccessorySurface.HatBrimUnderside(u,angle));
         }
         foreach(var p in RawBowPoints)points.Add(ActorAccessorySurface.HatBow(p*ActorAccessorySurface.HatBowScale));
         return points.ToArray();

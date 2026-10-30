@@ -127,8 +127,8 @@ if(marisa)
 {
     bodyCoordinates=false;
     Vector3 Hat(Vector3 p)=>ActorAccessoryPlacement.Point(p,true,previewDeformation)+Vector3.UnitY*(bodyLift+(naturalFrame==null?.46f*(previewDeformation.Y-1):0));
-    Surface("hat brim","3e3c46",14,96,(u,v)=>Hat(ActorAccessorySurface.HatBrim(u,v*MathF.Tau)));
-    Surface("hat underside","34323c",14,96,(u,v)=>Hat(ActorAccessorySurface.HatBrimUnderside(u,v*MathF.Tau)));
+    Surface("hat brim","3e3c46",ActorAccessorySurface.BrimRows,ActorAccessorySurface.BrimSides,(u,v)=>Hat(ActorAccessorySurface.HatBrim(u,v*MathF.Tau)));
+    Surface("hat underside","34323c",ActorAccessorySurface.BrimRows,ActorAccessorySurface.BrimSides,(u,v)=>Hat(ActorAccessorySurface.HatBrimUnderside(u,v*MathF.Tau)));
     Surface("hat crown","45434e",36,96,(u,v)=>Hat(ActorAccessorySurface.HatCone(u,v*MathF.Tau)));
     Surface("hat band","e9dfc5",6,96,(u,v)=>Hat(ActorAccessorySurface.HatCone(.045f+u*.16f,v*MathF.Tau)+new Vector3(MathF.Cos(v*MathF.Tau),0,MathF.Sin(v*MathF.Tau))*.006f));
     Vector3 SmallBow(Vector3 p)=>Hat(ActorAccessorySurface.HatBow(p*ActorAccessorySurface.HatBowScale));

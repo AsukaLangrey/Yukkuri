@@ -137,8 +137,13 @@ public partial class CreatureActor
     private void BuildSculptedHat(Node3D hat)
     {
         Vector3 Brim(float u,float v)=>AccessoryPoint(ActorAccessorySurface.HatBrim(u,v*Mathf.Tau));
-        SculptSurface(hat,14,96,Brim,"3e3c46");
-        SculptSurface(hat,14,96,(u,v)=>AccessoryPoint(ActorAccessorySurface.HatBrimUnderside(u,v*Mathf.Tau)),"34323c",flipNormal:true);
+        SculptSurface(hat,ActorAccessorySurface.BrimRows,ActorAccessorySurface.BrimSides,Brim,"3e3c46",(u,v)=>
+        {
+            float recess=ActorAccessorySurface.HatBrimRecess(u,v*Mathf.Tau)/ActorAccessorySurface.BrimPleatDepth;
+            float shade=1-.18f*recess;return new Color(shade,shade,shade);
+        });
+        SculptSurface(hat,ActorAccessorySurface.BrimRows,ActorAccessorySurface.BrimSides,
+            (u,v)=>AccessoryPoint(ActorAccessorySurface.HatBrimUnderside(u,v*Mathf.Tau)),"34323c",flipNormal:true);
         SculptTube(hat,v=>AccessoryPoint(ActorAccessorySurface.HatBrimRim(v*Mathf.Tau)),
             ActorAccessorySurface.BrimThickness*.5f,"55505c",96);
         SculptSurface(hat,36,96,(u,v)=>HatConePoint(u,v*Mathf.Tau),"45434e",

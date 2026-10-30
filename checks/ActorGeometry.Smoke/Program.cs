@@ -97,6 +97,70 @@ Check("hat brim closes its seam and keeps the rolled edge inside its thickness",
     }
     return System.Numerics.Vector3.Distance(ActorAccessorySurface.HatBrim(1,0),ActorAccessorySurface.HatBrim(1,MathF.Tau))<1e-6f;
 });
+Check("hat brim folds remain finite inside the original shell without changing its lining or projection",()=>
+{
+    bool recessed=false;
+    for(int row=0;row<=120;row++)for(int n=0;n<=384;n++)
+    {
+        float u=row/120f,angle=n*MathF.Tau/384;
+        float radius=.035f+.65f*u;
+        var original=new System.Numerics.Vector3(MathF.Cos(angle)*radius,
+            u*u*(.018f+MathF.Sin(angle*2+.4f)*.025f),MathF.Sin(angle)*radius);
+        var basis=ActorAccessorySurface.HatBrimBase(u,angle);
+        var top=ActorAccessorySurface.HatBrim(u,angle);
+        var bottom=ActorAccessorySurface.HatBrimUnderside(u,angle);
+        float depth=ActorAccessorySurface.HatBrimRecess(u,angle);
+        foreach(var p in new[]{basis,top,bottom})
+            if(!float.IsFinite(p.X)||!float.IsFinite(p.Y)||!float.IsFinite(p.Z))return false;
+        if(!float.IsFinite(depth)||depth<0||depth>ActorAccessorySurface.BrimPleatDepth+1e-7f)return false;
+        if(System.Numerics.Vector3.Distance(basis,original)>1e-6f||
+            System.Numerics.Vector3.Distance(bottom,original-System.Numerics.Vector3.UnitY*.016f)>1e-6f)return false;
+        if(top.X!=basis.X||top.Z!=basis.Z||MathF.Abs(basis.Y-top.Y-depth)>1e-7f)return false;
+        if(top.Y>basis.Y+1e-7f||top.Y-bottom.Y<.0135f-1e-7f||top.Y-bottom.Y>.016f+1e-7f)return false;
+        if((u<=.66f||u>=1)&&depth!=0)return false;
+        recessed|=depth>.0024f;
+    }
+    return recessed;
+});
+Check("eight brim folds join smoothly at radial boundaries and preserve the periodic seam",()=>
+{
+    const float epsilon=.0001f;
+    for(int n=0;n<=192;n++)
+    {
+        float angle=n*MathF.Tau/192;
+        foreach(float edge in new[]{0,.66f,1f})
+            if(ActorAccessorySurface.HatBrimRecess(edge,angle)!=0)return false;
+        if(ActorAccessorySurface.HatBrimRecess(.66f+epsilon,angle)/epsilon>.001f||
+            ActorAccessorySurface.HatBrimRecess(1-epsilon,angle)/epsilon>.001f)return false;
+        for(int row=0;row<=48;row++)
+        {
+            float u=row/48f;
+            float depth=ActorAccessorySurface.HatBrimRecess(u,angle);
+            if(MathF.Abs(depth-ActorAccessorySurface.HatBrimRecess(u,angle+MathF.PI/4))>1e-7f)return false;
+            if(System.Numerics.Vector3.Distance(ActorAccessorySurface.HatBrim(u,angle),
+                ActorAccessorySurface.HatBrim(u,angle+MathF.Tau))>2e-6f)return false;
+        }
+    }
+    // Distinct troughs and untouched cloth between them, rather than a uniformly lowered brim.
+    return ActorAccessorySurface.HatBrimRecess(.83f,MathF.PI/8)>.0024f&&
+        ActorAccessorySurface.HatBrimRecess(.83f,0)==0;
+});
+Check("hat support samples the exact authored folded brim and unchanged lining grid",()=>
+{
+    var points=ActorAccessorySupport.Points(true);
+    int index=25*64; // Existing crown samples precede the two brim surfaces.
+    int count=(ActorAccessorySurface.BrimRows+1)*(ActorAccessorySurface.BrimSides+1)*2;
+    if(points.Length<index+count)return false;
+    bool foldedSample=false;
+    for(int row=0;row<=ActorAccessorySurface.BrimRows;row++)for(int n=0;n<=ActorAccessorySurface.BrimSides;n++)
+    {
+        float u=row/(float)ActorAccessorySurface.BrimRows,angle=n/(float)ActorAccessorySurface.BrimSides*MathF.Tau;
+        if(System.Numerics.Vector3.Distance(points[index++],ActorAccessorySurface.HatBrim(u,angle))>1e-7f||
+            System.Numerics.Vector3.Distance(points[index++],ActorAccessorySurface.HatBrimUnderside(u,angle))>1e-7f)return false;
+        foldedSample|=ActorAccessorySurface.HatBrimRecess(u,angle)>.002f;
+    }
+    return foldedSample;
+});
 Check("press and squeeze deform opposite axes without inversion at any force",()=>
 {
     foreach(float size in new[]{.73f,1f,1.03f})for(int n=1;n<=100;n++)

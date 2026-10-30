@@ -197,3 +197,9 @@ CreatureActor.Water.cs移除独立sin周期的够岸抬身；新WaterAttempt文�
 Input将原始sampleSeconds传到持物身体入口，新HeldSupplyContact仅存上一实际source与actor引用。先显示工具并定位真实嘴部，再按两帧同源同对象接触累计；首次、换源/actor、离开重接、工具隐藏或超长帧只建基线。dt和原始sampleSeconds均须有限正数且不超过既有.15秒上限，断开通过Continue(false)清ContactElapsed，模拟在Elapsed增加之前返回，不借用伪造时间。无强制接近动画和世界点阈值，正常跟随移动嘴部仍可连续递送。
 
 拒绝、空源、遮挡、暂停/失焦/切工具/取消和瓶口分流清身体基线；原离体瓶口基线不改。实际入口后不再Continue，原EatingRemaining时钟继续吞咽，保持手势到原松手链，不重复扣料或清已发生反馈。root已读相关入口与模拟返回顺序，未运行；检查低帧率/卡顿、重新进入、同ID新actor、新source、拒食及身体瓶口往返的实机表现。
+
+## 第十九批：帽檐布层
+
+ActorAccessorySurface新增HatBrimBase保留原壳、HatBrimRecess只在.66<u<1内以.0025*sin²径向窗*sin⁶(4角度)形成八道浅凹褶；顶面内收Y，原XZ、内外沿和底面不动，厚度至少.0135。原帽冠包络以外才起褶，原头部净空保持。颜色同一凹深轻暗，不加节点、圆管或缓存；上下网格与支撑共同使用BrimRows24/BrimSides96。
+
+A独立新增ActorGeometry三组检查源码，覆盖有限域、原壳/底面/投影/厚度、周期/边界/封口及真实网格支撑；旧帽头间隙与封口断言保留。ActorArt.Preview仅上下帽檐两处采样常量同步，不运行预览。root已静态核对同源公式与采样顺序；八道布褶的实际清晰度、光照、法线和压扁/掉落后的点击与支撑仍待远测。

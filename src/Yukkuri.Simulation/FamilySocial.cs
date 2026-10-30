@@ -129,6 +129,23 @@ public sealed partial class WorldSimulation
         InteractionGestureTarget != c.Id && c.Family.Conflict.TargetId == null &&
         c.Family.CareTargetId == null && c.Family.CareParcelId == null && c.Family.FlightRemaining <= 0;
 
+    private bool RecentPeerHarmPreventsCompany(Creature victim, Creature other)
+    {
+        if (!victim.Family.Peers.TryGetValue(other.Id, out var bond) || bond.LastHarmAt < 0) return false;
+        double sinceHarm = State.WorldSeconds - bond.LastHarmAt;
+        // Use the existing affection and observed-safe-behaviour windows. A
+        // later unrelated fright must not turn an ancient, recovered injury
+        // into a permanent refusal of this particular companion.
+        return sinceHarm < 30 || sinceHarm < 120 && !EmotionalReadiness.Settled(victim);
+    }
+
+    private bool PeerCompanyMemoryAllows(Creature a, Creature b) =>
+        !RecentPeerHarmPreventsCompany(a, b) && !RecentPeerHarmPreventsCompany(b, a);
+
+    private bool PeerCompanyRelationsAllow(Creature a, Creature b) => PeerCompanyMemoryAllows(a, b) &&
+        (!a.Family.Peers.TryGetValue(b.Id, out var ab) || ab.Fear < 40 && ab.Resentment < 35) &&
+        (!b.Family.Peers.TryGetValue(a.Id, out var ba) || ba.Fear < 40 && ba.Resentment < 35);
+
     private bool FamilyVisible(Creature observer, Creature target, double range = 4.5)
     {
         if (observer.RegionId != target.RegionId || observer.Condition != PhysicalCondition.Active ||
@@ -157,11 +174,14 @@ public sealed partial class WorldSimulation
         if (a == null || b == null || a == b || a.RegionId != State.ActiveRegionId || !FamilyVisible(a, b, 6))
             return "先让两只油在同一区域能看见彼此的位置。";
         if (!FamilyActionReady(a) || !FamilyActionReady(b)) return "有一方正在忙、害怕或身体不适，先照顾眼前的需要。";
+        // A rejected reminder of real harm creates neither a relationship nor
+        // an invitation cooldown/reaction. It cannot erase the current alarm.
+        if (!PeerCompanyMemoryAllows(a, b)) return "还记得刚才受到对方的伤害，先留出距离；安全感需要慢慢恢复。";
         var ab = FamilyBond(a, b); var ba = FamilyBond(b, a);
         if (a.Family.CompanionTargetId == b.Id && b.Family.CompanionTargetId == a.Id) return "已经在尝试相处，给它们一点时间。";
         if (State.WorldSeconds < ab.NextInvitationAt || State.WorldSeconds < ba.NextInvitationAt) return "刚刚提出过邀请，先尊重对方的距离。";
         ab.NextInvitationAt = ba.NextInvitationAt = State.WorldSeconds + 12;
-        bool refusing = ab.Fear >= 40 || ba.Fear >= 40 || ab.Resentment >= 35 || ba.Resentment >= 35 ||
+        bool refusing = !PeerCompanyRelationsAllow(a, b) ||
             a.Family.CompanionTargetId != null || b.Family.CompanionTargetId != null;
         if (refusing)
         {
@@ -418,16 +438,17 @@ public sealed partial class WorldSimulation
             c.Family.NextSocialAt = State.WorldSeconds + 12;
             var candidate = State.Creatures.Where(x => x != c && FamilyActionReady(x) && x.Family.CompanionTargetId == null &&
                 !AutomaticCompanionShouldWait(x) &&
-                FamilyVisible(c, x, 4) && CanStartCompanionshipWithChild(c, x) &&
-                (!c.Family.Peers.TryGetValue(x.Id, out var own) || own.Fear < 40 && own.Resentment < 35 && State.WorldSeconds >= own.NextInvitationAt) &&
-                (!x.Family.Peers.TryGetValue(c.Id, out var theirs) || theirs.Fear < 40 && theirs.Resentment < 35 && State.WorldSeconds >= theirs.NextInvitationAt))
+                FamilyVisible(c, x, 4) && CanStartCompanionshipWithChild(c, x) && PeerCompanyRelationsAllow(c, x) &&
+                (!c.Family.Peers.TryGetValue(x.Id, out var own) || State.WorldSeconds >= own.NextInvitationAt) &&
+                (!x.Family.Peers.TryGetValue(c.Id, out var theirs) || State.WorldSeconds >= theirs.NextInvitationAt))
                 .OrderByDescending(x => c.Family.PartnerIds.Contains(x.Id)).ThenBy(x => Distance(c.X, c.Z, x.X, x.Z))
                 .ThenBy(x => x.Id, StringComparer.Ordinal).FirstOrDefault();
             if (candidate == null) return false;
             FamilyBond(c, candidate); FamilyBond(candidate, c); BeginCompanionship(c, candidate);
         }
         var companion = State.Creatures.Find(x => x.Id == c.Family.CompanionTargetId);
-        if (companion == null || !FamilyActionReady(companion) || !FamilyVisible(c, companion, 6) || State.WorldSeconds >= c.Family.CompanionUntil)
+        if (companion == null || !FamilyActionReady(companion) || !PeerCompanyRelationsAllow(c, companion) ||
+            !FamilyVisible(c, companion, 6) || State.WorldSeconds >= c.Family.CompanionUntil)
         { ClearCompanionship(c); return false; }
         if (!FamilyInContact(c, companion))
         {
@@ -439,8 +460,10 @@ public sealed partial class WorldSimulation
         if (State.WorldSeconds >= c.Family.NextCompanionReactionAt)
         {
             c.Family.NextCompanionReactionAt = State.WorldSeconds + 10;
-            React(c, FamilyBond(c, companion).Affection >= 35 ? Expression.Content : Expression.Curious,
-                "一起慢慢来。", $"留在{companion.Name}身旁，轻轻回应。", 3);
+            bool settled = EmotionalReadiness.Settled(c);
+            React(c, settled ? FamilyBond(c, companion).Affection >= 35 ? Expression.Content : Expression.Curious : Expression.Worried,
+                settled ? "一起慢慢来。" : "陪我待一会儿……",
+                settled ? $"留在{companion.Name}身旁，轻轻回应。" : $"仍有些不安，留在{companion.Name}身旁慢慢缓和。", 3);
         }
         return true;
     }
@@ -489,7 +512,7 @@ public sealed partial class WorldSimulation
             }
             var other = State.Creatures.Find(x => x.Id == c.Family.CompanionTargetId);
             if (other == null) continue;
-            if (!FamilyActionReady(c) || !FamilyActionReady(other) || other.Family.CompanionTargetId != c.Id ||
+            if (!FamilyActionReady(c) || !FamilyActionReady(other) || !PeerCompanyRelationsAllow(c, other) || other.Family.CompanionTargetId != c.Id ||
                 State.WorldSeconds >= c.Family.CompanionUntil || !FamilyVisible(c, other, 6))
             { ClearCompanionship(c); continue; }
             if (!FamilyInContact(c, other) || c.Family.LastCompanionActivityAt != State.WorldSeconds ||

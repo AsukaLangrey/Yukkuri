@@ -8,6 +8,8 @@ public static class ActorAccessorySurface
     public const float HatBowScale=.38f;
     public const float HatHeight=.64f;
     public const int BowKnotRows=24,BowKnotSides=64;
+    public const int BrimRows=24,BrimSides=96;
+    public const float BrimPleatDepth=.0025f;
     // A tied cloth band, not a second spherical bead. The polar seam closes and
     // every point stays inside the previous (.08,.07,.065) ellipsoid envelope.
     public static Vector3 BowKnot(float u,float v)
@@ -63,11 +65,24 @@ public static class ActorAccessorySurface
         float r=.40f*MathF.Pow(MathF.Max(0,1-t),.78f)+.012f*(1-t);
         return new(.025f+.13f*t*t+MathF.Cos(angle)*r,.028f+HatHeight*t,-.02f-.08f*t*t+MathF.Sin(angle)*r);
     }
-    public static Vector3 HatBrim(float u,float angle)
+    // Preserve the original shell separately: the lining and head clearance must
+    // not follow the shallow compression authored into its upper cloth layer.
+    public static Vector3 HatBrimBase(float u,float angle)
     {
         float r=.035f+.65f*u;
         return new(MathF.Cos(angle)*r,u*u*(.018f+MathF.Sin(angle*2+.4f)*.025f),MathF.Sin(angle)*r);
     }
-    public static Vector3 HatBrimUnderside(float u,float angle)=>HatBrim(u,angle)-Vector3.UnitY*BrimThickness;
+    public static float HatBrimRecess(float u,float angle)
+    {
+        // Radius .464 at u=.66 lies outside the offset crown's .444 envelope.
+        // Eight soft radial folds end before the rolled edge. Both radial ends
+        // have zero depth and slope, and all compression stays inside the shell.
+        if(u<=.66f||u>=1)return 0;
+        float radial=MathF.Sin((u-.66f)/.34f*MathF.PI);
+        float fold=MathF.Sin(angle*4),fold2=fold*fold;
+        return BrimPleatDepth*radial*radial*fold2*fold2*fold2;
+    }
+    public static Vector3 HatBrim(float u,float angle)=>HatBrimBase(u,angle)-Vector3.UnitY*HatBrimRecess(u,angle);
+    public static Vector3 HatBrimUnderside(float u,float angle)=>HatBrimBase(u,angle)-Vector3.UnitY*BrimThickness;
     public static Vector3 HatBrimRim(float angle)=>HatBrim(1,angle)-Vector3.UnitY*BrimThickness*.5f;
 }
