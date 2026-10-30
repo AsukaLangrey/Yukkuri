@@ -145,7 +145,7 @@ public partial class InteractionRoom
         var target=Sim.CurrentInteractionThreatTarget(aggressor);
         bool consumingRemains=target?.Condition==PhysicalCondition.Dead;
         _immediateThreatDescription.Text=consumingRemains?
-            $"它正在啃食{target!.Name}的残躯，可以制止后隔开并补充食物。":aggressor==selected?
+            $"它正试图取食{target!.Name}留下的遗体，可以制止后隔开并补充食物。":aggressor==selected?
             $"它正威胁{target?.Name??"同伴"}，可以及时制止并分开。":
             $"{aggressor.Name}正威胁它，可以先制止，再检查伤势。";
         _immediateStopThreat.Text=consumingRemains?"制止啃食":aggressor==selected?"制止它的袭击":"制止对它的袭击";

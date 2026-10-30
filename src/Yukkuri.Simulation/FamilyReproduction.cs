@@ -110,6 +110,7 @@ public sealed partial class WorldSimulation
         }while(State.CompletedBirths.Contains(id)||State.DetachedStemBroods.Any(s=>s.EventId==id)||State.FamilyRelationshipEvents.Any(e=>e.Id==id)||
             State.Creatures.Any(c=>c.Id==id||c.Family.Pregnancy.EventId==id||c.Interaction.Water.EventId==id||
                 c.Personality.WaterConcernEventId==id||c.Personality.WaterAftercare.EventId==id||
+                c.Personality.HungerFeeding.EventId==id||
                 kind=="birth"&&c.Id.StartsWith(id+"-",StringComparison.Ordinal))||State.RoomObjects.Any(o=>o.Id==id));
         return id;
     }

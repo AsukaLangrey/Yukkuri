@@ -12,6 +12,12 @@ public sealed partial class WorldSimulation
         target.Fear=Clamp100(target.Fear+fearIncrease);
         Remember(target,incident,victimMemory,severity);
         Hurt(target,damage,cause,actor.Id,BodyPart.Side);
+        RememberPeerAttackWitnesses(actor,target,incident,severity);
+        return incident;
+    }
+
+    private void RememberPeerAttackWitnesses(Creature actor,Creature target,Incident incident,double severity,bool remains=false)
+    {
         foreach(var observer in State.Creatures.Where(c=>c!=actor&&c!=target&&c.RegionId==target.RegionId&&
             IsAvailable(c)&&!c.Family.ColdStorage.Stored))
         {
@@ -30,14 +36,14 @@ public sealed partial class WorldSimulation
                 bond.Fear=Clamp100(bond.Fear+perceived*.5);
                 bond.Resentment=Clamp100(bond.Resentment+perceived*.2);
                 bond.Affection=Math.Max(0,bond.Affection-perceived*.15);
-                bond.LastEvent=$"亲眼看见它伤害{target.Name}，不敢再放心靠近";
-                memory=$"亲眼看见{actor.Name}伤害{target.Name}，记住了施害者。";
+                bond.LastEvent=remains?$"亲眼看见它啃食{target.Name}的残躯，不敢再放心靠近":$"亲眼看见它伤害{target.Name}，不敢再放心靠近";
+                memory=remains?$"亲眼看见{actor.Name}啃食同伴的残躯，记住了这件事。":$"亲眼看见{actor.Name}伤害{target.Name}，记住了施害者。";
             }
-            else memory=saw?"看见同伴受到伤害，但没看清施害者是谁。":"听见同伴痛苦的声音，还不知道是谁造成的。";
+            else memory=remains?saw?"看见同伴的残躯正在被动过，但没看清是谁。":"听见附近异常的声响，还不知道发生了什么。":
+                saw?"看见同伴受到伤害，但没看清施害者是谁。":"听见同伴痛苦的声音，还不知道是谁造成的。";
             Remember(observer,incident,memory,perceived);
             React(observer,identified?Expression.Frightened:Expression.Worried,
                 identified?"不要伤害它！":"发生什么了……？",memory,5);
         }
-        return incident;
     }
 }

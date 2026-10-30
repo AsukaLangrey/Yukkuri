@@ -36,7 +36,15 @@ Check("all three peer strike paths apply one injury, one incident and one victim
         var sim=Fixture(kind);var actor=sim.State.Creatures[0];var observer=sim.State.Creatures[1];var victim=sim.State.Creatures[2];
         double trust=victim.Trust,observerTrust=observer.Trust,humanHarm=victim.Interaction.HumanBond.LastHarmAt;
         double damage=kind=="family"?10.5:kind=="child"?12:6.5;
-        sim.Advance(.25);var incident=Attack(sim);
+        if(kind=="hunger")
+        {
+            // Hunger now has a real interruptible contact preparation. Keep the
+            // original one-injury/one-memory assertions at the first real strike.
+            for(int n=0;n<40&&!sim.State.Incidents.Any(e=>e.Kind==IncidentKind.Attack&&e.ActorId==actor.Id&&e.TargetId==victim.Id);n++)
+                sim.Advance(.25);
+        }
+        else sim.Advance(.25);
+        var incident=Attack(sim);
         Require(100-victim.Health>=damage-.1&&100-victim.Health<=damage+.1,"bodily damage was omitted or applied twice");
         Require(victim.Interaction.Emotion.Alarm>=damage*2&&victim.Interaction.Emotion.Alarm<=damage*2+.2,
             "actual harm was absent from continuity, or old hunger/warning consequences were double counted");

@@ -311,3 +311,17 @@ CutStem 对附着茎连续接触 1.6 秒；先找母体旁可见、干燥、足�
 本批新增模拟 `WaterRescueContinuity.cs`，修改 `CreaturePersonality.cs`、`InteractionWater.cs`、`InteractionValidation.cs`、`WorldSimulation.cs`、`InteractionBehavior.cs`、`FamilyCare.cs`、`FamilyReproduction.cs`、`HumanCompanionship.cs`、`MilestoneInteraction.cs`；新增上述检查项目 2 文件及本交接。仅源码读写和静态审查，未运行/编译/预览或 Git。10 组新检查、旧 WaterEmotion 和其余回归均待独立远程机器运行。
 
 本批期间另独立交付并已由 root 提交 `f08a25b119ea6fefc59ed104620ee593e559ce12`：`InteractionCompletion.cs` 只读真实长按进度及 `checks/Interaction.Completion/` 3 组；`checks/ActorGeometry.Smoke/Program.cs` 为 B10 增加 3 组连续眼层、眼弧、泪量检查，未修改旧断言。这两小单元不混入 A9 主生命周期结论，同样没有本机运行。
+
+## 第十批：可打断袭咬、有限摄食来源和原口部入口（源码冻结）
+
+保留原恶劣性格、极饿、概率和可行动门槛；补入口部严重失能、隔离、入侵及必要照护门控。实际看见且可接近的普通食物优先，在追击途中和只读威胁查询中也重验；手持、被搬运、占用、耗尽、隔区、遮挡或正在回避的食物不能凭空中止真实危险。原 2 秒新意图警告和 10 秒概率扫描保留。到近处之后累计 .8 秒真实连续准备，口部伤势按原摄食速率减慢；首个接触帧不借用事件发生前的时间。离开接触、换目标、换区、实际人类或同伴制止、身体失去资格均不能带走未完成的准备进度。
+
+成功时活体每口最多取 2 单位，按实际可取份额缩放原 6.5（默认侵略性 .5）实际侧部伤害，生成一次原严重度事件、一次受害余波和真实知情旁观影响。遗体每口最多取 6 单位。二者共用原 RemainsNutrition 的 24 单位有限储备，死亡、护理和存读档不重置。入口前没有营养或伤害；入口后只扣一次份额并交给原 Meal 口部时钟，不会在咽下时再扣伤或来源。已入口的后果不会因停止、分离、死亡或换动作而退回。遗体摄食的旁观事实与记忆描述不再伪称死者正在疼痛，人类信任和 LastHarm 不承担同伴伤害。
+
+公开 `HungerFeedingPhase { Pursuing, Preparing, Swallowing }` 和 `HungerFeedingView(TargetId, EventId, Phase, ContactProgress, TakenNutrition)`，只读 `HungerFeedingStatus(Creature)`。准备进度 0–1，吞咽仅说明实际已接受的一口，不属于仍在追击的威胁。root 接普通状态和调试，B13 接真实准备目标；嘴型仍完全用 B12 原 Meal 剩余时钟。入口来源绑定持久 IntakeSequence 与 IntakeGeneration：统一 BeginIntake 在 long.MaxValue 时换 GUID 代号并回卷到 1，旧来源不能错误绑定以后的一口；普通喂食入口也不会因合法最大序号抛溢出异常。
+
+新增 `checks/Interaction.HungerFeeding/` 两文件，共 14 组检查源码：实际准备后一次伤害/来源；暂停及人类中止；准备中同伴护卫；实际分离和重新接近；真实手持供给放地优先；活体至实际死亡和遗体共用有限储备；最后零碎份额和耗尽；口部失能和减速；即时保存、纯查询及近看时钟；普通 FeedMeal 最大入口序号换代；旧来源序号碰撞隔离；非法时间/来源/重复身份；跨区或换目标；善良和非极饿不无差别袭击。死亡等待先实际移开施害者，避免把另一口真实摄食误当死亡重置。原 PeerThreat 第一组与 WaterEmotion 两处饥饿场景改为真实推进到准备完成，原伤害、关系、制止、知情断言不降低。
+
+本批新增模拟 `HungerFeeding.cs`；修改 `CreaturePersonality.cs`、`InteractionState.cs`、`InteractionValidation.cs`、`FamilyReproduction.cs`、`InteractionWater.cs`、`InteractionInjury.cs`、`PeerAttackContinuity.cs`。检查为上述新项目两文件、`Interaction.PeerThreat/Program.cs`、`Interaction.WaterEmotion/Program.cs`，以及本交接。ActorGeometry 的 B12/B14 独立改动由 root 分批整合，不计入 A10。未修改 Game 或操作 Git。
+
+本批仍只做源码读写和静态审查，14 组及旧回归未运行、未编译。接触仍使用既有 FamilyInContact（双方占地半径加 .28）的近身规则，本批没有验证嘴部精确物理接触；Godot 实际表现与远程运行结果尚未确认。不包含整只吞入或肢体拆分，不把这一有限袭咬链称为那些更大范围玩法的完成。

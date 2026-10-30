@@ -113,6 +113,7 @@ public sealed partial class WorldSimulation
         if(c.Family.CompanionTargetId!=null)ClearCompanionship(c);
         if(FamilyRules.UnderIntervention(c))CancelIntervention(c,"落水中断了繁育干预；已用材料与后果保留。");
         c.Personality.HungerTargetId=null;c.Personality.WaterConcernId=null;c.Personality.WaterConcernEventId=null;
+        if(!c.Personality.HungerFeeding.Committed)c.Personality.HungerFeeding=new();
         EndHumanCompany(c);i.RestRemaining=0;i.Resting=false;i.ActiveCue=null;i.FollowPlayer=false;
         RememberThreat(c,30);c.Fear=Clamp100(c.Fear+30);
         if(causedByPlayer)

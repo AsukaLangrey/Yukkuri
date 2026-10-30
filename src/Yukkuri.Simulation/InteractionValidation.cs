@@ -34,6 +34,8 @@ public static class InteractionValidation
                 (personality.WaterConcernId==null||personality.WaterConcernId!=c.Id&&ids.Contains(personality.WaterConcernId)),"性格或连续事件状态无效");
             var i = c.Interaction;
             Require(i != null && i.Accessory != null && i.Learning != null && i.Memories != null, "互动个体数据缺失");
+            Require(i!.IntakeSequence>=0&&(i.IntakeGeneration==null||Guid.TryParseExact(i.IntakeGeneration,"N",out _)),"入口序号无效");
+            HungerFeedingValidation.Validate(c,s);
             BodyInjuryState.Validate(i!.Injuries,s.WorldSeconds);
             var emotion=i.Emotion;var water=i.Water;
             Require(i.HitCount is >=0 and <=999&&Range(i.HeatTension)&&double.IsFinite(i.HitRemaining)&&i.HitRemaining is >=0 and <=1.5&&double.IsFinite(i.LastHitAt)&&

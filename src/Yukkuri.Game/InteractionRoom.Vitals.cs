@@ -9,7 +9,7 @@ public partial class InteractionRoom
     private ProgressBar _fullnessMeter=null!,_thirstMeter=null!;
     private StyleBoxFlat _fullnessFill=null!,_thirstFill=null!;
     private Label _comfortLabel=null!,_trustLabel=null!,_lifeLabel=null!,_fearLabel=null!,_continuityLabel=null!,_personalityLabel=null!;
-    private Label _waterSupportLabel=null!;
+    private Label _waterSupportLabel=null!,_hungerFeedingLabel=null!;
     private ProgressBar _comfortMeter=null!,_trustMeter=null!,_lifeMeter=null!,_fearMeter=null!;
     private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
@@ -30,6 +30,7 @@ public partial class InteractionRoom
         BuildRelationshipMeter(overview,"恐惧", "ae8c74",out _fearLabel,out _fearMeter,out _fearFill);
         _continuityLabel=Text("",12,"78816e");meters.AddChild(_continuityLabel);
         _waterSupportLabel=Text("",12,"78816e");meters.AddChild(_waterSupportLabel);
+        _hungerFeedingLabel=Text("",12,"a56b55");meters.AddChild(_hungerFeedingLabel);
     }
     private void BuildRelationshipMeter(Control parent,string name,string color,out Label label,out ProgressBar bar,out StyleBoxFlat fill)
     {
@@ -80,6 +81,7 @@ public partial class InteractionRoom
             !EmotionalReadiness.Settled(c)?$"疼痛 {c.Pain:0} · 恐惧 {fear:0}\n还没有安定下来，先照顾身体并留出空间。":
             "0—100：馒馒来是当前心情；信任取决于相处经历。";
         RefreshImmediateInterventions(c);
+        RefreshHungerFeedingStatus(c);
         var support=Sim.WaterSupportStatus(c);
         var supported=support==null?null:Sim.State.Creatures.Find(other=>other.Id==support.TargetId);
         _waterSupportLabel.Visible=support!=null&&supported!=null;
@@ -92,6 +94,22 @@ public partial class InteractionRoom
                 _=>$"在{supported.Name}身边守候 · "+(support.ContactSeconds>=6?"已经陪伴一会儿":$"持续 {support.ContactSeconds:0} 秒")+
                     "\n守候不能代替实际食水和伤势护理。"
             };
+    }
+    private void RefreshHungerFeedingStatus(Creature c)
+    {
+        var feeding=Sim.HungerFeedingStatus(c);
+        var target=feeding==null?null:Sim.State.Creatures.Find(other=>other.Id==feeding.TargetId);
+        _hungerFeedingLabel.Visible=feeding!=null&&target!=null;
+        if(feeding==null||target==null)return;
+        bool remains=target.Condition==PhysicalCondition.Dead;
+        _hungerFeedingLabel.Text=feeding.Phase switch
+        {
+            HungerFeedingPhase.Pursuing=>remains?$"正在靠近{target.Name}留下的遗体。":$"饥饿中盯上了{target.Name}。\n及时隔开，或提供能实际吃到的食物。",
+            HungerFeedingPhase.Preparing=>remains?$"正准备取食遗体 · {feeding.ContactProgress*100:0}%":$"正在准备袭咬{target.Name} · {feeding.ContactProgress*100:0}%\n现在仍可隔开制止。",
+            _=>$"已经入口，正在吞咽 · 摄食量 {feeding.TakenNutrition:0.#}\n先检查被袭击者的伤势，并避免再次接触。"
+        };
+        if(remains&&feeding.Phase==HungerFeedingPhase.Swallowing)
+            _hungerFeedingLabel.Text=$"已经入口，正在吞咽 · 摄食量 {feeding.TakenNutrition:0.#}";
     }
     private static string WasteLabel(RoomObject obj)=>obj.Kind==RoomObjectKind.Urine?"尿液 · Del 清理":"粪便 · Del 清理";
     private static void BuildWaste(Node3D root,RoomObjectKind kind)

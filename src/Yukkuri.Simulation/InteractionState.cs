@@ -125,9 +125,18 @@ public sealed partial class InteractionLife
     public Dictionary<string, double> Memories { get; set; } = new();
     public bool CanWalk => FootIntegrity > 25 && Restraint == RestraintKind.None && !Carried && !Falling && !Supine && !Water.InWater;
     public bool HasAccessory => Accessory.Place == AccessoryPlace.Worn && Accessory.Integrity > 0;
+    public long IntakeSequence { get; set; }
+    public string? IntakeGeneration { get; set; }
     public static double IntakeDuration(IntakeKind kind)=>kind==IntakeKind.Water?1.2:1.6;
     public void BeginIntake(IntakeKind kind)
-    {EatingKind=kind;EatingRemaining=IntakeDuration(kind);GroundIntake=false;GroundIntakeKind=null;GroundIntakeSourceId=null;NaturalIntakePending=false;GroundIntakeDistance=.792;GroundIntakeSourceHeight=0;}
+    {
+        // A loaded exhausted counter must not break ordinary food or drink.
+        // Rotate its generation before reusing a number, so old source bindings
+        // cannot mistake the new mouthful for their previous accepted portion.
+        if(IntakeSequence==long.MaxValue){IntakeGeneration=Guid.NewGuid().ToString("N");IntakeSequence=0;}
+        IntakeSequence++;EatingKind=kind;EatingRemaining=IntakeDuration(kind);GroundIntake=false;GroundIntakeKind=null;
+        GroundIntakeSourceId=null;NaturalIntakePending=false;GroundIntakeDistance=.792;GroundIntakeSourceHeight=0;
+    }
 }
 
 public sealed class RoomObject

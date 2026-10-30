@@ -26,6 +26,7 @@ public partial class CreatureActor
     {
         CompanyEyes(expression,ref eyes,ref curve,ref left,ref right);
         WaterConcernEyes(expression,ref eyes,ref left,ref right);
+        HungerFeedingEyes(expression,ref eyes,ref curve,ref left,ref right);
         // Food can be welcome while the body is still afraid. Keep the eyes/brows wary
         // independently of the chewing mouth and the latest short-lived response.
         float caution=Mathf.Clamp(Mathf.Max((float)(c.Fear-20)/65,(float)c.Interaction.Emotion.Alarm/100*.85f),0,1);
@@ -41,10 +42,13 @@ public partial class CreatureActor
         float amount=initial?1:dt>0?1-Mathf.Exp(-dt*(urgent?32:15)):0;
         if(!_faceReady)
         {_smoothEye=eyes;_smoothEyeArc=arc;_smoothBrowLeft=left;_smoothBrowRight=right;_smoothBrowHeight=height;_faceReady=true;}
-        _smoothEye=Mathf.Lerp(_smoothEye,eyes,amount);
-        _smoothEyeArc=Mathf.Lerp(_smoothEyeArc,arc,amount);
-        _smoothBrowLeft=Mathf.Lerp(_smoothBrowLeft,left,amount);_smoothBrowRight=Mathf.Lerp(_smoothBrowRight,right,amount);
-        _smoothBrowHeight=Mathf.Lerp(_smoothBrowHeight,height,amount);
+        // An invalidated threat must not leave its added eye/brow pressure frozen
+        // on the face during a pause. Ordinary mouth/tears still use their clocks.
+        float eyeAmount=_hungerCueInvalidated?1:amount;_hungerCueInvalidated=false;
+        _smoothEye=Mathf.Lerp(_smoothEye,eyes,eyeAmount);
+        _smoothEyeArc=Mathf.Lerp(_smoothEyeArc,arc,eyeAmount);
+        _smoothBrowLeft=Mathf.Lerp(_smoothBrowLeft,left,eyeAmount);_smoothBrowRight=Mathf.Lerp(_smoothBrowRight,right,eyeAmount);
+        _smoothBrowHeight=Mathf.Lerp(_smoothBrowHeight,height,eyeAmount);
         // Quantize the authored surfaces so a long session cannot cache every float blend.
         SetSurfaceEyes(Mathf.Floor(_smoothEye*48)/48,Mathf.Round(_smoothEyeArc/.0015f)*.0015f);
         SetSurfaceBrows(Mathf.Round(_smoothBrowLeft/2)*2,Mathf.Round(_smoothBrowRight/2)*2,Mathf.Round(_smoothBrowHeight*200)/200);

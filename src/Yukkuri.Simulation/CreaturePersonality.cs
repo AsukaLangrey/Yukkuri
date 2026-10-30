@@ -9,6 +9,9 @@ public sealed class PersonalityTraits
     public double NextHungerConflictAt { get; set; }
     public string? HungerTargetId { get; set; }
     public double NextHungerStrikeAt { get; set; }
+    public HungerFeedingState HungerFeeding { get; set; } = new();
+    // One finite reserve for this body, including any portion taken while alive.
+    // Death and treatment never refill it.
     public double RemainsNutrition { get; set; } = 24;
     public string? WaterConcernId { get; set; }
     public string? WaterConcernEventId { get; set; }
@@ -156,6 +159,7 @@ public sealed partial class WorldSimulation
     private void StopHungerAggression(Creature c,string reason)
     {
         c.Personality.HungerTargetId=null;
+        if(!c.Personality.HungerFeeding.Committed)c.Personality.HungerFeeding=new();
         c.Personality.NextHungerConflictAt=Math.Max(c.Personality.NextHungerConflictAt,State.WorldSeconds+30);
         c.TargetX=c.X;c.TargetZ=c.Z;c.Family.LastEvent=reason;
     }
@@ -164,15 +168,17 @@ public sealed partial class WorldSimulation
     private bool CanHungerAggress(Creature c) => c.Fullness<12&&c.Personality.Kindness<.25&&CanSelfMove(c)&&
         !WaterEnvironment.IsInWater(State,c)&&c.Energy>=10&&c.Interaction.EatingRemaining<=0&&c.Fear<65&&c.Pain<40&&
         c.Family.FlightRemaining<=0&&!c.Interaction.Physiology.Active&&!FamilyRules.UnderIntervention(c)&&
-        InteractionGestureTarget!=c.Id&&c.Family.Conflict.TargetId==null&&c.Family.ChildThreat.TargetId==null;
+        InteractionGestureTarget!=c.Id&&c.Family.Conflict.TargetId==null&&c.Family.ChildThreat.TargetId==null&&
+        MouthFunction.Impairment(c)<60&&!c.Quarantine&&!c.IsIntruder&&!HasPriorityWaterDuty(c);
 
     private bool CanPursueHungerTarget(Creature c,Creature target) => c!=target&&CanHungerAggress(c)&&
         !target.Family.ColdStorage.Stored&&!target.Family.Memorialized&&!target.Interaction.Carried&&
-        (target.Condition!=PhysicalCondition.Dead||target.Personality.RemainsNutrition>0)&&
-        FamilyVisible(c,target,4)&&!WaterEnvironment.IsInWater(State,target);
+        target.Personality.RemainsNutrition>0&&FamilyVisible(c,target,4)&&!WaterEnvironment.IsInWater(State,target)&&
+        !ReachableOrdinaryHungerFood(c);
 
     private void SynchronizeHungerThreat(Creature c)
     {
+        SynchronizeHungerFeeding(c);
         if(c.Personality.HungerTargetId==null)return;
         var target=State.Creatures.Find(o=>o.Id==c.Personality.HungerTargetId);
         if(target==null||!CanPursueHungerTarget(c,target))
@@ -183,14 +189,13 @@ public sealed partial class WorldSimulation
     {
         var p=c.Personality;
         if(!CanHungerAggress(c))
-        {p.HungerTargetId=null;return false;}
+        {if(p.HungerTargetId!=null)StopHungerAggression(c,"身体或需求改变，停止饥饿追击；已发生的后果保留");return false;}
         if(p.HungerTargetId==null)
         {
             if(State.WorldSeconds<p.NextHungerConflictAt)return false;
             p.NextHungerConflictAt=State.WorldSeconds+10;
             // Edible, reachable ordinary food wins; malice does not invent starvation.
-            if(State.RoomObjects.Any(o=>!o.Stored&&o.RegionId==c.RegionId&&o.Portions>0&&
-                NaturalResources.IsFood(o.Kind)&&Distance(c.X,c.Z,o.X,o.Z)<3))return false;
+            if(ReachableOrdinaryHungerFood(c))return false;
             if(Next()>=.12+c.Aggression*.3)return false;
             var victim=State.Creatures.Where(o=>o!=c&&o.RegionId==c.RegionId&&!o.Family.ColdStorage.Stored&&
                 !o.Family.Memorialized&&!o.Interaction.Carried&&!WaterEnvironment.IsInWater(State,o)&&
@@ -201,7 +206,8 @@ public sealed partial class WorldSimulation
         }
         var target=State.Creatures.Find(o=>o.Id==p.HungerTargetId);
         if(target==null||!CanPursueHungerTarget(c,target))
-        {p.HungerTargetId=null;return false;}
+        {StopHungerAggression(c,"目标或普通食物条件改变，停止这次饥饿追击");return false;}
+        EnsureHungerFeeding(c,target);
         var protector=target.Condition==PhysicalCondition.Dead?null:State.Creatures
             .Where(o=>o!=c&&o!=target&&o.Personality.Kindness>=.65&&o.Courage>=.55&&
                 CanProtectFamily(o)&&FamilyInContact(o,target)&&FamilyVisible(o,c,2.5))
@@ -216,21 +222,25 @@ public sealed partial class WorldSimulation
             return true;
         }
         c.Activity=$"饥饿地逼近{target.Name}";
-        if(!FamilyInContact(c,target)){RoomMove(c,target.X,target.Z,dt);return true;}
+        if(!FamilyInContact(c,target))
+        {ResetHungerContact(c);RoomMove(c,target.X,target.Z,dt);return true;}
         if(State.WorldSeconds<p.NextHungerStrikeAt)return true;
+        if(!AdvanceHungerContact(c,target,dt))return true;
         p.NextHungerStrikeAt=State.WorldSeconds+3;
         if(target.Condition==PhysicalCondition.Dead)
         {
             double taken=Math.Min(6,target.Personality.RemainsNutrition);
-            if(taken<=0){p.HungerTargetId=null;return false;}
-            target.Personality.RemainsNutrition-=taken;c.Fullness=Clamp100(c.Fullness+taken);
-            c.Activity="极饿时啃食同伴的残躯";
+            if(taken<=0){StopHungerAggression(c,"可取食的有限余量已经耗尽");return false;}
+            var incident=Emit(IncidentKind.Attack,target,c.Id,$"{c.Name}啃食了同伴的残躯",8,visibleActor:c);
+            RememberPeerAttackWitnesses(c,target,incident,8,remains:true);
+            CommitHungerIntake(c,target,taken,incident.Id);
             RecordInteraction(c,"starvation-cannibalism","极度饥饿时啃食同伴，周围个体会记住这件事。",6);
-            Emit(IncidentKind.Attack,target,c.Id,$"{c.Name}啃食了同伴的残躯",8);
             return true;
         }
-        InflictPeerAttack(c,target,4+c.Aggression*5,8,"饥饿袭击",
-            $"{c.Name}因极度饥饿袭击了{target.Name}","遭到饥饿中的同伴袭击，需要离开危险。",12);
+        double portion=Math.Min(2,target.Personality.RemainsNutrition);
+        var strike=InflictPeerAttack(c,target,(4+c.Aggression*5)*(portion/2),8,"饥饿袭咬",
+            $"{c.Name}因极度饥饿袭咬了{target.Name}","遭到饥饿中的同伴袭咬，需要离开危险。",12);
+        CommitHungerIntake(c,target,portion,strike.Id);
         var bond=FamilyBond(target,c);bond.Fear=Clamp100(bond.Fear+15);bond.Resentment=Clamp100(bond.Resentment+15);
         bond.LastHarmAt=State.WorldSeconds;bond.LastEvent="遭到饥饿中的同伴袭击";
         State.HelpTargetId=target.Id;

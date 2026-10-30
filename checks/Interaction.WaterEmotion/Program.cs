@@ -176,7 +176,7 @@ Check("hunger attack can be stopped by feeding and preserves victim memory",()=>
     var victim=AddNeighbor(sim,"受害者",1.2,0);
     victim.X=WorldSimulation.InteractionFootprint(attacker)+WorldSimulation.InteractionFootprint(victim)+.1;victim.TargetX=victim.X;
     attacker.Personality.HungerTargetId=victim.Id;attacker.Personality.NextHungerStrikeAt=0;
-    sim.Advance(.25);
+    for(int n=0;n<40&&victim.Health>=100;n++)sim.Advance(.25);
     Require(victim.Health<100&&victim.Family.Peers[attacker.Id].Fear>0,"hunger pursuit produced no actual wound or relationship memory");
     double health=victim.Health;attacker.Fullness=40;Seconds(sim,4);
     Require(attacker.Personality.HungerTargetId==null&&victim.Health>=health,"food did not interrupt hunger aggression");
@@ -264,6 +264,7 @@ Check("nearby capable kind companion blocks starvation assault but distant one c
         attacker.Personality.Initialized=true;attacker.Personality.Kindness=.05;attacker.Fullness=5;
         attacker.Personality.HungerTargetId=victim.Id;attacker.Personality.NextHungerStrikeAt=0;
         double health=victim.Health;sim.Advance(.25);
+        if(!near)for(int n=0;n<40&&victim.Health>=health;n++)sim.Advance(.25);
         Require(near?attacker.Personality.HungerTargetId==null&&victim.Health>=health:victim.Health<health,
             "protector ignored physical reach or failed to protect at contact");
         if(!near)Require(victim.Family.FlightRemaining>0&&victim.Interaction.Emotion.Alarm>0,"victim failed to flee or remember danger");

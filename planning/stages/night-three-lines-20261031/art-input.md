@@ -167,3 +167,11 @@ ActorIntakePresentation新增纯形状记录及SampleMouth，直接采样EatingR
 CreatureActor.Intake增加口腔阴影、唇缘暖色及舌面渐层，形状量化缓存上限128。CreatureActor.Interaction改为实际连续样本；进入.08秒、结束/取消.10秒只交接嘴型透明度和几何，不推进任何摄食/吞咽。新Creature引用直接建立当前进度基线，暂停冻结，临危/死亡立即让出进食嘴，原恐惧/疼痛表情权重保留。
 
 A在ActorGeometry.Smoke新增3组纯检查源码，覆盖实际接食前静止、同进度采样不重播、摄食/吞咽边界连续、同一贴面口腔内舌面包络；旧断言保持。主协调核对程序集链接边界、调用及网格/透明交接；没有运行编译、检查、游戏或预览。真实近看、两口交接、嘴伤减速、渲染透明排序和长期缓存性能均待独立远端。
+
+## 第十三批：袭咬准备的连续眼眉（四文件冻结）
+
+新增CreatureActor.HungerFeeding.cs，CreatureActor.cs、CreatureActor.FaceMotion.cs、InteractionRoom.cs接只读HungerFeedingStatus。仅实际Pursuing/Preparing才附加紧盯眼眉，ContactProgress控制准备压力；本体Pain/Fear/Alarm削弱敌意并保留忧虑，显式痛苦、害怕、疲惫和求助不被覆盖。Swallowing交回原真实进食嘴型。
+
+按本体/目标引用及EventId/阶段保留当前观察；换目标、失效、近看、工具介入、水域优先时撤销本预告，暂停不启新预告也不推进准备。原有面部平滑正常进行，暂停中失效可撤去旧附加眼眉压力；不清真实Angry/Hurt状态。没有新箭头、浮标、位置、身体姿态或摄食时钟。目标名字和准备进度由root普通面板显示。
+
+B声明四文件仅静态读写，root已核对当前DTO与表现优先；未运行项目/编译/检查/预览。远端需观察完整追击、可中断准备、入口后的嘴型交接、制止/食物/目标改变以及袭击者自身伤痛。当前沿用原近身关系距离，不能据此宣称已完成嘴部精确物理接触验收。

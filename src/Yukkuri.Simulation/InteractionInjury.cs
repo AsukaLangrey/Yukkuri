@@ -206,6 +206,7 @@ public sealed partial class WorldSimulation
         else c.Family.CompanionUntil=0;
         DetachNaturalIntake(c);
         i.EatingRemaining = 0; i.GroundIntake = false; i.GroundIntakeKind = null;
+        c.Personality.HungerTargetId=null;c.Personality.HungerFeeding=new();
         i.GroundIntakeSourceId = null; i.NaturalIntakePending = false; i.NaturalBitePause = 0;
         i.Physiology.Excreting = ExcretionKind.None; i.Physiology.Remaining = 0;
         i.ActiveCue = null; i.FollowPlayer = false; i.WaitRemaining = 0;
