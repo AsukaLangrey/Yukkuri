@@ -145,6 +145,7 @@ public partial class InteractionRoom
                     SelectedDetachedStem=_selectedDetachedStemEventId, HeldSupply=_heldSupplyId,
                     Sim.CurrentInteractionTargetKind, GestureObject=Sim.InteractionGestureObject,
                     Sim.InteractionCompletionProgress,
+                    SelectedCreatureWaterSupport=_selectedDetachedStemEventId==null&&c!=null?Sim.WaterSupportStatus(c):null,
                     Sim.HasInteractionGesture, GestureTarget=Sim.InteractionGestureTarget, Sim.CurrentInteractionAction,
                     Sim.InteractionIntakeAccepted, Sim.State.Mode, Sim.State.WorldSeconds },
                 _=>brood is not null?(object)new { State=brood, Interaction=Sim.DetachedStemStatus(brood.EventId) }:c
@@ -213,6 +214,9 @@ public partial class InteractionRoom
         "FootIntegrity"=>"足底功能","FootRecovery"=>"足底恢复","Wetness"=>"潮湿","Damage"=>"损伤",
         "Carried"=>"被托举","Falling"=>"下落中","Restraint"=>"固定方式","Height"=>"高度",
         "InWater"=>"落水","ExposureSeconds"=>"泡水时间","Struggle"=>"挣扎","RecoverySeconds"=>"恢复时间",
+        "WaterAftercare"=>"离水后守候","WaterConcernEventId"=>"关切的落水事件","EnteredAt"=>"本次入水时间",
+        "PlayerCaused"=>"本次落水由人类造成","HumanRescueCredited"=>"本次救助已结算",
+        "ContactSeconds"=>"有效陪伴累计（最多6秒）","Remembered"=>"已留下关系记忆",
         "Money"=>"金钱","Food"=>"食物库存","Medicine"=>"护理包库存","CriticalRemaining"=>"救治剩余时间","UnlimitedResources"=>"测试无限资源","WorldSeconds"=>"世界时间",
         "WaterRescueTools"=>"救援用品库存","WaterRescuePurchases"=>"救援用品购买次数",
         "CourtshipTools"=>"诱导用品库存","CourtshipToolPurchases"=>"诱导用品购买次数",

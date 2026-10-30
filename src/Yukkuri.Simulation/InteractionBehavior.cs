@@ -369,6 +369,7 @@ public sealed partial class WorldSimulation
             }
             if(TickNaturalNeeds(c,dt))continue;
             if(TryFamilyCare(c,dt))continue;
+            if(TryWaterAftercare(c,dt))continue;
             if(TryKeepHumanDistance(c,dt))continue;
             if (i.FollowPlayer && CanSelfMove(c)&&SeesHelpingHand(c))
             {

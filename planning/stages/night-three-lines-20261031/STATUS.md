@@ -99,3 +99,7 @@
 瓶养批已提交推送cee5171ed450a7bb44bc28b20e0252c1fb4fa817，远端main核对一致，39文件1416行新增、58行删除。commit退出码0并生成提交，但Git另报unable to update .git/info/refs（原样保留此诊断，未清理任何refs）；随后push退出0且ls-remote确认提交。原AGENTS与完整素材ZIP仍未纳入。源码检查12组未运行。B10继续眼部/泪水，A只读救助后续预查。
 
 B10六个眼部/泪水文件及ActorGeometry新增3组断言已冻结；独立InteractionCompletion只读接触进度与Interaction.Completion新增3组检查已冻结，主协调接同排进度显示和完整输入调试。静态核对原闭眼边界、读档/暂停、真正ContactElapsed与完成一次消耗，全部未运行，请求升v27。A9水域事件/岸上守候与B11表现仍待整合，相关Vitals/WaterConcern/Room主文件及模拟修改不混入此次提交；B12已放行四个不重叠进食嘴型文件。
+
+眼部/泪水及真实接触进度已提交推送f08a25b119ea6fefc59ed104620ee593e559ce12，远端main核对一致，19文件326行新增、27行删除。commit再次给出相同.git/info/refs诊断但退出0，推送和远端确认成功；未清理refs。A9/B11水域后续仍未提交，root已指出同tick离水后ContactSeconds可能超过实际StartedAt差值的边界，A正修正并补保存检查。B12嘴型连续表现继续，7小时目标保持active。
+
+A9/B11已冻结并完成root静态整合：水事件持续归因、同伴余力和照护优先、限时真实岸上守候、共享预算一次救助、表现资格及普通/调试面板。root指出并已由A修正事件防重和同tick离水接触时间边界；新增Interaction.WaterSupport十组源码检查，请求v28，旧断言保持。准备提交，不含B12嘴型在制文件；本机未运行任何项目/检查/编译/渲染。A转饥饿袭咬只读预查并对接B12检查，B12继续。

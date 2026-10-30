@@ -55,6 +55,12 @@ public sealed partial class WorldSimulation
     private bool CanContinueFamilyCare(Creature adult,Creature recipient) => CaregiverReady(adult)&&CareTargetAvailable(adult,recipient)&&
         (CanSelfMove(adult)||recipient.IsYoung&&FamilyInContact(adult,recipient));
 
+    private bool CanChooseAutonomousFamilyCare(Creature adult,Creature child) => CanContinueFamilyCare(adult,child)&&
+        (!child.IsYoung||child.Family.CaregiverIds.Contains(adult.Id)||IsCareParent(adult,child)||adult.Aggression<=.25&&adult.Patience>=.65&&
+            adult.Family.Peers.TryGetValue(child.Id,out var known)&&known.Affection>=20&&known.Fear<25&&known.Resentment<25)&&
+        Distance(adult.X,adult.Z,child.X,child.Z)<5&&FamilyVisible(adult,child,5)&&
+        (child.Fullness<55||child.Interaction.Hydration<55||child.IsYoung&&child.Family.Warmth<60);
+
     // This is also read by a paused management modal. Do not create bonds,
     // update messages or apply the command's Pause gate while explaining it.
     public string? FamilyCareReason(string caregiverId,string recipientId)
@@ -225,11 +231,7 @@ public sealed partial class WorldSimulation
             if(f.CareTargetId!=null||f.CareParcelId!=null)
                 CancelFamilyCare(adult,reason:"对象已经无法继续接受这次照护，递送已中断；如有已取份额，已经留在身旁。");
             if(State.WorldSeconds<f.NextCareAt)return false;
-            child=State.Creatures.Where(c=>CanContinueFamilyCare(adult,c)&&
-                (!c.IsYoung||c.Family.CaregiverIds.Contains(adult.Id)||IsCareParent(adult,c)||adult.Aggression<=.25&&adult.Patience>=.65&&
-                    f.Peers.TryGetValue(c.Id,out var known)&&known.Affection>=20&&known.Fear<25&&known.Resentment<25)&&
-                Distance(adult.X,adult.Z,c.X,c.Z)<5&&FamilyVisible(adult,c,5)&&
-                (c.Fullness<55||c.Interaction.Hydration<55||c.IsYoung&&c.Family.Warmth<60))
+            child=State.Creatures.Where(c=>CanChooseAutonomousFamilyCare(adult,c))
                 .OrderBy(c=>Math.Min(c.Fullness,Math.Min(c.Interaction.Hydration,c.IsYoung?c.Family.Warmth:100)))
                 .ThenBy(c=>c.Id,StringComparer.Ordinal).FirstOrDefault();
             if(child==null)return false;

@@ -51,6 +51,7 @@ public sealed partial class WorldSimulation
             InteractionGestureTarget!=c.Id&&c.RetreatRemaining<=0&&c.Family.FlightRemaining<=0&&
             c.Family.Conflict.TargetId==null&&c.Family.ChildThreat.TargetId==null&&
             c.Family.CompanionTargetId==null&&c.Family.CareTargetId==null&&c.Family.CareParcelId==null&&
+            ValidWaterAftercareTarget(c)==null&&WaterConcernTarget(c)==null&&
             !State.Creatures.Any(other=>other!=c&&CurrentInteractionThreatTarget(other)==c)&&
             _interactionHandLive&&SeesHelpingHand(c);
     }

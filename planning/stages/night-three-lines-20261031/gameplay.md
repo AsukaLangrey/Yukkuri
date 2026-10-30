@@ -293,3 +293,21 @@ CutStem 对附着茎连续接触 1.6 秒；先找母体旁可见、干燥、足�
 新增模拟文件：`DetachedStemState.cs`、`DetachedStemLife.cs`、`DetachedStemGesture.cs`、`DetachedStemWitness.cs`、`DetachedStemValidation.cs`。修改模拟文件：`InteractionState.cs`、`InteractionCatalog.cs`、`FamilyReproduction.cs`、`StemCare.cs`、`InteractionGesture.cs`、`InteractionWorld.cs`、`WorldSimulation.cs`、`InteractionSpatial.cs`、`InteractionSupply.cs`、`MilestoneWorld.cs`、`FamilyValidation.cs`。另新增检查项目 2 文件、修改 StemCare/Program.cs 与本交接。未修改 Game，未操作 Git。
 
 本批仅源码和静态审查，未启动项目、编译器、测试/检查、模拟或预览。12 组新检查和旧回归均未运行；独立对象实际命中、瓶口补给、拖放与普通场景表现仍需 B 接线后的独立远程验证。原生物阈值和正常爱线条件未降低。
+
+## 第九批：水域因果、救助关系和岸上持续守候（源码冻结）
+
+新增 `WaterRescueContinuity.cs`。每次实际入水保存独立 EventId、EnteredAt、PlayerCaused 和 HumanRescueCredited。人类造成的本次落水不会因超过 120 秒而洗掉原因；再次真实入水生成新事件，并清除针对该目标的旧关切和守候。旧档仅在构造世界时为正在落水且缺事件的对象补身份，按已有暴露时间和旧入水归因恢复；查询不迁移状态。NewFamilyId 同时避开已有水事件、关切和守候事件，存档校验拒绝两个对象共用同一水事件、错目标事件、非有限/未来时间及不可能的已结算状态。
+
+善良者真正接应需要食水、体力、伤痛、恐惧和身体操作均允许。无余力时至多每 12 秒呼救一次，然后让出行为给真实取食、自行护伤、休息、逃离和指令。正在照护、亲代临危幼体，以及原规则会选择的幼体/失能同伴递送均优先；从 FamilyCare 提取并复用原候选资格，不降低原照护关系条件。新的落水危机打断旧岸上守候。恶劣者保留原嘲弄、怨恨和拒绝接应的实质差异。
+
+真正看见并跟随本次落水事件的善良同伴，在目标实际离水后保留最多 30 秒岸上查看。目标活着、仍在离水恢复、同区可见，双方无介入和冲突且有余力时，实际走到双方身体半径之和加 .25 的外围，.08 为到达余量；不会向身体中心冲撞。连续近旁累计 6 秒后只获得一次小幅同伴亲近/熟悉关系记录，不治愈伤势或清除恐惧。失去资格或离开距离会在普通时钟中重置未完成累计，死亡、新一轮入水和期限结束会清除。发生离水的同一帧不能先领取整帧时间：累计严格不大于 WorldSeconds−StartedAt，原存档时间断言保持。
+
+人类救助仍须原真实工具库存和合法岸边落点。观察者在搬离水域前捕获，并在实际救出位置再次验证可见；仅在事后看见湿透幸存者不会获知施救者。事件只结算一次，关系收益改用现有 CareBudget、LastProtectionAt 和近期人类伤害门控；不同性格获得不同实际关系变化，保留原恐惧和伤势，不直接填满信任/熟悉/安全，不降低原主动陪伴门槛。旁观描述只说亲眼看见的救出事实，不泄漏未见伤害来源。
+
+公开只读契约：`WaterSupportPhase { Calling, Responding, Approaching, Watching }`；`WaterSupportView(TargetId, EventId, Phase, ContactSeconds)`；`WaterSupportStatus(Creature observer)`。ContactSeconds 是 0–6 的连续关系反馈窗口，不能显示为整段守候时长。查询重验实际资格，不依据旧 ID 生成姿势；近看为空，暂停仅观察既有状态。旧 `WaterConcernTarget` 仍只返回真实水中的目标，避免岸上继续被画成落水呼救。root 接普通说明、B11 接实际目标表现，模拟不改 Game。
+
+新增 `checks/Interaction.WaterSupport/` 项目和 Program.cs，共 10 组源码检查：事件/归因/读档/序号回退；饥饿善良者实际进食；可见参与者岸上靠近和限时一次反馈；幼体照护和自身需求优先；真实救助共享预算/近期伤害/恐惧保留；善良和自负实际关系差异；超过旧归因窗口仍不能刷信任；纯查询/暂停/近看/遮挡；旧档与坏事件/重复事件；同一普通 tick 自救或同伴接应后立即保存。组件初始位置、既有失能或长时间落水存档边界均明确为夹具，后续救出、移动、接触和时间通过真实 API；不冒充默认陌生起步的全程爱线。
+
+本批新增模拟 `WaterRescueContinuity.cs`，修改 `CreaturePersonality.cs`、`InteractionWater.cs`、`InteractionValidation.cs`、`WorldSimulation.cs`、`InteractionBehavior.cs`、`FamilyCare.cs`、`FamilyReproduction.cs`、`HumanCompanionship.cs`、`MilestoneInteraction.cs`；新增上述检查项目 2 文件及本交接。仅源码读写和静态审查，未运行/编译/预览或 Git。10 组新检查、旧 WaterEmotion 和其余回归均待独立远程机器运行。
+
+本批期间另独立交付并已由 root 提交 `f08a25b119ea6fefc59ed104620ee593e559ce12`：`InteractionCompletion.cs` 只读真实长按进度及 `checks/Interaction.Completion/` 3 组；`checks/ActorGeometry.Smoke/Program.cs` 为 B10 增加 3 组连续眼层、眼弧、泪量检查，未修改旧断言。这两小单元不混入 A9 主生命周期结论，同样没有本机运行。

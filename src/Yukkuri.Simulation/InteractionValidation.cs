@@ -46,6 +46,7 @@ public static class InteractionValidation
                 water.ExposureSeconds is >=0 and <=86400&&water.RecoverySeconds is >=0 and <=120&&
                 water.NextAttemptAt>=0&&water.LastRescueAt>=-100&&water.LastRescueAt<=s.WorldSeconds+.001&&
                 water.LastPlayerSubmersionAt>=-100&&water.LastPlayerSubmersionAt<=s.WorldSeconds+.001,"水域危险状态无效");
+            WaterRescueValidation.Validate(c,s,ids);
             Require(i.FootIntegrity<=100-i.Injuries.PermanentFootLoss+.00001,"底部支撑能力超过永久损伤上限");
             var physiology=i!.Physiology;
             var bond=i.HumanBond;

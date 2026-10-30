@@ -9,6 +9,7 @@ public partial class InteractionRoom
     private ProgressBar _fullnessMeter=null!,_thirstMeter=null!;
     private StyleBoxFlat _fullnessFill=null!,_thirstFill=null!;
     private Label _comfortLabel=null!,_trustLabel=null!,_lifeLabel=null!,_fearLabel=null!,_continuityLabel=null!,_personalityLabel=null!;
+    private Label _waterSupportLabel=null!;
     private ProgressBar _comfortMeter=null!,_trustMeter=null!,_lifeMeter=null!,_fearMeter=null!;
     private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
@@ -28,6 +29,7 @@ public partial class InteractionRoom
         BuildRelationshipMeter(overview,"生命", "88a877",out _lifeLabel,out _lifeMeter,out _lifeFill);
         BuildRelationshipMeter(overview,"恐惧", "ae8c74",out _fearLabel,out _fearMeter,out _fearFill);
         _continuityLabel=Text("",12,"78816e");meters.AddChild(_continuityLabel);
+        _waterSupportLabel=Text("",12,"78816e");meters.AddChild(_waterSupportLabel);
     }
     private void BuildRelationshipMeter(Control parent,string name,string color,out Label label,out ProgressBar bar,out StyleBoxFlat fill)
     {
@@ -78,6 +80,18 @@ public partial class InteractionRoom
             !EmotionalReadiness.Settled(c)?$"疼痛 {c.Pain:0} · 恐惧 {fear:0}\n还没有安定下来，先照顾身体并留出空间。":
             "0—100：馒馒来是当前心情；信任取决于相处经历。";
         RefreshImmediateInterventions(c);
+        var support=Sim.WaterSupportStatus(c);
+        var supported=support==null?null:Sim.State.Creatures.Find(other=>other.Id==support.TargetId);
+        _waterSupportLabel.Visible=support!=null&&supported!=null;
+        if(support!=null&&supported!=null)
+            _waterSupportLabel.Text=support.Phase switch
+            {
+                WaterSupportPhase.Calling=>$"正在为{supported.Name}呼救。",
+                WaterSupportPhase.Responding=>$"正在岸边尝试接应{supported.Name}。",
+                WaterSupportPhase.Approaching=>$"正在靠近刚上岸的{supported.Name}，查看情况。",
+                _=>$"在{supported.Name}身边守候 · "+(support.ContactSeconds>=6?"已经陪伴一会儿":$"持续 {support.ContactSeconds:0} 秒")+
+                    "\n守候不能代替实际食水和伤势护理。"
+            };
     }
     private static string WasteLabel(RoomObject obj)=>obj.Kind==RoomObjectKind.Urine?"尿液 · Del 清理":"粪便 · Del 清理";
     private static void BuildWaste(Node3D root,RoomObjectKind kind)

@@ -17,6 +17,7 @@ public sealed partial class WorldSimulation
                 InitializePersonality(c);
                 if(c.Interaction.Restraint==RestraintKind.Hand)c.Interaction.Restraint=RestraintKind.None;
                 NormalizeDeadInteractionSupport(c);
+                NormalizeWaterEpisode(c);
                 SynchronizeWaterSupport(c);
             }
     }
@@ -79,6 +80,7 @@ public sealed partial class WorldSimulation
         foreach(var c in State.Creatures)SynchronizeWildSelfCare(c);
         if (State.InteractionPlaytest)
         {
+            foreach(var c in State.Creatures)SynchronizeWaterAftercare(c);
             SynchronizeCareParcels();
             TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickDetachedStems(dt);TickFamilySocial(dt);
             TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);

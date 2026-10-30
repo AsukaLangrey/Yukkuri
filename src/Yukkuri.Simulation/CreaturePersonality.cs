@@ -11,6 +11,8 @@ public sealed class PersonalityTraits
     public double NextHungerStrikeAt { get; set; }
     public double RemainsNutrition { get; set; } = 24;
     public string? WaterConcernId { get; set; }
+    public string? WaterConcernEventId { get; set; }
+    public WaterAftercareState WaterAftercare { get; set; } = new();
     public double NextWaterResponseAt { get; set; }
     public double NextWaterAccidentAt { get; set; }
     public double LastRescueWitnessAt { get; set; } = -100;
@@ -68,16 +70,31 @@ public sealed partial class WorldSimulation
     private bool TryRespondToWater(Creature c,double dt)
     {
         var p=c.Personality;
-        if(!CanRespondToWater(c)){p.WaterConcernId=null;return false;}
+        if(!CanRespondToWater(c)){p.WaterConcernId=null;p.WaterConcernEventId=null;return false;}
         var target=State.Creatures.Where(o=>o.Condition!=PhysicalCondition.Dead&&
             WaterEnvironment.IsInWater(State,o)&&CanWitnessWater(c,o)).OrderBy(o=>Distance(c.X,c.Z,o.X,o.Z)).FirstOrDefault();
-        if(target==null){p.WaterConcernId=null;return false;}
+        if(target==null){p.WaterConcernId=null;p.WaterConcernEventId=null;return false;}
+        ClearWaterAftercare(c);
         p.WaterConcernId=target.Id;
+        p.WaterConcernEventId=target.Interaction.Water.EventId;
         if(p.Kindness>=.5)
         {
+            EndHumanCompany(c);
+            if(!CanActivelySupportWater(c))
+            {
+                // Calling does not reserve the body. Hunger, wounds, escape and
+                // dependent children must still reach their ordinary decisions.
+                if(State.WorldSeconds>=p.NextWaterResponseAt)
+                {
+                    p.NextWaterResponseAt=State.WorldSeconds+12;
+                    State.HelpTargetId=target.Id;
+                    React(c,Expression.Calling,"快帮帮它！","自己也没有余力，留在安全处呼救。",3);
+                }
+                return false;
+            }
             double helperZ=Math.Clamp(target.Z+(c.Z>=target.Z?1:-1),-6.7,6.7);
             double bankX=WoodlandLayout.RiverEdge(helperZ)-InteractionFootprint(c)-.12;
-            if(c.Fear<75&&c.Energy>20)RoomMove(c,bankX,helperZ,dt);
+            RoomMove(c,bankX,helperZ,dt);
             c.Activity=$"着急地看着{target.Name}，寻找救援办法";
             State.HelpTargetId=target.Id;
             if(State.WorldSeconds<p.NextWaterResponseAt)return true;
@@ -111,31 +128,28 @@ public sealed partial class WorldSimulation
         return false;
     }
 
-    private void AcknowledgeHumanWaterRescue(Creature rescued)
+    private void AcknowledgeHumanWaterRescue(Creature rescued,IReadOnlyList<Creature> witnesses)
     {
         InitializePersonality(rescued);
-        // Pulling it out of danger you just caused cannot repeatedly farm trust.
-        bool causedDanger=rescued.Interaction.Water.LastPlayerSubmersionAt>=0&&
-            State.WorldSeconds-rescued.Interaction.Water.LastPlayerSubmersionAt<120;
+        var water=rescued.Interaction.Water;
+        if(water.HumanRescueCredited)return;
+        water.HumanRescueCredited=true;
+        // The cause belongs to this immersion, not an expiring 120-second
+        // accusation. Waiting underwater cannot make manufactured danger kind.
+        bool causedDanger=water.PlayerCaused||RecentlyHarmedByHuman(rescued);
         bool grateful=rescued.Personality.Kindness>=.25||rescued.Personality.Pride<.75;
-        if(!causedDanger)
-        {
-            rescued.Trust=Clamp100(rescued.Trust+(grateful?5:1));
-            rescued.Attachment=Clamp100(rescued.Attachment+(grateful?3:.5));
-        }
-        rescued.Family.LastEvent=causedDanger?"被人类救上岸，但仍记得刚才也是人类把自己弄进水里":
+        if(!causedDanger)RewardWaterProtection(rescued,grateful?.9:.12);
+        rescued.Family.LastEvent=causedDanger?"被人类救上岸，但受到人类伤害的记忆还在":
             grateful?"记得人类把自己从水里救回来":"认为人类救助自己理所当然";
-        foreach(var observer in State.Creatures.Where(o=>CanWitnessWater(o,rescued)))
+        foreach(var observer in witnesses.Where(o=>CanWitnessWater(o,rescued)))
         {
             InitializePersonality(observer);
-            if(observer.Personality.Kindness<.25||causedDanger||
-                State.WorldSeconds-observer.Personality.LastRescueWitnessAt<30)continue;
+            if(observer.Personality.Kindness<.25)continue;
             observer.Personality.LastRescueWitnessAt=State.WorldSeconds;
-            observer.Trust=Clamp100(observer.Trust+2);
-            observer.Interaction.HumanBond.Safety=Clamp100(observer.Interaction.HumanBond.Safety+2);
-            observer.Family.LastEvent=$"看见人类救回{rescued.Name}，更愿意向人类求助";
+            if(!causedDanger)RewardWaterProtection(observer,.35);
+            observer.Family.LastEvent=$"亲眼看见人类把{rescued.Name}带回岸上，仍担心它的身体";
             RecordInteraction(observer,"witness-water-rescue",observer.Family.LastEvent,2);
-            React(observer,Expression.Worried,"谢谢你救它！","看见同伴得救，仍担心它的身体。",5);
+            React(observer,Expression.Worried,causedDanger||RecentlyHarmedByHuman(observer)?"它还好吗……":"谢谢你救它！","看见同伴得救，仍担心它的身体。",5);
         }
     }
 

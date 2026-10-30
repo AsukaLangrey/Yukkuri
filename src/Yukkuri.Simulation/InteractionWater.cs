@@ -2,6 +2,10 @@ namespace Yukkuri.Simulation;
 
 public sealed class WaterExposure
 {
+    public string? EventId { get; set; }
+    public double EnteredAt { get; set; } = -100;
+    public bool PlayerCaused { get; set; }
+    public bool HumanRescueCredited { get; set; }
     public bool InWater { get; set; }
     public double ExposureSeconds { get; set; }
     public double Struggle { get; set; }
@@ -54,14 +58,16 @@ public sealed partial class WorldSimulation
         if(State.WaterRescueTools<=0)return Unavailable("需要先购买水域救援用品。");
         if(c.Interaction.Restraint!=RestraintKind.None)return Unavailable("先解除固定装置，再用救援用品将它带回岸上。");
         if(!TryWaterBankSpot(c,out double x,out double z))return Unavailable("附近岸边被占着，需要先腾出安全落点。");
+        // Capture actual witnesses before changing the target's location.
+        // Seeing a wet survivor later does not reveal who rescued it.
+        EnterWater(c);
+        var witnesses=State.Creatures.Where(o=>CanWitnessWater(o,c)).ToArray();
         State.WaterRescueTools--;
         c.X=x;c.Z=z;c.TargetX=x;c.TargetZ=z;
         c.Interaction.VelocityX=0;c.Interaction.VelocityZ=0;
         LeaveWater(c,true);
-        AcknowledgeHumanWaterRescue(c);
-        bool causedDanger=c.Interaction.Water.LastPlayerSubmersionAt>=0&&
-            State.WorldSeconds-c.Interaction.Water.LastPlayerSubmersionAt<120;
-        if(!causedDanger)c.Interaction.HumanBond.Safety=Clamp100(c.Interaction.HumanBond.Safety+4);
+        AcknowledgeHumanWaterRescue(c,witnesses);
+        bool causedDanger=c.Interaction.Water.PlayerCaused||RecentlyHarmedByHuman(c);
         RecordInteraction(c,"water-rescue","用救援用品被带回岸上，仍然湿透、惊魂未定。",5);
         var result=Feedback(c,"recovery",Expression.Worried,"已经救回岸上；它还在发抖，需要擦干并检查伤势。","water-recover");
         if(c.Condition!=PhysicalCondition.Critical)
@@ -91,13 +97,22 @@ public sealed partial class WorldSimulation
         var i=c.Interaction;var w=i.Water;
         if(w.InWater)return;
         w.InWater=true;w.ExposureSeconds=0;w.NextAttemptAt=State.WorldSeconds+1;
+        w.EventId=NewFamilyId("water");w.EnteredAt=State.WorldSeconds;
+        w.PlayerCaused=causedByPlayer;w.HumanRescueCredited=false;
+        ClearWaterAftercare(c);
+        foreach(var observer in State.Creatures)
+        {
+            if(observer.Personality.WaterConcernId==c.Id)
+            {observer.Personality.WaterConcernId=null;observer.Personality.WaterConcernEventId=null;}
+            if(observer.Personality.WaterAftercare.TargetId==c.Id)ClearWaterAftercare(observer);
+        }
         w.Struggle=Math.Max(5,c.Energy);w.RecoverySeconds=0;
         i.Falling=false;i.Height=0;i.VerticalVelocity=0;i.SoakSurface();
         CancelWildSelfCare(c,"落水打断了自行护伤，需要先脱离水域。");
         DetachNaturalIntake(c);CancelFamilyCare(c,reason:"落水中断了照护，先救援。");
         if(c.Family.CompanionTargetId!=null)ClearCompanionship(c);
         if(FamilyRules.UnderIntervention(c))CancelIntervention(c,"落水中断了繁育干预；已用材料与后果保留。");
-        c.Personality.HungerTargetId=null;c.Personality.WaterConcernId=null;
+        c.Personality.HungerTargetId=null;c.Personality.WaterConcernId=null;c.Personality.WaterConcernEventId=null;
         EndHumanCompany(c);i.RestRemaining=0;i.Resting=false;i.ActiveCue=null;i.FollowPlayer=false;
         RememberThreat(c,30);c.Fear=Clamp100(c.Fear+30);
         if(causedByPlayer)
@@ -116,6 +131,7 @@ public sealed partial class WorldSimulation
         w.InWater=false;w.Struggle=0;
         w.RecoverySeconds=Math.Max(w.RecoverySeconds,30+Math.Min(90,w.ExposureSeconds));
         if(rescued)w.LastRescueAt=State.WorldSeconds;
+        BeginWaterAftercare(c);
         c.Interaction.NextAutonomyAt=Math.Max(c.Interaction.NextAutonomyAt,State.WorldSeconds+8);
         RefreshHelpAfterResolution(c);
     }

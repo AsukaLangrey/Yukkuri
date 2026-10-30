@@ -209,7 +209,7 @@ public sealed partial class WorldSimulation
         c.Interaction.Injuries.DeathCause=cause;
         c.Interaction.Injuries.DeathAt=State.WorldSeconds;
         c.Condition=PhysicalCondition.Dead;c.Health=0;c.Speech="";c.Expression=Expression.Exhausted;c.Activity="已死亡";
-        c.Personality.HungerTargetId=null;c.Personality.WaterConcernId=null;
+        c.Personality.HungerTargetId=null;c.Personality.WaterConcernId=null;c.Personality.WaterConcernEventId=null;
         c.Interaction.Water.Struggle=0;c.Interaction.HeatTension=0;
         RegisterFamilyDeath(c);
         var pregnancy=c.Family.Pregnancy;

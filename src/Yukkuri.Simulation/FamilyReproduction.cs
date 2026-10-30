@@ -108,7 +108,9 @@ public sealed partial class WorldSimulation
             id=$"family-{kind}-{++State.FamilySequence}";
             if(State.FamilySequence==long.MaxValue)throw new InvalidOperationException("家庭事件编号已耗尽。");
         }while(State.CompletedBirths.Contains(id)||State.DetachedStemBroods.Any(s=>s.EventId==id)||State.FamilyRelationshipEvents.Any(e=>e.Id==id)||
-            State.Creatures.Any(c=>c.Id==id||c.Family.Pregnancy.EventId==id||kind=="birth"&&c.Id.StartsWith(id+"-",StringComparison.Ordinal))||State.RoomObjects.Any(o=>o.Id==id));
+            State.Creatures.Any(c=>c.Id==id||c.Family.Pregnancy.EventId==id||c.Interaction.Water.EventId==id||
+                c.Personality.WaterConcernEventId==id||c.Personality.WaterAftercare.EventId==id||
+                kind=="birth"&&c.Id.StartsWith(id+"-",StringComparison.Ordinal))||State.RoomObjects.Any(o=>o.Id==id));
         return id;
     }
 

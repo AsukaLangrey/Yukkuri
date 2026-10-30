@@ -153,3 +153,9 @@
 泪量从真实Pain/Fear/Alarm和当前痛苦表情读取目标，初次绑定个体直接建立当前基线，不重播旧伤起泪；后续快起慢退，泪珠亮度先软化，湿痕后退。进食不写入或清除情绪；死亡无新泪，临危目标限幅，暂停delta为0不推进。保留旧纯接口供已有检查使用。涉及ActorTearSurface、CreatureActor.Tears、CreatureActor.cs。
 
 B声明仅六文件静态读写，未运行项目、检查、编译、渲染、预览、导入或Git；主协调已核对引用、闭眼几何、平滑、暂停传参和缓存边界。A已在ActorGeometry.Smoke新增3组检查源码：眼层连续收回及规范圆约束、连续眼弧端点/外眼角、泪目标与不同步长/读入/暂停；保留旧断言，全部未运行。实际近看、受伤后递食和安慰余泪、长期网格切换及暂停表现待独立远端。
+
+## 第十一批：真实离水后关切（两文件冻结）
+
+CreatureActor.WaterConcern.cs和InteractionRoom.cs接WaterSupportStatus的真实TargetId/EventId/Phase；Approaching只在站稳时看向目标，实际走路仍由模拟决定；Watching按已完成接触及观察者自身Pain/Fear/Alarm限制缓和，保留Hurt/Frightened/Exhausted优先，不治疗或修改位移。落水时原求助/恶意旁观表现保留；岸上不继续交替向人类急切呼救。
+
+按当前Creature引用、目标引用和水事件建立基线，近看/隐藏/死亡/跨区/失效立即清理，暂停不启新事件；初观察直接读取当前阶段。B仅静态写上述两文件，未运行/Git；root已检查唯一调用和各状态优先。远端需观察真实救起后靠近/守候、不同体型距离、食水/抓起/疼痛中断、再次落水新事件、高Alarm观察者、暂停及读档。B10眼部六文件未在本批修改。

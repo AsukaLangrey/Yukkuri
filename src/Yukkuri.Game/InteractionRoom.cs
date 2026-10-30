@@ -181,7 +181,10 @@ public partial class InteractionRoom : Node3D
             var actor=_actors[c.Id];actor.Visible=HasVisibleFamilyBody(c)&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
             string pose=InteractionPresentation.Pose(c);
             if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
-            actor.PrepareWaterConcern(c,Sim.WaterConcernTarget(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),pose);
+            var waterSupport=Sim.WaterSupportStatus(c);
+            var supportTarget=waterSupport!=null?Sim.State.Creatures.Find(target=>target.Id==waterSupport.TargetId):null;
+            actor.PrepareWaterConcern(c,Sim.WaterConcernTarget(c),waterSupport,supportTarget,
+                new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),pose,paused,close);
             actor.PrepareHumanCompany(c,Sim.HasLiveHumanCompany(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),(float)Sim.PreferredHumanDistance(c),pose,paused,close);
             actor.ObserveWaterState(c,WaterEnvironment.IsInWater(Sim.State,c),paused);
             actor.PrepareStemPresentation(Sim.StemCareStatus(c.Id));
