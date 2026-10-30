@@ -7,7 +7,7 @@ public partial class InteractionRoom
     private WorldState? _detachedSelectionWorld;
     private VBoxContainer _detachedStemPanel=null!;
     private Label _detachedStemDescription=null!,_detachedStemInstructions=null!;
-    private Button _detachedBottleButton=null!,_detachedMoveButton=null!,_detachedClearButton=null!,_detachedParentButton=null!;
+    private Button _detachedBottleButton=null!,_detachedUnbottleButton=null!,_detachedMoveButton=null!,_detachedClearButton=null!,_detachedParentButton=null!;
     private Label _memoryHeading=null!;
     private Button _familyPanelButton=null!;
 
@@ -21,6 +21,8 @@ public partial class InteractionRoom
             if(Sim.State.StemVessels>0)SelectQuickTool(InteractionAction.BottleStem);
             else ShowStemVessels();
         });_detachedStemPanel.AddChild(_detachedBottleButton);
+        _detachedUnbottleButton=Button("撤茎支护 · 按住瓶中活窝",()=>SelectQuickTool(InteractionAction.UnbottleStem));
+        _detachedStemPanel.AddChild(_detachedUnbottleButton);
         _detachedMoveButton=Button("手掌 · 拖动整瓶",()=>SelectQuickTool(InteractionAction.Lift));
         _detachedStemPanel.AddChild(_detachedMoveButton);
         _detachedClearButton=Button("收拾残留 · 对准后按住",()=>SelectQuickTool(InteractionAction.ClearStem));
@@ -81,12 +83,16 @@ public partial class InteractionRoom
         bool alive=!stem.Cleared&&(stem.Phase is DetachedStemPhase.Loose or DetachedStemPhase.Bottled);
         _detachedStemInstructions.Text=!alive?(stem.Cleared?"残留已收拾。亲缘、出生或损失记录仍保留。":"这窝的结果已经确定。可拿收拾工具，对准残留按住清理；亲缘与经历仍保留。"):
             stem.Phase==DetachedStemPhase.Loose?"先拿空瓶，对准离体茎按住装瓶。离体后仍在消耗水分和营养。":
-            "空手拿起地面水杯或饭饭，再把实际食水按住递到瓶口。搬动时拖整瓶，放到干燥空处。";
+            "空手拿起地面水杯或饭饭，再把实际食水按住递到瓶口。搬动时拖整瓶，放到干燥空处。需要撤出活窝时，用撤茎支护垫按住瓶身或枝芽外表。";
         if(alive&&!string.IsNullOrEmpty(stem.RefusalReason))
             _detachedStemInstructions.Text+="\n"+stem.RefusalReason;
         _detachedBottleButton.Visible=alive&&(stem.Phase==DetachedStemPhase.Loose||stem.VesselIntegrity<=25);
         _detachedBottleButton.Text=Sim.State.StemVessels>0?$"拿空瓶 · 库存 {Sim.State.StemVessels}":"购买空瓶";
         _detachedBottleButton.TooltipText="拿工具后仍需对准这一窝连续接触；成功装瓶才消耗一个空瓶。";
+        _detachedUnbottleButton.Visible=alive&&stem.Phase==DetachedStemPhase.Bottled;
+        _detachedUnbottleButton.Text=Sim.State.Medicine>0?"撤茎支护 · 用1包护理用品":"撤茎支护 · 先补护理用品";
+        _detachedUnbottleButton.Disabled=Sim.State.Medicine>0&&!stem.CanUnbottle;
+        _detachedUnbottleButton.TooltipText="放稳并留出干燥空地后，对准瓶身或枝芽外表按住1.6秒。成功才用1包，原窝进度与伤势保留；旧瓶不退回库存，撤出后需及时重新装瓶。";
         _detachedMoveButton.Visible=alive&&stem.Phase==DetachedStemPhase.Bottled;
         _detachedClearButton.Visible=stem.CanClear;
         _detachedParentButton.Text="查看母体 · "+mother;

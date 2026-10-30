@@ -64,6 +64,7 @@ public static class InteractionCatalog
             new(InteractionAction.SupportStem,"茎株支护","对准外茎连续按住 1.6 秒，使用一包护理材料支护这一窝。",true),
             new(InteractionAction.CutStem,"剪断外茎","对准仍附着的外茎连续按住；剪离后需及时移入瓶中照护。",true),
             new(InteractionAction.BottleStem,"移茎入瓶","对准离体茎连续按住，成功后消耗一个培养瓶。",true),
+            new(InteractionAction.UnbottleStem,"撤茎支护","对准瓶中活窝按住 1.6 秒，消耗一包护理用品撤出；旧瓶不退库存，离瓶后需要及时照护。",true,BodyPart.Side),
             new(InteractionAction.ClearStem,"收起茎生残留","对准已失败或已出生的残留按住，收起实体并保留生命记录。",true),
             new(InteractionAction.Rest,"安置休息","给它垫好软垫，留一点安静的时间。")),
         new("P12", "逗弄", true, "它可能先当成玩耍，也可能生气或不再相信你。",

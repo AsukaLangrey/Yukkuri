@@ -17,8 +17,12 @@ public sealed partial class WorldSimulation
         var s=DetachedStem(eventId);var error=DetachedStemError(s,allowTerminal:input.Action==InteractionAction.ClearStem);if(error!=null)return error;
         if(input.Action==InteractionAction.ClearStem&&s!.Phase is not (DetachedStemPhase.Failed or DetachedStemPhase.Born))
             return "这窝仍然活着，不能作为残留收起。";
+        if(input.Action==InteractionAction.UnbottleStem&&input.SupplyObjectId!=null)
+            return "撤茎需要护理用品和真实瓶中活窝，不使用手持食水。";
+        if(input.Action==InteractionAction.UnbottleStem&&input.Part!=BodyPart.Side)
+            return "请把撤茎支护用品贴住真实瓶身或枝茎，瓶口空隙不能代替接触。";
         return input.Action is InteractionAction.BottleStem or InteractionAction.Drink or InteractionAction.FeedMeal or
-            InteractionAction.Lift or InteractionAction.Punch or InteractionAction.Burn or InteractionAction.ClearStem?null:"这个工具不能用于离体茎或培养瓶。";
+            InteractionAction.Lift or InteractionAction.Punch or InteractionAction.Burn or InteractionAction.ClearStem or InteractionAction.UnbottleStem?null:"这个工具不能用于离体茎或培养瓶。";
     }
     private RoomObject? DetachedStemSupply(DetachedStemBrood s,InteractionInput input)=>State.RoomObjects.Find(o=>
         o.Id==input.SupplyObjectId&&o.RegionId==s.RegionId&&o.HeldByHand&&!o.Stored&&o.CarrierId==null&&o.Portions>0&&
@@ -35,6 +39,12 @@ public sealed partial class WorldSimulation
             if(vessel)return "这窝已经在完整的培养瓶中。";
             if(State.StemVessels<=0)return "没有可用培养瓶，先购入一个。";
             if(!CanPlaceDetachedStem(s.RegionId,s.X,s.Z,s.EventId))return "这里被占用或不够干燥，暂时无法安放培养瓶。";
+        }
+        if(input.Action==InteractionAction.UnbottleStem)
+        {
+            if(s.Phase!=DetachedStemPhase.Bottled)return "只有仍活着的瓶中茎可以撤出。";
+            if(State.Medicine<=0)return "没有护理用品，先购买一包再撤出活窝。";
+            if(!CanPlaceDetachedStem(s.RegionId,s.X,s.Z,s.EventId))return "原位置被占用或不够干燥，先把培养瓶移到安全空地。";
         }
         if(input.Action is InteractionAction.Drink or InteractionAction.FeedMeal)
         {
@@ -66,13 +76,15 @@ public sealed partial class WorldSimulation
             InteractionAction.FeedMeal=>"把实际正餐对准培养瓶，持续接触完成补养。",
             InteractionAction.Lift=>"已低托培养瓶，沿干燥空地慢慢移动；松开或取消会在当前合法位置放稳。",
             InteractionAction.ClearStem=>"保持接触收起残留；这窝的出生或失败记录会保留。",
+            InteractionAction.UnbottleStem=>"护理用品已对准瓶中活窝，保持接触 1.6 秒完成撤出；松开或移开可中止。",
             _=>"火焰已接近这一窝，保持接触才会持续损伤。"
         },"",DetachedStemPose(input.Action));return g.Last;
     }
     private static string DetachedStemPose(InteractionAction action)=>action switch
     {
         InteractionAction.BottleStem=>"stem-bottle",InteractionAction.Drink=>"stem-water",InteractionAction.FeedMeal=>"stem-feed",
-        InteractionAction.Lift=>"stem-carry",InteractionAction.Punch=>"stem-hit",InteractionAction.ClearStem=>"stem-clear",_=>"stem-burn"
+        InteractionAction.Lift=>"stem-carry",InteractionAction.Punch=>"stem-hit",InteractionAction.ClearStem=>"stem-clear",
+        InteractionAction.UnbottleStem=>"stem-unbottle",_=>"stem-burn"
     };
     private InteractionFeedback ContinueDetachedStemGesture(ContactGesture g,InteractionInput input,bool inContact)
     {
@@ -82,7 +94,7 @@ public sealed partial class WorldSimulation
         var error=ValidateDetachedStemInput(g.TargetId,input);
         if(error!=null){EndInteractionGesture(true);return Unavailable(error);}
         var s=DetachedStem(g.TargetId)!;
-        if(g.Applied&&input.Action is InteractionAction.BottleStem or InteractionAction.Drink or InteractionAction.FeedMeal)
+        if(g.Applied&&input.Action is InteractionAction.BottleStem or InteractionAction.Drink or InteractionAction.FeedMeal or InteractionAction.UnbottleStem)
             return g.Last with {Changed=false};
         double dt=Math.Min(.1,input.Duration);if(dt<=0)return g.Last;
         g.Elapsed+=dt;g.Input=input;
@@ -110,7 +122,14 @@ public sealed partial class WorldSimulation
             g.Applied=true;return g.Last=new(true,s.Phase==DetachedStemPhase.Failed?s.LastEvent:"火焰持续损伤茎体和培养瓶。","",s.Phase==DetachedStemPhase.Failed?"stem-loss":"stem-burn",Changed:true,Effect:amount);
         }
         if(g.ContactElapsed+1e-9<1.6)return g.Last;
-        if(input.Action==InteractionAction.ClearStem)
+        if(input.Action==InteractionAction.UnbottleStem)
+        {
+            // Only remove the vessel. The same living brood keeps every accrued
+            // injury, need, cause, parent, child count and maturation second.
+            State.Medicine--;s.Phase=DetachedStemPhase.Loose;s.VesselIntegrity=0;
+            s.LastEvent="已用一包护理用品将活窝撤出，留在原来的干燥位置；旧瓶不退库存。伤势与食水需求保留，离瓶后需要及时照护。";
+        }
+        else if(input.Action==InteractionAction.ClearStem)
         {
             s.Cleared=true;s.LastEvent=s.Phase==DetachedStemPhase.Born?"出生后的空瓶残留已收起，家谱和出生记录保留。":
                 "失败的茎生残留已收起，原来的失败原因和生命记录保留。";

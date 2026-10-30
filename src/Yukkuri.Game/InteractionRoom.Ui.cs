@@ -390,10 +390,12 @@ public partial class InteractionRoom
     private void ShowMedicineSupplies(string? result=null,InteractionAction equipAction=InteractionAction.Care)
     {
         OpenModal("护理用品");
-        bool stem=equipAction==InteractionAction.SupportStem;
+        bool stem=equipAction is InteractionAction.SupportStem or InteractionAction.UnbottleStem;
+        bool unbottle=equipAction==InteractionAction.UnbottleStem;
         int price=WorldSimulation.MedicineBundlePrice,count=WorldSimulation.MedicineBundleCount;
         _modalContents.AddChild(Text($"护理用品 · {count} 包 / {price} 元",20));
-        _modalContents.AddChild(Text(stem?
+        _modalContents.AddChild(Text(unbottle?
+            "用支护垫对准瓶身或枝芽外表按住1.6秒，完成撤出才消耗一包。原窝身份、进度和伤势保留，旧瓶不退回库存；撤出后需及时重新装瓶。":stem?
             "拿出后对准外茎按住1.6秒，完成支护才消耗一包。支护有时限，仍需照顾母体的吃喝和安全。":
             "拿出后按住适用伤处，完成护理才结算一包。稳定伤势后仍需进食和休息；反复包扎不会立刻恢复。"));
         _modalContents.AddChild(Text(Sim.State.UnlimitedResources?
@@ -407,7 +409,7 @@ public partial class InteractionRoom
             ShowMedicineSupplies(purchased?$"已入库{count}包护理用品。":"未能购买，请检查金钱和库存；原用品没有减少。",equipAction);
         });
         buy.Disabled=Sim.State.Medicine>int.MaxValue-count||!Sim.State.UnlimitedResources&&Sim.State.Money<price;_modalContents.AddChild(buy);
-        var equip=Button(stem?"拿起茎部支护用品":"拿起护理用品",()=>{CloseModal();SelectQuickTool(equipAction);});
+        var equip=Button(unbottle?"拿起撤茎支护用品":stem?"拿起茎部支护用品":"拿起护理用品",()=>{CloseModal();SelectQuickTool(equipAction);});
         equip.Disabled=(stem||Sim.UsesConsumableStock)&&Sim.State.Medicine<=0;_modalContents.AddChild(equip);
         _modalContents.AddChild(Button("返回小院",CloseModal));
     }

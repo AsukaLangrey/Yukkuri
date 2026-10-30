@@ -140,7 +140,7 @@ public sealed partial class WorldSimulation
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
         if(input.TargetKind==InteractionTargetKind.Stem)return ValidateStemInteraction(c,input);
-        if(input.Action is InteractionAction.SupportStem or InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.ClearStem)
+        if(input.Action is InteractionAction.SupportStem or InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.ClearStem or InteractionAction.UnbottleStem)
             return "请把茎生工具对准真实外茎或离体窝，身体不能代替这些接触。";
         if(input.Action is InteractionAction.Punch or InteractionAction.Burn&&input.Part==BodyPart.Accessory)
             return "这里是饰品，把工具移到实际身体部位。";

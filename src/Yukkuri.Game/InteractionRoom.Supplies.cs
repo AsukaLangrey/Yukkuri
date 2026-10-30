@@ -17,14 +17,14 @@ public partial class InteractionRoom
     {
         InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Tease=>Sim.UsesConsumableStock&&Sim.State.Food<=0,
         InteractionAction.Care=>Sim.UsesConsumableStock&&Sim.State.Medicine<=0,
-        InteractionAction.SupportStem=>Sim.State.Medicine<=0,
+        InteractionAction.SupportStem or InteractionAction.UnbottleStem=>Sim.State.Medicine<=0,
         InteractionAction.BottleStem=>Sim.State.StemVessels<=0,
         _=>false
     };
 
     private void ShowMissingToolSupplies(InteractionAction action)
     {
-        if(action is InteractionAction.Care or InteractionAction.SupportStem)ShowMedicineSupplies("手边没有护理包，先补充用品。",action);
+        if(action is InteractionAction.Care or InteractionAction.SupportStem or InteractionAction.UnbottleStem)ShowMedicineSupplies("手边没有护理包，先补充用品。",action);
         else if(action==InteractionAction.BottleStem)ShowStemVessels("手边没有空瓶，先补充一个。");
         else ShowSuppliesOverview("食物已经用完，补充后再拿起来。",action);
     }

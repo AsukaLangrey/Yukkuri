@@ -19,7 +19,7 @@ public enum InteractionAction
     Flick, Push, Slap, Squeeze, Press, Roll, Throw, Drop,
     Flip, Hold, Pin, Release, Box, OpenBox,
     TakeAccessory, StoreAccessory, HangAccessory, DamageAccessory, BurnFeet, Hang, AdjustHanging, Lower,
-    Touch, PlaceWater, Punch, Burn, SupportStem, CutStem, BottleStem, ClearStem
+    Touch, PlaceWater, Punch, Burn, SupportStem, CutStem, BottleStem, ClearStem, UnbottleStem
 }
 
 public sealed class AccessoryState

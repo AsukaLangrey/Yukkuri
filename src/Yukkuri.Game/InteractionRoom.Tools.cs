@@ -64,7 +64,7 @@ public partial class InteractionRoom
                 InteractionFoodArt.Sweet(_toolFood,InteractionFoodSurface.SweetHandScale);break;
             case InteractionAction.Drink:
                 _cupWater=InteractionToolArt.Cup(_hand);break;
-            case InteractionAction.Care:case InteractionAction.SupportStem:
+            case InteractionAction.Care:case InteractionAction.SupportStem:case InteractionAction.UnbottleStem:
                 InteractionToolArt.CarePad(_hand);break;
             case InteractionAction.CutStem:
                 BuildStemScissors(_hand);break;

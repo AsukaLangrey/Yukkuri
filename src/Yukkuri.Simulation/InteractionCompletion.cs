@@ -13,7 +13,7 @@ public sealed partial class WorldSimulation
             {
                 InteractionTargetKind.Stem=>g.Input.Action is InteractionAction.SupportStem or InteractionAction.CutStem,
                 InteractionTargetKind.DetachedStem=>g.Input.Action is InteractionAction.BottleStem or InteractionAction.ClearStem or
-                    InteractionAction.Drink or InteractionAction.FeedMeal,
+                    InteractionAction.Drink or InteractionAction.FeedMeal or InteractionAction.UnbottleStem,
                 _=>false
             };
             return timed?g.Applied?1:g.ContactActive?Math.Clamp(g.ContactElapsed/1.6,0,1):0:null;

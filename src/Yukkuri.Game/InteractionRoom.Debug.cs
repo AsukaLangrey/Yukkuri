@@ -230,7 +230,7 @@ public partial class InteractionRoom
         "LastCareAt"=>"最近支护时间","LastDamageAt"=>"最近受损时间","LastDamageCause"=>"最近受损原因","LastDamageActorId"=>"最近施害者",
         "DetachedStemBroods"=>"离体茎记录","Nutrition"=>"营养","VesselIntegrity"=>"瓶体完整度",
         "StemVessels"=>"空瓶库存","StemVesselPurchases"=>"空瓶购买次数","DetachedAt"=>"离体时间",
-        "Cleared"=>"残留已收拾","CanClear"=>"当前可收拾",
+        "Cleared"=>"残留已收拾","CanClear"=>"当前可收拾","CanUnbottle"=>"当前可撤出活窝",
         "HeldByHand"=>"正被手持","Lowering"=>"正在慢慢放下","Rolling"=>"正在翻滚","RollOrientation"=>"翻滚方向",
         "InteractionHandPresent"=>"人类正在场中陪伴","InteractionHandUntil"=>"当前在场有效截止时间","InteractionHandRegionId"=>"人类在场区域",
         "ReactionPose"=>"即时反应姿态","ReactionPoseRemaining"=>"即时姿态剩余时间","ReactionSituation"=>"即时反应情境",

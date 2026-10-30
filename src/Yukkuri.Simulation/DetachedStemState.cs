@@ -51,4 +51,4 @@ public sealed partial class WorldState
 public sealed record DetachedStemView(string EventId,string MotherId,string FatherId,string RegionId,double X,double Z,
     DetachedStemPhase Phase,int PlannedChildren,double Progress,double Integrity,double Hydration,double Nutrition,
     double VesselIntegrity,bool HeldByHand,bool CanBottle,bool CanWater,bool CanFeed,string? RefusalReason,string LastDamageCause,
-    bool Cleared,bool CanClear);
+    bool Cleared,bool CanClear,bool CanUnbottle=false);

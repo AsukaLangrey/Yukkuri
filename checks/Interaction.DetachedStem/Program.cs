@@ -90,6 +90,105 @@ Check("empty bottle is bought and consumed only after one uninterrupted actual c
         "unlimited money invented a real bottle");
 });
 
+Check("real damaged bottle can release the same living brood once, then rehouse and deliver it",()=>
+{
+    var sim=Loose(37);Bottle(sim);var s=Brood(sim);string eventId=s.EventId;
+    for(int n=0;n<2;n++)Require(sim.ExecuteInteraction(eventId,Input(sim,InteractionAction.Punch,force:1)).Success,"real bottle damage refused");
+    Require(s.Phase==DetachedStemPhase.Bottled&&s.VesselIntegrity<=25&&s.Integrity>0,"actual damage did not leave a rescueable broken bottle");
+    // Compare every existing persistent brood field except the three intentional changes.
+    string Life()
+    {
+        var node=JsonSerializer.SerializeToNode(s,SaveStore.JsonOptions)!.AsObject();
+        foreach(string key in new[]{"Phase","VesselIntegrity","LastEvent"})node.Remove(key);
+        return node.ToJsonString();
+    }
+    string life=Life(),mother=JsonSerializer.Serialize(sim.Selected,SaveStore.JsonOptions);
+    int medicine=sim.State.Medicine,vessels=sim.State.StemVessels,objects=sim.State.RoomObjects.Count;
+    Require(sim.DetachedStemStatus(eventId)!.CanUnbottle,"broken live bottle not offered for rescue");
+    var input=Input(sim,InteractionAction.UnbottleStem);Hold(sim,input,15);
+    Require(sim.State.Medicine==medicine&&s.Phase==DetachedStemPhase.Bottled&&sim.InteractionCompletionProgress<1,"withdrawal completed early");
+    Require(sim.ContinueInteractionGesture(input,true).Success,"withdrawal did not complete");
+    Require(s.Phase==DetachedStemPhase.Loose&&s.VesselIntegrity==0&&Life()==life,"withdrawal repaired, rewound or replaced the brood");
+    Require(sim.State.Medicine==medicine-1&&sim.State.StemVessels==vessels&&sim.State.RoomObjects.Count==objects&&
+        s.LastEvent.Contains("旧瓶不退库存")&&JsonSerializer.Serialize(sim.Selected,SaveStore.JsonOptions)==mother,"withdrawal refunded bottle, invented object or changed mother");
+    Require(!sim.DetachedStemStatus(eventId)!.CanUnbottle&&sim.InteractionCompletionProgress==1&&sim.InteractionGestureTarget==null,"completion retained ownership or repeat eligibility");
+    string completed=Snapshot(sim);
+    for(int n=0;n<25;n++)Require(sim.ContinueInteractionGesture(input,true).Success,"inert completed hold unexpectedly failed");
+    Require(Snapshot(sim)==completed,"completed hold spent again or altered life");sim.EndInteractionGesture();
+    double integrity=s.Integrity,hydration=s.Hydration;Frame(sim,sim.Config.TickSeconds);
+    Require(s.Integrity<integrity&&s.Hydration<hydration,"withdrawal bypassed real loose-stem deterioration");
+    sim=Reload(sim);s=Brood(sim);Require(s.Phase==DetachedStemPhase.Loose&&s.EventId==eventId&&sim.State.Medicine==medicine-1,"load repeated or reversed withdrawal");
+    Bottle(sim);Require(sim.State.StemVessels==vessels&&s.Integrity<integrity,"rehousing repaired the brood or reused the discarded bottle");
+    Require(sim.BuyFood(),"real food restock failed");
+    void ActualSupply(InteractionAction action)
+    {
+        var place=action==InteractionAction.Drink?InteractionAction.PlaceWater:InteractionAction.PlaceMeal;
+        var beforeIds=sim.State.RoomObjects.Select(o=>o.Id).ToHashSet();int food=sim.State.Food;
+        Require(sim.PlaceInteractionSupply(place,-5,-5).Success,"real ground supply refused");
+        var source=sim.State.RoomObjects.Single(o=>!beforeIds.Contains(o.Id));
+        Require(sim.State.Food==food-(place==InteractionAction.PlaceMeal?1:0)&&sim.HoldSupply(source.Id),"source inventory or hold incorrect");
+        Hold(sim,Input(sim,action,source.Id));Require(source.Portions==0,"bottle did not consume actual source");
+        sim.EndInteractionGesture();sim.ReleaseSupply(source.Id);
+    }
+    for(int n=0;n<3000&&s.Phase==DetachedStemPhase.Bottled;n++)
+    {if(s.Nutrition<65)ActualSupply(InteractionAction.FeedMeal);if(s.Hydration<65)ActualSupply(InteractionAction.Drink);Frame(sim);}
+    Require(s.Phase==DetachedStemPhase.Born&&s.EventId==eventId&&sim.State.CompletedBirths.Count(id=>id==eventId)==1&&
+        sim.State.Creatures.Count(c=>c.Family.BirthEventId==eventId)==s.PlannedChildren&&
+        sim.State.Creatures.Where(c=>c.Family.BirthEventId==eventId).All(c=>c.Family.MotherId==s.Mother.Id&&c.Family.FatherId==s.Father.Id),"withdrawal/rehousing lost original litter or parent identities");
+    var copy=Reload(sim);Frame(copy,copy.Config.TickSeconds);Require(copy.State.Creatures.Count(c=>c.Family.BirthEventId==eventId)==s.PlannedChildren,"load duplicated birth after rehousing");
+    string terminal=Snapshot(sim);Require(!sim.BeginDetachedStemGesture(eventId,Input(sim,InteractionAction.UnbottleStem)).Success&&Snapshot(sim)==terminal,"born brood withdrawn again");
+});
+
+Check("withdrawal contact resets and cancellation, pause or changed identity never spend medicine",()=>
+{
+    foreach(string boundary in new[]{"cancel","pause","tool","identity","part"})
+    {
+        var sim=Loose();Bottle(sim);var input=Input(sim,InteractionAction.UnbottleStem);Hold(sim,input,15);
+        if(boundary=="pause")sim.State.Settings.Pause=true;
+        string before=Snapshot(sim);
+        if(boundary=="cancel")sim.EndInteractionGesture(true);
+        else Require(!sim.ContinueInteractionGesture(boundary switch{
+            "tool"=>input with{Action=InteractionAction.Burn},"identity"=>input with{ObjectId="old-other-event"},
+            "part"=>input with{Part=BodyPart.Mouth},_=>input},true).Success,"invalid continuation accepted");
+        Require(!sim.HasInteractionGesture&&Snapshot(sim)==before,"interrupted withdrawal spent or changed life");
+        sim.State.Settings.Pause=false;sim=Reload(sim);Require(Brood(sim).Phase==DetachedStemPhase.Bottled,"load completed unfinished withdrawal");
+    }
+    var reset=Loose();Bottle(reset);int stock=reset.State.Medicine;var request=Input(reset,InteractionAction.UnbottleStem);
+    Hold(reset,request,15);reset.ContinueInteractionGesture(request,false);
+    Require(reset.InteractionCompletionProgress==0,"lost contact retained completion timer");
+    for(int n=0;n<15;n++)reset.ContinueInteractionGesture(request,true);
+    Require(reset.State.Medicine==stock&&Brood(reset).Phase==DetachedStemPhase.Bottled,"resumed contact inherited earlier timer");
+    reset.ContinueInteractionGesture(request,true);Require(reset.State.Medicine==stock-1&&Brood(reset).Phase==DetachedStemPhase.Loose,"renewed full contact did not settle once");
+});
+
+Check("withdrawal rejects wrong physical target, missing stock and newly occupied placement",()=>
+{
+    var loose=Loose();string before=Snapshot(loose);
+    Require(!loose.BeginDetachedStemGesture(Brood(loose).EventId,Input(loose,InteractionAction.UnbottleStem)).Success&&Snapshot(loose)==before,"loose brood accepted withdrawal");
+    var attached=Attached();var mother=attached.Selected!;
+    foreach(var kind in new[]{InteractionTargetKind.Body,InteractionTargetKind.Stem})
+    {before=Snapshot(attached);Require(!attached.BeginInteractionGesture(mother.Id,new(InteractionAction.UnbottleStem,BodyPart.Side,ObjectId:mother.Family.Pregnancy.EventId,TargetKind:kind)).Success&&Snapshot(attached)==before,"body or attached stem accepted withdrawal");}
+    var sim=Loose();Bottle(sim);var s=Brood(sim);var input=Input(sim,InteractionAction.UnbottleStem);
+    foreach(var invalid in new[]{input with{Part=BodyPart.Mouth},input with{SupplyObjectId="not-a-care-tool"}})
+    {before=Snapshot(sim);Require(!sim.BeginDetachedStemGesture(s.EventId,invalid).Success&&Snapshot(sim)==before,"virtual aperture or supply identity accepted");}
+    sim.State.Medicine=0;before=Snapshot(sim);
+    Require(!sim.DetachedStemStatus(s.EventId)!.CanUnbottle&&!sim.BeginDetachedStemGesture(s.EventId,input).Success&&Snapshot(sim)==before,"unlimited money invented medicine");
+    Require(sim.BuyMedicine(),"real nursing stock purchase failed");
+    Require(sim.BeginDetachedStemGesture(s.EventId,Input(sim,InteractionAction.Lift)).Success,"actual bottle lift failed");
+    before=Snapshot(sim);Require(!sim.DetachedStemStatus(s.EventId)!.CanUnbottle&&!sim.ExecuteInteraction(s.EventId,input).Success&&Snapshot(sim)==before,"held bottle accepted withdrawal");
+    Require(s.HeldByHand&&sim.HasInteractionGesture&&sim.CurrentInteractionAction==InteractionAction.Lift&&
+        sim.InteractionGestureObject==s.EventId,"rejected withdrawal released the transient hold or replaced its gesture");
+    sim.EndInteractionGesture(true);
+    Hold(sim,input,15);var blocker=new RoomObject{Kind=RoomObjectKind.Cushion,RegionId=s.RegionId,X=s.X,Z=s.Z};sim.State.RoomObjects.Add(blocker);
+    before=Snapshot(sim);Require(!sim.DetachedStemStatus(s.EventId)!.CanUnbottle&&!sim.ContinueInteractionGesture(input,true).Success&&Snapshot(sim)==before,"completion ignored newly blocked original placement");
+    sim.State.RoomObjects.Remove(blocker);
+    for(int n=0;n<10&&s.Phase!=DetachedStemPhase.Failed;n++)sim.ExecuteInteraction(s.EventId,Input(sim,InteractionAction.Punch,force:1));
+    Require(s.Phase==DetachedStemPhase.Failed,"actual hits did not create failed brood");before=Snapshot(sim);
+    Require(!sim.BeginDetachedStemGesture(s.EventId,input).Success&&Snapshot(sim)==before,"failed brood revived by withdrawal");
+    Hold(sim,Input(sim,InteractionAction.ClearStem));sim.EndInteractionGesture();before=Snapshot(sim);
+    Require(!sim.BeginDetachedStemGesture(s.EventId,input).Success&&Snapshot(sim)==before,"cleared brood reappeared");
+});
+
 Check("actual held food and water are identity-bound; repeated hold never consumes a second portion",()=>
 {
     var sim=Loose();Bottle(sim);var s=Brood(sim);

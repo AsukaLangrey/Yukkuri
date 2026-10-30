@@ -656,7 +656,7 @@ public partial class InteractionRoom
                     _hand.GlobalPosition=contact.World+normal*.034f;
                 else if(_action is InteractionAction.Press or InteractionAction.Squeeze or InteractionAction.Hold or InteractionAction.Slap)
                     _hand.GlobalPosition=contact.World+normal*.052f;
-                else if(_action is InteractionAction.Care or InteractionAction.SupportStem)_hand.GlobalPosition=contact.World+normal*(-InteractionCareSurface.PadBottom+.003f);
+                else if(_action is InteractionAction.Care or InteractionAction.SupportStem or InteractionAction.UnbottleStem)_hand.GlobalPosition=contact.World+normal*(-InteractionCareSurface.PadBottom+.003f);
                 else if(_action is InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.ClearStem)
                 {
                     _hand.GlobalBasis=new Basis(new Quaternion(Vector3.Up,-normal));

@@ -37,7 +37,8 @@ public sealed partial class WorldSimulation
             CanPlaceDetachedStem(s.RegionId,s.X,s.Z,s.EventId),free&&vessel&&s.Hydration<95,
             free&&vessel&&s.Hydration>=10&&s.Nutrition<95,error,s.LastDamageCause,s.Cleared,
             DetachedStemError(s,allowTerminal:true)==null&&(s.Phase is DetachedStemPhase.Failed or DetachedStemPhase.Born)&&
-            !State.Creatures.Any(c=>c.Interaction.Carried)&&!State.RoomObjects.Any(o=>o.HeldByHand)&&!State.DetachedStemBroods.Any(b=>b.HeldByHand));
+            !State.Creatures.Any(c=>c.Interaction.Carried)&&!State.RoomObjects.Any(o=>o.HeldByHand)&&!State.DetachedStemBroods.Any(b=>b.HeldByHand),
+            error==null&&DetachedStemActionError(s,new(InteractionAction.UnbottleStem))==null);
     }
     public IReadOnlyList<DetachedStemView> DetachedStems(string regionId)=>State.DetachedStemBroods
         .Where(s=>s.RegionId==regionId).Select(DescribeDetachedStem).ToArray();

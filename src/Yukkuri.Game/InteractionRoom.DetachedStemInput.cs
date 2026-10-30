@@ -43,6 +43,10 @@ public partial class InteractionRoom
         return _action switch
         {
             InteractionAction.BottleStem=>"离体茎 · 持续接触装瓶，完成才消耗培养瓶",
+            InteractionAction.UnbottleStem=>contact.Part==BodyPart.Mouth?
+                "撤茎支护 · 请对准瓶身或枝茎外表，不是瓶口开口":state.CanUnbottle?
+                "撤茎支护 · 长按同一活窝，完成消耗1包护理用品；旧瓶不退回":
+                "撤茎支护 · 需要放稳的活瓶养窝、护理用品和安全落点",
             InteractionAction.Burn=>"离体茎 · 长按灼烧 / 松开停止",
             InteractionAction.Punch=>"离体茎 · 点击击打，损伤只作用这一窝",
             InteractionAction.Drink or InteractionAction.FeedMeal=>"培养瓶 · 先拿起地面实际食水，再递到瓶口",
@@ -63,6 +67,10 @@ public partial class InteractionRoom
         {_message=state?.RefusalReason??"这一窝已结束，记录保留在观察面板。";return;}
         if(IsFoodTool(_action))
         {_message="先拿起地面的实际水杯或正餐，再按住递到培养瓶上方开口。";return;}
+        // The bottle-mouth hit is an open aperture for food/water, not a solid
+        // surface on which the support pad can maintain contact.
+        if(_action==InteractionAction.UnbottleStem&&contact.Part==BodyPart.Mouth)
+        {_message="撤茎支护需要贴住瓶身或枝茎外表，请移开瓶口。";return;}
         _gestureTargetKind=InteractionTargetKind.DetachedStem;_gestureTargetObject=contact.Id;
         _dragStart=_lastPointer=pointer;_lastGestureSampleUsec=Time.GetTicksUsec();
         _directGesture=false;_appliedForce=_force;
@@ -83,7 +91,8 @@ public partial class InteractionRoom
         double sinceSample=(now-_lastGestureSampleUsec)/1_000_000.0;_lastGestureSampleUsec=now;
         Vector2 point=GetViewport().GetMousePosition();
         var contact=IsScenePoint(point)?ContactAt(point):null;
-        bool touching=contact!=null&&MatchesGestureContact(contact);
+        bool touching=contact!=null&&MatchesGestureContact(contact)&&
+            (_action!=InteractionAction.UnbottleStem||contact.Part!=BodyPart.Mouth);
         var state=Sim.DetachedStemStatus(_gestureTargetObject!);
         if(state==null||state.RegionId!=Sim.State.ActiveRegionId){CancelGesture();return;}
         Vector3 ground=new((float)state.X,0,(float)state.Z);
@@ -91,15 +100,18 @@ public partial class InteractionRoom
             sampleSeconds>0&&sampleSeconds<=ContactMotion.MaximumSampleSeconds&&
             sinceSample>0&&sinceSample<=ContactMotion.MaximumSampleSeconds)
             ground+=SupportDrag(point-_lastPointer);
-        var reply=Sim.ContinueInteractionGesture(new(_action,contact?.Part??BodyPart.Side,_force,dt,
+        // Keep this tool's original surface identity while the pointer crosses
+        // the mouth aperture; inContact=false resets dwell without ending it.
+        var part=_action==InteractionAction.UnbottleStem?BodyPart.Side:contact?.Part??BodyPart.Side;
+        var reply=Sim.ContinueInteractionGesture(new(_action,part,_force,dt,
             X:ground.X,Z:ground.Z,ObjectId:_gestureTargetObject,TargetKind:InteractionTargetKind.DetachedStem),touching);
         AcceptFeedback(reply);_gesturePose=reply.Pose;
-        _detachedActionComplete|=(_action is InteractionAction.BottleStem or InteractionAction.ClearStem)&&reply.Success&&reply.Changed;
+        _detachedActionComplete|=(_action is InteractionAction.BottleStem or InteractionAction.ClearStem or InteractionAction.UnbottleStem)&&reply.Success&&reply.Changed;
         _detachedLiveContact=touching&&reply.Success&&Sim.HasInteractionGesture&&!_detachedActionComplete;
         ShowInteractionTool();_hand.Visible=_detachedLiveContact&&_action!=InteractionAction.Lift;
         if(touching&&contact!=null)PlaceContactTool(contact);
         _lastPointer=point;
-        if(_action==InteractionAction.ClearStem&&_detachedActionComplete)
+        if((_action is InteractionAction.ClearStem or InteractionAction.UnbottleStem)&&_detachedActionComplete)
         {AcceptFeedback(Sim.EndInteractionGesture());_mouseHeld=false;_hand.Visible=false;ResetContactMotion();return;}
         if(!Sim.HasInteractionGesture){_mouseHeld=false;_hand.Visible=false;ResetContactMotion();}
     }
