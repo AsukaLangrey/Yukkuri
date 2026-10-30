@@ -4,6 +4,8 @@
 
 远程测试入口：[今晚改动先测什么](testing/night-20261031-first-pass.md)、[协作规范](testing/PROTOCOL.md)、[当前测试要求](testing/request.json)。开发源码在 `main`，测试结果写入 `codex/dot-test-results` 分支。运行只限用户安排的独立远程机器及当地授权范围；此次交付不启动或恢复已经暂停的周期测试。[dot 接入说明](testing/DOT-HANDOFF.md)保留定时接入方式。
 
+2026-10-31 夜间[源码与真实素材包](https://github.com/AsukaLangrey/Yukkuri/releases/tag/codex/alice-night-20261031-4a2adc6c4c13)已公开，固定提交 `4a2adc6c4c137e7e98387def474177f0bab3d034`。请下载 Release 附件中的 `Yukkuri-alice-night-source-4a2adc6c4c13.zip`；[交付记录](planning/stages/night-three-lines-20261031/DELIVERY.md)提供校验值与范围。该包未编译或运行，不是游戏成品。
+
 ## 当前状态
 
 - 当前工程入口为 `src/Yukkuri.Game/InteractionRoom.tscn`。2026-10-31 夜间需求与进度见[三线计划](planning/stages/night-three-lines-20261031/PLAN.md)、[当前状态](planning/stages/night-three-lines-20261031/STATUS.md)和[逐项证据](planning/stages/night-three-lines-20261031/requirement-evidence.tsv)。`planning/CURRENT.txt` 连接最新入口；`START-HERE.txt`、`README.txt` 和旧阶段记录保留历史背景。
