@@ -297,6 +297,7 @@ public partial class CreatureActor
         if(_speech!=null)_speech.Visible=!close&&c.ReactionRemaining>0&&c.Speech.Length>0;
         PresentPregnancyPlant(c,paused?0:delta);
         PresentWaterSurface(c,paused?0:delta);
+        PresentWaterTransitions(c,paused?0:delta);
     }
 
     public Vector3 ContactPoint(BodyPart part, float side = 1)

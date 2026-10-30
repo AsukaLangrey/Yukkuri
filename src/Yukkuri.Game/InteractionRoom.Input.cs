@@ -232,7 +232,11 @@ public partial class InteractionRoom
             if(contact==null){_message="用救援用品点击落水的油。购买用品后才能使用。";return;}
             if(contact.Id!=Sim.State.SelectedId)SelectOil(contact.Id);
             _waterRescueToolArmed=true;
-            AcceptFeedback(Sim.RescueFromWater(contact.Id),contact.Id);
+            var rescue=Sim.RescueFromWater(contact.Id);
+            if(rescue.Success&&rescue.Changed&&Sim.State.Creatures.Find(c=>c.Id==contact.Id) is { } rescued&&
+                !WaterEnvironment.IsInWater(Sim.State,rescued)&&_actors.TryGetValue(contact.Id,out var rescuedActor))
+                rescuedActor.NotifyActualWaterRescue(rescued);
+            AcceptFeedback(rescue,contact.Id);
             GetViewport().SetInputAsHandled();return;
         }
         if(_toolArmed&&IsFoodTool(_action))

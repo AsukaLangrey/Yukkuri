@@ -3,7 +3,7 @@ using Yukkuri.Simulation;
 
 public partial class InteractionRoom
 {
-    private Button _immediateRescue=null!,_immediateStopThreat=null!;
+    private Button _immediateRescue=null!,_immediateStopThreat=null!,_immediateCare=null!,_immediateRelease=null!,_immediateDry=null!;
     private Label _immediateThreatDescription=null!;
     private Button _yardHelpButton=null!;
     private string? _yardHelpTargetId;
@@ -53,12 +53,37 @@ public partial class InteractionRoom
     {
         _immediateThreatDescription=Text("",12,"a16a51");parent.AddChild(_immediateThreatDescription);
         _immediateStopThreat=Button("制止袭击",StopCurrentThreat);parent.AddChild(_immediateStopThreat);
+        _immediateRelease=Button("拿解除工具",ArmImmediateRelease);parent.AddChild(_immediateRelease);
         _immediateRescue=Button("拿救援用品",()=>
         {
             if(Sim.State.WaterRescueTools>0)ArmWaterRescueTool();
             else ShowRescueSupplies();
         });parent.AddChild(_immediateRescue);
-        _immediateThreatDescription.Visible=_immediateStopThreat.Visible=_immediateRescue.Visible=false;
+        _immediateCare=Button("拿护理用品",()=>
+        {
+            if(Sim.State.UnlimitedResources||Sim.State.Medicine>0)SelectQuickTool(InteractionAction.Care);
+            else ShowMedicineSupplies();
+        });parent.AddChild(_immediateCare);
+        _immediateDry=Button("拿毛巾 · 擦干身体",()=>SelectQuickTool(InteractionAction.Dry));parent.AddChild(_immediateDry);
+        _immediateThreatDescription.Visible=_immediateStopThreat.Visible=_immediateRescue.Visible=
+            _immediateCare.Visible=_immediateRelease.Visible=_immediateDry.Visible=false;
+    }
+
+    private void ArmImmediateRelease()
+    {
+        var c=Sim.Selected;
+        if(c==null||c.RegionId!=Sim.State.ActiveRegionId||!HasVisibleFamilyBody(c)||c.Condition==PhysicalCondition.Dead)
+        {RefreshRoomUi();return;}
+        InteractionAction? action=c.Interaction.Restraint switch
+        {
+            RestraintKind.Box=>InteractionAction.OpenBox,
+            RestraintKind.Wrap=>InteractionAction.Unwrap,
+            RestraintKind.Hanging=>InteractionAction.Lower,
+            RestraintKind.Frame=>InteractionAction.Release,
+            _=>null
+        };
+        if(action is { } release)SelectQuickTool(release);
+        else RefreshRoomUi();
     }
 
     private Creature? ThreatForSelected(Creature selected)=>
@@ -70,10 +95,28 @@ public partial class InteractionRoom
         bool local=selected.RegionId==Sim.State.ActiveRegionId&&HasVisibleFamilyBody(selected)&&
             selected.Condition!=PhysicalCondition.Dead;
         bool inWater=local&&WaterEnvironment.IsInWater(Sim.State,selected);
+        bool critical=local&&selected.Condition==PhysicalCondition.Critical;
+        bool recovery=local&&selected.Interaction.Water.RecoverySeconds>0;
+        _immediateRelease.Visible=(inWater||critical||recovery)&&selected.Interaction.Restraint is
+            RestraintKind.Box or RestraintKind.Wrap or RestraintKind.Frame or RestraintKind.Hanging;
+        _immediateRelease.Text=selected.Interaction.Restraint switch
+        {
+            RestraintKind.Box=>"开箱工具 · 点击箱子",
+            RestraintKind.Wrap=>"解包工具 · 点击包裹",
+            RestraintKind.Hanging=>"托住解下 · 点击支架",
+            _=>"解除工具 · 点击固定具"
+        };
+        _immediateRelease.TooltipText="只拿出对应工具；仍需在场景中接触装置，解除后再救援或护理。";
         _immediateRescue.Visible=inWater;
         _immediateRescue.Text=Sim.State.WaterRescueTools>0?$"拿救援用品 · 余 {Sim.State.WaterRescueTools}":"购买救援用品";
         // Equipping is harmless while paused. Actual rescue retains its simulation pause gate.
         _immediateRescue.Disabled=false;
+        _immediateCare.Visible=critical&&!inWater;
+        _immediateCare.Text=Sim.State.UnlimitedResources?"拿护理用品 · 按住伤处":
+            Sim.State.Medicine>0?$"拿护理用品 · 余 {Sim.State.Medicine} 包":"购买护理用品";
+        _immediateCare.TooltipText="拿出后，按住适用伤处完成护理。不会自动治疗或省略接触；稳定后仍要照护。";
+        _immediateDry.Visible=recovery&&!critical&&!inWater;
+        _immediateDry.TooltipText="拿毛巾后按住湿处擦拭；擦干不会消除已有伤势或惊惧。";
         var aggressor=local?ThreatForSelected(selected):null;
         _immediateStopThreat.Visible=_immediateThreatDescription.Visible=aggressor!=null;
         if(aggressor==null)return;

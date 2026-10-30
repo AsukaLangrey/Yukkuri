@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v22-night-three-lines-E-20261031",
+  "revision": "dot-v23-night-three-lines-F-20261031",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -9,7 +9,7 @@
   "run_timeout_minutes": 50,
   "watched_paths": ["src/", "checks/", "tools/", "assets-source/", "third-party/", "global.json", "NuGet.Config", "toolchain.lock.json", ".gitattributes", "testing/request.json", "testing/PROTOCOL.md", "testing/report-template.json"],
   "required_checks": [
-    "lfs-integrity", "game-build", "Interaction.Help", "Interaction.AffectionJourney", "Family.Desire", "Interaction.WaterEmotion", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
+    "lfs-integrity", "game-build", "Interaction.PeerThreat", "Interaction.AbuseJourney", "Interaction.Help", "Interaction.AffectionJourney", "Family.Desire", "Interaction.WaterEmotion", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "Interaction.AutonomyPriority", "Interaction.CompletedNeeds", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
     "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Family.AdoptionJourney", "Family.AssistedCare", "Family.Growth", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
@@ -245,6 +245,14 @@
     "递食先接近真实无遮挡的嘴部再累计接触，成功后空勺或空杯收回不再次结算；接近期间切工具、暂停、失焦、遮挡或目标离开均停止。火焰只在真实灼烧接触时燃动，保持原尺寸及尖端位置。甩动箭头只表示已有释放速度和阈值，不冒充落点预测。",
     "调试记下当前读数后可只看变化，冻结时记下屏幕已有读数，不推进或还原状态。切个体、范围、读档清除对照；世界数组插入删除按唯一Id配对，不把另一只油的读数当成同一只的变化。筛选分页、空结果、读取失败与复制完整当前范围分别检查。",
     "眼嘴颜色层次和递食、火焰、甩动、保持距离的实际画面与鼠标手感未验证。全部结果绑定包含第五批的完整SHA；本机没有运行检查、编译或游戏，本请求不恢复远程自动计划。"
+  ],
+  "night_three_lines_F_focus": [
+    "v23保留全部旧请求。家庭冲突、亲代伤害与饥饿袭击须按实际伤害留下连续惊惧，事件身份和施害来源准确，不重复计伤害/事件，不把同伴施害记成人类施害。看清双方、只看见伤者、只听见和无从知情的旁观者分别检查。",
+    "虐线真实操作旅程须从健康经历伤痛、功能受损、临危到死亡，并保留幸存者的后续反应；不能直接填伤势、跳过资源/时钟或降低断言替代可玩流程。",
+    "水域表现覆盖本次真实入水、成功救起和离水恢复。初次加载/读档/重建不重播旧救援；失败点击不显示成功；暂停冻结表现，近看不推进曝光、恢复和普通模拟时间。位置仍取真实模拟结果，不用表现替代拖救物理。",
+    "小院护理补给复用现有15元3包交易，有限资源下资金不足不扣费、不增库存，购买后可拿工具并按住适用伤处完成护理。测试无限资源的原护理不扣库存语义须与显示一致。",
+    "危急剩余时间读取真实计时；危急、落水固定、离水恢复时的直接工具入口只装备，不自动治疗、解除或擦干。Box/Wrap/Frame/Hanging对应正确工具，失焦/右键/换工具取消，暂停不推进。危机入口在状态说明之后，检查窄窗口和滚动可达性。",
+    "本机仅源码读写和静态审查。新增检查、画面、声音、工具手感均未执行；全部结果必须绑定包含第六批的完整SHA，不自动恢复远程计划。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

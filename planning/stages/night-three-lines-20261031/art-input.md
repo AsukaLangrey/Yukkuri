@@ -97,3 +97,13 @@
 - 同步 A 的 PreferredHumanDistance：陪伴到达判断不再写死1.15，直接读取模拟当前舒适距离；必须已有实际 ContactSeconds 且仍在该范围内，才表现为已到达。整合时同步了 A 到达判定的 .01 距离容差，避免模拟已开始相处而画面仍显示接近。
 
 本批文件：CreatureActor.Face.cs、CreatureActor.cs、CreatureActor.HumanCompany.cs、InteractionRoom.Tools.cs、InteractionRoom.Offering.cs、InteractionRoom.Input.cs、InteractionRoom.cs，以及本交接。未改 Simulation/checks、主协调专属文件，未使用 Git。只作源码审查，未启动项目/编译/测试/模拟/渲染/预览/转换/项目脚本。远端应检查：眼嘴颜色与淡出材质；火焰实际尺寸和贴合；接近期间取消不消耗、接近完成才开始接触；成功仅一份、拒绝不重复；收回期间切换/暂停/失焦不残留；连续同工具递送有新份；慢放/快甩提示与实际松手结果一致。
+
+## 第六批：真实入离水过渡与湿透后的连续滴水
+
+- 新增 CreatureActor.WaterTransitions.cs。Room 每帧在身体刷新前传入 `WaterEnvironment.IsInWater(Sim.State,c)` 的真实几何结果。首次观察、读档重建、模型引用替换、换区、隐藏后重新出现只建立当前基线，不把已有落水状态当成新落水。正常可见期间真实进入/离开水域才触发约 .65 秒水花/滴水；离水被抓起时按实际高度表现，不补画虚构的跳岸。
+- 人类救援在 Input.cs 唯一结算入口检查 `RescueFromWater` 的 Success、Changed 和实际已离水后，再通知 Actor。成功事件用约 1.1 秒岸边水滴与淡圈辨认。没有读取历史 LastRescueAt 触发重播，也不依赖世界秒变化，因此近看同一世界秒内再次实际救援仍能表现。通知只对同一 Creature 对象有效；隐藏、换到其他模型或重新入水会丢弃无效通知。当前规则仍是模拟直接救回岸边，没有加入或伪装成真实拖救物理。
+- 暂停使短表现和滴水时钟为零；成功通知若尚未播放就暂停，会保留到继续。近看允许播放纯画面反馈，但新增文件不写入 ExposureSeconds、RecoverySeconds、Wetness、LastRescueAt 或 WorldSeconds。实际恢复颤抖仍沿用原 Water.cs 与模拟恢复量。
+- 湿透后的持续滴水分别读取头部、左右脸、左右侧的 WetnessAt，局部擦干立即减弱或停止对应水滴。每滴从实际姿态的接触点开始后向下掉落，不随角色平移拖着走；实际重新入水后隐藏岸上滴水并重设来源。死亡不会触发新的入离水或救援过渡；临危者实际入水和成功救援仍有被动反馈，原水中循环表现已有零挣扎门控。仍湿的遗体可以自然滴水，不表达康复。此处由主协调按最终代码纠正表述，不删除临危者的真实成功救援反馈。
+- 新增网格挂在 Actor 根节点，避开 `_visual` 的支撑网格收集以及原显式接触射线对象；不改变身体顶点、支撑高度或命中。所有 Ball 缩放均乘回原尺寸，未重犯第五批单位球放大问题。现有持续波纹/挣扎水滴保留，不另造模拟状态。
+
+本批文件：CreatureActor.WaterTransitions.cs（新增）、CreatureActor.Interaction.cs、InteractionRoom.cs、InteractionRoom.Input.cs，以及本交接。只进行了文件读取、rg 检索和补丁编辑；未运行项目、编译、测试、模拟、渲染、预览、转换、项目脚本、钩子或 Git。源码核对覆盖实际水域查询、成功反馈 Changed 默认值、读取存档重建 Actor 路径、效果与接触/支撑树隔离。远端仍需核对：初载水中与旧救援存档不重播；正常丢入/托举离水/自行逃出/成功救援的区别；无库存、固定、岸边无空位等失败不出现成功圈；近看救援不走自然时间；暂停中途冻结再续；换区/隐藏/Actor 重建不残留；救起后再入水覆盖旧信号；分区擦干与水中死亡表现。

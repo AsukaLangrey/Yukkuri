@@ -196,7 +196,7 @@ public partial class InteractionRoom
         "FootIntegrity"=>"足底功能","FootRecovery"=>"足底恢复","Wetness"=>"潮湿","Damage"=>"损伤",
         "Carried"=>"被托举","Falling"=>"下落中","Restraint"=>"固定方式","Height"=>"高度",
         "InWater"=>"落水","ExposureSeconds"=>"泡水时间","Struggle"=>"挣扎","RecoverySeconds"=>"恢复时间",
-        "Money"=>"金钱","Food"=>"食物库存","UnlimitedResources"=>"测试无限资源","WorldSeconds"=>"世界时间",
+        "Money"=>"金钱","Food"=>"食物库存","Medicine"=>"护理包库存","CriticalRemaining"=>"救治剩余时间","UnlimitedResources"=>"测试无限资源","WorldSeconds"=>"世界时间",
         "WaterRescueTools"=>"救援用品库存","WaterRescuePurchases"=>"救援用品购买次数",
         "CourtshipTools"=>"诱导用品库存","CourtshipToolPurchases"=>"诱导用品购买次数",
         "BreedingInterest"=>"繁育兴趣","InducedInterestRemaining"=>"诱导剩余时间","NextInductionAt"=>"下次可诱导时间",

@@ -18,6 +18,7 @@ public partial class InteractionRoom
         _thirstLabel=Text("口渴度",13);meters.AddChild(_thirstLabel);
         _thirstMeter=NeedMeter(meters,"7cabc0",out _thirstFill);
         _healthLabel=Text("身体状态：正常",14);meters.AddChild(_healthLabel);
+        BuildImmediateInterventions(meters);
         _personalityLabel=Text("",12,"78816e");meters.AddChild(_personalityLabel);
         var overview=new GridContainer{Columns=2,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
         overview.AddThemeConstantOverride("h_separation",10);overview.AddThemeConstantOverride("v_separation",7);meters.AddChild(overview);
@@ -26,7 +27,6 @@ public partial class InteractionRoom
         BuildRelationshipMeter(overview,"生命", "88a877",out _lifeLabel,out _lifeMeter,out _lifeFill);
         BuildRelationshipMeter(overview,"恐惧", "ae8c74",out _fearLabel,out _fearMeter,out _fearFill);
         _continuityLabel=Text("",12,"78816e");meters.AddChild(_continuityLabel);
-        BuildImmediateInterventions(meters);
     }
     private void BuildRelationshipMeter(Control parent,string name,string color,out Label label,out ProgressBar bar,out StyleBoxFlat fill)
     {
@@ -53,6 +53,8 @@ public partial class InteractionRoom
             HealthStatus.Dead=>"死亡",HealthStatus.Critical=>"重伤 · 急需救治",
             HealthStatus.Recovering=>"恢复中",HealthStatus.Injured=>"受伤",_=>"正常"
         });
+        if(c.Condition==PhysicalCondition.Critical)
+            _healthLabel.Text+=$" · 救治余下约 {Math.Ceiling(Math.Max(0,c.CriticalRemaining)):0} 秒";
         var personality=c.Personality;
         _personalityLabel.Text="性情："+(personality.Kindness>=.65?"友善":personality.Kindness<.25?"自私":"随和")+
             (personality.Carelessness>=.5?" · 粗心":personality.Carelessness<.2?" · 谨慎":"")+

@@ -215,11 +215,10 @@ public sealed partial class WorldSimulation
             Emit(IncidentKind.Attack,target,c.Id,$"{c.Name}啃食了同伴的残躯",8);
             return true;
         }
-        Hurt(target,4+c.Aggression*5,"饥饿袭击",c.Id,BodyPart.Side);
-        RememberThreat(target,12);target.Fear=Clamp100(target.Fear+12);
+        InflictPeerAttack(c,target,4+c.Aggression*5,8,"饥饿袭击",
+            $"{c.Name}因极度饥饿袭击了{target.Name}","遭到饥饿中的同伴袭击，需要离开危险。",12);
         var bond=FamilyBond(target,c);bond.Fear=Clamp100(bond.Fear+15);bond.Resentment=Clamp100(bond.Resentment+15);
         bond.LastHarmAt=State.WorldSeconds;bond.LastEvent="遭到饥饿中的同伴袭击";
-        Emit(IncidentKind.Attack,target,c.Id,$"{c.Name}因极度饥饿袭击了{target.Name}",8);
         State.HelpTargetId=target.Id;
         if(target.Condition!=PhysicalCondition.Dead)
         {

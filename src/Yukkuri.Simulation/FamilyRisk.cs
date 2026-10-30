@@ -284,9 +284,10 @@ public sealed partial class WorldSimulation
         if(risk.WarningRemaining>0){c.Activity="紧盯幼体，显露危险敌意";return true;}
         if(!FamilyInContact(c,child)){RoomMove(c,child.X,child.Z,dt);c.Activity="危险地靠近幼体";return true;}
         c.Activity="正在伤害幼体";if(risk.StrikeRemaining>0)return true;
-        risk.StrikeRemaining=3;Hurt(child,8+c.Aggression*8,"母体在压力下伤害幼体",c.Id,BodyPart.Side);
-        var incident=Emit(IncidentKind.Attack,child,c.Id,$"{c.Name}在{risk.Cause}下伤害幼体",8);
-        Remember(child,incident,"受到亲代伤害，需要保护。",8);
+        risk.StrikeRemaining=3;
+        double damage=8+c.Aggression*8;
+        InflictPeerAttack(c,child,damage,8,"母体在压力下伤害幼体",
+            $"{c.Name}在{risk.Cause}下伤害幼体","受到亲代伤害，需要保护。",damage*.8);
         var bond=FamilyBond(child,c);bond.Fear=Clamp100(bond.Fear+15);bond.Resentment=Clamp100(bond.Resentment+10);bond.LastHarmAt=State.WorldSeconds;
         if(child.Condition==PhysicalCondition.Dead)StopChildThreat(c,"幼体在伤害中离世，已发生的后果不会被取消。",300);
         else

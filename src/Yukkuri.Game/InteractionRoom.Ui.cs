@@ -78,6 +78,7 @@ public partial class InteractionRoom
         {var action=entry.Item2;var button=Button(entry.Item1,()=>SelectQuickTool(action));_directToolButtons[action]=button;_quickTools.AddChild(button);}
         _quickTools.AddChild(Button("救援用品 · 点油救起",ArmWaterRescueTool));
         _quickTools.AddChild(Button("购买救援用品",()=>ShowRescueSupplies()));
+        _quickTools.AddChild(Button("购买护理用品",()=>ShowMedicineSupplies()));
         foreach(var entry in new[]{("说话","P01"),("毛巾","P07"),("护理用品","P11"),("包裹","P05"),("球与小宝物","P09")})
         {string id=entry.Item2;_quickTools.AddChild(Button(entry.Item1,()=>SelectGroup(InteractionCatalog.Groups.Single(g=>g.Id==id))));}
         _groupList=Column(toolLists,6);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
@@ -343,6 +344,27 @@ public partial class InteractionRoom
         }));
         _modalContents.AddChild(Button("关闭面板",CloseModal));
     }
+    private void ShowMedicineSupplies(string? result=null)
+    {
+        OpenModal("护理用品");
+        int price=WorldSimulation.MedicineBundlePrice,count=WorldSimulation.MedicineBundleCount;
+        _modalContents.AddChild(Text($"护理用品 · {count} 包 / {price} 元",20));
+        _modalContents.AddChild(Text("拿出后按住适用伤处，完成护理才结算一包。稳定伤势后仍需进食和休息；反复包扎不会立刻恢复。"));
+        _modalContents.AddChild(Text(Sim.State.UnlimitedResources?
+            "测试无限资源已开启：购买不扣钱，当前护理也不扣库存。":$"现有金钱：{Sim.State.Money} 元 · 每次完成护理消耗1包"));
+        _modalContents.AddChild(Text($"护理包库存：{Sim.State.Medicine}"));
+        if(!string.IsNullOrEmpty(result))_modalContents.AddChild(Text(result,14));
+        var buy=Button($"购买{count}包",()=>
+        {
+            bool purchased=Sim.BuyMedicine();
+            ShowMedicineSupplies(purchased?$"已入库{count}包护理用品。":"金钱不足，尚未购买。");
+        });
+        buy.Disabled=!Sim.State.UnlimitedResources&&Sim.State.Money<price;_modalContents.AddChild(buy);
+        var equip=Button("拿起护理用品",()=>{CloseModal();SelectQuickTool(InteractionAction.Care);});
+        equip.Disabled=!Sim.State.UnlimitedResources&&Sim.State.Medicine<=0;_modalContents.AddChild(equip);
+        _modalContents.AddChild(Button("返回小院",CloseModal));
+    }
+
     private void ShowRescueSupplies(string? result=null)
     {
         OpenModal("救援用品");

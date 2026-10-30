@@ -61,7 +61,7 @@ public sealed partial class WorldSimulation
         if(c.Knowledge.Count>80)c.Knowledge.RemoveAt(0);
     }
     public bool Knows(Creature c,string? incidentId)=>incidentId!=null&&c.Knowledge.Any(k=>k.IncidentId==incidentId&&k.KnowsActor);
-    private Incident Emit(IncidentKind kind,Creature target,string? actorId,string description,double severity=0,string? reason=null)
+    private Incident Emit(IncidentKind kind,Creature target,string? actorId,string description,double severity=0,string? reason=null,Creature? visibleActor=null)
     {
         var incident=new Incident{Id=$"event-{++State.IncidentSequence:000000}",Kind=kind,TargetId=target.Id,ActorId=actorId,
             RegionId=target.RegionId,X=target.X,Z=target.Z,At=State.WorldSeconds,Description=description,Severity=severity,ReasonIncidentId=reason};
@@ -81,7 +81,8 @@ public sealed partial class WorldSimulation
             if(State.InteractionPlaytest&&(c.Family.ColdStorage.Stored||target.Family.ColdStorage.Stored))continue;
             double distance=Distance(c.X,c.Z,target.X,target.Z);
             bool sees=(State.InteractionPlaytest?FamilyVisible(c,target):distance<=4.5)||c.Id==actorId||c.Id==target.Id;
-            if(sees)Learn(c,incident,KnowledgeSource.Witness,true);
+            if(sees)Learn(c,incident,KnowledgeSource.Witness,
+                visibleActor==null||c.Id==target.Id||c.Id==actorId||FamilyVisible(c,visibleActor));
             else if(severity>=4&&distance<=7)Learn(c,incident,KnowledgeSource.Heard,false);
         }
         if(target.RegionId==State.ActiveRegionId||actorId=="player")State.PlayerKnownIncidents.Add(incident.Id);
@@ -183,10 +184,13 @@ public sealed partial class WorldSimulation
         React(c,Expression.Delighted,"这里也有我的位置了！","开心地轻轻弹跳。",5);
         State.Progress.Completed.Add("admit");Log($"你接纳了{c.Name}。它开始把乐园当作家；牌照仍需另行申请。");return true;
     }
+    public const int MedicineBundlePrice=15;
+    public const int MedicineBundleCount=3;
     public bool BuyMedicine()
     {
-        if(!State.UnlimitedResources&&State.Money<15)return false;
-        if(!State.UnlimitedResources)State.Money-=15;State.Medicine+=3;Log("补给：3份护理包入库。");return true;
+        if(!State.UnlimitedResources&&State.Money<MedicineBundlePrice)return false;
+        if(!State.UnlimitedResources)State.Money-=MedicineBundlePrice;
+        State.Medicine+=MedicineBundleCount;Log($"补给：{MedicineBundleCount}份护理包入库。");return true;
     }
     public InteractionResult ClaimCareContract()
     {
