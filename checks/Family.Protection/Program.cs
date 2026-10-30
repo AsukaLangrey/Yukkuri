@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Reflection;
 using Yukkuri.Simulation;
 
 // Remote authorised machine only. Do not execute on the original development workstation.
@@ -44,6 +45,51 @@ WorldSimulation Fixture(bool maternal=false)
     return sim;
 }
 bool HasThreat(Creature actor,bool maternal)=>maternal?actor.Family.ChildThreat.TargetId!=null:actor.Family.Conflict.TargetId!=null;
+double Gap(Creature a,Creature b)=>Math.Sqrt(Math.Pow(a.X-b.X,2)+Math.Pow(a.Z-b.Z,2));
+// Read the actual, side-effect-free predicates for setup/diagnostics only. All
+// protection, warning and movement transitions still use the public Tick path.
+bool ProtectionPredicate(WorldSimulation sim,string name,params object[] args)=>(bool)(typeof(WorldSimulation)
+    .GetMethod(name,BindingFlags.Instance|BindingFlags.NonPublic)!.Invoke(sim,args)!);
+bool ProtectionContact(WorldSimulation sim,bool maternal)
+{
+    var actor=sim.State.Creatures[0];var protector=sim.State.Creatures[1];var target=sim.State.Creatures[2];
+    return ProtectionPredicate(sim,"FamilyInContact",protector,target)&&
+        ProtectionPredicate(sim,"FamilyVisible",protector,actor,maternal?2.5:2.0);
+}
+string ProtectionState(WorldSimulation sim,bool maternal)=>JsonSerializer.Serialize(new
+{
+    maternal,sim.State.WorldSeconds,threat=HasThreat(sim.State.Creatures[0],maternal),
+    canProtect=ProtectionPredicate(sim,"CanProtectFamily",sim.State.Creatures[1]),
+    contact=ProtectionContact(sim,maternal),
+    targetDistance=Gap(sim.State.Creatures[1],sim.State.Creatures[2]),
+    actorDistance=Gap(sim.State.Creatures[1],sim.State.Creatures[0]),
+    contactRange=WorldSimulation.InteractionFootprint(sim.State.Creatures[1])+WorldSimulation.InteractionFootprint(sim.State.Creatures[2])+.28,
+    creatures=sim.State.Creatures.Select(c=>new
+    {
+        c.Id,c.X,c.Z,c.TargetX,c.TargetZ,c.DecisionIn,c.Activity,c.Condition,c.Fullness,c.Energy,c.Pain,c.Fear,
+        c.Interaction.Height,c.Interaction.FootIntegrity,c.Interaction.EatingRemaining,c.Interaction.Resting,c.Interaction.RestRemaining,
+        c.Interaction.WaitRemaining,c.Interaction.ActiveCue,c.Interaction.FollowPlayer,c.Interaction.Hydration,
+        c.Family.CompanionTargetId,c.Family.CareTargetId,c.Family.CareParcelId,c.Family.FlightRemaining,c.Family.LastEvent,
+        c.Family.ChildThreat,c.Family.Conflict
+    })
+});
+(double X,double Z) ProtectionStandingPoint(WorldSimulation sim)
+{
+    var actor=sim.State.Creatures[0];var protector=sim.State.Creatures[1];var target=sim.State.Creatures[2];
+    // Intersect two circles around the CURRENT parties. Keep a .08 gap beyond
+    // each solid footprint and .20 within contact, allowing the normal walking
+    // route to stop within its .20 destination tolerance without body overlap.
+    double actorRadius=WorldSimulation.InteractionFootprint(protector)+WorldSimulation.InteractionFootprint(actor)+.08;
+    double targetRadius=WorldSimulation.InteractionFootprint(protector)+WorldSimulation.InteractionFootprint(target)+.08;
+    double distance=Gap(actor,target);
+    Require(distance>0&&distance<actorRadius+targetRadius&&distance>Math.Abs(actorRadius-targetRadius),"无法建立非重叠保护站位");
+    double along=(actorRadius*actorRadius-targetRadius*targetRadius+distance*distance)/(2*distance);
+    double across=Math.Sqrt(actorRadius*actorRadius-along*along);
+    double dx=(target.X-actor.X)/distance,dz=(target.Z-actor.Z)/distance;
+    var point=(X:actor.X+along*dx-across*dz,Z:actor.Z+along*dz+across*dx);
+    Require(sim.CanPlaceInteractionAt(protector.Id,point.X,point.Z),"保护站位被实体或地形占用");
+    return point;
+}
 void Busy(WorldSimulation sim,string mode)
 {
     var protector=sim.State.Creatures[1];
@@ -89,11 +135,58 @@ Check("保护者远离时不消除危险，实际走近后才能保护",()=>
 {
     foreach(bool maternal in new[]{false,true})
     {
-        var sim=Fixture(maternal);var protector=sim.State.Creatures[1];
+        var sim=Fixture(maternal);var protector=sim.State.Creatures[1];var target=sim.State.Creatures[2];
         protector.X=protector.TargetX=-5;protector.Z=protector.TargetZ=-5;Tick(sim,.25);
-        Require(HasThreat(sim.State.Creatures[0],maternal),"远处亲友自动保护");
+        Require(HasThreat(sim.State.Creatures[0],maternal),"远处亲友自动保护："+ProtectionState(sim,maternal));
+        // Keep the former coordinates as diagnostic evidence, not as a claim
+        // that a moving target is still there. NextAutonomyAt does not stop idle walking.
         protector.X=protector.TargetX=maternal?.75:.825;protector.Z=protector.TargetZ=maternal?1.4:1.43;
-        Tick(sim,.25);Require(!HasThreat(sim.State.Creatures[0],maternal),"实际在近处仍不保护");
+        Console.WriteLine("DIAG former-near-position "+ProtectionState(sim,maternal));
+        var point=ProtectionStandingPoint(sim);protector.X=protector.TargetX=point.X;protector.Z=protector.TargetZ=point.Z;
+        Require(ProtectionContact(sim,maternal)&&ProtectionPredicate(sim,"CanProtectFamily",protector),"近处保护前置不成立："+ProtectionState(sim,maternal));
+        string before=ProtectionState(sim,maternal);
+        Tick(sim,.25);Require(!HasThreat(sim.State.Creatures[0],maternal),"实际在近处仍不保护：before="+before+"; after="+ProtectionState(sim,maternal));
+        Require(target.Health==100&&(sim.State.Creatures[0].Family.LastEvent.Contains("护住")||protector.Family.LastEvent.Contains("护住")),
+            "危险虽结束，但没有实际保护证据："+ProtectionState(sim,maternal));
+    }
+});
+Check("保护者沿普通移动走近，接触前保持危险，接触后在预警内护住",()=>
+{
+    foreach(bool maternal in new[]{false,true})
+    {
+        var sim=Fixture(maternal);var actor=sim.State.Creatures[0];var protector=sim.State.Creatures[1];var target=sim.State.Creatures[2];
+        var point=ProtectionStandingPoint(sim);
+        // Isolate the route from a new random idle destination, without waiting,
+        // restraint, injury, teleporting during the route or calling a private action.
+        foreach(var c in sim.State.Creatures)c.DecisionIn=60;
+        protector.X=point.X;protector.Z=point.Z+2;protector.TargetX=point.X;protector.TargetZ=point.Z;
+        Require(sim.CanPlaceInteractionAt(protector.Id,protector.X,protector.Z)&&!ProtectionContact(sim,maternal),"步行起点不是可行的远处："+ProtectionState(sim,maternal));
+        bool sawDistantFrame=false,sawNearFrame=false;double travel=0,warningAtProtection=0;
+        for(int frame=0;frame<24&&HasThreat(actor,maternal);frame++)
+        {
+            bool wasNear=ProtectionContact(sim,maternal);double x=protector.X,z=protector.Z;
+            double warning=maternal?actor.Family.ChildThreat.WarningRemaining:actor.Family.Conflict.WarningRemaining;
+            string before=ProtectionState(sim,maternal);
+            Tick(sim,.25);
+            bool isNear=ProtectionContact(sim,maternal);
+            double step=Math.Sqrt(Math.Pow(protector.X-x,2)+Math.Pow(protector.Z-z,2));travel+=step;
+            Require(step<=sim.Config.MoveSpeed*.25+.000001,"保护者发生超出普通移动速度的位移："+ProtectionState(sim,maternal));
+            if(!wasNear&&!isNear)
+            {
+                sawDistantFrame=true;
+                Require(HasThreat(actor,maternal),"还未走到保护位置就清除危险：before="+before+"; after="+ProtectionState(sim,maternal));
+            }
+            if(wasNear||isNear)sawNearFrame=true;
+            if(!HasThreat(actor,maternal))
+            {
+                warningAtProtection=warning;
+                Require((wasNear||isNear)&&(actor.Family.LastEvent.Contains("护住")||protector.Family.LastEvent.Contains("护住")),
+                    "危险结束时没有近处实际保护：before="+before+"; after="+ProtectionState(sim,maternal));
+            }
+        }
+        Require(sawDistantFrame&&sawNearFrame&&travel>1,"没有经历从远到近的真实行走："+ProtectionState(sim,maternal));
+        Require(!HasThreat(actor,maternal)&&warningAtProtection>0&&target.Health==100,"走到身旁未能在预警内保护："+ProtectionState(sim,maternal));
+        Require(actor.Family.LastEvent.Contains("护住")||protector.Family.LastEvent.Contains("护住"),"危险结束并非实际保护："+ProtectionState(sim,maternal));
     }
 });
 Check("悬挂高处目标不能被地面冲突或母体攻击命中",()=>

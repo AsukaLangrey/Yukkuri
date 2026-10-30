@@ -30,3 +30,6 @@ H批：关系子代理拥有FamilySocial.cs、InteractionBehavior.cs、新checks
 
 I批：关系子代理拥有FamilySocial.cs、新checks/Family.AdoptionJourney与I-adoption/I-family-gap；身体子代理拥有FamilyCare.cs、新checks/Family.AssistedCare与I-assisted-care/I-body-gap；界面子代理拥有InteractionRoom.Family.cs与I-care-ui/I-ui-gap。
 主协调拥有InteractionBehavior失能入口接线、新checks/Family.Growth、原ColdCare幼体年龄夹具、请求与总交接；各子代理停写后整合FamilySocial.ClearFamilyTargetsTo取消原因。全部Git由主协调操作，所有检查源码只交独立远端运行。
+
+J批（用户十小时续授权）：身体子代理仅PregnancyBoundaries/AssistedCare两检查Program.cs和J-check-build.txt；界面子代理仅Main.MilestoneStates.cs及J-game-build.txt；关系子代理拥有FamilyRisk.cs、checks/Family.Protection/Program.cs和J-protection.txt，跨文件问题先交主协调。
+主协调拥有checks/Interaction.Continuity/Program.cs、FamilyCare.cs原因显示顺序、测试请求、c08/c09证据与阅读记录、总交接及全部Git操作。此分工延续用户已授权的适当并行，各子代理禁止运行和Git。

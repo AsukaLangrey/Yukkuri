@@ -1422,12 +1422,44 @@ Check("push release off the body cannot apply saved force or a reentry pointer j
 Check("an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",()=>
 {
     var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;c.Fullness=90;
+    // The first damaging press intentionally cancels FollowPlayer. Give the
+    // retained positive-X assertion an explicit independent walking target.
+    // No position, target, need or willingness is rewritten after the contact.
+    c.TargetX=3;c.TargetZ=0;
     sim.SetInteractionHand(3,0,true);c.Interaction.FollowPlayer=true;c.Interaction.Hydration=90;
     var input=new InteractionInput(InteractionAction.Press,BodyPart.Side,Force:.3,Duration:.1);
     sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);double health=c.Health;
+    Require(!c.Interaction.FollowPlayer,"damaging pressure did not cancel following before the off-contact movement check");
     sim.ContinueInteractionGesture(input,false);
     for(int frame=0;frame<15;frame++){sim.SetInteractionHand(3,0,true);Tick(sim,1);}
-    Require(c.X>.1&&c.Health>=health&&InteractionPresentation.Pose(c)!="pressure",$"empty mouse hold froze movement or continued pressure: X={c.X}, health={c.Health}/{health}, pose={InteractionPresentation.Pose(c)}");
+    Require(c.X>.1&&c.Health>=health&&InteractionPresentation.Pose(c)!="pressure",$"empty mouse hold froze movement or continued pressure: X={c.X}, health={c.Health}/{health}, pose={InteractionPresentation.Pose(c)}, target={c.TargetX}/{c.TargetZ}, follow={c.Interaction.FollowPlayer}, ownsPose={sim.InteractionGestureOwnsPose}, activity={c.Activity}");
+    Require(sim.HasInteractionGesture&&!sim.InteractionGestureOwnsPose&&!c.Interaction.FollowPlayer,"empty hold reactivated pressure or following");
+    sim.EndInteractionGesture();
+});
+Check("a harmful press cancels following but an off-contact held mouse preserves independent movement",()=>
+{
+    // Preserve c08's original default negative target and 1.5-second sequence as
+    // a separate control. The hand on the right must not force obedience again.
+    var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;c.Fullness=90;
+    double targetX=c.TargetX,targetZ=c.TargetZ,initialDistance=WorldSimulation.Distance(c.X,c.Z,targetX,targetZ);
+    Require(targetX<0,"control lost the original independent walking target");
+    sim.SetInteractionHand(3,0,true);c.Interaction.FollowPlayer=true;c.Interaction.Hydration=90;
+    var input=new InteractionInput(InteractionAction.Press,BodyPart.Side,Force:.3,Duration:.1);
+    double before=c.Health;sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);double health=c.Health;
+    Require(health<before&&!c.Interaction.FollowPlayer,"initial real damage did not interrupt following");
+    sim.ContinueInteractionGesture(input,false);double travel=0;
+    for(int frame=0;frame<15;frame++)
+    {
+        double x=c.X,z=c.Z;sim.SetInteractionHand(3,0,true);Tick(sim,1);
+        travel+=WorldSimulation.Distance(x,z,c.X,c.Z);
+    }
+    string diagnostics=JsonSerializer.Serialize(new{c.X,c.Z,c.TargetX,c.TargetZ,c.Activity,c.Health,health,c.Interaction.FollowPlayer,travel,
+        pose=InteractionPresentation.Pose(c),sim.HasInteractionGesture,sim.InteractionGestureOwnsPose});
+    Console.WriteLine("OFF_CONTACT_INDEPENDENT "+diagnostics);
+    Require(travel>.1&&WorldSimulation.Distance(c.X,c.Z,targetX,targetZ)<initialDistance&&c.X<0,
+        "independent movement was lost or redirected to the hand: "+diagnostics);
+    Require(c.Health>=health&&!c.Interaction.FollowPlayer&&sim.HasInteractionGesture&&!sim.InteractionGestureOwnsPose&&InteractionPresentation.Pose(c)!="pressure",
+        "off-contact input damaged, deformed or forced following: "+diagnostics);
     sim.EndInteractionGesture();
 });
 Check("following can reach the rear yard without an invisible inner movement boundary",()=>

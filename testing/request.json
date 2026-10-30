@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v15-interaction-depth-I-20261030",
+  "revision": "dot-v16-interaction-depth-J-20261030",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -22,6 +22,12 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "planning/stages/interaction-depth-20261030/J.txt",
+    "planning/stages/interaction-depth-20261030/J-game-build.txt",
+    "planning/stages/interaction-depth-20261030/J-check-build.txt",
+    "planning/stages/interaction-depth-20261030/J-continuity.txt",
+    "planning/stages/interaction-depth-20261030/J-protection.txt",
+    "testing/reviews/20261029T194053Z-281d0cf63c87-c08.md",
     "planning/stages/interaction-depth-20261030/I.txt",
     "planning/stages/interaction-depth-20261030/I-audit.tsv",
     "planning/stages/interaction-depth-20261030/I-adoption.txt",
@@ -180,6 +186,14 @@
     "原默认/旧档幼体即使没有BirthEventId也按身体年龄和原营养/健康/保暖条件成长，不虚构出生事件、不重置身份、累计年龄或固定繁殖角色。冷藏成长仍为0.1身体时间，暂停/近看不成长。Family.ColdCare中明确要保持幼体的夹具改为幼体年龄0，原断言全部保留；不能依赖旧永久幼年缺陷维持夹具。",
     "实际家庭面板观察两方向照护入口、具体当前阻碍、失败后仍能看到双方、正在搬送的真实份额和亲代/养亲区别。原暂停保持且不能在暂停中安排；不要把只读原因说明当作完成照护。真实Wrap幼体吃喝、脚伤亲代保暖、成年伤残对象受助及长大后模型/名单衔接均需实际图形观察，缺条件列未测。",
     "本批没有实现外部茎附着/摘取/断茎、完整器官/手术/内馅转移、六种全部模型和升级，仍见I-audit.tsv。不能用新增检查数量宣称这些范围完成，也不能把B版c06结果套到本批。"
+  ],
+  "interaction_depth_J_focus": [
+    "v16继续保留全部旧要求。c08固定281d0cf实际918通过/2规则失败，另完整游戏3编译错误、两个检查项目编译失败造成28计划案例未运行。c09是环境预检，不是产品复测；不要以最新指针blocked丢掉c08失败基线。",
+    "c09报告独立云工作区的源码和精确.NET10.0.402/Godot4.7.2mono缓存已不存在。当前新源码/请求触发下一轮前，先在获授权独立云环境恢复官方精确工具链和完整固定SHA源码并校验身份，再运行；不得用系统4.6.3或原开发机副本替代。恢复失败明确环境缺项，不把未执行记成通过。",
+    "完整游戏先验证Main.MilestoneStates缺失System.Collections.Generic导入修复。PregnancyBoundaries/AssistedCare改为真实Hang→Lower，不再写internal Lowering setter，确认两项目能够编译并执行原12/16组；所有原断言保留。真实Carried+Lowering照护原因应优先显示正在放下，资格仍拒绝。",
+    "Continuity空按原X>.1断言保留；初次实际伤害仍取消FollowPlayer，正方向夹具只在动作前设独立右目标，不在过程中改坐标/需求/意愿。新增原c08负目标场景对照，记录OFF_CONTACT_INDEPENDENT，验证手在右侧而自主目标在左侧仍可移动、无持续受压或强迫跟随。此为夹具与对照，不能称修改了产品伤害/自主规则。",
+    "Family.Protection保留远处不能保护、真实近处才能保护的断言，按当前当事人位置核对可占据站位与实际接触，保留位置/视线/资格诊断；另用真实普通时间行走靠近的对照验证。c08日志没有分支和当帧位置，不能据旧失败消息宣称所有保护都失效。",
+    "对当前完整SHA重新运行完整Continuity、AutonomyPriority、CompletedNeeds、Protection及其相关家庭检查。独立部分失败不跳过其他可执行项。实际游戏输入/画面/音频及历史存档仍单列证据，开发机本轮没有运行或编译。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

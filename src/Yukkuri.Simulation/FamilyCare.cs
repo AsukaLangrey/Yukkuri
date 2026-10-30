@@ -83,9 +83,9 @@ public sealed partial class WorldSimulation
         if(!recipient.IsYoung&&!NeedsAssistedIntake(recipient))return "成年对象目前能自行生活，或暂时不需要补充食水。";
         if(recipient.Family.ColdStorage.Stored)return "对象仍在冷藏中，先安全取出再安排食水。";
         if(FamilyRules.UnderIntervention(recipient))return "对象仍在繁育干预中，先停止干预并放稳身体。";
+        if(recipient.Interaction.Lowering)return "对象正在放下，等放稳后再安排。";
         if(recipient.Interaction.Carried)return "对象还被手托着，先放稳再安排送食水。";
         if(recipient.Interaction.Falling)return "对象正在下落，先帮助它安全落稳。";
-        if(recipient.Interaction.Lowering)return "对象正在放下，等放稳后再安排。";
         if(recipient.Interaction.Height>.05)return "对象还在高处，先安置到地面稳定支撑处。";
         if(recipient.Interaction.Restraint is not (RestraintKind.None or RestraintKind.Wrap)||recipient.Interaction.Supine)
             return "对象正在箱内、悬挂或其他受限姿势中，先解除限制并放稳；地面柔软包裹可以保留。";

@@ -1,0 +1,15 @@
+J批：十小时Goal续接与c08失败修补
+2026-10-30；基线281d0cf63c87adcbe14d5503d67713e430acba3c。
+
+用户已明确继续Goal并改为十小时，09:42 +08查询旧Goal为空，建立新的active目标。继续原本作设定、十倍有限冷藏、不加秘药与独立远测约束；模型优先沿用当前会话，Astra无法继续时已获准降级GPT-6.1 Sol，未宣称主聊天自动切换已配置。
+
+本批优先处理c08明确失败
+1. 完整游戏三个CS1061：Main.MilestoneStates补System.Collections.Generic导入，原调用与断言保留。见J-game-build.txt。
+2. PregnancyBoundaries与AssistedCare两个检查项目CS0200：用真实悬挂→放下过程代替写入internal Lowering，仍须执行原12+16组。实际放下同时Carried，原因说明优先Lowering，其余照护门槛不变。见J-check-build.txt。
+3. Continuity空按鼠标：原日志实际向左走、没有继续受压，但夹具要求向右；明确动作前的独立右目标保留原断言，另保留原负目标流程为独立对照，验证受伤取消跟随后自主移动与空按不持续伤害。见J-continuity.txt。
+4. Protection：保留远处不能保护、真实接触才可保护的边界；核对动态位置、补诊断和真实步行对照。见J-protection.txt，未改保护产品规则。
+
+证据与交接
+c08实测281d0cf：完整游戏3编译错误；33项目调用中31进入案例，918通过/2失败；另外两个项目编译失败，28计划案例未执行。报告与失败摘录已保存testing/reviews/同名c08-evidence，失败摘录SHA256与远端原报告登记一致。完整处理记录见testing/reviews/20261029T194053Z-281d0cf63c87-c08.md。
+c09仅报告独立云工作区缺源码及指定工具链，没有运行项目；它不替代c08完整测试基线。dot-v16要求先恢复官方精确.NET/Godot和完整源码SHA再复测，仍只通过GitHub交接。远端未恢复不妨碍继续独立源码工作。
+本批只静态读写与审查，未编译、运行、游戏、预览、截图或本机脚本。所有修复是否通过须由新的完整固定提交报告证明。当前交付SHA以包含本文件的提交为准。Goal仍active，十小时目标及I-audit中的实质缺项尚未全部完成。

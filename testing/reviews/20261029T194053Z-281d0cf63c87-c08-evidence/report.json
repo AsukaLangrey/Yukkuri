@@ -1,0 +1,2432 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "run_id": "20261029T194053Z-281d0cf63c87-c08",
+  "runner": "dot",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_branch": "main",
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "source_tree": "b744d40f68c312910e6dcdecf1d291b2e262a612",
+  "request_revision": "dot-v15-interaction-depth-I-20261030",
+  "request_sha256": "75b83fe65b776beadba9ae2630e56f56649551d6d339d736ca1dd979df92a59e",
+  "protocol_sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+  "source_worktree_clean": null,
+  "started_at": "2026-10-29T19:40:53Z",
+  "finished_at": "2026-10-29T19:56:18.734168+00:00",
+  "retry_of": null,
+  "supersedes": null,
+  "environment": {
+    "id": "dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe",
+    "checked_at": "2026-10-29T19:51:33.484978+00:00",
+    "os": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logical_processors": 9,
+    "gpu": "Not probed this round; prior c07 observed Mesa llvmpipe LLVM19.1.7 / Mesa25.0.7. No current graphics execution because game build failed.",
+    "driver": "Not re-observed this round; prior c07 OpenGL4.5 Core Mesa25.0.7-2+deb13u1",
+    "dotnet": "10.0.402",
+    "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+    "display": "No current native window: dependency game-build failed. Own cloud desktop previously verified, not user development PC.",
+    "audio": "Not tested this round; no game/audio launch. Prior c07 ALSA unavailable/Dummy fallback is historical only.",
+    "desktop_observation_authorized": true,
+    "profile": "cloud1940-c08 (allocated but not launched)",
+    "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+    "limitations": [
+      "Linux authorized same-version package is not locked Windows platform acceptance.",
+      "No current runtime, visual or audible acceptance."
+    ],
+    "current_verification": [
+      "godot-current-verification.json",
+      "nuget-current-verification.json",
+      "dotnet-info.txt",
+      "environment-raw.txt"
+    ]
+  },
+  "status": "failed",
+  "summary": "完整游戏构建 failed，0警告/3错误；33个项目调用中31个进入用例；实际断言918通过/2失败；另2个编译失败，28个计划案例未执行。构建失败，本轮导入、运行、原生UI、引擎接触/渲染与试听均未执行，无当前图像验收。素材与历史样本仍有缺项，不是整体验收。",
+  "checks": [
+    {
+      "id": "lfs-integrity",
+      "status": "blocked",
+      "command": "python /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/report-preparation/assemble_report.py",
+      "working_directory": "/workspace/scratch/31f78fd1d54c",
+      "started_at": "2026-10-29T19:56:18.681329+00:00",
+      "finished_at": "2026-10-29T19:56:18.734168+00:00",
+      "exit_code": 0,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "已物化原始对象按 LFS OID/字节数重核；3 个原始对象在本云未取得。无新受支持取件通道，本轮没有重复获取失败。不能据此断言开发侧未上传。",
+      "evidence": [
+        "evidence/lfs-audit.json",
+        "evidence/source-verification.json"
+      ],
+      "command_scope": "Non-executing independent hash verification during report assembly; original acquisition audit retained separately.",
+      "initial_acquisition_audit_observed_at": "2026-10-29T19:50:15.061043+00:00",
+      "recovered_count": 12,
+      "missing_count": 3,
+      "exit_code_scope": "审计结束，不表示完整LFS通过。"
+    },
+    {
+      "id": "game-build",
+      "status": "failed",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet build src/Yukkuri.Game/Yukkuri.Game.csproj --configuration Debug --no-restore -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:50:16Z",
+      "finished_at": "2026-10-29T19:50:25Z",
+      "exit_code": 1,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前固定源码 Linux Debug 完整游戏构建。不是 Windows 平台或打包通过。 0 warning / 3 error。",
+      "evidence": [
+        "evidence/game-build-start.txt",
+        "evidence/game-build-end.txt",
+        "evidence/game-build-exit.txt",
+        "evidence/game-build.txt",
+        "evidence/game-restore-start.txt",
+        "evidence/game-restore-end.txt",
+        "evidence/game-restore-exit.txt",
+        "evidence/game-restore.txt"
+      ],
+      "timeout_seconds": 300,
+      "restore": {
+        "id": "game-restore",
+        "status": "passed",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore src/Yukkuri.Game/Yukkuri.Game.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.godot.Config -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:50:15Z",
+        "finished_at": "2026-10-29T19:50:16Z",
+        "exit_code": 0,
+        "passed_count": 1,
+        "failed_count": 0,
+        "seeds": [],
+        "reason": "本轮固定源码，官方准确包身份与隔离缓存 restore。",
+        "evidence": [
+          "evidence/game-restore-start.txt",
+          "evidence/game-restore-end.txt",
+          "evidence/game-restore-exit.txt",
+          "evidence/game-restore.txt"
+        ],
+        "timeout_seconds": 300
+      },
+      "warning_count": 0,
+      "error_count": 3,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Main.MilestoneStates.cs(103,56): error CS1061: 'Dictionary<string, int>' does not contain a definition for 'GetValueOrDefault' and no accessible extension method 'GetValueOrDefault' accepting a first argument of type 'Dictionary<string, int>' could be found (are you missing a using directive or an assembly reference?) [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Yukkuri.Game.csproj]",
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Main.MilestoneStates.cs(112,40): error CS1061: 'Dictionary<string, int>' does not contain a definition for 'GetValueOrDefault' and no accessible extension method 'GetValueOrDefault' accepting a first argument of type 'Dictionary<string, int>' could be found (are you missing a using directive or an assembly reference?) [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Yukkuri.Game.csproj]",
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Main.MilestoneStates.cs(115,89): error CS1061: 'Dictionary<string, int>' does not contain a definition for 'GetValueOrDefault' and no accessible extension method 'GetValueOrDefault' accepting a first argument of type 'Dictionary<string, int>' could be found (are you missing a using directive or an assembly reference?) [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Yukkuri.Game.csproj]"
+      ]
+    },
+    {
+      "id": "Simulation.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Simulation.Smoke/Simulation.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:50:34.740518+00:00",
+      "finished_at": "2026-10-29T19:50:42.746337+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Simulation.Smoke.txt",
+        "evidence/Simulation.Smoke-restore.txt"
+      ],
+      "passed_count": 125,
+      "failed_count": 0,
+      "restore": {
+        "id": "Simulation.Smoke-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Simulation.Smoke/Simulation.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:50:33.721512+00:00",
+        "finished_at": "2026-10-29T19:50:34.739538+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Simulation.Smoke-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        92137,
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Milestone.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Milestone.Smoke/Milestone.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:50:43.769053+00:00",
+      "finished_at": "2026-10-29T19:50:47.246282+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Milestone.Smoke.txt",
+        "evidence/Milestone.Smoke-restore.txt"
+      ],
+      "passed_count": 63,
+      "failed_count": 0,
+      "restore": {
+        "id": "Milestone.Smoke-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Milestone.Smoke/Milestone.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:50:42.748733+00:00",
+        "finished_at": "2026-10-29T19:50:43.768578+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Milestone.Smoke-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        92137,
+        20261027
+      ],
+      "seed_schedule": "SharingScene input seeds 1..40 and 1..120; RandomState=unchecked(seed*0x9E3779B97F4A7C15UL).",
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Smoke/Interaction.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/Interaction.Smoke.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:50:48.164575+00:00",
+      "finished_at": "2026-10-29T19:50:51.794354+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Smoke.txt",
+        "evidence/Interaction.Smoke.json",
+        "evidence/Interaction.Smoke-restore.txt"
+      ],
+      "passed_count": 48,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "results_count": 48,
+      "restore": {
+        "id": "Interaction.Smoke-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Smoke/Interaction.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:50:47.246811+00:00",
+        "finished_at": "2026-10-29T19:50:48.163958+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.Smoke-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": true,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Input.Intent",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Input.Intent/Input.Intent.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/Input.Intent.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:50:52.813019+00:00",
+      "finished_at": "2026-10-29T19:50:56.698239+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Input.Intent.txt",
+        "evidence/Input.Intent.json",
+        "evidence/Input.Intent-restore.txt"
+      ],
+      "passed_count": 43,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "results_count": 43,
+      "restore": {
+        "id": "Input.Intent-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Input.Intent/Input.Intent.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:50:51.795020+00:00",
+        "finished_at": "2026-10-29T19:50:52.812339+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Input.Intent-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": true,
+      "execution_phase": "test"
+    },
+    {
+      "id": "NaturalLife.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/NaturalLife.Smoke.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:50:57.767132+00:00",
+      "finished_at": "2026-10-29T19:51:04.662665+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/NaturalLife.Smoke.txt",
+        "evidence/NaturalLife.Smoke.json",
+        "evidence/NaturalLife.Smoke-restore.txt"
+      ],
+      "passed_count": 95,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "results_count": 95,
+      "restore": {
+        "id": "NaturalLife.Smoke-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:50:56.699123+00:00",
+        "finished_at": "2026-10-29T19:50:57.766582+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/NaturalLife.Smoke-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        779,
+        1009,
+        291044,
+        292107,
+        20261028,
+        20261029
+      ],
+      "seed_schedule": "Fixed seed loops 1..20; sampled world seeds deterministically generated by listed new Random seeds; exact source lines retained.",
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": true,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.Continuity",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Continuity/Interaction.Continuity.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/Interaction.Continuity.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:05.632347+00:00",
+      "finished_at": "2026-10-29T19:51:10.613839+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Interaction.Continuity.txt",
+        "evidence/Interaction.Continuity.json",
+        "evidence/Interaction.Continuity-restore.txt"
+      ],
+      "passed_count": 123,
+      "failed_count": 1,
+      "json_success": false,
+      "json_failures": 1,
+      "results_count": 124,
+      "restore": {
+        "id": "Interaction.Continuity-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Continuity/Interaction.Continuity.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:04.663555+00:00",
+        "finished_at": "2026-10-29T19:51:05.631656+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.Continuity-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_schedule": "Random(71000+seed), seed=1..12; default world seed 20261028.",
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": true,
+      "execution_phase": "test",
+      "scope_note": "Current H held-completion fixture deliberately delays idle decision and clears prior idle target after real destination intake. If it passes, report current fixture pass, not proof of a product swallowing-bug fix; historical failures remain."
+    },
+    {
+      "id": "Interaction.AutonomyPriority",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:11.532614+00:00",
+      "finished_at": "2026-10-29T19:51:15.107979+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.AutonomyPriority.txt",
+        "evidence/Interaction.AutonomyPriority-restore.txt"
+      ],
+      "passed_count": 12,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.AutonomyPriority-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:10.614724+00:00",
+        "finished_at": "2026-10-29T19:51:11.532059+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.AutonomyPriority-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.CompletedNeeds",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.CompletedNeeds/Interaction.CompletedNeeds.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:16.178644+00:00",
+      "finished_at": "2026-10-29T19:51:19.357087+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.CompletedNeeds.txt",
+        "evidence/Interaction.CompletedNeeds-restore.txt"
+      ],
+      "passed_count": 1,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.CompletedNeeds-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.CompletedNeeds/Interaction.CompletedNeeds.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:15.108868+00:00",
+        "finished_at": "2026-10-29T19:51:16.178089+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.CompletedNeeds-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test",
+      "scope_note": "One top-level stdout PASS/FAIL emitted by try/catch; counted from execution, not Check-call source occurrences."
+    },
+    {
+      "id": "ActorGeometry.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/ActorGeometry.Smoke.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:20.377113+00:00",
+      "finished_at": "2026-10-29T19:51:29.427664+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/ActorGeometry.Smoke.txt",
+        "evidence/ActorGeometry.Smoke.json",
+        "evidence/ActorGeometry.Smoke-restore.txt"
+      ],
+      "passed_count": 93,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": null,
+      "checks_count": 93,
+      "restore": {
+        "id": "ActorGeometry.Smoke-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:19.357783+00:00",
+        "finished_at": "2026-10-29T19:51:20.376106+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/ActorGeometry.Smoke-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028,
+        20261029
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": true,
+      "execution_phase": "test"
+    },
+    {
+      "id": "NaturalLife.Soak",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/NaturalLife.Soak/NaturalLife.Soak.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/evidence/NaturalLife.Soak.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:30.449546+00:00",
+      "finished_at": "2026-10-29T19:51:40.435039+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/NaturalLife.Soak.txt",
+        "evidence/NaturalLife.Soak.json",
+        "evidence/NaturalLife.Soak-restore.txt"
+      ],
+      "passed_count": 24,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "scenarios_count": 24,
+      "expected_scenarios": 24,
+      "seeds": [
+        72341,
+        592813,
+        1597331,
+        20261029
+      ],
+      "simulated_seconds_by_scenario": [
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600
+      ],
+      "restore": {
+        "id": "NaturalLife.Soak-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/NaturalLife.Soak/NaturalLife.Soak.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:29.428657+00:00",
+        "finished_at": "2026-10-29T19:51:30.448824+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/NaturalLife.Soak-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 1800,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": true,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.Mouth",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Mouth/Interaction.Mouth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:41.420164+00:00",
+      "finished_at": "2026-10-29T19:51:45.208114+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Mouth.txt",
+        "evidence/Interaction.Mouth-restore.txt"
+      ],
+      "passed_count": 16,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.Mouth-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Mouth/Interaction.Mouth.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:40.451643+00:00",
+        "finished_at": "2026-10-29T19:51:41.419502+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.Mouth-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.MouthCommunication",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.MouthCommunication/Family.MouthCommunication.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:46.429360+00:00",
+      "finished_at": "2026-10-29T19:51:50.263082+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.MouthCommunication.txt",
+        "evidence/Family.MouthCommunication-restore.txt"
+      ],
+      "passed_count": 9,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.MouthCommunication-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.MouthCommunication/Family.MouthCommunication.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:45.208887+00:00",
+        "finished_at": "2026-10-29T19:51:46.428615+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.MouthCommunication-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261102
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.MouthPresentation",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.MouthPresentation/Interaction.MouthPresentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:51.287116+00:00",
+      "finished_at": "2026-10-29T19:51:54.865137+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.MouthPresentation.txt",
+        "evidence/Interaction.MouthPresentation-restore.txt"
+      ],
+      "passed_count": 10,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.MouthPresentation-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.MouthPresentation/Interaction.MouthPresentation.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:50.264118+00:00",
+        "finished_at": "2026-10-29T19:51:51.286425+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.MouthPresentation-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        301030
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.PregnancyBoundaries",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:55.833637+00:00",
+      "finished_at": "2026-10-29T19:51:58.410723+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Family.PregnancyBoundaries.txt",
+        "evidence/Family.PregnancyBoundaries-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.PregnancyBoundaries-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:54.865830+00:00",
+        "finished_at": "2026-10-29T19:51:55.832959+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.PregnancyBoundaries-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "检查程序集在dotnet run编译阶段失败；没有执行顶层案例。0/0是实际断言计数，不是通过；源码计划案例不算执行或断言失败。",
+      "seeds": [
+        20261103
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "compile",
+      "test_execution": "not_run",
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]"
+      ],
+      "source_planned_named_cases": 12,
+      "scope_note": "Contains reflection-based internal TryDeliverFamily boundary isolation as well as controls; not every case is a normal end-to-end pregnancy/UI flow."
+    },
+    {
+      "id": "Interaction.EmergencyIntervention",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.EmergencyIntervention/Interaction.EmergencyIntervention.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:51:59.432290+00:00",
+      "finished_at": "2026-10-29T19:52:02.918380+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.EmergencyIntervention.txt",
+        "evidence/Interaction.EmergencyIntervention-restore.txt"
+      ],
+      "passed_count": 6,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.EmergencyIntervention-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.EmergencyIntervention/Interaction.EmergencyIntervention.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:51:58.411879+00:00",
+        "finished_at": "2026-10-29T19:51:59.431544+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.EmergencyIntervention-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Save.Compatibility",
+      "status": "blocked",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "没有获准真实历史样本；合成坏档/缺字段及当前隔离档不是历史 fixture。",
+      "evidence": []
+    },
+    {
+      "id": "Interaction.Depth",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Depth/Interaction.Depth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:03.988570+00:00",
+      "finished_at": "2026-10-29T19:52:07.224272+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Depth.txt",
+        "evidence/Interaction.Depth-restore.txt"
+      ],
+      "passed_count": 4,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.Depth-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Depth/Interaction.Depth.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:02.919159+00:00",
+        "finished_at": "2026-10-29T19:52:03.987376+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.Depth-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.Injury",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Injury/Interaction.Injury.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:08.248013+00:00",
+      "finished_at": "2026-10-29T19:52:11.824251+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Injury.txt",
+        "evidence/Interaction.Injury-restore.txt"
+      ],
+      "passed_count": 15,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.Injury-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.Injury/Interaction.Injury.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:07.225206+00:00",
+        "finished_at": "2026-10-29T19:52:08.247253+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.Injury-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Social",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Social/Family.Social.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:12.793063+00:00",
+      "finished_at": "2026-10-29T19:52:16.369652+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Social.txt",
+        "evidence/Family.Social-restore.txt"
+      ],
+      "passed_count": 22,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Social-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Social/Family.Social.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:11.825094+00:00",
+        "finished_at": "2026-10-29T19:52:12.792118+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Social-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        912345
+      ],
+      "seed_schedule": "Fixture default 912345; search loop seed=1..1024 with early stop when targets.Count>=3 and peaceful; exact last executed seed not logged.",
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Reproduction",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Reproduction/Family.Reproduction.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:17.389301+00:00",
+      "finished_at": "2026-10-29T19:52:21.017808+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Reproduction.txt",
+        "evidence/Family.Reproduction-restore.txt"
+      ],
+      "passed_count": 8,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Reproduction-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Reproduction/Family.Reproduction.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:16.370616+00:00",
+        "finished_at": "2026-10-29T19:52:17.388492+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Reproduction-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        72381
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.ColdCare",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.ColdCare/Family.ColdCare.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:21.991903+00:00",
+      "finished_at": "2026-10-29T19:52:25.719709+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.ColdCare.txt",
+        "evidence/Family.ColdCare-restore.txt"
+      ],
+      "passed_count": 9,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.ColdCare-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.ColdCare/Family.ColdCare.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:21.018625+00:00",
+        "finished_at": "2026-10-29T19:52:21.991077+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.ColdCare-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        138731
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Aftermath",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Aftermath/Family.Aftermath.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:26.739260+00:00",
+      "finished_at": "2026-10-29T19:52:30.015306+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Aftermath.txt",
+        "evidence/Family.Aftermath-restore.txt"
+      ],
+      "passed_count": 17,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Aftermath-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Aftermath/Family.Aftermath.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:25.720729+00:00",
+        "finished_at": "2026-10-29T19:52:26.737981+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Aftermath-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261030
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Risk",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Risk/Family.Risk.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:30.987370+00:00",
+      "finished_at": "2026-10-29T19:52:34.415738+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Risk.txt",
+        "evidence/Family.Risk-restore.txt"
+      ],
+      "passed_count": 14,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Risk-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Risk/Family.Risk.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:30.016332+00:00",
+        "finished_at": "2026-10-29T19:52:30.986581+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Risk-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        1
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.InjuryPresentation",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.InjuryPresentation/Interaction.InjuryPresentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:35.435402+00:00",
+      "finished_at": "2026-10-29T19:52:38.409981+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.InjuryPresentation.txt",
+        "evidence/Interaction.InjuryPresentation-restore.txt"
+      ],
+      "passed_count": 6,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.InjuryPresentation-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.InjuryPresentation/Interaction.InjuryPresentation.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:34.416702+00:00",
+        "finished_at": "2026-10-29T19:52:35.434526+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.InjuryPresentation-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Compatibility",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Compatibility/Family.Compatibility.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:39.379122+00:00",
+      "finished_at": "2026-10-29T19:52:44.874211+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Compatibility.txt",
+        "evidence/Family.Compatibility-restore.txt"
+      ],
+      "passed_count": 77,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Compatibility-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Compatibility/Family.Compatibility.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:38.410930+00:00",
+        "finished_at": "2026-10-29T19:52:39.378222+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Compatibility-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        1
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.CareLearning",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.CareLearning/Family.CareLearning.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:45.945138+00:00",
+      "finished_at": "2026-10-29T19:52:49.772096+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.CareLearning.txt",
+        "evidence/Family.CareLearning-restore.txt"
+      ],
+      "passed_count": 14,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.CareLearning-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.CareLearning/Family.CareLearning.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:44.875409+00:00",
+        "finished_at": "2026-10-29T19:52:45.943947+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.CareLearning-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261031
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Teaching",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Teaching/Family.Teaching.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:50.994732+00:00",
+      "finished_at": "2026-10-29T19:52:54.674699+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Teaching.txt",
+        "evidence/Family.Teaching-restore.txt"
+      ],
+      "passed_count": 10,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Teaching-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Teaching/Family.Teaching.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:49.773324+00:00",
+        "finished_at": "2026-10-29T19:52:50.993441+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Teaching-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.AdoptionJourney",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.AdoptionJourney/Family.AdoptionJourney.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:52:55.643941+00:00",
+      "finished_at": "2026-10-29T19:52:59.521146+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.AdoptionJourney.txt",
+        "evidence/Family.AdoptionJourney-restore.txt"
+      ],
+      "passed_count": 6,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.AdoptionJourney-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.AdoptionJourney/Family.AdoptionJourney.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:54.675554+00:00",
+        "finished_at": "2026-10-29T19:52:55.642958+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.AdoptionJourney-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261104
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.AssistedCare",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.AssistedCare/Family.AssistedCare.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:53:00.592311+00:00",
+      "finished_at": "2026-10-29T19:53:03.322747+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Family.AssistedCare.txt",
+        "evidence/Family.AssistedCare-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.AssistedCare-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.AssistedCare/Family.AssistedCare.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:52:59.522115+00:00",
+        "finished_at": "2026-10-29T19:53:00.591117+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.AssistedCare-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "检查程序集在dotnet run编译阶段失败；没有执行顶层案例。0/0是实际断言计数，不是通过；源码计划案例不算执行或断言失败。",
+      "seeds": [
+        20261031
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "compile",
+      "test_execution": "not_run",
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Program.cs(152,17): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Family.AssistedCare.csproj]"
+      ],
+      "source_planned_named_cases": 16
+    },
+    {
+      "id": "Family.Growth",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Growth/Family.Growth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:53:04.295346+00:00",
+      "finished_at": "2026-10-29T19:53:07.619460+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Growth.txt",
+        "evidence/Family.Growth-restore.txt"
+      ],
+      "passed_count": 5,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Growth-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Growth/Family.Growth.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:53:03.323956+00:00",
+        "finished_at": "2026-10-29T19:53:04.294282+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Growth-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.StateBoundaries",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.StateBoundaries/Interaction.StateBoundaries.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:53:08.641315+00:00",
+      "finished_at": "2026-10-29T19:53:11.971737+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.StateBoundaries.txt",
+        "evidence/Interaction.StateBoundaries-restore.txt"
+      ],
+      "passed_count": 10,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.StateBoundaries-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.StateBoundaries/Interaction.StateBoundaries.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:53:07.620500+00:00",
+        "finished_at": "2026-10-29T19:53:08.639873+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.StateBoundaries-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Interaction.HumanCompany",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.HumanCompany/Interaction.HumanCompany.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:53:12.991325+00:00",
+      "finished_at": "2026-10-29T19:53:16.470081+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.HumanCompany.txt",
+        "evidence/Interaction.HumanCompany-restore.txt"
+      ],
+      "passed_count": 17,
+      "failed_count": 0,
+      "restore": {
+        "id": "Interaction.HumanCompany-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Interaction.HumanCompany/Interaction.HumanCompany.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:53:11.972916+00:00",
+        "finished_at": "2026-10-29T19:53:12.990308+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Interaction.HumanCompany-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261028
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Protection",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Protection/Family.Protection.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:53:17.440249+00:00",
+      "finished_at": "2026-10-29T19:53:20.718718+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Family.Protection.txt",
+        "evidence/Family.Protection-restore.txt"
+      ],
+      "passed_count": 13,
+      "failed_count": 1,
+      "restore": {
+        "id": "Family.Protection-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Protection/Family.Protection.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:53:16.471327+00:00",
+        "finished_at": "2026-10-29T19:53:17.438979+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Protection-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [
+        20261101
+      ],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "Family.Presentation",
+      "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Presentation/Family.Presentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+      "started_at": "2026-10-29T19:53:21.690776+00:00",
+      "finished_at": "2026-10-29T19:53:24.564965+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Presentation.txt",
+        "evidence/Family.Presentation-restore.txt"
+      ],
+      "passed_count": 3,
+      "failed_count": 0,
+      "restore": {
+        "id": "Family.Presentation-restore",
+        "command": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet restore checks/Family.Presentation/Family.Presentation.csproj --configfile /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+        "working_directory": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source",
+        "started_at": "2026-10-29T19:53:20.719861+00:00",
+        "finished_at": "2026-10-29T19:53:21.689803+00:00",
+        "exit_code": 0,
+        "status": "passed",
+        "evidence": [
+          "evidence/Family.Presentation-restore.txt"
+        ],
+        "passed_count": 0,
+        "failed_count": 0,
+        "timeout_seconds": 180
+      },
+      "timeout_seconds": 600,
+      "timeout_policy": "Actual runner caps each phase to min(per-check limit, remaining runner deadline); see run_checks.py.txt.",
+      "runner_deadline_utc": "2026-10-29T20:05:00+00:00",
+      "reason": "本轮先尝试完整游戏构建；本检查独立 Release 构建并运行，不依赖游戏程序集成功；退出码和当前 JSON 或 PASS/FAIL stdout 重核。纯规则不是实际 UI/听感验收。",
+      "seeds": [],
+      "seed_provenance": "evidence/seed-provenance.json includes exact seed/default/range expressions from this pinned source; literal list alone is not an exhaustive generated-case list.",
+      "json_expected": false,
+      "execution_phase": "test"
+    },
+    {
+      "id": "runtime-smoke",
+      "status": "skipped",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前完整游戏构建失败，无可运行的当前游戏程序集；按依赖跳过，未借用旧构建或旧画面。",
+      "evidence": [
+        "evidence/game-build.txt",
+        "evidence/game-build-exit.txt"
+      ],
+      "working_directory_note": "Use wrapper-recorded pwd if available; otherwise CUA terminal cwd unknown. Project selected with absolute GAME_PATH.",
+      "project_path": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game",
+      "timeout_seconds": null
+    },
+    {
+      "id": "visual-interaction-review",
+      "status": "skipped",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前游戏构建失败，未启动游戏或观察当前画面；完整视觉验收依赖被阻断。",
+      "evidence": [
+        "evidence/game-build.txt"
+      ]
+    },
+    {
+      "id": "asset-import",
+      "status": "skipped",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前完整游戏构建失败，无可运行的当前游戏程序集；按依赖跳过，未借用旧构建或旧画面。",
+      "evidence": [
+        "evidence/game-build.txt",
+        "evidence/game-build-exit.txt"
+      ],
+      "timeout_seconds": null
+    },
+    {
+      "id": "native-observed-interaction",
+      "status": "skipped",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前完整游戏构建失败，本轮无原生UI操作或图像验收。",
+      "evidence": [
+        "evidence/game-build.txt"
+      ]
+    },
+    {
+      "id": "engine-contact",
+      "status": "skipped",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前游戏构建失败；引擎接触/布局依赖跳过，无本轮渲染或图像。",
+      "evidence": [
+        "evidence/game-build.txt"
+      ],
+      "required": false
+    },
+    {
+      "id": "engine-layout",
+      "status": "skipped",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前游戏构建失败；引擎接触/布局依赖跳过，无本轮渲染或图像。",
+      "evidence": [
+        "evidence/game-build.txt"
+      ],
+      "required": false
+    },
+    {
+      "id": "audio-playback",
+      "status": "skipped",
+      "command": null,
+      "working_directory": null,
+      "started_at": null,
+      "finished_at": null,
+      "exit_code": null,
+      "passed_count": null,
+      "failed_count": null,
+      "seeds": [],
+      "reason": "当前游戏构建失败，未运行、未试听；不复制旧轮Dummy或音频结论。",
+      "evidence": [
+        "evidence/game-build.txt"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "independent-check-compilation-failures",
+      "status": "confirmed",
+      "failures": [
+        {
+          "check_id": "Family.PregnancyBoundaries",
+          "exit_code": 1,
+          "compiler_errors": [
+            "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]"
+          ],
+          "source_planned_named_cases_not_executed": 12
+        },
+        {
+          "check_id": "Family.AssistedCare",
+          "exit_code": 1,
+          "compiler_errors": [
+            "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Program.cs(152,17): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Family.AssistedCare.csproj]"
+          ],
+          "source_planned_named_cases_not_executed": 16
+        }
+      ],
+      "interpretation": "Failed compilation means no test cases executed; source planned counts are not assertion failures."
+    },
+    {
+      "id": "game-build-compiler-errors",
+      "status": "failed",
+      "warning_count": 0,
+      "error_count": 3,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Main.MilestoneStates.cs(103,56): error CS1061: 'Dictionary<string, int>' does not contain a definition for 'GetValueOrDefault' and no accessible extension method 'GetValueOrDefault' accepting a first argument of type 'Dictionary<string, int>' could be found (are you missing a using directive or an assembly reference?) [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Yukkuri.Game.csproj]",
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Main.MilestoneStates.cs(112,40): error CS1061: 'Dictionary<string, int>' does not contain a definition for 'GetValueOrDefault' and no accessible extension method 'GetValueOrDefault' accepting a first argument of type 'Dictionary<string, int>' could be found (are you missing a using directive or an assembly reference?) [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Yukkuri.Game.csproj]",
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Main.MilestoneStates.cs(115,89): error CS1061: 'Dictionary<string, int>' does not contain a definition for 'GetValueOrDefault' and no accessible extension method 'GetValueOrDefault' accepting a first argument of type 'Dictionary<string, int>' could be found (are you missing a using directive or an assembly reference?) [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/src/Yukkuri.Game/Yukkuri.Game.csproj]"
+      ],
+      "evidence": [
+        "evidence/game-build.txt"
+      ],
+      "interpretation": "Actual current compile result; no source edits or retry performed."
+    },
+    {
+      "id": "current-rule-failures",
+      "status": "confirmed",
+      "failures": [
+        {
+          "check_id": "Interaction.Continuity",
+          "name": "an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",
+          "passed": false,
+          "error": "empty mouse hold froze movement or continued pressure: X=-1.0800000000000005, health=99.99749999999996/99.96, pose=idle",
+          "source_locations": [
+            "checks/Interaction.Continuity/Program.cs:1422"
+          ]
+        },
+        {
+          "check_id": "Family.Protection",
+          "name": "保护者远离时不消除危险，实际走近后才能保护",
+          "output_header": "FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护",
+          "passed": false,
+          "error": "FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护\n   at Program.<<Main>$>g__Require|0_0(Boolean condition, String reason) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 6\n   at Program.<>c.<<Main>$>b__0_8() in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 96\n   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 8",
+          "format": "full stdout failure block",
+          "source_locations": [
+            "checks/Family.Protection/Program.cs:6",
+            "checks/Family.Protection/Program.cs:8",
+            "checks/Family.Protection/Program.cs:88",
+            "checks/Family.Protection/Program.cs:96"
+          ]
+        }
+      ],
+      "diagnostic_interpretation": "",
+      "root_cause_confirmed": false,
+      "evidence": [
+        "evidence/failure-extract.json",
+        "evidence/failed-check-source.json"
+      ]
+    },
+    {
+      "id": "lfs-transport-limitation",
+      "status": "blocked",
+      "description": "本云仍缺3原始对象，未出现新受支持取件通道；本轮不重复已确定的取件阻挡。不能把取件限制误记为开发侧未推送。",
+      "evidence": [
+        "evidence/lfs-audit.json"
+      ]
+    },
+    {
+      "id": "build-warnings",
+      "status": "observed",
+      "warning_count": 0,
+      "description": "本轮构建日志中的警告按实际摘要计数；完整位置与类型保留，不将警告自动等同运行错误。",
+      "evidence": [
+        "evidence/game-build.txt"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": "evidence/ActorGeometry.Smoke-restore.txt",
+      "sha256": "117814edad650b3f04a0d3febeeecce133a66a54da09ab1105d97531ad477719",
+      "bytes": 558
+    },
+    {
+      "path": "evidence/ActorGeometry.Smoke.json",
+      "sha256": "cd74e363d31736ff307887b60a19dcbeb29e2ab021a3a9987f33417685b42bff",
+      "bytes": 12374
+    },
+    {
+      "path": "evidence/ActorGeometry.Smoke.txt",
+      "sha256": "e7c3916d6a7060261234d77759034752c7c938f275811b1bb696b3f7eff1d843",
+      "bytes": 10008
+    },
+    {
+      "path": "evidence/Family.AdoptionJourney-restore.txt",
+      "sha256": "93e2c36dc075a5335dda25a09609ba02f48309b4fba64047336eecef6e664bf7",
+      "bytes": 569
+    },
+    {
+      "path": "evidence/Family.AdoptionJourney.txt",
+      "sha256": "27de3f943ea6dd64bd679fd7f4bf2ac11d77b1d0295999411e14f0173fc1d261",
+      "bytes": 759
+    },
+    {
+      "path": "evidence/Family.Aftermath-restore.txt",
+      "sha256": "a8a71bd9da2b67dd3d6234ea1de88f71966175a9f274fdeeae639e8ab43882b2",
+      "bytes": 545
+    },
+    {
+      "path": "evidence/Family.Aftermath.txt",
+      "sha256": "0f5de625e6a0d369a2ea6161e187bdae96932d9bb2b4b47c4cdacfc3e3ac6975",
+      "bytes": 1476
+    },
+    {
+      "path": "evidence/Family.AssistedCare-restore.txt",
+      "sha256": "99dc715ccdfcd53b314e3ad9224c4fb99becab7979451fd113dfb10170bcc4de",
+      "bytes": 557
+    },
+    {
+      "path": "evidence/Family.AssistedCare.txt",
+      "sha256": "7fb76090942da6fba9d50c0699669c16947fa93480bc0e2f1654fe6405b49005",
+      "bytes": 683
+    },
+    {
+      "path": "evidence/Family.CareLearning-restore.txt",
+      "sha256": "36ac8609e9a85f8ef5690aae29efd7adb96224b5256383862d7db85cc6db36a5",
+      "bytes": 557
+    },
+    {
+      "path": "evidence/Family.CareLearning.txt",
+      "sha256": "d34f3fbf3d452c2572801b8f00b17adeb2aed1fdafab54e373ddcfaeec0ab355",
+      "bytes": 1273
+    },
+    {
+      "path": "evidence/Family.ColdCare-restore.txt",
+      "sha256": "5b3501cbd509dc90d08e667e6e651dc67106ec9bffebd9021f506e412abd8fce",
+      "bytes": 541
+    },
+    {
+      "path": "evidence/Family.ColdCare.txt",
+      "sha256": "576e048a461a4a9089271fff69049964f688c2d38d5bbd4f977536a4587daeab",
+      "bytes": 925
+    },
+    {
+      "path": "evidence/Family.Compatibility-restore.txt",
+      "sha256": "80ec687ee0ee83bec97f0973e48417c2a77d95ace0af1a00170ef9ad85fe8c8f",
+      "bytes": 561
+    },
+    {
+      "path": "evidence/Family.Compatibility.txt",
+      "sha256": "3ea71a1cdf490a8236f7d4b3537ea2f2ae2f41d586c6ccfe014bec4cb1e8c95c",
+      "bytes": 6813
+    },
+    {
+      "path": "evidence/Family.Growth-restore.txt",
+      "sha256": "743552fb0a58243f32b57ac1c1ed94e0d65ab6687cb091c27fe06a3a877e8f92",
+      "bytes": 533
+    },
+    {
+      "path": "evidence/Family.Growth.txt",
+      "sha256": "d0c14ea36b51540df67553f0b953b41ec3d98840d40ac1195b8bdef97fd321b4",
+      "bytes": 660
+    },
+    {
+      "path": "evidence/Family.MouthCommunication-restore.txt",
+      "sha256": "c8d8b84f55dd2bb10cacd613f91896c5867661daa91071afd1d1b5366fc65918",
+      "bytes": 581
+    },
+    {
+      "path": "evidence/Family.MouthCommunication.txt",
+      "sha256": "0dae1bb010f08aacb415cd00b19cbb51c23f6c4ed6cb28fe945c280d353ee06f",
+      "bytes": 998
+    },
+    {
+      "path": "evidence/Family.PregnancyBoundaries-restore.txt",
+      "sha256": "7052f7ce9ff190bc7523422f31925fa5b5a19227af8e05100294cbc812bcfca7",
+      "bytes": 585
+    },
+    {
+      "path": "evidence/Family.PregnancyBoundaries.txt",
+      "sha256": "aaed5f34feb2c488a2d491dcad591c07829529b3dff329a715b91bab81f99c2f",
+      "bytes": 718
+    },
+    {
+      "path": "evidence/Family.Presentation-restore.txt",
+      "sha256": "9e595928ac1e1e1e30372ebbcf663b598fc96bc64bc42d45ccb8f2e92c698a76",
+      "bytes": 557
+    },
+    {
+      "path": "evidence/Family.Presentation.txt",
+      "sha256": "b1e9c05c0a6916ab34da8125d5d98c71f525165667d62c1d17d7c32fdefc27ab",
+      "bytes": 468
+    },
+    {
+      "path": "evidence/Family.Protection-restore.txt",
+      "sha256": "dfcd1f563fde83beb26d69ee2dfa5443c03015283c53e913cf29840e4df70269",
+      "bytes": 549
+    },
+    {
+      "path": "evidence/Family.Protection.txt",
+      "sha256": "d72df5478f3974306e16d758f8c2c4fd73137c527bdc5d23792b1953093aba24",
+      "bytes": 1817
+    },
+    {
+      "path": "evidence/Family.Reproduction-restore.txt",
+      "sha256": "3d5bd8607dfdac2c3f19bfa5680cea9ff169c932cad751963542d8162754fa7c",
+      "bytes": 557
+    },
+    {
+      "path": "evidence/Family.Reproduction.txt",
+      "sha256": "d5223a94ce26dffa84fa731a0e40f6ae0935300d053cfa2d7a03cd38c0569d38",
+      "bytes": 903
+    },
+    {
+      "path": "evidence/Family.Risk-restore.txt",
+      "sha256": "7fc1d291097b5d23808c7fba2ba7841a45a193c048a8aa83f9e1c7b739d9b79a",
+      "bytes": 525
+    },
+    {
+      "path": "evidence/Family.Risk.txt",
+      "sha256": "0e64eaefa3cf9b59a65efb60716b3ae3b0a0c901b841c9d203089ac8d37062a9",
+      "bytes": 1370
+    },
+    {
+      "path": "evidence/Family.Social-restore.txt",
+      "sha256": "98cf7c6154c0455b35736b3f27c895178100fb753217151491e34c5c417c6029",
+      "bytes": 533
+    },
+    {
+      "path": "evidence/Family.Social.txt",
+      "sha256": "e144a8df2355e22ac705870b948dc654f153396f74367619e38afcd25553e370",
+      "bytes": 1797
+    },
+    {
+      "path": "evidence/Family.Teaching-restore.txt",
+      "sha256": "a6bc535fa2c316624e8394145358cb0395dae8701278d971508aefb30ca4d8a6",
+      "bytes": 541
+    },
+    {
+      "path": "evidence/Family.Teaching.txt",
+      "sha256": "b8ad08df91bff8987c80f304743d2609f51d04eab08c21313d1a90cd40b193ca",
+      "bytes": 1039
+    },
+    {
+      "path": "evidence/Input.Intent-restore.txt",
+      "sha256": "b95c73b965e07e0270ff8afbbbc04dd0ae8b3e443d9b32e471457674e0995266",
+      "bytes": 530
+    },
+    {
+      "path": "evidence/Input.Intent.json",
+      "sha256": "bcb84347840dee78dd033a0764371fd6b89263fb7d14cd2b7165312bf54fcc91",
+      "bytes": 10540
+    },
+    {
+      "path": "evidence/Input.Intent.txt",
+      "sha256": "d74b5002029a2193494358ca9099f8c4f48c9156ac0cb0667f3517ce05c4083e",
+      "bytes": 3524
+    },
+    {
+      "path": "evidence/Interaction.AutonomyPriority-restore.txt",
+      "sha256": "0b299f4216a8b2164da86b8582e7c538c21073d1ed2f26c39b1c15d9bc8493ba",
+      "bytes": 593
+    },
+    {
+      "path": "evidence/Interaction.AutonomyPriority.txt",
+      "sha256": "d41ca8acce55c216d08e8e5738eeb9c934601f9986203d8c12ec04c0615eaa09",
+      "bytes": 1188
+    },
+    {
+      "path": "evidence/Interaction.CompletedNeeds-restore.txt",
+      "sha256": "f613cc848b9581eb712ebe1a7fa7c0e0d46c1b9a7be06a18e94d8d92738bf10c",
+      "bytes": 585
+    },
+    {
+      "path": "evidence/Interaction.CompletedNeeds.txt",
+      "sha256": "1360344cd0cbf19a259c36442fe919a3a795ae88f3d0e7e8f178d69c81228e81",
+      "bytes": 1001
+    },
+    {
+      "path": "evidence/Interaction.Continuity-restore.txt",
+      "sha256": "5f855655ce215be0414316bf96fdb6c4804f1998fa0d7300ff9075e759f7e6d6",
+      "bytes": 569
+    },
+    {
+      "path": "evidence/Interaction.Continuity.json",
+      "sha256": "7f58bef4383d8b55303b2f75a7e58d0e3e1988d6d0946bdc57b8b4d9f8f4ede2",
+      "bytes": 16522
+    },
+    {
+      "path": "evidence/Interaction.Continuity.txt",
+      "sha256": "84731bb768877a06ef5d11656e4f6ba7c274c3d375799ab646eee470dc579300",
+      "bytes": 11122
+    },
+    {
+      "path": "evidence/Interaction.Depth-restore.txt",
+      "sha256": "3c6570ef6e9b5fbbee9c832bf7899cc098c6a9a695444f279b67f36ae374673f",
+      "bytes": 549
+    },
+    {
+      "path": "evidence/Interaction.Depth.txt",
+      "sha256": "6e31d9f16d89260be07a563745e29fef065df561a0f722a4dd09a1734ef32222",
+      "bytes": 503
+    },
+    {
+      "path": "evidence/Interaction.EmergencyIntervention-restore.txt",
+      "sha256": "c8dcde644eb48d56b31818a04d457f860c4ef50b0fae96a22a994985e24d6624",
+      "bytes": 613
+    },
+    {
+      "path": "evidence/Interaction.EmergencyIntervention.txt",
+      "sha256": "ce27ba39bd0f773b73cfb5ee20157f8c3c3c8323065c4dec4512c1bfb02b89f3",
+      "bytes": 824
+    },
+    {
+      "path": "evidence/Interaction.HumanCompany-restore.txt",
+      "sha256": "37e449b0db55b962cffe670abb5de70591bc01ced8b88255c03cd8e4122797a9",
+      "bytes": 578
+    },
+    {
+      "path": "evidence/Interaction.HumanCompany.txt",
+      "sha256": "bb01cd0414c2c1331cd9915171388205890e86424c123150d311cfe71b9051a7",
+      "bytes": 1590
+    },
+    {
+      "path": "evidence/Interaction.Injury-restore.txt",
+      "sha256": "cb261477d2b5a9c12be8d231cc161f5ad1fa67b1aa086464d04a4bf1c3e6e403",
+      "bytes": 553
+    },
+    {
+      "path": "evidence/Interaction.Injury.txt",
+      "sha256": "7e3f156b23aa0fe8d849aa335908dc213717497969830cec1fa8e784f7829ab4",
+      "bytes": 1153
+    },
+    {
+      "path": "evidence/Interaction.InjuryPresentation-restore.txt",
+      "sha256": "e547ea25e66cdc8e4f38160c6d145960ac69ff9493649b6820f05afbde58513b",
+      "bytes": 601
+    },
+    {
+      "path": "evidence/Interaction.InjuryPresentation.txt",
+      "sha256": "244f99a2fc9003886333cf543c5e9b39f66dd5d0624498e5b90f9908d0ac97df",
+      "bytes": 640
+    },
+    {
+      "path": "evidence/Interaction.Mouth-restore.txt",
+      "sha256": "e7b56a5e45acb6fe1033b1b824449c320b683bcffc5283796a8c2c34a7e8d1a0",
+      "bytes": 549
+    },
+    {
+      "path": "evidence/Interaction.Mouth.txt",
+      "sha256": "6639a734d701438d2c1a2da73fd90df631f5aec1194cb6949d381d3f39616856",
+      "bytes": 1559
+    },
+    {
+      "path": "evidence/Interaction.MouthPresentation-restore.txt",
+      "sha256": "b9105f22ff090f87d0c6610b2406b708fcbeb426670aeda69d04182cd3a8ce1a",
+      "bytes": 597
+    },
+    {
+      "path": "evidence/Interaction.MouthPresentation.txt",
+      "sha256": "87f3fdcecea3fbcbdc22cffbc13ea4c638c6dd0d53a3755dc91f764e478c7009",
+      "bytes": 1025
+    },
+    {
+      "path": "evidence/Interaction.Smoke-restore.txt",
+      "sha256": "bbf9568d8e83319a5e2c043c12604b76a4e1b95f64120fa0bc0d6144902bd5a5",
+      "bytes": 549
+    },
+    {
+      "path": "evidence/Interaction.Smoke.json",
+      "sha256": "efdbee10dbe7a682840196bcbf6ec8c69af82a8d5f0de6b17d86a2becd4a2dfa",
+      "bytes": 5432
+    },
+    {
+      "path": "evidence/Interaction.Smoke.txt",
+      "sha256": "bfbbd052d4cf5f57dfd04c9f34bee89653e68019c6a4449df72b44a12cc196b1",
+      "bytes": 3449
+    },
+    {
+      "path": "evidence/Interaction.StateBoundaries-restore.txt",
+      "sha256": "2c6a521e06e634db742906f53cc8cecb080bc8a6b52ca672a1556fe1562f12b6",
+      "bytes": 589
+    },
+    {
+      "path": "evidence/Interaction.StateBoundaries.txt",
+      "sha256": "52359176a6c4ca1a0718bc953cfed096cb3eaaa54e1ceab76c591dbc3da25f05",
+      "bytes": 928
+    },
+    {
+      "path": "evidence/Milestone.Smoke-restore.txt",
+      "sha256": "afb12ada651b8a23c0e2532c3b5cb4a65ddd95062f5b97c7d3b535eac7d50c07",
+      "bytes": 541
+    },
+    {
+      "path": "evidence/Milestone.Smoke.txt",
+      "sha256": "74218b131c977f7ad768bef00736932e609ddbf4369a6e89b0bd37e41e574f9e",
+      "bytes": 5669
+    },
+    {
+      "path": "evidence/NaturalLife.Smoke-restore.txt",
+      "sha256": "369936225691cc381bb4b888382705c327851fdecb70ed5ed6ce9bed2024ab41",
+      "bytes": 549
+    },
+    {
+      "path": "evidence/NaturalLife.Smoke.json",
+      "sha256": "62eeb98cfea803a1c636e2717481d082329e3dcd5b73bd98f003f947217f7fa7",
+      "bytes": 18308
+    },
+    {
+      "path": "evidence/NaturalLife.Smoke.txt",
+      "sha256": "7cbc71a2fdcc5728d89ba6902aeb7b883dce5287307580e347ef4a39ee99c73f",
+      "bytes": 8143
+    },
+    {
+      "path": "evidence/NaturalLife.Soak-restore.txt",
+      "sha256": "90f6d77f262f4d612fd5f7d155e8332551182c2c7f095ec752e2113ab8021de6",
+      "bytes": 545
+    },
+    {
+      "path": "evidence/NaturalLife.Soak.json",
+      "sha256": "9d20d9175f46378d22b86b1d552075afe25e4a07811f7aedd1ac1cddab64977a",
+      "bytes": 61418
+    },
+    {
+      "path": "evidence/NaturalLife.Soak.txt",
+      "sha256": "6c346ec76869947d679ccb40f4ef5772cfa68a551c427de50298381d6f92a889",
+      "bytes": 6505
+    },
+    {
+      "path": "evidence/NuGet.godot.Config.txt",
+      "sha256": "4e7a77570623a696dd2c56311ebaee0365693bdbba0b0fc1767a95aba438107f",
+      "bytes": 285
+    },
+    {
+      "path": "evidence/NuGet.offline.Config.txt",
+      "sha256": "7d59a339f0f6022f0710d690fe52e2a0f868519847651f6c10f6c9ff1bd7213a",
+      "bytes": 112
+    },
+    {
+      "path": "evidence/Simulation.Smoke-restore.txt",
+      "sha256": "919e5fc7f774a6a6547c1caa6945a34b9d00cccce3a144a4f22f59fe86dff248",
+      "bytes": 634
+    },
+    {
+      "path": "evidence/Simulation.Smoke.txt",
+      "sha256": "1391dd10d0556a064dca6b016f0e5e8b6da3b7cebb5efa7ae4cf7f4d6d0e37ac",
+      "bytes": 9004
+    },
+    {
+      "path": "evidence/assemble_report.py.txt",
+      "sha256": "465108f9d38db7672646a0e3c3efd173411fbdadb8388199f61e5f0347db3d7c",
+      "bytes": 47098
+    },
+    {
+      "path": "evidence/change-manifest.json",
+      "sha256": "32ff838756711cf8fd60d8985b4b2a78ea428511ea70a5013d1ae18e6a766f7e",
+      "bytes": 11063
+    },
+    {
+      "path": "evidence/configuration/AGENTS.md",
+      "sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285",
+      "bytes": 1584
+    },
+    {
+      "path": "evidence/configuration/global.json",
+      "sha256": "81ae2087dbfb46027fd94748351fb4b1ab24145fbb52544a2822bf128e2e48f1",
+      "bytes": 105
+    },
+    {
+      "path": "evidence/configuration/testing/DOT-HANDOFF.md",
+      "sha256": "65db09ce7b87f113b0b312eee46a6559f1d0aaba6813f1ef7389b6901ad90319",
+      "bytes": 1859
+    },
+    {
+      "path": "evidence/configuration/testing/PROTOCOL.md",
+      "sha256": "4cf8faa4ca5a32a6ecf3fe4cfcc7b6f4c3df40e978af319768ab9e0d8bb4a6d0",
+      "bytes": 8127
+    },
+    {
+      "path": "evidence/configuration/testing/report-template.json",
+      "sha256": "8ffef1deec11c581cae798583d79674a62ef766b5e7b642003c0febdb3397701",
+      "bytes": 1507
+    },
+    {
+      "path": "evidence/configuration/testing/request.json",
+      "sha256": "75b83fe65b776beadba9ae2630e56f56649551d6d339d736ca1dd979df92a59e",
+      "bytes": 28801
+    },
+    {
+      "path": "evidence/configuration/testing/reviews/20261029T154437Z-8238c6e6380f-c04.md",
+      "sha256": "90ec69efd49854e9aa7756275838bcca86eb308be2521e781e62219324180c06",
+      "bytes": 3247
+    },
+    {
+      "path": "evidence/configuration/toolchain.lock.json",
+      "sha256": "757032e50d135a6bb3e44d666758cca92a2d23d3954523e33208de2e6b161789",
+      "bytes": 2003
+    },
+    {
+      "path": "evidence/dotnet-info.txt",
+      "sha256": "a35b2c5bfb8b4877b73a1b2e5499ca46e7a5c07a174429ed535c0860aab41c27",
+      "bytes": 1378
+    },
+    {
+      "path": "evidence/env.sh.txt",
+      "sha256": "aeafadcb250f746d54ad41cb2c0c602ea8dec83fdfd79a84fd87c369f9aa703b",
+      "bytes": 1224
+    },
+    {
+      "path": "evidence/environment-raw.txt",
+      "sha256": "787b4657191af98eee2176864ce72c4e0f5cb8f6d12d54ef973956258235d2d8",
+      "bytes": 376
+    },
+    {
+      "path": "evidence/environment-verification-command.json",
+      "sha256": "ec001bb24c9d3d261867aac402727d718510d416e4946b68b575915611019914",
+      "bytes": 682
+    },
+    {
+      "path": "evidence/environment.json",
+      "sha256": "d45d41a9de798951747e17481d123a82a08ab5e6a7dfb2649c6a5b2b5cbb9dad",
+      "bytes": 1325
+    },
+    {
+      "path": "evidence/failed-check-source.json",
+      "sha256": "aedc70c9fbc7c2ea0a38fe59e9541f7fc40db34f09f6f95a7d3105cfc7c1d41a",
+      "bytes": 2194
+    },
+    {
+      "path": "evidence/failure-extract.json",
+      "sha256": "5bf217fec4c3ef219aba17c2c9cc6da7ff0cc6ac6ea2073538558c31345793ec",
+      "bytes": 29928
+    },
+    {
+      "path": "evidence/game-build-end.txt",
+      "sha256": "564cad126d0eefae251621ee5618b37c777e43985ddb7ec3b0ba99a2e15e39f6",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-build-exit.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/game-build-start.txt",
+      "sha256": "4f41f927bdc693b46a0382fc4a0134aef97c9b1be5cea60fae564fe81d78b23e",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-build.txt",
+      "sha256": "a48c5e5d78a0b532061d19a3103f423d5e446697ba0bdf96fb6847ef31f1c92a",
+      "bytes": 3237
+    },
+    {
+      "path": "evidence/game-restore-end.txt",
+      "sha256": "4f41f927bdc693b46a0382fc4a0134aef97c9b1be5cea60fae564fe81d78b23e",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-restore-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "evidence/game-restore-start.txt",
+      "sha256": "eff51124bbe5cdedb6e7f78bf78f5516f698e8f4c1b50301fda6698e2d93ccc3",
+      "bytes": 21
+    },
+    {
+      "path": "evidence/game-restore.txt",
+      "sha256": "adf2ef5ee816226fc14f4f7b30d58ede538ba8ab47ecba43d4d41270f4af29f7",
+      "bytes": 967
+    },
+    {
+      "path": "evidence/godot-current-verification.json",
+      "sha256": "d185b557161b0ded2c661e275c16a07d879307b72fcdfeaefeaa2ecffca2477e",
+      "bytes": 601
+    },
+    {
+      "path": "evidence/godot-package-identity.json",
+      "sha256": "5a4b56cd1ace80aa1b44d5370f1ef4dabcbca0531a345d070f5b0e5e622e6345",
+      "bytes": 1082
+    },
+    {
+      "path": "evidence/godot-version.txt",
+      "sha256": "0e0e71b31bada9dad0d5bec80e325e3579cfb2e36885ab03221a9338525cb51b",
+      "bytes": 37
+    },
+    {
+      "path": "evidence/lfs-audit.json",
+      "sha256": "f9e414b3471b7216596f47c1f9616bfeb01d3f6339a7e35c4f992c8f11098016",
+      "bytes": 3003
+    },
+    {
+      "path": "evidence/main-at-end.json",
+      "sha256": "d403b524471623f2d28d995769a131731619345ed286f72567071249fbb3f48d",
+      "bytes": 265
+    },
+    {
+      "path": "evidence/main-at-report.json",
+      "sha256": "18e57d066f70eed4bc6cf8b9fbfa340175c07aa0c5d5857d3550b312ea338fa9",
+      "bytes": 181
+    },
+    {
+      "path": "evidence/materialization-manifest.json",
+      "sha256": "3f29ccbb887ea640c592d2b7e8d91efa4e5cbf9941ceda0df1f04b22ac38b241",
+      "bytes": 112973
+    },
+    {
+      "path": "evidence/nuget-current-verification.json",
+      "sha256": "54b82472b03adfb871fd3c5edea8146dcc6036a3a986fb6b22e5f35e66849968",
+      "bytes": 1777
+    },
+    {
+      "path": "evidence/nuget-package-identities.json",
+      "sha256": "fe0baa46a0878886fd94ef83321b46fb71df5c6def98b36c3c08332dffa9c90d",
+      "bytes": 2122
+    },
+    {
+      "path": "evidence/pending-preflight.json",
+      "sha256": "d00ed08ee6d5fc45682eb0d4701528e5bbf77b5b65b107106c91ecc674b139e3",
+      "bytes": 986
+    },
+    {
+      "path": "evidence/pure-checks.json.txt",
+      "sha256": "a684d48396aa1a6930e060391bfe215cb22036289a650f9506f8b752bbbdf823",
+      "bytes": 853
+    },
+    {
+      "path": "evidence/readonly-failure-review.json",
+      "sha256": "de1fae00208bc36bcfd50a90d730d53154aa0adb5af8fb4c3bd3468508695aba",
+      "bytes": 25507
+    },
+    {
+      "path": "evidence/readonly-static-review.json",
+      "sha256": "eaa067064b1c9b3bac63ccb073ff9ca85d0d3e5535825b4fd70bd584bbc0c3a7",
+      "bytes": 16977
+    },
+    {
+      "path": "evidence/round-lifecycle.json",
+      "sha256": "3b20a5ccd8051e1e1a0ede96b8790457079b7af6074a2dc4a1da0cbd5e846255",
+      "bytes": 658
+    },
+    {
+      "path": "evidence/run-build.sh.txt",
+      "sha256": "ef2aaa4e740062343f3986c4e3d320d07851b40d90eff34a833e4c0dd4f7f9cb",
+      "bytes": 1063
+    },
+    {
+      "path": "evidence/run-engine-checks.sh.txt",
+      "sha256": "52ced02e648b8d3c6ebfb483579be757a56f50a3a135ddec19b6142958eaf426",
+      "bytes": 766
+    },
+    {
+      "path": "evidence/run-game.sh.txt",
+      "sha256": "6ddd409e0e13bd4b337e019bc2446770031e894000fb96648e59d1655501c9de",
+      "bytes": 668
+    },
+    {
+      "path": "evidence/run.json",
+      "sha256": "71d838a841404515ca70a1c3fed0bf801c8dcb49903027800aa3e38ff776e685",
+      "bytes": 48402
+    },
+    {
+      "path": "evidence/run_checks.py.txt",
+      "sha256": "fe7865d55c278cd5b9f19b5cc38b3f6c31aa5275c76c0dc1624e1ee43cd32d8e",
+      "bytes": 6879
+    },
+    {
+      "path": "evidence/sdk-version-from-source.txt",
+      "sha256": "44ea2595bc5a7acabc030531952071226aa70862fd008ed7327d752b39c8513c",
+      "bytes": 9
+    },
+    {
+      "path": "evidence/seed-provenance.json",
+      "sha256": "876a60e95df8d839155293ef6ad9b1b3eb72be2101af8aececaa30e6477dd1f7",
+      "bytes": 25444
+    },
+    {
+      "path": "evidence/source-verification.json",
+      "sha256": "8858e57d433bcc7563fd94cf1575daf945032588576bba8ba2a7cfe179c459ec",
+      "bytes": 136759
+    },
+    {
+      "path": "evidence/test-completion.json",
+      "sha256": "55774ce43440afebaee156cdf6283b89314c70500e0f5627a89927a4ed736f9e",
+      "bytes": 807
+    }
+  ],
+  "limitations": [
+    "仅授权自己的云Linux，不是Windows专用平台验证，也未在用户原开发机运行。",
+    "本轮物化文件逐个核验；非完整Git checkout，缺3个原始LFS对象。",
+    "当前先执行完整游戏构建尝试，再执行独立纯规则；完整游戏编译失败不由纯Simulation检查通过抵消。",
+    "历史报告保留；本轮之前完整规则基线为c07，人工复演不作为完整规则基线。",
+    "没有获准历史存档样本；合成保存检查与当前档不能替代。",
+    "Soak为模拟时长，不是实机连续小时；仅大型成功快照精简，失败全文、结果、度量、种子和原始哈希保留。",
+    "完整v2-v15视觉、输入、家庭、孕育、幼体、冷藏、伤势与声音不能用纯规则或局部原生观察证明；未测项见native记录。",
+    "产品与断言未修改；确定失败未重跑。",
+    "本轮Godot --version仅用于独立身份核验，不是游戏启动或导入；该探针的Fontconfig缓存警告不是当前游戏运行结果。GPU/display/audio的旧轮信息仅按environment中的historical标注使用。"
+  ],
+  "next_action": "保留本轮完整失败与诊断后分别定位，不把历史假设直接当本轮根因。补支持的原始LFS传输、历史样本与真实UI/音频覆盖；不要无变化重复确定性失败。",
+  "template_sha256": "8ffef1deec11c581cae798583d79674a62ef766b5e7b642003c0febdb3397701",
+  "agents_sha256": "f2e69b3738849601e27c9783d8a52c9177f29cdfe0afc13ba93117887e221285",
+  "main_at_completion": {
+    "checked_at": "2026-10-29T19:53:27.379Z",
+    "main_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+    "tested_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+    "same_as_tested": true,
+    "note": "Read-only main check after all test commands completed."
+  },
+  "source_materialization": {
+    "materialized_files": 407,
+    "full_git_checkout": false,
+    "product_code_changes": [],
+    "generated_tracked_changes": [],
+    "lfs_original_objects_recovered": 12,
+    "complete_repository_lfs_verified": false
+  },
+  "deduplication": {
+    "prior_full_rule_run": "20261029T183752Z-f91146391e2a-c07",
+    "prior_full_rule_source": "f91146391e2a1629b86530eff5b82fbf0085ec23",
+    "prior_full_rule_report_commit_short": "de505d96",
+    "intervening_manual_replay_is_not_full_baseline": "20261029T162613Z-8238c6e6380f-v05",
+    "trigger": "New pinned source plus watched source/checks/request changes; v15 request.",
+    "key": "281d0cf63c87adcbe14d5503d67713e430acba3c|dot-v15-interaction-depth-I-20261030|dot-cloud-linux-debian13-x64-godot4.7.2mono-llvmpipe"
+  },
+  "run_timeout_minutes": 50,
+  "test_processes_finished": true,
+  "test_processes_finished_at": "2026-10-29T19:53:24.598848+00:00",
+  "test_execution_evidence_finished_at": "2026-10-29T19:53:24.598848+00:00",
+  "verification_finished_at": "2026-10-29T19:56:18.734168+00:00",
+  "finished_at_semantics": "Latest of recorded terminal test evidence and every check completion, including non-executing report-time LFS hash verification; original process time retained separately; no visual completion is inferred.",
+  "publication_state": "ready-for-atomic-results-branch-publication",
+  "draft_missing_inputs": [],
+  "pure_project_attempts": 33,
+  "pure_suites_entered_cases": 31,
+  "pure_compile_planned_cases_not_run": 28,
+  "pure_assertion_totals": {
+    "passed": 918,
+    "failed": 2,
+    "counting_unit": "Actual executed top-level assertions/scenarios only; excludes compiler diagnostics and unexecuted source cases."
+  },
+  "pure_compilation_failures": [
+    {
+      "check_id": "Family.PregnancyBoundaries",
+      "exit_code": 1,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]"
+      ],
+      "source_planned_named_cases_not_executed": 12
+    },
+    {
+      "check_id": "Family.AssistedCare",
+      "exit_code": 1,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Program.cs(152,17): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Family.AssistedCare.csproj]"
+      ],
+      "source_planned_named_cases_not_executed": 16
+    }
+  ],
+  "round_lifecycle_note": "round-lifecycle.json is the acquired-lock/start snapshot. Its running status is not the final test-process status; terminal evidence is test-completion.json. Initial phase published pending c07; no historical test is counted here.",
+  "source_pinned_at": "2026-10-29T19:47:17Z",
+  "omitted_reference_input": {
+    "path": "local evidence/readonly-static-inputs.json",
+    "sha256": "41a0cdf647d4bf1d22205da29b3f23e71eced5096314e5346cde23e0e037a167",
+    "bytes": 230430,
+    "reason": "Bulky pinned source/reference input, not test output. Current focused review and exact source identity retained; raw remains local."
+  },
+  "static_scope_review": "evidence/readonly-static-review.json"
+}

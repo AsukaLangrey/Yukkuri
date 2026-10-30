@@ -36,9 +36,9 @@ WorldSimulation Reload(WorldSimulation sim)
     var state=JsonSerializer.Deserialize<WorldState>(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions),SaveStore.JsonOptions)!;
     SaveStore.Validate(state);return new(state);
 }
-WorldSimulation Due()
+WorldSimulation Due(double gap=1.65)
 {
-    var sim=Fixture();var m=sim.State.Creatures[0];
+    var sim=Fixture(gap);var m=sim.State.Creatures[0];
     m.Family.Pregnancy=new(){Phase=PregnancyPhase.Gestating,Method=BirthMethod.Stem,FatherId=sim.State.Creatures[1].Id,
         Elapsed=FamilyRules.GestationSeconds(BirthMethod.Stem),EventId="pregnancy-boundary-birth",PlannedChildren=2};
     return sim;
@@ -161,7 +161,9 @@ Check("逃离冲突伤幼嘴忙排泄手势及支撑不稳时等待分娩",()=>
 {
     foreach(string mode in new[]{"flight","retreat","conflict","child-threat","meal","water","excretion","hand","lowering","sliding","carried","falling","height","hanging","supine"})
     {
-        var sim=Due();var m=sim.State.Creatures[0];var f=sim.State.Creatures[1];var i=m.Interaction;
+        // Leave actual fixture space for Hang; the other boundary fixtures keep
+        // their original positions. No coordinates change after either action.
+        var sim=Due(mode=="lowering"?4:1.65);var m=sim.State.Creatures[0];var f=sim.State.Creatures[1];var i=m.Interaction;
         if(mode=="flight")m.Family.FlightRemaining=4;
         if(mode=="retreat")m.RetreatRemaining=4;
         if(mode=="conflict")m.Family.Conflict.TargetId=f.Id;
@@ -169,7 +171,14 @@ Check("逃离冲突伤幼嘴忙排泄手势及支撑不稳时等待分娩",()=>
         if(mode=="meal"||mode=="water")i.BeginIntake(mode=="meal"?IntakeKind.Meal:IntakeKind.Water);
         if(mode=="excretion"){i.Physiology.Excreting=ExcretionKind.Urine;i.Physiology.Remaining=2;}
         if(mode=="hand")Require(sim.BeginInteractionGesture(m.Id,new(InteractionAction.Stroke,BodyPart.Head)).Success,"分娩手势前置失败");
-        if(mode=="lowering")i.Lowering=true;
+        if(mode=="lowering")
+        {
+            // Lowering is intentionally not writable here; both the suspension
+            // and supported release must succeed through their actual entries.
+            Require(sim.ExecuteInteraction(m.Id,new(InteractionAction.Hang)).Success,"分娩悬挂前置入口失败");
+            Require(sim.ExecuteInteraction(m.Id,new(InteractionAction.Lower)).Success,"分娩放下前置入口失败");
+            Require(i.Lowering&&i.Carried&&!i.Falling&&i.Restraint==RestraintKind.None&&i.Height>0,"没有实际进入托住放下过程");
+        }
         if(mode=="sliding")i.VelocityX=.8;
         if(mode=="carried")i.Carried=true;
         if(mode=="falling")i.Falling=true;

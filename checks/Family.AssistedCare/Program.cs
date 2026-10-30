@@ -149,9 +149,19 @@ Check("本人需要和对象支撑各自给明确原因，不靠UI猜测",()=>
         ((a,b)=>a.Interaction.RestRemaining=5,"休息"),((a,b)=>a.Interaction.BeginIntake(IntakeKind.Meal),"咽下"),
         ((a,b)=>a.Interaction.ActiveCue=LearnedCue.Wait,"指令"),
         ((a,b)=>b.Interaction.Carried=true,"托"),((a,b)=>b.Interaction.Falling=true,"下落"),
-        ((a,b)=>b.Interaction.Lowering=true,"放下"),((a,b)=>b.Interaction.Height=.8,"高处")
+        ((a,b)=>b.Interaction.Height=.8,"高处")
     };
     foreach(var edit in edits){var (sim,a,b,source)=Delivery(arrange:false);edit.Apply(a,b);Reject(sim,a,b,edit.Reason);}
+    {
+        var (sim,a,b,source)=Delivery(arrange:false);
+        // Use both real actions. The product owns Lowering and keeps the hand
+        // supporting the creature until the lowering process has completed.
+        Require(sim.ExecuteInteraction(b.Id,new(InteractionAction.Hang)).Success,"照护悬挂前置入口失败");
+        Require(sim.ExecuteInteraction(b.Id,new(InteractionAction.Lower)).Success,"照护放下前置入口失败");
+        Require(b.Interaction.Lowering&&b.Interaction.Carried&&!b.Interaction.Falling&&
+            b.Interaction.Restraint==RestraintKind.None&&b.Interaction.Height>0,"没有实际进入托住放下过程");
+        Reject(sim,a,b,"放下");
+    }
 });
 Check("已有家人也尊重双方恐惧怨恨，单向喜欢不足以照护陌生成人",()=>
 {
