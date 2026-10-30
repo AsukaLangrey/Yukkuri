@@ -186,6 +186,7 @@ public partial class CreatureActor
         // the supported/rolling/falling orientation and offset already calculated.
         if(c.Condition==PhysicalCondition.Critical)
         {_visual.Scale=new Vector3(1.13f,.63f,1.07f)*BodyScale;PoseTag="critical";}
+        ApplyWaterConcernBody(c,pose,paused?0:delta);
         ApplyPregnancyBodyPose(c,pose,paused?0:delta);
         ApplyHeatBodyPose(c,pose);
         ApplyWaterBodyPose(c,pose,paused?0:delta);
@@ -195,7 +196,7 @@ public partial class CreatureActor
             new(targetRotation.X,targetRotation.Y,targetRotation.Z,targetRotation.W),delta,paused,life.GroundIntake&&life.EatingRemaining>0);
         _visual.Scale=AccessoryPoint(_poseSmoothing.Scale);_visual.Position=AccessoryPoint(_poseSmoothing.Offset);
         var smoothed=_poseSmoothing.Rotation;_visual.Quaternion=new(smoothed.X,smoothed.Y,smoothed.Z,smoothed.W);
-        if(canHop)
+        if(canHop&&!_waterConcernFacing)
         {
             // Heading has already turned at a bounded speed while planted. A second
             // rotation filter would leave the face trailing behind the flight direction.

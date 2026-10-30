@@ -24,6 +24,7 @@ public partial class CreatureActor
 
     private void PresentFaceTransition(Creature c,Expression expression,float eyes,EyeCurve curve,float left,float right,float dt)
     {
+        WaterConcernEyes(expression,ref eyes,ref left,ref right);
         // Food can be welcome while the body is still afraid. Keep the eyes/brows wary
         // independently of the chewing mouth and the latest short-lived response.
         float caution=Mathf.Clamp((float)(c.Fear-20)/65,0,1);

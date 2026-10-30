@@ -25,13 +25,59 @@ public sealed partial class WorldSimulation
 {
     private void RecordPlayerThreat(Creature target,string description,double severity)
     {
-        var incident=Emit(IncidentKind.Attack,target,"player",description,severity);
-        WitnessCorrection(incident,target,severity);
-        foreach(var witness in State.Creatures.Where(c=>c!=target&&c.RegionId==target.RegionId&&
-            c.Condition==PhysicalCondition.Active&&!c.Family.ColdStorage.Stored))
+        if(severity<=0)return;
+        var bond=target.Interaction.HumanBond;
+        var incident=State.WorldSeconds-bond.LastWitnessThreatAt<2.5?
+            State.Incidents.LastOrDefault(e=>e.Kind==IncidentKind.Attack&&e.ActorId=="player"&&
+                e.TargetId==target.Id&&e.At==bond.LastWitnessThreatAt&&e.RegionId==target.RegionId):null;
+        if(incident==null)
         {
-            var knowledge=witness.Knowledge.Find(k=>k.IncidentId==incident.Id);
-            if(knowledge!=null)RememberThreat(witness,severity*(knowledge.KnowsActor?.8:.25));
+            incident=Emit(IncidentKind.Attack,target,"player",description,severity);
+            bond.LastWitnessThreatAt=State.WorldSeconds;
+        }
+        else incident.Severity+=severity;
+        // Match the unjustified-harm response of WitnessCorrection, applying
+        // only this increment. Knowledge of an earlier moment is not current
+        // sight: someone who has walked away cannot see through a wall.
+        foreach(var witness in State.Creatures.Where(c=>c!=target&&c.RegionId==target.RegionId&&
+            IsAvailable(c)&&!c.Family.ColdStorage.Stored))
+        {
+            bool sees=FamilyVisible(witness,target);
+            // Only the fraction beyond the audible threshold is heard. The
+            // threshold-crossing sample cannot retroactively count its quiet
+            // portion, which would make hearing depend on sample size again.
+            double audible=Math.Max(0,incident.Severity-4)-Math.Max(0,incident.Severity-severity-4);
+            bool hears=!sees&&audible>0&&Distance(witness.X,witness.Z,target.X,target.Z)<=7;
+            if(!sees&&!hears)continue;
+            var previousKnowledge=witness.Knowledge.Find(k=>k.IncidentId==incident.Id);
+            bool firstSight=sees&&previousKnowledge?.Source!=KnowledgeSource.Witness;
+            Learn(witness,incident,sees?KnowledgeSource.Witness:KnowledgeSource.Heard,sees);
+            if(sees&&witness.Knowledge.Find(k=>k.IncidentId==incident.Id) is { } knowledge)
+            {
+                // Seeing it oneself is stronger evidence than an earlier
+                // account. This transition happens once, not once per sample.
+                knowledge.Source=KnowledgeSource.Witness;knowledge.InformantId=null;
+            }
+            double perceived=sees?severity:audible;
+            bool family=witness.Id==target.ParentId||witness.ParentId==target.Id;
+            double intensity=family?1.45:1;
+            witness.Fear=Clamp100(witness.Fear+perceived*(sees?.65*intensity:.18));
+            if(sees)witness.Trust=Clamp100(witness.Trust-perceived*.22*intensity);
+            RememberThreat(witness,perceived*(sees?.8:.25));
+            var memory=witness.PersonalMemories.Find(m=>m.IncidentId==incident.Id);
+            if(memory==null)
+            {
+                Remember(witness,incident,sees?"不知道它做错了什么，却看见它受到伤害。":
+                    "听到了不安的声音，还不知道发生了什么。",perceived*(sees?1:.2));
+            }
+            else
+            {
+                memory.EmotionalWeight+=perceived*(sees?1:.2);
+                if(sees)memory.Text="看见它持续受到伤害，仍然感到害怕。";
+            }
+            if(sees&&(memory==null||firstSight))
+                React(witness,Expression.Frightened,family?"不要再伤害它了！":"为什么……？",
+                    "害怕地退开，注意着主人的动作。",5);
         }
     }
 

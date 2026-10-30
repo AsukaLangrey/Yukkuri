@@ -26,6 +26,7 @@ public partial class InteractionRoom
         BuildRelationshipMeter(overview,"生命", "88a877",out _lifeLabel,out _lifeMeter,out _lifeFill);
         BuildRelationshipMeter(overview,"恐惧", "ae8c74",out _fearLabel,out _fearMeter,out _fearFill);
         _continuityLabel=Text("",12,"78816e");meters.AddChild(_continuityLabel);
+        BuildImmediateInterventions(meters);
     }
     private void BuildRelationshipMeter(Control parent,string name,string color,out Label label,out ProgressBar bar,out StyleBoxFlat fill)
     {
@@ -72,6 +73,7 @@ public partial class InteractionRoom
             water.RecoverySeconds>0?$"已经离水，仍在恢复 · 余下 {water.RecoverySeconds:0} 秒\n先擦干并检查伤势。":
             emotion.Alarm>=12?$"惊惧余波 {emotion.Alarm:0} · 需要持续安全\n愿意接近食物，也可能仍然害怕。":
             "0—100：馒馒来是当前心情；信任取决于相处经历。";
+        RefreshImmediateInterventions(c);
     }
     private static string WasteLabel(RoomObject obj)=>obj.Kind==RoomObjectKind.Urine?"尿液 · Del 清理":"粪便 · Del 清理";
     private static void BuildWaste(Node3D root,RoomObjectKind kind)

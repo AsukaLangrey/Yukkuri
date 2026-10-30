@@ -270,5 +270,105 @@ Check("nearby capable kind companion blocks starvation assault but distant one c
     }
 });
 
+Check("held harm depends on contact duration rather than input sampling rate",()=>
+{
+    foreach(var action in new[]{InteractionAction.Burn,InteractionAction.BurnFeet,InteractionAction.Press})
+    {
+        (double Health,double Pain,double Alarm,double Comfort,double Trust,double WitnessFear,double WitnessAlarm,double WitnessTrust,double HeardFear,double HeardAlarm)? expected=null;
+        foreach(double sample in new[]{.1,.05,.02,.01})
+        {
+            var sim=Fresh();var c=sim.Selected!;sim.State.Mode=PlayMode.CloseUp;
+            var witness=AddNeighbor(sim,"近处目击者",0,2);
+            var listener=AddNeighbor(sim,"远处只听见的油",0,6);
+            c.Interaction.Restraint=RestraintKind.Frame;
+            var input=new InteractionInput(action,action==InteractionAction.BurnFeet?BodyPart.Bottom:BodyPart.Side,.4,sample);
+            Require(sim.BeginInteractionGesture(c.Id,input).Success,"could not begin held contact");
+            for(int n=0;n<(int)Math.Round(2/sample);n++)sim.ContinueInteractionGesture(input,true);
+            sim.EndInteractionGesture();
+            var actual=(Health:c.Health,Pain:c.Pain,Alarm:c.Interaction.Emotion.Alarm,
+                Comfort:c.Interaction.Emotion.Manmanlai,Trust:c.Trust,
+                WitnessFear:witness.Fear,WitnessAlarm:witness.Interaction.Emotion.Alarm,WitnessTrust:witness.Trust,
+                HeardFear:listener.Fear,HeardAlarm:listener.Interaction.Emotion.Alarm);
+            Require(actual.Health<100&&actual.Pain>0&&actual.Alarm>0,"contact lost real damage or emotional consequence");
+            if(expected is { } reference)
+                Require(Math.Abs(actual.Health-reference.Health)<.000001&&Math.Abs(actual.Pain-reference.Pain)<.000001&&
+                    Math.Abs(actual.Alarm-reference.Alarm)<.000001&&Math.Abs(actual.Comfort-reference.Comfort)<.000001&&
+                    Math.Abs(actual.Trust-reference.Trust)<.000001&&Math.Abs(actual.WitnessFear-reference.WitnessFear)<.000001&&
+                    Math.Abs(actual.WitnessAlarm-reference.WitnessAlarm)<.000001&&Math.Abs(actual.WitnessTrust-reference.WitnessTrust)<.000001,
+                    "same contact duration changed victim or witness consequences with sample count");
+            if(expected is { } heardReference)
+                Require(Math.Abs(actual.HeardFear-heardReference.HeardFear)<.000001&&
+                    Math.Abs(actual.HeardAlarm-heardReference.HeardAlarm)<.000001,
+                    "audibility threshold crossed differently with a different contact sample size");
+            var incidents=sim.State.Incidents.Where(e=>e.Kind==IncidentKind.Attack&&e.ActorId=="player").ToArray();
+            Require(incidents.Length==1&&witness.PersonalMemories.Count(m=>m.IncidentId==incidents[0].Id)==1,
+                "continuous perception duplicated the public incident or witness memory");
+            expected=actual;
+        }
+    }
+});
+
+Check("water concern presentation query rejects stale hidden or inaccessible targets without mutation",()=>
+{
+    var sim=Fresh();var target=sim.Selected!;Immerse(sim);
+    var helper=AddNeighbor(sim,"援助者",5,0);helper.Personality.WaterConcernId=target.Id;
+    Require(sim.WaterConcernTarget(helper)==target,"visible actual crisis missing");
+    double time=sim.State.WorldSeconds,health=target.Health;
+    helper.Quarantine=true;Require(sim.WaterConcernTarget(helper)==null,"quarantine boundary ignored");helper.Quarantine=false;
+    helper.Interaction.Restraint=RestraintKind.Box;Require(sim.WaterConcernTarget(helper)==null,"boxed observer showed active rescue");
+    helper.Interaction.Restraint=RestraintKind.None;
+    target.Condition=PhysicalCondition.Dead;Require(sim.WaterConcernTarget(helper)==null,"old concern resurrected victim");
+    target.Condition=PhysicalCondition.Active;target.X=0;
+    Require(sim.WaterConcernTarget(helper)==null&&helper.Personality.WaterConcernId==target.Id,"query trusted wet cache or mutated saved concern");
+    Require(sim.State.WorldSeconds==time&&target.Health==health,"read-only presentation query advanced state");
+});
+
+Check("continuous witness event survives a save without restarting or remembering each sample",()=>
+{
+    var sim=Fresh();var target=sim.Selected!;target.Interaction.Restraint=RestraintKind.Frame;
+    var witness=AddNeighbor(sim,"目击者",0,2);
+    var input=new InteractionInput(InteractionAction.Burn,BodyPart.Side,.4,.05);
+    sim.BeginInteractionGesture(target.Id,input);
+    for(int n=0;n<20;n++)sim.ContinueInteractionGesture(input,true);
+    sim.EndInteractionGesture();
+    var incident=sim.State.Incidents.Single(e=>e.Kind==IncidentKind.Attack&&e.ActorId=="player");
+    string id=incident.Id;double previous=incident.Severity,fear=witness.Fear;
+    var copy=Clone(sim);var saved=copy.State.Creatures.Single(c=>c.Id==witness.Id);
+    copy.BeginInteractionGesture(target.Id,input);
+    for(int n=0;n<20;n++)copy.ContinueInteractionGesture(input,true);
+    copy.EndInteractionGesture();
+    Require(copy.State.Incidents.Count(e=>e.Kind==IncidentKind.Attack&&e.ActorId=="player")==1&&
+        copy.State.Incidents.Single(e=>e.Id==id).Severity>previous&&saved.Fear>fear,
+        "save discarded the coalesced incident or its continued witnessed intensity");
+    Require(saved.PersonalMemories.Count(m=>m.IncidentId==id)==1,"save replayed witness memory");
+    saved.X=-8;saved.Z=0;double distantFear=saved.Fear,distantAlarm=saved.Interaction.Emotion.Alarm;
+    copy.BeginInteractionGesture(target.Id,input);
+    for(int n=0;n<20;n++)copy.ContinueInteractionGesture(input,true);
+    copy.EndInteractionGesture();
+    Require(saved.Fear==distantFear&&saved.Interaction.Emotion.Alarm==distantAlarm,
+        "past knowledge caused new emotional increments beyond sight and hearing range");
+});
+
+Check("hearing then seeing the actor adds one first-sight response without replaying each contact",()=>
+{
+    var sim=Fresh();var target=sim.Selected!;target.Interaction.Restraint=RestraintKind.Frame;
+    var listener=AddNeighbor(sim,"先听后看的油",0,6);
+    var input=new InteractionInput(InteractionAction.Burn,BodyPart.Side,.4,.1);
+    sim.BeginInteractionGesture(target.Id,input);
+    for(int n=0;n<20;n++)sim.ContinueInteractionGesture(input,true);
+    var incident=sim.State.Incidents.Single(e=>e.Kind==IncidentKind.Attack&&e.ActorId=="player");
+    Require(listener.Knowledge.Single(k=>k.IncidentId==incident.Id).Source==KnowledgeSource.Heard&&
+        !listener.Knowledge.Single(k=>k.IncidentId==incident.Id).KnowsActor,"unseen actor was identified by hearing");
+    int before=listener.ReactionSerial;listener.Z=2;
+    sim.ContinueInteractionGesture(input,true);
+    Require(listener.ReactionSerial==before+1&&listener.Knowledge.Single(k=>k.IncidentId==incident.Id).Source==KnowledgeSource.Witness,
+        "first direct sight was suppressed by an existing heard memory");
+    int seen=listener.ReactionSerial;
+    for(int n=0;n<5;n++)sim.ContinueInteractionGesture(input,true);
+    sim.EndInteractionGesture();
+    Require(listener.ReactionSerial==seen&&listener.PersonalMemories.Count(m=>m.IncidentId==incident.Id)==1,
+        "same visible event replayed reaction or duplicated personal memory");
+});
+
 Console.WriteLine($"Water/emotion checks: {failures} failure(s).");
 return failures==0?0:1;

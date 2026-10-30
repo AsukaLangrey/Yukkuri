@@ -29,12 +29,17 @@ public partial class CreatureActor
         }
         _waterPhase+=dt;
         float effort=c.Condition==PhysicalCondition.Active?Mathf.Clamp((float)water.Struggle/100,0,1):0;
+        bool canEscape=WaterEnvironment.CanStruggle(c);
+        bool fixedBody=c.Interaction.Restraint!=RestraintKind.None||c.Interaction.Supine;
         float struggle=Mathf.Sin(_waterPhase*(5+effort*4));
-        float reach=Mathf.Max(0,Mathf.Sin(_waterPhase*2.5f));
-        _visual.Position+=new Vector3(struggle*.025f*effort,-.23f+(reach*.09f+Mathf.Abs(struggle)*.025f)*effort,0)*BodyScale;
-        _visual.RotationDegrees+=new Vector3(-reach*12*effort,0,struggle*10*effort);
+        float reach=canEscape?Mathf.Max(0,Mathf.Sin(_waterPhase*2.5f)):0;
+        float sway=fixedBody ? .005f : .025f;
+        float bob=fixedBody ? 0 : .025f;
+        _visual.Position+=new Vector3(struggle*sway*effort,-.23f+(reach*.09f+Mathf.Abs(struggle)*bob)*effort,0)*BodyScale;
+        if(!fixedBody)_visual.RotationDegrees+=new Vector3(-reach*12*effort,0,struggle*10*effort);
         _visual.Scale*=new Vector3(1-effort*reach*.04f,1+effort*reach*.065f,1);
-        PoseTag=c.Condition==PhysicalCondition.Dead?"water-dead":effort>.12f?"water-struggle":"water-exhausted";
+        PoseTag=c.Condition==PhysicalCondition.Dead?"water-dead":effort<=.12f?"water-exhausted":
+            canEscape?"water-struggle":fixedBody?"water-restrained":"water-strain";
     }
 
     private void BuildWaterSurface()
@@ -60,6 +65,7 @@ public partial class CreatureActor
         if(!wet)return;
         _waterSurface.GlobalPosition=new((float)c.X,NaturalIntakeGeometry.WaterHeight+.008f,(float)c.Z);
         float effort=c.Condition==PhysicalCondition.Active?Mathf.Clamp((float)c.Interaction.Water.Struggle/100,0,1):0;
+        if(c.Interaction.Restraint!=RestraintKind.None||c.Interaction.Supine)effort*=.25f;
         for(int n=0;n<_waterRings.Length;n++)
         {
             float phase=Mathf.PosMod(_waterPhase*(.30f+effort*.24f)+n/3f,1);

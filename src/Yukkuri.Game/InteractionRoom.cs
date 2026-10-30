@@ -179,6 +179,7 @@ public partial class InteractionRoom : Node3D
             var actor=_actors[c.Id];actor.Visible=HasVisibleFamilyBody(c)&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
             string pose=InteractionPresentation.Pose(c);
             if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
+            actor.PrepareWaterConcern(c,Sim.WaterConcernTarget(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),pose);
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
             RefreshFamilyPresentation(c,actor);
         }

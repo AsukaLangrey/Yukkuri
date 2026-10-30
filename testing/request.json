@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v19-night-three-lines-B-20261031",
+  "revision": "dot-v20-night-three-lines-C-20261031",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -9,7 +9,7 @@
   "run_timeout_minutes": 50,
   "watched_paths": ["src/", "checks/", "tools/", "assets-source/", "third-party/", "global.json", "NuGet.Config", "toolchain.lock.json", ".gitattributes", "testing/request.json", "testing/PROTOCOL.md", "testing/report-template.json"],
   "required_checks": [
-    "lfs-integrity", "game-build", "Family.Desire", "Interaction.WaterEmotion", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
+    "lfs-integrity", "game-build", "Interaction.AffectionJourney", "Family.Desire", "Interaction.WaterEmotion", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "Interaction.AutonomyPriority", "Interaction.CompletedNeeds", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
     "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Family.AdoptionJourney", "Family.AssistedCare", "Family.Growth", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
@@ -224,6 +224,13 @@
     "真实落水不现场生产，身体时间与负担继续；救回干燥可用空间后继续原出生事件，读档不能重复结算。饥饿袭击能被玩家制止、真实近身善意同伴保护、喂食和隔开打断，受害者有逃离意图；无保护者和远处保护者对照保留。",
     "图形核对茎生枝芽和数量/进度、胎生负担体态、真实出生才触发短表现；读档不重播，失败恢复不冒充出生，护理反应不能吃掉所有出生提示。危急/死亡/水中/托举/固定仍优先。新皮肤渐变和发束层次只改材质不改接触网格，尚无渲染验收。",
     "普通四项监测与性情描述、调试新世界快照解除冻结及小窗口滚动、诱导商店返回保留家庭对象均需实际界面验证。两个食品GLB及依赖纹理仅为有官方许可的候选，未接入运行。本批不能视为八景完整覆盖，也不恢复远程自动计划。"
+  ],
+  "night_three_lines_C_focus": [
+    "v20保留所有旧请求。新增Interaction.AffectionJourney，从默认陌生个体开始，经真实照护、说话和相处建立人类信任，再形成双向伴侣关系、安全自主孕育和出生。不得用预填信任/亲密/兴趣的边界夹具替代此旅程；失败需保留实际阶段、时间、食水精力及关系读数。本机未执行。",
+    "持续接触的真实伤害相同时，受害者和实际目击者的惊惧、恐惧、信任及公共事件/记忆数量应不随输入采样率改变。听见、看见、离开视线与近看世界时间冻结分别核对；短动作不能丢掉后续目击强度，也不能每帧重复播放事件。",
+    "实际图形观察善良者向落水同伴和人类求助、中性观察和有真实事件时的恶劣嘲弄；遮挡、失去行动能力、目标离水或死亡时退出。本人临危/死亡/疼痛/进食/直接操作优先。固定及脚部伤残的落水者保留有限挣扎，不伪装成正常跳逃。",
+    "Hits读取模拟每个目标的计数和剩余时间：空点/拒绝不计，切换目标不混链，暂停保持而继续后到期消失。普通观察面板的落水救援入口使用真实用品库存；制止袭击可从施害者或受害者进入，暂停不能执行，终止后仍保留饥饿/伤势/关系。",
+    "全部结果绑定包含第三批的完整SHA。未运行项目、编译、测试、模拟或渲染；静态审查与代码新增都不是实测证据。本请求不恢复远程自动计划。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

@@ -57,20 +57,19 @@ public sealed partial class WorldSimulation
 
     private void RememberPlayerHarm(Creature c, double amount, BodyPart? injuredPart=null,string? cause=null)
     {
+        if(amount<=0)return;
         var b = c.Interaction.HumanBond;
         b.LastHarmAt = State.WorldSeconds;
         b.Safety = Math.Max(0, b.Safety - amount);
         b.CareBudget = 0;
-        RememberThreat(c,Math.Max(4,amount*2));
-        // All contact tools share the existing witness system. Accumulate continuous
-        // harm, but never create a new public incident on every render/input sample.
-        b.UnreportedHarm=Math.Min(40,b.UnreportedHarm+amount);
-        if(State.WorldSeconds-b.LastWitnessThreatAt>=2.5)
-        {
-            b.LastWitnessThreatAt=State.WorldSeconds;
-            RecordPlayerThreat(c,$"人类的{cause??"粗暴接触"}让{c.Name}受到惊吓或伤害",Math.Clamp(b.UnreportedHarm*1.8,4,24));
-            b.UnreportedHarm=0;
-        }
+        // amount already represents the actual injury, or the intensity of a
+        // non-injuring fright. A minimum per sample makes a held tool scarier
+        // at higher input rates even when its contact time and damage match.
+        RememberThreat(c,amount*2);
+        // The public event is coalesced, but witnesses must perceive every real
+        // increment. Preserve pending harm from older saves once, then clear it.
+        RecordPlayerThreat(c,$"人类的{cause??"粗暴接触"}让{c.Name}受到惊吓或伤害",(amount+b.UnreportedHarm)*1.8);
+        b.UnreportedHarm=0;
         EndHumanCompany(c);
         var part = injuredPart ?? (_interactionGesture?.TargetId == c.Id ? _interactionGesture.Input.Part : BodyPart.Side);
         b.Caution[part] = Clamp100(b.Caution.GetValueOrDefault(part) + amount * 3);

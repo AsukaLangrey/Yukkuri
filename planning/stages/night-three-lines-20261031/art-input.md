@@ -65,3 +65,14 @@
 接口文档来源：
 - https://docs.godotengine.org/en/4.4/classes/class_gradienttexture2d.html
 - https://docs.godotengine.org/en/4.4/classes/class_basematerial3d.html
+
+## 第三批：水域围观性格与计数一致性（接替线 art_input_2）
+
+- Room 在每帧向 Actor 提供 A 新增的 `Sim.WaterConcernTarget(c)`。此查询复用真实落水、存活、观察资格和视线规则；旧 `WaterConcernId` 本身不能驱动画面。目标离水、死亡、隔离、遮挡或观察者失去资格时，情境表现退出。
+- 新增 CreatureActor.WaterConcern.cs。善良者在安全自主姿态中伸展、急切抬眉，站稳后在落水同伴与人类之间回望；中性者观察；恶劣者只有实际 Defiant 反应仍在持续时才偏头、挑眉嘲弄。表情复用原平滑过渡，身体权重渐变。临危、死亡、托举、固定、翻滚、本人落水、进食、排泄、受伤疼痛及直接接触姿态优先，不由围观覆盖。
+- 走动仍使用原起跳与落地朝向；只有身体已站稳、未转向/跳跃时才回头求助。不新增模拟位移，不从台词字符串推断事件。
+- Hits 删除本机微秒计时与本地加一，直接显示模拟每个目标的 `HitCount` / `HitRemaining`，上限999。换目标后返回前一目标，在其模拟有效时间内接续该目标原链；暂停冻结模拟计时，因此显示不再自己过期。只在命中反馈成功、发生变更且未拒绝时选择显示目标。
+- 水中“有体力挣扎”与“有能力跳逃”分开。主动抬身尝试严格由 `WaterEnvironment.CanStruggle` 门控，固定者保留原方向只轻微颤动，残障但仍有体力者不伪装成正常跳逃，临危/死亡无主动动作。
+- 只读复核了工具选择、目标切换、释放鼠标、移出场景、失焦/暂停调用链：已有 `CancelGesture` / `EndPointerGesture` 负责收尾，本批不额外改变输入语义。单击递一份后释放仍继续递送；换工具/右键仍取消。
+
+本批改动：CreatureActor.WaterConcern.cs（新增）、CreatureActor.cs、CreatureActor.Interaction.cs、CreatureActor.FaceMotion.cs、CreatureActor.Water.cs、InteractionRoom.cs、InteractionRoom.HitFeedback.cs，以及本交接。未改主协调专属文件、Simulation 或 checks。只作源码静态审查，未运行游戏、编译、测试、模拟、渲染、预览、转换或项目脚本；还需授权远端核对实际表情节奏、视线遮挡后渐退、暂停/切换目标的 Hits 以及固定/残障水中姿态。

@@ -38,6 +38,19 @@ public sealed partial class WorldSimulation
         !observer.Family.Memorialized&&observer.RegionId==target.RegionId&&
         !WaterEnvironment.IsInWater(State,observer)&&FamilyVisible(observer,target,5);
 
+    private static bool CanRespondToWater(Creature observer) => CanSelfMove(observer)&&
+        observer.Interaction.EatingRemaining<=0&&!FamilyRules.UnderIntervention(observer);
+
+    // Presentation reads the same visibility and bodily eligibility as the
+    // behaviour. A saved concern id alone is not evidence of a current crisis.
+    public Creature? WaterConcernTarget(Creature observer)
+    {
+        if(!State.Creatures.Contains(observer)||!CanRespondToWater(observer))return null;
+        var target=State.Creatures.Find(c=>c.Id==observer.Personality.WaterConcernId);
+        return target!=null&&target.Condition!=PhysicalCondition.Dead&&
+            WaterEnvironment.IsInWater(State,target)&&CanWitnessWater(observer,target)?target:null;
+    }
+
     private bool TryWaterDrinkingAccident(Creature c,RoomObject source)
     {
         var p=c.Personality;
@@ -55,7 +68,7 @@ public sealed partial class WorldSimulation
     private bool TryRespondToWater(Creature c,double dt)
     {
         var p=c.Personality;
-        if(!CanSelfMove(c)||c.Interaction.EatingRemaining>0||FamilyRules.UnderIntervention(c))return false;
+        if(!CanRespondToWater(c)){p.WaterConcernId=null;return false;}
         var target=State.Creatures.Where(o=>o.Condition!=PhysicalCondition.Dead&&
             WaterEnvironment.IsInWater(State,o)&&CanWitnessWater(c,o)).OrderBy(o=>Distance(c.X,c.Z,o.X,o.Z)).FirstOrDefault();
         if(target==null){p.WaterConcernId=null;return false;}
