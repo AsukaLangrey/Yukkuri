@@ -399,6 +399,7 @@ public partial class InteractionRoom
         _gestureTargetKind=InteractionTargetKind.Body;_gestureTargetObject=null;_gestureStemMotherId=null;
         _detachedLiveContact=false;_detachedActionComplete=false;
         _detachedSupplyContactId=null;
+        ResetBodySupplyContact();
     }
     private void CancelGesture()
     {
@@ -446,7 +447,7 @@ public partial class InteractionRoom
     private void ProcessRoomGesture(float dt,double sampleSeconds,bool releasing=false)
     {
         if(_clickOfferId!=null){ProcessClickOffer(dt);return;}
-        if(_heldSupplyId!=null){ProcessHeldSupply(dt);return;}
+        if(_heldSupplyId!=null){ProcessHeldSupply(dt,sampleSeconds);return;}
         if(_gestureTargetKind==InteractionTargetKind.DetachedStem){ProcessDetachedGesture(dt,sampleSeconds,releasing);return;}
         if(!_mouseHeld)return;
         if(!Sim.HasInteractionGesture){CancelGesture();return;}
@@ -546,34 +547,51 @@ public partial class InteractionRoom
         _lastPointer=current;
     }
 
-    private void ProcessHeldSupply(float dt)
+    private void ProcessHeldSupply(float dt,double sampleSeconds)
     {
+        if(Sim.State.Settings.Pause||!_windowFocused||_modalOpen)
+        {CancelGesture();return;}
         if(!_mouseHeld||!Input.IsMouseButtonPressed(MouseButton.Left)){CancelGesture();return;}
         Vector2 point=GetViewport().GetMousePosition();
         var obj=Sim.State.RoomObjects.Find(o=>o.Id==_heldSupplyId&&o.HeldByHand);
         if(obj==null){CancelGesture();return;}
         var contact=IsScenePoint(point)?ContactAt(point):null;
-        if(ProcessDetachedSupply(obj,contact,point,dt))return;
+        if(contact?.TargetKind==InteractionTargetKind.DetachedStem||_gestureTargetKind==InteractionTargetKind.DetachedStem)
+            ResetBodySupplyContact();
+        if(ProcessDetachedSupply(obj,contact,point,dt)){ResetBodySupplyContact();return;}
         bool mouth=contact is {Part:BodyPart.Mouth,Blocked:false,TargetKind:InteractionTargetKind.Body};
         if(mouth&&_selectedDetachedStemEventId!=null){_selectedDetachedStemEventId=null;RefreshRoomUi();}
         if(Sim.HasInteractionGesture&&contact?.Id!=Sim.InteractionGestureTarget)AcceptFeedback(Sim.EndInteractionGesture(true));
-        if(mouth&&contact!=null&&obj.Portions>0&&!_supplyBiteTaken&&!Sim.HasInteractionGesture)
-        {
-            Sim.State.SelectedId=contact.Id;
-            AcceptFeedback(Sim.BeginInteractionGesture(contact.Id,new(_action,BodyPart.Mouth,.2,dt,ObjectId:obj.Id)));
-        }
-        if(Sim.HasInteractionGesture)
-        {
-            var reply=Sim.ContinueInteractionGesture(new(_action,contact?.Part??BodyPart.Side,.2,dt,ObjectId:obj.Id),mouth);
-            _supplyBiteTaken|=Sim.InteractionIntakeAccepted;
-            _gesturePose=reply.Pose;AcceptFeedback(reply);
-        }
+        // Establish this frame's visible, real contact before admitting any dwell.
+        if(!_hand.Visible)ResetBodySupplyContact();
         ShowInteractionTool();_hand.Visible=IsScenePoint(point);
         if(_toolFood!=null)_toolFood.Visible=obj.Portions>0;
-        if(_cupWater!=null)SetCupFill(_cupWater,(float)NaturalResources.VisibleWaterFill(Sim.State,obj));
         if(mouth&&contact!=null)PlaceContactTool(contact);
         else if(TryGroundPoint(point,.6f,out var position)){_hand.GlobalBasis=Basis.Identity;_hand.GlobalPosition=position;}
         else _hand.Visible=false;
+        bool settled=ObserveBodySupplyContact(obj,contact,dt,sampleSeconds);
+        // A positive placeholder lets the simulation clear a broken contact even
+        // when the incoming duration is invalid. touching=false never spends it.
+        float contactDt=float.IsFinite(dt)&&dt>0?Math.Min(.1f,dt):.01f;
+        if(mouth&&contact!=null&&obj.Portions>0&&!_supplyBiteTaken&&!Sim.HasInteractionGesture)
+        {
+            Sim.State.SelectedId=contact.Id;
+            var start=Sim.BeginInteractionGesture(contact.Id,new(_action,BodyPart.Mouth,.2,contactDt,ObjectId:obj.Id));
+            AcceptFeedback(start);
+            if(!start.Success||start.Refused){ResetBodySupplyContact();settled=false;}
+        }
+        if(Sim.HasInteractionGesture&&!_supplyBiteTaken)
+        {
+            var reply=Sim.ContinueInteractionGesture(new(_action,contact?.Part??BodyPart.Side,.2,contactDt,ObjectId:obj.Id),settled);
+            _supplyBiteTaken|=Sim.InteractionIntakeAccepted;
+            if(!settled&&_bodySupplyActor!=null&&reply.Success&&!reply.Refused&&!_supplyBiteTaken)
+                reply=reply with {Message="已递到嘴边，保持接触让它接过去。"};
+            _gesturePose=reply.Pose;AcceptFeedback(reply);
+            if(!reply.Success||reply.Refused||_supplyBiteTaken)ResetBodySupplyContact();
+        }
+        if(!Sim.HasInteractionGesture||!_hand.Visible||obj.Portions<=0)ResetBodySupplyContact();
+        if(_toolFood!=null)_toolFood.Visible=obj.Portions>0;
+        if(_cupWater!=null)SetCupFill(_cupWater,(float)NaturalResources.VisibleWaterFill(Sim.State,obj));
         _lastPointer=point;
     }
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v34-night-three-lines-K-water-attempts-20261031",
+  "revision": "dot-v35-night-three-lines-K-held-supply-contact-20261031",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -26,6 +26,7 @@
   "targeted_review_documents": [
     "testing/night-three-lines-20261031.md",
     "planning/stages/night-three-lines-20261031/PLAN.md",
+    "planning/stages/night-three-lines-20261031/requirement-evidence.tsv",
     "planning/stages/night-three-lines-20261031/gameplay.md",
     "planning/stages/night-three-lines-20261031/art-input.md",
     "planning/stages/night-three-lines-20261031/debug.md",
