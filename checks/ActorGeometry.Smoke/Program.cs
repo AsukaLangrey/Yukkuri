@@ -1209,6 +1209,63 @@ Check("every live intake mouth frame follows the continuous face surface",()=>
     }
     return true;
 });
+Check("continuous intake keeps preparation still and reads existing mouthful progress without replaying",()=>
+{
+    foreach(var kind in Enum.GetValues<Yukkuri.Simulation.IntakeKind>())
+    {
+        double duration=Yukkuri.Simulation.InteractionLife.IntakeDuration(kind);
+        var ready=ActorIntakeMouthSurface.ShapeForFrame(kind==Yukkuri.Simulation.IntakeKind.Water?3:0);
+        for(int n=0;n<=40;n++)
+        {
+            var sample=ActorIntakePresentation.SampleMouth(kind,duration-n*.01,false,true);
+            if(sample!=ready)return false;
+        }
+        if(ActorIntakePresentation.SampleMouth(kind,0,false).Active||!ActorIntakePresentation.SampleMouth(kind,0,true).Active)return false;
+        var saved=ActorIntakePresentation.SampleMouth(kind,.63,false,true);
+        for(int n=0;n<100;n++)if(ActorIntakePresentation.SampleMouth(kind,.63,false,true)!=saved)return false;
+    }
+    return true;
+});
+Check("mouth geometry changes continuously through actual intake and swallowing boundaries",()=>
+{
+    foreach(var kind in Enum.GetValues<Yukkuri.Simulation.IntakeKind>())foreach(bool ground in new[]{false,true})
+    {
+        double duration=Yukkuri.Simulation.InteractionLife.IntakeDuration(kind);
+        var previous=ActorIntakePresentation.SampleMouth(kind,duration,false,ground);
+        for(int n=1;n<duration/.002;n++)
+        {
+            var next=ActorIntakePresentation.SampleMouth(kind,duration-n*.002,false,ground);
+            if(!next.Active||next.Width<.0319f||next.Width>.1101f||next.Height<.0119f||next.Height>.0901f||next.Tongue<0||next.Tongue>1)return false;
+            if(MathF.Abs(previous.Width-next.Width)>.002f||MathF.Abs(previous.Height-next.Height)>.002f||MathF.Abs(previous.Tongue-next.Tongue)>.06f)return false;
+            previous=next;
+        }
+        foreach(double boundary in new[]{duration-Yukkuri.Simulation.NaturalResources.BiteContactSeconds,.25})
+        {
+            var before=ActorIntakePresentation.SampleMouth(kind,boundary+.000001,false,ground);
+            var after=ActorIntakePresentation.SampleMouth(kind,boundary-.000001,false,ground);
+            if(MathF.Abs(before.Width-after.Width)>.00001f||MathF.Abs(before.Height-after.Height)>.00001f||MathF.Abs(before.Tongue-after.Tongue)>.0001f)return false;
+        }
+    }
+    return true;
+});
+Check("interpolated intake cavity and tongue remain on the face and inside the same changing aperture",()=>
+{
+    for(int from=0;from<ActorIntakeMouthSurface.FrameCount;from++)for(int to=0;to<ActorIntakeMouthSurface.FrameCount;to++)
+    for(int step=0;step<=12;step++)
+    {
+        var shape=ActorIntakeMouthSurface.Blend(ActorIntakeMouthSurface.ShapeForFrame(from),ActorIntakeMouthSurface.ShapeForFrame(to),step/12f);
+        foreach(bool tongue in new[]{false,true})for(int ring=0;ring<=3;ring++)for(int n=0;n<48;n++)
+        {
+            var p=ActorIntakeMouthSurface.Point(shape,tongue,ring/3f,n*MathF.Tau/48);
+            if(!float.IsFinite(p.LengthSquared())||p.Y<-.2201f||p.Y>-.1299f)return false;
+            float expected=tongue?.018f:.012f;
+            if(MathF.Abs(p.Z-ActorFaceSurface.Height(p.X,p.Y)-expected)>.00001f)return false;
+            float x=p.X/(shape.Width*.5f),y=(p.Y+.175f)/(shape.Height*.5f);
+            if(x*x+y*y>(tongue?.88f*.88f:1)+.0001f)return false;
+        }
+    }
+    return true;
+});
 Check("supported mouth reaches leaves river meals sweets and cup rims across body sizes",()=>
 {
     var hair=new List<System.Numerics.Vector3>(ActorHairSurface.BackSupport.ToArray());

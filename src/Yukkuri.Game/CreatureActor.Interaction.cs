@@ -106,10 +106,10 @@ public partial class CreatureActor
         _hopMotion.Advance(new(Position.X,Position.Z),delta,canHop,paused);
         _interactionPoseClock.Advance(pose,c.ReactionSerial,delta,paused);
         float age=_interactionPoseClock.Age;
-        var intake=ActorIntakePresentation.Sample(life.EatingKind,life.EatingRemaining,pose=="offer",life.GroundIntake);
-        if(!intake.Active&&pose=="sing")intake=new(true,ActorReactionMotion.SingingMouthFrame(age),1,1);
-        if(c.Condition==PhysicalCondition.Dead)intake=new(false,-1,1,1);
-        PresentIntakeMouth(intake);
+        var intake=ActorIntakePresentation.SampleMouth(life.EatingKind,life.EatingRemaining,pose=="offer",life.GroundIntake);
+        if(!intake.Active&&pose=="sing")intake=ActorIntakeMouthSurface.ShapeForFrame(ActorReactionMotion.SingingMouthFrame(age));
+        bool intakeBlocked=c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical;
+        PresentIntakeMouth(c,intake,paused?0:delta,intakeBlocked);
         float wave=Mathf.Sin(age*6);
         _visual.RotationDegrees=new(0,0,0);
         _visual.Position=Vector3.Zero;

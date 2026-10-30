@@ -159,3 +159,11 @@ B声明仅六文件静态读写，未运行项目、检查、编译、渲染、�
 CreatureActor.WaterConcern.cs和InteractionRoom.cs接WaterSupportStatus的真实TargetId/EventId/Phase；Approaching只在站稳时看向目标，实际走路仍由模拟决定；Watching按已完成接触及观察者自身Pain/Fear/Alarm限制缓和，保留Hurt/Frightened/Exhausted优先，不治疗或修改位移。落水时原求助/恶意旁观表现保留；岸上不继续交替向人类急切呼救。
 
 按当前Creature引用、目标引用和水事件建立基线，近看/隐藏/死亡/跨区/失效立即清理，暂停不启新事件；初观察直接读取当前阶段。B仅静态写上述两文件，未运行/Git；root已检查唯一调用和各状态优先。远端需观察真实救起后靠近/守候、不同体型距离、食水/抓起/疼痛中断、再次落水新事件、高Alarm观察者、暂停及读档。B10眼部六文件未在本批修改。
+
+## 第十二批：连续进食口腔（四文件冻结）
+
+ActorIntakePresentation新增纯形状记录及SampleMouth，直接采样EatingRemaining，保留旧Sample、FrameCount和五帧Layers；准备接触不提前咀嚼，嘴伤沿原实际摄食时钟减速，没有表现层第二倍率。ActorIntakeMouthSurface以统一椭圆拓扑生成口腔及舌面，保留原中心、.012/.018贴面偏移；舌面规范半径限制.88，避免闭口时伸出口腔。
+
+CreatureActor.Intake增加口腔阴影、唇缘暖色及舌面渐层，形状量化缓存上限128。CreatureActor.Interaction改为实际连续样本；进入.08秒、结束/取消.10秒只交接嘴型透明度和几何，不推进任何摄食/吞咽。新Creature引用直接建立当前进度基线，暂停冻结，临危/死亡立即让出进食嘴，原恐惧/疼痛表情权重保留。
+
+A在ActorGeometry.Smoke新增3组纯检查源码，覆盖实际接食前静止、同进度采样不重播、摄食/吞咽边界连续、同一贴面口腔内舌面包络；旧断言保持。主协调核对程序集链接边界、调用及网格/透明交接；没有运行编译、检查、游戏或预览。真实近看、两口交接、嘴伤减速、渲染透明排序和长期缓存性能均待独立远端。
