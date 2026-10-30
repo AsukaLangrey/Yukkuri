@@ -284,6 +284,34 @@ Check("every cleanable surface has marks whose entire footprint matches the real
     }
     return true;
 });
+Check("injury detail remains inside the original patches with bounded colour and unchanged edge fading",()=>
+{
+    foreach(bool scar in new[]{false,true})for(int row=0;row<=ActorInjurySurface.Rows;row++)for(int side=0;side<=ActorInjurySurface.Sides;side++)
+    {
+        float r=(float)row/ActorInjurySurface.Rows,a=side*MathF.Tau/ActorInjurySurface.Sides;
+        var q=ActorInjurySurface.Surface(r,a,scar);var tint=ActorInjurySurface.Tint(r,a,scar);
+        if(!float.IsFinite(q.LengthSquared())||q.LengthSquared()>r*r+.000001f||
+            !float.IsFinite(tint.LengthSquared())||tint.X is <0 or >1||tint.Y is <0 or >1||tint.Z is <0 or >1)return false;
+        if(scar&&(MathF.Abs(q.X-r*MathF.Cos(a))>.000001f||MathF.Abs(q.Y)>MathF.Abs(r*MathF.Sin(a))+.000001f))return false;
+        if(!scar&&q.Length()<r*.88f-.000001f)return false;
+        if(row==0&&(q!=System.Numerics.Vector2.Zero||tint!=ActorInjurySurface.Tint(0,0,scar)))return false;
+        if(side==ActorInjurySurface.Sides&&
+            (System.Numerics.Vector2.Distance(q,ActorInjurySurface.Surface(r,0,scar))>.00001f||
+             System.Numerics.Vector3.Distance(tint,ActorInjurySurface.Tint(r,0,scar))>.00001f))return false;
+        float alpha=ActorInjurySurface.EdgeOpacity(r);
+        if(!float.IsFinite(alpha)||alpha is <0 or >1||MathF.Abs(alpha-MathF.Sqrt(MathF.Max(0,1-r*r)))>.000001f)return false;
+        foreach(var source in ActorSurfaceMarks.Dressing)
+        {
+            var site=source with {Size=source.Size*.82f};
+            var mark=scar?site with {Size=site.Size*new System.Numerics.Vector2(.7f,.3f)}:site;
+            var point=ActorInjurySurface.Point(site,r,a,scar);
+            var skin=ActorSurfaceMarks.Project(mark,q,0);
+            if(!float.IsFinite(point.LengthSquared())||
+                MathF.Abs(System.Numerics.Vector3.Distance(point,skin)-(scar?.012f:.011f))>.00001f)return false;
+        }
+    }
+    return ActorInjurySurface.EdgeOpacity(0)==1&&ActorInjurySurface.EdgeOpacity(1)==0;
+});
 Check("localized water and dirt stay visible until that region is actually dried or cleaned",()=>
 {
     var life=new Yukkuri.Simulation.InteractionLife{Dirt=0,Wetness=0};

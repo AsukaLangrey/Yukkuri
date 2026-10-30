@@ -50,9 +50,9 @@
 
 ## 共同约束
 
-第七批接口约定（实施中，未完成）：A新增 `InteractionTargetKind { Body, Stem }`，`InteractionInput` 末尾追加默认Body的 `TargetKind`；现有 `ObjectId` 在Stem路径绑定当前孕育EventId，不扩BodyPart。B的真实茎命中携带独立Kind/身份，不能落回母体Head行为。先支持SupportStem持续支护与现有Punch/Burn独立损伤，其余不适用工具明确拒绝。SupportStem成功后扣1包真实Medicine，测试无限金钱不绕过此库存；已有普通伤势护理语义保持。茎体仍附着母体、整窝共用原孕育事件/计划数量/成熟和一次出生结算，不宣称已有独立脱落幼体。A先公布只读StemCareStatus精确字段，B与主协调按同一状态接线；旧档、失败恢复、死亡、换次孕育和暂停边界必须覆盖。
+第七批接口约定（已接入源码，待远端验证）：A新增 `InteractionTargetKind { Body, Stem }`，`InteractionInput` 末尾追加默认Body的 `TargetKind`；现有 `ObjectId` 在Stem路径绑定当前孕育EventId，不扩BodyPart。B的真实茎命中携带独立Kind/身份，不能落回母体Head行为。先支持SupportStem持续支护与现有Punch/Burn独立损伤，其余不适用工具明确拒绝。SupportStem成功后扣1包真实Medicine，测试无限金钱不绕过此库存；已有普通伤势护理语义保持。茎体仍附着母体、整窝共用原孕育事件/计划数量/成熟和一次出生结算，不宣称已有独立脱落幼体。A先公布只读StemCareStatus精确字段，B与主协调按同一状态接线；旧档、失败恢复、死亡、换次孕育和暂停边界必须覆盖。
 
 原开发机只源码/文档读写、已有日志与静态文本审查、Git/GitHub管理。禁止编译、项目/检查脚本、测试程序、模拟、渲染、预览、Godot及任何本机副本绕过；禁止computer-use。子代理不暂存、不提交、不推送、不切分支、不重置，不清理他人改动，不再派子代理。主协调显式禁用Git钩子后按明确文件集合提交。
 长工作分批交接并继续，不为凑时长空转。只把具体静态检查记为静态结论，新增检查源码留给授权远端执行。旧J的c10不能覆盖本轮；不擅自联系Alice或恢复远端自动测试。
 
-第八批功能放行：对照HK026/027，推进整窝断茎与瓶养，不能用SupportStem冒充覆盖。A在Simulation/checks新增独立DetachedStemBroods持久生命周期、TargetKind.DetachedStem和原EventId身份，复用唯一手势通道与原整窝出生结算；剪断后母体恢复，独立窝保留进度/计划数量/亲代来源，母体死亡不无理由抹掉瓶养窝。瓶具购买与真实库存、连续水/营养/损伤、失败原因、搬放干燥占位均需接通。Input末追加SupplyObjectId区分窝身份与实际食水来源。B第8先完成托举接续及草花资源，随后第9接独立世界对象表现/输入；主协调接用品和普通面板。精确DTO先公布再跨线接入，不拆成可同时运行的第二手势，也不当普通食物RoomObject清除。
+第八批功能放行（原约定保留；已接入源码，待远端验证）：对照HK026/027，推进整窝断茎与瓶养，不能用SupportStem冒充覆盖。A在Simulation/checks新增独立DetachedStemBroods持久生命周期、TargetKind.DetachedStem和原EventId身份，复用唯一手势通道与原整窝出生结算；剪断后母体恢复，独立窝保留进度/计划数量/亲代来源，母体死亡不无理由抹掉瓶养窝。瓶具购买与真实库存、连续水/营养/损伤、失败原因、搬放干燥占位均需接通。Input末追加SupplyObjectId区分窝身份与实际食水来源。B第8先完成托举接续及草花资源，随后第9接独立世界对象表现/输入；主协调接用品和普通面板。精确DTO先公布再跨线接入，不拆成可同时运行的第二手势，也不当普通食物RoomObject清除。

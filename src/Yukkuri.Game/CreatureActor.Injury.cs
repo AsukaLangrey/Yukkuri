@@ -16,14 +16,19 @@ public partial class CreatureActor
                 var site=source with {Size=source.Size*.82f};
                 MeshInstance3D Layer(bool scar)
                 {
-                    var mesh=SculptSurface(_visual,5,32,(u,v)=>
+                    var mesh=SculptSurface(_visual,ActorInjurySurface.Rows,ActorInjurySurface.Sides,(u,v)=>
                     {
-                        var mark=scar?site with {Size=site.Size*new System.Numerics.Vector2(.7f,.3f)}:site;
-                        var point=ActorSurfaceMarks.Point(mark,u,v*Mathf.Tau,scar?.012f:.011f);
+                        var point=ActorInjurySurface.Point(site,u,v*Mathf.Tau,scar);
                         return new(point.X,point.Y,point.Z);
                     },scar?"b19b86":"a78291",
-                    (u,v)=>new Color(1,1,1,Mathf.Sqrt(Mathf.Max(0,1-u*u))),flipNormal:true);
+                    (u,v)=>
+                    {
+                        var tint=ActorInjurySurface.Tint(u,v*Mathf.Tau,scar);
+                        return new Color(tint.X,tint.Y,tint.Z,ActorInjurySurface.EdgeOpacity(u));
+                    },flipNormal:true);
                     mesh.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
+                    // SculptSurface owns the vertex-colour material; the fade
+                    // copy preserves it. Its alpha multiplies real injury opacity.
                     SceneArt.EnableSurfaceFade(mesh);mesh.Visible=false;return mesh;
                 }
                 _injuryMarks[(site.Part,site.Side)]=(Layer(false),Layer(true));
