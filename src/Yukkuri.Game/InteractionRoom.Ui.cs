@@ -176,11 +176,13 @@ public partial class InteractionRoom
         _force=_toolForces.TryGetValue(action,out float rememberedForce)?rememberedForce:.25f;_forceSlider.SetValueNoSignal(_force);
         foreach(var option in _group.Choices){var a=option.Action;_choiceList.AddChild(Button(option.Label,()=>SelectAction(a),a==action));}
         _title.Text=_group.Name+" · "+InteractionCatalog.Choice(_action).Label;
-        _hint.Text=action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink?
-            "点油：递到嘴边，等它接下一口；点地面：放下一份。右键收回，换工具也会停止递送。":InteractionCatalog.Choice(_action).Hint;
+        _hint.Text=ToolHint(action);
         _message=_group.Description;RefreshRoomUi();
         if(!_modalOpen&&SupplyStockMissing(action))ShowMissingToolSupplies(action);
     }
+    private static string ToolHint(InteractionAction action)=>
+        action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink?
+            "点油：递到嘴边，等它接下一口；点地面：放下一份。右键收回，换工具也会停止递送。":InteractionCatalog.Choice(action).Hint;
     private void DisarmTool()
     {
         CancelGesture();_toolArmed=false;
@@ -240,10 +242,19 @@ public partial class InteractionRoom
         }
         var c=Sim.Selected;if(c==null)return;var i=c.Interaction;
         RefreshVitalMeters(c);
+        var heldSupply=_heldSupplyId==null?null:Sim.State.RoomObjects.Find(o=>o.Id==_heldSupplyId&&o.HeldByHand);
         if(_waterRescueToolArmed)
         {
             _title.Text="救援用品";
             _hint.Text=$"点击落水的油救回岸上；右键收回。每次消耗1份，当前 {Sim.State.WaterRescueTools} 份；可在“用品补给”补充。";
+        }
+        else if(heldSupply!=null)
+        {
+            _title.Text=heldSupply.Portions<=0?"这一份已递出":heldSupply.Kind switch
+            {RoomObjectKind.Water=>"拿着清水",RoomObjectKind.Sweet=>"拿着零食",_=>"拿着饭饭"};
+            _hint.Text=heldSupply.Portions<=0?"这一份已用完，松手结束这次递送。":
+                "按住递到嘴边；移到空地松开放下，右键收回。"+
+                (heldSupply.Kind is RoomObjectKind.Meal or RoomObjectKind.Water?"也可对准培养瓶开口，给这一窝补充食水。":"");
         }
         else if(!_toolArmed)
         {
@@ -252,6 +263,7 @@ public partial class InteractionRoom
                 c.Family.ColdStorage.Stored?"从家庭与照护面板取出，才能再次靠近；冷藏只会有限延缓。":
                 i.Carried?"按住身体继续搬运，慢慢松手放下；快速甩动后松手会抛出。Shift＋滚轮调高度，也可在空地单击放稳。":"按住身体抓起拖动，慢慢松手放下；快速甩动后松手会抛出。空手拿食水、推球；双击近看。";
         }
+        else _hint.Text=ToolHint(_action);
         _who.Text=c.Name+" · "+SpeciesName(c.Body.SpeciesId)+(c.IsYoung?"幼体":"");
         string intake=i.NaturalIntakePending?i.EatingKind==IntakeKind.Water?"准备喝这一口":"准备取这一口":
             i.EatingKind==IntakeKind.Water?"慢慢喝着这一口":i.GroundIntake&&i.GroundIntakeKind==RoomObjectKind.Leaves?"慢慢嚼着叶子":"慢慢嚼着这一口";

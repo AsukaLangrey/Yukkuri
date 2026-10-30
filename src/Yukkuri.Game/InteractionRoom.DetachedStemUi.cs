@@ -89,7 +89,7 @@ public partial class InteractionRoom
         _detachedMoveButton.Visible=alive&&stem.Phase==DetachedStemPhase.Bottled;
         _detachedClearButton.Visible=stem.CanClear;
         _detachedParentButton.Text="查看母体 · "+mother;
-        if(!_toolArmed)
+        if(!_toolArmed&&!_waterRescueToolArmed&&_heldSupplyId==null)
         {
             _title.Text=stem.HeldByHand?"托着整瓶":"空手 · 观察离体茎";
             _hint.Text=alive?"点击茎或瓶观察；整瓶可按住拖动，食水需拿起实物后递到瓶口。":

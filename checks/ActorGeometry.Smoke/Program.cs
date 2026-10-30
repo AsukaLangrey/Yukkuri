@@ -1226,6 +1226,56 @@ Check("ball picking follows the visible sphere instead of a fixed screen-distanc
     bool behind=InteractionPropContact.RayHit(Yukkuri.Simulation.RoomObjectKind.Ball,zero,new(0,.24f,2),-ray,out _);
     return hit&&MathF.Abs(distance-1.76f)<.00001f&&!outside&&!behind;
 });
+Check("body water droplets preserve the old sphere envelope and smooth outward surface normals",()=>
+{
+    for(int row=0;row<=96;row++)for(int side=0;side<=96;side++)
+    {
+        float u=row/96f,v=side/96f;
+        var p=ActorWaterDropletSurface.Point(u,v);var n=ActorWaterDropletSurface.Normal(u,v);
+        if(!float.IsFinite(p.LengthSquared())||p.LengthSquared()>.250001f||
+            !float.IsFinite(n.LengthSquared())||MathF.Abs(n.LengthSquared()-1)>.00001f||
+            System.Numerics.Vector3.Dot(p,n)<=0)return false;
+        if(side==96&&(p!=ActorWaterDropletSurface.Point(u,0)||n!=ActorWaterDropletSurface.Normal(u,0)))return false;
+        if(row==0&&(p!=new System.Numerics.Vector3(0,-.5f,0)||n!=-System.Numerics.Vector3.UnitY))return false;
+        if(row==96&&(p!=new System.Numerics.Vector3(0,.5f,0)||n!=System.Numerics.Vector3.UnitY))return false;
+        if(row>0&&row<48&&ActorWaterDropletSurface.Point(u,0).X<=ActorWaterDropletSurface.Point(1-u,0).X)return false;
+    }
+    return true;
+});
+Check("rendered water droplet triangles are closed nondegenerate shells using the sampled surface",()=>
+{
+    var samples=new Dictionary<System.Numerics.Vector3,System.Numerics.Vector3>();
+    for(int row=0;row<=ActorWaterDropletSurface.Rows;row++)for(int side=0;side<ActorWaterDropletSurface.Sides;side++)
+    {
+        float u=(float)row/ActorWaterDropletSurface.Rows,v=(float)side/ActorWaterDropletSurface.Sides;
+        samples[ActorWaterDropletSurface.Point(u,v)]=ActorWaterDropletSurface.Normal(u,v);
+    }
+    var vertices=new Dictionary<System.Numerics.Vector3,int>();
+    var edges=new Dictionary<(int,int),(int Count,int Direction)>();
+    int Key(System.Numerics.Vector3 p)
+    {if(!vertices.TryGetValue(p,out int id)){id=vertices.Count;vertices.Add(p,id);}return id;}
+    int count=0;
+    foreach(var face in ActorWaterDropletSurface.Triangles())
+    {
+        var a=face.A.Position;var b=face.B.Position;var c=face.C.Position;
+        var cross=System.Numerics.Vector3.Cross(c-a,b-a);
+        if(!float.IsFinite(cross.LengthSquared())||cross.LengthSquared()<=1e-12f||
+            System.Numerics.Vector3.Dot(cross,(a+b+c)/3)<=0)return false;
+        foreach(var vertex in new[]{face.A,face.B,face.C})
+            if(!samples.TryGetValue(vertex.Position,out var normal)||vertex.Normal!=normal||
+                System.Numerics.Vector3.Dot(cross,vertex.Normal)<=0)return false;
+        int ia=Key(a),ib=Key(b),ic=Key(c);
+        foreach(var edge in new[]{(ia,ib),(ib,ic),(ic,ia)})
+        {
+            var key=(Math.Min(edge.Item1,edge.Item2),Math.Max(edge.Item1,edge.Item2));
+            var old=edges.GetValueOrDefault(key);
+            edges[key]=(old.Count+1,old.Direction+(edge.Item1<edge.Item2?1:-1));
+        }
+        count++;
+    }
+    return count==352&&vertices.Count==samples.Count&&vertices.Count-edges.Count+count==2&&
+        edges.Values.All(edge=>edge.Count==2&&edge.Direction==0);
+});
 Check("actual chocolate facets remain inside their original oriented crumb envelope",()=>
 {
     for(int index=0;index<InteractionFoodSurface.ChipCount;index++)

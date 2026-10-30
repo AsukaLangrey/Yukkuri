@@ -84,9 +84,19 @@ public partial class CreatureActor
             SceneArt.EnableSurfaceFade(drop);_waterTransitionDrops[n]=drop;
         }
         _wetDripRoot=new Node3D();AddChild(_wetDripRoot);
+        using var dripSurface=new SurfaceTool();dripSurface.Begin(Mesh.PrimitiveType.Triangles);
+        void AddDripVertex(WaterDropletVertex vertex)
+        {
+            dripSurface.SetNormal(new(vertex.Normal.X,vertex.Normal.Y,vertex.Normal.Z));
+            dripSurface.AddVertex(new(vertex.Position.X,vertex.Position.Y,vertex.Position.Z));
+        }
+        foreach(var face in ActorWaterDropletSurface.Triangles())
+        {AddDripVertex(face.A);AddDripVertex(face.B);AddDripVertex(face.C);}
+        dripSurface.Index();var dripMesh=dripSurface.Commit();
         for(int n=0;n<_wetDrips.Length;n++)
         {
-            var drop=SceneArt.Ball(_wetDripRoot,Vector3.Zero,new(.018f,.035f,.018f),"badde0");
+            var drop=SceneArt.Mesh(_wetDripRoot,dripMesh,Vector3.Zero,"badde0");
+            drop.Scale=new(.018f,.035f,.018f);
             SceneArt.EnableSurfaceFade(drop);_wetDrips[n]=drop;
         }
     }
