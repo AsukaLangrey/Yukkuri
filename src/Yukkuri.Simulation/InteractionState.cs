@@ -1,7 +1,7 @@
 namespace Yukkuri.Simulation;
 
 public enum BodyPart { Head, Cheek, Side, Bottom, Mouth, Accessory }
-public enum InteractionTargetKind { Body, Stem }
+public enum InteractionTargetKind { Body, Stem, DetachedStem }
 public enum SurfaceSide { Whole, Left, Right }
 public enum RestraintKind { None, Hand, Frame, Box, Hanging, Wrap }
 public enum AccessoryPlace { Worn, Hand, Ground, Stored, Hung }
@@ -19,7 +19,7 @@ public enum InteractionAction
     Flick, Push, Slap, Squeeze, Press, Roll, Throw, Drop,
     Flip, Hold, Pin, Release, Box, OpenBox,
     TakeAccessory, StoreAccessory, HangAccessory, DamageAccessory, BurnFeet, Hang, AdjustHanging, Lower,
-    Touch, PlaceWater, Punch, Burn, SupportStem
+    Touch, PlaceWater, Punch, Burn, SupportStem, CutStem, BottleStem, ClearStem
 }
 
 public sealed class AccessoryState
@@ -164,7 +164,7 @@ public sealed record InteractionInput(InteractionAction Action, BodyPart Part = 
     double Force = .3, double Duration = .1, double Motion = 0,
     double X = 0, double Z = 0, double Height = 0, double DirectionX = 1, double DirectionZ = 0,SurfaceSide Side=SurfaceSide.Whole,string? ObjectId=null,
     double StopImpact=0,double TouchTangentFraction=1,double TouchNormalSpeed=0,
-    InteractionTargetKind TargetKind=InteractionTargetKind.Body);
+    InteractionTargetKind TargetKind=InteractionTargetKind.Body,string? SupplyObjectId=null);
 
 public sealed record InteractionFeedback(bool Success, string Message, string Speech,
     string Pose, bool Refused = false, bool Changed = false, double Effect = 0);

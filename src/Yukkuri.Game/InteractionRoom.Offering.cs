@@ -36,6 +36,11 @@ public partial class InteractionRoom
             var obstruction=other.Value.RayContact(origin,-normal);
             if(obstruction!=null&&obstruction.Distance<hit.Distance)return null;
         }
+        foreach(var other in _detachedStemActors.Values)
+        {
+            var obstruction=other.RayContact(origin,-normal);
+            if(obstruction!=null&&obstruction.Distance<hit.Distance)return null;
+        }
         return new(id,BodyPart.Mouth,hit.Point,hit.Normal,hit.Distance,false,RestraintKind.None,SurfaceSide.Whole);
     }
 

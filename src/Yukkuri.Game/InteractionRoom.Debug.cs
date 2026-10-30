@@ -58,12 +58,16 @@ public partial class InteractionRoom
         _debugCreature.ItemSelected+=index=>
         {
             if(index<0||index>=_debugCreatureIds.Count)return;
-            _debugFrozen=false;_debugPage=0;SelectOil(_debugCreatureIds[(int)index]);RefreshDebugPanel(true);
+            _debugFrozen=false;_debugPage=0;
+            string id=_debugCreatureIds[(int)index];
+            if(id.StartsWith("stem:",StringComparison.Ordinal))SelectDetachedStem(id[5..]);
+            else SelectOil(id[9..]);
+            RefreshDebugPanel(true);
         };
         _debugSummary=Text("",13);column.AddChild(_debugSummary);
         var tools=Row(column,5);
         _debugScope=new OptionButton{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
-        _debugScope.AddItem("选中油 · 全部状态");_debugScope.AddItem("世界 · 全部个体与资源");_debugScope.AddItem("模拟配置与当前输入");
+        _debugScope.AddItem("选中对象 · 全部状态");_debugScope.AddItem("世界 · 全部个体与资源");_debugScope.AddItem("模拟配置与当前输入");
         tools.AddChild(_debugScope);
         _debugScope.ItemSelected+=_=>{_debugPage=0;_debugFrozen=false;ClearDebugComparison();RefreshDebugPanel(true);};
         _debugFreezeButton=Button("冻结读数",()=>
@@ -102,10 +106,12 @@ public partial class InteractionRoom
     private void RefreshDebugPanel(bool force=false)
     {
         if(!DebugPanelVisible||Sim==null)return;
+        NormalizeDetachedStemSelection();
         float available=Math.Max(200,_ui.Size.X-28);
         _debugPanel.OffsetLeft=-Math.Min(available,Math.Clamp(_ui.Size.X*.38f,330,520))-14;
         RefreshDebugCreatureSelector();
-        if(_debugSourceId!=Sim.State.SelectedId||!ReferenceEquals(_debugWorldSource,Sim.State))
+        string sourceId=_selectedDetachedStemEventId is { } stemId?"stem:"+stemId:"creature:"+Sim.State.SelectedId;
+        if(_debugSourceId!=sourceId||!ReferenceEquals(_debugWorldSource,Sim.State))
         {
             // Selecting in the scene must not relabel a frozen old creature's
             // values as the newly selected creature.
@@ -115,9 +121,13 @@ public partial class InteractionRoom
         ulong now=Time.GetTicksMsec();
         if(_debugFrozen||!force&&now-_debugCapturedAt<250)return;
         _debugCapturedAt=now;_debugFreezeButton.Text="冻结读数";
-        _debugSourceId=Sim.State.SelectedId;_debugWorldSource=Sim.State;_debugWorldSeconds=Sim.State.WorldSeconds;
+        _debugSourceId=sourceId;_debugWorldSource=Sim.State;_debugWorldSeconds=Sim.State.WorldSeconds;
         var c=Sim.Selected;
-        _debugSummary.Text=c==null?"当前未选中油，可切换到世界范围。":
+        var brood=_selectedDetachedStemEventId is { } selectedStem?Sim.State.DetachedStemBroods.Find(s=>s.EventId==selectedStem):null;
+        _debugSummary.Text=brood!=null?
+            $"离体茎 · {brood.Mother.Name}\n完整度 {brood.Integrity:0.0}　水分 {brood.Hydration:0.0}　营养 {brood.Nutrition:0.0}\n"+
+            $"瓶体完整 {brood.VesselIntegrity:0.0}　发育 {brood.Elapsed:0.0} 秒\n{brood.LastEvent}":
+            c==null?"当前未选中对象，可切换到世界范围。":
             $"{c.Name} · {c.Activity}\n生命 {c.Health:0.0}　信任 {c.Trust:0.0}　恐惧 {c.Fear:0.0}　疼痛 {c.Pain:0.0}\n"+
             $"馒馒来度 {c.Interaction.Emotion.Manmanlai:0.0}　惊惧余波 {c.Interaction.Emotion.Alarm:0.0}\n"+
             $"饱食 {c.Fullness:0.0}　水分 {c.Interaction.Hydration:0.0}　精力 {c.Energy:0.0}\n"+
@@ -132,9 +142,11 @@ public partial class InteractionRoom
                 2=>new { Configuration=Sim.Config, Sim.State.Settings, Tool=_action, ToolArmed=_toolArmed,
                     BaseForce=_force, AppliedForce=_appliedForce, PointerHeld=_mouseHeld, CarryHeight=_height,
                     RescueToolArmed=_waterRescueToolArmed, ClickOfferTarget=_clickOfferId,
+                    SelectedDetachedStem=_selectedDetachedStemEventId, HeldSupply=_heldSupplyId,
+                    Sim.CurrentInteractionTargetKind, GestureObject=Sim.InteractionGestureObject,
                     Sim.HasInteractionGesture, GestureTarget=Sim.InteractionGestureTarget, Sim.CurrentInteractionAction,
                     Sim.InteractionIntakeAccepted, Sim.State.Mode, Sim.State.WorldSeconds },
-                _=>c
+                _=>brood is not null?(object)new { State=brood, Interaction=Sim.DetachedStemStatus(brood.EventId) }:c
             };
             JsonElement snapshot=JsonSerializer.SerializeToElement(source,DebugJsonOptions);
             _debugSnapshotJson=snapshot.GetRawText();
@@ -155,13 +167,17 @@ public partial class InteractionRoom
 
     private void RefreshDebugCreatureSelector()
     {
-        string key=string.Join("\n",Sim.State.Creatures.Select(c=>c.Id+"="+c.Name));
+        var stems=Sim.State.DetachedStemBroods.Where(s=>s.RegionId==Sim.State.ActiveRegionId).ToArray();
+        string key=string.Join("\n",Sim.State.Creatures.Select(c=>c.Id+"="+c.Name))+"\nSTEMS\n"+
+            string.Join("\n",stems.Select(s=>s.EventId+"="+s.Mother.Name));
         if(key!=_debugCreatureList)
         {
             _debugCreatureList=key;_debugCreature.Clear();_debugCreatureIds.Clear();
-            foreach(var c in Sim.State.Creatures){_debugCreature.AddItem(c.Name);_debugCreatureIds.Add(c.Id);}
+            foreach(var c in Sim.State.Creatures){_debugCreature.AddItem(c.Name);_debugCreatureIds.Add("creature:"+c.Id);}
+            for(int n=0;n<stems.Length;n++)
+            {_debugCreature.AddItem($"离体茎 {n+1} · {stems[n].Mother.Name}");_debugCreatureIds.Add("stem:"+stems[n].EventId);}
         }
-        int selected=_debugCreatureIds.IndexOf(Sim.State.SelectedId??"");
+        int selected=_debugCreatureIds.IndexOf(_selectedDetachedStemEventId is { } id?"stem:"+id:"creature:"+Sim.State.SelectedId);
         if(_debugCreature.Selected!=selected)_debugCreature.Select(selected);
     }
 
@@ -205,6 +221,9 @@ public partial class InteractionRoom
         "CareRemaining"=>"护理剩余时间","CareLastEvent"=>"照护记录","EatingRemaining"=>"吞咽剩余时间",
         "Stem"=>"外茎幼芽","Integrity"=>"完整度","SupportRemaining"=>"支护剩余时间",
         "LastCareAt"=>"最近支护时间","LastDamageAt"=>"最近受损时间","LastDamageCause"=>"最近受损原因","LastDamageActorId"=>"最近施害者",
+        "DetachedStemBroods"=>"离体茎记录","Nutrition"=>"营养","VesselIntegrity"=>"瓶体完整度",
+        "StemVessels"=>"空瓶库存","StemVesselPurchases"=>"空瓶购买次数","DetachedAt"=>"离体时间",
+        "Cleared"=>"残留已收拾","CanClear"=>"当前可收拾",
         _=>""
     };
 }

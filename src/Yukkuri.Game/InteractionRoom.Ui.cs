@@ -79,6 +79,7 @@ public partial class InteractionRoom
         _quickTools.AddChild(Button("救援用品 · 点油救起",ArmWaterRescueTool));
         _quickTools.AddChild(Button("购买救援用品",()=>ShowRescueSupplies()));
         _quickTools.AddChild(Button("购买护理用品",()=>ShowMedicineSupplies()));
+        _quickTools.AddChild(Button("购买瓶养用品",()=>ShowStemVessels()));
         foreach(var entry in new[]{("说话","P01"),("毛巾","P07"),("护理用品","P11"),("包裹","P05"),("球与小宝物","P09")})
         {string id=entry.Item2;_quickTools.AddChild(Button(entry.Item1,()=>SelectGroup(InteractionCatalog.Groups.Single(g=>g.Id==id))));}
         _groupList=Column(toolLists,6);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
@@ -93,12 +94,13 @@ public partial class InteractionRoom
         var viewControls=Row(right,5);
         _closeButton=Button("靠近看看 · 双击",ToggleClose);_closeButton.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;viewControls.AddChild(_closeButton);
         _resetViewButton=Button("正面",ResetCloseView);viewControls.AddChild(_resetViewButton);
-        right.AddChild(Button("同伴、家庭与照护",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamily();}));
+        _familyPanelButton=Button("同伴、家庭与照护",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamily();});right.AddChild(_familyPanelButton);
         var reportScroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(reportScroll);
         var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        BuildDetachedStemPanel(report);
         BuildVitalMeters(report);
         _condition=Text("",14);report.AddChild(_condition);
-        report.AddChild(Text("刚才发生的事",12,"8b927f"));_memory=Text("",13);report.AddChild(_memory);
+        _memoryHeading=Text("刚才发生的事",12,"8b927f");report.AddChild(_memoryHeading);_memory=Text("",13);report.AddChild(_memory);
 
         _bottomPanel=Panel(_ui);_bottomPanel.AnchorTop=1;_bottomPanel.AnchorBottom=1;_bottomPanel.AnchorRight=1;
         _bottomPanel.OffsetLeft=14;_bottomPanel.OffsetRight=-14;_bottomPanel.OffsetTop=-206;_bottomPanel.OffsetBottom=-12;
@@ -179,6 +181,7 @@ public partial class InteractionRoom
     }
     private void SelectOil(string id)
     {
+        _selectedDetachedStemEventId=null;
         CancelGesture();Sim.State.SelectedId=id;_familyFirstId=id;
         bool leftClose=LeaveUnavailableCloseup();
         _message=Sim.Selected!.Family.Memorialized?"正在查看"+Sim.Selected.Name+"留下的家庭记录。":
@@ -188,6 +191,7 @@ public partial class InteractionRoom
     }
     private void ToggleClose()
     {
+        if(_selectedDetachedStemEventId!=null)return;
         if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected is { } selected&&!HasVisibleFamilyBody(selected))
         {_message=selected.Family.Memorialized?"遗体已经安置，可以在家庭面板查看留下的记录。":"它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
@@ -210,6 +214,7 @@ public partial class InteractionRoom
     private void RefreshRoomUi()
     {
         if(_who==null||Sim==null)return;
+        NormalizeDetachedStemSelection();
         RefreshOilSelector();
         RefreshDebugPanel();
         RefreshYardHelpButton();
@@ -292,6 +297,7 @@ public partial class InteractionRoom
         _feedback.Text=_message;
         string speech=c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
+        RefreshDetachedStemUi();
     }
 
     private void OpenModal(string title)

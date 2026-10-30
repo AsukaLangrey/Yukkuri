@@ -2,6 +2,19 @@
 
 范围：src/Yukkuri.Game/，排除主协调所有 Ui/Vitals/Debug 文件；assets-source 本轮新增候选记录。仅静态源码工作，未启动编译、测试、游戏、渲染或预览。
 
+## 第九批：离体茎世界实体与真实工具接触（交接）
+
+- 新增 DetachedStemActor.cs。Loose 是低伏离体茎，Bottled 是有开口的培养瓶，Failed 保留枯损实体。瓶中实际含水量、营养余量、完整度、进度决定水位、沉积物、裂痕和芽体状态。全部根位置直接读取 DetachedStemView 的 X/Z；托举只显示低位选择圈，不额外抬高或视觉穿过障碍。Born 按主协调最终口径仅留贴地小枯梗，不显示完整大瓶、不增加物理占位；Cleared 隐藏实体和命中。首次读取只显示当前状态，没有重播旧出生。
+- 新增 InteractionRoom.DetachedStemInput.cs，并接入 Room 构建/每帧同步、Input 选择/按下/继续/松手/取消。目标严格使用 DetachedStem + EventId，不把 EventId 传 SelectOil，不读母体位置。实际瓶体、茎、幼芽、瓶口及终态枯梗参加三角形射线最近排序；身体、附着茎、场景和前方地面食水/软球可以遮挡。瓶口只接收从上方穿过真实开口的射线，瓶壁或枝芽更近时不能当作瓶口供给。
+- CutStem 沿原附着 Stem 输入链，新增剪具外观，尖端对齐真实茎接触。BottleStem/Drink/FeedMeal/ClearStem 均走模拟唯一手势的 1.6 秒连续接触与单次结算。装瓶工具只显示手边小空瓶，世界瓶只在 DTO 真正装瓶后出现。ClearStem 完成立即结束输入、藏工具，保留模拟历史。独立 Punch 不增加母体 Hits；Burn 使用实际独立接触标志控制原火焰，离开即停。
+- 实际食水从原 HoldSupply 路径进入，传 SupplyObjectId=手中 RoomObject.Id，ObjectId=窝 EventId。只对开口建立接触；新入口或明显跳动先建立工具位置基线，不提前累计。移到瓶壁/空处归零，换油/换窝结束旧手势，同次拿起成功或拒绝后不自动重复；食水剩余外观仍读真实 Portions。仅目标改变时调用 SelectDetachedStem(id,false)，不重选/放掉手中实物；转回油嘴时清理独立观察，原身体递食继续工作。
+- Lift 使用真实鼠标相对拖动，模拟每步合法位置直接显示；松手、右键取消、暂停、读档沿模拟当前最后合法位置放稳，不回原点、不补位移。跨 UI/卡帧重新建立指针基线，不追补之前的移动。所有新增表现无模拟推进时钟；暂停/失焦/换工具/存读档沿现有统一取消链。母体死亡或新孕育不影响独立 EventId。
+- 修复身体手势中鼠标移到瓶身时旧代码按 contact.Id 强取 _actors 的越界路径。单击递食的嘴前遮挡检查也纳入独立实体。离体茎出生只给真实新生幼体触发原出生反馈，不给母体误播新的身体分娩，避免母体死亡、异区或再次孕育时串状态。
+
+本批文件：DetachedStemActor.cs、InteractionRoom.DetachedStemInput.cs（均新增）；InteractionRoom.Input.cs、InteractionRoom.Tools.cs、InteractionRoom.Offering.cs、InteractionRoom.Family.cs、InteractionRoom.cs；本交接。未改 Simulation、checks 或根专属 UI/Debug/Vitals/Supplies/Intervention/DetachedStemUi。只进行源码读取、rg 检索和补丁编辑；未运行游戏、Godot、编译、测试、模拟、渲染、预览、转换、导入、项目脚本、钩子或 Git。
+
+远端待测：实际剪取→整窝离体→装瓶→拿真实水/正餐递瓶口→低托搬放→出生与清理；瓶口从不同视角是否易对准、玻璃透明排序/芽体与瓶口遮挡；移开重计时、换窝/换油、松手/暂停/失焦/存读档/跨区；食水耗尽、不足库存、满水/满营养拒绝不扣错；障碍与其他瓶占位、取消不回起点；母体死亡/再次孕育后独立照护；失败不能复活、Born 仅贴地残留、清理后历史仍在；击打不污染母体 Hits。以上均未在本机执行，静态接线不代表实机效果验收。
+
 ## 首批增量（进行中）
 
 - 移除工具手、托举手、持饰品手的人类网格，保留接触和感知锚点。托举仍有落点标记，身体和鼠标反馈表达接触。

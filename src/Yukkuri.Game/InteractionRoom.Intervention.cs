@@ -8,6 +8,7 @@ public partial class InteractionRoom
     private Button _yardHelpButton=null!;
     private Label _stemCareDescription=null!;
     private Button _stemCareButton=null!;
+    private Button _stemCutButton=null!;
     private string? _yardHelpTargetId;
 
     private void BuildYardHelpButton(Control parent)
@@ -73,7 +74,8 @@ public partial class InteractionRoom
             if(Sim.State.Medicine>0)SelectQuickTool(InteractionAction.SupportStem);
             else ShowMedicineSupplies(equipAction:InteractionAction.SupportStem);
         });parent.AddChild(_stemCareButton);
-        _stemCareDescription.Visible=_stemCareButton.Visible=false;
+        _stemCutButton=Button("剪具 · 按住外茎剪下",()=>SelectQuickTool(InteractionAction.CutStem));parent.AddChild(_stemCutButton);
+        _stemCareDescription.Visible=_stemCareButton.Visible=_stemCutButton.Visible=false;
         _immediateThreatDescription.Visible=_immediateStopThreat.Visible=_immediateRescue.Visible=
             _immediateCare.Visible=_immediateRelease.Visible=_immediateDry.Visible=false;
     }
@@ -127,7 +129,7 @@ public partial class InteractionRoom
         _immediateDry.Visible=recovery&&!critical&&!inWater;
         _immediateDry.TooltipText="拿毛巾后按住湿处擦拭；擦干不会消除已有伤势或惊惧。";
         var stem=local?Sim.StemCareStatus(selected.Id):null;
-        _stemCareDescription.Visible=_stemCareButton.Visible=stem!=null;
+        _stemCareDescription.Visible=_stemCareButton.Visible=_stemCutButton.Visible=stem!=null;
         if(stem!=null)
         {
             _stemCareDescription.Text=$"外茎幼芽 {stem.PlannedChildren} 个 · 发育 {stem.Progress*100:0}%\n茎部完整 {stem.Integrity:0}/100 · 含水 {stem.Hydration:0}/100"+

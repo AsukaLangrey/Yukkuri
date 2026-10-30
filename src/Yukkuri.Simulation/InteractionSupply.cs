@@ -10,7 +10,8 @@ public sealed partial class WorldSimulation
     }
     public bool HoldSupply(string id)
     {
-        if(!State.InteractionPlaytest||State.Settings.Pause||State.RoomObjects.Any(o=>o.HeldByHand))return false;
+        if(!State.InteractionPlaytest||State.Settings.Pause||State.RoomObjects.Any(o=>o.HeldByHand)||
+            State.DetachedStemBroods.Any(s=>s.HeldByHand))return false;
         var obj=State.RoomObjects.Find(o=>o.Id==id&&!o.Stored&&o.RegionId==State.ActiveRegionId);
         if(obj==null||obj.Kind is not (RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water))return false;
         if(obj.Portions<=0&&NaturalResources.Consumer(State,obj)==null)return false;
@@ -32,6 +33,8 @@ public sealed partial class WorldSimulation
         {
             if(!double.IsFinite(x.Value)||!double.IsFinite(z.Value)||Math.Abs(x.Value)>7.7||Math.Abs(z.Value)>7.7)return false;
             if(!WoodlandLayout.GroundFits(State,obj.RegionId,x.Value,z.Value,.2))return false;
+            if(State.DetachedStemBroods.Any(s=>s.RegionId==obj.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
+                Distance(s.X,s.Z,x.Value,z.Value)<StemVesselRadius+.2))return false;
             if(State.Creatures.Any(c=>!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&c.RegionId==obj.RegionId&&Distance(c.X,c.Z,x.Value,z.Value)<InteractionFootprint(c)+.2))return false;
             obj.X=x.Value;obj.Z=z.Value;obj.Height=RoomSupplySupport.Height(State,obj.RegionId,obj.X,obj.Z,obj.Kind);
         }

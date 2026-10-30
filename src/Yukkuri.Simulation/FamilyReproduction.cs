@@ -107,7 +107,7 @@ public sealed partial class WorldSimulation
         {
             id=$"family-{kind}-{++State.FamilySequence}";
             if(State.FamilySequence==long.MaxValue)throw new InvalidOperationException("家庭事件编号已耗尽。");
-        }while(State.CompletedBirths.Contains(id)||State.FamilyRelationshipEvents.Any(e=>e.Id==id)||
+        }while(State.CompletedBirths.Contains(id)||State.DetachedStemBroods.Any(s=>s.EventId==id)||State.FamilyRelationshipEvents.Any(e=>e.Id==id)||
             State.Creatures.Any(c=>c.Id==id||c.Family.Pregnancy.EventId==id||kind=="birth"&&c.Id.StartsWith(id+"-",StringComparison.Ordinal))||State.RoomObjects.Any(o=>o.Id==id));
         return id;
     }
@@ -222,37 +222,50 @@ public sealed partial class WorldSimulation
             i.EatingRemaining>0||i.Physiology.Active||InteractionGestureTarget==mother.Id||mother.RetreatRemaining>0||
             mother.Family.FlightRemaining>0||mother.Family.Conflict.TargetId!=null||mother.Family.ChildThreat.TargetId!=null)return;
         if(father==null){EndPregnancy(mother,"孕育记录缺少父体来源，停止结算并保留母体状态。");return;}
+        if(!TryCreateFamilyChildren(mother,father,p,mother.RegionId,mother.X,mother.Z))return;
+        Hurt(mother,p.Method==BirthMethod.Live?7+p.Burden*.12:2+p.Burden*.05,"生产负担",null);
+        EndPregnancy(mother,$"{p.PlannedChildren}只宝宝出生了，母体需要恢复，幼体需要吃喝与保暖。"+
+            (p.Decision==PregnancyDecision.ProtectYoung?"这次曾在危险中主动坚持保胎。":""));
+    }
+
+    private bool TryCreateFamilyChildren(Creature mother,Creature father,PregnancyState p,string regionId,double originX,double originZ,
+        StemParentSource? maternal=null,StemParentSource? paternal=null)
+    {
+        if(p.EventId==null||State.CompletedBirths.Contains(p.EventId))return false;
+        bool attached=maternal==null;
+        maternal??=StemParentSource.Capture(mother);paternal??=StemParentSource.Capture(father);
         var babies=new List<Creature>();
         // Reserve enough dry free space for the entire birth before settling any.
         for(int n=0;n<p.PlannedChildren;n++)
         {
-            var probe=new Creature{Id=$"{p.EventId}-{n}",RegionId=mother.RegionId,IsYoung=true};
+            if(State.Creatures.Any(c=>c.Id==$"{p.EventId}-{n}"))return false;
+            var probe=new Creature{Id=$"{p.EventId}-{n}",RegionId=regionId,IsYoung=true};
             bool found=false;
             for(double radius=1.4;radius<=4&&!found;radius+=.45)
                 for(int angle=0;angle<24&&!found;angle++)
                 {
-                    double x=mother.X+Math.Cos(angle*Math.Tau/24)*radius,z=mother.Z+Math.Sin(angle*Math.Tau/24)*radius;
+                    double x=originX+Math.Cos(angle*Math.Tau/24)*radius,z=originZ+Math.Sin(angle*Math.Tau/24)*radius;
                     if(!CanOccupyRoom(probe,x,z)||babies.Any(b=>Distance(b.X,b.Z,x,z)<InteractionFootprint(b)+InteractionFootprint(probe)))continue;
                     probe.X=x;probe.Z=z;probe.TargetX=x;probe.TargetZ=z;found=true;
                 }
             if(!found||State.Creatures.Count+babies.Count>=10000)
-            {mother.Family.LastEvent="宝宝快出生了，需要母体旁边有干燥的空位置。";return;}
+            {if(attached)mother.Family.LastEvent="宝宝快出生了，需要母体旁边有干燥的空位置。";return false;}
             babies.Add(probe);
         }
         // Only make ordinary activities yield after the complete birth has space.
         // Do not drop carried food or stop companionship merely while waiting.
-        YieldActivitiesForDelivery(mother);
+        if(attached)YieldActivitiesForDelivery(mother);
         foreach(var baby in babies)
         {
-            baby.Name=$"{mother.Name}的宝宝{State.Creatures.Count(c=>c.Family.MotherId==mother.Id)+1}";
-            baby.Body=new(){Id=baby.Id+"-body",SpeciesId=Next()<.5?mother.Body.SpeciesId:father.Body.SpeciesId,
+            baby.Name=$"{maternal.Name}的宝宝{State.Creatures.Count(c=>c.Family.MotherId==mother.Id)+1}";
+            baby.Body=new(){Id=baby.Id+"-body",SpeciesId=Next()<.5?maternal.SpeciesId:paternal.SpeciesId,
                 ReproductionRole=Next()<.5?ReproductionRole.Maternal:ReproductionRole.Paternal};
             baby.Registration=new(){IdentityId=baby.Id+"-identity"};
             double disposition=Next();
-            baby.TrueDisposition=disposition<.03?new[]{"curious","shy","proud","greedy"}[(int)(Next()*4)]:disposition<.15?father.TrueDisposition:mother.TrueDisposition;
-            baby.Courage=Math.Clamp(mother.Courage*.8+father.Courage*.2+(Next()-.5)*.08,0,1);
-            baby.Patience=Math.Clamp(mother.Patience*.8+father.Patience*.2+(Next()-.5)*.08,0,1);
-            baby.Aggression=Math.Clamp(mother.Aggression*.8+father.Aggression*.2+(Next()-.5)*.08,0,1);
+            baby.TrueDisposition=disposition<.03?new[]{"curious","shy","proud","greedy"}[(int)(Next()*4)]:disposition<.15?paternal.Disposition:maternal.Disposition;
+            baby.Courage=Math.Clamp(maternal.Courage*.8+paternal.Courage*.2+(Next()-.5)*.08,0,1);
+            baby.Patience=Math.Clamp(maternal.Patience*.8+paternal.Patience*.2+(Next()-.5)*.08,0,1);
+            baby.Aggression=Math.Clamp(maternal.Aggression*.8+paternal.Aggression*.2+(Next()-.5)*.08,0,1);
             baby.Health=(p.Method==BirthMethod.Live?100:92)-p.Burden*.2;
             baby.Energy=p.Method==BirthMethod.Live?78:68;baby.Fullness=55;baby.Trust=10;baby.Attachment=5;
             baby.ParentId=mother.Id;
@@ -274,9 +287,7 @@ public sealed partial class WorldSimulation
             father.Family.Peers[baby.Id]=new(){Familiarity=10,Affection=20};
         }
         State.CompletedBirths.Add(p.EventId);
-        Hurt(mother,p.Method==BirthMethod.Live?7+p.Burden*.12:2+p.Burden*.05,"生产负担",null);
-        EndPregnancy(mother,$"{babies.Count}只宝宝出生了，母体需要恢复，幼体需要吃喝与保暖。"+
-            (p.Decision==PregnancyDecision.ProtectYoung?"这次曾在危险中主动坚持保胎。":""));
+        return true;
     }
 
     private void YieldActivitiesForDelivery(Creature mother)

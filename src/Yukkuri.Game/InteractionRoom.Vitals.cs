@@ -4,6 +4,7 @@ using Yukkuri.Simulation;
 
 public partial class InteractionRoom
 {
+    private VBoxContainer _creatureVitalMeters=null!;
     private Label _fullnessLabel=null!,_thirstLabel=null!,_healthLabel=null!;
     private ProgressBar _fullnessMeter=null!,_thirstMeter=null!;
     private StyleBoxFlat _fullnessFill=null!,_thirstFill=null!;
@@ -12,7 +13,7 @@ public partial class InteractionRoom
     private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
     {
-        var meters=Column(parent,5);
+        var meters=Column(parent,5);_creatureVitalMeters=meters;
         _fullnessLabel=Text("饱食度",13);meters.AddChild(_fullnessLabel);
         _fullnessMeter=NeedMeter(meters,"8aa576",out _fullnessFill);
         _thirstLabel=Text("口渴度",13);meters.AddChild(_thirstLabel);

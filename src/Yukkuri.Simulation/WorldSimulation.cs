@@ -7,6 +7,7 @@ public sealed partial class WorldSimulation
     public WorldSimulation(WorldState state, SimulationConfig? config = null)
     {
         State = state; Config = state.InteractionPlaytest ? new() { HungerPerSecond = .025, EnergyPerSecond = .02, MoveSpeed = .72 } : state.MilestoneScenario ? MilestoneConfig() : config ?? new();
+        foreach(var brood in state.DetachedStemBroods)brood.HeldByHand=false;
         foreach(var c in state.Creatures)
             if(c.Family.Pregnancy is { Phase:PregnancyPhase.Gestating, Method:BirthMethod.Stem, Stem:null })
                 InitializeStemBrood(c.Family.Pregnancy);
@@ -79,7 +80,7 @@ public sealed partial class WorldSimulation
         if (State.InteractionPlaytest)
         {
             SynchronizeCareParcels();
-            TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickFamilySocial(dt);
+            TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickDetachedStems(dt);TickFamilySocial(dt);
             TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);
             foreach(var c in State.Creatures)SynchronizeWildSelfCare(c);
             return;

@@ -85,7 +85,8 @@ public partial class InteractionRoom
                 if(c.IsYoung&&c.Family.BirthEventId is { } birth&&Sim.State.CompletedBirths.Contains(birth))
                 {
                     actor.BeginNewbornPresentation();
-                    if(c.Family.MotherId is { } mother&&_actors.TryGetValue(mother,out var maternalActor))
+                    if(!Sim.State.DetachedStemBroods.Any(s=>s.EventId==birth)&&
+                        c.Family.MotherId is { } mother&&_actors.TryGetValue(mother,out var maternalActor))
                         maternalActor.BeginBirthPresentation(c.Family.BirthMethod);
                 }
             }

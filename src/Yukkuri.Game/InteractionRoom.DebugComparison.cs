@@ -117,6 +117,15 @@ public partial class InteractionRoom
         else parameters.Add(key,new(path,value.GetRawText()));
     }
 
-    private static string? DebugObjectId(JsonElement value)=>value.ValueKind==JsonValueKind.Object&&
-        value.TryGetProperty("Id",out var id)&&id.ValueKind==JsonValueKind.String&&!string.IsNullOrEmpty(id.GetString())?id.GetString():null;
+    private static string? DebugObjectId(JsonElement value)
+    {
+        if(value.ValueKind!=JsonValueKind.Object)return null;
+        if(value.TryGetProperty("Id",out var id)&&id.ValueKind==JsonValueKind.String&&!string.IsNullOrEmpty(id.GetString()))
+            return "Id:"+id.GetString();
+        // Independent broods retain the original pregnancy identity rather than
+        // inventing a second creature ID. Keep their world comparisons stable too.
+        if(value.TryGetProperty("EventId",out var eventId)&&eventId.ValueKind==JsonValueKind.String&&!string.IsNullOrEmpty(eventId.GetString()))
+            return "EventId:"+eventId.GetString();
+        return null;
+    }
 }

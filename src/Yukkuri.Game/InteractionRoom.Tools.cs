@@ -62,6 +62,12 @@ public partial class InteractionRoom
                 _cupWater=InteractionToolArt.Cup(_hand);break;
             case InteractionAction.Care:case InteractionAction.SupportStem:
                 InteractionToolArt.CarePad(_hand);break;
+            case InteractionAction.CutStem:
+                BuildStemScissors(_hand);break;
+            case InteractionAction.BottleStem:
+                BuildEmptyStemVessel(_hand);break;
+            case InteractionAction.ClearStem:
+                SceneArt.Box(_hand,new(0,-.006f,0),new(.14f,.012f,.12f),"c7bea0");break;
             case InteractionAction.RepairAccessory:
                 InteractionToolArt.RepairNeedle(_hand);break;
             case InteractionAction.Burn:
@@ -95,11 +101,32 @@ public partial class InteractionRoom
         _lighterFlame.Visible=_lighterCore.Visible=false;
     }
 
+    private static void BuildStemScissors(Node3D root)
+    {
+        // The two tips meet at local origin; contact placement never assumes a hand mesh.
+        for(int n=0;n<2;n++)
+        {
+            float side=n==0?-1:1;
+            var blade=SceneArt.Box(root,new(side*.016f,-.08f,0),new(.015f,.16f,.012f),"bfc5bd");
+            blade.RotationDegrees=new(0,0,side*-11);
+            var handle=SceneArt.Mesh(root,new TorusMesh{InnerRadius=.028f,OuterRadius=.043f,Rings=20,RingSegments=6},new(side*.045f,-.205f,0),"708c80");
+            handle.RotationDegrees=new(90,0,0);
+        }
+        SceneArt.Ball(root,new(0,-.14f,.009f),new(.027f,.027f,.018f),"8e948b");
+    }
+    private static void BuildEmptyStemVessel(Node3D root)
+    {
+        // An empty carried supply, kept smaller than the settled world's vessel.
+        var shell=SceneArt.Mesh(root,new CylinderMesh{TopRadius=.075f,BottomRadius=.12f,Height=.22f,CapTop=false,RadialSegments=24},new(0,-.12f,0),"adc8c0");
+        SceneArt.EnableSurfaceFade(shell);SceneArt.SetSurfaceOpacity(shell,.35f);
+        SceneArt.Mesh(root,new TorusMesh{InnerRadius=.055f,OuterRadius=.08f,Rings=24,RingSegments=6},new(0,-.01f,0),"b5c9bd");
+    }
+
     private void UpdateLighterFeedback(float dt,bool paused)
     {
         if(_lighterFlame==null||_lighterCore==null)return;
         bool contact=!paused&&_windowFocused&&_mouseHeld&&_hand.Visible&&_action==InteractionAction.Burn&&
-            Sim.CurrentInteractionAction==InteractionAction.Burn&&Sim.InteractionGestureOwnsPose&&
+            Sim.CurrentInteractionAction==InteractionAction.Burn&&(Sim.InteractionGestureOwnsPose||_detachedLiveContact)&&
             _gesturePose is "burn-flee" or "burn-tense" or "stem-burn";
         _lighterFlame.Visible=_lighterCore.Visible=contact;
         if(!contact){_lighterClock=0;return;}

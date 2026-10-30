@@ -100,5 +100,6 @@ public static partial class FamilyRules
         ValidateAftermath(s);
         ValidateRisk(s);
         ValidateLearning(s);
+        ValidateDetachedStems(s);
     }
 }

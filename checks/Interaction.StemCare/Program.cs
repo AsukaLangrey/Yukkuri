@@ -50,7 +50,7 @@ Check("default target stays body; every unsupported stem tool refuses without bo
     var sim=Brood();var c=sim.Selected!;
     Require(new InteractionInput(InteractionAction.Punch).TargetKind==InteractionTargetKind.Body,"legacy input target changed");
     foreach(var action in Enum.GetValues<InteractionAction>().Where(a=>a is not
-        (InteractionAction.SupportStem or InteractionAction.Punch or InteractionAction.Burn)))
+        (InteractionAction.SupportStem or InteractionAction.Punch or InteractionAction.Burn or InteractionAction.CutStem)))
     {
         var before=Snapshot(sim);Require(!sim.ExecuteInteraction(c.Id,Input(sim,action)).Success,"unsupported tool accepted: "+action);
         Require(Snapshot(sim)==before,"unsupported stem tool mutated body: "+action);

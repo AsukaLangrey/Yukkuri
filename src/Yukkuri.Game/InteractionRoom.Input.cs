@@ -42,7 +42,7 @@ public partial class InteractionRoom
         RestraintKind.Hanging=>_action is InteractionAction.Lower or InteractionAction.AdjustHanging,
         _=>false
     };
-    private static string ContactName(Contact c)=>c.TargetKind==InteractionTargetKind.Stem?"外茎与幼芽":!c.Blocked?PartName(c.Part,c.Side):c.Fixture switch
+    private static string ContactName(Contact c)=>c.TargetKind==InteractionTargetKind.DetachedStem?"离体茎":c.TargetKind==InteractionTargetKind.Stem?"外茎与幼芽":!c.Blocked?PartName(c.Part,c.Side):c.Fixture switch
     {RestraintKind.Box=>"箱子",RestraintKind.Wrap=>"包裹",RestraintKind.Frame=>"固定具",RestraintKind.Hanging=>"悬挂支架",_=>"托举支撑"};
     private bool MatchesGestureContact(Contact contact)
     {
@@ -51,6 +51,8 @@ public partial class InteractionRoom
         // actual starting identity solely to recognize contact again, not to own it.
         if(_gestureTargetKind==InteractionTargetKind.Stem)
             return Sim.HasInteractionGesture&&contact.Id==_gestureStemMotherId&&contact.ObjectId==_gestureTargetObject;
+        if(_gestureTargetKind==InteractionTargetKind.DetachedStem)
+            return Sim.HasInteractionGesture&&contact.Id==_gestureTargetObject&&contact.ObjectId==_gestureTargetObject;
         return contact.Id==Sim.InteractionGestureTarget&&contact.ObjectId==null;
     }
 
@@ -102,6 +104,25 @@ public partial class InteractionRoom
             var local=actor.ContactCoordinate(hit.Point,hit.Part);
             best=new(c.Id,hit.Part,hit.Point,hit.Normal,hit.Distance,hit.Blocked,hit.Fixture,
                 hit.TargetKind==InteractionTargetKind.Stem?SurfaceSide.Whole:ActorSurfaceMarks.ContactSide(hit.Part,local.X),hit.TargetKind,hit.ObjectId);
+        }
+        foreach(var pair in _detachedStemActors)
+        {
+            var hit=pair.Value.RayContact(origin,direction);
+            if(hit==null||hit.Distance>=nearest)continue;
+            // A loose cup or meal in front of the neck must not feed through itself.
+            bool obscured=false;
+            foreach(var obj in Sim.State.RoomObjects)
+            {
+                if(obj.Stored||obj.HeldByHand||obj.RegionId!=Sim.State.ActiveRegionId||!ObjectHasVisibleGeometry(obj)||
+                    !_objects.TryGetValue(obj.Id,out var visual)||!visual.Visible)continue;
+                if(InteractionPropContact.RayHit(obj.Kind,new((float)obj.X,(float)obj.Height,(float)obj.Z),
+                    new(origin.X,origin.Y,origin.Z),new(direction.X,direction.Y,direction.Z),out float distance,
+                    obj.Kind==RoomObjectKind.Ball?RoomBallEnvironment.CenterHeight(Sim.State,obj):null)&&distance<hit.Distance)
+                {obscured=true;break;}
+            }
+            if(obscured)continue;
+            nearest=hit.Distance;
+            best=new(pair.Key,hit.Part,hit.Point,hit.Normal,hit.Distance,false,RestraintKind.None,SurfaceSide.Whole,hit.TargetKind,hit.ObjectId);
         }
         return best;
     }
@@ -239,6 +260,8 @@ public partial class InteractionRoom
         if(mouse.ButtonIndex!=MouseButton.Left)return;
         if(_clickOfferId!=null||_offerReturnId!=null)CancelGesture();
         var contact=ContactAt(mouse.Position);
+        if(contact?.TargetKind==InteractionTargetKind.DetachedStem)
+        {BeginDetachedPointer(contact,mouse.Position);GetViewport().SetInputAsHandled();return;}
         if(_waterRescueToolArmed)
         {
             if(Sim.State.Settings.Pause){_message="先继续时间，再使用救援用品。";return;}
@@ -374,6 +397,8 @@ public partial class InteractionRoom
         _carryReleaseMotion.Reset();
         _appliedForce=.12f;_gestureDirection=Vector2.Zero;_gesturePose="idle";
         _gestureTargetKind=InteractionTargetKind.Body;_gestureTargetObject=null;_gestureStemMotherId=null;
+        _detachedLiveContact=false;_detachedActionComplete=false;
+        _detachedSupplyContactId=null;
     }
     private void CancelGesture()
     {
@@ -422,6 +447,7 @@ public partial class InteractionRoom
     {
         if(_clickOfferId!=null){ProcessClickOffer(dt);return;}
         if(_heldSupplyId!=null){ProcessHeldSupply(dt);return;}
+        if(_gestureTargetKind==InteractionTargetKind.DetachedStem){ProcessDetachedGesture(dt,sampleSeconds,releasing);return;}
         if(!_mouseHeld)return;
         if(!Sim.HasInteractionGesture){CancelGesture();return;}
         if(!releasing&&!Input.IsMouseButtonPressed(MouseButton.Left)){CancelGesture();return;}
@@ -439,7 +465,7 @@ public partial class InteractionRoom
         bool bodyMotionContact=touching&&(_action!=InteractionAction.Touch||contact!.Part!=BodyPart.Accessory);
         var motionSample=_contactMotion.Sample(bodyMotionContact?contact!.Id:null,
             new(pointerTravel.X,pointerTravel.Y,pointerTravel.Z),new(normal.X,normal.Y,normal.Z),sampleSeconds,
-            contact!=null?_actors[contact.Id].BodyScale:1);
+            contact!=null&&_actors.TryGetValue(contact.Id,out var contactActor)?contactActor.BodyScale:1);
         bool speedForce=_action is InteractionAction.Touch or InteractionAction.Stroke or InteractionAction.Nuzzle or InteractionAction.Rock or
             InteractionAction.Clean or InteractionAction.Dry or InteractionAction.Press or InteractionAction.Squeeze;
         _appliedForce=_action==InteractionAction.Touch?(float)motionSample.Force:
@@ -527,7 +553,9 @@ public partial class InteractionRoom
         var obj=Sim.State.RoomObjects.Find(o=>o.Id==_heldSupplyId&&o.HeldByHand);
         if(obj==null){CancelGesture();return;}
         var contact=IsScenePoint(point)?ContactAt(point):null;
+        if(ProcessDetachedSupply(obj,contact,point,dt))return;
         bool mouth=contact is {Part:BodyPart.Mouth,Blocked:false,TargetKind:InteractionTargetKind.Body};
+        if(mouth&&_selectedDetachedStemEventId!=null){_selectedDetachedStemEventId=null;RefreshRoomUi();}
         if(Sim.HasInteractionGesture&&contact?.Id!=Sim.InteractionGestureTarget)AcceptFeedback(Sim.EndInteractionGesture(true));
         if(mouth&&contact!=null&&obj.Portions>0&&!_supplyBiteTaken&&!Sim.HasInteractionGesture)
         {
@@ -585,6 +613,11 @@ public partial class InteractionRoom
                 else if(_action is InteractionAction.Press or InteractionAction.Squeeze or InteractionAction.Hold or InteractionAction.Slap)
                     _hand.GlobalPosition=contact.World+normal*.052f;
                 else if(_action is InteractionAction.Care or InteractionAction.SupportStem)_hand.GlobalPosition=contact.World+normal*(-InteractionCareSurface.PadBottom+.003f);
+                else if(_action is InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.ClearStem)
+                {
+                    _hand.GlobalBasis=new Basis(new Quaternion(Vector3.Up,-normal));
+                    _hand.GlobalPosition=contact.World+normal*.003f;
+                }
                 else
                 {
                     _hand.GlobalBasis*=Basis.FromEuler(new(Mathf.DegToRad(InteractionToolSurface.FingerTiltDegrees),0,0));
@@ -598,6 +631,9 @@ public partial class InteractionRoom
     {
         if(_tapContact is not { } contact)return;
         if(contact.TargetKind==InteractionTargetKind.Stem&&Sim.StemCareStatus(contact.Id)?.EventId!=contact.ObjectId)
+        {_tapContact=null;_hand.Visible=false;return;}
+        if(contact.TargetKind==InteractionTargetKind.DetachedStem&&
+            (!_detachedStemActors.TryGetValue(contact.Id,out var detached)||!detached.Visible))
         {_tapContact=null;_hand.Visible=false;return;}
         _tapAge+=dt;
         if(_tapAge>=.22f){_tapContact=null;_hand.Visible=false;return;}
@@ -637,7 +673,7 @@ public partial class InteractionRoom
         _hoverLabel.Visible=(contact!=null||roomObject!=null)&&!_modalOpen;
         if(contact!=null)
         {
-            _hoverLabel.Text=contact.TargetKind==InteractionTargetKind.Stem?StemContactHint(contact):ContactName(contact)+(MatchesGestureContact(contact)?
+            _hoverLabel.Text=contact.TargetKind==InteractionTargetKind.DetachedStem?DetachedStemHint(contact):contact.TargetKind==InteractionTargetKind.Stem?StemContactHint(contact):ContactName(contact)+(MatchesGestureContact(contact)?
                 " · "+(_appliedForce<.35?"轻触":_appliedForce<.62?"稍重":"用力"):
                 _waterRescueToolArmed?" · 点击使用救援用品":
                 !_toolArmed||_action==InteractionAction.Lift?" · 按住抓起 / 松手放下 / 甩手抛出":
@@ -685,6 +721,7 @@ public partial class InteractionRoom
             return status is {CanSupport:false}?"外茎与幼芽 · "+status.RefusalReason:
                 "外茎与幼芽 · 持续接触护理，完成消耗一份护理包";
         }
+        if(_action==InteractionAction.CutStem)return "外茎与幼芽 · 剪具持续真实接触，完成后整窝离体";
         return "外茎与幼芽"+(_action==InteractionAction.Burn?" · 长按灼烧外茎 / 松开停止":
             _action==InteractionAction.Punch?" · 点击击打外茎":" · 当前工具需按外茎规则判断");
     }

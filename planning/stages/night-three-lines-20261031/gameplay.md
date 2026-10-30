@@ -271,3 +271,25 @@ Emit 增加可选 `visibleActor`，默认 null 保留其他调用语义。看见
 修改文件：`InteractionState.cs`、`FamilyState.cs`、`WorldSimulation.cs`、`FamilyReproduction.cs`、`FamilyRisk.cs`、`InteractionCatalog.cs`、`MilestoneInteraction.cs`、`InteractionWorld.cs`、`InteractionGesture.cs`、`FamilyValidation.cs`，以及本交接文档；新增 StemCare.cs 和检查项目 2 个文件。没有改 Game、Git 或其他线分配文件。
 
 本批仅源码读写和静态核对，未运行/编译任何项目或检查。静态已修正不存在的 PlayMode 名称，核对原时钟、射线身份接入约定、死亡/出生收尾、实际水域、库存在成功点扣减、完成后不占目标和无身体伤害回落。12 组检查尚待独立远程机器运行；茎模型实际命中、遮挡与表现由 B 接入后仍需远测。
+
+## 第八批：整窝断茎与独立瓶养（模拟与检查源码冻结）
+
+HK026/027 对应断茎、移茎入瓶；第七批附着支护不算瓶养。本批新增独立、可保存的 `WorldState.DetachedStemBroods : List<DetachedStemBrood>`，不是普通食物 RoomObject，避免按 Portions 清理、误吃或绑定食水 CarrierId。每窝继承原 EventId、Elapsed、PlannedChildren、Burden 与父母真实家谱身份，保存父母身体来源和物种/性格等稳定遗传快照；另有独立位置、Loose/Bottled/Failed/Born 阶段、完整度、水分、营养、瓶体完整度、损伤原因/来源/时间、事件及 Cleared。母体只保留历史，进入原恢复流程；死亡、冷藏或新一次孕育不会接管或抹掉已离体的一窝。
+
+输入末尾追加 `SupplyObjectId=null`，TargetKind 末追加 DetachedStem，Action 末追加 CutStem/BottleStem/ClearStem。仍只有一个 ContactGesture：Begin/Continue/End 最前分派真实独立 EventId，不通过母体 InteractionTarget；便利入口 `BeginDetachedStemGesture(eventId,input)` 使用同一通道，离体对象不占母体 target 或姿势。ObjectId 一直表示窝，SupplyObjectId 单独表示实际手持水杯/正餐，二者不能在持续接触中换绑。未支持工具、错误身份、暂停、近看、跨区或变化来源都明确停止/拒绝，不落回身体。
+
+CutStem 对附着茎连续接触 1.6 秒；先找母体旁可见、干燥、足够空间的落点，再结算剪离。剪离有真实茎损伤 3 和母体系统性恢复负担 2，不伪造 Head 局部伤势；母体和真实知情旁观者保留人类威胁余波。落地的一窝有实际救助窗口，未装瓶时持续失水，不能无限暂停生命。BottleStem 连续 1.6 秒，成功才扣 StemVessels 1；`StemVesselPrice=20`、`BuyStemVessel()`，测试购买免费但使用仍需实际库存。瓶里水分、营养持续消耗；Drink/FeedMeal 各需实际手持 RoomObject 的一份食水、连续 1.6 秒才加入 45 点，不凭无限钱创造份额。直接拳火损伤独立茎与瓶，破瓶持续漏水失养，可用新瓶替换但不会治好已有茎伤。一次手势最多一份资源，移开重新计时，完成继续长按不重复扣。
+
+整瓶 Lift 沿真实干燥空间移动，每秒最多 6 单位、每 .06 单位检查一步；当前可见位置每步立即写入持久 X/Z，并持续占位，手持也不允许油/其他瓶/食水进入。取消、暂停或读档只在当前最后合法位置放下，不回旧位、不另找位置传送、不保留隐形旧占位。与手持食水和托着油互斥；只改变瞬时 HeldByHand 的保存归一化不改变生命时钟、进度和资源。B 已获知 DTO X/Z 就是当前真实位置，表现应低托近地。
+
+原 `TryDeliverFamily` 抽出共用 `TryCreateFamilyChildren`：完整预留一窝干燥落点后再生成，保留原数量、ID、CompletedBirths、家谱和正常附着产伤/恢复条件；瓶养从瓶体位置使用同一结算，遗传来自剪离时快照，不要求父母还活着，不给已死或已重新孕育的母体追加第二次产伤/恢复。无空间时等待，不出生一半、不改计划数。出生后 Born 仅是平贴地面的小残留，不占新生/行走空间。Failed 未清理实体占位；ClearStem 连续接触 1.6 秒仅允许 Failed/Born，成功 Cleared=true 隐藏实体并释放占位，保留 EventId、失败原因、原阶段、家谱，不退款、不复活。活窝不能误清理。
+
+独立物体威胁事件不把远处母体伪装成受击目标；目击/听见按实际瓶位置、区域、距离和遮挡，听见不认定人类施害，增量按真实强度而非采样次数。事件清理复用原历史裁剪。失败可见事实不向旁观者泄露未见过的旧原因；玩家仍可从持久记录读取真实失败原因。新状态验证覆盖身份唯一、亲代来源、独立/附着同时归属、数量/时钟/有限数值、零活性、出生账本、清理资格与单手互斥；旧档缺少列表使用默认空列表。
+
+只读契约：`DetachedStemStatus(eventId)` 与 `DetachedStems(regionId)` 返回 `DetachedStemView(EventId,MotherId,FatherId,RegionId,X,Z,Phase,PlannedChildren,Progress,Integrity,Hydration,Nutrition,VesselIntegrity,HeldByHand,CanBottle,CanWater,CanFeed,RefusalReason,LastDamageCause,Cleared,CanClear)`。进度 0–1，其余生命指标 0–100。区域列表包含历史；B 过滤 Cleared，根 UI 可展示历史。`CanPlaceDetachedStemAt` 复用真实放置资格，`CurrentInteractionTargetKind` 用于统一输入区分。根接用品/状态/调试，B 接独立实体及实际接触；本冻结仅交模拟源码，不能把先前美术提交当作瓶养整体验证。
+
+新增 `checks/Interaction.DetachedStem` 项目，共 12 组检查源码：真实剪离与原身份/进度/数量/母体恢复；瓶具付费和连续接触一次消费；实际食水来源绑定与份额；母体死亡后持续真实照护至一次出生与读档；离体救助窗口和持续失养失败；破瓶漏水与替换保留茎伤；不同采样率伤害/目击及只听见和远处不知情；动态搬放占位、旧位被其他油占据、取消/读档不回旧位；暂停/近看/跨区/错误身份；母体冷藏与新孕不接管；只读和坏状态；终态实际清理保留记录且不退款复活。现有 StemCare 的“不支持工具”枚举检查只将本批实际新增支持的 CutStem 排除，其余原断言保留。
+
+新增模拟文件：`DetachedStemState.cs`、`DetachedStemLife.cs`、`DetachedStemGesture.cs`、`DetachedStemWitness.cs`、`DetachedStemValidation.cs`。修改模拟文件：`InteractionState.cs`、`InteractionCatalog.cs`、`FamilyReproduction.cs`、`StemCare.cs`、`InteractionGesture.cs`、`InteractionWorld.cs`、`WorldSimulation.cs`、`InteractionSpatial.cs`、`InteractionSupply.cs`、`MilestoneWorld.cs`、`FamilyValidation.cs`。另新增检查项目 2 文件、修改 StemCare/Program.cs 与本交接。未修改 Game，未操作 Git。
+
+本批仅源码和静态审查，未启动项目、编译器、测试/检查、模拟或预览。12 组新检查和旧回归均未运行；独立对象实际命中、瓶口补给、拖放与普通场景表现仍需 B 接线后的独立远程验证。原生物阈值和正常爱线条件未降低。

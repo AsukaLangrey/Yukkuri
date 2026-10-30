@@ -105,6 +105,7 @@ public partial class InteractionRoom : Node3D
 
     private void BuildActors()
     {
+        ResetDetachedStemActors();
         _heardReactions.Clear();
         foreach(var actor in _actors.Values)actor.QueueFree();_actors.Clear();
         int index=0;
@@ -173,6 +174,7 @@ public partial class InteractionRoom : Node3D
         bool close=Sim.State.Mode==PlayMode.CloseUp;
         bool paused=Sim.State.Settings.Pause||_modalOpen;
         SynchronizeFamilyActors();
+        SynchronizeDetachedStemActors();
         UpdateRoomCamera(dt);
         foreach(var c in Sim.State.Creatures)
         {

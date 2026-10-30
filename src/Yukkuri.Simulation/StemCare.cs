@@ -66,7 +66,12 @@ public sealed partial class WorldSimulation
         if(AttachedStem(c) is not { } stem||input.ObjectId!=stem.EventId)
             return "这窝外茎已经改变或结束，先重新对准当前外茎。";
         if(stem.Integrity<=0)return "这窝外茎已经无法继续发育。";
-        return input.Action is InteractionAction.SupportStem or InteractionAction.Punch or InteractionAction.Burn
+        if(input.Action==InteractionAction.CutStem&&(c.Interaction.Carried||c.Interaction.Falling||c.Interaction.Height>.05))
+            return "先把母体放稳，再剪离外茎。";
+        if(input.Action==InteractionAction.CutStem&&(State.Creatures.Any(o=>o.Interaction.Carried)||
+            State.RoomObjects.Any(o=>o.HeldByHand)||State.DetachedStemBroods.Any(o=>o.HeldByHand)))
+            return "手里还有其他东西，先放下再使用剪具。";
+        return input.Action is InteractionAction.SupportStem or InteractionAction.Punch or InteractionAction.Burn or InteractionAction.CutStem
             ?null:"这个工具还不能用于外茎；请移开后对准身体，或使用茎株支护。";
     }
 
@@ -77,8 +82,9 @@ public sealed partial class WorldSimulation
         if(input.Action==InteractionAction.SupportStem&&StemSupportError(c,stem) is { } reason)return Unavailable(reason);
         var g=new ContactGesture{TargetId=c.Id,Input=input,ObjectId=input.ObjectId};
         _interactionGesture=g;
-        g.Last=new(true,input.Action==InteractionAction.SupportStem?"对准这一窝外茎保持接触，完成后才使用护理包。":"火焰正在接近外茎，移开立即停止。",
-            c.Speech,input.Action==InteractionAction.SupportStem?"stem-care":"stem-burn");
+        g.Last=new(true,input.Action==InteractionAction.SupportStem?"对准这一窝外茎保持接触，完成后才使用护理包。":
+            input.Action==InteractionAction.CutStem?"剪具已对准这窝外茎，保持接触完成剪离；移开会停止。":"火焰正在接近外茎，移开立即停止。",
+            c.Speech,input.Action==InteractionAction.SupportStem?"stem-care":input.Action==InteractionAction.CutStem?"stem-cut":"stem-burn");
         return g.Last;
     }
 
@@ -96,6 +102,13 @@ public sealed partial class WorldSimulation
             return g.Last with {Message="已离开外茎，连续接触计时重新开始。",Changed=false,Pose="idle"};
         }
         g.ContactElapsed+=dt;
+        if(input.Action==InteractionAction.CutStem)
+        {
+            if(g.ContactElapsed+1e-9<1.6)return g.Last;
+            g.Last=CutAttachedStem(c);g.Applied=g.Last.Success;g.CompletionReleased=true;g.ReactionSerial=c.ReactionSerial;
+            if(!g.Last.Success)EndInteractionGesture(true);
+            return g.Last;
+        }
         if(input.Action==InteractionAction.SupportStem)
         {
             var stem=AttachedStem(c)!;

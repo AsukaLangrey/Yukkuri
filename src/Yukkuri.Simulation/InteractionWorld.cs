@@ -140,7 +140,8 @@ public sealed partial class WorldSimulation
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
         if(input.TargetKind==InteractionTargetKind.Stem)return ValidateStemInteraction(c,input);
-        if(input.Action==InteractionAction.SupportStem)return "请把支护工具对准真实外茎，身体不能代替外茎接触。";
+        if(input.Action is InteractionAction.SupportStem or InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.ClearStem)
+            return "请把茎生工具对准真实外茎或离体窝，身体不能代替这些接触。";
         if(input.Action is InteractionAction.Punch or InteractionAction.Burn&&input.Part==BodyPart.Accessory)
             return "这里是饰品，把工具移到实际身体部位。";
         if(c.Family.ColdStorage.Stored)return "它还在冷藏中，先从家庭照护里取出。";
@@ -167,6 +168,7 @@ public sealed partial class WorldSimulation
 
     private InteractionFeedback ExecuteInteractionCore(string id, InteractionInput input)
     {
+        if(input.TargetKind==InteractionTargetKind.DetachedStem)return ExecuteDetachedStemInteraction(id,input);
         var c = InteractionTarget(id);
         var invalid = ValidateInteraction(c, input);
         if (invalid != null) return Unavailable(invalid);
@@ -391,6 +393,8 @@ public sealed partial class WorldSimulation
     {
         bool water=input.Action==InteractionAction.PlaceWater;
         if(!WoodlandLayout.GroundFits(State,c.RegionId,input.X,input.Z,.2))return Unavailable("这里是河道，找岸边的干燥空地放食水。 ");
+        if(State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
+            Distance(s.X,s.Z,input.X,input.Z)<StemVesselRadius+.2))return Unavailable("培养瓶或离体茎占着这里，请把食水放到旁边。 ");
         if (!water&&!State.UnlimitedResources && State.Food <= 0) return Unavailable("没有食物了。 ");
         if (State.RoomObjects.Count(o => o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water && !o.Stored) >= 24)
             return Unavailable("先收起或吃完地上的食物。 ");

@@ -66,16 +66,7 @@ public sealed partial class WorldSimulation
         var incident=new Incident{Id=$"event-{++State.IncidentSequence:000000}",Kind=kind,TargetId=target.Id,ActorId=actorId,
             RegionId=target.RegionId,X=target.X,Z=target.Z,At=State.WorldSeconds,Description=description,Severity=severity,ReasonIncidentId=reason};
         State.Incidents.Add(incident);
-        if(State.Incidents.Count>500)
-        {
-            // Keep facts still needed to judge an ongoing offense or encounter.
-            var expired=State.Incidents.FirstOrDefault(e=>e.Id!=State.Threat.IncidentId&&!State.Creatures.Any(c=>c.CurrentOffenseId==e.Id));
-            if(expired!=null){
-            string oldest=expired.Id;State.Incidents.Remove(expired);
-            State.PlayerKnownIncidents.Remove(oldest);
-            foreach(var c in State.Creatures)c.Knowledge.RemoveAll(k=>k.IncidentId==oldest);
-            }
-        }
+        TrimIncidentHistory();
         foreach(var c in State.Creatures.Where(c=>c.RegionId==target.RegionId&&c.Condition!=PhysicalCondition.Dead))
         {
             if(State.InteractionPlaytest&&(c.Family.ColdStorage.Stored||target.Family.ColdStorage.Stored))continue;
@@ -87,6 +78,19 @@ public sealed partial class WorldSimulation
         }
         if(target.RegionId==State.ActiveRegionId||actorId=="player")State.PlayerKnownIncidents.Add(incident.Id);
         return incident;
+    }
+    private void TrimIncidentHistory()
+    {
+        if(State.Incidents.Count>500)
+        {
+            // Keep facts still needed to judge an ongoing offense or encounter.
+            var expired=State.Incidents.FirstOrDefault(e=>e.Id!=State.Threat.IncidentId&&!State.Creatures.Any(c=>c.CurrentOffenseId==e.Id));
+            if(expired!=null){
+            string oldest=expired.Id;State.Incidents.Remove(expired);
+            State.PlayerKnownIncidents.Remove(oldest);
+            foreach(var c in State.Creatures)c.Knowledge.RemoveAll(k=>k.IncidentId==oldest);
+            }
+        }
     }
     private void WitnessCorrection(Incident incident,Creature target,double severity)
     {
