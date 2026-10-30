@@ -1,6 +1,8 @@
 using System;
 using System.Numerics;
 
+public readonly record struct FoodChipTriangle(Vector3 A,Vector3 B,Vector3 C,Vector3 Normal);
+
 public static class InteractionFoodSurface
 {
     public const int GrainCount=18,ChipCount=7;
@@ -45,6 +47,52 @@ public static class InteractionFoodSurface
     }
     private readonly record struct Crumb(Vector3 Center,Vector3 Radii,float Yaw);
     private static readonly Crumb[] Grains=BuildCrumbs(false),Chips=BuildCrumbs(true);
+    private static readonly FoodChipTriangle[][] ChipMeshes=BuildChipMeshes();
+
+    // Render and geometry checks share the same small, immutable topology.
+    public static ReadOnlySpan<FoodChipTriangle> ChipTriangles(int index)=>ChipMeshes[index];
+    private static FoodChipTriangle[][] BuildChipMeshes()
+    {
+        var meshes=new FoodChipTriangle[ChipCount][];
+        for(int index=0;index<ChipCount;index++)
+        {
+            var crumb=Chips[index];
+            var points=new Vector3[4,8];
+            for(int ring=0;ring<4;ring++)for(int side=0;side<8;side++)
+            {
+                float height=ring switch {0=>-.9f,1=>-.35f,2=>.35f,_=>.9f};
+                float radius=ring is 0 or 3 ? .4f : .7f;
+                float angle=side*MathF.Tau/8;
+                var local=new Vector3(radius*MathF.Cos(angle),height,radius*MathF.Sin(angle));
+                // The largest normalized squared radius is .4²+.9²=.97:
+                // all faces remain inside the original ellipsoidal chip.
+                points[ring,side]=crumb.Center+Rotate(local*crumb.Radii,crumb.Yaw);
+            }
+            var faces=new FoodChipTriangle[64];int face=0;
+            void Add(Vector3 a,Vector3 b,Vector3 c)
+            {
+                // Godot's clockwise front face; compute after nonuniform scale
+                // so the flat normal describes this actual chocolate facet.
+                var normal=Vector3.Normalize(Vector3.Cross(c-a,b-a));
+                faces[face++]=new(a,b,c,normal);
+            }
+            var bottom=crumb.Center-Vector3.UnitY*(.9f*crumb.Radii.Y);
+            var top=crumb.Center+Vector3.UnitY*(.9f*crumb.Radii.Y);
+            for(int side=0;side<8;side++)
+            {
+                int next=(side+1)%8;
+                Add(bottom,points[0,next],points[0,side]);
+                Add(top,points[3,side],points[3,next]);
+                for(int ring=0;ring<3;ring++)
+                {
+                    Add(points[ring,side],points[ring+1,next],points[ring+1,side]);
+                    Add(points[ring,side],points[ring,next],points[ring+1,next]);
+                }
+            }
+            meshes[index]=faces;
+        }
+        return meshes;
+    }
     private static Crumb[] BuildCrumbs(bool chips)
     {
         int count=chips?ChipCount:GrainCount;var crumbs=new Crumb[count];

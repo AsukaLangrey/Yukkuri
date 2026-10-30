@@ -1162,6 +1162,66 @@ Check("ball picking follows the visible sphere instead of a fixed screen-distanc
     bool behind=InteractionPropContact.RayHit(Yukkuri.Simulation.RoomObjectKind.Ball,zero,new(0,.24f,2),-ray,out _);
     return hit&&MathF.Abs(distance-1.76f)<.00001f&&!outside&&!behind;
 });
+Check("actual chocolate facets remain inside their original oriented crumb envelope",()=>
+{
+    for(int index=0;index<InteractionFoodSurface.ChipCount;index++)
+    {
+        // Derive the old ellipsoid from its public surface, independently of
+        // the new ring construction. Game and this check use the same faces.
+        var top=InteractionFoodSurface.CrumbPoint(index,0,0,true);
+        var bottom=InteractionFoodSurface.CrumbPoint(index,MathF.PI,0,true);
+        var center=(top+bottom)*.5f;
+        var x=InteractionFoodSurface.CrumbPoint(index,MathF.PI*.5f,0,true)-center;
+        var y=top-center;
+        var z=InteractionFoodSurface.CrumbPoint(index,MathF.PI*.5f,MathF.PI*.5f,true)-center;
+        bool Inside(System.Numerics.Vector3 p)
+        {
+            var q=p-center;
+            float u=System.Numerics.Vector3.Dot(q,x)/x.LengthSquared();
+            float v=System.Numerics.Vector3.Dot(q,y)/y.LengthSquared();
+            float w=System.Numerics.Vector3.Dot(q,z)/z.LengthSquared();
+            float squared=u*u+v*v+w*w;
+            return float.IsFinite(squared)&&squared<=1.00001f;
+        }
+        foreach(var face in InteractionFoodSurface.ChipTriangles(index))
+            if(!Inside(face.A)||!Inside(face.B)||!Inside(face.C)||!Inside((face.A+face.B+face.C)/3))return false;
+    }
+    return true;
+});
+Check("rendered chocolate facets form closed shells with actual flat outward normals",()=>
+{
+    for(int index=0;index<InteractionFoodSurface.ChipCount;index++)
+    {
+        var center=(InteractionFoodSurface.CrumbPoint(index,0,0,true)+
+            InteractionFoodSurface.CrumbPoint(index,MathF.PI,0,true))*.5f;
+        var vertices=new Dictionary<System.Numerics.Vector3,int>();
+        var edges=new Dictionary<(int,int),(int Count,int Direction)>();
+        int Key(System.Numerics.Vector3 point)
+        {if(!vertices.TryGetValue(point,out int id)){id=vertices.Count;vertices.Add(point,id);}return id;}
+        int faces=0;
+        foreach(var face in InteractionFoodSurface.ChipTriangles(index))
+        {
+            var cross=System.Numerics.Vector3.Cross(face.C-face.A,face.B-face.A);
+            float area=cross.Length();
+            if(!float.IsFinite(area)||area<=.0000001f||!float.IsFinite(face.Normal.Length())||
+                MathF.Abs(face.Normal.Length()-1)>.00001f||
+                System.Numerics.Vector3.Distance(cross/area,face.Normal)>.00001f||
+                System.Numerics.Vector3.Dot(face.Normal,(face.A+face.B+face.C)/3-center)<=0)return false;
+            int a=Key(face.A),b=Key(face.B),c=Key(face.C);
+            if(a==b||b==c||c==a)return false;
+            foreach(var edge in new[]{(a,b),(b,c),(c,a)})
+            {
+                var key=(Math.Min(edge.Item1,edge.Item2),Math.Max(edge.Item1,edge.Item2));
+                var old=edges.GetValueOrDefault(key);
+                edges[key]=(old.Count+1,old.Direction+(edge.Item1<edge.Item2?1:-1));
+            }
+            faces++;
+        }
+        if(faces!=64||vertices.Count-edges.Count+faces!=2||
+            edges.Values.Any(edge=>edge.Count!=2||edge.Direction!=0))return false;
+    }
+    return true;
+});
 Check("cookie edges close and the hand portion rests above the spoon's inner surface",()=>
 {
     if(MathF.Abs(InteractionFoodSurface.Plate(0,0,false).Y+InteractionFoodSurface.MealGroundOffset)>.000001f||MathF.Abs(InteractionFoodSurface.CookieTop(0,0,true).Y+InteractionFoodSurface.SweetGroundOffset)>.000001f)return false;

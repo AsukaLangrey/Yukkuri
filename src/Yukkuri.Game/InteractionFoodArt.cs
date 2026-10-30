@@ -43,7 +43,16 @@ public static class InteractionFoodArt
     private static void Crumbs(Node3D parent,bool chips,bool hand=false)
     {
         using var surface=new SurfaceTool();surface.Begin(Mesh.PrimitiveType.Triangles);
-        for(int index=0;index<(chips?InteractionFoodSurface.ChipCount:InteractionFoodSurface.GrainCount);index++)
+        if(chips)
+        {
+            for(int index=0;index<InteractionFoodSurface.ChipCount;index++)
+                foreach(var face in InteractionFoodSurface.ChipTriangles(index))
+                {
+                    surface.SetNormal(V(face.Normal));
+                    surface.AddVertex(V(face.A));surface.AddVertex(V(face.B));surface.AddVertex(V(face.C));
+                }
+        }
+        else for(int index=0;index<InteractionFoodSurface.GrainCount;index++)
         {
             void Vertex(float u,float v)
             {surface.SetNormal(V(InteractionFoodSurface.CrumbNormal(index,u*Mathf.Pi,v*Mathf.Tau,chips)));surface.AddVertex(V(hand?InteractionFoodSurface.HandCrumbPoint(index,u*Mathf.Pi,v*Mathf.Tau):InteractionFoodSurface.CrumbPoint(index,u*Mathf.Pi,v*Mathf.Tau,chips)));}
