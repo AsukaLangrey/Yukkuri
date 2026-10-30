@@ -30,6 +30,38 @@ if(args.Contains("--intake-perf"))
 var checks=new List<object>();
 bool all=true;
 void Check(string name,Func<bool> run){bool ok=run();all&=ok;checks.Add(new{name,passed=ok});Console.WriteLine((ok?"PASS ":"FAIL ")+name);}
+Check("detached buds grow within the mature shell while keeping lower pole and branch contact",()=>
+{
+    float previous=0;
+    for(int step=0;step<=100;step++)
+    {
+        var growth=ActorStemBudPresentation.Sample(step/100f);float s=growth.Scale,y=growth.OffsetY;
+        if(!float.IsFinite(s)||!float.IsFinite(y)||s<.18f||s>1||s<previous||MathF.Abs(y-.065f*s+.065f)>.000001f)return false;
+        previous=s;
+        // Same affine transform used for bud, eyes and mouth in DetachedStemActor.
+        foreach(var feature in new[]{new System.Numerics.Vector3(-.027f,.005f,.066f),new(.027f,.005f,.066f),new(0,-.025f,.068f)})
+        {
+            var actual=feature*s+System.Numerics.Vector3.UnitY*y;
+            if(System.Numerics.Vector3.Distance((actual-System.Numerics.Vector3.UnitY*y)/s,feature)>.000001f)return false;
+        }
+        for(int ring=0;ring<=16;ring++)for(int side=0;side<24;side++)
+        {
+            float angle=ring*MathF.PI/16,around=side*MathF.Tau/24;
+            // Normalize by the original ellipsoid radii (.075,.065,.07).
+            float x=s*MathF.Sin(angle)*MathF.Cos(around),z=s*MathF.Sin(angle)*MathF.Sin(around),v=y/.065f+s*MathF.Cos(angle);
+            if(x*x+v*v+z*z>1.00001f)return false;
+        }
+        foreach(bool central in new[]{false,true})
+        {
+            float dx=central?0:.085f+.11f/MathF.Sqrt(2)-.17f;
+            float dy=(central?.58f:.47f+.11f/MathF.Sqrt(2))-(central?.64f:.60f)-y;
+            if(MathF.Pow(dx/(.075f*s),2)+MathF.Pow(dy/(.065f*s),2)>1.00001f)return false;
+        }
+    }
+    var mature=ActorStemBudPresentation.Sample(1);
+    return mature.Scale==1&&mature.OffsetY==0&&ActorStemBudPresentation.Sample(2)==mature&&
+        new[]{float.NaN,float.PositiveInfinity,float.NegativeInfinity,-1f}.All(p=>ActorStemBudPresentation.Sample(p)==ActorStemBudPresentation.Sample(0));
+});
 Check("old flat eye cannot preserve face clearance across its whole shape",()=>
 {
     float centerGap=.541f-ActorFaceSurface.Height(.23f,.04f);

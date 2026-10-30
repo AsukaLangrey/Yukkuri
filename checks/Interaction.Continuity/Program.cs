@@ -44,6 +44,54 @@ WorldSimulation CompletionFixture()
     return(reply,pose,Math.Sqrt((c.X-x)*(c.X-x)+(c.Z-z)*(c.Z-z)));
 }
 
+// Serialization component fixture: deliberate transient values are not a gameplay journey.
+WorldState DebugFixture()
+{
+    var state=Fresh().State;var c=state.Creatures[0];var i=c.Interaction;
+    void Set(string name,object value)=>typeof(InteractionLife).GetProperty(name,
+        System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic)!.SetValue(i,value);
+    i.ReactionPose="slap";i.ReactionPoseRemaining=.37;
+    Set("Rolling",true);Set("Lowering",true);Set("RollOrientation",new System.Numerics.Quaternion(.1f,.2f,.3f,.4f));
+    Set("ConversationDelay",.73);Set("ConversationPraise","debug-component");
+    state.InteractionHandPresent=true;state.InteractionHandUntil=12;
+    state.RoomObjects.Add(new(){Id="debug-held-source",RegionId=state.ActiveRegionId,HeldByHand=true});
+    state.DetachedStemBroods.Add(new(){EventId="debug-held-brood",RegionId=state.ActiveRegionId,HeldByHand=true});
+    return state;
+}
+Check("debug snapshots expose transient state in selected and complete world views",()=>
+{
+    var state=DebugFixture();var c=state.Creatures[0];
+    void AssertLife(JsonElement life)
+    {
+        Require(life.GetProperty("ReactionPose").GetString()=="slap"&&life.GetProperty("ReactionPoseRemaining").GetDouble()==.37,"reaction missing");
+        Require(life.GetProperty("Rolling").GetBoolean()&&life.GetProperty("Lowering").GetBoolean(),"movement transient missing");
+        Require(life.GetProperty("ConversationDelay").GetDouble()==.73&&life.GetProperty("ConversationPraise").GetString()=="debug-component","internal getters missing");
+        var q=life.GetProperty("RollOrientation");
+        foreach(var item in new[]{("X",.1f),("Y",.2f),("Z",.3f),("W",.4f)})
+            Require(q.GetProperty(item.Item1).GetSingle()==item.Item2,"Quaternion component missing");
+    }
+    AssertLife(DebugStateSnapshot.Capture(c).GetProperty("Interaction"));
+    var world=DebugStateSnapshot.Capture(state);AssertLife(world.GetProperty("Creatures")[0].GetProperty("Interaction"));
+    Require(world.GetProperty("InteractionHandPresent").GetBoolean()&&world.GetProperty("InteractionHandUntil").GetDouble()==12,"world hand state missing");
+    Require(world.GetProperty("RoomObjects").EnumerateArray().Single(o=>o.GetProperty("Id").GetString()=="debug-held-source").GetProperty("HeldByHand").GetBoolean(),"held portion missing");
+    Require(world.GetProperty("DetachedStemBroods")[0].GetProperty("HeldByHand").GetBoolean(),"held brood missing");
+});
+Check("debug capture stays read only and keeps transient properties out of save JSON",()=>
+{
+    var state=DebugFixture();string before=JsonSerializer.Serialize(state,SaveStore.JsonOptions);
+    string snapshot=DebugStateSnapshot.Capture(state).GetRawText();
+    _=DebugStateSnapshot.Capture(state.Creatures[0]);_=DebugStateSnapshot.Capture(state.DetachedStemBroods[0]);
+    Require(snapshot==DebugStateSnapshot.Capture(state).GetRawText(),"capture changed instantaneous state");
+    Require(before==JsonSerializer.Serialize(state,SaveStore.JsonOptions),"capture changed persistent world");
+    Require(!SaveStore.JsonOptions.IncludeFields,"debug mutated save options");
+    using var saved=JsonDocument.Parse(before);var root=saved.RootElement;var life=root.GetProperty("Creatures")[0].GetProperty("Interaction");
+    foreach(string name in new[]{"ReactionPose","ReactionPoseRemaining","Rolling","RollOrientation","Lowering","ConversationDelay","ConversationPraise"})
+        Require(!life.TryGetProperty(name,out _),"transient leaked into save: "+name);
+    Require(!root.TryGetProperty("InteractionHandPresent",out _)&&!root.TryGetProperty("InteractionHandUntil",out _),"hand leaked into save");
+    Require(!root.GetProperty("RoomObjects").EnumerateArray().Single(o=>o.GetProperty("Id").GetString()=="debug-held-source").TryGetProperty("HeldByHand",out _)&&
+        !root.GetProperty("DetachedStemBroods")[0].TryGetProperty("HeldByHand",out _),"held state leaked into save");
+});
+
 Check("carried release speed is frame independent and clears after stopping or interruption",()=>
 {
     foreach(int fps in new[]{30,60,144})

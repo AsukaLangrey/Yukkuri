@@ -60,3 +60,5 @@ A10/B13在制接线：Vitals读取HungerFeedingStatus显示实际目标、追击
 A11实际库存接线：左栏归并“用品补给·查看库存”，显示食物与药品数量；统一面板列食物、药品、救助工具、空瓶、繁育用品的实际库存/价格/每份数量。测试阶段购买不扣钱，用掉的份数仍真实扣除，不自动补货。缺货选工具后进入对应用品页，购买后可重新装备原工具；伤势护理按钮及调试UsesConsumableStock跟随模拟同一规则，满仓拒绝购买整包。独立瓶养文案同步。静态审查完成，未运行。
 
 A12调试接线：当前输入范围增加选中个体有效WaterAttemptStatus，完整个体中实际尝试序号、换代、时间和结果均有中文字段名；NextAttemptAt明确为下次资格检查，避免误读成已经动作。读取不改时钟/位置/随机，未运行。
+
+即时状态补全：此前调试沿用了存档的忽略标记，反应姿态、滚动方向、等待回应和手持状态缺席。独立 DebugStateSnapshot 只读取模型，将 Simulation 程序集内标注 JsonIgnore 的属性纳入调试契约，IncludeFields 显示 Quaternion 分量；不改 SaveStore.JsonOptions，也不改变存档。中文标签和异常清理同步补齐。实现依据：https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/custom-contracts 。A 在 Interaction.Continuity 补2组组件检查，覆盖个体/整个世界即时值、读取无副作用和存档隔离；源码冻结，未执行。记下读数/只看变化沿用原比较路径，真实面板刷新及布局待远端。

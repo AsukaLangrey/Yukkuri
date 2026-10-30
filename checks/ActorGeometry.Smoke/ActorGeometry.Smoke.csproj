@@ -6,6 +6,7 @@
     <Compile Include="../../src/Yukkuri.Game/ActorTearSurface.cs" Link="ActorTearSurface.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorWaterDropletSurface.cs" Link="ActorWaterDropletSurface.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorInjurySurface.cs" Link="ActorInjurySurface.cs" />
+    <Compile Include="../../src/Yukkuri.Game/ActorStemBudPresentation.cs" Link="ActorStemBudPresentation.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorMouthSurface.cs" Link="ActorMouthSurface.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorTouchShape.cs" Link="ActorTouchShape.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorIntakeMouthSurface.cs" Link="ActorIntakeMouthSurface.cs" />

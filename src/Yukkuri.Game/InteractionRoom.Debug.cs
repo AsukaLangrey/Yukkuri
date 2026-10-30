@@ -2,10 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.Unicode;
 using Yukkuri.Simulation;
 
 public partial class InteractionRoom
@@ -26,12 +23,6 @@ public partial class InteractionRoom
     private readonly List<string> _debugCreatureIds=new();
     private readonly List<string> _debugRows=new();
     private const int DebugPageSize=160;
-    private static readonly JsonSerializerOptions DebugJsonOptions=new()
-    {
-        WriteIndented=true,
-        Encoder=JavaScriptEncoder.Create(UnicodeRanges.All),
-        Converters={new JsonStringEnumConverter()}
-    };
 
     // Debugging reads state. It never runs a simulation step, spends resources,
     // changes a creature, or persists a private second copy of gameplay state.
@@ -152,14 +143,14 @@ public partial class InteractionRoom
                     Sim.InteractionIntakeAccepted, Sim.State.Mode, Sim.State.WorldSeconds },
                 _=>brood is not null?(object)new { State=brood, Interaction=Sim.DetachedStemStatus(brood.EventId) }:c
             };
-            JsonElement snapshot=JsonSerializer.SerializeToElement(source,DebugJsonOptions);
+            JsonElement snapshot=DebugStateSnapshot.Capture(source);
             _debugSnapshotJson=snapshot.GetRawText();
             _debugParameters.Clear();CollectDebugParameters(snapshot,"","",_debugParameters);
             _debugRows.Clear();_debugRows.AddRange(_debugParameters.Values.Select(parameter=>FormatDebugParameter(parameter.Path,parameter.Value)));
             RefreshDebugComparisonControls();
             RenderDebugRows();
         }
-        catch(Exception error) when(error is JsonException or NotSupportedException or InvalidOperationException)
+        catch(Exception error) when(error is JsonException or NotSupportedException or InvalidOperationException or System.Reflection.TargetInvocationException)
         {
             _debugRows.Clear();_debugParameters.Clear();_debugSnapshotJson="";
             RefreshDebugComparisonControls();
@@ -240,6 +231,12 @@ public partial class InteractionRoom
         "DetachedStemBroods"=>"离体茎记录","Nutrition"=>"营养","VesselIntegrity"=>"瓶体完整度",
         "StemVessels"=>"空瓶库存","StemVesselPurchases"=>"空瓶购买次数","DetachedAt"=>"离体时间",
         "Cleared"=>"残留已收拾","CanClear"=>"当前可收拾",
+        "HeldByHand"=>"正被手持","Lowering"=>"正在慢慢放下","Rolling"=>"正在翻滚","RollOrientation"=>"翻滚方向",
+        "InteractionHandPresent"=>"人类正在场中陪伴","InteractionHandUntil"=>"当前在场有效截止时间","InteractionHandRegionId"=>"人类在场区域",
+        "ReactionPose"=>"即时反应姿态","ReactionPoseRemaining"=>"即时姿态剩余时间","ReactionSituation"=>"即时反应情境",
+        "ReactionRefused"=>"本次反应为拒绝","ReactionDirectionX"=>"反应方向X","ReactionDirectionZ"=>"反应方向Z",
+        "BallContactCooldown"=>"软球接触间隔","HarshResponseRemaining"=>"严厉言语回应剩余时间",
+        "PendingConversation"=>"等待回应的话语","ConversationPraise"=>"等待回应的夸奖","ConversationReactionSerial"=>"对话对应反应序号","ConversationDelay"=>"对话等待时间",
         _=>""
     };
 }

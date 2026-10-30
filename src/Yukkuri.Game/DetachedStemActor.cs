@@ -10,6 +10,7 @@ public partial class DetachedStemActor : Node3D
     private readonly MeshInstance3D[] _buds=new MeshInstance3D[3],_nutrients=new MeshInstance3D[3],_cracks=new MeshInstance3D[3];
     private readonly MeshInstance3D[] _eyes=new MeshInstance3D[6];
     private readonly MeshInstance3D[] _mouths=new MeshInstance3D[3],_branches=new MeshInstance3D[3];
+    private readonly Vector3[] _budCenters=new Vector3[3];
     private readonly List<MeshInstance3D> _contacts=new();
     private readonly Dictionary<Mesh,TriangleMesh> _trees=new();
     private DetachedStemView? _state;
@@ -41,7 +42,8 @@ public partial class DetachedStemActor : Node3D
                 new((n-1)*.085f,.47f,0),"91a774");
             _branches[n]=branch;
             branch.RotationDegrees=new(0,0,(n-1)*-45);
-            var bud=SceneArt.Ball(_plant,new((n-1)*.17f,.60f+(n==1?.04f:0),0),new(.15f,.13f,.14f),"ebdab6");
+            _budCenters[n]=new((n-1)*.17f,.60f+(n==1?.04f:0),0);
+            var bud=SceneArt.Ball(_plant,_budCenters[n],new(.15f,ActorStemBudPresentation.MatureHeight,.14f),"ebdab6");
             bud.MaterialOverride=bud.MaterialOverride.Duplicate() as Material;_buds[n]=bud;
             for(int eye=0;eye<2;eye++)
                 _eyes[n*2+eye]=SceneArt.Ball(_plant,bud.Position+new Vector3(eye==0?-.027f:.027f,.005f,.066f),new(.012f,.018f,.006f),"655347");
@@ -74,6 +76,7 @@ public partial class DetachedStemActor : Node3D
         _plant.Position=new(0,bottled?.08f:.025f,0);
         _plant.RotationDegrees=new(0,0,bottled?0:-28);
         float progress=Mathf.Clamp((float)state.Progress,0,1);
+        var budGrowth=ActorStemBudPresentation.Sample(progress);
         float stress=Mathf.Clamp((float)((100-state.Integrity)+(100-state.Hydration)*.5)/130,0,1);
         _plant.Scale=bottled?new(1,(.45f+progress*.55f)*(alive?1: .48f),1):new(.75f,.40f,.75f);
         float waterHeight=Mathf.Clamp((float)state.Hydration/100,0,1)*.30f;
@@ -83,9 +86,18 @@ public partial class DetachedStemActor : Node3D
         {
             bool bud=n<state.PlannedChildren;
             _buds[n].Visible=_mouths[n].Visible=_branches[n].Visible=bud;
+            Vector3 budCenter=_budCenters[n]+Vector3.Up*budGrowth.OffsetY;
+            _buds[n].Position=budCenter;
+            _buds[n].Scale=new Vector3(.15f,ActorStemBudPresentation.MatureHeight,.14f)*budGrowth.Scale;
             if(_buds[n].MaterialOverride is StandardMaterial3D skin)skin.AlbedoColor=new Color("ebdab6").Lerp(new Color("a69b80"),alive?stress:1);
             for(int eye=0;eye<2;eye++)
-            {_eyes[n*2+eye].Visible=bud;_eyes[n*2+eye].Scale=new(.012f,.018f*(alive?1-stress*.65f:.15f),.006f);}
+            {
+                var eyeMesh=_eyes[n*2+eye];eyeMesh.Visible=bud;
+                eyeMesh.Position=budCenter+new Vector3(eye==0?-.027f:.027f,.005f,.066f)*budGrowth.Scale;
+                eyeMesh.Scale=new Vector3(.012f,.018f*(alive?1-stress*.65f:.15f),.006f)*budGrowth.Scale;
+            }
+            _mouths[n].Position=budCenter+new Vector3(0,-.025f,.068f)*budGrowth.Scale;
+            _mouths[n].Scale=new Vector3(.022f,.008f,.005f)*budGrowth.Scale;
             _nutrients[n].Visible=state.Nutrition>(n*30+5)&&state.Phase!=DetachedStemPhase.Born;
             _cracks[n].Visible=state.VesselIntegrity<75-n*20;
         }

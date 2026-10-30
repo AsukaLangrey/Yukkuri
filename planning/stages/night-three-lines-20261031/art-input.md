@@ -333,3 +333,15 @@ B单源码冻结，既有纯热检查已覆盖固定分支无朝向/零Pitch及�
 Point/Surface/Tint/EdgeOpacity公开给A；Tint在极点颜色一致，RGB有界，边缘alpha沿用sqrt(1-r²)。SculptSurface在创建时复制独立材质并启用VertexColorUseAsAlbedo，EnableSurfaceFade保留顶点色并启用Alpha；原SetSurfaceOpacity仍只写材质alpha，故顶点收边乘真实Damage/PermanentLoss强度。HasDressing同部位遮蔽、永久旧痕和新伤的各自显隐完全不变，零伤势不造痕迹。
 
 两源码冻结，A仅补一组纯边界检查源码，未运行任何程序/编译/测试/渲染/预览/Git。远端仍需确认新伤与旧痕在近看、躺倒、固定和托举时可辨，包扎遮蔽/到期显露、真实湿身和余泪叠层不影响眼口辨识；未见实机，不能声明视觉已验收。
+
+## 第三十六批：独立窝幼芽随真实进度长大
+
+先只读复核生育链，未发现提前出生或加载重播的确定缺口：附着茎需真实StemCareStatus与Gestating，胎生读取孕育/恢复阶段；新增幼体且BirthEventId属于CompletedBirths才触发短反馈，读档BuildActors整体建立对象不播出生。独立窝从当前区DetachedStems按EventId/未清理同步，不依赖Selected或母体存活；真实整窝出生完成才显示Born枯梗，离体窝不触发母体身体分娩提示。
+
+原DetachedStemActor仅按Progress拉长整株Y，芽体宽度与眼嘴始终固定。本批只修改该文件并新增ActorStemBudPresentation纯接口：Sample(progress)用真实0至1进度的smoothstep把芽尺寸从.18平滑增至1，OffsetY=-.065*(1-size)，保留旧芽下极点。SceneArt.Ball原单位球半径.5/高1，成熟芽尺寸仍(.15,.13,.14)，故缩小后的椭球始终在旧芽椭球内，成熟时原位置和尺寸完全恢复。
+
+保存原三个芽中心，不增加节点；眼嘴相对芽中心的位置和各自原尺寸同乘size，眼睛再乘原完整度/含水/失败疲惫因子。旧枝条位置/长度/旋转不动，最小芽尺寸仍覆盖原中央及两侧枝尖；真实射线继续读取当前Mesh.GlobalTransform。整株高度、瓶口/水位/营养/破损、根位置和模拟占位全不变。
+
+数量门控静态复核：原n<PlannedChildren同时控制芽、嘴、枝与双眼，本批完整保留，固定分配3节点不会把不存在的第三芽显示出来。Loose/Bottled读取同一真实Progress；Failed沿停止时的进度保留发育尺寸并用原枯损姿态，Born隐藏整株，Cleared沿原Room同步移除。没有计时器、出生事件、母体查找或暂停期间自行生长。
+
+两源码冻结，纯StemBudGrowth(Scale,OffsetY)/Sample接口交A至多补一小组边界检查。未运行项目/编译/测试/渲染/预览/Git。远端需观察早中晚期幼芽与枝尖连接、五官贴合和可辨性，2/3芽正确数量、停育/失败保留阶段、读档与暂停不前进、母体死亡后持续瓶养、真实出生后幼芽消失及新幼体出现；本批是阶段表现细化，未宣称视觉验收。
