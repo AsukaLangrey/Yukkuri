@@ -1,0 +1,12 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Teaching/Family.Teaching.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 近处教导必须听满六秒，不是点击或半途即获得知识
+PASS 远处先实际靠近，路上时间不能当作已听完
+PASS 未知常识、跨区、双方饥渴与恐惧关系都不能强行教会
+PASS 暂停拒绝新教导，暂停与近看都不推进已有课程
+PASS 冷藏打断不学会，重复点击不跳过过程或完成冷却
+PASS 茎生能学且可能误解，两个方式同档继续都不重抽理解
+PASS 真实吃下干净食物可修正长辈错误判断并改记亲身经验
+PASS 足底失能幼体在近处仍能原地听完，不能借教导恢复行走
+PASS 伪造已听时间或脱离双向相处的课程存档拒绝
+PASS 长辈说安全不改变真实污染，最后一份吃完后不适仍能修正判断

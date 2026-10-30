@@ -1,0 +1,997 @@
+{
+  "started_at": "2026-10-30T10:29:50.774916+00:00",
+  "finished_at": "2026-10-30T10:34:32.322136+00:00",
+  "status": "failed",
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "source_tree": "973bec65b3c6ce331583aa4f5be45331ccb106bf",
+  "source_worktree_clean": null,
+  "source_materialization": "412 exact Git blob verified dependency closure files; separate current LFS audit; not a complete Git checkout",
+  "scope": "Pure .NET Linux behavior/math checks only; no game launch, runtime, visual or Windows acceptance",
+  "configuration": "Release, UseAppHost=false; external NuGet config with empty package sources; no product source changes",
+  "steps": [
+    {
+      "id": "Simulation.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Simulation.Smoke/Simulation.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:29:50.984515+00:00",
+      "finished_at": "2026-10-30T10:29:52.453467+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Simulation.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Simulation.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Simulation.Smoke/Simulation.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:29:52.454327+00:00",
+      "finished_at": "2026-10-30T10:30:06.143996+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Simulation.Smoke.txt"
+      ],
+      "passed_count": 125,
+      "failed_count": 0
+    },
+    {
+      "id": "Milestone.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Milestone.Smoke/Milestone.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:06.145094+00:00",
+      "finished_at": "2026-10-30T10:30:07.671060+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Milestone.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Milestone.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Milestone.Smoke/Milestone.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:07.671514+00:00",
+      "finished_at": "2026-10-30T10:30:13.411576+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Milestone.Smoke.txt"
+      ],
+      "passed_count": 63,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.Smoke/Interaction.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:13.414017+00:00",
+      "finished_at": "2026-10-30T10:30:15.093190+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Smoke/Interaction.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/evidence/Interaction.Smoke.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:15.093790+00:00",
+      "finished_at": "2026-10-30T10:30:20.383317+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Smoke.txt",
+        "evidence/Interaction.Smoke.json"
+      ],
+      "passed_count": 48,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "results_count": 48
+    },
+    {
+      "id": "Input.Intent-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Input.Intent/Input.Intent.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:20.384015+00:00",
+      "finished_at": "2026-10-30T10:30:21.972439+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Input.Intent-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Input.Intent",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Input.Intent/Input.Intent.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/evidence/Input.Intent.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:21.973876+00:00",
+      "finished_at": "2026-10-30T10:30:27.827029+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Input.Intent.txt",
+        "evidence/Input.Intent.json"
+      ],
+      "passed_count": 43,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "results_count": 43
+    },
+    {
+      "id": "NaturalLife.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:27.827763+00:00",
+      "finished_at": "2026-10-30T10:30:29.346625+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/NaturalLife.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "NaturalLife.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/evidence/NaturalLife.Smoke.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:29.347239+00:00",
+      "finished_at": "2026-10-30T10:30:39.011253+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/NaturalLife.Smoke.txt",
+        "evidence/NaturalLife.Smoke.json"
+      ],
+      "passed_count": 95,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "results_count": 95
+    },
+    {
+      "id": "Interaction.Continuity-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.Continuity/Interaction.Continuity.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:39.012162+00:00",
+      "finished_at": "2026-10-30T10:30:40.488752+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Continuity-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Continuity",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Continuity/Interaction.Continuity.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/evidence/Interaction.Continuity.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:40.489299+00:00",
+      "finished_at": "2026-10-30T10:30:48.542562+00:00",
+      "exit_code": 1,
+      "status": "failed",
+      "evidence": [
+        "evidence/Interaction.Continuity.txt",
+        "evidence/Interaction.Continuity.json"
+      ],
+      "passed_count": 124,
+      "failed_count": 1,
+      "json_success": false,
+      "json_failures": 1,
+      "results_count": 125
+    },
+    {
+      "id": "Interaction.AutonomyPriority-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:48.544917+00:00",
+      "finished_at": "2026-10-30T10:30:49.966123+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.AutonomyPriority-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.AutonomyPriority",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:49.966715+00:00",
+      "finished_at": "2026-10-30T10:30:55.266634+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.AutonomyPriority.txt"
+      ],
+      "passed_count": 12,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.CompletedNeeds-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.CompletedNeeds/Interaction.CompletedNeeds.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:55.267299+00:00",
+      "finished_at": "2026-10-30T10:30:56.787289+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.CompletedNeeds-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.CompletedNeeds",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.CompletedNeeds/Interaction.CompletedNeeds.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:30:56.787885+00:00",
+      "finished_at": "2026-10-30T10:31:01.640057+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.CompletedNeeds.txt"
+      ],
+      "passed_count": 1,
+      "failed_count": 0
+    },
+    {
+      "id": "ActorGeometry.Smoke-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:01.640630+00:00",
+      "finished_at": "2026-10-30T10:31:03.116073+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/ActorGeometry.Smoke-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "ActorGeometry.Smoke",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/evidence/ActorGeometry.Smoke.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:03.117063+00:00",
+      "finished_at": "2026-10-30T10:31:18.719106+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/ActorGeometry.Smoke.txt",
+        "evidence/ActorGeometry.Smoke.json"
+      ],
+      "passed_count": 93,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": null,
+      "checks_count": 93
+    },
+    {
+      "id": "NaturalLife.Soak-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/NaturalLife.Soak/NaturalLife.Soak.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:18.720064+00:00",
+      "finished_at": "2026-10-30T10:31:20.145123+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/NaturalLife.Soak-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "NaturalLife.Soak",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/NaturalLife.Soak/NaturalLife.Soak.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/evidence/NaturalLife.Soak.json",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:20.145708+00:00",
+      "finished_at": "2026-10-30T10:31:32.462332+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/NaturalLife.Soak.txt",
+        "evidence/NaturalLife.Soak.json"
+      ],
+      "passed_count": 24,
+      "failed_count": 0,
+      "json_success": true,
+      "json_failures": 0,
+      "scenarios_count": 24,
+      "expected_scenarios": 24,
+      "seeds": [
+        72341,
+        592813,
+        1597331,
+        20261029
+      ],
+      "simulated_seconds_by_scenario": [
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600,
+        3600
+      ]
+    },
+    {
+      "id": "Interaction.Mouth-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.Mouth/Interaction.Mouth.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:32.489644+00:00",
+      "finished_at": "2026-10-30T10:31:33.960837+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Mouth-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Mouth",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Mouth/Interaction.Mouth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:33.961505+00:00",
+      "finished_at": "2026-10-30T10:31:39.448053+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Mouth.txt"
+      ],
+      "passed_count": 16,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.MouthCommunication-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.MouthCommunication/Family.MouthCommunication.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:39.448899+00:00",
+      "finished_at": "2026-10-30T10:31:40.872816+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.MouthCommunication-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.MouthCommunication",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.MouthCommunication/Family.MouthCommunication.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:40.873838+00:00",
+      "finished_at": "2026-10-30T10:31:45.961844+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.MouthCommunication.txt"
+      ],
+      "passed_count": 9,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.MouthPresentation-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.MouthPresentation/Interaction.MouthPresentation.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:45.962686+00:00",
+      "finished_at": "2026-10-30T10:31:47.442103+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.MouthPresentation-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.MouthPresentation",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.MouthPresentation/Interaction.MouthPresentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:47.442864+00:00",
+      "finished_at": "2026-10-30T10:31:53.128030+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.MouthPresentation.txt"
+      ],
+      "passed_count": 10,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.PregnancyBoundaries-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:53.128966+00:00",
+      "finished_at": "2026-10-30T10:31:56.704248+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.PregnancyBoundaries-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.PregnancyBoundaries",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:31:56.705455+00:00",
+      "finished_at": "2026-10-30T10:32:11.749302+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.PregnancyBoundaries.txt"
+      ],
+      "passed_count": 12,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.EmergencyIntervention-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.EmergencyIntervention/Interaction.EmergencyIntervention.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:11.750068+00:00",
+      "finished_at": "2026-10-30T10:32:13.321816+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.EmergencyIntervention-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.EmergencyIntervention",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.EmergencyIntervention/Interaction.EmergencyIntervention.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:13.322542+00:00",
+      "finished_at": "2026-10-30T10:32:19.239901+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.EmergencyIntervention.txt"
+      ],
+      "passed_count": 6,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Depth-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.Depth/Interaction.Depth.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:19.240699+00:00",
+      "finished_at": "2026-10-30T10:32:20.660500+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Depth-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Depth",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Depth/Interaction.Depth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:20.661883+00:00",
+      "finished_at": "2026-10-30T10:32:25.998630+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Depth.txt"
+      ],
+      "passed_count": 4,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Injury-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.Injury/Interaction.Injury.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:25.999957+00:00",
+      "finished_at": "2026-10-30T10:32:27.825750+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Injury-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.Injury",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Injury/Interaction.Injury.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:27.827396+00:00",
+      "finished_at": "2026-10-30T10:32:33.274101+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.Injury.txt"
+      ],
+      "passed_count": 15,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Social-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Social/Family.Social.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:33.275319+00:00",
+      "finished_at": "2026-10-30T10:32:34.695977+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Social-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Social",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Social/Family.Social.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:34.697311+00:00",
+      "finished_at": "2026-10-30T10:32:40.089447+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Social.txt"
+      ],
+      "passed_count": 22,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Reproduction-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Reproduction/Family.Reproduction.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:40.090362+00:00",
+      "finished_at": "2026-10-30T10:32:41.461964+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Reproduction-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Reproduction",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Reproduction/Family.Reproduction.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:41.463126+00:00",
+      "finished_at": "2026-10-30T10:32:46.910332+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Reproduction.txt"
+      ],
+      "passed_count": 8,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.ColdCare-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.ColdCare/Family.ColdCare.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:46.911213+00:00",
+      "finished_at": "2026-10-30T10:32:48.233691+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.ColdCare-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.ColdCare",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.ColdCare/Family.ColdCare.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:48.234815+00:00",
+      "finished_at": "2026-10-30T10:32:53.277385+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.ColdCare.txt"
+      ],
+      "passed_count": 9,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Aftermath-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Aftermath/Family.Aftermath.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:53.280316+00:00",
+      "finished_at": "2026-10-30T10:32:54.753021+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Aftermath-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Aftermath",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Aftermath/Family.Aftermath.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:32:54.754245+00:00",
+      "finished_at": "2026-10-30T10:33:00.052061+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Aftermath.txt"
+      ],
+      "passed_count": 17,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Risk-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Risk/Family.Risk.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:00.052911+00:00",
+      "finished_at": "2026-10-30T10:33:01.626796+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Risk-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Risk",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Risk/Family.Risk.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:01.627618+00:00",
+      "finished_at": "2026-10-30T10:33:07.067871+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Risk.txt"
+      ],
+      "passed_count": 14,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.InjuryPresentation-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.InjuryPresentation/Interaction.InjuryPresentation.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:07.069176+00:00",
+      "finished_at": "2026-10-30T10:33:08.438817+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.InjuryPresentation-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.InjuryPresentation",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.InjuryPresentation/Interaction.InjuryPresentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:08.439807+00:00",
+      "finished_at": "2026-10-30T10:33:12.728984+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.InjuryPresentation.txt"
+      ],
+      "passed_count": 6,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Compatibility-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Compatibility/Family.Compatibility.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:12.730119+00:00",
+      "finished_at": "2026-10-30T10:33:14.202279+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Compatibility-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Compatibility",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Compatibility/Family.Compatibility.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:14.203435+00:00",
+      "finished_at": "2026-10-30T10:33:22.343263+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Compatibility.txt"
+      ],
+      "passed_count": 77,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.CareLearning-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.CareLearning/Family.CareLearning.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:22.344251+00:00",
+      "finished_at": "2026-10-30T10:33:24.128923+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.CareLearning-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.CareLearning",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.CareLearning/Family.CareLearning.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:24.130325+00:00",
+      "finished_at": "2026-10-30T10:33:30.271775+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.CareLearning.txt"
+      ],
+      "passed_count": 14,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Teaching-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Teaching/Family.Teaching.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:30.273408+00:00",
+      "finished_at": "2026-10-30T10:33:31.962249+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Teaching-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Teaching",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Teaching/Family.Teaching.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:31.963878+00:00",
+      "finished_at": "2026-10-30T10:33:38.834095+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Teaching.txt"
+      ],
+      "passed_count": 10,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.AdoptionJourney-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.AdoptionJourney/Family.AdoptionJourney.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:38.843225+00:00",
+      "finished_at": "2026-10-30T10:33:40.482510+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.AdoptionJourney-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.AdoptionJourney",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.AdoptionJourney/Family.AdoptionJourney.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:40.483432+00:00",
+      "finished_at": "2026-10-30T10:33:47.888496+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.AdoptionJourney.txt"
+      ],
+      "passed_count": 6,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.AssistedCare-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.AssistedCare/Family.AssistedCare.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:47.889604+00:00",
+      "finished_at": "2026-10-30T10:33:49.530496+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.AssistedCare-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.AssistedCare",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.AssistedCare/Family.AssistedCare.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:49.531633+00:00",
+      "finished_at": "2026-10-30T10:33:55.441126+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.AssistedCare.txt"
+      ],
+      "passed_count": 16,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Growth-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Growth/Family.Growth.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:55.442382+00:00",
+      "finished_at": "2026-10-30T10:33:57.128799+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Growth-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Growth",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Growth/Family.Growth.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:33:57.130118+00:00",
+      "finished_at": "2026-10-30T10:34:02.330496+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Growth.txt"
+      ],
+      "passed_count": 5,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.StateBoundaries-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.StateBoundaries/Interaction.StateBoundaries.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:02.331677+00:00",
+      "finished_at": "2026-10-30T10:34:03.974123+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.StateBoundaries-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.StateBoundaries",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.StateBoundaries/Interaction.StateBoundaries.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:03.983079+00:00",
+      "finished_at": "2026-10-30T10:34:09.429014+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.StateBoundaries.txt"
+      ],
+      "passed_count": 10,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.HumanCompany-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Interaction.HumanCompany/Interaction.HumanCompany.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:09.431914+00:00",
+      "finished_at": "2026-10-30T10:34:11.389192+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.HumanCompany-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Interaction.HumanCompany",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.HumanCompany/Interaction.HumanCompany.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:11.390433+00:00",
+      "finished_at": "2026-10-30T10:34:18.183626+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Interaction.HumanCompany.txt"
+      ],
+      "passed_count": 17,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Protection-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Protection/Family.Protection.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:18.184931+00:00",
+      "finished_at": "2026-10-30T10:34:20.320129+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Protection-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Protection",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Protection/Family.Protection.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:20.321230+00:00",
+      "finished_at": "2026-10-30T10:34:26.306255+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Protection.txt"
+      ],
+      "passed_count": 15,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Presentation-restore",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.Presentation/Family.Presentation.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:26.308195+00:00",
+      "finished_at": "2026-10-30T10:34:27.997988+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Presentation-restore.txt"
+      ],
+      "passed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "id": "Family.Presentation",
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Presentation/Family.Presentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false",
+      "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+      "started_at": "2026-10-30T10:34:27.999072+00:00",
+      "finished_at": "2026-10-30T10:34:32.268807+00:00",
+      "exit_code": 0,
+      "status": "passed",
+      "evidence": [
+        "evidence/Family.Presentation.txt"
+      ],
+      "passed_count": 3,
+      "failed_count": 0
+    }
+  ],
+  "materialized_sources_unchanged": true,
+  "changed_files": [],
+  "duration_seconds": 281.54735005600014
+}

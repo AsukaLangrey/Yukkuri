@@ -1,0 +1,14 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 正常父母实际靠近后完整相处才能开始孕育
+PASS 脚部失能但已在近处且吃喝充足仍可安静完成准备
+PASS 脚部失能且需要吃饭时不能用邻近空等代替准备
+PASS 高处和第三只箱体遮挡不累计准备
+PASS 吃喝、手势与被动滑动会中断已经累计的准备
+PASS 暂停和近看不借用上一帧相处时间推进准备
+PASS 部分准备读档续接仍需要剩余实际相处时间
+PASS 分娩优先使练习跟随等待休息与人油陪伴让位
+PASS 分娩放下照护份额且保留食物与血缘身份
+PASS 逃离冲突伤幼嘴忙排泄手势及支撑不稳时等待分娩
+PASS 空间不足不提前打断母体活动，空位恢复后正常让位
+PASS 脚伤不能走但地面安稳仍可分娩且普通后续不重复出生

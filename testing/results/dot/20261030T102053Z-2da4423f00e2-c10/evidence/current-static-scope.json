@@ -1,0 +1,43 @@
+{
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "reviewed_at": "2026-10-30T10:29:26.722413+00:00",
+  "scope": "Static read only of pinned J documents and changed check source; not build/test/UI proof.",
+  "files": [
+    {
+      "path": "checks/Family.PregnancyBoundaries/Program.cs",
+      "sha256": "fa4ab60c68f3eec8ea020bd27a87927a5abe7b583976457bbd7e14c20139d200"
+    },
+    {
+      "path": "checks/Family.AssistedCare/Program.cs",
+      "sha256": "45b973bfdecd7bf7f8e4c3c2534bff7cf8a23a3082b293421c9dccf1292123a0"
+    },
+    {
+      "path": "checks/Interaction.Continuity/Program.cs",
+      "sha256": "04fda7cb099272c17301705cfbe0b152c5e2aaef2ce9deee967c5e48cc682679"
+    },
+    {
+      "path": "checks/Family.Protection/Program.cs",
+      "sha256": "8f5f42690087deaf113c459a2407d00f50f3bb608164d9d5ca6195f1f26bd6f6"
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneStates.cs",
+      "sha256": "b754df8a9204c6b67790e3b5f2802798ea281484ab032188bf6fef85156e4901"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyCare.cs",
+      "sha256": "87455ec7fb0773beff565e8361fabe4eb6a81b65abb3a79f2b0fb04ae344de56"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionLowering.cs",
+      "sha256": "ffa0db8bcb0f689a48ba7918d8c50881183034b0e5f201548012f3ae8b07702a"
+    }
+  ],
+  "notes": [
+    "J preserves PregnancyBoundaries and AssistedCare original named case sets; Hang then Lower through public actions creates Carried+Lowering. Success requires actual new compilation and runtime; planned counts are never actual assertions.",
+    "Continuity positive-X fixture sets an independent target before contact, preserving original assertion; new negative-target control logs OFF_CONTACT_INDEPENDENT and must retain own movement without re-enabling Following. This is fixture/control work, not a product injury/autonomy rule change.",
+    "Protection retains far/near assertions, recalculates real contact placement, records maternal/state diagnostics and adds ordinary-time walking control. Private-method reflection is read-only qualification/contact/visibility inspection, so it is not fully black-box.",
+    "H held-completion isolation and PregnancyBoundaries internal delivery isolation remain; their passes cannot stand in for a swallowing product fix or ordinary complete pregnancy/UI acceptance.",
+    "Actual build, rule, native graphics/audio and real historical save coverage must be recorded separately. Current J documents explicitly say developer machine did not build or run.",
+    "Current source Main.MilestoneStates.cs line3 imports System.Collections.Generic. FamilyCare.cs86 checks recipient Lowering before Carried line87, while availability still rejects both; InteractionLowering.cs7 retains public get/internal set. These are static facts only, not build or scenario success."
+  ]
+}

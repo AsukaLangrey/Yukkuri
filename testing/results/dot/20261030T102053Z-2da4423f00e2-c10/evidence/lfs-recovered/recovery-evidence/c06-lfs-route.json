@@ -1,0 +1,88 @@
+{
+  "checked_at": "2026-10-29T17:45:25Z",
+  "repository": "AsukaLangrey/Yukkuri",
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "source_tree": "79c54b3c949fd772bf11a2fa13317ff7c81b4e39",
+  "request_revision": "dot-v8-interaction-depth-B-20261030",
+  "status": "blocked",
+  "original_objects_obtained": 0,
+  "objects": [
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "git_blob_sha": "02ea76885440093787ed85177f67715b827dfa27",
+      "pointer_file": "pipeline-probe.glb.pointer.txt",
+      "pointer_bytes": 130,
+      "pointer_sha256": "32f54da3bba25dd6615ee8b450c64a8e5fa867f99545882a37e5ccb6b508e2e2",
+      "pointer_blob_verified": true,
+      "oid_sha256": "8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352",
+      "expected_original_bytes": 98908,
+      "original_obtained": false,
+      "method": "GitHub fetch_file encoding=base64",
+      "outcome": "Only Git LFS pointer returned; no original object bytes",
+      "source_url": "https://github.com/AsukaLangrey/Yukkuri/blob/cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d/src/Yukkuri.Game/Assets/pipeline-probe.glb"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "git_blob_sha": "cf0f5bb8a8a6d4a6795f886bcdedcef7691156e3",
+      "pointer_file": "sanctuary-morning.png.pointer.txt",
+      "pointer_bytes": 132,
+      "pointer_sha256": "9af6ad7ee2d24803ea07a0ee4c35d6fe79dabf5d567d6a4c701697732450fef6",
+      "pointer_blob_verified": true,
+      "oid_sha256": "1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024",
+      "expected_original_bytes": 2846992,
+      "original_obtained": false,
+      "method": "GitHub fetch_file encoding=utf-8",
+      "outcome": "Only Git LFS pointer returned; no original object bytes",
+      "source_url": "https://github.com/AsukaLangrey/Yukkuri/blob/cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d/src/Yukkuri.Game/Assets/Art/sanctuary-morning.png"
+    },
+    {
+      "path": "assets-source/pipeline-probe.blend",
+      "git_blob_sha": "58c91fc1e9928ee2ed22ee046d0877cd155eae23",
+      "pointer_file": "pipeline-probe.blend.pointer.txt",
+      "pointer_bytes": 131,
+      "pointer_sha256": "c90a1e42c7524f7335b0f072fb07b46bf048723ca2141468cf2273fad811caa2",
+      "pointer_blob_verified": true,
+      "oid_sha256": "2d187b80047d24ddd1df7132f2ff4a8a7595e18a420d60e31c0426a6187b4fcb",
+      "expected_original_bytes": 641206,
+      "original_obtained": false,
+      "method": "GitHub fetch_file encoding=utf-8",
+      "outcome": "Only Git LFS pointer returned; no original object bytes",
+      "source_url": "https://github.com/AsukaLangrey/Yukkuri/blob/cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d/assets-source/pipeline-probe.blend"
+    }
+  ],
+  "remote_upload_claim": "Current request says developer pushed these three originals at about 2026-10-29 23:55 Beijing time. This was not independently verified against the LFS object server.",
+  "transport_assessment": [
+    "Current supported GitHub fetch_file(base64) was tried for the smallest missing object at the new pin; it returned only its pointer. Other two pinned pointers were read and all OID/size identities remain unchanged.",
+    "GitHub fetch tool description explicitly excludes binary downloads and unlisted endpoints. No available connected tool exposes Git LFS batch/download or credential delegation.",
+    "Git LFS 3.6.1 and Git 2.52.0 are installed. Current git credential.helper and URL rewrite queries returned no values; no credential contents inspected.",
+    "Prior authorized Git ls-remote failed because no username was available. Same unchanged unauthenticated transport was not retried, and no alternate host or approval bypass was attempted.",
+    "The existing 12-object recovery used deterministic audio synthesis and an official public upstream font; it did not establish authenticated private-LFS retrieval. Those methods do not recover these three originals."
+  ],
+  "not_done": [
+    "No product/test/compiler/engine execution",
+    "No source writes",
+    "No credentials created, extracted or changed",
+    "No user developer-machine access",
+    "No GitHub publication or mutations",
+    "No regenerated substitute original assets"
+  ],
+  "next_action": "Use a supported authenticated LFS binary transport, or have the user provide these three exact originals as an authorized uploaded archive; then verify SHA256 and sizes before materialization/import.",
+  "diagnostic_review": {
+    "source": "testing/reviews/20261029T154437Z-8238c6e6380f-c04.md",
+    "git_blob_sha": "cdaa939eaa14738e83655623195ee1a2b2e0ec32",
+    "current_check_blob_sha": "2cd4e1f4347b7d93445cd82627c0a1a20dca107c",
+    "assertion_location": "checks/Interaction.Continuity/Program.cs:339",
+    "original_predicate_preserved": "accepted && sawSwallow && moved && c.X > .5",
+    "diagnostics_added": [
+      "peakX",
+      "maxDistanceFromStart",
+      "totalTravel",
+      "closestDestination",
+      "sawDestinationIntake",
+      "returnedAfterDestination",
+      "terminal position/target/pose/needs/gesture/physiology"
+    ],
+    "interpretation": "New pinned source and configuration allow one current run. Diagnostics are not a product fix or a prior failure pass; retain any failure and unexecuted following subcases."
+  }
+}
+

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "engine-contact",
+    "status": "passed",
+    "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/Godot_v4.7.2-stable_mono_linux.x86_64 --path /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source/src/Yukkuri.Game --audio-driver Dummy --resolution 1280x800 -- --interaction-test-profile cloud1030-c10-contact --contact-check-output /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/evidence/contact.json",
+    "working_directory": "/workspace",
+    "timeout_seconds": 300,
+    "started_at": "2026-10-30T10:39:35Z",
+    "finished_at": "2026-10-30T10:39:55Z",
+    "exit_code": 0,
+    "passed_count": 4,
+    "failed_count": 0,
+    "reason": "Actual Godot ray/contact geometry in authored states; not native gesture acceptance.",
+    "evidence": [
+      "evidence/engine-contact.txt",
+      "evidence/contact.json"
+    ],
+    "required": false
+  },
+  {
+    "id": "engine-layout",
+    "status": "passed",
+    "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/Godot_v4.7.2-stable_mono_linux.x86_64 --path /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source/src/Yukkuri.Game --audio-driver Dummy --resolution 1280x800 -- --interaction-test-profile cloud1030-c10-render --room-render-output /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/render",
+    "working_directory": "/workspace",
+    "timeout_seconds": 300,
+    "started_at": "2026-10-30T10:39:55Z",
+    "finished_at": "2026-10-30T10:40:45Z",
+    "exit_code": 0,
+    "passed_count": 10,
+    "failed_count": 0,
+    "reason": "Five current engine images inspected; ten layout predicates, not a substitute for native mouse/keyboard or complete visual acceptance.",
+    "evidence": [
+      "evidence/engine-render.txt",
+      "evidence/render-checks.json"
+    ],
+    "required": false
+  }
+]

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -u
+source /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/env.sh
+B=/workspace/shared/yukkuri-cloud-20261030T102053-2da4423
+cd "$B/source"
+step() {
+ id=$1; shift
+ date -u '+%Y-%m-%dT%H:%M:%SZ' > "$B/evidence/$id-start.txt"
+ printf 'COMMAND: '; printf '%q ' "$@"; printf '\n'
+ timeout --signal=TERM --kill-after=5 300 "$@" > "$B/evidence/$id.txt" 2>&1
+ ret=$?
+ printf '%s\n' "$ret" > "$B/evidence/$id-exit.txt"
+ date -u '+%Y-%m-%dT%H:%M:%SZ' > "$B/evidence/$id-end.txt"
+ echo "$id exit $ret"
+ return "$ret"
+}
+step game-restore "$DOTNET_ROOT/dotnet" restore src/Yukkuri.Game/Yukkuri.Game.csproj --configfile "$B/NuGet.godot.Config" -p:NuGetAudit=false || exit $?
+step game-build "$DOTNET_ROOT/dotnet" build src/Yukkuri.Game/Yukkuri.Game.csproj --configuration Debug --no-restore -p:UseSharedCompilation=false || exit $?
+"$DOTNET_ROOT/dotnet" --info > "$B/evidence/dotnet-info.txt" 2>&1
+"$GODOT_BIN" --version > "$B/evidence/godot-version.txt" 2>&1

@@ -1,0 +1,12 @@
+{
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "blocks": [
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "a harmful press cancels following but an off-contact held mouse preserves independent movement",
+      "start_line": 1439,
+      "end_line": 1464,
+      "source": "1439: Check(\"a harmful press cancels following but an off-contact held mouse preserves independent movement\",()=>\n1440: {\n1441:     // Preserve c08's original default negative target and 1.5-second sequence as\n1442:     // a separate control. The hand on the right must not force obedience again.\n1443:     var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;c.Fullness=90;\n1444:     double targetX=c.TargetX,targetZ=c.TargetZ,initialDistance=WorldSimulation.Distance(c.X,c.Z,targetX,targetZ);\n1445:     Require(targetX<0,\"control lost the original independent walking target\");\n1446:     sim.SetInteractionHand(3,0,true);c.Interaction.FollowPlayer=true;c.Interaction.Hydration=90;\n1447:     var input=new InteractionInput(InteractionAction.Press,BodyPart.Side,Force:.3,Duration:.1);\n1448:     double before=c.Health;sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);double health=c.Health;\n1449:     Require(health<before&&!c.Interaction.FollowPlayer,\"initial real damage did not interrupt following\");\n1450:     sim.ContinueInteractionGesture(input,false);double travel=0;\n1451:     for(int frame=0;frame<15;frame++)\n1452:     {\n1453:         double x=c.X,z=c.Z;sim.SetInteractionHand(3,0,true);Tick(sim,1);\n1454:         travel+=WorldSimulation.Distance(x,z,c.X,c.Z);\n1455:     }\n1456:     string diagnostics=JsonSerializer.Serialize(new{c.X,c.Z,c.TargetX,c.TargetZ,c.Activity,c.Health,health,c.Interaction.FollowPlayer,travel,\n1457:         pose=InteractionPresentation.Pose(c),sim.HasInteractionGesture,sim.InteractionGestureOwnsPose});\n1458:     Console.WriteLine(\"OFF_CONTACT_INDEPENDENT \"+diagnostics);\n1459:     Require(travel>.1&&WorldSimulation.Distance(c.X,c.Z,targetX,targetZ)<initialDistance&&c.X<0,\n1460:         \"independent movement was lost or redirected to the hand: \"+diagnostics);\n1461:     Require(c.Health>=health&&!c.Interaction.FollowPlayer&&sim.HasInteractionGesture&&!sim.InteractionGestureOwnsPose&&InteractionPresentation.Pose(c)!=\"pressure\",\n1462:         \"off-contact input damaged, deformed or forced following: \"+diagnostics);\n1463:     sim.EndInteractionGesture();\n1464: });"
+    }
+  ]
+}

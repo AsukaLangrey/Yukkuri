@@ -1,0 +1,25 @@
+{
+  "operation": "create_library_file",
+  "status": "succeeded",
+  "path": "/c10-2da4423-native-and-engine-images.zip",
+  "file_id": "file_00000000e520823098b5fb5d3310654b",
+  "library_file_id": "libfile_c28dda8280f08191b3d774e06dbfe49a",
+  "file_name": "c10-2da4423-native-and-engine-images.zip",
+  "current_version_number": 0,
+  "restored_from_version_number": null,
+  "xattrs": [
+    {
+      "name": "user.library-file-version",
+      "value": "0"
+    }
+  ],
+  "directory_id": "libdir_69d8843864fc8191a4b6c25e74d26443",
+  "mime_type": "application/zip",
+  "library_artifact_type": "report",
+  "file_size_bytes": 1855263,
+  "external_connectors_accessed": false,
+  "archive_sha256": "ef0a01adcd79b2fee58dc3263839aef3b8ca4c4ae316ba98ea0812bffc853bdf",
+  "archive_bytes": 1855263,
+  "local_library_metadata_persisted": true,
+  "publication_note": "Derived Git metadata omits the local ZIP workspace path; original private Library ZIP and returned identity are unchanged."
+}

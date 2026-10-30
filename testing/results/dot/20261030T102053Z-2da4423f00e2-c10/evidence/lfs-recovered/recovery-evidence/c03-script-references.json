@@ -1,0 +1,37 @@
+{
+  "historical_report_commit": "e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3",
+  "retrieved_at": "2026-10-30T10:29:36Z",
+  "refs": [
+    {
+      "remote": "tools_make-audio.py.txt",
+      "local": "tools/make-audio.py",
+      "blob": "19951f1f68b5bc2e624a97bf369d08076d8c2782",
+      "url": "https://github.com/AsukaLangrey/Yukkuri/blob/e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3/testing/results/dot/20261029T084136Z-c6fc7d897955-c03/evidence/asset-recovery/tools_make-audio.py.txt"
+    },
+    {
+      "remote": "audio-bake_Bake.csproj.txt",
+      "local": "audio-bake/Bake.csproj",
+      "blob": "2f0349aa8c6729c4c98936b1965f974008e8ba6b",
+      "url": "https://github.com/AsukaLangrey/Yukkuri/blob/e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3/testing/results/dot/20261029T084136Z-c6fc7d897955-c03/evidence/asset-recovery/audio-bake_Bake.csproj.txt"
+    },
+    {
+      "remote": "audio-bake_M01AudioBake.cs.txt",
+      "local": "audio-bake/M01AudioBake.cs",
+      "blob": "d82160eb0964c68817cf6d0b4a99b50f099a4a6b",
+      "url": "https://github.com/AsukaLangrey/Yukkuri/blob/e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3/testing/results/dot/20261029T084136Z-c6fc7d897955-c03/evidence/asset-recovery/audio-bake_M01AudioBake.cs.txt"
+    },
+    {
+      "remote": "audio-bake_Program.cs.txt",
+      "local": "audio-bake/Program.cs",
+      "blob": "88e4e4fd584cd3a341c2146e4ff4dba1b8d38c39",
+      "url": "https://github.com/AsukaLangrey/Yukkuri/blob/e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3/testing/results/dot/20261029T084136Z-c6fc7d897955-c03/evidence/asset-recovery/audio-bake_Program.cs.txt"
+    },
+    {
+      "remote": "tools_make-m01-audio.ps1.txt",
+      "local": "recovery-evidence/original-make-m01-audio.ps1.txt",
+      "blob": "e5bae5b7e385291bd7151f71428f7639a9e324b2",
+      "url": "https://github.com/AsukaLangrey/Yukkuri/blob/e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3/testing/results/dot/20261029T084136Z-c6fc7d897955-c03/evidence/asset-recovery/tools_make-m01-audio.ps1.txt"
+    }
+  ],
+  "copy_note": "Imported published text with apply_patch; trailing newline normalization may differ from historic bytes. Content was inspected before execution. Current recovery script bytes separately hashed."
+}

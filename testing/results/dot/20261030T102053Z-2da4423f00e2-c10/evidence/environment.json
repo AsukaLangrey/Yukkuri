@@ -1,0 +1,39 @@
+{
+  "id": "alice-cloud-c10|Debian13.6|dotnet10.0.402|Godot4.7.2|DISPLAY:0",
+  "observed_at": "2026-10-30T10:41:12.379193+00:00",
+  "host": "alice-cloud-c10",
+  "os": "Debian GNU/Linux 13.6 (trixie)",
+  "kernel": "6.18.57",
+  "architecture": "x86_64",
+  "ownership": "Alice own cloud Linux desktop; not user developer PC",
+  "display": ":0",
+  "desktop_resolution": [
+    1364,
+    1024
+  ],
+  "actual_game_window_size": [
+    1180,
+    812
+  ],
+  "requested_game_resolution": [
+    1280,
+    800
+  ],
+  "gpu_from_runtime": "Mesa llvmpipe (LLVM 19.1.7, 256 bits), OpenGL4.5, Mesa25.0.7-2+deb13u1",
+  "dotnet_version": "10.0.402",
+  "godot_version": "4.7.2.stable.mono.official.ed1daf0bf",
+  "toolchain_evidence": "evidence/toolchain-restoration.json",
+  "current_audio": "ALSA no default sound card; runtime fell back to Dummy; not auditioned",
+  "stock_godot_not_used": true,
+  "native_process_working_directory": "/workspace",
+  "source_root": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source",
+  "unique_profile": "cloud1030-c10",
+  "automation": "remains paused; explicitly requested single round",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "gpu": "Mesa llvmpipe (LLVM 19.1.7, 256 bits)",
+  "driver": "Mesa 25.0.7-2+deb13u1; OpenGL4.5 Compatibility",
+  "dotnet": "10.0.402",
+  "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+  "desktop_observation_authorized": true,
+  "identity_redaction": "Host identifier pseudonymized to alice-cloud-c10 for publication; toolchain/current run identity preserved. This is not a literal hostname or a developer-machine ID."
+}

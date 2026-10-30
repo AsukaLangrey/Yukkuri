@@ -1,0 +1,139 @@
+{
+  "recorded_at": "2026-10-30T10:31:44.166053+00:00",
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "recovered_count": 12,
+  "missing_count": 3,
+  "manifest": "manifest.json",
+  "current_source_unmodified_by_this_agent": true,
+  "scope": "Own cloud original-byte materialization only; no game, simulation, checks, engine, UI or Git writes.",
+  "font": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+    "license": "SIL Open Font License 1.1; source third-party/NotoSansSC-OFL.txt retained",
+    "curl_exit_code": 0,
+    "finished_at_observed": "2026-10-30T10:29:11Z",
+    "original_oid_verified": true
+  },
+  "audio": {
+    "route": "Same original deterministic synthesis recovered from immutable c03 report evidence; all eleven outputs equal current OID and size. No approximations/substitute waveform accepted.",
+    "historical_report_commit": "e36a5cdc9a42ceb8bd29cd9d84b69c28dcc323e3",
+    "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered",
+    "python_command": "python /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/tools/make-audio.py",
+    "initial_started_at": "2026-10-30T10:30:01Z",
+    "initial_dotnet_restore_exit_code": 1,
+    "initial_dotnet_failure": "Inherited XDG_RUNTIME_DIR /home/agent/.local/run was read-only; NuGet-Migrations mutex mkdtemp EROFS. Not a reviewer/network denial. No permissions changed.",
+    "repaired_environment": {
+      "HOME": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/home",
+      "XDG_RUNTIME_DIR": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/runtime",
+      "TMPDIR": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/tmp",
+      "XDG_CACHE_HOME": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/cache",
+      "XDG_DATA_HOME": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/data",
+      "XDG_CONFIG_HOME": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/config",
+      "DOTNET_CLI_HOME": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/dotnet-home",
+      "NUGET_PACKAGES": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/nuget-packages"
+    },
+    "dotnet_fixed_started_at": "2026-10-30T10:30:32Z",
+    "dotnet_restore_exit_code": 0,
+    "dotnet_generator_exit_code": 0,
+    "dotnet_restore_command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/audio-bake/Bake.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/NuGet.Config -p:NuGetAudit=false",
+    "dotnet_generator_command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --project /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/audio-bake/Bake.csproj --no-restore -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio",
+    "finished_at": "2026-10-30T10:30:38Z",
+    "copy_only_verified_manifest_objects": true,
+    "do_not_copy": "Generated audio-analysis.json is an auxiliary output, not an authorized source replacement."
+  },
+  "unexpected_sdk_first_run_side_effect": {
+    "log": "recovery-evidence/audio-bake-restore-runtime-fixed.txt",
+    "observed_message": "Installed an ASP.NET Core HTTPS development certificate.",
+    "scope": "SDK automatic first-run initialization in isolated cloud HOME; not explicitly requested, not account credentials, not read/exported/used or trusted by agent. Certificate bytes/path were not inspected. Parent notified immediately. Do not claim no certificate creation.",
+    "subsequent_recommendation": "Set DOTNET_GENERATE_ASPNET_CERTIFICATE=false for future isolated SDK first use."
+  },
+  "known_missing_objects_not_retried": [
+    "assets-source/pipeline-probe.blend",
+    "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+    "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png"
+  ],
+  "library_used": false,
+  "private_lfs_transport_used": false,
+  "credential_search_or_external_account_creation": false,
+  "evidence_files": [
+    {
+      "path": "audio-bake/Bake.csproj",
+      "bytes": 176,
+      "sha256": "b7e7a56ea5ff8a1fee2468fd57cea3ebace4e02d9298ee3b13d540e99375358a"
+    },
+    {
+      "path": "audio-bake/M01AudioBake.cs",
+      "bytes": 1325,
+      "sha256": "f68e8d5b076d9213f9c78337789c0a6bb832650229271a0e63d5cafa470e6495"
+    },
+    {
+      "path": "audio-bake/Program.cs",
+      "bytes": 236,
+      "sha256": "39771337bcfc66a5620fa9faf9f223c373ad5248347cd5ffa8f755abeed73e5f"
+    },
+    {
+      "path": "recovery-evidence/audio-bake-restore-runtime-fixed.txt",
+      "bytes": 823,
+      "sha256": "dc589ce97d0ae412f29efa34677b49cdfad1a540d6edfb579636a0a6618df7ac"
+    },
+    {
+      "path": "recovery-evidence/audio-bake-restore.txt",
+      "bytes": 1194,
+      "sha256": "d28aadd4b1b753e35df4c979dc608a6328bf9e7bfae16eae29d456d1f6397f21"
+    },
+    {
+      "path": "recovery-evidence/audio-bake-run.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "recovery-evidence/audio-python.txt",
+      "bytes": 730,
+      "sha256": "e907cf0a8af357c8f53729ec31f454f9377b8ce842d66e6ce1653186ae65cd24"
+    },
+    {
+      "path": "recovery-evidence/c03-script-references.json",
+      "bytes": 2198,
+      "sha256": "3295db1069d94aef6b51b08777664231f2e186bbad9c9eacd718d67800218f23"
+    },
+    {
+      "path": "recovery-evidence/c06-lfs-audit.json",
+      "bytes": 5563,
+      "sha256": "9056ebc1cbf054a0f02d432ed6ae8d6c1b142663d9604765b107ea5649595bf3"
+    },
+    {
+      "path": "recovery-evidence/c06-lfs-route.json",
+      "bytes": 5279,
+      "sha256": "cbcb37f985317138ccf993a62591132b117a722915be50e001470d7cf9c5e5fc"
+    },
+    {
+      "path": "recovery-evidence/font-download.txt",
+      "bytes": 1028,
+      "sha256": "ea23ac0845e650e71a72e9ead40f9c2c58e34252b93ead934c25412f3704ff92"
+    },
+    {
+      "path": "recovery-evidence/original-make-m01-audio.ps1.txt",
+      "bytes": 2898,
+      "sha256": "e1ed8e9d5b31894ee5e41315f95e36dc49f5b995984bb26fe9eee66b52c1f4fc"
+    },
+    {
+      "path": "recovery-evidence/synthesis-dotnet-start.txt",
+      "bytes": 21,
+      "sha256": "d434fe2c1d55339029f44d245e2d26e1fc5360015380a1983d06550d87e34be5"
+    },
+    {
+      "path": "recovery-evidence/synthesis-end.txt",
+      "bytes": 21,
+      "sha256": "dc5a199e87edf31b3e418020179f4738e890906e2ed08ab684cbf7c57b75f4d6"
+    },
+    {
+      "path": "recovery-evidence/synthesis-start.txt",
+      "bytes": 21,
+      "sha256": "29865efb660adef980ebe3a7fc0fe69674a25ad667d7bfc6c587071be2320b88"
+    },
+    {
+      "path": "tools/make-audio.py",
+      "bytes": 2211,
+      "sha256": "9d7e1df955c00dd6a6c71a8660bdd6f827a2d383bb1e91b1b598fae3c10e2d49"
+    }
+  ]
+}

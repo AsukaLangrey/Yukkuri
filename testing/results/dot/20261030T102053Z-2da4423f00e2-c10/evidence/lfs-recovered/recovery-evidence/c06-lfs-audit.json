@@ -1,0 +1,135 @@
+{
+  "checked_at": "2026-10-29T17:45:42.904758+00:00",
+  "source_commit": "cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d",
+  "recovered_files": [
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/build.wav",
+      "git_blob_sha": "bf3919c6aed6ff80ad15cefd371b0a9110f78aea",
+      "sha256": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "bytes": 22094,
+      "lfs_restored": true,
+      "lfs_oid": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "lfs_size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-help.wav",
+      "git_blob_sha": "278de052f080f1bfdaeca3adbbef658fbd613734",
+      "sha256": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "bytes": 48554,
+      "lfs_restored": true,
+      "lfs_oid": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "lfs_size": 48554
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav",
+      "git_blob_sha": "526f8534f80a42156ed53b32068241aefe84b282",
+      "sha256": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav",
+      "git_blob_sha": "015c0af8ab79a3dc92b9163320ec22683de8036c",
+      "sha256": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav",
+      "git_blob_sha": "a0faa124d8510fb2e717af35ce01766b0ee5de33",
+      "sha256": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav",
+      "git_blob_sha": "9d4205706afa7cd4f1c1b529d4217be195cffd01",
+      "sha256": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav",
+      "git_blob_sha": "2903c65036dca7bfa753d206a48b4da20181a8f6",
+      "sha256": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "bytes": 27386,
+      "lfs_restored": true,
+      "lfs_oid": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "lfs_size": 27386
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/feed.wav",
+      "git_blob_sha": "9d0de2d836f5d43b95721fa2da321e2b71bbdcf6",
+      "sha256": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "bytes": 22094,
+      "lfs_restored": true,
+      "lfs_oid": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "lfs_size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav",
+      "git_blob_sha": "8149529212b7773233867262e561cd466d05a74a",
+      "sha256": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "bytes": 1058444,
+      "lfs_restored": true,
+      "lfs_oid": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "lfs_size": 1058444
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/select.wav",
+      "git_blob_sha": "736557e8c558bab39069da7a1e88f7281ea29fdb",
+      "sha256": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "bytes": 22094,
+      "lfs_restored": true,
+      "lfs_oid": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "lfs_size": 22094
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav",
+      "git_blob_sha": "5100cd2055b4c807dae4b68b8605c31ff5aa3d53",
+      "sha256": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "bytes": 1058444,
+      "lfs_restored": true,
+      "lfs_oid": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "lfs_size": 1058444
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf",
+      "git_blob_sha": "b80cf067a32aff52cc930db8be85894f525ab4ac",
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "bytes": 17772300,
+      "lfs_restored": true,
+      "lfs_oid": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "lfs_size": 17772300
+    }
+  ],
+  "missing_original_objects": [
+    {
+      "path": "assets-source/pipeline-probe.blend",
+      "oid": "2d187b80047d24ddd1df7132f2ff4a8a7595e18a420d60e31c0426a6187b4fcb",
+      "size": 641206,
+      "reason": "Original LFS object not materialized yet; source pointer exact."
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "oid": "1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024",
+      "size": 2846992,
+      "reason": "Original LFS object not materialized yet; source pointer exact."
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "oid": "8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352",
+      "size": 98908,
+      "reason": "Original LFS object not materialized yet; source pointer exact."
+    }
+  ]
+}
+

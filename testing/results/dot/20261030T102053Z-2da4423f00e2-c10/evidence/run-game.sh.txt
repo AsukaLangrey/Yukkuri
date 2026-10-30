@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -u
+source /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/env.sh
+B=/workspace/shared/yukkuri-cloud-20261030T102053-2da4423
+date -u '+%Y-%m-%dT%H:%M:%SZ' > "$B/evidence/game-runtime-start.txt"
+pwd > "$B/evidence/desktop-cwd.txt"
+printf 'DISPLAY=%s\n' "${DISPLAY:-}" > "$B/evidence/desktop-display.txt"
+timeout --signal=TERM --kill-after=5 900 "$GODOT_BIN" --path "$GAME_PATH" --resolution 1280x800 --position 20,70 -- --interaction-test-profile cloud1030-c10 > "$B/evidence/game-runtime.txt" 2>&1
+s=$?
+printf '%s\n' "$s" > "$B/evidence/game-runtime-exit.txt"
+date -u '+%Y-%m-%dT%H:%M:%SZ' > "$B/evidence/game-runtime-end.txt"
+exit "$s"

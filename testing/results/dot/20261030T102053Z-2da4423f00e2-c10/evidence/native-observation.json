@@ -1,0 +1,148 @@
+{
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "status": "passed",
+  "scope": "Only named finite native observations; not complete v2-v16 acceptance",
+  "started_at": "2026-10-30T10:33:10Z",
+  "finished_at": "2026-10-30T10:39:15Z",
+  "summary": "实际云桌面观察当前源码游戏启动、近看、饮水（口渴45→17与反馈）、帮助、返回小院、家庭面板关闭后保持暂停；当前窗口正常退出0。此为有限交互观察，不是v2-v16全部画面/手感/声音通过。",
+  "passed_count": null,
+  "failed_count": null,
+  "command": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/run-game.sh; native CUA/Sky recorded actions",
+  "window_id": 37748739,
+  "window_title": "油库里乐园 · 慢慢来，相处小院 · 人油互动试玩 (DEBUG)",
+  "environment_identity": "Alice cloud host alice-cloud-c10, DISPLAY=:0",
+  "actions": [
+    {
+      "id": "startup",
+      "image": "images/01-startup.png",
+      "observation": "Actual current build started in own cloud desktop; three characters, courtyard and Chinese controls visible.",
+      "time": "2026-10-30T10:36:18.829204+00:00"
+    },
+    {
+      "id": "near-look",
+      "image": "images/04-near-look-settled.png",
+      "observation": "Tab enters settled close view, current selected character front-facing, natural time paused.",
+      "time": "2026-10-30T10:36:53.891720+00:00"
+    },
+    {
+      "id": "water-selection",
+      "image": "images/05-water-tools.png",
+      "observation": "Food/water panel opens; drinking control present.",
+      "time": "2026-10-30T10:37:03.111329+00:00"
+    },
+    {
+      "id": "water-action",
+      "image": "images/07-water-pointer-moved.png",
+      "observation": "After actual sky.move to mouth and 3-second held click, thirst 45→17, drinking dialogue and history visible. Initial bound click at mouth without native pointer motion did not update 3D ray; no product conclusion from that input limitation.",
+      "time": "2026-10-30T10:37:47.825441+00:00"
+    },
+    {
+      "id": "help",
+      "image": "images/09-help-settled.png",
+      "observation": "Help modal visible with Chinese instructions; closed with Escape.",
+      "time": "2026-10-30T10:38:07.344609+00:00"
+    },
+    {
+      "id": "return-courtyard",
+      "image": "images/10-return-courtyard.png",
+      "observation": "Tab returns to courtyard, natural time resumed and thirst18 shown.",
+      "time": "2026-10-30T10:38:24.107895+00:00"
+    },
+    {
+      "id": "family-panel",
+      "image": "images/11-family-panel.png",
+      "observation": "Paused courtyard via Space, opened family/care panel; says close preserves prior pause. Adult current care limitation displayed; no forced injury or save edits.",
+      "time": "2026-10-30T10:38:40.627193+00:00"
+    },
+    {
+      "id": "family-close-preserves-pause",
+      "image": "images/12-family-close-preserves-pause.png",
+      "observation": "After Escape, family modal absent; courtyard paused and Continue button visible.",
+      "time": "2026-10-30T10:38:54.162620+00:00"
+    }
+  ],
+  "images": [
+    {
+      "path": "images/01-startup.png",
+      "size_bytes": 100369,
+      "sha256": "7fe0ed1c6145f930da2ad81a853273acd7389f65426deded7ae629bf4ccbd632",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:36:18.829204+00:00"
+    },
+    {
+      "path": "images/02-near-look.png",
+      "size_bytes": 99346,
+      "sha256": "4bab82e1a8d6e9f897d03f7355715e77a1de8ae07c94732cede4020d9e99eeca",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:36:27.184850+00:00"
+    },
+    {
+      "path": "images/03-near-tab.png",
+      "size_bytes": 96927,
+      "sha256": "9e407e881d28a425d52c98513d91e9e963d8ec4162e9475beee748ae2022e27b",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:36:39.396333+00:00"
+    },
+    {
+      "path": "images/04-near-look-settled.png",
+      "size_bytes": 88470,
+      "sha256": "73722654105f12a05fad760b3be8547e46fcfae9fa5877ef64d1dbfb1602501e",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:36:53.891720+00:00"
+    },
+    {
+      "path": "images/05-water-tools.png",
+      "size_bytes": 85756,
+      "sha256": "415588c3aed7aa17a937fa4564eb2d54085f6250a53a00454818b852fc3f5ec5",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:37:03.111329+00:00"
+    },
+    {
+      "path": "images/06-water-action.png",
+      "size_bytes": 84315,
+      "sha256": "0cfe4616f01b4b3ba3113bc317cad7b741c38c477b4878b0214a12db9c70924b",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:37:13.182904+00:00"
+    },
+    {
+      "path": "images/07-water-pointer-moved.png",
+      "size_bytes": 85144,
+      "sha256": "28c309e5fa5a468e5c55e8a678da89da55ebfbcde053b045530d1a86819d619c",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:37:47.825441+00:00"
+    },
+    {
+      "path": "images/08-help.png",
+      "size_bytes": 85318,
+      "sha256": "edf1e468ae6fff8dbdb8d97588023ba5c874032c5fb02c3ff5ca074a75cb20b3",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:37:56.061089+00:00"
+    },
+    {
+      "path": "images/09-help-settled.png",
+      "size_bytes": 110754,
+      "sha256": "c7dc9c89f5d0e1097efb569e6165a5ace5eb72fcf9ab8e36dc8e8694a4de2948",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:38:07.344609+00:00"
+    },
+    {
+      "path": "images/10-return-courtyard.png",
+      "size_bytes": 96359,
+      "sha256": "cd3fc556d58a939b6f66d9923a91bde069b249fe368f5ed9efb0d9933645d8b5",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:38:24.107895+00:00"
+    },
+    {
+      "path": "images/11-family-panel.png",
+      "size_bytes": 86430,
+      "sha256": "b7b26147f872094edd0724af97671ef94300f2652a2a5d7e2ba5674dbf5462c2",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:38:40.627193+00:00"
+    },
+    {
+      "path": "images/12-family-close-preserves-pause.png",
+      "size_bytes": 99714,
+      "sha256": "2aa80dc1e875628063d4ccdbcd477ef6c6ea4f8363bdb58e9c036d0c42a375ec",
+      "captured_at_from_saved_file_utc": "2026-10-30T10:38:54.162620+00:00"
+    }
+  ],
+  "input_notes": [
+    "Some bound screenshots immediately after action showed prior animation frame; settled screenshot is authoritative.",
+    "Initial Alt+F4 bound to game did not close window. Normal desktop titlebar close at10:39:14 completed10:39:15 exit0, absence verified before engine tests.",
+    "Bound CUA coordinates are window-relative; Sky move uses observed desktop coordinates. No OS input outside CUA."
+  ],
+  "limitations": [
+    "仅有限真实UI；off-contact负向独立移动、真实保护行走、孕育育幼、Lowering照护、全部P组和伤势/冷藏等未逐一实际操作验收。",
+    "ALSA无可用声卡并回退Dummy，声音blocked；无声音通过结论。",
+    "原始标题PNG、probeGLB和blend仍缺，完整导入blocked；未把未见素材当完整画面通过。"
+  ]
+}

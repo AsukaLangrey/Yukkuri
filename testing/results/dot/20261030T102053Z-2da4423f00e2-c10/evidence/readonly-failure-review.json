@@ -1,0 +1,931 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-30T10:35:50.691271+00:00",
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "source_tree": "973bec65b3c6ce331583aa4f5be45331ccb106bf",
+  "request_revision": "dot-v16-interaction-depth-J-20261030",
+  "scope": "Read-only independent interpretation of current completed outputs and pinned source; this review did not run or modify game, tests, assertions, compiler, or UI. Prior asset recovery is separately recorded.",
+  "run_finished_at": "2026-10-30T10:34:32.322136+00:00",
+  "counts": {
+    "attempted_suites": 33,
+    "completed_suites": 33,
+    "all_pass_suites": 32,
+    "failed_suites": 1,
+    "passed": 949,
+    "failed_checks": 1,
+    "compile_failed_suites": 0,
+    "cases_not_entered_due_to_compile_failure": 0,
+    "diagnostic_exception_checks": 1,
+    "observed_failed_Require_assertions": 0,
+    "note": "One FAIL is a caught diagnostic serialization exception; its later Require assertions were not evaluated. Do not label this as one confirmed product-rule assertion failure."
+  },
+  "suite_results": [
+    {
+      "suite": "Simulation.Smoke",
+      "status": "passed",
+      "passed": 125,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 125,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:29:52.454327+00:00",
+      "finished_at": "2026-10-30T10:30:06.143996+00:00"
+    },
+    {
+      "suite": "Milestone.Smoke",
+      "status": "passed",
+      "passed": 63,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 63,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:30:07.671514+00:00",
+      "finished_at": "2026-10-30T10:30:13.411576+00:00"
+    },
+    {
+      "suite": "Interaction.Smoke",
+      "status": "passed",
+      "passed": 48,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "current JSON results",
+      "stdout_pass": 48,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:30:15.093790+00:00",
+      "finished_at": "2026-10-30T10:30:20.383317+00:00"
+    },
+    {
+      "suite": "Input.Intent",
+      "status": "passed",
+      "passed": 43,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "current JSON results",
+      "stdout_pass": 43,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:30:21.973876+00:00",
+      "finished_at": "2026-10-30T10:30:27.827029+00:00"
+    },
+    {
+      "suite": "NaturalLife.Smoke",
+      "status": "passed",
+      "passed": 95,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "current JSON results",
+      "stdout_pass": 95,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:30:29.347239+00:00",
+      "finished_at": "2026-10-30T10:30:39.011253+00:00"
+    },
+    {
+      "suite": "Interaction.Continuity",
+      "status": "failed",
+      "passed": 124,
+      "failed_checks": 1,
+      "exit_code": 1,
+      "basis": "current JSON results",
+      "stdout_pass": 124,
+      "stdout_fail": 1,
+      "started_at": "2026-10-30T10:30:40.489299+00:00",
+      "finished_at": "2026-10-30T10:30:48.542562+00:00"
+    },
+    {
+      "suite": "Interaction.AutonomyPriority",
+      "status": "passed",
+      "passed": 12,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 12,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:30:49.966715+00:00",
+      "finished_at": "2026-10-30T10:30:55.266634+00:00"
+    },
+    {
+      "suite": "Interaction.CompletedNeeds",
+      "status": "passed",
+      "passed": 1,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 1,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:30:56.787885+00:00",
+      "finished_at": "2026-10-30T10:31:01.640057+00:00"
+    },
+    {
+      "suite": "ActorGeometry.Smoke",
+      "status": "passed",
+      "passed": 93,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "current JSON checks",
+      "stdout_pass": 93,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:31:03.117063+00:00",
+      "finished_at": "2026-10-30T10:31:18.719106+00:00"
+    },
+    {
+      "suite": "NaturalLife.Soak",
+      "status": "passed",
+      "passed": 24,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "current JSON scenarios",
+      "stdout_pass": 0,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:31:20.145708+00:00",
+      "finished_at": "2026-10-30T10:31:32.462332+00:00"
+    },
+    {
+      "suite": "Interaction.Mouth",
+      "status": "passed",
+      "passed": 16,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 16,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:31:33.961505+00:00",
+      "finished_at": "2026-10-30T10:31:39.448053+00:00"
+    },
+    {
+      "suite": "Family.MouthCommunication",
+      "status": "passed",
+      "passed": 9,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 9,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:31:40.873838+00:00",
+      "finished_at": "2026-10-30T10:31:45.961844+00:00"
+    },
+    {
+      "suite": "Interaction.MouthPresentation",
+      "status": "passed",
+      "passed": 10,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 10,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:31:47.442864+00:00",
+      "finished_at": "2026-10-30T10:31:53.128030+00:00"
+    },
+    {
+      "suite": "Family.PregnancyBoundaries",
+      "status": "passed",
+      "passed": 12,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 12,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:31:56.705455+00:00",
+      "finished_at": "2026-10-30T10:32:11.749302+00:00"
+    },
+    {
+      "suite": "Interaction.EmergencyIntervention",
+      "status": "passed",
+      "passed": 6,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 6,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:32:13.322542+00:00",
+      "finished_at": "2026-10-30T10:32:19.239901+00:00"
+    },
+    {
+      "suite": "Interaction.Depth",
+      "status": "passed",
+      "passed": 4,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 4,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:32:20.661883+00:00",
+      "finished_at": "2026-10-30T10:32:25.998630+00:00"
+    },
+    {
+      "suite": "Interaction.Injury",
+      "status": "passed",
+      "passed": 15,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 15,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:32:27.827396+00:00",
+      "finished_at": "2026-10-30T10:32:33.274101+00:00"
+    },
+    {
+      "suite": "Family.Social",
+      "status": "passed",
+      "passed": 22,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 22,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:32:34.697311+00:00",
+      "finished_at": "2026-10-30T10:32:40.089447+00:00"
+    },
+    {
+      "suite": "Family.Reproduction",
+      "status": "passed",
+      "passed": 8,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 8,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:32:41.463126+00:00",
+      "finished_at": "2026-10-30T10:32:46.910332+00:00"
+    },
+    {
+      "suite": "Family.ColdCare",
+      "status": "passed",
+      "passed": 9,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 9,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:32:48.234815+00:00",
+      "finished_at": "2026-10-30T10:32:53.277385+00:00"
+    },
+    {
+      "suite": "Family.Aftermath",
+      "status": "passed",
+      "passed": 17,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 17,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:32:54.754245+00:00",
+      "finished_at": "2026-10-30T10:33:00.052061+00:00"
+    },
+    {
+      "suite": "Family.Risk",
+      "status": "passed",
+      "passed": 14,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 14,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:01.627618+00:00",
+      "finished_at": "2026-10-30T10:33:07.067871+00:00"
+    },
+    {
+      "suite": "Interaction.InjuryPresentation",
+      "status": "passed",
+      "passed": 6,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 6,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:08.439807+00:00",
+      "finished_at": "2026-10-30T10:33:12.728984+00:00"
+    },
+    {
+      "suite": "Family.Compatibility",
+      "status": "passed",
+      "passed": 77,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 77,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:14.203435+00:00",
+      "finished_at": "2026-10-30T10:33:22.343263+00:00"
+    },
+    {
+      "suite": "Family.CareLearning",
+      "status": "passed",
+      "passed": 14,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 14,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:24.130325+00:00",
+      "finished_at": "2026-10-30T10:33:30.271775+00:00"
+    },
+    {
+      "suite": "Family.Teaching",
+      "status": "passed",
+      "passed": 10,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 10,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:31.963878+00:00",
+      "finished_at": "2026-10-30T10:33:38.834095+00:00"
+    },
+    {
+      "suite": "Family.AdoptionJourney",
+      "status": "passed",
+      "passed": 6,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 6,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:40.483432+00:00",
+      "finished_at": "2026-10-30T10:33:47.888496+00:00"
+    },
+    {
+      "suite": "Family.AssistedCare",
+      "status": "passed",
+      "passed": 16,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 16,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:49.531633+00:00",
+      "finished_at": "2026-10-30T10:33:55.441126+00:00"
+    },
+    {
+      "suite": "Family.Growth",
+      "status": "passed",
+      "passed": 5,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 5,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:33:57.130118+00:00",
+      "finished_at": "2026-10-30T10:34:02.330496+00:00"
+    },
+    {
+      "suite": "Interaction.StateBoundaries",
+      "status": "passed",
+      "passed": 10,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 10,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:34:03.983079+00:00",
+      "finished_at": "2026-10-30T10:34:09.429014+00:00"
+    },
+    {
+      "suite": "Interaction.HumanCompany",
+      "status": "passed",
+      "passed": 17,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 17,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:34:11.390433+00:00",
+      "finished_at": "2026-10-30T10:34:18.183626+00:00"
+    },
+    {
+      "suite": "Family.Protection",
+      "status": "passed",
+      "passed": 15,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 15,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:34:20.321230+00:00",
+      "finished_at": "2026-10-30T10:34:26.306255+00:00"
+    },
+    {
+      "suite": "Family.Presentation",
+      "status": "passed",
+      "passed": 3,
+      "failed_checks": 0,
+      "exit_code": 0,
+      "basis": "anchored PASS/FAIL stdout",
+      "stdout_pass": 3,
+      "stdout_fail": 0,
+      "started_at": "2026-10-30T10:34:27.999072+00:00",
+      "finished_at": "2026-10-30T10:34:32.268807+00:00"
+    }
+  ],
+  "failures": [
+    {
+      "suite": "Interaction.Continuity",
+      "kind": "test diagnostic serialization exception; not an evaluated movement predicate failure",
+      "name": "a harmful press cancels following but an off-contact held mouse preserves independent movement",
+      "reported_error": "Members 'health' and 'Health' on type '<>f__AnonymousType6`12[System.Double,System.Double,System.Double,System.Double,System.String,System.Double,System.Double,System.Boolean,System.Double,System.String,System.Boolean,System.Boolean]' cannot both bind with parameter 'Health' in the deserialization constructor.",
+      "source_path": "checks/Interaction.Continuity/Program.cs",
+      "top_level_check_line": 1439,
+      "localized_exception_statement_lines": [
+        1456,
+        1457
+      ],
+      "exception_type_not_logged": true,
+      "evidence_strength": "Current exception message explicitly names health and Health; the sole matching diagnostic object includes both c.Health and local health. Source localization is unambiguous; no runtime stack or terminal diagnostic values were captured.",
+      "setup": {
+        "seed": 20261028,
+        "seed_source": "src/Yukkuri.Simulation/InteractionWorld.cs:5",
+        "selected_only": true,
+        "room_objects_cleared": true,
+        "position": [
+          0,
+          0
+        ],
+        "fullness_and_hydration": 90,
+        "independent_target": "Retains original default negative-X target; no positive target rewrite",
+        "hand": [
+          3,
+          0
+        ],
+        "following_before_contact": true,
+        "input": "Press / BodyPart.Side / Force 0.3 / Duration 0.1",
+        "sequence": "BeginInteractionGesture; contact true; require actual health reduction and FollowPlayer false; contact false; 15 frames each SetInteractionHand(3,0,true) plus AdvanceInteractionPresentation(.1) and Advance(.1)."
+      },
+      "reached_and_completed": [
+        "line1445 Require(targetX<0)",
+        "line1449 Require(health<before && !FollowPlayer)",
+        "lines1451-1455 fifteen-frame loop"
+      ],
+      "not_executed": [
+        {
+          "lines": [
+            1458
+          ],
+          "operation": "OFF_CONTACT_INDEPENDENT stdout emission"
+        },
+        {
+          "lines": [
+            1459,
+            1460
+          ],
+          "operation": "Require travel>.1 && distance to original target decreased && X<0"
+        },
+        {
+          "lines": [
+            1461,
+            1462
+          ],
+          "operation": "Require health>=post-contact health && !FollowPlayer && HasGesture && !GestureOwnsPose && pose!=pressure"
+        },
+        {
+          "lines": [
+            1463
+          ],
+          "operation": "EndInteractionGesture"
+        }
+      ],
+      "terminal_movement_health_pose_values": "Not emitted; cannot borrow c08 numbers or infer that these unevaluated predicates pass/fail.",
+      "continuation": "Check wrapper lines6-10 catches Exception and continues other independent top-level checks. Subsequent eight checks pass, including mixed1440-attempt audit. No retry or assertion changes."
+    }
+  ],
+  "current_baseline_comparison": {
+    "historical_source": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+    "historical_report_commit": "f6fa6fd72d00f9103eb7c6f42abf14cbf503678c",
+    "historical_summary": "c08 918 pass / 2 failed checks; two pure compile failures left28 declared cases unexecuted; game3 CS1061. Immutable history, not rewritten.",
+    "game_build": {
+      "status": "passed",
+      "warnings": 0,
+      "errors": 0,
+      "scope": "Current Linux game build only; not old Windows or runtime acceptance. Missing System.Collections.Generic import repair is part of new source."
+    },
+    "lowering_checks": {
+      "Family.PregnancyBoundaries": {
+        "passed": 12,
+        "failed": 0,
+        "lines": [
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180
+        ],
+        "scope": "Public Hang then Lower and supported lowering precondition replace illegal internal setter. Boundary delivery helper still includes private reflection; not native/UI birth acceptance."
+      },
+      "Family.AssistedCare": {
+        "passed": 16,
+        "failed": 0,
+        "lines": [
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163
+        ],
+        "scope": "Public Hang then Lower before actual FamilyCareReason refusal. Pure simulation, not actual panel observation."
+      },
+      "compilation_blockers": "Current new-source execution confirms former two projects now compile and all12+16 cases execute; does not alter c08 not-run record."
+    },
+    "continuity_fixture": {
+      "positive_target_check": "Current lines1422-1438 passes; keeps X>.1/health/pose predicate at1435, sets TargetX=3/TargetZ=0 before contact at1428, verifies damaging press cancels FollowPlayer1432 and held-input does not own pose1436.",
+      "negative_target_control": "New lines1439-1464 blocked by diagnostic exception after15 frames; final movement/injury/follow predicates remain unverified.",
+      "interpretation": "J is a fixture/control change, not evidence of a product damage/autonomy-rule fix; current positive case pass cannot close the new control failure."
+    },
+    "protection": {
+      "passed": 15,
+      "failed": 0,
+      "prior_fixture_check_lines": [
+        134,
+        152
+      ],
+      "new_real_movement_control_lines": [
+        153,
+        191
+      ],
+      "current_former_position_diagnostics": [
+        {
+          "maternal": false,
+          "WorldSeconds": 0.25,
+          "threat": true,
+          "canProtect": true,
+          "contact": true,
+          "targetDistance": 1.7318555164884966,
+          "actorDistance": 1.6509164121783997,
+          "contactRange": 1.839999942779541,
+          "creatures": [
+            {
+              "Id": "interaction-oil-0",
+              "X": 0,
+              "Z": 0,
+              "TargetX": 0,
+              "TargetZ": 0,
+              "DecisionIn": 0,
+              "Activity": "愤怒地盯着豆豆，尚未动手",
+              "Condition": 0,
+              "Fullness": 99.99375,
+              "Energy": 99.995,
+              "Pain": 0,
+              "Fear": 0,
+              "Height": 0,
+              "FootIntegrity": 100,
+              "EatingRemaining": 0,
+              "Resting": false,
+              "RestRemaining": 0,
+              "WaitRemaining": 0,
+              "ActiveCue": null,
+              "FollowPlayer": false,
+              "Hydration": 99.99375,
+              "CompanionTargetId": null,
+              "CareTargetId": null,
+              "CareParcelId": null,
+              "FlightRemaining": 0,
+              "LastEvent": "",
+              "ChildThreat": {
+                "TargetId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "NextCheckAt": 0,
+                "Cause": ""
+              },
+              "Conflict": {
+                "TargetId": "interaction-oil-2",
+                "CauseEventId": "protection-betrayal",
+                "WarningRemaining": 7.75,
+                "Remaining": 59.75,
+                "StrikeRemaining": 0,
+                "Strikes": 0
+              }
+            },
+            {
+              "Id": "interaction-oil-1",
+              "X": 0.825,
+              "Z": 1.43,
+              "TargetX": 0.825,
+              "TargetZ": 1.43,
+              "DecisionIn": 5.005937487997458,
+              "Activity": "在小院里慢慢走",
+              "Condition": 0,
+              "Fullness": 99.99375,
+              "Energy": 99.995,
+              "Pain": 0,
+              "Fear": 0,
+              "Height": 0,
+              "FootIntegrity": 100,
+              "EatingRemaining": 0,
+              "Resting": false,
+              "RestRemaining": 0,
+              "WaitRemaining": 0,
+              "ActiveCue": null,
+              "FollowPlayer": false,
+              "Hydration": 99.99375,
+              "CompanionTargetId": null,
+              "CareTargetId": null,
+              "CareParcelId": null,
+              "FlightRemaining": 0,
+              "LastEvent": "",
+              "ChildThreat": {
+                "TargetId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "NextCheckAt": 30.25,
+                "Cause": ""
+              },
+              "Conflict": {
+                "TargetId": null,
+                "CauseEventId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "Strikes": 0
+              }
+            },
+            {
+              "Id": "interaction-oil-2",
+              "X": 1.5568165481278342,
+              "Z": -0.13963947130476395,
+              "TargetX": 0.9765611424465654,
+              "TargetZ": -0.5988626385260372,
+              "DecisionIn": 6.988585895983064,
+              "Activity": "在小院里慢慢走",
+              "Condition": 0,
+              "Fullness": 99.99375,
+              "Energy": 99.995,
+              "Pain": 0,
+              "Fear": 0,
+              "Height": 0,
+              "FootIntegrity": 100,
+              "EatingRemaining": 0,
+              "Resting": false,
+              "RestRemaining": 0,
+              "WaitRemaining": 0,
+              "ActiveCue": null,
+              "FollowPlayer": false,
+              "Hydration": 99.99375,
+              "CompanionTargetId": null,
+              "CareTargetId": null,
+              "CareParcelId": null,
+              "FlightRemaining": 0,
+              "LastEvent": "",
+              "ChildThreat": {
+                "TargetId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "NextCheckAt": 30.25,
+                "Cause": ""
+              },
+              "Conflict": {
+                "TargetId": null,
+                "CauseEventId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "Strikes": 0
+              }
+            }
+          ]
+        },
+        {
+          "maternal": true,
+          "WorldSeconds": 0.25,
+          "threat": true,
+          "canProtect": true,
+          "contact": false,
+          "targetDistance": 1.639528681868714,
+          "actorDistance": 1.588238017426859,
+          "contactRange": 1.6293999505043029,
+          "creatures": [
+            {
+              "Id": "interaction-oil-0",
+              "X": 0,
+              "Z": 0,
+              "TargetX": 0,
+              "TargetZ": 0,
+              "DecisionIn": 0,
+              "Activity": "紧盯幼体，显露危险敌意",
+              "Condition": 0,
+              "Fullness": 18.99375,
+              "Energy": 99.995,
+              "Pain": 0,
+              "Fear": 0,
+              "Height": 0,
+              "FootIntegrity": 100,
+              "EatingRemaining": 0,
+              "Resting": false,
+              "RestRemaining": 0,
+              "WaitRemaining": 0,
+              "ActiveCue": null,
+              "FollowPlayer": false,
+              "Hydration": 99.99375,
+              "CompanionTargetId": null,
+              "CareTargetId": null,
+              "CareParcelId": null,
+              "FlightRemaining": 0,
+              "LastEvent": "",
+              "ChildThreat": {
+                "TargetId": "interaction-oil-2",
+                "WarningRemaining": 7.75,
+                "Remaining": 44.75,
+                "StrikeRemaining": 0,
+                "NextCheckAt": 120,
+                "Cause": "饥饿与求生压力"
+              },
+              "Conflict": {
+                "TargetId": null,
+                "CauseEventId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "Strikes": 0
+              }
+            },
+            {
+              "Id": "interaction-oil-1",
+              "X": 0.75,
+              "Z": 1.4,
+              "TargetX": 0.75,
+              "TargetZ": 1.4,
+              "DecisionIn": 5.005937487997458,
+              "Activity": "在小院里慢慢走",
+              "Condition": 0,
+              "Fullness": 99.99375,
+              "Energy": 99.995,
+              "Pain": 0,
+              "Fear": 0,
+              "Height": 0,
+              "FootIntegrity": 100,
+              "EatingRemaining": 0,
+              "Resting": false,
+              "RestRemaining": 0,
+              "WaitRemaining": 0,
+              "ActiveCue": null,
+              "FollowPlayer": false,
+              "Hydration": 99.99375,
+              "CompanionTargetId": null,
+              "CareTargetId": null,
+              "CareParcelId": null,
+              "FlightRemaining": 0,
+              "LastEvent": "",
+              "ChildThreat": {
+                "TargetId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "NextCheckAt": 30.25,
+                "Cause": ""
+              },
+              "Conflict": {
+                "TargetId": null,
+                "CauseEventId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "Strikes": 0
+              }
+            },
+            {
+              "Id": "interaction-oil-2",
+              "X": 1.365491151947157,
+              "Z": -0.11961341812479542,
+              "TargetX": 0.8265611424465655,
+              "TargetZ": -0.5988626385260372,
+              "DecisionIn": 6.988585895983064,
+              "Activity": "在小院里慢慢走",
+              "Condition": 0,
+              "Fullness": 99.99375,
+              "Energy": 99.995,
+              "Pain": 0,
+              "Fear": 0,
+              "Height": 0,
+              "FootIntegrity": 100,
+              "EatingRemaining": 0,
+              "Resting": false,
+              "RestRemaining": 0,
+              "WaitRemaining": 0,
+              "ActiveCue": null,
+              "FollowPlayer": false,
+              "Hydration": 99.99375,
+              "CompanionTargetId": null,
+              "CareTargetId": null,
+              "CareParcelId": null,
+              "FlightRemaining": 0,
+              "LastEvent": "",
+              "ChildThreat": {
+                "TargetId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "NextCheckAt": 0,
+                "Cause": ""
+              },
+              "Conflict": {
+                "TargetId": null,
+                "CauseEventId": null,
+                "WarningRemaining": 0,
+                "Remaining": 0,
+                "StrikeRemaining": 0,
+                "Strikes": 0
+              }
+            }
+          ]
+        }
+      ],
+      "confirmed_current_observation": "At WorldSeconds=.25, maternal=true former placement targetDistance1.639528681868714 exceeds contactRange1.6293999505043029; canProtect=true,contact=false. maternal=false contact=true. Both revised near-placement branches and both ordinary-time walking branches complete successfully.",
+      "causal_limit": "This directly supports missing-contact explanation in current instrumented fixture, but c08 lacked branch/position diagnostics, so do not claim its hidden runtime branch/state was retrospectively captured. No product FamilyRisk protection-rule change is established by a passing repaired fixture.",
+      "method_limit": "First revised case explicitly relocates protector to computed current nonoverlapping point. Separate added case sets initial destination then advances public ordinary-time simulation without trajectory coordinate rewrites; private predicate reflection only for contact/eligibility diagnostics. Neither is native mouse/UI coverage."
+    }
+  },
+  "scope_notes": [
+    "Current counts independently recomputed from actual JSON and anchored stdout, never source Check literals. NaturalLife.Soak has24 JSON scenarios and no stdout PASS lines; not zero cases.",
+    "Interaction.CompletedNeeds has one top-level PASS, not zero despite no Check wrapper.",
+    "Top-level failed check count includes exceptions as well as Require failures. Two final control Require predicates remain unevaluated inside the one failed case; do not count them as extra fails or passes.",
+    "Current pure results do not validate native input, graphics, audible sound, historical save samples, or full product behavior.",
+    "LFS recovery separately verified12 original objects and retained3 missing; no successful pure run closes missing assets."
+  ],
+  "source_inputs": [
+    {
+      "path": "checks/Interaction.Continuity/Program.cs",
+      "bytes": 122747,
+      "sha256": "04fda7cb099272c17301705cfbe0b152c5e2aaef2ce9deee967c5e48cc682679"
+    },
+    {
+      "path": "checks/Family.Protection/Program.cs",
+      "bytes": 21735,
+      "sha256": "8f5f42690087deaf113c459a2407d00f50f3bb608164d9d5ca6195f1f26bd6f6"
+    },
+    {
+      "path": "checks/Family.PregnancyBoundaries/Program.cs",
+      "bytes": 13907,
+      "sha256": "fa4ab60c68f3eec8ea020bd27a87927a5abe7b583976457bbd7e14c20139d200"
+    },
+    {
+      "path": "checks/Family.AssistedCare/Program.cs",
+      "bytes": 18118,
+      "sha256": "45b973bfdecd7bf7f8e4c3c2534bff7cf8a23a3082b293421c9dccf1292123a0"
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.MilestoneStates.cs",
+      "bytes": 14681,
+      "sha256": "b754df8a9204c6b67790e3b5f2802798ea281484ab032188bf6fef85156e4901"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "bytes": 31155,
+      "sha256": "4fd4fb621f9f4fa42636b7d9206b28b92ac6b3a3d69c20614867192826d4d0bb"
+    },
+    {
+      "path": "planning/stages/interaction-depth-20261030/J-continuity.txt",
+      "bytes": 1701,
+      "sha256": "ae0788f53aeb5e792dd0e846f9d7d061acaff6024b76f63923c992c548226d89"
+    },
+    {
+      "path": "planning/stages/interaction-depth-20261030/J-protection.txt",
+      "bytes": 4389,
+      "sha256": "3f0278eaafbf9396e53563797790315fa6ebbadae510b175468be7dab331660a"
+    }
+  ],
+  "evidence_inputs": [
+    {
+      "path": "evidence/run.json",
+      "bytes": 48787,
+      "sha256": "438bd54700ec8289dbf37838c15ead1bbc901d2880c23baf4fba8fa67a2bcc2f"
+    },
+    {
+      "path": "evidence/Interaction.Continuity.json",
+      "bytes": 16915,
+      "sha256": "ee0ac7ea4522ded32a330f8f7ed18fc0cdbe60de641153a5b44218dfe1544681"
+    },
+    {
+      "path": "evidence/Interaction.Continuity.txt",
+      "bytes": 11421,
+      "sha256": "6137ac48cdd276321ac453af98d208c36a0d1645ad6d244fbb35c94b4a19f408"
+    },
+    {
+      "path": "evidence/Family.PregnancyBoundaries.txt",
+      "bytes": 1116,
+      "sha256": "e6b0e7ffced132595797c1fa1dca6f6ac4f0ea3ef9db233e51c0ea27d5e2b20c"
+    },
+    {
+      "path": "evidence/Family.AssistedCare.txt",
+      "bytes": 1583,
+      "sha256": "49e8344d9c109c604cf3183ecf8dc0d4691e8dd11e4b58de292e30fb90c14973"
+    },
+    {
+      "path": "evidence/Family.Protection.txt",
+      "bytes": 6367,
+      "sha256": "9dadc58fa90484962c7e8c4aecc00e80054578c9e498cb69db665671ee90296b"
+    },
+    {
+      "path": "evidence/game-build.txt",
+      "bytes": 369,
+      "sha256": "df44df59a654afa90b722ffc28aeb9ea6d6b88fff0ea54ce449bdb0b4446ab98"
+    }
+  ],
+  "issues": []
+}

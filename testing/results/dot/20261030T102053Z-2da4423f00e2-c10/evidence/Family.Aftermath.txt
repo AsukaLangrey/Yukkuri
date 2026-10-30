@@ -1,0 +1,19 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Aftermath/Family.Aftermath.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 死亡时刻实际可见才是目击，同一消息只结算一次恐惧
+PASS 后来发现只确认已经离世，不编造亲眼经过或死因
+PASS 冷藏内部死亡不广播，取出后才可能被发现
+PASS 箱体遮挡与不同区域阻止知情，安置不补造告别在场
+PASS 树干遮挡不能看到死亡，绕到可见处才发现
+PASS 实际转述标听说，后来确认不重复加恐惧或改成目击
+PASS 安置后仍能实际转述，但附近路过不凭空发现隐藏遗体
+PASS 告别只记实际在场者，重复安置不刷恐惧和记忆
+PASS 悬挂遗体安置不产生跌落或新死亡，并保留身份亲缘死因
+PASS 死亡与安置只退还一次尚未入口的食物
+PASS 悲伤有期限但记忆保留，饥渴优先于陪伴
+PASS 实际陪伴可以缓解悲伤，不能瞬间清除经历
+PASS 暂停拒绝安置与转述，活体不能被安置
+PASS 相同存档继续推进一致，加载不重复见证或告别
+PASS 旧档缺字段有默认，显式空、假安置和追认目击被拒绝
+PASS 已有旧版死亡记忆不在迁移时再次叠加恐惧
+PASS 普通模式获知与悲伤计时可用，不排入无法执行的陪伴动作

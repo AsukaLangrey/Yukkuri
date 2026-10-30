@@ -1,0 +1,107 @@
+{
+  "run_id": "20261030T102053Z-2da4423f00e2-c10",
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "files": [
+    {
+      "path": "images/01-startup.png",
+      "bytes": 100369,
+      "sha256": "7fe0ed1c6145f930da2ad81a853273acd7389f65426deded7ae629bf4ccbd632"
+    },
+    {
+      "path": "images/02-near-look.png",
+      "bytes": 99346,
+      "sha256": "4bab82e1a8d6e9f897d03f7355715e77a1de8ae07c94732cede4020d9e99eeca"
+    },
+    {
+      "path": "images/03-near-tab.png",
+      "bytes": 96927,
+      "sha256": "9e407e881d28a425d52c98513d91e9e963d8ec4162e9475beee748ae2022e27b"
+    },
+    {
+      "path": "images/04-near-look-settled.png",
+      "bytes": 88470,
+      "sha256": "73722654105f12a05fad760b3be8547e46fcfae9fa5877ef64d1dbfb1602501e"
+    },
+    {
+      "path": "images/05-water-tools.png",
+      "bytes": 85756,
+      "sha256": "415588c3aed7aa17a937fa4564eb2d54085f6250a53a00454818b852fc3f5ec5"
+    },
+    {
+      "path": "images/06-water-action.png",
+      "bytes": 84315,
+      "sha256": "0cfe4616f01b4b3ba3113bc317cad7b741c38c477b4878b0214a12db9c70924b"
+    },
+    {
+      "path": "images/07-water-pointer-moved.png",
+      "bytes": 85144,
+      "sha256": "28c309e5fa5a468e5c55e8a678da89da55ebfbcde053b045530d1a86819d619c"
+    },
+    {
+      "path": "images/08-help.png",
+      "bytes": 85318,
+      "sha256": "edf1e468ae6fff8dbdb8d97588023ba5c874032c5fb02c3ff5ca074a75cb20b3"
+    },
+    {
+      "path": "images/09-help-settled.png",
+      "bytes": 110754,
+      "sha256": "c7dc9c89f5d0e1097efb569e6165a5ace5eb72fcf9ab8e36dc8e8694a4de2948"
+    },
+    {
+      "path": "images/10-return-courtyard.png",
+      "bytes": 96359,
+      "sha256": "cd3fc556d58a939b6f66d9923a91bde069b249fe368f5ed9efb0d9933645d8b5"
+    },
+    {
+      "path": "images/11-family-panel.png",
+      "bytes": 86430,
+      "sha256": "b7b26147f872094edd0724af97671ef94300f2652a2a5d7e2ba5674dbf5462c2"
+    },
+    {
+      "path": "images/12-family-close-preserves-pause.png",
+      "bytes": 99714,
+      "sha256": "2aa80dc1e875628063d4ccdbcd477ef6c6ea4f8363bdb58e9c036d0c42a375ec"
+    },
+    {
+      "path": "render/01-yard.png",
+      "bytes": 212999,
+      "sha256": "36a2c8c04611db2cdc7e039d93f78075b7d7b6e7495a13fe3e4dbc48a48163ce"
+    },
+    {
+      "path": "render/02-close.png",
+      "bytes": 204402,
+      "sha256": "77c26ce860f4c305d010e2f1049872bb618afd6820721b9fd1f64403e6c4bb84"
+    },
+    {
+      "path": "render/03-feeding-controls.png",
+      "bytes": 196921,
+      "sha256": "6aa3ffb86edcc2e757d6149ee0f9e09abc58c2a9e2402d92b9052c026a2a2e84"
+    },
+    {
+      "path": "render/04-force-controls.png",
+      "bytes": 191952,
+      "sha256": "ab5bd77a01834ed543c37b0bdf0e8c126c00bd07a1fd34a1e6ca5a77030e9272"
+    },
+    {
+      "path": "render/05-help.png",
+      "bytes": 330859,
+      "sha256": "9e3d040fb82ea9b6c2bc3e2c370280486f35ff6992fc1c68f444661bd904d38d"
+    },
+    {
+      "path": "evidence/native-observation.json",
+      "bytes": 6855,
+      "sha256": "523e7c75fa436b2299707813eadb52f3bb1da0d0dc889623910015704f37d5e9"
+    },
+    {
+      "path": "evidence/render-visual-review.json",
+      "bytes": 1534,
+      "sha256": "27a5c6e958121d93547c4be3d74389e6d0e2f3f2b72ff59c794fbfbb70aab602"
+    },
+    {
+      "path": "evidence/render-checks.json",
+      "bytes": 2020,
+      "sha256": "7b36b6307948f00866b64ab2b87f0f5f72c954da974c0969532cd57460311f95"
+    }
+  ],
+  "publication_scope": "These hashes identify ORIGINAL private ZIP members, not redacted Git-derived text at similar relative paths. Native JSON inside ZIP is unchanged. See report.publication_redaction.derivations for published-text hashes."
+}

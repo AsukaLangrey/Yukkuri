@@ -1,0 +1,12 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.StateBoundaries/Interaction.StateBoundaries.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 冷藏拒绝旧接触和喂食入口且读档后仍拒绝
+PASS 暂停拒绝旧接触和喂食入口且不消耗资源
+PASS 已积累投掷在暂停后松手只取消不发射
+PASS 已积累投掷在濒危后松手保留托举支撑
+PASS 正常投掷仍在松手结算而不是无条件吞掉
+PASS 濒危允许托举放稳和实际护理
+PASS 强制准备挡住普通新旧动作且近看不能绕过
+PASS 强制准备清旧待回应且读档不会重扣材料或关系
+PASS 必要护理明确中断强制准备并保留已发生代价
+PASS 收起原坐标旁的宝物不会唤起冷藏个体的反应和怨恨

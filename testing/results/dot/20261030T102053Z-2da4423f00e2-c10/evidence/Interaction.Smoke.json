@@ -1,0 +1,200 @@
+{
+  "at": "2026-10-30T03:30:20.3204195-07:00",
+  "scope": "Simulation-level first-batch interaction checks; not GUI or user acceptance",
+  "success": true,
+  "failures": 0,
+  "results": [
+    {
+      "name": "cheek invitation receives an answer before movement earns affection",
+      "passed": true
+    },
+    {
+      "name": "leaving the cheek requires a fresh invitation",
+      "passed": true
+    },
+    {
+      "name": "forceful nuzzling is rejected without a happy nuzzle memory",
+      "passed": true
+    },
+    {
+      "name": "fast rubbing is rejected even with a gentle force setting",
+      "passed": true
+    },
+    {
+      "name": "nuzzle guidance names the wrong body part before inviting",
+      "passed": true
+    },
+    {
+      "name": "first batch contains twenty groups and unique reachable actions",
+      "passed": true
+    },
+    {
+      "name": "pressing down and squeezing sideways return distinct body feedback",
+      "passed": true
+    },
+    {
+      "name": "fresh world saves without loss of identity",
+      "passed": true
+    },
+    {
+      "name": "motion differentiates a stroke from a stationary hold",
+      "passed": true
+    },
+    {
+      "name": "leaving contact never continues hidden effects",
+      "passed": true
+    },
+    {
+      "name": "gesture target stays locked when a different selection appears",
+      "passed": true
+    },
+    {
+      "name": "nuzzle requires the cheek and respects rejection",
+      "passed": true
+    },
+    {
+      "name": "a feeding gesture consumes exactly one portion",
+      "passed": true
+    },
+    {
+      "name": "cancel before food entry does not consume it",
+      "passed": true
+    },
+    {
+      "name": "fullness is a valid refusal, not disobedience",
+      "passed": true
+    },
+    {
+      "name": "taking and returning an accessory cannot farm trust",
+      "passed": true
+    },
+    {
+      "name": "repair respects partial work and destroyed items",
+      "passed": true
+    },
+    {
+      "name": "hand hold releases but fixed restraints require an explicit release",
+      "passed": true
+    },
+    {
+      "name": "cancelled carry stays supported, deliberate drop has a trajectory",
+      "passed": true
+    },
+    {
+      "name": "foot injury persists through feeding and removal of restraints",
+      "passed": true
+    },
+    {
+      "name": "injured creature can eat nearby food but cannot teleport to a distant plate",
+      "passed": true
+    },
+    {
+      "name": "care begins a real recovery period, never instant foot repair",
+      "passed": true
+    },
+    {
+      "name": "close-up freezes passive healing and time without a catch-up",
+      "passed": true
+    },
+    {
+      "name": "bottom injury does not automatically disable flight or a different body",
+      "passed": true
+    },
+    {
+      "name": "training only learns the named skill after real action",
+      "passed": true
+    },
+    {
+      "name": "stationary follow does not pretend the learner followed",
+      "passed": true
+    },
+    {
+      "name": "dialogue expresses needs without leaking hidden counters",
+      "passed": true
+    },
+    {
+      "name": "save-load preserves injury accessory memory and does not replay gestures",
+      "passed": true
+    },
+    {
+      "name": "corrupt functional state rejected at the real save entry",
+      "passed": true
+    },
+    {
+      "name": "time beside the mouth cannot pre-charge the next bite",
+      "passed": true
+    },
+    {
+      "name": "leaving the mouth interrupts readiness to take food",
+      "passed": true
+    },
+    {
+      "name": "repair touches the removed accessory rather than any body point",
+      "passed": true
+    },
+    {
+      "name": "a stop can interrupt an unfinished follow without awarding completion",
+      "passed": true
+    },
+    {
+      "name": "closed box does not let an oil eat through its back wall",
+      "passed": true
+    },
+    {
+      "name": "repeated greetings leave a real response window",
+      "passed": true
+    },
+    {
+      "name": "putting down cannot intersect another oil or silently discard support",
+      "passed": true
+    },
+    {
+      "name": "food seeking does not merge multiple bodies",
+      "passed": true
+    },
+    {
+      "name": "pushing into a fixed box does not pass through the occupant",
+      "passed": true
+    },
+    {
+      "name": "wiping a cheek leaves dirt elsewhere and preserves local progress",
+      "passed": true
+    },
+    {
+      "name": "hanging adjustment persists after cancellation without becoming a drop",
+      "passed": true
+    },
+    {
+      "name": "idle standing cannot be sold as a learned stop",
+      "passed": true
+    },
+    {
+      "name": "active teasing permits an actual chase in normal time",
+      "passed": true
+    },
+    {
+      "name": "voices differ by individual and never promise impossible movement",
+      "passed": true
+    },
+    {
+      "name": "instant contact targets the named anatomical part",
+      "passed": true
+    },
+    {
+      "name": "head care cannot secretly treat a damaged foot",
+      "passed": true
+    },
+    {
+      "name": "hands remain committed to one supported oil until it is set down",
+      "passed": true
+    },
+    {
+      "name": "a missing treasure remains visible in the expression after speech ends",
+      "passed": true
+    },
+    {
+      "name": "permitted accessory care waits differently from theft",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Simulation.Smoke/Simulation.Smoke.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS: clock display floors elapsed minutes instead of rounding at 30 seconds
+PASS: normal simulation consumes food needs
+PASS: all state and random state freeze during close-up
+PASS: direct close-up feeding changes resources once
+PASS: exit has no catch-up
+PASS: inactive region advances and stable identities survive travel
+PASS: new evidence corrects uncertain observation, not the true trait
+PASS: UI projection does not expose true trait
+PASS: care evidence and wellbeing earn one commission reward
+PASS: care reward cannot be claimed twice
+PASS: rescue preserves identity and enters observation area
+PASS: placement consumes actual funds
+PASS: overlapping placement rejected without charging
+PASS: empty inventory cannot feed
+PASS: insufficient funds reject purchases and construction
+PASS: staff supplies a hungry resident without player action
+PASS: staff does not award certification or independent identity
+PASS: nonfinite timestep rejected
+PASS: zero simulation tick rejected
+PASS: save round-trip preserves entire state, no offline time
+PASS: random state and tick remainder continue deterministically after load
+PASS: truncated primary recovers from valid backup
+PASS: corrupt primary cannot overwrite good backup
+PASS: failed save preserves both source files
+PASS: another manual slot remains usable
+PASS: invalid slot rejected
+PASS: unknown schema refused
+PASS: duplicate identity refused
+PASS: null region rejected with controlled invalid-data result
+PASS: null observations rejected before UI reads them
+PASS: nonfinite player position rejected
+PASS: null object before a pending intake reference is rejected as invalid data
+PASS: null object before a pending intake reference falls back to the valid backup
+PASS: null object before a pending intake reference cannot replace the good backup
+PASS: null object before a pending intake reference leaves both files unchanged
+PASS: active lesson without its learning record is rejected as invalid data
+PASS: active lesson without its learning record falls back to the valid backup
+PASS: active lesson without its learning record cannot replace the good backup
+PASS: active lesson without its learning record leaves both files unchanged
+PASS: inactive empty learning records remain valid
+PASS: null speech with a live reaction is rejected as invalid data
+PASS: null speech with a live reaction falls back to the valid backup
+PASS: null speech with a live reaction cannot replace the good backup
+PASS: null speech with a live reaction leaves both files unchanged
+PASS: synthetic missing speech fields retain safe defaults without backup recovery
+PASS: access-denied primary falls back to a valid backup
+PASS: access-denied fallback leaves the primary path and backup unchanged
+PASS: two access-denied paths produce a controlled load failure
+PASS: failed access-denied load preserves both paths
+PASS: locked temporary file refuses save
+PASS: temporary write failure preserves the valid primary and backup
+PASS: null speech cannot be saved over a valid primary
+PASS: invalid candidate preserves both valid save generations
+PASS: excretion kind without remaining time is rejected as invalid data
+PASS: excretion kind without remaining time falls back to the valid backup
+PASS: excretion kind without remaining time cannot replace the good backup
+PASS: excretion kind without remaining time leaves both files unchanged
+PASS: inconsistent physiology cannot replace a valid save
+PASS: physiology validation failure preserves both valid save generations
+PASS: explicit null physiology recovers the valid backup
+PASS: explicit null physiology cannot overwrite the good backup
+PASS: explicit null physiology preserves both files
+PASS: negative bladder recovers the valid backup
+PASS: negative bladder cannot overwrite the good backup
+PASS: negative bladder preserves both files
+PASS: bowel above its limit recovers the valid backup
+PASS: bowel above its limit cannot overwrite the good backup
+PASS: bowel above its limit preserves both files
+PASS: remaining time above its limit recovers the valid backup
+PASS: remaining time above its limit cannot overwrite the good backup
+PASS: remaining time above its limit preserves both files
+PASS: undefined numeric excretion kind recovers the valid backup
+PASS: undefined numeric excretion kind cannot overwrite the good backup
+PASS: undefined numeric excretion kind preserves both files
+PASS: negative urination count recovers the valid backup
+PASS: negative urination count cannot overwrite the good backup
+PASS: negative urination count preserves both files
+PASS: overflowing defecation count recovers the valid backup
+PASS: overflowing defecation count cannot overwrite the good backup
+PASS: overflowing defecation count preserves both files
+PASS: remaining time without an excretion kind recovers the valid backup
+PASS: remaining time without an excretion kind cannot overwrite the good backup
+PASS: remaining time without an excretion kind preserves both files
+PASS: missing physiology object uses idle defaults without backup fallback
+PASS: missing physiology fields uses idle defaults without backup fallback
+PASS: active excretion, saturated counters and both full waste collections survive exact save round-trip
+PASS: cleaning loaded saturated waste refunds no food and preserves every unrelated object
+PASS: waste continuation starts from identical saved branches
+PASS: Urine completion 1 resumes deterministically with saturated=False
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: waste continuation starts from identical saved branches
+PASS: Urine completion 2 resumes deterministically with saturated=False
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: waste continuation starts from identical saved branches
+PASS: Urine completion 1 resumes deterministically with saturated=True
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: waste continuation starts from identical saved branches
+PASS: Urine completion 2 resumes deterministically with saturated=True
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: waste continuation starts from identical saved branches
+PASS: Feces completion 1 resumes deterministically with saturated=False
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: waste continuation starts from identical saved branches
+PASS: Feces completion 2 resumes deterministically with saturated=False
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: waste continuation starts from identical saved branches
+PASS: Feces completion 1 resumes deterministically with saturated=True
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: waste continuation starts from identical saved branches
+PASS: Feces completion 2 resumes deterministically with saturated=True
+PASS: automatic waste avoids all existing IDs and completes exactly once at the counter boundary
+PASS: automatic waste ID conflict resolution never renames, replaces or removes existing objects
+PASS: full waste collections continue deterministically for Urine
+PASS: completion at 64 objects and 1000 portions preserves existing IDs, objects and saturated counters
+PASS: full waste collections continue deterministically for Feces
+PASS: completion at 64 objects and 1000 portions preserves existing IDs, objects and saturated counters
+PASS: quarantine resident stays within the observation area
+CROWD_CHECK: 0/100 have a neighbor closer than 0.45 world units after 20 seconds.
+PASS: 100-resident feeder crowd avoids near-total body overlap
+CORE_BENCHMARK: 106 total creatures, 600 simulated seconds in 722.4ms; not GPU FPS.
+RESULT: 125 checks passed; test files retained at /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/temp/yukkuri-checks/edd0403e26f941ab9763e4ac1c66ebe6

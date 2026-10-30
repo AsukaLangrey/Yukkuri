@@ -1,0 +1,8 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.InjuryPresentation/Interaction.InjuryPresentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 淤痕和永久旧痕只属于实际受伤侧
+PASS 敷料遮盖对应伤痕但不抹掉伤势数据
+PASS 剧痛濒危死亡覆盖乐观表情与亲近姿势
+PASS 受损底部跳步减少抬升但不改模拟轨迹
+PASS 身体声音优先于残留亲昵情境
+PASS 新的家庭回应不继承旧吃喝或拒绝情境

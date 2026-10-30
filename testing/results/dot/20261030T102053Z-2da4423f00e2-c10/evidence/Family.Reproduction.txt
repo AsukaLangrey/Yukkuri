@@ -1,0 +1,10 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.Reproduction/Family.Reproduction.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 安排先经过准备与接受，不能点击即生或换方式
+PASS 固定角色、未成熟、单方意愿与身体不足分别拒绝
+PASS 茎生与胎生都能完整经过孕育出生恢复，时间数量负担有差别
+PASS 孕育中存读继续一致，出生结算不会读档重放
+PASS 亲缘与出生角色保留，新生不复制亲代伤势技能或仇恨
+PASS 出生空间不足时整批等待，腾出位置后只结算一次
+PASS 原暂停与近看不推进孕育，关闭新繁育不会清掉已有孕育
+PASS 家庭显式空、非法父体角色与重复生育事件作为坏档拒绝

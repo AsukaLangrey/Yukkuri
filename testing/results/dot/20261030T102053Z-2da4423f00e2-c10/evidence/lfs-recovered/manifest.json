@@ -1,0 +1,161 @@
+{
+  "checked_at": "2026-10-30T10:30:38.635682+00:00",
+  "source_commit": "2da4423f00e2723722611ded8f2108980480c6bd",
+  "recovered_count": 12,
+  "missing_count": 3,
+  "objects": [
+    {
+      "path": "assets-source/pipeline-probe.blend",
+      "oid_sha256": "2d187b80047d24ddd1df7132f2ff4a8a7595e18a420d60e31c0426a6187b4fcb",
+      "expected_bytes": 641206,
+      "recovered_path": null,
+      "actual_bytes": null,
+      "actual_sha256": null,
+      "verified_original": false,
+      "method": "not retried: known unsupported original LFS binary transport"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "oid_sha256": "8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352",
+      "expected_bytes": 98908,
+      "recovered_path": null,
+      "actual_bytes": null,
+      "actual_sha256": null,
+      "verified_original": false,
+      "method": "not retried: known unsupported original LFS binary transport"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/select.wav",
+      "oid_sha256": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "expected_bytes": 22094,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/select.wav",
+      "actual_bytes": 22094,
+      "actual_sha256": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/build.wav",
+      "oid_sha256": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "expected_bytes": 22094,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/build.wav",
+      "actual_bytes": 22094,
+      "actual_sha256": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav",
+      "oid_sha256": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "expected_bytes": 27386,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav",
+      "actual_bytes": 27386,
+      "actual_sha256": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav",
+      "oid_sha256": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "expected_bytes": 27386,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/coo-hug.wav",
+      "actual_bytes": 27386,
+      "actual_sha256": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-help.wav",
+      "oid_sha256": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "expected_bytes": 48554,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/coo-help.wav",
+      "actual_bytes": 48554,
+      "actual_sha256": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav",
+      "oid_sha256": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "expected_bytes": 27386,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/coo-hurt.wav",
+      "actual_bytes": 27386,
+      "actual_sha256": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav",
+      "oid_sha256": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "expected_bytes": 1058444,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav",
+      "actual_bytes": 1058444,
+      "actual_sha256": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav",
+      "oid_sha256": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "expected_bytes": 27386,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/coo-stroke.wav",
+      "actual_bytes": 27386,
+      "actual_sha256": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav",
+      "oid_sha256": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "expected_bytes": 1058444,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav",
+      "actual_bytes": 1058444,
+      "actual_sha256": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/feed.wav",
+      "oid_sha256": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "expected_bytes": 22094,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/feed.wav",
+      "actual_bytes": 22094,
+      "actual_sha256": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav",
+      "oid_sha256": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "expected_bytes": 27386,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Audio/coo-refuse.wav",
+      "actual_bytes": 27386,
+      "actual_sha256": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177",
+      "verified_original": true,
+      "method": "original deterministic synthesis from c03 published recovery scripts"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "oid_sha256": "1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024",
+      "expected_bytes": 2846992,
+      "recovered_path": null,
+      "actual_bytes": null,
+      "actual_sha256": null,
+      "verified_original": false,
+      "method": "not retried: known unsupported original LFS binary transport"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf",
+      "oid_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "expected_bytes": 17772300,
+      "recovered_path": "/workspace/shared/yukkuri-cloud-20261030T102053-2da4423/lfs-recovered/src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf",
+      "actual_bytes": 17772300,
+      "actual_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "verified_original": true,
+      "method": "official public Google Fonts download"
+    }
+  ],
+  "source_writes": false,
+  "game_or_test_execution": false,
+  "note": "Only original-byte asset recovery; hashes must equal current source LFS OIDs. Audio synthesis is not playback or product test."
+}

@@ -1,0 +1,172 @@
+{
+  "completed_at": "2026-10-30T10:25:10.592027+00:00",
+  "status": "ready",
+  "purpose": "Authorized exact official Linux x64 toolchain restoration only, not project validation",
+  "environment": {
+    "container_hostname": "alice-cloud-c10",
+    "kernel": "6.18.57",
+    "machine": "x86_64",
+    "provider_environment_id": null
+  },
+  "download_verification": [
+    {
+      "name": "dotnet-sdk-10.0.402-linux-x64.tar.gz",
+      "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.402/dotnet-sdk-10.0.402-linux-x64.tar.gz",
+      "algorithm": "sha512",
+      "expected_hash": "1904a98dda2db34ba78ba3c4fb1b224455329af91c341d83547843c1839e112b04ae699ee92fa2449a8f62249196a938723078c0c60b9f65c88539d5687729c2",
+      "started_at": "2026-10-30T10:23:34.733718+00:00",
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "20",
+        "--max-time",
+        "240",
+        "--silent",
+        "--show-error",
+        "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.402/dotnet-sdk-10.0.402-linux-x64.tar.gz",
+        "-o",
+        "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/downloads/dotnet-sdk-10.0.402-linux-x64.tar.gz"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-10-30T10:23:45.184651+00:00",
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/downloads/dotnet-sdk-10.0.402-linux-x64.tar.gz",
+      "bytes": 240279509,
+      "actual_hash": "1904a98dda2db34ba78ba3c4fb1b224455329af91c341d83547843c1839e112b04ae699ee92fa2449a8f62249196a938723078c0c60b9f65c88539d5687729c2",
+      "hash_matches": true,
+      "size_matches": true
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+      "url": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+      "algorithm": "sha256",
+      "expected_hash": "129f82db7bafd54ae14bb5bb284041c73860e8c7a009a3a026ca5e946cbff247",
+      "expected_bytes": 107698034,
+      "started_at": "2026-10-30T10:23:34.734347+00:00",
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "20",
+        "--max-time",
+        "240",
+        "--silent",
+        "--show-error",
+        "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+        "-o",
+        "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/downloads/Godot_v4.7.2-stable_mono_linux_x86_64.zip"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-10-30T10:23:47.216963+00:00",
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/downloads/Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+      "bytes": 107698034,
+      "actual_hash": "129f82db7bafd54ae14bb5bb284041c73860e8c7a009a3a026ca5e946cbff247",
+      "hash_matches": true,
+      "size_matches": true
+    }
+  ],
+  "official_metadata": [
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/metadata/dotnet-releases-10.0.json",
+      "bytes": 1151627,
+      "sha256": "8fa7ae2d46b1f94416d5458c7ed68b0c3cafc5efb8e34d89dea3a98bf0a38b33"
+    },
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/metadata/godot-4.7.2-release.json",
+      "bytes": 67437,
+      "sha256": "daa53d6927eebb3128fdd29d784428f549e073855b4fda8eeda15b5a4385b249"
+    }
+  ],
+  "official_hash_basis": {
+    "dotnet": "Microsoft official release10.0 JSON sdk10.0.402 linux-x64 SHA512; not Windows toolchain.lock hash",
+    "godot": "godotengine/godot-builds official4.7.2-stable release asset519681607 digest and size; independently matches supplied prior SHA256"
+  },
+  "paths": {
+    "dotnet_root": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet",
+    "dotnet": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet",
+    "godot": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/Godot_v4.7.2-stable_mono_linux.x86_64",
+    "nuget_source": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/GodotSharp/Tools/nupkgs",
+    "dotnet_cli_home": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/cli-home"
+  },
+  "version_probes": {
+    "working_directory": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain",
+    "started_at": "2026-10-30T10:24:12Z",
+    "finished_at": "2026-10-30T10:24:13Z",
+    "dotnet_info": {
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet --info",
+      "exit_code": 0,
+      "evidence": "logs/dotnet-info.txt"
+    },
+    "dotnet_version": {
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet --version",
+      "exit_code": 0,
+      "actual": "10.0.402",
+      "evidence": "logs/dotnet-version.txt"
+    },
+    "godot_version": {
+      "command": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/Godot_v4.7.2-stable_mono_linux.x86_64 --headless --version",
+      "exit_code": 0,
+      "actual": "4.7.2.stable.mono.official.ed1daf0bf",
+      "evidence": "logs/godot-version.txt",
+      "warnings": "Fontconfig error: No writable cache directories (30 occurrences). Preserved; no project/game/UI was opened."
+    }
+  },
+  "executable_identities": [
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet",
+      "bytes": 71744,
+      "sha256": "8b3d902364f618e31e029d4eba077d52c141dd641e375f4555715604806e44b6"
+    },
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/Godot_v4.7.2-stable_mono_linux.x86_64",
+      "bytes": 146900080,
+      "sha256": "fc1bd592b5e771c65d52968f99835b4f2b7fe7b7cbc141e202cb63e01c95ec4d"
+    }
+  ],
+  "nuget_packages": [
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/GodotSharp/Tools/nupkgs/Godot.NET.Sdk.4.7.2.nupkg",
+      "bytes": 6887,
+      "sha256": "805c4be14cffb6907498269501c2c27341553d79267beaeb4c9595d6bf216866",
+      "nuspec": "Godot.NET.Sdk.nuspec"
+    },
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/GodotSharp/Tools/nupkgs/Godot.SourceGenerators.4.7.2.nupkg",
+      "bytes": 45681,
+      "sha256": "4170a0666ce2d1137a8b2c9f7aab72a6782256c8c824a35e8a249f72b4445a42",
+      "nuspec": "Godot.SourceGenerators.nuspec"
+    },
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/GodotSharp/Tools/nupkgs/GodotSharp.4.7.2.nupkg",
+      "bytes": 3222070,
+      "sha256": "3dfcc5c7a452d56e9ce103cac92bc46f25f23828b886064bf363474af287fad3",
+      "nuspec": "GodotSharp.nuspec"
+    },
+    {
+      "path": "/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/GodotSharp/Tools/nupkgs/GodotSharpEditor.4.7.2.nupkg",
+      "bytes": 177772,
+      "sha256": "faf33a701fbb99d27b93bee3a999613829a5cdadafc99f32a8125bffc0c38718",
+      "nuspec": "GodotSharpEditor.nuspec"
+    }
+  ],
+  "constraints": {
+    "system_godot_4_6_3_used": false,
+    "project_tests_executed": false,
+    "project_builds_executed": false,
+    "native_UI_launched": false,
+    "product_files_changed": false,
+    "git_writes": false,
+    "user_development_machine_used": false,
+    "credentials_searched_or_created": false
+  },
+  "permission_event": {
+    "operation": "exec_command require_escalated for official metadata download",
+    "outcome": "sandbox startup failure before command execution",
+    "exit_code": 1,
+    "stderr": "bwrap: Can't create file at /home/agent/.codex/sessions: Read-only file system",
+    "approval_reviewer_denial": false,
+    "handling": "No denied path access or permission change attempted. Same authorized official metadata retrieval succeeded under ordinary more-restricted default sandbox. No rejected network route was bypassed."
+  }
+}

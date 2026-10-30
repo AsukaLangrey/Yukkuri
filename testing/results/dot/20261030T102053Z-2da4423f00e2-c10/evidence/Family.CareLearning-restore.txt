@@ -1,0 +1,5 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet restore checks/Family.CareLearning/Family.CareLearning.csproj --configfile /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/NuGet.offline.Config -p:UseAppHost=false -p:NuGetAudit=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+  Determining projects to restore...
+  Restored /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source/checks/Family.CareLearning/Family.CareLearning.csproj (in 147 ms).
+  1 of 2 projects are up-to-date for restore.

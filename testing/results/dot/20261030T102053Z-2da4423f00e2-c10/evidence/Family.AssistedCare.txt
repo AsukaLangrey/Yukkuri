@@ -1,0 +1,19 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Family.AssistedCare/Family.AssistedCare.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 成年永久脚伤对象实际收到一份主食，不重建脚底或被收养
+PASS 成年伤残对象收到实际饮水，运输途中不先增加水分
+PASS 双方亲近者会自主照护，正常成年陌生对象不会被自动投喂
+PASS 恢复期健康脚底也可得到送食，恢复和步行能力不被照护重置
+PASS 地面包裹可实际接下食水，箱子悬挂和不稳支撑不能冒充可接食
+PASS 暂停面板查询允许实际候选但无副作用，命令仍服从暂停
+PASS 本人需要和对象支撑各自给明确原因，不靠UI猜测
+PASS 已有家人也尊重双方恐惧怨恨，单向喜欢不足以照护陌生成人
+PASS 脚伤亲代只在真实近旁保暖，不搬运或隔空补食
+PASS 脚伤亲代与幼体分开时不远程保暖，读档也不创造接触
+PASS 缺少或拿在玩家手里的物资不会生成食物，并说明已停止递送
+PASS 搬运者新受伤或自身饥渴立即释放真实份额，不重复归还
+PASS 收件人濒危死亡或冷藏中断搬运，不直接灌食
+PASS 实际运输份额存读续接，不重取物资或成人收养
+PASS 运输暂停与近看冻结实际旅程，恢复普通时间再送达
+PASS 非法运输存档被拒绝，实际原档仍可保存
+Family assisted care: 0 failure(s)

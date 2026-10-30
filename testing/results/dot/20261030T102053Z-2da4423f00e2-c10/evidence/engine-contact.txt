@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:372)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+INTERACTION_TEST_PROFILE: cloud1030-c10-contact
+INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development
+PASS tool contact stays under the actual cursor: surface projection offset 0.062px
+PASS upright hidden underside cannot be touched through the face: no hit
+PASS turning over exposes the real underside: Bottom
+PASS stored accessories have no phantom contact region: Head

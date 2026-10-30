@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><configuration><packageSources><clear/><add key="Godot official bundled" value="/workspace/shared/yukkuri-cloud-20261030T102053-toolchain/godot/Godot_v4.7.2-stable_mono_linux_x86_64/GodotSharp/Tools/nupkgs"/></packageSources></configuration>

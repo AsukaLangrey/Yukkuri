@@ -1,0 +1,9 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.EmergencyIntervention/Interaction.EmergencyIntervention.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 真实准备在近看濒危时立即结束并恢复托举救助入口
+PASS 普通时间与暂停中的外部重伤都同步清理，读档不会重启操作或重复扣账
+PASS 准备完成时自身负担致濒危，只结算一次中断
+PASS 已有孕育在濒危时不被未完成操作的清理误取消
+PASS 致命设置关闭仍取消重伤准备，不把终末指标误当已死亡
+PASS 当次致命伤和死亡读档保持死因及孕育死亡结果
+Emergency intervention: 0 failure(s)

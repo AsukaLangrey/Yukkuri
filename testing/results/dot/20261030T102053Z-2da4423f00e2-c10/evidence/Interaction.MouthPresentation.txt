@@ -1,0 +1,12 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261030T102053-toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.MouthPresentation/Interaction.MouthPresentation.csproj -p:UseAppHost=false -p:UseSharedCompilation=false
+CWD: /workspace/shared/yukkuri-cloud-20261030T102053-2da4423/source
+PASS 普通动作仍可接受，最终台词按嘴部能力表达
+PASS 唱不清不能结算唱歌成功或增加亲近
+PASS 未达发音受限程度仍可唱歌，不把当前与永久损失相加
+PASS 口部含混的普通发声不沿用亲昵旋律，吃喝声与情绪事实保留
+PASS 求救痛呼优先于发音限制，死亡与冷藏没有回应声
+PASS 真实查看伤势入口仍保留剧痛与濒危表达优先
+PASS 清楚的讲者能把事实告诉口伤听者，不能把口伤当失聪
+PASS 口伤或忙嘴的讲者不能转述，伤情改善后原有事实仍可传递
+PASS 持久口伤存读后仍限制唱歌和完整讲述，知识本身保存
+PASS 暂停和近看不推进旧事实转述

@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-30T10:39:55.4064189+00:00",
+  "scope": "Engine ray/contact geometry, authored states; not native mouse acceptance",
+  "failures": 0,
+  "checks": [
+    {
+      "name": "tool contact stays under the actual cursor",
+      "passed": true,
+      "actual": "surface projection offset 0.062px"
+    },
+    {
+      "name": "upright hidden underside cannot be touched through the face",
+      "passed": true,
+      "actual": "no hit"
+    },
+    {
+      "name": "turning over exposes the real underside",
+      "passed": true,
+      "actual": "Bottom"
+    },
+    {
+      "name": "stored accessories have no phantom contact region",
+      "passed": true,
+      "actual": "Head"
+    }
+  ]
+}

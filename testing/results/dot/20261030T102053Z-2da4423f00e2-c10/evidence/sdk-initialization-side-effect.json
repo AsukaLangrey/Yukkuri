@@ -1,0 +1,6 @@
+{
+  "noted_at": "2026-10-30T10:32:24.455527+00:00",
+  "observation": "Authorized asset recovery SDK initialization printed Installed an ASP.NET Core HTTPS development certificate. Unintended local SDK initialization side effect, not requested account credential creation. No certificate bytes read, exported, or used by assistant; no credentials/account changes requested.",
+  "future_setting": "DOTNET_GENERATE_ASPNET_CERTIFICATE=false",
+  "scope": "isolated cloud asset-recovery HOME; logs retained in lfs-recovered/recovery-evidence; no private key content included"
+}
