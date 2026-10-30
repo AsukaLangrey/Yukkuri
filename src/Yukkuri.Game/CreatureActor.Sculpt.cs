@@ -114,12 +114,20 @@ public partial class CreatureActor
             SculptTube(parent,v=>Fit(Tail(1,v)-Vector3.Back*(ActorAccessorySurface.ClothThickness*.5f*width)),.006f*width,fabric,20);
             SculptTube(parent,v=>Fit(Tail(.91f,v)+Vector3.Back*.004f*width),.0035f*width,trim,24);
         }
-        if(conform==null)
-        {
-            var knot=SceneArt.Ball(parent,new(0,0,.045f*width),new Vector3(.16f,.14f,.13f)*width,fabric);
-            knot.RotationDegrees=new(0,0,-5);
-        }
-        else SculptSurface(parent,16,32,(u,v)=>Fit((new Vector3(0,0,.045f)+new Vector3(.08f*Mathf.Sin(u*Mathf.Pi)*Mathf.Cos(v*Mathf.Tau),.07f*Mathf.Cos(u*Mathf.Pi),.065f*Mathf.Sin(u*Mathf.Pi)*Mathf.Sin(v*Mathf.Tau)))*width),fabric);
+        // The knot and its support samples share the same actual folded volume.
+        // Apply scale before HeadBow/HatBow, exactly like the adjoining cloth.
+        SculptSurface(parent,ActorAccessorySurface.BowKnotRows,ActorAccessorySurface.BowKnotSides,
+            (u,v)=>Fit(AccessoryPoint(ActorAccessorySurface.BowKnot(u,v))*width),fabric,(u,v)=>
+            {
+                float fold=ActorAccessorySurface.BowKnotPleat(u,v);
+                float front=Mathf.Max(0,Mathf.Sin(v*Mathf.Tau));
+                float waist=Mathf.Exp(-Mathf.Pow((u-.5f)/.19f,2));
+                // The same geometric furrows carry their own soft shadow; the
+                // narrow hem accents remain on the surface, not floating tubes.
+                float hem=Mathf.Exp(-Mathf.Pow((u-.22f)/.022f,2))+Mathf.Exp(-Mathf.Pow((u-.78f)/.022f,2));
+                float shade=1-fold*.20f-waist*.045f+front*(1-fold)*.055f+hem*front*.055f;
+                return new Color(shade,shade,shade);
+            });
     }
     private static Vector3 AccessoryPoint(System.Numerics.Vector3 p)=>new(p.X,p.Y,p.Z);
     private static Vector3 ClothBowPoint(float sign,float u,float v)=>AccessoryPoint(ActorAccessorySurface.Bow(sign,u,v));

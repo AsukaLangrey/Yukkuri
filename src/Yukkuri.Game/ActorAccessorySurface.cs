@@ -7,6 +7,26 @@ public static class ActorAccessorySurface
     public const float ClothThickness=.012f,BrimThickness=.016f;
     public const float HatBowScale=.38f;
     public const float HatHeight=.64f;
+    public const int BowKnotRows=24,BowKnotSides=64;
+    // A tied cloth band, not a second spherical bead. The polar seam closes and
+    // every point stays inside the previous (.08,.07,.065) ellipsoid envelope.
+    public static Vector3 BowKnot(float u,float v)
+    {
+        if(u<=0)return new(0,.07f,.045f);
+        if(u>=1)return new(0,-.07f,.045f);
+        float latitude=u*MathF.PI,angle=(v==1?0:v)*MathF.Tau,r=MathF.Sin(latitude);
+        float waist=MathF.Exp(-MathF.Pow((u-.5f)/.19f,2));
+        return new(.08f*r*MathF.Cos(angle)*(1-.18f*waist),.07f*MathF.Cos(latitude),
+            .045f+.065f*r*MathF.Sin(angle)*(1-.08f*waist)-.006f*BowKnotPleat(u,v));
+    }
+    public static float BowKnotPleat(float u,float v)
+    {
+        if(u<=0||u>=1)return 0;
+        float r=MathF.Sin(u*MathF.PI),angle=(v==1?0:v)*MathF.Tau;
+        // Three shallow front folds die into the poles and the side seam. Their
+        // depth cannot reverse the front: .006 < the minimum .065*.92 radius.
+        return r*r*MathF.Max(0,MathF.Sin(angle))*MathF.Pow(MathF.Sin(angle*3),8);
+    }
     public static Vector3 HeadBow(Vector3 cloth)
     {
         var rotation=ActorAccessoryPlacement.Rotation(ActorAccessoryPlacement.BowRotation);

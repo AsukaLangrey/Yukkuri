@@ -21,11 +21,10 @@ public static class ActorAccessorySupport
             points.Add(p);points.Add(p-Vector3.UnitZ*ActorAccessorySurface.ClothThickness);
             var tail=ActorAccessorySurface.BowTail(sign,u,v);points.Add(tail);points.Add(tail-Vector3.UnitZ*ActorAccessorySurface.ClothThickness);
         }
-        for(int row=0;row<=12;row++)for(int n=0;n<32;n++)
-        {
-            float latitude=row*MathF.PI/12,angle=n*MathF.Tau/32;
-            points.Add(new Vector3(0,0,.045f)+new Vector3(.08f*MathF.Sin(latitude)*MathF.Cos(angle),.07f*MathF.Cos(latitude),.065f*MathF.Sin(latitude)*MathF.Sin(angle)));
-        }
+        for(int row=0;row<=ActorAccessorySurface.BowKnotRows;row++)
+            for(int n=0;n<=ActorAccessorySurface.BowKnotSides;n++)
+                points.Add(ActorAccessorySurface.BowKnot(row/(float)ActorAccessorySurface.BowKnotRows,
+                    n/(float)ActorAccessorySurface.BowKnotSides));
         return points.ToArray();
     }
     private static Vector3[] BuildHat()

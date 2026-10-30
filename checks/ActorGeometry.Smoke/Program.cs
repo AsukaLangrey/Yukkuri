@@ -642,8 +642,7 @@ Check("the central ribbon knot is readable above the hair instead of burying its
     foreach(var deform in new[]{System.Numerics.Vector3.One,ActorTouchShape.Press(1),ActorTouchShape.Squeeze(1)})
     for(int row=0;row<=24;row++)for(int n=0;n<=48;n++)
     {
-        float latitude=row*MathF.PI/24,angle=n*MathF.PI/48;
-        var local=new System.Numerics.Vector3(.08f*MathF.Sin(latitude)*MathF.Cos(angle),.07f*MathF.Cos(latitude),.045f+.065f*MathF.Sin(latitude)*MathF.Sin(angle));
+        var local=ActorAccessorySurface.BowKnot(row/24f,n/96f);
         var p=ActorAccessoryPlacement.Point(ActorAccessorySurface.HeadBow(local),false,deform);
         float q=((p-ActorSurfaceMarks.HairCenter*deform)/(ActorSurfaceMarks.HairRadii*deform)).LengthSquared();minimum=MathF.Min(minimum,q);
         var old=System.Numerics.Vector3.Transform(local,ActorAccessoryPlacement.Rotation(ActorAccessoryPlacement.BowRotation))+new System.Numerics.Vector3(0,.50f,.10f)*deform;
@@ -1063,8 +1062,39 @@ Check("hat bow front backing tails and knot clear the crown rather than intersec
         float u=r/32f,v=n/48f;
         foreach(var p in new[]{ActorAccessorySurface.Bow(sign,u,v),ActorAccessorySurface.BowTail(sign,u,v)})
             if(!Clear(p)||!Clear(p-System.Numerics.Vector3.UnitZ*ActorAccessorySurface.ClothThickness))return false;
-        var knot=new System.Numerics.Vector3(0,0,.045f)+new System.Numerics.Vector3(.08f*MathF.Sin(u*MathF.PI)*MathF.Cos(v*MathF.Tau),.07f*MathF.Cos(u*MathF.PI),.065f*MathF.Sin(u*MathF.PI)*MathF.Sin(v*MathF.Tau));
+        var knot=ActorAccessorySurface.BowKnot(u,v);
         if(!Clear(knot))return false;
+    }
+    return true;
+});
+Check("authored cloth knot closes both poles and its seam inside the original envelope",()=>
+{
+    var center=new System.Numerics.Vector3(0,0,.045f);var radii=new System.Numerics.Vector3(.08f,.07f,.065f);
+    for(int row=0;row<=96;row++)for(int n=0;n<=256;n++)
+    {
+        float u=row/96f,v=n/256f;var p=ActorAccessorySurface.BowKnot(u,v);
+        if(!float.IsFinite(p.LengthSquared())||((p-center)/radii).LengthSquared()>1.00001f)return false;
+        if(row==0&&p!=new System.Numerics.Vector3(0,.07f,.045f))return false;
+        if(row==96&&p!=new System.Numerics.Vector3(0,-.07f,.045f))return false;
+        if(row>0&&p.Y>ActorAccessorySurface.BowKnot((row-1)/96f,v).Y)return false;
+        if(ActorAccessorySurface.BowKnot(u,0)!=ActorAccessorySurface.BowKnot(u,1))return false;
+        float pleat=ActorAccessorySurface.BowKnotPleat(u,v);
+        if(!float.IsFinite(pleat)||pleat<0||pleat>1.00001f||v>.5f&&pleat!=0)return false;
+        if(v>0&&v<.5f&&p.Z<center.Z||v>.5f&&v<1&&p.Z>center.Z+.000001f)return false;
+    }
+    return ActorAccessorySurface.BowKnotPleat(.5f,1f/12)>0;
+});
+Check("head and hat supports sample every authored knot vertex through the same placement",()=>
+{
+    var bow=ActorAccessorySupport.Points(false);var hat=ActorAccessorySupport.Points(true);
+    int count=(ActorAccessorySurface.BowKnotRows+1)*(ActorAccessorySurface.BowKnotSides+1);
+    int index=0;
+    for(int row=0;row<=ActorAccessorySurface.BowKnotRows;row++)for(int n=0;n<=ActorAccessorySurface.BowKnotSides;n++)
+    {
+        var p=ActorAccessorySurface.BowKnot(row/(float)ActorAccessorySurface.BowKnotRows,n/(float)ActorAccessorySurface.BowKnotSides);
+        if(System.Numerics.Vector3.Distance(bow[bow.Length-count+index],ActorAccessorySurface.HeadBow(p))>.000001f||
+            System.Numerics.Vector3.Distance(hat[hat.Length-count+index],ActorAccessorySurface.HatBow(p*ActorAccessorySurface.HatBowScale))>.000001f)return false;
+        index++;
     }
     return true;
 });
