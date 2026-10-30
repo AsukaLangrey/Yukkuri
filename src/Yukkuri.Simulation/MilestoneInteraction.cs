@@ -22,6 +22,8 @@ public sealed partial class WorldSimulation
             return new(false,"接触参数无效。","",Expression.Neutral);
         if(State.Mode==PlayMode.CloseUp&&State.SelectedId!=id)return new(false,"特写中只能接触当前对象。","",Expression.Neutral);
         if(c.Condition==PhysicalCondition.Dead)return new(false,"它已经无法回应了。","没有回应。",Expression.Exhausted);
+        if(request.Action==ContactAction.Treat&&UsesConsumableStock&&State.Medicine<=0)
+            return new(false,"护理包不足，可在补给处购买。","",Expression.Neutral);
         if(FamilyRules.UnderIntervention(c))
         {
             if(request.Action!=ContactAction.Treat)return new(false,"繁育干预进行中，先停止或安排必要的护理。","",Expression.Neutral);
@@ -248,12 +250,12 @@ public sealed partial class WorldSimulation
     }
     private InteractionResult Treat(Creature c,ContactRequest request)
     {
-        if(!State.UnlimitedResources&&State.Medicine<=0)return new(false,"护理包不足，可在补给处购买。","",Expression.Neutral);
+        if(UsesConsumableStock&&State.Medicine<=0)return new(false,"护理包不足，可在补给处购买。","",Expression.Neutral);
         BodyPart carePart=request.Area switch{ContactArea.Forehead=>BodyPart.Head,ContactArea.Cheek=>BodyPart.Cheek,_=>BodyPart.Side};
         var careSite=ChooseGeneralCareSite(c,carePart);
         if(!NeedsInteractionCare(c))return new(false,c.Interaction.Injuries.CareCooldown>0?"刚做过护理，需要时间观察恢复；重复包扎不能加快愈合。":"目前没有需要护理的伤势。","",Expression.Neutral);
         if(!ApplyBodyCare(c,careSite.Part,careSite.Side))return new(false,"刚做过护理，需要时间观察恢复；重复包扎不能加快愈合。","",Expression.Neutral);
-        if(!State.UnlimitedResources)State.Medicine--;
+        if(UsesConsumableStock)State.Medicine--;
         c.Trust=Clamp100(c.Trust+3);c.Fear=Math.Max(0,c.Fear-2);
         React(c,Expression.Shy,"轻一点……谢谢。","包扎后慢慢放松，还需要休息。",5);
         var e=Emit(IncidentKind.Care,c,"player",$"为{c.Name}护理伤势");Remember(c,e,"主人照顾了自己的伤。",4);
@@ -263,16 +265,17 @@ public sealed partial class WorldSimulation
     private void StaffCare(Creature c)
     {
         var careSite=ChooseGeneralCareSite(c,BodyPart.Side);
-        if(c.Condition==PhysicalCondition.Critical&&(State.Medicine>0||State.UnlimitedResources))
-        {
-            if(!State.UnlimitedResources)State.Medicine--;
-            ApplyBodyCare(c,careSite.Part,careSite.Side);c.RecoveryRemaining=75;
-            Log($"雇员小岚为{c.Name}做了紧急稳定处理，正在等待恢复。");
-        }
-        else if(c.Condition==PhysicalCondition.Active&&NeedsInteractionCare(c)&&(State.Medicine>0||State.UnlimitedResources))
+        if(c.Condition==PhysicalCondition.Critical&&(State.Medicine>0||!UsesConsumableStock))
         {
             if(!ApplyBodyCare(c,careSite.Part,careSite.Side))return;
-            if(!State.UnlimitedResources)State.Medicine--;
+            if(UsesConsumableStock)State.Medicine--;
+            c.RecoveryRemaining=75;
+            Log($"雇员小岚为{c.Name}做了紧急稳定处理，正在等待恢复。");
+        }
+        else if(c.Condition==PhysicalCondition.Active&&NeedsInteractionCare(c)&&(State.Medicine>0||!UsesConsumableStock))
+        {
+            if(!ApplyBodyCare(c,careSite.Part,careSite.Side))return;
+            if(UsesConsumableStock)State.Medicine--;
             c.Activity="接受雇员护理";
         }
     }

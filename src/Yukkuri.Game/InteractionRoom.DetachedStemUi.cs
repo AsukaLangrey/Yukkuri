@@ -103,7 +103,7 @@ public partial class InteractionRoom
         OpenModal("瓶养用品");
         _modalContents.AddChild(Text($"空瓶 · 每个 {WorldSimulation.StemVesselPrice} 元",20));
         _modalContents.AddChild(Text("拿空瓶对准离体茎，按住完成装瓶。成功后消耗一个真实空瓶；水和营养需要继续补给。"));
-        _modalContents.AddChild(Text(Sim.State.UnlimitedResources?"测试无限资源：购买不扣钱，装瓶仍消耗库存。":$"现有金钱：{Sim.State.Money} 元"));
+        _modalContents.AddChild(Text(Sim.State.UnlimitedResources?"测试阶段购买不扣钱，装瓶仍消耗库存。":$"现有金钱：{Sim.State.Money} 元"));
         _modalContents.AddChild(Text($"空瓶库存：{Sim.State.StemVessels}"));
         if(!string.IsNullOrEmpty(result))_modalContents.AddChild(Text(result,14));
         var buy=Button("购买一个空瓶",()=>

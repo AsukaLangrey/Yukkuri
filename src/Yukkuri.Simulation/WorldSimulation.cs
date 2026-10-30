@@ -207,8 +207,8 @@ public sealed partial class WorldSimulation
     public bool Feed(string id, bool staff = false)
     {
         var c = State.Creatures.Find(c=>c.Id==id);
-        if (State.Settings.Pause || c==null || !CanAcceptLegacyIntake(c) || (!staff && c.RegionId!=State.ActiveRegionId) || (!State.UnlimitedResources && State.Food<=0)) return false;
-        if (!State.UnlimitedResources) State.Food--;
+        if (State.Settings.Pause || c==null || !CanAcceptLegacyIntake(c) || (!staff && c.RegionId!=State.ActiveRegionId) || (UsesConsumableStock && State.Food<=0)) return false;
+        if (UsesConsumableStock) State.Food--;
         c.Fullness=Math.Min(100,c.Fullness+Config.FeedGain); c.Trust=Math.Min(100,c.Trust+2); c.Activity=c.Condition==PhysicalCondition.Recovering?"休养中接受喂食":"接受喂食";
         BeginLegacyIntake(c);
         if (!staff)
@@ -257,9 +257,9 @@ public sealed partial class WorldSimulation
     }
     public bool BuyFood()
     {
-        if(!State.UnlimitedResources && State.Money<10)return false;
-        if(!State.UnlimitedResources)State.Money-=10;
-        State.Food+=20;Log("补给：20份食物入库。");return true;
+        if(State.Food>int.MaxValue-FoodBundleCount||!State.UnlimitedResources && State.Money<FoodBundlePrice)return false;
+        if(!State.UnlimitedResources)State.Money-=FoodBundlePrice;
+        State.Food+=FoodBundleCount;Log($"补给：{FoodBundleCount}份食物入库。");return true;
     }
     public bool CompleteCareRecord()
     {
@@ -271,9 +271,9 @@ public sealed partial class WorldSimulation
     {
         var feeder=ActiveRegion.Facilities.Where(f=>f.Kind==FacilityKind.Feeder).MinBy(f=>f.Stock);
         if(feeder==null)return false;
-        int amount=State.UnlimitedResources?10:Math.Min(State.Food,10);
-        if(amount==0)return false;
-        if(!State.UnlimitedResources)State.Food-=amount;
+        int amount=UsesConsumableStock?Math.Min(State.Food,10):10;
+        if(amount==0||feeder.Stock>int.MaxValue-amount)return false;
+        if(UsesConsumableStock)State.Food-=amount;
         feeder.Stock+=amount;Log($"食盆补充 {amount} 份。");return true;
     }
     public void MoveCreature(string id,double x,double z)

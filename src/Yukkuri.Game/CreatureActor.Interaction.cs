@@ -72,6 +72,7 @@ public partial class CreatureActor
         var life=c.Interaction;
         bool waterBody=HasWaterBodyPresentation(c);
         pose=ActorInjuryPresentation.GuardPose(c,pose);
+        ObserveGuardedImpact(c,pose,delta,paused);
         // Physiology is an idle posture, not a final override of contact or pain.
         // In close-up its world timer can stay active while a gesture owns the pose.
         if(pose=="idle"&&life.Physiology.Active&&c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)
@@ -227,6 +228,9 @@ public partial class CreatureActor
         }
         else if(canHop)
             _visual.Position+=new Vector3(_hopMotion.Position.X-Position.X,0,_hopMotion.Position.Y-Position.Z);
+        // Keep the protective pose. This short, already resolved hit bypasses
+        // its low-pass filter, then shares the final accessory/support geometry.
+        ApplyGuardedImpact(c);
         if(_accessoryRoot!=null)
         {
             _accessoryRoot.Visible=life.HasAccessory;

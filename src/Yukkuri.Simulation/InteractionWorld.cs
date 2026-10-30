@@ -174,8 +174,6 @@ public sealed partial class WorldSimulation
         if (invalid != null) return Unavailable(invalid);
         if(input.TargetKind==InteractionTargetKind.Stem)
             return input.Action==InteractionAction.Punch?StrikeStem(c!,input):Unavailable("外茎的支护和灼烧需要持续接触，先开始手势。");
-        if(input.Action==InteractionAction.Care&&FamilyRules.UnderIntervention(c!))
-            CancelIntervention(c!,"开始伤势护理，繁育干预已停止；已用材料和关系后果保留。");
         BodyPart? requiredPart=input.Action switch
         {
             InteractionAction.Flick=>BodyPart.Head,
@@ -395,10 +393,10 @@ public sealed partial class WorldSimulation
         if(!WoodlandLayout.GroundFits(State,c.RegionId,input.X,input.Z,.2))return Unavailable("这里是河道，找岸边的干燥空地放食水。 ");
         if(State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
             Distance(s.X,s.Z,input.X,input.Z)<StemVesselRadius+.2))return Unavailable("培养瓶或离体茎占着这里，请把食水放到旁边。 ");
-        if (!water&&!State.UnlimitedResources && State.Food <= 0) return Unavailable("没有食物了。 ");
+        if (!water&&UsesConsumableStock && State.Food <= 0) return Unavailable("没有食物了。 ");
         if (State.RoomObjects.Count(o => o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water && !o.Stored) >= 24)
             return Unavailable("先收起或吃完地上的食物。 ");
-        if (!water&&!State.UnlimitedResources) State.Food--;
+        if (!water&&UsesConsumableStock) State.Food--;
         State.RoomObjects.Add(new() { Kind = water?RoomObjectKind.Water:input.Action == InteractionAction.PlaceSweet ? RoomObjectKind.Sweet : RoomObjectKind.Meal,
             RegionId=c.RegionId,X = input.X, Z = input.Z,Height=RoomSupplySupport.Height(State,c.RegionId,input.X,input.Z,
                 water?RoomObjectKind.Water:input.Action==InteractionAction.PlaceSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal) });

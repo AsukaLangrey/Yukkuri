@@ -23,6 +23,19 @@ public sealed partial class WorldSimulation
             InteractionAction.TeachStop or InteractionAction.Stop => LearnedCue.Stop,
             _ => LearnedCue.Wait
         };
+        bool needsWaitFood=cue==LearnedCue.Wait&&!State.RoomObjects.Any(o=>o.RegionId==c.RegionId&&o.Portions>0&&
+            o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet&&!o.Stored&&!o.HeldByHand&&o.CarrierId==null&&
+            Distance(c.X,c.Z,o.X,o.Z)<2&&CanSeeResource(c,o));
+        double waitFoodX=Math.Clamp(c.X+.8,-7,7);
+        if(needsWaitFood)
+        {
+            if(UsesConsumableStock&&State.Food<=0)return Unavailable("等待练习需要眼前的一份食物。 ");
+            if(!WoodlandLayout.GroundFits(State,c.RegionId,waitFoodX,c.Z,.2)||
+                State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
+                    Distance(s.X,s.Z,waitFoodX,c.Z)<StemVesselRadius+.2)||
+                State.RoomObjects.Count(o=>o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water&&!o.Stored)>=24)
+                return Unavailable("这里没有合适的位置放练习用的食物，先整理近旁空地。 ");
+        }
         bool demonstration = action is InteractionAction.TeachFollow or InteractionAction.TeachStop or InteractionAction.TeachWait;
         if (!i.Learning.TryGetValue(cue, out var learning)) i.Learning[cue] = learning = new();
         if (demonstration && State.WorldSeconds - learning.LastPracticeAt < 5)
@@ -38,12 +51,11 @@ public sealed partial class WorldSimulation
         if (cue == LearnedCue.Wait)
         {
             i.WaitRemaining = 4;
-            if (!State.RoomObjects.Any(o => o.RegionId==c.RegionId&&o.Portions>0&&o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet && !o.Stored && Distance(c.X, c.Z, o.X, o.Z) < 2))
+            if (needsWaitFood)
             {
-                if (!State.UnlimitedResources && State.Food <= 0)
-                { i.ActiveCue = null; i.WaitRemaining = 0; return Unavailable("等待练习需要眼前的一份食物。 "); }
-                if (!State.UnlimitedResources) State.Food--;
-                State.RoomObjects.Add(new() { Kind = RoomObjectKind.Meal,RegionId=c.RegionId, X = Math.Clamp(c.X + .8, -7, 7), Z = c.Z });
+                if (UsesConsumableStock) State.Food--;
+                State.RoomObjects.Add(new() { Kind = RoomObjectKind.Meal,RegionId=c.RegionId, X = waitFoodX, Z = c.Z,
+                    Height=RoomSupplySupport.Height(State,c.RegionId,waitFoodX,c.Z,RoomObjectKind.Meal) });
             }
         }
         i.RestRemaining=0;i.Resting=false;
@@ -552,11 +564,16 @@ public sealed partial class WorldSimulation
     {
         var obj = State.RoomObjects.Find(o => o.Id == id);
         if (obj == null || obj.Stored || obj.HeldByHand || obj.Kind == RoomObjectKind.Cushion || NaturalResources.IsWild(obj.Kind)) return false;
+        bool returnsFood=UsesConsumableStock&&obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet;
+        // Pending natural intake reserved a portion but has not accepted it.
+        // Include that returned reservation before interrupting any real care.
+        long returned=(long)obj.Portions+State.Creatures.Count(o=>o.Interaction.NaturalIntakePending&&o.Interaction.GroundIntakeSourceId==id);
+        if(returnsFood&&(long)State.Food+returned>int.MaxValue)return false;
         if(obj.CarrierId is { } carrierId&&State.Creatures.Find(c=>c.Id==carrierId) is { } carrier)
             CancelFamilyCare(carrier,reason:"递送中的食水被收起，这次照护已中断。");
         foreach(var oil in State.Creatures)
             if(oil.Interaction.GroundIntakeSourceId==id)DetachNaturalIntake(oil);
-        if (obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet && !State.UnlimitedResources) State.Food += obj.Portions;
+        if (returnsFood) State.Food += obj.Portions;
         foreach (var c in State.Creatures.Where(c => c.RegionId==obj.RegionId&&Distance(c.X, c.Z, obj.X, obj.Z) < 2 &&
             c.Condition != PhysicalCondition.Dead&&CanSeeResource(c,obj)))
             Feedback(c, "cold", Expression.Shy, "眼前的东西被收起，它停下来望着你。", "withdraw");

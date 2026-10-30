@@ -77,9 +77,8 @@ public partial class InteractionRoom
             ("清水 · 点油喂 / 点地放",InteractionAction.Drink)})
         {var action=entry.Item2;var button=Button(entry.Item1,()=>SelectQuickTool(action));_directToolButtons[action]=button;_quickTools.AddChild(button);}
         _quickTools.AddChild(Button("救援用品 · 点油救起",ArmWaterRescueTool));
-        _quickTools.AddChild(Button("购买救援用品",()=>ShowRescueSupplies()));
-        _quickTools.AddChild(Button("购买护理用品",()=>ShowMedicineSupplies()));
-        _quickTools.AddChild(Button("购买瓶养用品",()=>ShowStemVessels()));
+        _quickTools.AddChild(Button("用品补给 · 查看库存",()=>ShowSuppliesOverview()));
+        _supplyStockLabel=Text("",12,"78816e");_quickTools.AddChild(_supplyStockLabel);
         foreach(var entry in new[]{("说话","P01"),("毛巾","P07"),("护理用品","P11"),("包裹","P05"),("球与小宝物","P09")})
         {string id=entry.Item2;_quickTools.AddChild(Button(entry.Item1,()=>SelectGroup(InteractionCatalog.Groups.Single(g=>g.Id==id))));}
         _groupList=Column(toolLists,6);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
@@ -171,6 +170,7 @@ public partial class InteractionRoom
         _hint.Text=action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink?
             "点油：递到嘴边，等它接下一口；点地面：放下一份。右键收回，换工具也会停止递送。":InteractionCatalog.Choice(_action).Hint;
         _message=_group.Description;RefreshRoomUi();
+        if(!_modalOpen&&SupplyStockMissing(action))ShowMissingToolSupplies(action);
     }
     private void DisarmTool()
     {
@@ -218,6 +218,7 @@ public partial class InteractionRoom
         NormalizeDetachedStemSelection();
         RefreshOilSelector();
         RefreshDebugPanel();
+        RefreshSupplyStock();
         RefreshYardHelpButton();
         _choiceList.Visible=_toolArmed&&!_directToolMode&&!_waterRescueToolArmed;
         InteractionAction? highlighted=_toolArmed&&!_waterRescueToolArmed?_action:null;
@@ -236,7 +237,7 @@ public partial class InteractionRoom
         if(_waterRescueToolArmed)
         {
             _title.Text="救援用品";
-            _hint.Text=$"点击落水的油救回岸上；右键收回。每次消耗1份，当前 {Sim.State.WaterRescueTools} 份；可在“购买救援用品”补充。";
+            _hint.Text=$"点击落水的油救回岸上；右键收回。每次消耗1份，当前 {Sim.State.WaterRescueTools} 份；可在“用品补给”补充。";
         }
         else if(!_toolArmed)
         {
@@ -319,7 +320,7 @@ public partial class InteractionRoom
         _modalContents.AddChild(Text("4  小院里按住中键拖动画面，滚轮缩放，“居中”回到中央。空手双击小油，或按 Tab 近看；使用工具时双击仍是操作工具。近看暂停自然时间，回到小院才继续自主找食水、跟随、休息和恢复。近看时用中键转视角，空手也可左键按住环境拖动；装备工具时左键按工具规则交互。滚轮调远近，“正面”恢复视角。转镜头时托举仍保持支撑；要放下小油或放置物品，在空地单击后松开，不要拖动。"));
         _modalContents.AddChild(Text("5  空手按住软球，拖动后松开推球。跟随练习时移动鼠标指路，不用操作人类角色。空格暂停；Del 收起指向的可收纳物品，树叶、河水和软垫不能收起。"));
         _modalContents.AddChild(Text("6  固定具、箱子和悬挂装置要用各自的解除动作；切回空手不会解除装置。脚脚受伤时，把食水放到能吃到的地方，再护理和休息。左右脸可以分别擦洗和护理。"));
-        _modalContents.AddChild(Text("7  油可以落入水中并挣扎，长时间泡水会恶化。选择“救援用品”后点击落水的油，带回有空位的岸边；每次成功救助用掉1份。左侧“购买救援用品”可以补充，测试阶段不扣金钱。救起后仍要擦干、检查伤势。"));
+        _modalContents.AddChild(Text("7  油可以落入水中并挣扎，长时间泡水会恶化。选择“救援用品”后点击落水的油，带回有空位的岸边；每次成功救助用掉1份。左侧“用品补给”可补充食物、护理包和救援用品；测试阶段购买不扣钱，使用仍消耗库存。救起后仍要擦干、检查伤势。"));
         _modalContents.AddChild(Text("8  茎生时可以按住外茎支护，也可以拿剪具持续接触剪下整窝。离体后先购买空瓶，再对准茎按住装瓶；空手拿起地面水杯或饭饭，对准瓶口持续补给。进度条显示这次连续接触，移开就重新计时。整瓶用手掌拖动，松手放稳；失败或出生后的残留可以收拾，亲缘和经历会保留。"));
         _modalContents.AddChild(Text("招呼、夸奖、安慰不必连点。嘴里有食物时会先咽下再回应，歇着时也可能慢一点；先看它的表情和回应。",13,"78816e"));
         _modalContents.AddChild(Text("嘴边受伤会让接食和咽下更慢；严重时说话含混，暂时唱不清小调或完整讲述。它仍能听懂，也能用声音和动作表达需要。",13,"78816e"));
@@ -365,18 +366,18 @@ public partial class InteractionRoom
             "拿出后对准外茎按住1.6秒，完成支护才消耗一包。支护有时限，仍需照顾母体的吃喝和安全。":
             "拿出后按住适用伤处，完成护理才结算一包。稳定伤势后仍需进食和休息；反复包扎不会立刻恢复。"));
         _modalContents.AddChild(Text(Sim.State.UnlimitedResources?
-            (stem?"测试无限资源已开启：购买不扣钱，茎部支护仍消耗真实库存。":"测试无限资源已开启：购买不扣钱，身体护理不扣库存。"):
+            (Sim.UsesConsumableStock||stem?"测试阶段购买不扣钱；每次实际完成护理仍消耗1包库存。":"沙盒无限物资已开启，身体护理不扣库存。"):
             $"现有金钱：{Sim.State.Money} 元 · 每次完成护理消耗1包"));
         _modalContents.AddChild(Text($"护理包库存：{Sim.State.Medicine}"));
         if(!string.IsNullOrEmpty(result))_modalContents.AddChild(Text(result,14));
         var buy=Button($"购买{count}包",()=>
         {
             bool purchased=Sim.BuyMedicine();
-            ShowMedicineSupplies(purchased?$"已入库{count}包护理用品。":"金钱不足，尚未购买。",equipAction);
+            ShowMedicineSupplies(purchased?$"已入库{count}包护理用品。":"未能购买，请检查金钱和库存；原用品没有减少。",equipAction);
         });
-        buy.Disabled=!Sim.State.UnlimitedResources&&Sim.State.Money<price;_modalContents.AddChild(buy);
+        buy.Disabled=Sim.State.Medicine>int.MaxValue-count||!Sim.State.UnlimitedResources&&Sim.State.Money<price;_modalContents.AddChild(buy);
         var equip=Button(stem?"拿起茎部支护用品":"拿起护理用品",()=>{CloseModal();SelectQuickTool(equipAction);});
-        equip.Disabled=(stem||!Sim.State.UnlimitedResources)&&Sim.State.Medicine<=0;_modalContents.AddChild(equip);
+        equip.Disabled=(stem||Sim.UsesConsumableStock)&&Sim.State.Medicine<=0;_modalContents.AddChild(equip);
         _modalContents.AddChild(Button("返回小院",CloseModal));
     }
 

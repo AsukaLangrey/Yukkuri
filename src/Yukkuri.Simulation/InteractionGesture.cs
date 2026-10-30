@@ -128,11 +128,15 @@ public sealed partial class WorldSimulation
         RoomObject? ball=input.Action==InteractionAction.PlayBall?State.RoomObjects.FirstOrDefault(o=>o.Kind==RoomObjectKind.Ball&&!o.Stored&&o.RegionId==oil.RegionId&&(input.ObjectId==null||o.Id==input.ObjectId)):null;
         if(input.Action==InteractionAction.PlayBall&&ball==null)return Unavailable("先点到当前小院里可见的软球，再拖动。 ");
         if (input.Action == InteractionAction.Care && !NeedsInteractionCare(oil)) return Unavailable("目前没有需要使用护理包的伤势。 ");
+        if(input.Action==InteractionAction.Care&&UsesConsumableStock&&State.Medicine<=0)
+            return Unavailable("护理用品不足，先到补给处准备一包。 ");
         if(input.Action==InteractionAction.Care&&FamilyRules.UnderIntervention(oil))
             CancelIntervention(oil,"开始伤势护理，繁育干预已停止；已用材料和关系后果保留。");
-        if(input.Action==InteractionAction.Tease&&!State.UnlimitedResources&&State.Food<=0)return Unavailable("手边没有甜甜，先准备一份食物。 ");
+        if(input.Action==InteractionAction.Tease&&UsesConsumableStock&&State.Food<=0)return Unavailable("手边没有甜甜，先准备一份食物。 ");
         bool foodAction=input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
         if(foodAction&&input.ObjectId!=null&&OfferedSupply(input,oil)==null)return Unavailable("刚才拿起的食水已经不在手里。 ");
+        if(foodAction&&input.Action!=InteractionAction.Drink&&input.ObjectId==null&&UsesConsumableStock&&State.Food<=0)
+            return Unavailable("食物已经用完，先准备一份。 ");
         var g = new ContactGesture { TargetId = id, Input = input,ObjectId=foodAction?input.ObjectId:ball?.Id };
         if(input.Action==InteractionAction.RepairAccessory&&i.Accessory.Integrity>=100)
         {g.RepairFinished=true;g.CompletionReleased=true;}
@@ -403,10 +407,10 @@ public sealed partial class WorldSimulation
                 if (g.ContactElapsed < .65) return g.Last = new(true, drinking?"杯沿到了嘴边，等它自己抿一口……":"递到了嘴边，等它接过去……", "", "offer");
                 var supply=OfferedSupply(input,c);
                 if(input.ObjectId!=null&&supply==null)return Refuse("suspicious-food","手里的这一份已经没有了，先收手。 ");
-                if (input.ObjectId==null&&input.Action != InteractionAction.Drink && !State.UnlimitedResources && State.Food <= 0)
+                if (input.ObjectId==null&&input.Action != InteractionAction.Drink && UsesConsumableStock && State.Food <= 0)
                     return Refuse("hungry", "食物已经用完。 ");
                 if(supply!=null)supply.Portions--;
-                else if (input.Action != InteractionAction.Drink && !State.UnlimitedResources) State.Food--;
+                else if (input.Action != InteractionAction.Drink && UsesConsumableStock) State.Food--;
                 c.Fullness = Clamp100(c.Fullness + (input.Action == InteractionAction.FeedMeal ? 19 : input.Action == InteractionAction.FeedSweet ? 9 : 0));
                 i.BeginIntake(drinking?IntakeKind.Water:input.Action==InteractionAction.FeedSweet?IntakeKind.Sweet:IntakeKind.Meal);
                 if(!drinking&&i.Digestion.Symptomatic)i.Digestion.NextFoodAt=State.WorldSeconds+6;
@@ -472,9 +476,9 @@ public sealed partial class WorldSimulation
                 if (g.Applied) return g.Last=g.Last with {Speech=c.Speech,Pose=InteractionPresentation.Pose(c),Changed=false};
                 if(!CanCareAt(c,input.Part,input.Side))return g.Last=new(true,"这里不是需要处理的伤处。先看看，再把护理包移到相应部位。",c.Speech,"invite");
                 if (g.ContactElapsed < 1.6) return g.Last = new(true, "正在处理伤处……保持接触，松开可中止。", c.Speech, "nursing");
-                if (!State.UnlimitedResources && State.Medicine <= 0) return Refuse("inspect", "护理用品不足。 ");
+                if (UsesConsumableStock && State.Medicine <= 0) return Refuse("inspect", "护理用品不足。 ");
                 if(!ApplyBodyCare(c,input.Part,input.Side))return g.Last=Unavailable("刚做过护理，需要时间观察恢复；重复包扎不能加快愈合。");
-                if (!State.UnlimitedResources) State.Medicine--;
+                if (UsesConsumableStock) State.Medicine--;
                 i.CareContinuity = Clamp100(i.CareContinuity + 5);
                 if(i.Digestion.Symptomatic&&input.Part==BodyPart.Side)
                     i.Digestion.CareRemaining=Math.Max(i.Digestion.CareRemaining,60);
@@ -484,6 +488,7 @@ public sealed partial class WorldSimulation
                 c.TargetX = c.X; c.TargetZ = c.Z; i.WaitRemaining = .5; g.Applied = true;
                 return Say("blocked", Expression.Defiant, "它前方被挡住，转头寻找其他方向。", "blocked");
             case InteractionAction.Tease:
+                if(UsesConsumableStock&&State.Food<=0)return Refuse("hungry","手边的甜甜已经没有了，先收手补给。 ");
                 if(c.Fullness>=98)return Refuse("full","它已经吃饱，对眼前的甜甜没有兴趣。 ");
                 if(i.FoodSuspicion>=75)
                 {c.TargetX=c.X;c.TargetZ=c.Z;return Refuse("suspicious-food","它停下追逐，不再相信这次递来的甜甜。 ");}

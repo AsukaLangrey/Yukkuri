@@ -64,7 +64,7 @@ public partial class InteractionRoom
         });parent.AddChild(_immediateRescue);
         _immediateCare=Button("拿护理用品",()=>
         {
-            if(Sim.State.UnlimitedResources||Sim.State.Medicine>0)SelectQuickTool(InteractionAction.Care);
+            if(!Sim.UsesConsumableStock||Sim.State.Medicine>0)SelectQuickTool(InteractionAction.Care);
             else ShowMedicineSupplies();
         });parent.AddChild(_immediateCare);
         _immediateDry=Button("拿毛巾 · 擦干身体",()=>SelectQuickTool(InteractionAction.Dry));parent.AddChild(_immediateDry);
@@ -123,7 +123,7 @@ public partial class InteractionRoom
         // Equipping is harmless while paused. Actual rescue retains its simulation pause gate.
         _immediateRescue.Disabled=false;
         _immediateCare.Visible=critical&&!inWater;
-        _immediateCare.Text=Sim.State.UnlimitedResources?"拿护理用品 · 按住伤处":
+        _immediateCare.Text=!Sim.UsesConsumableStock?"拿护理用品 · 按住伤处":
             Sim.State.Medicine>0?$"拿护理用品 · 余 {Sim.State.Medicine} 包":"购买护理用品";
         _immediateCare.TooltipText="拿出后，按住适用伤处完成护理。不会自动治疗或省略接触；稳定后仍要照护。";
         _immediateDry.Visible=recovery&&!critical&&!inWater;

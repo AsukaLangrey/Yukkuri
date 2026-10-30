@@ -187,6 +187,42 @@ Check("landing absorbs impact and settles without inversion or runaway motion",(
     }
     return true;
 });
+Check("guarded impacts stay bounded without travel and resolve continuously into the protective posture",()=>
+{
+    foreach(string pose in new[]{"slap","flick","poke"})foreach(bool restrained in new[]{false,true})
+    {
+        for(int n=0;n<220;n++)
+        {
+            var m=ActorReactionMotion.SampleGuardedImpact(pose,n/1000f,new(1,2),restrained)!.Value;
+            if(!float.IsFinite(m.Scale.LengthSquared())||!float.IsFinite(m.RotationDegrees.LengthSquared())||m.Offset!=System.Numerics.Vector3.Zero||
+                m.Scale.X<.98f||m.Scale.X>1.02f||m.Scale.Y<.95f||m.Scale.Y>1.05f||m.Scale.Z<.98f||m.Scale.Z>1.02f||
+                m.RotationDegrees.Length()>5.00001f||restrained&&m.RotationDegrees!=System.Numerics.Vector3.Zero)return false;
+        }
+        var end=ActorReactionMotion.SampleGuardedImpact(pose,ActorReactionMotion.GuardedImpactDuration-.00001f,new(1,2),restrained)!.Value;
+        if(System.Numerics.Vector3.Distance(end.Scale,System.Numerics.Vector3.One)>.000001f||end.RotationDegrees.Length()>.000001f||
+            ActorReactionMotion.SampleGuardedImpact(pose,ActorReactionMotion.GuardedImpactDuration,new(1,2),restrained)!=null)return false;
+    }
+    return true;
+});
+Check("guarded impact direction changes only recoil and unrelated or invalid events produce no overlay",()=>
+{
+    foreach(string pose in new[]{"slap","flick","poke"})
+    {
+        var right=ActorReactionMotion.SampleGuardedImpact(pose,.03f,new(1,0))!.Value;
+        var left=ActorReactionMotion.SampleGuardedImpact(pose,.03f,new(-1,0))!.Value;
+        if(right.Scale!=left.Scale||right.Offset!=left.Offset||right.RotationDegrees!=-left.RotationDegrees)return false;
+        foreach(float age in new[]{-.1f,float.NaN,float.PositiveInfinity,1f})
+            if(ActorReactionMotion.SampleGuardedImpact(pose,age,new(1,0))!=null)return false;
+        foreach(var direction in new[]{System.Numerics.Vector2.Zero,new System.Numerics.Vector2(float.NaN,0),new System.Numerics.Vector2(0,float.PositiveInfinity)})
+        {
+            var m=ActorReactionMotion.SampleGuardedImpact(pose,0,direction)!.Value;
+            if(!float.IsFinite(m.Scale.LengthSquared())||!float.IsFinite(m.RotationDegrees.LengthSquared()))return false;
+        }
+    }
+    foreach(string pose in new[]{"guard","care","burn-tense","dead","swallow",""})
+        if(ActorReactionMotion.SampleGuardedImpact(pose,0,new(1,0))!=null)return false;
+    return true;
+});
 Check("repeated impacts replay their response while speech during a held motion does not restart its cycle",()=>
 {
     var clock=new ActorPoseClock();clock.Advance("flick",1,.1f,false);

@@ -325,3 +325,17 @@ CutStem 对附着茎连续接触 1.6 秒；先找母体旁可见、干燥、足�
 本批新增模拟 `HungerFeeding.cs`；修改 `CreaturePersonality.cs`、`InteractionState.cs`、`InteractionValidation.cs`、`FamilyReproduction.cs`、`InteractionWater.cs`、`InteractionInjury.cs`、`PeerAttackContinuity.cs`。检查为上述新项目两文件、`Interaction.PeerThreat/Program.cs`、`Interaction.WaterEmotion/Program.cs`，以及本交接。ActorGeometry 的 B12/B14 独立改动由 root 分批整合，不计入 A10。未修改 Game 或操作 Git。
 
 本批仍只做源码读写和静态审查，14 组及旧回归未运行、未编译。接触仍使用既有 FamilyInContact（双方占地半径加 .28）的近身规则，本批没有验证嘴部精确物理接触；Godot 实际表现与远程运行结果尚未确认。不包含整只吞入或肢体拆分，不把这一有限袭咬链称为那些更大范围玩法的完成。
+
+## 第十一批：测试免费购买、真实用品库存（源码冻结）
+
+新增只读 `WorldSimulation.UsesConsumableStock => State.InteractionPlaytest || !State.UnlimitedResources`。本轮小院测试保留免费购买，但手喂、放地、教学等待使用的食物，以及普通护理/旧护理入口/雇员护理都需要并消耗真实库存；不改变非小院旧沙盒无限物资语义。金钱仍只由原 UnlimitedResources 控制，有限模式原价购买。公开 `FoodBundlePrice=10`、`FoodBundleCount=20`；原护理 15 元 3 包常量不变。水没有新增仓库数值，水域救援、外茎支护、培养瓶和诱导用品沿用本来已真实扣库存的路径。
+
+BuyFood/BuyMedicine 在完整一包放不下 int 合法范围时先拒绝，钱、库存和日志均不部分结算；没有暗中夹掉旧档高库存。Refill 同样先确认食盆容量再扣实际仓库份额。PutAway 先计入自然摄食尚未入口的预约份额，确认所有退回份额均能容纳，再取消相关递送/预约、归还一次并移除实体；已入口份额不会退款，重复收取不复制。实际手持供应物入口只扣该实体，不再重复扣仓库。
+
+教学等待在写入学习记录或抽取理解概率之前检查需要新增的食物、库存和可用放置位置；已有手持/搬运或不可见食物不充当眼前练习餐。取消练习不会另行退一份，实物仍须真实收起。Tease 只要求有真实未食用食物，持续过程中也重验；它仍不是喂食工具，不消费或凭空复制。护理开始时缺货即拒绝，不先取消繁育干预；持续护理仍在实际成功之后扣一次。雇员危急护理也改为身体护理成功才消费。
+
+新增 `checks/Interaction.Inventory/` 两文件，共 12 组检查源码：测试免费补货与一次手喂；取消/暂停/缺货；放地后手喂实物不双扣；自然预约和已入口归还区别；满仓拒绝不先取消预约；真实护理前后及持续手势；旧 Feed/Contact 护理入口；等待教学与逗食；免费和付费完整交易及 int 边界；食盆实际补充与溢出拒绝；旧非小院沙盒兼容；有限模式真实雇员护理。AffectionJourney 仅在实际缺粮时通过 BuyFood 免费购买，原陌生起点、关系门槛、实际动作和时间断言全部保留，未直接填库存。
+
+本批新增模拟 `ConsumableInventory.cs`；修改 `InteractionGesture.cs`、`InteractionWorld.cs`、`InteractionBehavior.cs`、`WorldSimulation.cs`、`MilestoneInteraction.cs`、`MilestoneWorld.cs`。新增上述检查项目两文件，修改 `checks/Interaction.AffectionJourney/Program.cs` 和本交接。root 接用品补给/库存/帮助，未由本分工修改 Game。B15/B16 的 ActorGeometry 新增检查单独冻结交 root，不属于库存交付。
+
+只进行源码读写和静态审查，没有运行项目、编译器、检查、测试、渲染或 Git。12 组新检查、长爱线补货和旧物品/照护/自然取食回归均等待独立远程验证；没有把源码检查存在称为运行通过。

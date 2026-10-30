@@ -192,7 +192,7 @@ public sealed partial class WorldSimulation
     public const int MedicineBundleCount=3;
     public bool BuyMedicine()
     {
-        if(!State.UnlimitedResources&&State.Money<MedicineBundlePrice)return false;
+        if(State.Medicine>int.MaxValue-MedicineBundleCount||!State.UnlimitedResources&&State.Money<MedicineBundlePrice)return false;
         if(!State.UnlimitedResources)State.Money-=MedicineBundlePrice;
         State.Medicine+=MedicineBundleCount;Log($"补给：{MedicineBundleCount}份护理包入库。");return true;
     }

@@ -4,6 +4,23 @@ using System.Numerics;
 public readonly record struct ReactionMotion(Vector3 Scale,Vector3 Offset,Vector3 RotationDegrees);
 public static class ActorReactionMotion
 {
+    public const float GuardedImpactDuration=.22f;
+    // A brief resolved impact may sit on top of a protective posture. It has no
+    // travel offset: actual displacement remains entirely in the simulation.
+    public static ReactionMotion? SampleGuardedImpact(string impact,float age,Vector2 direction,bool restrained=false)
+    {
+        float strength=impact switch {"slap"=>1,"flick"=>.65f,"poke"=>.45f,_=>0};
+        if(strength<=0||!float.IsFinite(age)||age<0||age>=GuardedImpactDuration)return null;
+        if(!float.IsFinite(direction.X)||!float.IsFinite(direction.Y)||direction.LengthSquared()<.00001f)
+            direction=new(0,-1);
+        else direction=Vector2.Normalize(direction);
+        float t=age/GuardedImpactDuration;
+        float recoil=(1-t)*(1-t)*MathF.Cos(t*MathF.Tau)*strength;
+        float compression=recoil*(restrained?.025f:.045f);
+        float angle=restrained?0:recoil*5;
+        return new(new(1+compression*.35f,1-compression,1+compression*.35f),Vector3.Zero,
+            new(direction.Y*angle,0,-direction.X*angle));
+    }
     public static float GuardYaw(double leftCheek,double rightCheek)=>rightCheek>leftCheek+10?15:-15;
     public static int SingingMouthFrame(float age)
     {

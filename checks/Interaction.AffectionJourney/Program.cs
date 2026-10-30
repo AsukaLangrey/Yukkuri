@@ -136,6 +136,8 @@ sealed class AffectionJourney(WorldSimulation sim,Creature mother,Creature fathe
 
     private void Offer(Creature c,InteractionAction action)
     {
+        if(action!=InteractionAction.Drink&&sim.UsesConsumableStock&&sim.State.Food==0&&!sim.BuyFood())
+            throw new Exception("actual household food replenishment failed");
         var input=new InteractionInput(action,BodyPart.Mouth,.15,.1,X:c.X,Z:c.Z);
         if(!sim.BeginInteractionGesture(c.Id,input).Success)return;
         bool accepted=false;
