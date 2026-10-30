@@ -5,13 +5,27 @@ using Yukkuri.Simulation;
 public static class ActorDressingSurface
 {
     public const int Rows=10,Sides=48;
+    public const float BackingFoldMaximum=.0015f;
     private static float Rounded(float value)=>MathF.CopySign(MathF.Pow(MathF.Abs(value),.48f),value);
+    public static float BackingFoldDepth(float radius,float angle)
+    {
+        // Only the exposed backing beside the gauze folds. The center and the
+        // original outer bevel keep their exact surface and support geometry.
+        if(radius<=.56f||radius>=.88f)return 0;
+        float x=Rounded(MathF.Cos(angle))*radius,y=Rounded(MathF.Sin(angle))*radius;
+        float across=Math.Clamp(1-MathF.Abs(MathF.Abs(x)-.70f)/.14f,0,1);
+        float rim=Math.Clamp((.88f-radius)/.08f,0,1);
+        float along=MathF.Max(0,1-y*y);
+        across=across*across*(3-2*across);rim=rim*rim*(3-2*rim);
+        return BackingFoldMaximum*across*along*along*rim;
+    }
     public static Vector3 Point(BodySurfaceMark site,float radius,float angle,bool pad=false)
     {
         var outline=new Vector2(Rounded(MathF.Cos(angle)),Rounded(MathF.Sin(angle)))*radius;
         // Both layers taper onto the surface below, so the edge is not a floating paper cutout.
         float bevel=Math.Clamp((radius-.88f)/.12f,0,1);bevel=bevel*bevel*(3-2*bevel);
         float offset=pad?.023f-.004f*bevel:.019f-.012f*bevel;
+        if(!pad)offset-=BackingFoldDepth(radius,angle);
         if(pad)site=site with {Size=site.Size*new Vector2(.46f,.76f)};
         return ActorSurfaceMarks.Project(site,outline,offset);
     }

@@ -963,6 +963,70 @@ Check("dressing tape and gauze follow the selected skin or hair with a closed ta
     }
     return true;
 });
+Check("backing folds stay within the old shell while preserving the gauze center and outer bevel",()=>
+{
+    bool folded=false;
+    foreach(var site in ActorSurfaceMarks.Dressing)for(int row=0;row<=50;row++)for(int n=0;n<96;n++)
+    {
+        float radius=row/50f,angle=n*MathF.Tau/96;
+        float depth=ActorDressingSurface.BackingFoldDepth(radius,angle);
+        if(!float.IsFinite(depth)||depth<0||depth>ActorDressingSurface.BackingFoldMaximum+.0000001f)return false;
+        if(radius<=.56f||radius>=.88f){if(depth!=0)return false;}
+        if(MathF.Abs(depth-ActorDressingSurface.BackingFoldDepth(radius,-angle))>.000001f||
+            MathF.Abs(depth-ActorDressingSurface.BackingFoldDepth(radius,MathF.PI-angle))>.000001f)return false;
+        folded|=depth>.0001f;
+        float Round(float value)=>MathF.CopySign(MathF.Pow(MathF.Abs(value),.48f),value);
+        var outline=new System.Numerics.Vector2(Round(MathF.Cos(angle)),Round(MathF.Sin(angle)))*radius;
+        float bevel=Math.Clamp((radius-.88f)/.12f,0,1);bevel=bevel*bevel*(3-2*bevel);
+        foreach(bool pad in new[]{false,true})
+        {
+            var sampled=pad?site with {Size=site.Size*new System.Numerics.Vector2(.46f,.76f)}:site;
+            float oldOffset=pad?.023f-.004f*bevel:.019f-.012f*bevel;
+            var original=ActorSurfaceMarks.Project(sampled,outline,oldOffset);
+            var basePoint=ActorSurfaceMarks.Project(sampled,outline,0);
+            var current=ActorDressingSurface.Point(site,radius,angle,pad);
+            float displacement=System.Numerics.Vector3.Distance(current,original);
+            if(!float.IsFinite(current.Length())||MathF.Abs(displacement-(pad?0:depth))>.000001f)return false;
+            // Projection offsets are along the same unit surface normal; the
+            // fold removes height without moving sideways or entering skin.
+            var expected=ActorSurfaceMarks.Project(sampled,outline,oldOffset-(pad?0:depth));
+            if(System.Numerics.Vector3.Distance(current,expected)>.000001f||
+                System.Numerics.Vector3.Distance(current,basePoint)<(pad?.019f:.007f)-.000001f)return false;
+        }
+    }
+    foreach(float boundary in new[]{.56f,.88f})for(int n=0;n<96;n++)
+    {
+        float angle=n*MathF.Tau/96;
+        if(ActorDressingSurface.BackingFoldDepth(boundary,angle)!=0||
+            MathF.Abs(ActorDressingSurface.BackingFoldDepth(boundary-.00001f,angle)-
+                ActorDressingSurface.BackingFoldDepth(boundary+.00001f,angle))>.000001f)return false;
+    }
+    return folded;
+});
+Check("dressing support uses the actual folded backing and gauze mesh samples",()=>
+{
+    var life=new Yukkuri.Simulation.InteractionLife();
+    foreach(var site in ActorSurfaceMarks.Dressing)life.Dress(site.Part,site.Side);
+    foreach(float pitch in new[]{0f,-105,125})foreach(float roll in new[]{0f,70})
+    {
+        var scale=new System.Numerics.Vector3(.89f,.73f,.92f);
+        var rotation=System.Numerics.Quaternion.CreateFromYawPitchRoll(.3f,pitch*MathF.PI/180,roll*MathF.PI/180);
+        var origin=new System.Numerics.Vector3(.1f,.37f,.05f);
+        var transform=System.Numerics.Matrix4x4.CreateScale(scale)*System.Numerics.Matrix4x4.CreateFromQuaternion(rotation)*
+            System.Numerics.Matrix4x4.CreateTranslation(origin);
+        float lowest=float.PositiveInfinity,lift=0;
+        foreach(var site in ActorSurfaceMarks.Dressing)foreach(bool pad in new[]{false,true})
+            for(int row=0;row<=ActorDressingSurface.Rows;row++)for(int n=0;n<ActorDressingSurface.Sides;n++)
+            {
+                var p=ActorDressingSurface.Point(site,row/(float)ActorDressingSurface.Rows,n*MathF.Tau/ActorDressingSurface.Sides,pad);
+                lowest=MathF.Min(lowest,System.Numerics.Vector3.Transform(p,transform).Y);
+                lift=MathF.Max(lift,ActorCushionSurface.PointLift(new[]{p},transform,System.Numerics.Vector3.Zero,.004f));
+            }
+        if(MathF.Abs(ActorDressingSurface.LowestY(life,transform)-lowest)>.000001f||
+            MathF.Abs(ActorDressingSurface.CushionLift(life,System.Numerics.Vector3.Zero,origin,scale,rotation)-lift)>.000001f)return false;
+    }
+    return true;
+});
 Check("visible care dressings clear the cushion under a resting or rolled body",()=>
 {
     int oldPenetrations=0;

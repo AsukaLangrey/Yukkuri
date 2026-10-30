@@ -12,14 +12,14 @@ public partial class InteractionRoom
     private VBoxContainer _quickTools=null!;
     private HFlowContainer _choiceList=null!;
     private Label _title=null!,_hint=null!,_feedback=null!,_speechLabel=null!,_who=null!,_condition=null!,_memory=null!,_clockLabel=null!,_hoverLabel=null!,_forceLabel=null!;
-    private Button _closeButton=null!,_pauseButton=null!,_gentleTab=null!,_roughTab=null!,_resetViewButton=null!;
+    private Button _closeButton=null!,_pauseButton=null!,_gentleTab=null!,_roughTab=null!,_resetViewButton=null!,_rescueQuickTool=null!;
     private bool _roughTabSelected,_modalOpen,_pauseBeforeModal;
     private bool _browseTools,_directToolMode;
     private HSlider _forceSlider=null!;
     private readonly System.Collections.Generic.Dictionary<InteractionAction,float> _toolForces=new();
     private readonly System.Collections.Generic.Dictionary<InteractionAction,Button> _directToolButtons=new();
     private InteractionAction? _highlightedDirectTool;
-    private bool _directHighlightInitialized;
+    private bool _directHighlightInitialized,_highlightedRescueTool;
     private InteractionGroup _group=InteractionCatalog.Groups[0];
 
     private StyleBoxFlat RoomStyle(string color,int radius=12,int pad=14,string? border=null)
@@ -41,6 +41,15 @@ public partial class InteractionRoom
         b.AddThemeStyleboxOverride("pressed",RoomStyle("c6cfb9",8,9));
         b.AddThemeColorOverride("font_color",new Color(active?"fff7df":"405247"));
         b.Pressed+=action;return b;
+    }
+    private void SetQuickToolHighlight(Button button,bool active)
+    {
+        button.AddThemeStyleboxOverride("normal",RoomStyle(active?"566e5d":"eae9d9",8,9));
+        button.AddThemeStyleboxOverride("hover",RoomStyle(active?"647d6a":"dedfca",8,9));
+        var textColor=new Color(active?"fff7df":"405247");
+        button.AddThemeColorOverride("font_color",textColor);
+        button.AddThemeColorOverride("font_hover_color",textColor);
+        button.AddThemeColorOverride("font_pressed_color",new Color("405247"));
     }
     private PanelContainer Panel(Control parent,string color="f6f2e5")
     {var p=new PanelContainer();p.AddThemeStyleboxOverride("panel",RoomStyle(color));parent.AddChild(p);return p;}
@@ -76,7 +85,7 @@ public partial class InteractionRoom
             ("零食 · 点油喂 / 点地放",InteractionAction.FeedSweet),("饭饭 · 点油喂 / 点地放",InteractionAction.FeedMeal),
             ("清水 · 点油喂 / 点地放",InteractionAction.Drink)})
         {var action=entry.Item2;var button=Button(entry.Item1,()=>SelectQuickTool(action));_directToolButtons[action]=button;_quickTools.AddChild(button);}
-        _quickTools.AddChild(Button("救援用品 · 点油救起",ArmWaterRescueTool));
+        _rescueQuickTool=Button("救援用品 · 点油救起",ArmWaterRescueTool);_quickTools.AddChild(_rescueQuickTool);
         _quickTools.AddChild(Button("用品补给 · 查看库存",()=>ShowSuppliesOverview()));
         _supplyStockLabel=Text("",12,"78816e");_quickTools.AddChild(_supplyStockLabel);
         foreach(var entry in new[]{("说话","P01"),("毛巾","P07"),("护理用品","P11"),("包裹","P05"),("球与小宝物","P09")})
@@ -222,15 +231,12 @@ public partial class InteractionRoom
         RefreshYardHelpButton();
         _choiceList.Visible=_toolArmed&&!_directToolMode&&!_waterRescueToolArmed;
         InteractionAction? highlighted=_toolArmed&&!_waterRescueToolArmed?_action:null;
-        if(!_directHighlightInitialized||highlighted!=_highlightedDirectTool)
+        if(!_directHighlightInitialized||highlighted!=_highlightedDirectTool||_highlightedRescueTool!=_waterRescueToolArmed)
         {
-            _directHighlightInitialized=true;_highlightedDirectTool=highlighted;
+            _directHighlightInitialized=true;_highlightedDirectTool=highlighted;_highlightedRescueTool=_waterRescueToolArmed;
             foreach(var pair in _directToolButtons)
-            {
-                bool active=highlighted==pair.Key;
-                pair.Value.AddThemeStyleboxOverride("normal",RoomStyle(active?"566e5d":"eae9d9",8,9));
-                pair.Value.AddThemeColorOverride("font_color",new Color(active?"fff7df":"405247"));
-            }
+                SetQuickToolHighlight(pair.Value,highlighted==pair.Key);
+            SetQuickToolHighlight(_rescueQuickTool,_waterRescueToolArmed);
         }
         var c=Sim.Selected;if(c==null)return;var i=c.Interaction;
         RefreshVitalMeters(c);
