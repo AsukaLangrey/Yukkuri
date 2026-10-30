@@ -50,7 +50,7 @@ public sealed partial class WorldSimulation
         c.Body.UpgradeRoute is not ("flying" or "body" or "bodied");
 
     public static bool CanSelfMove(Creature c) => c.Condition == PhysicalCondition.Active &&
-        !c.Family.ColdStorage.Stored &&
+        !c.Family.ColdStorage.Stored &&!c.Interaction.Water.InWater&&
         c.Interaction.Restraint == RestraintKind.None && !c.Interaction.Carried &&
         !c.Interaction.Falling && !c.Interaction.Supine && !c.Interaction.Physiology.Active &&
         (!UsesGroundFoot(c) || c.Interaction.FootIntegrity > 25);
@@ -78,8 +78,10 @@ public sealed partial class WorldSimulation
         { expression=Expression.Exhausted; situation="hurt"; pose="help"; }
         else if (c.Pain >= 40 && expression is Expression.Content or Expression.Delighted)
         { expression=Expression.Hurt; situation="touch-sore"; }
-        else if (c.Fear >= 68 && expression is Expression.Content or Expression.Delighted)
+        else if ((c.Fear >= 68||c.Interaction.Emotion.Alarm>=25) && expression is Expression.Content or Expression.Delighted)
         { expression=Expression.Frightened; situation="touch-no"; }
+        else if (c.Interaction.Emotion.Alarm>=12&&expression is Expression.Content or Expression.Delighted)
+        { expression=Expression.Worried; }
         React(c, expression, OilDialogue.Say(c, situation), description, 4.5);
         c.Interaction.ReactionPose=pose;c.Interaction.ReactionPoseRemaining=2.2;
         c.Interaction.ReactionSituation=situation;c.Interaction.ReactionRefused=refused;
@@ -119,7 +121,7 @@ public sealed partial class WorldSimulation
         c.Fear = Clamp100(c.Fear + amount * (1.2 - c.Courage * .5));
         c.Resentment = Clamp100(c.Resentment + amount * .55);
         c.Trust = Clamp100(c.Trust - amount * .45);
-        if (damage <= 0) RememberPlayerHarm(c, amount * .35,part);
+        if (damage <= 0) RememberPlayerHarm(c, amount * .35,part,cause);
         if (damage > 0) Hurt(c, damage, cause, "player",part,side);
     }
 
@@ -137,11 +139,16 @@ public sealed partial class WorldSimulation
             Math.Abs(input.X) > 8 || Math.Abs(input.Z) > 8 || input.Height is < 0 or > 3)
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
+        if(input.Action is InteractionAction.Punch or InteractionAction.Burn&&input.Part==BodyPart.Accessory)
+            return "这里是饰品，把工具移到实际身体部位。";
         if(c.Family.ColdStorage.Stored)return "它还在冷藏中，先从家庭照护里取出。";
         if(FamilyRules.UnderIntervention(c)&&input.Action is not (InteractionAction.Care or InteractionAction.Inspect))
             return "繁育干预仍在进行，先停止；必要的伤势护理可以直接中断它。";
         if (State.Mode == PlayMode.CloseUp && State.SelectedId != c.Id) return "先退出特写，再选择另一只油。";
         if (c.Condition == PhysicalCondition.Dead) return "它已经无法回应。可以读取此前存档。";
+        if(WaterEnvironment.IsInWater(State,c)&&input.Action is not (InteractionAction.Inspect or
+            InteractionAction.Release or InteractionAction.OpenBox or InteractionAction.Unwrap))
+            return "它正在水里，需要先解除固定并使用水域救援用品；普通托起不能代替救援。";
         if (c.Condition == PhysicalCondition.Critical && input.Action is not
             (InteractionAction.Care or InteractionAction.Inspect or InteractionAction.Lift or
              InteractionAction.PutDown or InteractionAction.Lower or InteractionAction.Release or
@@ -195,9 +202,14 @@ public sealed partial class WorldSimulation
                 return BeginConversation(oil,input.Action);
             case InteractionAction.PutDown:
                 if (!life.Carried) return Unavailable("先把它托起来，再选择落点。 ");
-                if(!CanOccupyRoom(oil,input.X,input.Z))return Unavailable("这里被身体或装置占着，仍在托着它；换一个空落点。 ");
+                if(!CanOccupyRoom(oil,input.X,input.Z,allowWater:true))return Unavailable("这里被身体或装置占着，仍在托着它；换一个空落点。 ");
                 life.Lowering=false;life.Carried = false; life.Height = 0; life.Falling = false;
                 MoveCreature(oil.Id, input.X, input.Z);
+                if(WaterEnvironment.IsInWater(State,oil))
+                {
+                    EnterWater(oil,true);
+                    return new(true,"它被放进水里，正在挣扎；需要逃出或用救援用品救起。",oil.Speech,"water-struggle",Changed:true);
+                }
                 RecordInteraction(oil, "safe-carry", "被稳稳托着，放到了地面。", 1);
                 return Feedback(oil, "down", Expression.Content, "已经放稳，可以自己活动。", "settle");
             case InteractionAction.Wrap:
@@ -311,10 +323,17 @@ public sealed partial class WorldSimulation
                 return HarshConversation(oil,input.Action);
             case InteractionAction.Flick:
             case InteractionAction.Slap:
-                double severity = input.Action == InteractionAction.Flick ? 1.2 + input.Force * 3 : 3 + input.Force * 7;
-                Distress(oil, severity, Math.Max(0, severity - 1), input.Action == InteractionAction.Flick ? "弹额" : "掌掴",input.Part,input.Side);
+            case InteractionAction.Punch:
+                double severity = input.Action == InteractionAction.Flick ? 1.2 + input.Force * 3 :
+                    input.Action==InteractionAction.Punch?4+input.Force*9:3 + input.Force * 7;
+                Distress(oil, severity, Math.Max(0, severity - 1), input.Action == InteractionAction.Flick ? "弹额" : input.Action==InteractionAction.Punch?"拳头击打":"掌掴",input.Part,input.Side);
                 if(input.Action==InteractionAction.Slap)life.ChangeCheekSensitivity(input.Side,severity);
-                else life.HeadSensitivity = Clamp100(life.HeadSensitivity + severity);
+                else if(input.Action==InteractionAction.Flick)life.HeadSensitivity = Clamp100(life.HeadSensitivity + severity);
+                if(input.Action==InteractionAction.Punch)
+                {
+                    life.HitCount=life.HitRemaining>0&&State.WorldSeconds-life.LastHitAt<=1.5?Math.Min(999,life.HitCount+1):1;
+                    life.LastHitAt=State.WorldSeconds;life.HitRemaining=1.5;
+                }
                 Impulse(oil, input.DirectionX, input.DirectionZ, severity * .16);
                 RecordInteraction(oil, "hand-hurt", "手的突然接触让自己疼痛。", severity);
                 return Feedback(oil, "hurt", Expression.Hurt, "接触产生了位移，它护住刚被碰到的部位。", input.Action == InteractionAction.Flick ? "flick" : "slap");

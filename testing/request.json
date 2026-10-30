@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v17-interaction-depth-K-20261030",
+  "revision": "dot-v18-night-three-lines-A-20261031",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -9,7 +9,7 @@
   "run_timeout_minutes": 50,
   "watched_paths": ["src/", "checks/", "tools/", "assets-source/", "third-party/", "global.json", "NuGet.Config", "toolchain.lock.json", ".gitattributes", "testing/request.json", "testing/PROTOCOL.md", "testing/report-template.json"],
   "required_checks": [
-    "lfs-integrity", "game-build", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
+    "lfs-integrity", "game-build", "Interaction.WaterEmotion", "Interaction.WildSelfCare", "Family.CareInterruption", "Simulation.Smoke", "Milestone.Smoke",
     "Interaction.Smoke", "Input.Intent", "NaturalLife.Smoke",
     "Interaction.Continuity", "Interaction.AutonomyPriority", "Interaction.CompletedNeeds", "ActorGeometry.Smoke", "NaturalLife.Soak", "Interaction.Mouth", "Family.MouthCommunication", "Interaction.MouthPresentation", "Family.PregnancyBoundaries", "Interaction.EmergencyIntervention",
     "Save.Compatibility", "Interaction.Depth", "Interaction.Injury", "Family.Social", "Family.Reproduction", "Family.ColdCare", "Family.Aftermath", "Family.Risk", "Interaction.InjuryPresentation", "Family.Compatibility", "Family.CareLearning", "Family.Teaching", "Family.AdoptionJourney", "Family.AssistedCare", "Family.Growth", "Interaction.StateBoundaries", "Interaction.HumanCompany", "Family.Protection", "Family.Presentation", "runtime-smoke", "visual-interaction-review"
@@ -22,6 +22,11 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "testing/night-three-lines-20261031.md",
+    "planning/stages/night-three-lines-20261031/PLAN.md",
+    "planning/stages/night-three-lines-20261031/gameplay.md",
+    "planning/stages/night-three-lines-20261031/art-input.md",
+    "planning/stages/night-three-lines-20261031/debug.md",
     "planning/stages/interaction-depth-20261030/K.txt",
     "planning/stages/interaction-depth-20261030/K-self-care.txt",
     "planning/stages/interaction-depth-20261030/K-self-care-checks.txt",
@@ -206,6 +211,12 @@
     "普通互动和M01野外后台推进；暂停/特写/离线不推进，旧未启用水分的M01不受默认水分阻挡。存档记住进行时间及锁存结果，真实新伤/护理/托举/搬移/冷藏/干预/分娩/排泄及时取消。旧档缺字段安全默认，坏档拒绝；正在自护不同时被安排为别人送食水。已完成被动护理仍遵守原有限十倍冷藏时钟。",
     "家庭照护取消清理完整任务，实际份额不复制、不重复退款、不跨区瞬移；手接走保持原实物，收起仅归还实际份额。CareLastEvent独立保存双方说明，不覆盖死亡或孕育结果；正常送达仍按真正入口消费。旧照护、收养、孕育、保护及冷藏检查保留。",
     "实际观察野外停下护伤、进行中不泄漏成败、完成或中断后的历史说明与真实姿势优先；家庭面板同时呈现当前递送/真实份额/独立照护记录。完整画面、听感和历史兼容未覆盖项仍保留。c10是独立人工单轮，报告说明自动计划仍暂停；本请求只提供后续获授权执行范围，不自行恢复测试计划。"
+  ],
+  "night_three_lines_A_focus": [
+    "v18保留旧要求和未关闭项。首批新增真实入水/挣扎/逃岸/泡水伤亡、有限救援用品与商店、连续情绪和性格事件、拳头/火机、直接工具输入和只读调试面板。原开发机只有静态审查，新增Interaction.WaterEmotion的16组检查源码尚未执行。固定包含本批的完整SHA，不能用c10或旧源码ZIP结果替代。",
+    "真实鼠标路径验证手掌拖拽放水、拳头连续命中、火机按住/松开/移离、零食单击油自动递一份与单击地面放置。重点观察切工具、暂停、失焦、进入面板均取消相关动作；调试F3、选择个体、筛选分页和复制不穿透场景。普通时间、近看表现时钟和冻结读数分别验证。",
+    "救援保留真实伤残、潮湿、疼痛、惊惧余波；主动制造危险再救起不刷信任。围观反馈须有范围和冷却，持续施害不能按每个渲染帧产生公共事件。危险中的新家庭门槛继续保留旧家庭检查；自主繁育安全与生育表现仍待下一批。",
+    "核对去人类手外观后逻辑接触与支撑仍在，脸部过渡、连击、水中挣扎/濒危/死亡和救后余震连续。新增三个CC0低面资源仅是来源明确的候选，未接入运行。没有图形/声音条件的项目单列未测，不用规则检查代替手感或美术验收。此请求不恢复已暂停的远程自动计划。"
   ],
   "runtime_policy": "仅在用户安排的远程测试机器及其授权范围内执行。桌面/窗口/截图操作依当地明确授权；缺条件如实报告。原开发机禁止运行约束不变。",
   "product_code_changes_allowed": false,

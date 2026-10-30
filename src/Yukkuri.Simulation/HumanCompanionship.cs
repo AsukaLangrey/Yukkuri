@@ -36,7 +36,7 @@ public sealed partial class WorldSimulation
     {
         var i=c.Interaction;
         return c.Condition==PhysicalCondition.Active&&!c.Quarantine&&!c.IsIntruder&&
-            !c.Family.ColdStorage.Stored&&!FamilyRules.UnderIntervention(c)&&
+            !c.Family.ColdStorage.Stored&&!FamilyRules.UnderIntervention(c)&&!i.Water.InWater&&
             c.Pain<25&&c.Fear<60&&c.Resentment<35&&c.Trust>=60&&c.Attachment>=40&&
             i.HumanBond.Familiarity>=8&&i.HumanBond.Safety>=8&&State.WorldSeconds-i.HumanBond.LastHarmAt>=60&&
             !NaturalResources.WantsFood(c)&&!NaturalResources.WantsWater(c)&&c.Energy>=40&&

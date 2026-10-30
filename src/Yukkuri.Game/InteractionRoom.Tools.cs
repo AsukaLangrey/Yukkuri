@@ -32,9 +32,10 @@ public partial class InteractionRoom
         Vector3 point=placing?GroundPoint(mouse):new Vector3((float)c!.X,0,(float)c.Z);
         if(placing&&!TryGroundPoint(mouse,0,out point)){_landingMarker.Visible=false;_landingStem.Visible=false;return;}
         bool clear=Sim.CanPlaceInteractionAt(c!.Id,point.X,point.Z);
+        bool water=WoodlandLayout.HasRiver(Sim.State,c.RegionId)&&point.X>WoodlandLayout.RiverEdge(point.Z);
         _landingMarker.Position=point+Vector3.Up*.028f;
         _landingMarker.Scale=Vector3.One*(float)(WorldSimulation.InteractionFootprint(c)/.60);
-        _landingMarker.MaterialOverride=SceneArt.Mat(clear?"739683":"b66f56");
+        _landingMarker.MaterialOverride=SceneArt.Mat(!clear?"b66f56":water?"5896a3":"739683");
         _landingStem.Visible=!placing;
         float height=(float)c.Interaction.Height;
         _landingStem.Position=point+Vector3.Up*(height*.5f);
@@ -61,26 +62,31 @@ public partial class InteractionRoom
                 InteractionToolArt.CarePad(_hand);break;
             case InteractionAction.RepairAccessory:
                 InteractionToolArt.RepairNeedle(_hand);break;
+            case InteractionAction.Burn:
+                BuildLighterTool(_hand);break;
             case InteractionAction.BurnFeet:
                 InteractionFixtureArt.RoundedBox(_hand,new(0,-.035f,0),new(.24f,.06f,.18f),"777569",.012f);
                 var hotPlate=InteractionFixtureArt.RoundedBox(_hand,new(0,.003f,0),new(.20f,.018f,.14f),"dc9c62",.004f);
                 var hotMaterial=(StandardMaterial3D)hotPlate.MaterialOverride.Duplicate();hotMaterial.EmissionEnabled=true;
                 hotMaterial.Emission=new Color("d38c52");hotMaterial.EmissionEnergyMultiplier=.25f;hotPlate.MaterialOverride=hotMaterial;
                 InteractionFixtureArt.RoundedBox(_hand,new(0,-.04f,.15f),new(.065f,.06f,.20f),"927c64",.014f);break;
-            case InteractionAction.Press:case InteractionAction.Squeeze:case InteractionAction.Hold:case InteractionAction.Slap:
-                SceneArt.Ball(_hand,Vector3.Zero,new(.36f,.10f,.32f),"efc5a4");
-                for(int n=0;n<4;n++)
-                {
-                    float x=(n-1.5f)*.075f;
-                    SceneArt.Ball(_hand,new(x,-.015f,-.18f),new(.07f,.07f,.23f),"f4d4b7");
-                    SceneArt.Ball(_hand,new(x,.013f,-.24f),new(.038f,.004f,.05f),"f9dfcb");
-                }
-                break;
             default:
-                SceneArt.Ball(_hand,Vector3.Zero,new(.17f,.12f,.20f),"efc5a4");
-                SceneArt.Ball(_hand,new(0,0,-.12f),new(.07f,.08f,.20f),"f4d4b7");
-                SceneArt.Ball(_hand,new(0,.033f,-.18f),new(.04f,.004f,.055f),"f9dfcb");break;
+                // Bare-hand actions are conveyed by the cursor and the oil's response.
+                // Keep this transform as the contact/perception anchor, without a human model.
+                break;
         }
         SceneArt.SetRenderLayer(_hand,SceneArt.InteractionLayer);
+    }
+
+    private static void BuildLighterTool(Node3D root)
+    {
+        // Local +Y is the flame tip; PlaceContactTool aligns it with the contacted surface.
+        InteractionFixtureArt.RoundedBox(root,new(0,-.20f,0),new(.115f,.24f,.075f),"728b84",.012f);
+        InteractionFixtureArt.RoundedBox(root,new(0,-.065f,0),new(.12f,.055f,.08f),"a8aaa1",.007f);
+        var flame=SceneArt.Ball(root,new(0,-.021f,0),new(.027f,.065f,.027f),"f5be67");
+        var flameMat=(StandardMaterial3D)flame.MaterialOverride.Duplicate();
+        flameMat.EmissionEnabled=true;flameMat.Emission=new Color("ffb650");flameMat.EmissionEnergyMultiplier=.65f;
+        flame.MaterialOverride=flameMat;flame.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
+        SceneArt.Ball(root,new(0,-.045f,0),new(.019f,.025f,.019f),"e9e5b1").CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
     }
 }

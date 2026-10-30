@@ -68,7 +68,7 @@ public static partial class FamilyRules
     public static double RecoverySeconds(BirthMethod method) => method == BirthMethod.Live ? 300 : 180;
     public static bool CommonSpecies(string species) => species is "reimu" or "marisa" or "alice" or "patchouli";
     public static bool WillSocialize(Creature c) => !UnderIntervention(c)&&c.Family.ChildThreat.TargetId==null&&
-        !c.Interaction.Injuries.SelfCare.Active&&
+        !c.Interaction.Injuries.SelfCare.Active&&!c.Interaction.Water.InWater&&
         !c.Family.ColdStorage.Stored && c.Family.ColdStorage.RecoveryRemaining<=0 && c.Condition == PhysicalCondition.Active && c.Pain < 25 &&
         c.Fear < 55 && c.Fullness > 25 && c.Interaction.Hydration > 25 && c.Energy > 25 &&
         !c.Interaction.Digestion.Symptomatic && c.Interaction.Restraint == RestraintKind.None &&
@@ -77,7 +77,7 @@ public static partial class FamilyRules
     public static bool Predator(string species) => species is "remilia" or "flandre";
     public static bool SupportedSpecies(string species) => CommonSpecies(species)||Predator(species);
     public static bool CrossEcology(Creature a,Creature b) => Predator(a.Body.SpeciesId)!=Predator(b.Body.SpeciesId);
-    public static bool WillPair(Creature c, Creature other) => WillSocialize(c) && !c.IsYoung &&
+    public static bool WillPair(Creature c, Creature other) => WillSocialize(c) && EmotionalReadiness.Settled(c) && !c.IsYoung &&
         c.Family.Peers.TryGetValue(other.Id, out var bond) &&
         bond.Familiarity >= (CrossEcology(c,other)?75:30) && bond.Affection >= (CrossEcology(c,other)?80:35) && bond.Fear < 25 && bond.Resentment < 25;
     public static string Describe(Creature c)

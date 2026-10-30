@@ -71,7 +71,7 @@ public sealed partial class WorldSimulation
     {
         var i=c.Interaction;
         bool interrupted=(c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical)||
-            c.Family.ColdStorage.Stored||
+            c.Family.ColdStorage.Stored||i.Water.InWater||
             i.Carried||i.Falling||i.Lowering||i.Height>.25||i.Supine||
             Math.Abs(i.VelocityX)+Math.Abs(i.VelocityZ)>.05||i.EatingRemaining>0||
             (InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy);

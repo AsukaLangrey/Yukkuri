@@ -82,5 +82,6 @@ public partial class CreatureActor
         // Drop managed references promptly; shared render meshes remain owned by
         // their nodes and must not be disposed while another instance uses them.
         _eyeSurfaceCache.Clear();_browCache.Clear();_mouthShapes.Clear();_supportMeshes.Clear();_supportVertices.Clear();
+        _mouthWeights.Clear();_mouthFadeMeshes.Clear();_blushFadeMeshes.Clear();
     }
 }

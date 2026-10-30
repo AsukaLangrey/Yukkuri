@@ -48,6 +48,8 @@ public static class InteractionPresentation
         var i=c.Interaction;
         if(c.Condition==PhysicalCondition.Dead)return "dead";
         if(i.Falling)return "fall";
+        if(i.Water.InWater&&!i.Carried)return "water-struggle";
+        if(i.HeatTension>20&&c.Condition==PhysicalCondition.Active&&i.Restraint!=RestraintKind.None)return "burn-tense";
         if(i.Carried&&(c.Pain>=40||c.Fear>=60||c.Condition==PhysicalCondition.Critical))return "carry-tense";
         if(c.Condition==PhysicalCondition.Critical)return "help";
         if(c.Pain>=40&&i.EatingRemaining<=0)return "guard";

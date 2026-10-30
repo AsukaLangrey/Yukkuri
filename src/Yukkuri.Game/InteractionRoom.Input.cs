@@ -73,6 +73,7 @@ public partial class InteractionRoom
     private bool IsScenePoint(Vector2 point)
     {
         if(_modalOpen)return false;
+        if(DebugPanelVisible&&DebugContainsPoint(point))return false;
         return point.Y>82&&point.Y<_ui.Size.Y-216&&point.X>226&&point.X<_ui.Size.X-282;
     }
     private Contact? ContactAt(Vector2 point)
@@ -120,6 +121,11 @@ public partial class InteractionRoom
     public override void _Input(InputEvent input)
     {
         if(!_ready||!_windowFocused)return;
+        if(input is InputEventKey{Pressed:true,Echo:false} debugKey&&
+            (debugKey.Keycode==Key.F3||debugKey.Keycode==Key.Escape&&DebugPanelVisible&&!_modalOpen))
+        {ToggleDebugPanel();GetViewport().SetInputAsHandled();return;}
+        if(input is InputEventKey focusKey&&focusKey.Keycode!=Key.Escape&&GetViewport().GuiGetFocusOwner() is LineEdit or TextEdit)return;
+        if(input is InputEventMouseButton{ButtonIndex:MouseButton.Right} debugMouse&&DebugContainsPoint(debugMouse.Position))return;
         if(input is InputEventMouseButton {Pressed:false} released&&
             (_panning&&released.ButtonIndex==MouseButton.Middle||_orbiting&&released.ButtonIndex==_orbitButton))
         {
@@ -218,7 +224,25 @@ public partial class InteractionRoom
             GetViewport().SetInputAsHandled();return;
         }
         if(mouse.ButtonIndex!=MouseButton.Left)return;
+        if(_clickOfferId!=null)CancelGesture();
         var contact=ContactAt(mouse.Position);
+        if(_waterRescueToolArmed)
+        {
+            if(Sim.State.Settings.Pause){_message="先继续时间，再使用救援用品。";return;}
+            if(contact==null){_message="用救援用品点击落水的油。购买用品后才能使用。";return;}
+            if(contact.Id!=Sim.State.SelectedId)SelectOil(contact.Id);
+            _waterRescueToolArmed=true;
+            AcceptFeedback(Sim.RescueFromWater(contact.Id),contact.Id);
+            GetViewport().SetInputAsHandled();return;
+        }
+        if(_toolArmed&&IsFoodTool(_action))
+        {
+            if(Sim.State.Settings.Pause){_message="小院暂停中，先点“继续”或按空格。";return;}
+            if(contact!=null)BeginClickOffer(contact);
+            else if(TryGroundPoint(mouse.Position,0,out var foodPoint)&&Sim.Selected!=null)
+                AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(GroundFoodAction(_action),X:foodPoint.X,Z:foodPoint.Z)));
+            GetViewport().SetInputAsHandled();return;
+        }
         // Decide once at press time. Crossing a creature while orbiting does not touch it,
         // and dragging off a creature never turns an interaction into a camera drag.
         if(Sim.State.Mode==PlayMode.CloseUp&&contact==null&&ObjectAt(mouse.Position)==null)
@@ -277,11 +301,12 @@ public partial class InteractionRoom
             _ballDragId=obj.Id;
         }
         else if(contact==null){_message="还没有接触到小油。双击它靠近看，会更容易对准。";return;}
-        if(!ball&&contact!=null&&contact.Id!=Sim.State.SelectedId){SelectOil(contact.Id);return;}
+        if(!ball&&contact!=null&&contact.Id!=Sim.State.SelectedId)SelectOil(contact.Id);
         if(!ball&&contact!=null&&!CanUseContact(contact))
         {_message="这里是"+ContactName(contact)+"，挡住了身体。先用相应的打开、解开或解除操作。";return;}
         var selected=Sim.Selected;if(selected==null)return;
-        if(_action==InteractionAction.Lift)_height=selected.Interaction.Carried?(float)selected.Interaction.Height:.8f;
+        if(_action==InteractionAction.Lift)
+        {_directGesture=true;_height=selected.Interaction.Carried?(float)selected.Interaction.Height:.8f;}
         else if(_action==InteractionAction.AdjustHanging)
             _height=(float)selected.Interaction.Height;
         _dragStart=mouse.Position;_lastPointer=mouse.Position;_dragWorldStart=ground;_gestureDirection=Vector2.Zero;
@@ -292,7 +317,7 @@ public partial class InteractionRoom
         if(contact!=null)SampleStroke(contact,mouse.Position,true);
         var part=contact?.Part??BodyPart.Side;
         var request=new InteractionInput(_action,part,_appliedForce,X:ground.X,Z:ground.Z,Height:_height,Side:contact?.Side??SurfaceSide.Whole,ObjectId:ball?_ballDragId:null);
-        if(contact!=null&&_action is InteractionAction.Poke or InteractionAction.Flick or InteractionAction.Slap)
+        if(contact!=null&&_action is InteractionAction.Poke or InteractionAction.Flick or InteractionAction.Slap or InteractionAction.Punch)
         {
             var normal=contact.Normal;var forward=-_camera.GlobalBasis.Z;
             var impulse=InteractionCameraOrbit.ContactImpulse(new(normal.X,normal.Y,normal.Z),new(forward.X,forward.Y,forward.Z));
@@ -307,9 +332,10 @@ public partial class InteractionRoom
         else
         {
             var feedback=Sim.ExecuteInteraction(selected.Id,request);AcceptFeedback(feedback);
-            if(contact!=null&&feedback.Success&&feedback.Changed&&!feedback.Refused&&_action is InteractionAction.Poke or InteractionAction.Flick or InteractionAction.Slap)
+            if(contact!=null&&feedback.Success&&feedback.Changed&&!feedback.Refused&&_action is InteractionAction.Poke or InteractionAction.Flick or InteractionAction.Slap or InteractionAction.Punch)
             {
                 _tapContact=contact;_tapAge=0;ShowInteractionTool();PlaceContactTool(contact);_hand.Visible=true;
+                if(_action is InteractionAction.Slap or InteractionAction.Punch)RegisterHit(contact.Id);
             }
         }
         GetViewport().SetInputAsHandled();
@@ -323,6 +349,8 @@ public partial class InteractionRoom
     }
     private void CancelGesture()
     {
+        _waterRescueToolArmed=false;
+        _clickOfferId=null;
         _tapContact=null;
         _orbiting=_panning=false;
         _orbitDragged=false;_orbitTravel=Vector2.Zero;_orbitClickAction=null;
@@ -363,6 +391,7 @@ public partial class InteractionRoom
 
     private void ProcessRoomGesture(float dt,double sampleSeconds,bool releasing=false)
     {
+        if(_clickOfferId!=null){ProcessClickOffer(dt);return;}
         if(_heldSupplyId!=null){ProcessHeldSupply(dt);return;}
         if(!_mouseHeld)return;
         if(!Sim.HasInteractionGesture){CancelGesture();return;}
@@ -509,7 +538,7 @@ public partial class InteractionRoom
             else
             {
                 _hand.GlobalBasis=new Basis(new Quaternion(Vector3.Up,normal));
-                if(_action==InteractionAction.BurnFeet)
+                if(_action is InteractionAction.BurnFeet or InteractionAction.Burn)
                 {
                     _hand.GlobalBasis=new Basis(new Quaternion(Vector3.Up,-normal));
                     _hand.GlobalPosition=contact.World+normal*.016f;
@@ -566,6 +595,7 @@ public partial class InteractionRoom
     private void UpdatePointer()
     {
         if(_pointer==null)return;
+        UpdateHitFeedback();
         Vector2 point=GetViewport().GetMousePosition();bool scene=_windowFocused&&!_panning&&!_orbiting&&IsScenePoint(point);
         var contact=scene?ContactAt(point):null;
         var roomObject=scene&&(!_toolArmed||_action==InteractionAction.PlayBall)?ObjectAt(point):null;
@@ -575,25 +605,44 @@ public partial class InteractionRoom
         {
             _hoverLabel.Text=ContactName(contact)+(Sim.InteractionGestureTarget==contact.Id&&CanUseContact(contact)?
                 " · "+(_appliedForce<.35?"轻触":_appliedForce<.62?"稍重":"用力"):
-                !_toolArmed?" · 按住抓起 / 松手放下 / 甩手抛出":"");
+                _waterRescueToolArmed?" · 点击使用救援用品":
+                !_toolArmed||_action==InteractionAction.Lift?" · 按住抓起 / 松手放下 / 甩手抛出":
+                IsFoodTool(_action)?" · 点击递食 / 点地面放下":
+                _action is InteractionAction.Slap or InteractionAction.Punch?" · 点击击打 / 连点连击":
+                _action==InteractionAction.Burn?" · 长按灼烧 / 松开停止":"");
             _hoverLabel.Position=point+new Vector2(18,18);
         }
         if(roomObject!=null){_hoverLabel.Text=WorldSimulation.IsWaste(roomObject.Kind)?WasteLabel(roomObject):RoomResourceText.Label(roomObject,Sim.State);_hoverLabel.Position=point+new Vector2(18,18);}
         _pointer.Point=point;_pointer.Active=scene&&(contact!=null||roomObject!=null);
+        _pointer.Rescue=_waterRescueToolArmed;
         _pointer.Rough=_mouseHeld?_appliedForce>.62f:_toolArmed&&_group.Rough;_pointer.Pressed=_mouseHeld;
         _pointer.DragOrigin=_dragStart;_pointer.Aim=_mouseHeld&&_action is InteractionAction.Push or InteractionAction.Throw or InteractionAction.PlayBall;
+        _pointer.Impact=scene&&_tapContact!=null;
+        _pointer.ImpactPoint=_tapContact is { } impact?_camera.UnprojectPosition(impact.World):Vector2.Zero;
+        _pointer.ImpactAge=_tapAge;
         _pointer.QueueRedraw();
     }
 }
 
 public partial class RoomPointer : Control
 {
-    public Vector2 Point,DragOrigin;
-    public bool Active,Rough,Pressed,Aim;
+    public Vector2 Point,DragOrigin,ImpactPoint;
+    public float ImpactAge;
+    public bool Active,Rough,Pressed,Aim,Rescue,Impact;
     public override void _Draw()
     {
-        var color=new Color(Rough?"ae6e51":"62846d");
+        var color=new Color(Rescue?"518caa":Rough?"ae6e51":"62846d");
         if(Active){DrawArc(Point,Pressed?12:9,0,Mathf.Tau,32,color,2,true);DrawCircle(Point,2,color);}
         if(Aim){DrawLine(DragOrigin,Point,color,2,true);DrawCircle(DragOrigin,4,color);}
+        if(Impact)
+        {
+            float progress=Mathf.Clamp(ImpactAge/.22f,0,1);
+            var impactColor=new Color("b66d4e");impactColor.A=1-progress;
+            for(int n=0;n<6;n++)
+            {
+                var direction=Vector2.FromAngle(n*Mathf.Tau/6);
+                DrawLine(ImpactPoint+direction*(8+progress*9),ImpactPoint+direction*(15+progress*14),impactColor,2,true);
+            }
+        }
     }
 }

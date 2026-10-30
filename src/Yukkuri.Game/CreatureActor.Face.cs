@@ -73,6 +73,7 @@ public partial class CreatureActor
         var key=(left,right,height);
         if(!_browCache.TryGetValue(key,out var pair))
         {
+            if(_browCache.Count>=192)_browCache.Clear();
             pair=(FaceBrowMesh(-1,left,height),FaceBrowMesh(1,right,height));_browCache[key]=pair;
         }
         _leftBrow.Mesh=pair.left;_rightBrow.Mesh=pair.right;

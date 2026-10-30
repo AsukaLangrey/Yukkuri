@@ -184,7 +184,7 @@ public sealed partial class WorldSimulation
             injuries.CriticalCareBudget=Math.Max(0,injuries.CriticalCareBudget-amount*.5);
             if(c.Condition==PhysicalCondition.Critical)c.CriticalRemaining=Math.Min(c.CriticalRemaining,injuries.CriticalCareBudget);
         }
-        if(actor=="player"&&c.Interaction.Enabled)RememberPlayerHarm(c,amount,part);
+        if(actor=="player"&&c.Interaction.Enabled)RememberPlayerHarm(c,amount,part,cause);
         c.Health=Math.Max(0,c.Health-amount);c.Pain=Clamp100(c.Pain+amount*1.5);c.Strain=Clamp100(c.Strain+amount*.7);
         c.InjuryCause=cause;
         if(amount>18)c.FillingIntegrity=Math.Max(0,c.FillingIntegrity-(amount-18)*1.2);
@@ -206,6 +206,8 @@ public sealed partial class WorldSimulation
         c.Interaction.Injuries.DeathCause=cause;
         c.Interaction.Injuries.DeathAt=State.WorldSeconds;
         c.Condition=PhysicalCondition.Dead;c.Health=0;c.Speech="";c.Expression=Expression.Exhausted;c.Activity="已死亡";
+        c.Personality.HungerTargetId=null;c.Personality.WaterConcernId=null;
+        c.Interaction.Water.Struggle=0;c.Interaction.HeatTension=0;
         RegisterFamilyDeath(c);
         var pregnancy=c.Family.Pregnancy;
         if(pregnancy.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)

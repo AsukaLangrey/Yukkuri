@@ -43,7 +43,7 @@ public sealed partial class WorldSimulation
 
     private bool CareTargetAvailable(Creature adult,Creature child) => child!=adult && (child.IsYoung||NeedsAssistedIntake(child)) &&
         child.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering && child.RegionId==adult.RegionId &&
-        !child.Family.ColdStorage.Stored && !FamilyRules.UnderIntervention(child) &&
+        !child.Family.ColdStorage.Stored && !FamilyRules.UnderIntervention(child) && !child.Interaction.Water.InWater&&
         !child.Interaction.Carried && !child.Interaction.Falling && !child.Interaction.Lowering && !child.Interaction.Supine && child.Interaction.Height<=.05 &&
         child.Interaction.Restraint is RestraintKind.None or RestraintKind.Wrap && InteractionGestureTarget!=child.Id &&
         !child.Interaction.Physiology.Active && !child.Interaction.Injuries.SelfCare.Active &&

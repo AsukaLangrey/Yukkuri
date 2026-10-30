@@ -10,8 +10,10 @@ public sealed partial class WorldSimulation
         if(state.InteractionPlaytest)
             foreach(var c in state.Creatures)
             {
+                InitializePersonality(c);
                 if(c.Interaction.Restraint==RestraintKind.Hand)c.Interaction.Restraint=RestraintKind.None;
                 NormalizeDeadInteractionSupport(c);
+                SynchronizeWaterSupport(c);
             }
     }
     public Creature? Selected => State.Creatures.Find(c => c.Id == State.SelectedId);
@@ -274,5 +276,6 @@ public sealed partial class WorldSimulation
         var c=State.Creatures.Find(c=>c.Id==id);if(c==null)return;
         CancelWildSelfCare(c,"身体被移动，自行护伤已中断；尚未获得护理效果。");
         c.X=Math.Clamp(x,-8,8);c.Z=Math.Clamp(z,-8,8);c.TargetX=c.X;c.TargetZ=c.Z;
+        SynchronizeWaterSupport(c);
     }
 }

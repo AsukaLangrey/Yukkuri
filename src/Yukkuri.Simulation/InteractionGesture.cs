@@ -145,7 +145,7 @@ public sealed partial class WorldSimulation
             i.Restraint = RestraintKind.Hand; g.Applied = true;
             g.Last = Feedback(oil, "restrained", Expression.Defiant, "手正在限制它，松开就会解除手的限制。", "held");
         }
-        else if (input.Action == InteractionAction.BurnFeet && i.FireFear > 15)
+        else if (input.Action is InteractionAction.BurnFeet or InteractionAction.Burn && i.FireFear > 15)
             g.Last = Feedback(oil, "fire-memory", Expression.Frightened, "看见这个工具，它想起了以前的经历。", "guard", false);
         else g.Last = new(true, InteractionCatalog.Choice(input.Action).Hint, oil.Speech, PoseFor(input.Action));
         if(oil.ReactionSerial!=previousReaction)g.ReactionSerial=oil.ReactionSerial;
@@ -190,6 +190,7 @@ public sealed partial class WorldSimulation
             InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink=>input.Part==BodyPart.Mouth,
             InteractionAction.CleanAccessory or InteractionAction.RepairAccessory=>input.Part==BodyPart.Accessory,
             InteractionAction.BurnFeet=>input.Part==BodyPart.Bottom,
+            InteractionAction.Burn=>input.Part!=BodyPart.Accessory,
             InteractionAction.Care=>CanCareAt(c,input.Part,input.Side),
             _=>true
         };
@@ -501,6 +502,23 @@ public sealed partial class WorldSimulation
                 i.Restraint=RestraintKind.Hand;
                 g.Applied = true;
                 return Say("restrained", Expression.Defiant, "它被手按住；松手即可解除这层限制。", "held");
+            case InteractionAction.Burn:
+                if(!validPart)return g.Last=new(true,"火机没有接触身体。",c.Speech,"tool-approach");
+                double burn=dt*(1.2+force*5);
+                Distress(c,burn*.7,burn,"灼烧",input.Part,input.Side);
+                i.FireFear=Clamp100(i.FireFear+burn);
+                i.HeatTension=Clamp100(i.HeatTension+dt*(20+force*40));
+                if(CanSelfMove(c))
+                {
+                    double fleeX=c.X-input.X,fleeZ=c.Z-input.Z;
+                    if(Math.Abs(fleeX)+Math.Abs(fleeZ)<.01){fleeX=c.X-State.PlayerX;fleeZ=c.Z-State.PlayerZ;}
+                    if(Math.Abs(fleeX)+Math.Abs(fleeZ)<.01)fleeZ=-1;
+                    RoomMove(c,c.X+fleeX,c.Z+fleeZ,dt*1.7);
+                    c.Activity="躲开火机，尝试逃跑";
+                }
+                g.Applied=true;g.Effect+=burn;
+                return Say("hurt",Expression.Hurt,CanSelfMove(c)?"它疼得缩起身体，正在逃离火机。":"它疼得身体绷紧，当前状态使它无法逃开。",
+                    CanSelfMove(c)?"burn-flee":"burn-tense");
             case InteractionAction.BurnFeet:
                 if (input.Part != BodyPart.Bottom) return g.Last = new(true, "工具还没有接触底部。", c.Speech, "tool-approach");
                 double injury = dt * (2.5 + force * 10);
@@ -577,7 +595,7 @@ public sealed partial class WorldSimulation
             string key = g.RoughTouch?"rough-touch":g.Input.Action switch
             {
                 InteractionAction.Stroke or InteractionAction.Touch => "stroke", InteractionAction.Nuzzle => "nuzzle",
-                InteractionAction.Tease => "teasing", InteractionAction.BurnFeet => "fire",
+                InteractionAction.Tease => "teasing", InteractionAction.BurnFeet or InteractionAction.Burn => "fire",
                 InteractionAction.Care => "nursing", _ => g.Input.Action.ToString()
             };
             string description = g.StopImpact?"手快速移动后突然停在身上，受到了一下冲击。":g.RoughTouch?(g.Input.Action==InteractionAction.Rock?"被过急或过重地摇动，扭动着要求停下。":"本想轻轻接触，却被过重或过急地揉蹭，缩开了身体。"):g.Input.Action switch
@@ -631,6 +649,6 @@ public sealed partial class WorldSimulation
         InteractionAction.Rock => "rock", InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink => "offer",
         InteractionAction.Clean or InteractionAction.Dry => "wipe", InteractionAction.Care => "nursing",
         InteractionAction.Press => "pressure", InteractionAction.Squeeze => "squeeze", InteractionAction.Roll => "roll",
-        InteractionAction.BurnFeet => "foot-hurt", InteractionAction.Tease => "reach", _ => "idle"
+        InteractionAction.BurnFeet => "foot-hurt", InteractionAction.Burn=>"burn-tense", InteractionAction.Punch=>"slap", InteractionAction.Tease => "reach", _ => "idle"
     };
 }

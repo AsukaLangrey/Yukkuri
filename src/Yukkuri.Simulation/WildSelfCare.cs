@@ -26,7 +26,7 @@ public static class WildSelfCareRules
         var i=c.Interaction;
         return c.Condition==PhysicalCondition.Active&&!c.Family.ColdStorage.Stored&&c.Family.ColdStorage.RecoveryRemaining<=0&&
             !FamilyRules.UnderIntervention(c)&&c.Family.Pregnancy.Phase!=PregnancyPhase.Preparing&&
-            i.Restraint==RestraintKind.None&&!i.Carried&&!i.Falling&&!i.Lowering&&!i.Supine&&i.Height<=.05&&
+            i.Restraint==RestraintKind.None&&!i.Water.InWater&&!i.Carried&&!i.Falling&&!i.Lowering&&!i.Supine&&i.Height<=.05&&
             Math.Abs(i.VelocityX)<.05&&Math.Abs(i.VelocityZ)<.05&&Math.Abs(i.VerticalVelocity)<.05&&!i.Rolling&&
             i.EatingRemaining<=0&&!i.NaturalIntakePending&&!i.Physiology.Active&&
             i.ActiveCue==null&&!i.FollowPlayer&&i.WaitRemaining<=0&&!i.Resting&&i.RestRemaining<=0&&

@@ -18,7 +18,7 @@ public enum InteractionAction
     Flick, Push, Slap, Squeeze, Press, Roll, Throw, Drop,
     Flip, Hold, Pin, Release, Box, OpenBox,
     TakeAccessory, StoreAccessory, HangAccessory, DamageAccessory, BurnFeet, Hang, AdjustHanging, Lower,
-    Touch, PlaceWater
+    Touch, PlaceWater, Punch, Burn
 }
 
 public sealed class AccessoryState
@@ -122,7 +122,7 @@ public sealed partial class InteractionLife
     public string LastObservedCondition { get; set; } = "尚未检查";
     public int DialogueSequence { get; set; }
     public Dictionary<string, double> Memories { get; set; } = new();
-    public bool CanWalk => FootIntegrity > 25 && Restraint == RestraintKind.None && !Carried && !Falling && !Supine;
+    public bool CanWalk => FootIntegrity > 25 && Restraint == RestraintKind.None && !Carried && !Falling && !Supine && !Water.InWater;
     public bool HasAccessory => Accessory.Place == AccessoryPlace.Worn && Accessory.Integrity > 0;
     public static double IntakeDuration(IntakeKind kind)=>kind==IntakeKind.Water?1.2:1.6;
     public void BeginIntake(IntakeKind kind)

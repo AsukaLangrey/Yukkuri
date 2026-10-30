@@ -21,11 +21,11 @@ public static class WoodlandLayout
     public static double DrinkX => RiverEdge(BankZ);
     public static bool HasRiver(WorldState state,string region) =>
         state.RoomObjects.Any(o=>o.RegionId==region&&o.Kind==RoomObjectKind.RiverWater);
-    public static bool GroundFits(WorldState state,string region,double x,double z,double radius)
+    public static bool GroundFits(WorldState state,string region,double x,double z,double radius,bool allowWater=false)
     {
         if(!HasRiver(state,region))return true;
         // Account for the curved bank across the whole footprint, not only its centre.
-        if(x+radius*Math.Sqrt(1+.104*.104)>RiverEdge(z))return false;
+        if(!allowWater&&x+radius*Math.Sqrt(1+.104*.104)>RiverEdge(z))return false;
         return Trees.All(tree=>Math.Pow(x-tree.X,2)+Math.Pow(z-tree.Z,2)>=Math.Pow(radius+tree.TrunkRadius,2));
     }
 }

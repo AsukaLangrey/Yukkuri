@@ -10,6 +10,7 @@ public static class InteractionValidation
         static bool Finite(params double[] values) => values.All(double.IsFinite);
         static bool Range(params double[] values) => Finite(values) && values.All(v => v >= 0 && v <= 100);
         Require(s.MilestoneScenario && s.RoomObjects != null && s.InteractionSequence >= 0, "互动世界状态无效");
+        Require(s.WaterRescueTools is >=0 and <=99&&s.WaterRescuePurchases>=0,"水域救援用品库存无效");
         var ids = s.Creatures.Select(c => c.Id).ToHashSet();
         // Validate object structure before pending-intake references inspect its entries.
         var objectIds = new HashSet<string>();
@@ -21,9 +22,30 @@ public static class InteractionValidation
         var accessoryIds = new HashSet<string>();
         foreach (var c in s.Creatures)
         {
+            var personality=c.Personality;
+            Require(personality!=null&&Finite(personality.Kindness,personality.Carelessness,personality.Pride,
+                personality.NextHungerConflictAt,personality.NextHungerStrikeAt,personality.RemainsNutrition,
+                personality.NextWaterResponseAt,personality.NextWaterAccidentAt,personality.LastRescueWitnessAt)&&
+                personality.Kindness is >=0 and <=1&&personality.Carelessness is >=0 and <=1&&personality.Pride is >=0 and <=1&&
+                personality.NextHungerConflictAt>=0&&personality.NextHungerStrikeAt>=0&&personality.RemainsNutrition is >=0 and <=24&&
+                personality.NextWaterResponseAt>=0&&personality.NextWaterAccidentAt>=0&&
+                personality.LastRescueWitnessAt>=-100&&personality.LastRescueWitnessAt<=s.WorldSeconds+.001&&
+                (personality.HungerTargetId==null||personality.HungerTargetId!=c.Id&&ids.Contains(personality.HungerTargetId))&&
+                (personality.WaterConcernId==null||personality.WaterConcernId!=c.Id&&ids.Contains(personality.WaterConcernId)),"性格或连续事件状态无效");
             var i = c.Interaction;
             Require(i != null && i.Accessory != null && i.Learning != null && i.Memories != null, "互动个体数据缺失");
             BodyInjuryState.Validate(i!.Injuries,s.WorldSeconds);
+            var emotion=i.Emotion;var water=i.Water;
+            Require(i.HitCount is >=0 and <=999&&Range(i.HeatTension)&&double.IsFinite(i.HitRemaining)&&i.HitRemaining is >=0 and <=1.5&&double.IsFinite(i.LastHitAt)&&
+                i.LastHitAt>=-100&&i.LastHitAt<=s.WorldSeconds+.001,"工具连续接触状态无效");
+            Require(emotion!=null&&Range(emotion.Manmanlai,emotion.Alarm)&&
+                Finite(emotion.SafeSeconds,emotion.LastThreatAt)&&emotion.SafeSeconds is >=0 and <=600&&
+                emotion.LastThreatAt>=-100&&emotion.LastThreatAt<=s.WorldSeconds+.001,"连续情绪状态无效");
+            Require(water!=null&&Range(water.Struggle)&&
+                Finite(water.ExposureSeconds,water.RecoverySeconds,water.NextAttemptAt,water.LastRescueAt,water.LastPlayerSubmersionAt)&&
+                water.ExposureSeconds is >=0 and <=86400&&water.RecoverySeconds is >=0 and <=120&&
+                water.NextAttemptAt>=0&&water.LastRescueAt>=-100&&water.LastRescueAt<=s.WorldSeconds+.001&&
+                water.LastPlayerSubmersionAt>=-100&&water.LastPlayerSubmersionAt<=s.WorldSeconds+.001,"水域危险状态无效");
             Require(i.FootIntegrity<=100-i.Injuries.PermanentFootLoss+.00001,"底部支撑能力超过永久损伤上限");
             var physiology=i!.Physiology;
             var bond=i.HumanBond;
@@ -32,7 +54,8 @@ public static class InteractionValidation
                 c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)&&
                 !c.Family.ColdStorage.Stored&&!FamilyRules.UnderIntervention(c),"失能、冷藏或干预状态不能保留主动陪伴");
             Require(bond!=null&&Range(bond.Familiarity,bond.Safety)&&
-                Finite(bond.CareBudget,bond.LastHarmAt)&&bond.CareBudget is >=0 and <=3&&
+                Finite(bond.CareBudget,bond.LastHarmAt,bond.LastWitnessThreatAt,bond.UnreportedHarm)&&bond.CareBudget is >=0 and <=3&&
+                bond.UnreportedHarm is >=0 and <=40&&bond.LastWitnessThreatAt>=-100&&bond.LastWitnessThreatAt<=s.WorldSeconds+.001&&
                 bond.LastHarmAt>=-100&&bond.LastHarmAt<=s.WorldSeconds+.001&&
                 bond.Caution!=null&&bond.Caution.All(p=>Enum.IsDefined(p.Key)&&Range(p.Value)),"人油相处记忆无效");
             Require(physiology!=null&&Range(physiology.Bladder,physiology.Bowel)&&

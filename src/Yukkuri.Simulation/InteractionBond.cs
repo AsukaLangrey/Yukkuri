@@ -7,6 +7,8 @@ public sealed class HumanBond
     public double Safety { get; set; }
     public double CareBudget { get; set; } = 3;
     public double LastHarmAt { get; set; } = -100;
+    public double LastWitnessThreatAt { get; set; } = -100;
+    public double UnreportedHarm { get; set; }
     public Dictionary<BodyPart, double> Caution { get; set; } = new();
 }
 
@@ -53,12 +55,22 @@ public sealed partial class WorldSimulation
         c.Resentment = Math.Max(0, c.Resentment - dt * .004);
     }
 
-    private void RememberPlayerHarm(Creature c, double amount, BodyPart? injuredPart=null)
+    private void RememberPlayerHarm(Creature c, double amount, BodyPart? injuredPart=null,string? cause=null)
     {
         var b = c.Interaction.HumanBond;
         b.LastHarmAt = State.WorldSeconds;
         b.Safety = Math.Max(0, b.Safety - amount);
         b.CareBudget = 0;
+        RememberThreat(c,Math.Max(4,amount*2));
+        // All contact tools share the existing witness system. Accumulate continuous
+        // harm, but never create a new public incident on every render/input sample.
+        b.UnreportedHarm=Math.Min(40,b.UnreportedHarm+amount);
+        if(State.WorldSeconds-b.LastWitnessThreatAt>=2.5)
+        {
+            b.LastWitnessThreatAt=State.WorldSeconds;
+            RecordPlayerThreat(c,$"人类的{cause??"粗暴接触"}让{c.Name}受到惊吓或伤害",Math.Clamp(b.UnreportedHarm*1.8,4,24));
+            b.UnreportedHarm=0;
+        }
         EndHumanCompany(c);
         var part = injuredPart ?? (_interactionGesture?.TargetId == c.Id ? _interactionGesture.Input.Part : BodyPart.Side);
         b.Caution[part] = Clamp100(b.Caution.GetValueOrDefault(part) + amount * 3);

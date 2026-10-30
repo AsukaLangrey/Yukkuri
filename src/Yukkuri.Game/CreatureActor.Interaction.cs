@@ -14,14 +14,7 @@ public partial class CreatureActor
     {
         _roomEquipment = new Node3D(); AddChild(_roomEquipment);
         _carrySupport=new Node3D();_roomEquipment.AddChild(_carrySupport);
-        SceneArt.Ball(_carrySupport,new(0,-.54f,.04f),new(.64f,.15f,.49f),"e5b99e");
-        for(int finger=0;finger<4;finger++)
-        {
-            float x=(finger-1.5f)*.14f;
-            SceneArt.Ball(_carrySupport,new(x,-.51f,-.18f),new(.125f,.105f,.32f),"efc6ab");
-        }
-        SceneArt.Ball(_carrySupport,new(.32f,-.46f,.08f),new(.19f,.14f,.24f),"efc6ab");
-        SceneArt.Ball(_carrySupport,new(0,-.59f,.32f),new(.35f,.15f,.28f),"e5b99e");
+        // Carry support remains a logical anchor. No human hand mesh obscures the oil.
         _boxEquipment = new Node3D(); _roomEquipment.AddChild(_boxEquipment);
         // Clearance includes the tallest hat and the widened body during pressure reactions.
         InteractionFixtureArt.RoundedBox(_boxEquipment,new(0,InteractionFixtureGeometry.BoxFloorY,0),new(InteractionFixtureGeometry.BoxWidth,InteractionFixtureGeometry.BoxFloorThickness,InteractionFixtureGeometry.BoxDepth),"9c7552");
@@ -62,9 +55,6 @@ public partial class CreatureActor
             _looseAccessory.Visible=false;
             _accessoryGrip=new Node3D{Position=_hatAccessory?new(.39f,.015f,.40f):new(0,0,.065f)};
             _looseAccessory.AddChild(_accessoryGrip);
-            SceneArt.Ball(_accessoryGrip,new(.075f,-.025f,.055f),new(.11f,.16f,.14f),"efc6ab");
-            SceneArt.Ball(_accessoryGrip,new(-.075f,-.025f,-.025f),new(.11f,.16f,.14f),"e5b99e");
-            SceneArt.Ball(_accessoryGrip,new(0,-.16f,.035f),new(.23f,.18f,.20f),"e5b99e");
         }
     }
 
@@ -80,6 +70,7 @@ public partial class CreatureActor
         Refresh(c,selected,false,paused?0:delta,0,true,true);
         Freeze=true;
         var life=c.Interaction;
+        bool waterBody=HasWaterBodyPresentation(c);
         pose=ActorInjuryPresentation.GuardPose(c,pose);
         // Physiology is an idle posture, not a final override of contact or pain.
         // In close-up its world timer can stay active while a gesture owns the pose.
@@ -88,6 +79,7 @@ public partial class CreatureActor
             pose=life.Physiology.Excreting==ExcretionKind.Urine?"urinate":"defecate";
         Position=new((float)c.X,.46f*BodyScale+(float)life.Height,(float)c.Z);
         bool canHop=ActorHopMotion.AllowsView(close,paused,_hadHopPresentation)&&WorldSimulation.CanSelfMove(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine
+            &&!waterBody
             &&!life.Resting&&life.Restraint==RestraintKind.None&&life.Height<=.001
             &&System.Math.Abs(life.VelocityX)+System.Math.Abs(life.VelocityZ)<.005
             &&pose is "idle" or "guard" or "stomach" or "careful-step";
@@ -194,6 +186,8 @@ public partial class CreatureActor
         // the supported/rolling/falling orientation and offset already calculated.
         if(c.Condition==PhysicalCondition.Critical)
         {_visual.Scale=new Vector3(1.13f,.63f,1.07f)*BodyScale;PoseTag="critical";}
+        ApplyHeatBodyPose(c,pose);
+        ApplyWaterBodyPose(c,pose,paused?0:delta);
         Vector3 targetScale=_visual.Scale,targetOffset=_visual.Position;
         Quaternion targetRotation=_visual.Quaternion;
         _poseSmoothing.Advance(new(targetScale.X,targetScale.Y,targetScale.Z),new(targetOffset.X,targetOffset.Y,targetOffset.Z),
@@ -236,7 +230,7 @@ public partial class CreatureActor
             _accessoryRoot.Transform=accessory;
         }
         RefreshDressings(life);
-        if(!life.Carried&&!life.Falling&&life.Restraint!=RestraintKind.Hanging)
+        if(!waterBody&&!life.Carried&&!life.Falling&&life.Restraint!=RestraintKind.Hanging)
             KeepBodyAboveSupport(life.Restraint is RestraintKind.Box or RestraintKind.Frame?
                 (.46f+InteractionFixtureGeometry.BoxFloorY+InteractionFixtureGeometry.BoxFloorThickness*.5f)*BodyScale:0);
         if(life.Restraint==RestraintKind.Wrap)
@@ -245,7 +239,7 @@ public partial class CreatureActor
             float bottom=ActorCradleSurface.LowestY(new(scale.X,scale.Y,scale.Z),new(rotation.X,rotation.Y,rotation.Z,rotation.W),new(offset.X,offset.Y,offset.Z));
             _visual.Position+=Vector3.Up*Mathf.Max(0,.003f-Position.Y-bottom);
         }
-        if(!life.Carried&&!life.Falling&&life.Restraint is RestraintKind.None or RestraintKind.Wrap&&roomObjects!=null)
+        if(!waterBody&&!life.Carried&&!life.Falling&&life.Restraint is RestraintKind.None or RestraintKind.Wrap&&roomObjects!=null)
         {
             var scale=_visual.Scale;var rotation=_visual.Quaternion;
             for(int cushionIndex=0;cushionIndex<roomObjects.Count;cushionIndex++)
@@ -298,6 +292,7 @@ public partial class CreatureActor
         }
         if(_name!=null){_name.Visible=!close;_name.Position=new(0,1.28f*BodyScale,0);}
         if(_speech!=null)_speech.Visible=!close&&c.ReactionRemaining>0&&c.Speech.Length>0;
+        PresentWaterSurface(c,paused?0:delta);
     }
 
     public Vector3 ContactPoint(BodyPart part, float side = 1)

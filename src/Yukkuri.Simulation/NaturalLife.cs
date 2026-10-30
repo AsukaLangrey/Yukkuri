@@ -279,6 +279,7 @@ public sealed partial class WorldSimulation
                 Distance(c.X,c.Z,obj.X,obj.Z)<=NaturalResources.Reach(c)&&CanReachRoomFood(c,obj)&&NaturalResources.Consumer(State,obj)==null&&
                 !life.Carried&&!life.Falling&&!life.Supine&&life.Height<=.25)
             {
+                if(TryWaterDrinkingAccident(c,obj))return true;
                 BeginNaturalIntake(c,obj);ResetNaturalResourceSearch(c);return true;
             }
             if(CanSelfMove(c))

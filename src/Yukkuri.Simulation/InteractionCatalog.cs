@@ -9,7 +9,7 @@ public static class InteractionCatalog
 {
     public static bool UsesForce(InteractionAction action)=>action is InteractionAction.Stroke or InteractionAction.Nuzzle or InteractionAction.Rock or
         InteractionAction.Flick or InteractionAction.Push or InteractionAction.Slap or InteractionAction.Squeeze or InteractionAction.Press or
-        InteractionAction.Roll or InteractionAction.Throw or InteractionAction.BurnFeet or InteractionAction.DamageAccessory;
+        InteractionAction.Roll or InteractionAction.Throw or InteractionAction.BurnFeet or InteractionAction.DamageAccessory or InteractionAction.Punch or InteractionAction.Burn;
     public static readonly InteractionGroup[] Groups =
     [
         new("P01", "打招呼", false, "给它一点回应的时间。夸奖最好跟在刚做好的事情后面。",
@@ -98,7 +98,10 @@ public static class InteractionCatalog
         new("P20", "悬挂", true, "与包裹轻摇使用不同装置。解下时先托住，再放稳。",
             new(InteractionAction.Hang,"悬挂","将它固定在悬挂装置上。"),
             new(InteractionAction.AdjustHanging,"调整支点","按住装置中的油拖动位置；Shift＋滚轮调悬挂高度。",true,BodyPart.Side),
-            new(InteractionAction.Lower,"托住解下","先托住，再解除悬挂，稳稳放下。"))
+            new(InteractionAction.Lower,"托住解下","先托住，再解除悬挂，稳稳放下。")),
+        new("P21","直接工具",true,"工具与鼠标直接作用于实际接触部位。",
+            new(InteractionAction.Punch,"拳头","点击身体击打，连续命中累计连击。",false,BodyPart.Side),
+            new(InteractionAction.Burn,"火机","长按实际接触部位灼烧；未固定时会尝试逃离。",true,BodyPart.Side))
     ];
 
     public static InteractionChoice Choice(InteractionAction action) =>

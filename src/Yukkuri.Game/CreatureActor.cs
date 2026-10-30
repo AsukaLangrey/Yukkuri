@@ -111,7 +111,9 @@ public partial class CreatureActor : RigidBody3D
     {
         expression=expression switch
         {
-            Expression.Calling or Expression.Frightened or Expression.Hurt=>Expression.Hurt,
+            Expression.Calling=>Expression.Calling,
+            Expression.Frightened=>Expression.Frightened,
+            Expression.Hurt=>Expression.Hurt,
             Expression.Delighted=>Expression.Delighted,
             Expression.Defiant or Expression.Angry=>Expression.Angry,
             Expression.Worried=>Expression.Worried,
@@ -120,12 +122,17 @@ public partial class CreatureActor : RigidBody3D
             _=>Expression.Neutral
         };
         if(_lastMouth==expression)return;_lastMouth=expression;
-        foreach(var shape in _mouthShapes.Values)shape.Visible=false;
-        if(_mouthShapes.TryGetValue(expression,out var cached)){cached.Visible=true;return;}
+        if(_mouthShapes.ContainsKey(expression))return;
         var mouthShape=new Node3D();_mouth.AddChild(mouthShape);_mouthShapes[expression]=mouthShape;
         if(expression is Expression.Calling or Expression.Frightened or Expression.Hurt or Expression.Delighted)
         {
-            var size=expression==Expression.Delighted?new Vector3(.18f,.14f,.025f):new Vector3(.12f,.18f,.025f);
+            var size=expression switch
+            {
+                Expression.Delighted=>new Vector3(.18f,.14f,.025f),
+                Expression.Calling=>new Vector3(.09f,.15f,.025f),
+                Expression.Frightened=>new Vector3(.10f,.12f,.025f),
+                _=>new Vector3(.13f,.19f,.025f)
+            };
             FaceOval(mouthShape,new(0,-.178f),new(size.X,size.Y),"7e4543");
             if(expression==Expression.Delighted)FaceOval(mouthShape,new(0,-.211f),new(.115f,.045f),"dc8d85",.015f);
         }
@@ -137,6 +144,7 @@ public partial class CreatureActor : RigidBody3D
             FaceMouthCurve(mouthShape,MouthCurve.Flat,"9b5c4d");
         else
             FaceMouthCurve(mouthShape,expression==Expression.Worried?MouthCurve.Worry:MouthCurve.Smile,"9b5c4d");
+        PrepareMouthFade(expression,mouthShape);
     }
     public void SetContactPose(ContactAction action,bool active,float force=0)
     {
@@ -165,7 +173,6 @@ public partial class CreatureActor : RigidBody3D
         {BuildDressings();RefreshDressings(c.Interaction);}
         RefreshInjuryMarks(c.Interaction);
         RefreshTears(c.Condition!=PhysicalCondition.Dead&&expression is Expression.Hurt or Expression.Frightened,delta);
-        _blushRoot.Visible=expression is Expression.Content or Expression.Delighted or Expression.Shy;
         BuildMouth(expression);
         float eyes=1,browLeft=0,browRight=0;
         if(expression is Expression.Content or Expression.Sleeping)eyes=.12f;
@@ -175,8 +182,7 @@ public partial class CreatureActor : RigidBody3D
         else if(expression==Expression.Exhausted){eyes=.42f;browLeft=9;browRight=-9;}
         if(Mathf.Sin(_phase*1.6f)>.994f&&expression==Expression.Neutral)eyes=.1f;
         var eyeCurve=expression switch {Expression.Content=>EyeCurve.Relaxed,Expression.Delighted=>EyeCurve.Joy,Expression.Sleeping=>EyeCurve.Sleep,_=>EyeCurve.Open};
-        SetSurfaceEyes(eyes,eyeCurve);
-        SetSurfaceBrows(browLeft,browRight,expression==Expression.Frightened?ActorBrowSurface.FrightHeight:0);
+        PresentFaceTransition(c,expression,eyes,eyeCurve,browLeft,browRight,delta);
         Vector3 visualScale=Vector3.One;Vector3 visualOffset=Vector3.Zero;
         if(!close)
         {

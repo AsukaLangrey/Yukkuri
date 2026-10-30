@@ -100,6 +100,11 @@ public sealed partial class WorldSimulation
         foreach (var c in State.Creatures)
         {
             var i = c.Interaction;
+            SynchronizeWaterSupport(c);
+            i.HitRemaining=Math.Max(0,i.HitRemaining-dt);
+            if(i.HitRemaining<=0)i.HitCount=0;
+            if(CurrentInteractionAction!=InteractionAction.Burn||InteractionGestureTarget!=c.Id||
+                _interactionGesture?.ContactActive!=true)i.HeatTension=Math.Max(0,i.HeatTension-dt*12);
             if(c.Family.ColdStorage.Stored)continue;
             SynchronizeInterruptedPhysiology(c);
             ResetInterruptedAutonomySearch(c);
@@ -132,7 +137,8 @@ public sealed partial class WorldSimulation
             {
                 c.Speech = "";
                 c.Expression = c.Condition == PhysicalCondition.Dead ? Expression.Exhausted :
-                    c.Pain > 25 ? Expression.Hurt : c.Fear > 60 ? Expression.Frightened :
+                    c.Pain > 25 ? Expression.Hurt : c.Fear > 60||i.Emotion.Alarm>=25 ? Expression.Frightened :
+                    i.Emotion.Alarm>=12||i.Water.RecoverySeconds>0?Expression.Worried:
                     i.Resting ? Expression.Sleeping :
                     i.HeadSensitivity>30||i.CheekSensitivity>30?Expression.Worried:
                     !i.HasAccessory ? (i.Accessory.BorrowedForCare ? Expression.Curious : Expression.Worried) :
@@ -150,18 +156,20 @@ public sealed partial class WorldSimulation
                     double speed = Math.Abs(i.VerticalVelocity);
                     i.Height = 0; i.Falling = false; i.VerticalVelocity = 0;
                     ClearLandingOverlap(c);
-                    double damage = State.Settings.Accidents ? Math.Max(0, speed - 2.8) * 2.2 : 0;
+                    bool inWater=WaterEnvironment.IsInWater(State,c);
+                    double damage = State.Settings.Accidents&&!inWater ? Math.Max(0, speed - 2.8) * 2.2 : 0;
                     Distress(c, 2, damage, "跌落碰撞",BodyPart.Bottom);
                     RecordInteraction(c, "fall", "离开手的支撑后落地，记住了这次经历。", Math.Max(1, damage));
                     Feedback(c, damage > 0 ? "hurt" : "down", damage > 0 ? Expression.Hurt : Expression.Shy,
                         damage > 0 ? "落地受伤，查看身体和后续动作。" : "落地了，仍然受了惊。", "land");
+                    if(inWater)EnterWater(c,true);
                 }
             }
             if (Math.Abs(i.VelocityX) + Math.Abs(i.VelocityZ) > .005)
             {
                 double nextX=Math.Clamp(c.X+i.VelocityX*dt,-7.5,7.5),nextZ=Math.Clamp(c.Z+i.VelocityZ*dt,-6,6);
                 if(i.Height>1){c.X=nextX;c.Z=nextZ;}
-                else if(!GroundMove(c,nextX,nextZ,false)){i.VelocityX*= -.18;i.VelocityZ*= -.18;}
+                else if(!GroundMove(c,nextX,nextZ,false,allowWater:true)){i.VelocityX*= -.18;i.VelocityZ*= -.18;}
                 double drag = Math.Exp(-dt * (i.Falling ? .4 : 4));
                 i.VelocityX *= drag; i.VelocityZ *= drag;
                 c.TargetX = c.X; c.TargetZ = c.Z;
@@ -183,7 +191,12 @@ public sealed partial class WorldSimulation
             SynchronizeInterruptedPhysiology(c);
             if (c.Condition == PhysicalCondition.Dead) continue;
             double dt=BiologicalDelta(c,worldDt);
+            InitializePersonality(c);
             var i = c.Interaction;
+            bool inWater=TickWaterExposure(c,dt);
+            if(c.Condition==PhysicalCondition.Dead)continue;
+            AdvanceEmotionalContinuity(c,dt);
+            if(State.WorldSeconds-i.LastHitAt>1.5)i.HitCount=0;
             i.Resting=false;
             ResetInterruptedAutonomySearch(c);
             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
@@ -200,7 +213,7 @@ public sealed partial class WorldSimulation
             i.PraiseRemaining = Math.Max(0, i.PraiseRemaining - dt);
             if (i.PraiseRemaining == 0) i.PendingPraise = null;
             if (c.Fullness <= 0) Hurt(c, dt * .12, "饥饿", null);
-            if(!c.Family.ColdStorage.Stored&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering)UpdateInteractionRest(c,dt);
+            if(!inWater&&!c.Family.ColdStorage.Stored&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering)UpdateInteractionRest(c,dt);
             AdvanceBodyInjuries(c,dt);
             if(c.Condition==PhysicalCondition.Dead)continue;
             if (c.Condition == PhysicalCondition.Critical)
@@ -214,6 +227,7 @@ public sealed partial class WorldSimulation
                 }
                 continue;
             }
+            if(inWater)continue;
             // Rest takes priority over a completed lesson's persistent follow
             // order. Otherwise that order prevents UpdateInteractionRest forever.
             if(!i.Physiology.Active&&i.ActiveCue==null&&i.RestRemaining>0)i.FollowPlayer=false;
@@ -274,6 +288,8 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if((c.Fullness<12||i.Hydration<12)&&i.ActiveCue!=null)CompleteCue(c,false);
+            if(TryRespondToWater(c,dt))continue;
+            if(TryHungerAggression(c,dt))continue;
             if(TryMaternalCrisis(c,dt))continue;
             if((c.Family.Conflict.TargetId!=null||c.Family.FlightRemaining>0)&&i.EatingRemaining<=0&&TryFamilyActivity(c,dt))continue;
             if (i.ActiveCue is { } cue)
@@ -400,7 +416,7 @@ public sealed partial class WorldSimulation
                     Feedback(c,"treasure-missing",Expression.Worried,"它望向原来放小石头的位置，还惦记着被收走的宝物。","inspect");
                 else if (State.RoomObjects.Any(o => o.OwnerId == c.Id && o.Kind == RoomObjectKind.Treasure&&!o.Stored&&o.RegionId==c.RegionId&&Distance(c.X,c.Z,o.X,o.Z)<1.8))
                     Feedback(c, "treasure", Expression.Delighted, "它把自己的小宝物展示给你看。", "proud");
-                else if (c.Fear < 30 && c.Pain < 20)
+                else if (EmotionalReadiness.Settled(c))
                 {
                     string activity=Next()<.5&&MouthFunction.CanSpeakClearly(c)?"sing":"stretch";
                     Feedback(c,activity,Expression.Content,"没有操作时，它也在自己慢慢来。",activity);
@@ -420,14 +436,14 @@ public sealed partial class WorldSimulation
     }
 
     private bool CanRequestAutonomousNuzzle(Creature c) => SeesHelpingHand(c)&&
-        c.Interaction.NuzzleFamiliarity>8&&c.Trust>40&&c.Fear<35&&
+        c.Interaction.NuzzleFamiliarity>8&&c.Trust>40&&EmotionalReadiness.Settled(c)&&
         InteractionReadiness.WillAcceptAffection(c,BodyPart.Cheek,SurfaceSide.Whole);
 
     private RoomObject? BallForAutonomousPlay(Creature c)
     {
         var ball=State.RoomObjects.FirstOrDefault(o=>o.Kind==RoomObjectKind.Ball&&!o.Stored&&
             o.RegionId==c.RegionId&&o.Id!=InteractionGestureObject&&!RoomBallEnvironment.InWater(State,o));
-        return ball!=null&&CanSelfMove(c)&&c.Interaction.ToyInterest>.4&&c.Fear<45&&c.Energy>30&&
+        return ball!=null&&CanSelfMove(c)&&EmotionalReadiness.Settled(c)&&c.Interaction.ToyInterest>.4&&c.Fear<45&&c.Energy>30&&
             Distance(c.X,c.Z,ball.X,ball.Z)<3?ball:null;
     }
 

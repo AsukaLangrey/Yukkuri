@@ -70,6 +70,13 @@ public sealed partial class InteractionLife
         foreach(var dirt in SideDirt.Values){dirt.Left=Math.Min(100,dirt.Left+amount);dirt.Right=Math.Min(100,dirt.Right+amount);}
         ReconcileSurface();
     }
+    public void SoakSurface()
+    {
+        PrepareSurface();
+        foreach(var part in SurfaceParts)SurfaceWetness[part]=100;
+        foreach(var wet in SideWetness.Values){wet.Left=100;wet.Right=100;}
+        ReconcileSurface();
+    }
     private void ReconcileSurface()
     {
         foreach(var (part,dirt) in SideDirt)SurfaceDirt[part]=dirt.Average;

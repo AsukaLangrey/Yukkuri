@@ -131,14 +131,14 @@ public sealed partial class WorldSimulation
         mother.Family.NextForcedAttemptAt=State.WorldSeconds+120;
         mother.Trust=Math.Max(0,mother.Trust-15);mother.Attachment=Math.Max(0,mother.Attachment-8);
         mother.Fear=Clamp100(mother.Fear+12);mother.Resentment=Clamp100(mother.Resentment+18);
-        RememberPlayerHarm(mother,5);
+        RememberPlayerHarm(mother,5,cause:"强制繁育干预");
         RecordInteraction(mother,"forced-breeding","玩家无视意愿开始强制干预，损害了信任；材料已经使用。",6);
         mother.Activity="强制干预进行中";
         return State.LastActionMessage="已开始强制干预，可及时停止。材料已经使用，信任受损；恢复不足会加重风险。";
     }
 
     private bool InterventionBodyAvailable(Creature c)=>(c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering)&&
-        !c.Family.ColdStorage.Stored&&!c.Interaction.Carried&&!c.Interaction.Falling&&!c.Interaction.Lowering&&c.Interaction.Height<=.05&&
+        !c.Family.ColdStorage.Stored&&!c.Interaction.Water.InWater&&!c.Interaction.Carried&&!c.Interaction.Falling&&!c.Interaction.Lowering&&c.Interaction.Height<=.05&&
         c.Interaction.Restraint==RestraintKind.None&&!c.Interaction.Supine&&!c.Interaction.Physiology.Active&&
         c.Interaction.EatingRemaining<=0&&c.Interaction.ActiveCue==null&&c.Family.ColdStorage.RecoveryRemaining<=0&&
         c.Family.Conflict.TargetId==null&&c.Family.ChildThreat.TargetId==null&&InteractionGestureTarget!=c.Id;

@@ -99,8 +99,6 @@ public partial class InteractionRoom : Node3D
         SceneArt.Mesh(_player,new TorusMesh{InnerRadius=.24f,OuterRadius=.30f,Rings=24,RingSegments=6},new(0,.035f,0),"faf2d9");
         SceneArt.Box(_player,new(0,.04f,.23f),new(.07f,.02f,.16f),"faf2d9");
         _hand=new Node3D();AddChild(_hand);
-        SceneArt.Ball(_hand,Vector3.Zero,new(.17f,.12f,.20f),"efc5a4");
-        SceneArt.Ball(_hand,new(0,0,-.12f),new(.07f,.08f,.20f),"f4d4b7");
         _hand.Visible=false;
         _woodland=new Node3D();_yard.AddChild(_woodland);WoodlandArt.Build(_woodland);
     }
@@ -259,7 +257,7 @@ public partial class InteractionRoom : Node3D
         }
         // Perception follows the actual tool/support, not its projection onto the floor.
         // A high held oil and a cup at its mouth can be far from that projected point.
-        if(inScene&&(_mouseHeld||_tapContact!=null)&&_hand.Visible)
+        if((inScene&&(_mouseHeld||_tapContact!=null)||_clickOfferId!=null)&&_hand.Visible)
         {
             var hand=_hand.GlobalPosition;
             Sim.SetInteractionHand(hand.X,hand.Z,true);return;
