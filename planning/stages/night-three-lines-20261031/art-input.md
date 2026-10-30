@@ -309,3 +309,15 @@ CloseUp及其他原模式保留Selected→ExecuteInteraction，近看左键地�
 只读交叉审root的Ui/DetachedStemUi空选择修正：公共时间、力度、反馈和实际HeldByHand提示先刷新；无Selected清旧对象文字后仍刷实际独立窝DTO与真实进度，进度最后覆盖提示。独立窝空手提示排除救援/真实持物；正常身体分支原规则保持。本代理未编辑root文件。普通地面物体构建与显示不依赖Selected，供给可进入原实物递送链。
 
 B单源码与交接冻结，未运行或做鼠标验证。远端需以死母体选择/Management空选择分别放饭水并拿到真实瓶口补给；核对库存耗尽、河道/瓶占位拒绝、暂停与失焦不新增份额、近看仍沿原对象资格、普通身体点喂和PutDown/GiveBall不受影响，以及空选择下物品/反馈/独立窝进度显示。A负责模拟和相关旅程检查源码。
+
+## 第三十四批：固定具仰躺时接通真实热紧绷
+
+先复核进食时受击/灼烧、救后与受威胁时接甜食的最终表情链，未找到新的确定错配：Feedback与最终ExpressionFor保痛/恐惧/未安定优先，实际进食嘴不驱动快乐眼眉；余泪独立读取痛/Fear/Alarm。ReactionPose不入档，guard命中与泪水/进食首次观察以当前状态建立基线，未添加重复防重系统。
+
+本轮身体核对发现真实漏接：Pin把Restraint设为Frame且Supine=true；Burn实际累积HeatTension并返回burn-tense，但Heat.cs的资格一律排除Supine，ActorReactionMotion也没有另一条burn-tense身体缩紧。于是固定框中的油保留痛脸，却漏掉已有固定热紧绷形变。
+
+仅修改CreatureActor.Heat.cs的资格，让真实Frame中的Supine可以进入原固定热分支；自由仰躺仍排除。继续排除水中、托举、跌落、滚动、休息、冷藏、干预和临危/死亡。固定Sample仍只有有界局部缩放，Pitch=0/Heading=null；已有Supine角度/偏移、框结构、真实位置与碰撞规则不变，最终KeepBodyAboveSupport继续按实际变形网格补支撑。不新增热时钟、逃跳、事件或模拟伤害。
+
+其它身体状态已静态确认实接：Damage/PermanentLoss各自驱动瘀痕/疤痕，真实包扎才遮同部位；永久足损约束FootIntegrity恢复上限并减弱/禁止跳步；临危/死亡使用最终瘪形并停止摄食嘴；水中Struggle随体力和痛恶化，精疲/死亡削弱或停止主动水滴。近看沿同一RefreshInteraction链，饰品随身体逆缩放并重新计算帽间隙。这是源码覆盖结论，不是实机验收。
+
+B单源码冻结，既有纯热检查已覆盖固定分支无朝向/零Pitch及有界形变，不增重复大检查。未执行项目、编译、检查、渲染、预览或Git。远端应以Pin固定→火机真实接触→移开→冷却/解除固定核对身体缩紧、框内仰躺与净空；对照自由仰躺、落水、临危死亡仍保原优先，不出现热逃跑或旧朝向。

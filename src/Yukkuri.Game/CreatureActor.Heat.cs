@@ -12,8 +12,11 @@ public partial class CreatureActor
     private void ApplyHeatBodyPose(Creature c,string pose,float delta,bool paused,bool close)
     {
         var life=c.Interaction;
+        // Pin holds the body supine. Keep that supported orientation while the
+        // restrained sample adds only local tension, never escape pitch or travel.
         bool eligible=Visible&&c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)&&
-            !HasWaterBodyPresentation(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine&&!life.Resting&&
+            !HasWaterBodyPresentation(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&
+            (!life.Supine||life.Restraint==RestraintKind.Frame)&&!life.Resting&&
             !c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&!FamilyRules.UnderIntervention(c);
         bool fleeing=eligible&&pose=="burn-flee"&&WorldSimulation.CanSelfMove(c);
         bool timely=float.IsFinite(delta)&&delta>0&&delta<=ContactMotion.MaximumSampleSeconds;

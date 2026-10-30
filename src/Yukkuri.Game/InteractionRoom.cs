@@ -294,20 +294,30 @@ public partial class InteractionRoom : Node3D
     }
     private bool SaveRoom(int slot,bool announce=true)
     {
+        var state=Sim.State;
+        bool visiblePause=state.Settings.Pause;
         try
         {
-            CancelGesture();_saves.Save(Sim.State,slot);
+            CancelGesture();
+            // The menu pauses the live yard only while it is open. Persist the
+            // user's pause choice, then restore the menu even if saving fails.
+            if(_modalOpen)state.Settings.Pause=_pauseBeforeModal;
+            _saves.Save(state,slot);
             if(announce)_message=$"已保存到槽位 {slot}。身体、饰品和经历会保留。";
             return true;
         }
         catch(Exception e){_message="保存未成功，原档保留："+e.Message;GD.PushWarning(e.Message);return false;}
+        finally {state.Settings.Pause=visiblePause;}
     }
     private void LoadRoom(int slot)
     {
         try
         {
             var load=_saves.Load(slot);if(!load.State.InteractionPlaytest)throw new InvalidDataException("这个槽位不是相处小院存档。");
-            CancelGesture();Sim=new WorldSimulation(load.State);Sim.State.Settings.Pause=false;
+            CancelGesture();Sim=new WorldSimulation(load.State);
+            // Closing the old menu must restore the loaded world's choice,
+            // rather than borrowing the previous world's paused/running state.
+            _pauseBeforeModal=Sim.State.Settings.Pause;
             _recovered=load.RecoveredBackup;_message=load.Message;BuildActors();CloseModal();RefreshRoomUi();
         }
         catch(Exception e){_message="读取未成功："+e.Message;ShowModalMessage(_message);}
