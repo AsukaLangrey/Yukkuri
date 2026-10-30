@@ -261,4 +261,159 @@ Check("实际近身伤害走共同身体流程，致死开关分别生效",()=>
         Require(child.Family.Peers[m.Id].Resentment>0,"亲代伤害没有留下独立关系后果");
     }
 });
+foreach(var method in new[]{BirthMethod.Stem,BirthMethod.Live})
+Check(method+"从真实强制准备经食水护理到完整出生，再用真实恢复债中断下一次尝试",()=>
+{
+    // The existing component fixture supplies mature, healthy, nourished adults
+    // with Trust 80. There is no injected pregnancy, deep bond or child count.
+    // Its NextAutonomyAt, NextSocialAt and NextCareAt are 10000, isolating those
+    // autonomous/social/care choices. This is a real-action component journey,
+    // not a full management journey amid unrestricted autonomous daily life.
+    // Each seed is a different actual attempt, never a reload to reroll failure.
+    WorldSimulation? chosen=null;
+    for(ulong seed=1;seed<=64;seed++)
+    {
+        var attempt=Fixture(seed);var mother=attempt.State.Creatures[0];var father=attempt.State.Creatures[1];
+        double trust=mother.Trust,resentment=mother.Resentment,alarm=mother.Interaction.Emotion.Alarm;
+        Collect(attempt);var source=attempt.State.BreedingMaterials.Single();
+        Require(source.FatherId==father.Id&&source.BodyId==father.Body.Id,"实际材料来源不符");
+        string response=attempt.RequestForcedPregnancy(mother.Id,father.Id,method);
+        Require(FamilyRules.UnderIntervention(mother)&&attempt.State.BreedingMaterials.Count==0&&
+            mother.Trust<trust&&mother.Resentment>resentment&&mother.Interaction.Emotion.Alarm>alarm&&
+            mother.Family.Pregnancy.EventId==null&&mother.Family.Pregnancy.PlannedChildren==0,
+            "真实准备未消费一次材料或未保留身心代价："+response);
+        double health=mother.Health;
+        Tick(attempt,4);
+        Require(!FamilyRules.UnderIntervention(mother)&&attempt.State.BreedingMaterials.Count==0&&
+            mother.Health<health&&mother.Interaction.Injuries.At(BodyPart.Side)?.Damage==4&&
+            mother.Interaction.HumanBond.LastHarmAt>=3.5&&attempt.State.CompletedBirths.Count==0,
+            "四秒准备没有真实身体结算、重复消耗或提前出生");
+        if(mother.Family.Pregnancy.Phase==PregnancyPhase.Gestating){chosen=attempt;break;}
+        Require(mother.Family.Pregnancy.Phase==PregnancyPhase.None&&mother.Family.Pregnancy.InterventionRemaining==0&&
+            mother.Family.Pregnancy.EventId==null&&mother.Family.Pregnancy.PlannedChildren==0&&
+            mother.Family.Pregnancy.Outcome.Length>0&&mother.Family.NextForcedAttemptAt>attempt.State.WorldSeconds,
+            "实际失败尝试留下准备、伪造孕育、清掉结果或取消重试代价");
+        SaveStore.Validate(attempt.State);
+    }
+    Require(chosen!=null,"64个独立真实尝试中没有到达该方式的孕育分支");
+    var sim=chosen!;var m=sim.State.Creatures[0];var f=sim.State.Creatures[1];var pregnancy=m.Family.Pregnancy;
+    string eventId=pregnancy.EventId!;int planned=pregnancy.PlannedChildren;
+    double gestatingAt=sim.State.WorldSeconds;
+    Require(eventId!=null&&pregnancy.Forced&&pregnancy.Method==method&&pregnancy.FatherId==f.Id&&
+        (method==BirthMethod.Live?planned==1:planned is 2 or 3)&&pregnancy.Elapsed==0,
+        "真实准备结果没有稳定的方式、来源和原计划窝数");
+    Require(sim.State.AutonomousBreeding==false,"组件夹具意外开启了另一条自主繁育来源");
+    double? bornAt=null;string[] childIds=[];
+    int meals=0,waters=0,carePackages=0;
+
+    void InspectBirth()
+    {
+        if(bornAt!=null||!sim.State.CompletedBirths.Contains(eventId))return;
+        bornAt=sim.State.WorldSeconds;
+        var babies=sim.State.Creatures.Where(c=>c.Family.BirthEventId==eventId).ToArray();
+        childIds=babies.Select(c=>c.Id).OrderBy(id=>id,StringComparer.Ordinal).ToArray();
+        Require(babies.Length==planned&&childIds.Distinct().Count()==planned&&sim.State.Creatures.Count==2+planned&&
+            babies.All(c=>c.ParentId==m.Id&&c.Family.MotherId==m.Id&&c.Family.FatherId==f.Id&&
+                c.Family.BirthMethod==method&&c.Condition==PhysicalCondition.Active&&c.Health>0),
+            "真实出生丢失本窝数量、家谱来源或健康个体身份");
+        Require(pregnancy.Forced&&pregnancy.EventId==eventId&&pregnancy.PlannedChildren==planned&&
+            pregnancy.Phase==PregnancyPhase.Recovering&&pregnancy.RecoveryDebt==0&&
+            pregnancy.RecoveryRemaining>0&&pregnancy.RecoveryRemaining<=FamilyRules.RecoverySeconds(method)&&
+            pregnancy.RecoveryRemaining+babies.Min(c=>c.Body.AgeSeconds)>=FamilyRules.RecoverySeconds(method)-.3&&
+            sim.State.WorldSeconds-gestatingAt>=FamilyRules.GestationSeconds(method)-.001,
+            "强制出生缩短真实孕育/恢复窗口，或替换了已确定的孕育身份");
+        Require(m.Condition==PhysicalCondition.Active&&m.Pain>0&&m.Health<100,
+            "生产没有保留实际母体负担");
+        SaveStore.Validate(sim.State);
+    }
+    void Frame()
+    {
+        sim.AdvanceInteractionPresentation(.05);sim.Advance(.05);InspectBirth();
+        Require(m.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)&&
+            f.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical),"真实照护期间父母进入危急或死亡");
+        Require(pregnancy.EventId==eventId&&pregnancy.PlannedChildren==planned&&pregnancy.Method==method,
+            "普通时间替换了实际孕育身份、方式或窝数");
+        if(bornAt==null)Require(pregnancy.Phase==PregnancyPhase.Gestating,"照护中的真实孕育失败，不能冒充出生完成");
+    }
+    void Feed(Creature c,InteractionAction action)
+    {
+        if(action==InteractionAction.FeedMeal&&sim.State.Food==0)Require(sim.BuyFood(),"真实免费食物补给失败");
+        int stock=sim.State.Food;long sequence=c.Interaction.IntakeSequence;
+        var input=new InteractionInput(action,BodyPart.Mouth,Duration:.05);
+        Require(sim.BeginInteractionGesture(c.Id,input).Success,"真实食水接触无法开始");
+        for(int n=0;n<16;n++)
+        {Require(sim.ContinueInteractionGesture(input,true).Success,"真实食水未被接受");Frame();}
+        sim.EndInteractionGesture();
+        Require(c.Interaction.IntakeSequence==sequence+1&&sim.State.Food==stock-(action==InteractionAction.FeedMeal?1:0),
+            "照护食水没有一口一份真实结算");
+        if(c==m){if(action==InteractionAction.FeedMeal)meals++;else waters++;}
+        double deadline=sim.State.WorldSeconds+10;
+        while(c.Interaction.EatingRemaining>0&&sim.State.WorldSeconds<deadline)Frame();
+        Require(c.Interaction.EatingRemaining==0,"没有等待真实吞咽完成");
+    }
+    void Maintain(Creature c)
+    {
+        if(c.Interaction.EatingRemaining>0||c.Interaction.Physiology.Active)return;
+        if(c.Interaction.Hydration<94.5)Feed(c,InteractionAction.Drink);
+        else if(c.Fullness<91.9)Feed(c,InteractionAction.FeedMeal);
+        else if(c.Energy<70&&c.Interaction.RestRemaining<=0)
+            Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Rest)).Success,"实际休息安排被拒绝");
+    }
+    // Treat the actual side wound made by the four-second procedure, not a
+    // fabricated illness. This does not cancel an already established pregnancy.
+    var care=new InteractionInput(InteractionAction.Care,BodyPart.Side,Duration:.05);
+    int medicine=sim.State.Medicine;
+    Require(sim.BeginInteractionGesture(m.Id,care).Success,"真实干预伤势不能护理");
+    for(int n=0;n<36;n++){Require(sim.ContinueInteractionGesture(care,true).Success,"实际护理未完成");Frame();}
+    sim.EndInteractionGesture();
+    Require(sim.State.Medicine==medicine-1&&m.Interaction.Injuries.At(BodyPart.Side)!.CareRemaining>0&&
+        pregnancy.Phase==PregnancyPhase.Gestating&&pregnancy.EventId==eventId,"护理扣账或真实孕育保留错误");
+    carePackages++;
+    double birthDeadline=gestatingAt+FamilyRules.GestationSeconds(method)+120;
+    while(bornAt==null&&sim.State.WorldSeconds<birthDeadline)
+    {
+        Maintain(m);if(bornAt!=null)break;
+        Maintain(f);if(bornAt!=null)break;
+        Frame();
+    }
+    Require(bornAt!=null&&meals>0&&waters>0&&carePackages==1,"未完成真实出生或母体食水护理入口没有实际发生");
+    // The new recovery debt comes from the birth above, not the older injected
+    // recovery fixtures. This second real attempt is stopped before settlement.
+    double settleDeadline=sim.State.WorldSeconds+15;
+    while((f.Interaction.EatingRemaining>0||f.Interaction.Physiology.Active||m.Interaction.Physiology.Active)&&
+        sim.State.WorldSeconds<settleDeadline)Frame();
+    Require(f.Interaction.EatingRemaining==0&&!f.Interaction.Physiology.Active&&!m.Interaction.Physiology.Active,
+        "出生后的实际嘴部/生理活动没有按时结束，不能跳过身体占用采集或重试");
+    double debt=pregnancy.RecoveryRemaining;
+    Require(debt>0&&pregnancy.Phase==PregnancyPhase.Recovering&&
+        sim.State.WorldSeconds>=f.Family.NextMaterialAt,"实际出生没有留下可观察的恢复期或材料间隔尚未结束");
+    Collect(sim);int births=sim.State.CompletedBirths.Count,count=sim.State.Creatures.Count;
+    string retryResponse=sim.RequestForcedPregnancy(m.Id,f.Id,method);
+    Require(FamilyRules.UnderIntervention(m)&&pregnancy.RecoveryDebt==debt&&pregnancy.EventId==null&&
+        sim.State.BreedingMaterials.Count==0,"真实恢复期重试没有消费材料并保留原恢复债："+retryResponse);
+    // Frame above is intentionally for the original pregnancy only. A new
+    // preparation has a new identity, so use the ordinary shared Tick helper.
+    Tick(sim,1);double trustAfterRetry=m.Trust;
+    sim.InterruptPregnancyIntervention(m.Id);
+    Require(pregnancy.Phase==PregnancyPhase.Recovering&&pregnancy.InterventionRemaining==0&&
+        pregnancy.RecoveryRemaining==debt&&pregnancy.RecoveryDebt==debt&&pregnancy.EventId==null&&
+        pregnancy.PlannedChildren==0&&sim.State.BreedingMaterials.Count==0&&m.Trust<=trustAfterRetry&&
+        sim.State.CompletedBirths.Count==births&&sim.State.Creatures.Count==count&&
+        sim.State.Creatures.Where(c=>c.Family.BirthEventId==eventId).Select(c=>c.Id).OrderBy(id=>id,StringComparer.Ordinal).SequenceEqual(childIds),
+        "中断返还材料、消掉真实恢复债、重复出生或改写第一窝家谱");
+    string stopped=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    sim.InterruptPregnancyIntervention(m.Id);
+    Require(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==stopped,"重复停止推进记录或状态");
+    double endCount=m.Interaction.Memories.GetValueOrDefault("intervention-ended");
+    var restored=Reload(sim);Tick(restored,.5);var saved=restored.State.Creatures[0].Family.Pregnancy;
+    Require(saved.Phase==PregnancyPhase.Recovering&&saved.RecoveryDebt==debt&&saved.RecoveryRemaining<=debt&&
+        saved.InterventionRemaining==0&&restored.State.BreedingMaterials.Count==0&&
+        restored.State.CompletedBirths.Count==births&&restored.State.Creatures.Count==count&&
+        restored.State.Creatures.Where(c=>childIds.Contains(c.Id)).All(c=>c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical))&&
+        restored.State.Creatures[0].Interaction.Memories.GetValueOrDefault("intervention-ended")==endCount,
+        "读档重启已停止的准备、重结出生/中断或退材料");
+    SaveStore.Validate(restored.State);
+    Console.WriteLine($"forced {method}: birth event={eventId}, children={planned}, elapsed={bornAt-gestatingAt:F2}, "+
+        $"actual meals={meals}, water={waters}, medicine={carePackages}, retained recovery debt={debt:F2}");
+});
 Environment.ExitCode=failures==0?0:1;

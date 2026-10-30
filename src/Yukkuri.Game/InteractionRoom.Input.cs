@@ -702,22 +702,30 @@ public partial class InteractionRoom
         Vector2 point=GetViewport().GetMousePosition();bool scene=_windowFocused&&!_panning&&!_orbiting&&IsScenePoint(point);
         var contact=scene?ContactAt(point):null;
         var roomObject=scene&&(!_toolArmed||_action==InteractionAction.PlayBall)?ObjectAt(point):null;
+        bool rescuePointer=scene&&_waterRescueToolArmed;
+        var rescueHint=rescuePointer?WaterRescueHint(contact):(Hint:"",Candidate:false);
         _hoverId=contact?.Id;_hoverPart=contact?.Part??BodyPart.Side;
         _hoverLabel.Visible=(contact!=null||roomObject!=null)&&!_modalOpen;
-        if(contact!=null)
+        if(rescuePointer)
+        {
+            // Rescue clicks use ContactAt before ground resources. Keep the same
+            // priority here when a nearby resource is also under the pointer.
+            _hoverLabel.Text=(contact is {TargetKind:InteractionTargetKind.Body}?ContactName(contact)+" · ":"")+rescueHint.Hint;
+            _hoverLabel.Position=point+new Vector2(18,18);
+        }
+        else if(contact!=null)
         {
             _hoverLabel.Text=contact.TargetKind==InteractionTargetKind.DetachedStem?DetachedStemHint(contact):contact.TargetKind==InteractionTargetKind.Stem?StemContactHint(contact):ContactName(contact)+(MatchesGestureContact(contact)?
                 " · "+(_appliedForce<.35?"轻触":_appliedForce<.62?"稍重":"用力"):
-                _waterRescueToolArmed?" · 点击使用救援用品":
                 !_toolArmed||_action==InteractionAction.Lift?" · 按住抓起 / 松手放下 / 甩手抛出":
                 IsFoodTool(_action)?" · 点击递食 / 点地面放下":
                 _action is InteractionAction.Slap or InteractionAction.Punch?" · 点击击打 / 连点连击":
                 _action==InteractionAction.Burn?" · 长按灼烧 / 松开停止":"");
             _hoverLabel.Position=point+new Vector2(18,18);
         }
-        if(roomObject!=null){_hoverLabel.Text=WorldSimulation.IsWaste(roomObject.Kind)?WasteLabel(roomObject):RoomResourceText.Label(roomObject,Sim.State);_hoverLabel.Position=point+new Vector2(18,18);}
+        if(!rescuePointer&&roomObject!=null){_hoverLabel.Text=WorldSimulation.IsWaste(roomObject.Kind)?WasteLabel(roomObject):RoomResourceText.Label(roomObject,Sim.State);_hoverLabel.Position=point+new Vector2(18,18);}
         _pointer.Point=point;_pointer.Active=scene&&(contact!=null||roomObject!=null);
-        _pointer.Rescue=_waterRescueToolArmed;
+        _pointer.Rescue=rescuePointer;_pointer.RescueCandidate=rescueHint.Candidate;
         _pointer.Rough=_mouseHeld?_appliedForce>.62f:_toolArmed&&_group.Rough;_pointer.Pressed=_mouseHeld;
         _pointer.DragOrigin=_dragStart;_pointer.Aim=_mouseHeld&&_action is InteractionAction.Push or InteractionAction.Throw or InteractionAction.PlayBall;
         var releaseVelocity=_carryReleaseMotion.Velocity;
@@ -764,11 +772,24 @@ public partial class RoomPointer : Control
 {
     public Vector2 Point,DragOrigin,ImpactPoint,ReleaseVector;
     public float ImpactAge;
-    public bool Active,Rough,Pressed,Aim,Rescue,Impact,CarryThrow;
+    public bool Active,Rough,Pressed,Aim,Rescue,RescueCandidate,Impact,CarryThrow;
     public override void _Draw()
     {
         var color=new Color(Rescue?"518caa":CarryThrow?"c37b39":Rough?"ae6e51":"62846d");
-        if(Active){DrawArc(Point,Pressed?12:9,0,Mathf.Tau,32,color,2,true);DrawCircle(Point,2,color);}
+        if(Rescue)
+        {
+            // A tool symbol only: no rescue progress or success is predicted.
+            var ring=new Color(RescueCandidate?"518caa":"87949a");
+            var band=new Color(RescueCandidate?"f5e5c9":"c7cdcf");
+            DrawArc(Point,10,0,Mathf.Tau,32,ring,5,true);
+            for(int n=0;n<4;n++)
+            {
+                float angle=n*Mathf.Tau/4;
+                DrawArc(Point,10,angle-.20f,angle+.20f,6,band,5,true);
+            }
+            if(RescueCandidate)DrawCircle(Point,2,ring);
+        }
+        else if(Active){DrawArc(Point,Pressed?12:9,0,Mathf.Tau,32,color,2,true);DrawCircle(Point,2,color);}
         if(Aim){DrawLine(DragOrigin,Point,color,2,true);DrawCircle(DragOrigin,4,color);}
         if(CarryThrow&&ReleaseVector.LengthSquared()>1)
         {
