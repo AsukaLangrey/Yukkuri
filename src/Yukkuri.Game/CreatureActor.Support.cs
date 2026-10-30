@@ -4,14 +4,16 @@ using System.Collections.Generic;
 public partial class CreatureActor
 {
     private readonly List<MeshInstance3D> _supportMeshes=new();
-    private readonly Dictionary<Mesh,System.Numerics.Vector3[]> _supportVertices=new();
-    private System.Numerics.Vector3[] SupportVertices(Mesh mesh)
+    private readonly Dictionary<MeshInstance3D,(Mesh Mesh,System.Numerics.Vector3[] Vertices)> _supportVertices=new();
+    private System.Numerics.Vector3[] SupportVertices(MeshInstance3D owner,Mesh mesh)
     {
-        if(_supportVertices.TryGetValue(mesh,out var vertices))return vertices;
+        if(_supportVertices.TryGetValue(owner,out var cached)&&ReferenceEquals(cached.Mesh,mesh))return cached.Vertices;
         var unique=new HashSet<Vector3>(mesh.GetFaces());
-        vertices=new System.Numerics.Vector3[unique.Count];int index=0;
+        var vertices=new System.Numerics.Vector3[unique.Count];int index=0;
         foreach(var p in unique)vertices[index++]=new(p.X,p.Y,p.Z);
-        _supportVertices[mesh]=vertices;return vertices;
+        // Animated eyes, brows and mouths replace their meshes. Keep only this
+        // node's current surface, not every historical shape from their caches.
+        _supportVertices[owner]=(mesh,vertices);return vertices;
     }
     private static void RestAccessoryOnGround(Node3D root)
     {
@@ -42,12 +44,22 @@ public partial class CreatureActor
         if(_supportMeshes.Count==0)RememberSupportMeshes(_visual);
         float lowest=floor-Position.Y;
         Transform3D local=GlobalTransform.AffineInverse();
-        foreach(var mesh in _supportMeshes)
+        for(int index=0;index<_supportMeshes.Count;index++)
         {
-            if(!mesh.IsVisibleInTree()||mesh.Mesh==null)continue;
+            var mesh=_supportMeshes[index];
+            if(!GodotObject.IsInstanceValid(mesh))
+            {_supportVertices.Remove(mesh);_supportMeshes.RemoveAt(index--);continue;}
+            var geometry=mesh.Mesh;
+            if(geometry==null||!GodotObject.IsInstanceValid(geometry))
+            {_supportVertices.Remove(mesh);continue;}
+            // Release an obsolete shape even if the new one is hidden or its
+            // bounds need no detailed support sampling on this frame.
+            if(_supportVertices.TryGetValue(mesh,out var cached)&&!ReferenceEquals(cached.Mesh,geometry))
+                _supportVertices.Remove(mesh);
+            if(!mesh.IsVisibleInTree())continue;
             Transform3D t=local*mesh.GlobalTransform;
             float y;
-            if(mesh.Mesh is SphereMesh sphere)
+            if(geometry is SphereMesh sphere)
             {
                 float rx=sphere.Radius,ry=sphere.Height*.5f;
                 float extent=Mathf.Sqrt(Mathf.Pow(t.Basis.X.Y*rx,2)+Mathf.Pow(t.Basis.Y.Y*ry,2)+Mathf.Pow(t.Basis.Z.Y*rx,2));
@@ -55,10 +67,10 @@ public partial class CreatureActor
             }
             else
             {
-                Aabb bounds=mesh.Mesh.GetAabb();y=float.PositiveInfinity;
+                Aabb bounds=geometry.GetAabb();y=float.PositiveInfinity;
                 for(int n=0;n<8;n++)y=Mathf.Min(y,(t*bounds.GetEndpoint(n)).Y);
                 if(y>=lowest)continue;
-                var vertices=SupportVertices(mesh.Mesh);
+                var vertices=SupportVertices(mesh,geometry);
                 if(vertices.Length>0)y=ActorMeshSupport.LowestY(vertices,new(t.Basis.X.Y,t.Basis.Y.Y,t.Basis.Z.Y),t.Origin.Y);
             }
             lowest=Mathf.Min(lowest,y);
