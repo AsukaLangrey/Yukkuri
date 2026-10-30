@@ -4,7 +4,8 @@ using Yukkuri.Simulation;
 
 public partial class CreatureActor
 {
-    public sealed record SurfaceContact(BodyPart Part,Vector3 Point,Vector3 Normal,float Distance,bool Blocked,RestraintKind Fixture);
+    public sealed record SurfaceContact(BodyPart Part,Vector3 Point,Vector3 Normal,float Distance,bool Blocked,RestraintKind Fixture,
+        InteractionTargetKind TargetKind=InteractionTargetKind.Body,string? ObjectId=null);
     private MeshInstance3D? _skinContact;
     private Node3D? _hairContact;
     private readonly Dictionary<Mesh,TriangleMesh> _contactTrees=new();
@@ -31,7 +32,8 @@ public partial class CreatureActor
     public SurfaceContact? RayContact(Vector3 origin,Vector3 direction)
     {
         SurfaceContact? nearest=null;
-        void Test(MeshInstance3D mesh,BodyPart part,bool blocked=false,bool skin=false,RestraintKind fixture=RestraintKind.None)
+        void Test(MeshInstance3D mesh,BodyPart part,bool blocked=false,bool skin=false,RestraintKind fixture=RestraintKind.None,
+            InteractionTargetKind targetKind=InteractionTargetKind.Body,string? objectId=null)
         {
             if(!mesh.IsVisibleInTree()||mesh.Mesh==null)return;
             Transform3D transform=mesh.GlobalTransform,inverse=transform.AffineInverse();
@@ -57,13 +59,16 @@ public partial class CreatureActor
                 part=ActorSurfaceMarks.ClassifySkin(new(p.X,p.Y,p.Z));
                 normal=(_visual.GlobalBasis.Inverse().Transposed()*n).Normalized();
             }
-            nearest=new(part,point,normal,distance,blocked,fixture);
+            nearest=new(part,point,normal,distance,blocked,fixture,targetKind,objectId);
         }
         void TestRoot(Node3D? root,BodyPart part,bool blocked=false,RestraintKind fixture=RestraintKind.None)
         {if(root?.IsVisibleInTree()!=true)return;foreach(var mesh in ContactMeshes(root))Test(mesh,part,blocked,fixture:fixture);}
         if(_skinContact!=null)Test(_skinContact,BodyPart.Side,skin:true);
         TestRoot(_hairContact,BodyPart.Head);
         TestRoot(_accessoryRoot,BodyPart.Accessory);TestRoot(_looseAccessory,BodyPart.Accessory);
+        if(_stemContactEventId!=null&&_gestationPlant?.IsVisibleInTree()==true)
+            foreach(var mesh in ContactMeshes(_gestationPlant))
+                Test(mesh,BodyPart.Side,targetKind:InteractionTargetKind.Stem,objectId:_stemContactEventId);
         // A box wall, fixing frame, wrapping cloth or support hand in front of the body occludes it.
         TestRoot(_boxEquipment,BodyPart.Side,true,RestraintKind.Box);
         TestRoot(_frameEquipment,BodyPart.Side,true,RestraintKind.Frame);

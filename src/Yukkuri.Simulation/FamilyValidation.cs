@@ -56,6 +56,16 @@ public static partial class FamilyRules
                 Require(p.EventId!=null&&!s.CompletedBirths.Contains(p.EventId)&&
                     (p.Method==BirthMethod.Live?p.PlannedChildren==1:p.PlannedChildren is 2 or 3),"孕育数量或结算状态无效");
             var cold=f.ColdStorage;
+            // Null is the legacy representation. World construction initializes
+            // only missing active broods; querying status never repairs a save.
+            if(p.Stem is { } stem)
+                Require(p.Method==BirthMethod.Stem&&p.EventId!=null&&stem.EventId==p.EventId&&
+                    p.Phase!=PregnancyPhase.Preparing&&Number(stem.Integrity,100)&&
+                    (p.Phase!=PregnancyPhase.Gestating||stem.Integrity>0)&&Number(stem.Hydration,100)&&
+                    Number(stem.SupportRemaining,60)&&double.IsFinite(stem.LastCareAt)&&stem.LastCareAt>=-100&&
+                    stem.LastCareAt<=s.WorldSeconds+.001&&double.IsFinite(stem.LastDamageAt)&&stem.LastDamageAt>=-100&&
+                    stem.LastDamageAt<=s.WorldSeconds+.001&&Text(stem.LastDamageCause)&&
+                    (stem.LastDamageActorId==null||stem.LastDamageActorId=="player"||creatures.ContainsKey(stem.LastDamageActorId)),"外茎照护状态无效");
             Require(Number(cold.Elapsed,1000000)&&Number(cold.RecoveryRemaining,30)&&cold.Sessions>=0,"冷藏记录无效");
             if(cold.Stored)
                 Require(s.InteractionPlaytest&&cold.RecoveryRemaining==0&&!c.Interaction.Carried&&!c.Interaction.Falling&&

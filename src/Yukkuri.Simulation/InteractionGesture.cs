@@ -33,13 +33,28 @@ public sealed partial class WorldSimulation
     private ContactGesture? _interactionGesture;
     private const double NuzzleReplyHoldSeconds=.35;
     public bool HasInteractionGesture => _interactionGesture != null;
-    public string? InteractionGestureTarget => _interactionGesture?.TargetId;
+    // A completed external support hold is retained only to consume the release,
+    // not to reserve its mother against feeding, family care or birth.
+    public string? InteractionGestureTarget
+    {
+        get
+        {
+            if(_interactionGesture is not { } g)return null;
+            if(g.Input.TargetKind==InteractionTargetKind.Stem&&(!g.ContactActive||
+                g.Applied&&g.Input.Action==InteractionAction.SupportStem||
+                State.Creatures.Find(c=>c.Id==g.TargetId) is not { } mother||AttachedStem(mother)?.EventId!=g.ObjectId))return null;
+            return g.TargetId;
+        }
+    }
     public string? InteractionGestureObject=>_interactionGesture?.ObjectId;
     public SurfaceSide CurrentInteractionSide=>_interactionGesture?.Input.Side??SurfaceSide.Whole;
     public InteractionAction? CurrentInteractionAction => _interactionGesture?.Input.Action;
     public double InteractionGestureSeconds => _interactionGesture?.Elapsed ?? 0;
     public bool InteractionGestureOwnsPose=>_interactionGesture is { Refused:false } g&&
         State.Creatures.Find(o=>o.Id==g.TargetId) is { Condition:not PhysicalCondition.Dead }&&
+        (g.Input.TargetKind!=InteractionTargetKind.Stem||
+            State.Creatures.Find(o=>o.Id==g.TargetId) is { } stemMother&&AttachedStem(stemMother)?.EventId==g.ObjectId&&
+            (!g.Applied&&g.Input.Action==InteractionAction.SupportStem||g.Input.Action==InteractionAction.Burn))&&
         (g.ContactActive||g.Input.Action is InteractionAction.Lift or InteractionAction.Throw or InteractionAction.AdjustHanging or InteractionAction.Tease or InteractionAction.Roll)&&
         (g.Input.Action switch
         {
@@ -85,6 +100,7 @@ public sealed partial class WorldSimulation
         var c = InteractionTarget(id);
         string? invalid = ValidateInteraction(c, input);
         if (invalid != null) return Unavailable(invalid);
+        if(input.TargetKind==InteractionTargetKind.Stem)return BeginStemGesture(c!,input);
         if (!InteractionCatalog.Choice(input.Action).Continuous) return ExecuteInteraction(id, input);
         var oil = c!; var i = oil.Interaction;
         int previousReaction=oil.ReactionSerial;
@@ -159,10 +175,13 @@ public sealed partial class WorldSimulation
         if (g == null) return Unavailable("没有进行中的动作。 ");
         var c = InteractionTarget(g.TargetId);
         if (c == null || input.Action != g.Input.Action) { EndInteractionGesture(true); return Unavailable("动作对象或工具已改变。 "); }
+        if(input.TargetKind!=g.Input.TargetKind||input.TargetKind==InteractionTargetKind.Stem&&input.ObjectId!=g.ObjectId)
+        {EndInteractionGesture(true);return Unavailable("接触目标已改变，请收回工具重新对准。 ");}
         if(input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink&&input.ObjectId!=g.ObjectId)
         {EndInteractionGesture(true);return Unavailable("手里的食水已经改变，先收回再递。 ");}
         string? invalid = ValidateInteraction(c, input);
         if (invalid != null) { EndInteractionGesture(true); return Unavailable(invalid); }
+        if(input.TargetKind==InteractionTargetKind.Stem)return ContinueStemGesture(g,c,input,inContact);
         if(input.Action==InteractionAction.PlayBall&&(input.ObjectId!=null&&input.ObjectId!=g.ObjectId||!State.RoomObjects.Any(o=>o.Id==g.ObjectId&&!o.Stored&&o.RegionId==c.RegionId&&o.Kind==RoomObjectKind.Ball)))
         {EndInteractionGesture(true);return Unavailable("刚才按住的软球已经不在这里，动作已停止。 ");}
         // Samples never catch up a missed frame; leaving the contact surface pauses contact effects.
@@ -541,6 +560,11 @@ public sealed partial class WorldSimulation
         // Cleanup belongs to the object on which the gesture began, even if the view changed.
         var c = State.Creatures.Find(o=>o.Id==g.TargetId);
         if (c == null) return g.Last;
+        if(g.Input.TargetKind==InteractionTargetKind.Stem)
+        {
+            if(c.ReactionSerial==g.ReactionSerial){c.Interaction.ReactionPose="idle";c.Interaction.ReactionPoseRemaining=0;}
+            return g.Last with {Pose=InteractionPresentation.Pose(c),Changed=false};
+        }
         if(c.Condition==PhysicalCondition.Dead)
         {NormalizeDeadInteractionSupport(c);cancelled=true;}
         // Finishing an old gesture is another action boundary. A pause, loss of
@@ -647,7 +671,7 @@ public sealed partial class WorldSimulation
     {
         InteractionAction.Stroke or InteractionAction.Touch => "stroke", InteractionAction.Nuzzle => "nuzzle", InteractionAction.Lift => "carry",
         InteractionAction.Rock => "rock", InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink => "offer",
-        InteractionAction.Clean or InteractionAction.Dry => "wipe", InteractionAction.Care => "nursing",
+        InteractionAction.Clean or InteractionAction.Dry => "wipe", InteractionAction.Care => "nursing",InteractionAction.SupportStem=>"stem-care",
         InteractionAction.Press => "pressure", InteractionAction.Squeeze => "squeeze", InteractionAction.Roll => "roll",
         InteractionAction.BurnFeet => "foot-hurt", InteractionAction.Burn=>"burn-tense", InteractionAction.Punch=>"slap", InteractionAction.Tease => "reach", _ => "idle"
     };

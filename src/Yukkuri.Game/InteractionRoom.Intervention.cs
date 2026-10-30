@@ -6,6 +6,8 @@ public partial class InteractionRoom
     private Button _immediateRescue=null!,_immediateStopThreat=null!,_immediateCare=null!,_immediateRelease=null!,_immediateDry=null!;
     private Label _immediateThreatDescription=null!;
     private Button _yardHelpButton=null!;
+    private Label _stemCareDescription=null!;
+    private Button _stemCareButton=null!;
     private string? _yardHelpTargetId;
 
     private void BuildYardHelpButton(Control parent)
@@ -65,6 +67,13 @@ public partial class InteractionRoom
             else ShowMedicineSupplies();
         });parent.AddChild(_immediateCare);
         _immediateDry=Button("拿毛巾 · 擦干身体",()=>SelectQuickTool(InteractionAction.Dry));parent.AddChild(_immediateDry);
+        _stemCareDescription=Text("",12,"78816e");parent.AddChild(_stemCareDescription);
+        _stemCareButton=Button("拿茎部支护用品",()=>
+        {
+            if(Sim.State.Medicine>0)SelectQuickTool(InteractionAction.SupportStem);
+            else ShowMedicineSupplies(equipAction:InteractionAction.SupportStem);
+        });parent.AddChild(_stemCareButton);
+        _stemCareDescription.Visible=_stemCareButton.Visible=false;
         _immediateThreatDescription.Visible=_immediateStopThreat.Visible=_immediateRescue.Visible=
             _immediateCare.Visible=_immediateRelease.Visible=_immediateDry.Visible=false;
     }
@@ -117,6 +126,17 @@ public partial class InteractionRoom
         _immediateCare.TooltipText="拿出后，按住适用伤处完成护理。不会自动治疗或省略接触；稳定后仍要照护。";
         _immediateDry.Visible=recovery&&!critical&&!inWater;
         _immediateDry.TooltipText="拿毛巾后按住湿处擦拭；擦干不会消除已有伤势或惊惧。";
+        var stem=local?Sim.StemCareStatus(selected.Id):null;
+        _stemCareDescription.Visible=_stemCareButton.Visible=stem!=null;
+        if(stem!=null)
+        {
+            _stemCareDescription.Text=$"外茎幼芽 {stem.PlannedChildren} 个 · 发育 {stem.Progress*100:0}%\n茎部完整 {stem.Integrity:0}/100 · 含水 {stem.Hydration:0}/100"+
+                (stem.SupportRemaining>0?$"\n支护余下 {System.Math.Ceiling(stem.SupportRemaining):0} 秒":"\n需要时可按住外茎完成支护。")+
+                (string.IsNullOrEmpty(stem.LastDamageCause)?"":"\n最近受损："+stem.LastDamageCause);
+            _stemCareButton.Text=Sim.State.Medicine>0?"拿茎部支护用品 · 按住外茎":"购买茎部支护用品";
+            _stemCareButton.Disabled=false;
+            _stemCareButton.TooltipText=stem.CanSupport?"按住外茎1.6秒；成功支护消耗1包真实库存。":stem.RefusalReason??"当前不能支护。";
+        }
         var aggressor=local?ThreatForSelected(selected):null;
         _immediateStopThreat.Visible=_immediateThreatDescription.Visible=aggressor!=null;
         if(aggressor==null)return;

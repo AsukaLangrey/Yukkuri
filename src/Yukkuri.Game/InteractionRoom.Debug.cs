@@ -203,6 +203,8 @@ public partial class InteractionRoom
         "HeatTension"=>"灼烧紧绷","HitCount"=>"连续命中","HitRemaining"=>"连击剩余时间",
         "Pause"=>"暂停","LethalInjuries"=>"致命后果","AgeSeconds"=>"身体年龄","InnerAgeSeconds"=>"内在年龄",
         "CareRemaining"=>"护理剩余时间","CareLastEvent"=>"照护记录","EatingRemaining"=>"吞咽剩余时间",
+        "Stem"=>"外茎幼芽","Integrity"=>"完整度","SupportRemaining"=>"支护剩余时间",
+        "LastCareAt"=>"最近支护时间","LastDamageAt"=>"最近受损时间","LastDamageCause"=>"最近受损原因","LastDamageActorId"=>"最近施害者",
         _=>""
     };
 }

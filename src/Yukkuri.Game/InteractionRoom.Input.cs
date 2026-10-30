@@ -30,7 +30,10 @@ public partial class InteractionRoom
     private bool _supplyBiteTaken;
     private float _closeYaw,_closePitch=InteractionCameraOrbit.DefaultPitch,_closeZoom=1;
     private string? _ballDragId;
-    private record Contact(string Id,BodyPart Part,Vector3 World,Vector3 Normal,float Distance,bool Blocked,RestraintKind Fixture,SurfaceSide Side);
+    private InteractionTargetKind _gestureTargetKind=InteractionTargetKind.Body;
+    private string? _gestureTargetObject,_gestureStemMotherId;
+    private record Contact(string Id,BodyPart Part,Vector3 World,Vector3 Normal,float Distance,bool Blocked,RestraintKind Fixture,SurfaceSide Side,
+        InteractionTargetKind TargetKind=InteractionTargetKind.Body,string? ObjectId=null);
     private bool CanUseContact(Contact contact)=>!contact.Blocked||contact.Fixture switch
     {
         RestraintKind.Box=>_action==InteractionAction.OpenBox,
@@ -39,8 +42,17 @@ public partial class InteractionRoom
         RestraintKind.Hanging=>_action is InteractionAction.Lower or InteractionAction.AdjustHanging,
         _=>false
     };
-    private static string ContactName(Contact c)=>!c.Blocked?PartName(c.Part,c.Side):c.Fixture switch
+    private static string ContactName(Contact c)=>c.TargetKind==InteractionTargetKind.Stem?"外茎与幼芽":!c.Blocked?PartName(c.Part,c.Side):c.Fixture switch
     {RestraintKind.Box=>"箱子",RestraintKind.Wrap=>"包裹",RestraintKind.Frame=>"固定具",RestraintKind.Hanging=>"悬挂支架",_=>"托举支撑"};
+    private bool MatchesGestureContact(Contact contact)
+    {
+        if(!CanUseContact(contact)||contact.TargetKind!=_gestureTargetKind)return false;
+        // The simulation releases public ownership while off the stem. Keep the
+        // actual starting identity solely to recognize contact again, not to own it.
+        if(_gestureTargetKind==InteractionTargetKind.Stem)
+            return Sim.HasInteractionGesture&&contact.Id==_gestureStemMotherId&&contact.ObjectId==_gestureTargetObject;
+        return contact.Id==Sim.InteractionGestureTarget&&contact.ObjectId==null;
+    }
 
     private Vector3 GroundPoint(Vector2 point,float height=0)
     {
@@ -88,7 +100,8 @@ public partial class InteractionRoom
             if(hit==null||hit.Distance>=nearest)continue;
             nearest=hit.Distance;
             var local=actor.ContactCoordinate(hit.Point,hit.Part);
-            best=new(c.Id,hit.Part,hit.Point,hit.Normal,hit.Distance,hit.Blocked,hit.Fixture,ActorSurfaceMarks.ContactSide(hit.Part,local.X));
+            best=new(c.Id,hit.Part,hit.Point,hit.Normal,hit.Distance,hit.Blocked,hit.Fixture,
+                hit.TargetKind==InteractionTargetKind.Stem?SurfaceSide.Whole:ActorSurfaceMarks.ContactSide(hit.Part,local.X),hit.TargetKind,hit.ObjectId);
         }
         return best;
     }
@@ -230,6 +243,7 @@ public partial class InteractionRoom
         {
             if(Sim.State.Settings.Pause){_message="先继续时间，再使用救援用品。";return;}
             if(contact==null){_message="用救援用品点击落水的油。购买用品后才能使用。";return;}
+            if(contact.TargetKind==InteractionTargetKind.Stem){_message="这里是外茎。救援用品需要对准落水油的身体。";return;}
             if(contact.Id!=Sim.State.SelectedId)SelectOil(contact.Id);
             _waterRescueToolArmed=true;
             var rescue=Sim.RescueFromWater(contact.Id);
@@ -242,7 +256,9 @@ public partial class InteractionRoom
         if(_toolArmed&&IsFoodTool(_action))
         {
             if(Sim.State.Settings.Pause){_message="小院暂停中，先点“继续”或按空格。";return;}
-            if(contact!=null)BeginClickOffer(contact);
+            if(contact?.TargetKind==InteractionTargetKind.Stem)
+                AcceptFeedback(Sim.ExecuteInteraction(contact.Id,new(_action,contact.Part,_force,ObjectId:contact.ObjectId,TargetKind:contact.TargetKind)),contact.Id);
+            else if(contact!=null)BeginClickOffer(contact);
             else if(TryGroundPoint(mouse.Position,0,out var foodPoint)&&Sim.Selected!=null)
                 AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(GroundFoodAction(_action),X:foodPoint.X,Z:foodPoint.Z)));
             GetViewport().SetInputAsHandled();return;
@@ -294,6 +310,8 @@ public partial class InteractionRoom
         bool placement=IsGroundPlacement(_action);
         if(placement)
         {
+            if(contact?.TargetKind==InteractionTargetKind.Stem)
+            {AcceptFeedback(Sim.ExecuteInteraction(contact.Id,new(_action,contact.Part,_force,ObjectId:contact.ObjectId,TargetKind:contact.TargetKind)),contact.Id);return;}
             if(!TryGroundPoint(mouse.Position,0,out ground)){_message="这个视角看不到落点。先把镜头转向地面，再放置；托举仍保持支撑。";return;}
             if(Sim.Selected!=null)AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(_action,Force:_force,X:ground.X,Z:ground.Z)));
             return;
@@ -320,7 +338,11 @@ public partial class InteractionRoom
         _contactMotion.Sample(contact?.Id,System.Numerics.Vector3.Zero,System.Numerics.Vector3.UnitY,.01);
         if(contact!=null)SampleStroke(contact,mouse.Position,true);
         var part=contact?.Part??BodyPart.Side;
-        var request=new InteractionInput(_action,part,_appliedForce,X:ground.X,Z:ground.Z,Height:_height,Side:contact?.Side??SurfaceSide.Whole,ObjectId:ball?_ballDragId:null);
+        _gestureTargetKind=ball?InteractionTargetKind.Body:contact?.TargetKind??InteractionTargetKind.Body;
+        _gestureTargetObject=ball?_ballDragId:contact?.ObjectId;
+        _gestureStemMotherId=_gestureTargetKind==InteractionTargetKind.Stem?selected.Id:null;
+        var request=new InteractionInput(_action,part,_appliedForce,X:ground.X,Z:ground.Z,Height:_height,Side:contact?.Side??SurfaceSide.Whole,
+            ObjectId:_gestureTargetObject,TargetKind:_gestureTargetKind);
         if(contact!=null&&_action is InteractionAction.Poke or InteractionAction.Flick or InteractionAction.Slap or InteractionAction.Punch)
         {
             var normal=contact.Normal;var forward=-_camera.GlobalBasis.Z;
@@ -339,7 +361,8 @@ public partial class InteractionRoom
             if(contact!=null&&feedback.Success&&feedback.Changed&&!feedback.Refused&&_action is InteractionAction.Poke or InteractionAction.Flick or InteractionAction.Slap or InteractionAction.Punch)
             {
                 _tapContact=contact;_tapAge=0;ShowInteractionTool();PlaceContactTool(contact);_hand.Visible=true;
-                if(_action is InteractionAction.Slap or InteractionAction.Punch)RegisterHit(contact.Id);
+                if(contact.TargetKind==InteractionTargetKind.Stem)_hitTarget=null;
+                if(contact.TargetKind==InteractionTargetKind.Body&&(_action is InteractionAction.Slap or InteractionAction.Punch))RegisterHit(contact.Id);
             }
         }
         GetViewport().SetInputAsHandled();
@@ -350,6 +373,7 @@ public partial class InteractionRoom
         _strokeTracker.Reset();_contactMotion.Reset();
         _carryReleaseMotion.Reset();
         _appliedForce=.12f;_gestureDirection=Vector2.Zero;_gesturePose="idle";
+        _gestureTargetKind=InteractionTargetKind.Body;_gestureTargetObject=null;_gestureStemMotherId=null;
     }
     private void CancelGesture()
     {
@@ -404,7 +428,7 @@ public partial class InteractionRoom
         ulong sampleUsec=Time.GetTicksUsec();
         double gestureSeconds=(sampleUsec-_lastGestureSampleUsec)/1_000_000.0;_lastGestureSampleUsec=sampleUsec;
         Vector2 current=GetViewport().GetMousePosition();var contact=IsScenePoint(current)?ContactAt(current):null;
-        bool touching=contact!=null&&contact.Id==Sim.InteractionGestureTarget&&CanUseContact(contact);
+        bool touching=contact!=null&&MatchesGestureContact(contact);
         var ground=GroundPoint(current);var worldMotion=ground-GroundPoint(_lastPointer);
         bool surfaceMotion=_action is InteractionAction.Stroke or InteractionAction.Nuzzle or InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory or InteractionAction.Rock;
         bool timelySample=double.IsFinite(sampleSeconds)&&sampleSeconds>0&&sampleSeconds<=ContactMotion.MaximumSampleSeconds;
@@ -446,6 +470,7 @@ public partial class InteractionRoom
         }
         double appliedMotion=_action==InteractionAction.Touch?motionSample.Distance:surfaceMotion?stroke.Distance:worldMotion.Length();
         var input=new InteractionInput(_action,contact?.Part??BodyPart.Side,_appliedForce,dt,appliedMotion,Math.Clamp(carriedTarget.X,-7.7,7.7),Math.Clamp(carriedTarget.Z,-7.7,7.7),_height,direction.X,direction.Z,contact?.Side??SurfaceSide.Whole,_action==InteractionAction.PlayBall?_ballDragId:null);
+        input=input with {TargetKind=_gestureTargetKind,ObjectId=_gestureTargetObject};
         if(_action==InteractionAction.Touch)input=input with {StopImpact=motionSample.StopImpact,TouchTangentFraction=motionSample.TangentFraction,TouchNormalSpeed=motionSample.NormalSpeed};
         // Dragging off the scene never creates force, consumes a dose, or drops a held oil.
         if(!IsScenePoint(current))
@@ -474,6 +499,7 @@ public partial class InteractionRoom
         if(!Sim.HasInteractionGesture){CancelGesture();_lastPointer=current;return;}
         ShowInteractionTool();
         _hand.Visible=(_action is InteractionAction.Tease or InteractionAction.PlayBall||touching)&&(!Sim.InteractionIntakeAccepted||_action is InteractionAction.Drink or InteractionAction.FeedMeal)&&_action is not (InteractionAction.Lift or InteractionAction.Throw);
+        if(_action==InteractionAction.SupportStem&&_gesturePose=="stem-supported")_hand.Visible=false;
         if(_toolFood!=null)_toolFood.Visible=!Sim.InteractionIntakeAccepted;
         if(_action==InteractionAction.Drink&&_cupWater!=null)
         {
@@ -501,7 +527,7 @@ public partial class InteractionRoom
         var obj=Sim.State.RoomObjects.Find(o=>o.Id==_heldSupplyId&&o.HeldByHand);
         if(obj==null){CancelGesture();return;}
         var contact=IsScenePoint(point)?ContactAt(point):null;
-        bool mouth=contact is {Part:BodyPart.Mouth,Blocked:false};
+        bool mouth=contact is {Part:BodyPart.Mouth,Blocked:false,TargetKind:InteractionTargetKind.Body};
         if(Sim.HasInteractionGesture&&contact?.Id!=Sim.InteractionGestureTarget)AcceptFeedback(Sim.EndInteractionGesture(true));
         if(mouth&&contact!=null&&obj.Portions>0&&!_supplyBiteTaken&&!Sim.HasInteractionGesture)
         {
@@ -558,7 +584,7 @@ public partial class InteractionRoom
                     _hand.GlobalPosition=contact.World+normal*.034f;
                 else if(_action is InteractionAction.Press or InteractionAction.Squeeze or InteractionAction.Hold or InteractionAction.Slap)
                     _hand.GlobalPosition=contact.World+normal*.052f;
-                else if(_action==InteractionAction.Care)_hand.GlobalPosition=contact.World+normal*(-InteractionCareSurface.PadBottom+.003f);
+                else if(_action is InteractionAction.Care or InteractionAction.SupportStem)_hand.GlobalPosition=contact.World+normal*(-InteractionCareSurface.PadBottom+.003f);
                 else
                 {
                     _hand.GlobalBasis*=Basis.FromEuler(new(Mathf.DegToRad(InteractionToolSurface.FingerTiltDegrees),0,0));
@@ -571,6 +597,8 @@ public partial class InteractionRoom
     private void UpdateTapTool(float dt)
     {
         if(_tapContact is not { } contact)return;
+        if(contact.TargetKind==InteractionTargetKind.Stem&&Sim.StemCareStatus(contact.Id)?.EventId!=contact.ObjectId)
+        {_tapContact=null;_hand.Visible=false;return;}
         _tapAge+=dt;
         if(_tapAge>=.22f){_tapContact=null;_hand.Visible=false;return;}
         PlaceContactTool(contact);
@@ -586,7 +614,8 @@ public partial class InteractionRoom
         if(pointer!=_lastPointer)
         {
             var previous=IsScenePoint(_lastPointer)?ContactAt(_lastPointer):null;
-            if(previous==null||previous.Id!=contact.Id||previous.Part!=contact.Part||previous.Side!=contact.Side||!CanUseContact(previous))
+            if(previous==null||previous.Id!=contact.Id||previous.Part!=contact.Part||previous.Side!=contact.Side||
+                previous.TargetKind!=contact.TargetKind||previous.ObjectId!=contact.ObjectId||!CanUseContact(previous))
                 _strokeTracker.Reset();
             else
             {
@@ -608,7 +637,7 @@ public partial class InteractionRoom
         _hoverLabel.Visible=(contact!=null||roomObject!=null)&&!_modalOpen;
         if(contact!=null)
         {
-            _hoverLabel.Text=ContactName(contact)+(Sim.InteractionGestureTarget==contact.Id&&CanUseContact(contact)?
+            _hoverLabel.Text=contact.TargetKind==InteractionTargetKind.Stem?StemContactHint(contact):ContactName(contact)+(MatchesGestureContact(contact)?
                 " · "+(_appliedForce<.35?"轻触":_appliedForce<.62?"稍重":"用力"):
                 _waterRescueToolArmed?" · 点击使用救援用品":
                 !_toolArmed||_action==InteractionAction.Lift?" · 按住抓起 / 松手放下 / 甩手抛出":
@@ -639,6 +668,25 @@ public partial class InteractionRoom
         _pointer.ImpactPoint=_tapContact is { } impact?_camera.UnprojectPosition(impact.World):Vector2.Zero;
         _pointer.ImpactAge=_tapAge;
         _pointer.QueueRedraw();
+    }
+
+    private string StemContactHint(Contact contact)
+    {
+        if(_waterRescueToolArmed)return "外茎与幼芽 · 救援用品请对准母体";
+        if(!_toolArmed)return "外茎与幼芽 · 选择外茎护理；抓起请对准母体";
+        if(_action==InteractionAction.SupportStem)
+        {
+            // Completed support deliberately releases the public simulation target.
+            // Retain only this input's identity for its label, never to own the mother again.
+            bool completed=Sim.HasInteractionGesture&&_gesturePose=="stem-supported"&&
+                _gestureTargetKind==InteractionTargetKind.Stem&&_gestureStemMotherId==contact.Id&&_gestureTargetObject==contact.ObjectId;
+            if(completed)return "外茎护理已完成 · 松开后再选择操作";
+            var status=Sim.StemCareStatus(contact.Id);
+            return status is {CanSupport:false}?"外茎与幼芽 · "+status.RefusalReason:
+                "外茎与幼芽 · 持续接触护理，完成消耗一份护理包";
+        }
+        return "外茎与幼芽"+(_action==InteractionAction.Burn?" · 长按灼烧外茎 / 松开停止":
+            _action==InteractionAction.Punch?" · 点击击打外茎":" · 当前工具需按外茎规则判断");
     }
 }
 

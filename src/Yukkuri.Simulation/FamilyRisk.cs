@@ -124,7 +124,7 @@ public sealed partial class WorldSimulation
         mother.Interaction.PendingConversation=null;mother.Interaction.ConversationPraise=null;mother.Interaction.ConversationDelay=0;
         mother.Interaction.PendingPraise=null;mother.Interaction.PraiseRemaining=0;
         mother.Interaction.SocialResponseRemaining=0;mother.Interaction.ReactionPose="idle";mother.Interaction.ReactionPoseRemaining=0;
-        p.Phase=PregnancyPhase.Preparing;p.Method=method;p.FatherId=fatherId;p.EventId=null;p.PlannedChildren=0;
+        p.Phase=PregnancyPhase.Preparing;p.Method=method;p.FatherId=fatherId;p.EventId=null;p.PlannedChildren=0;p.Stem=null;
         p.Forced=true;p.InterventionRemaining=4;p.RecoveryDebt=debt;p.RecoveryRemaining=0;
         p.Elapsed=0;p.WaitingSeconds=0;p.Burden=Math.Min(60,10+debt*.15);p.Outcome="";
         p.Decision=PregnancyDecision.Undecided;p.PrenatalAttachment=mother.Patience*30;p.NextDecisionAt=State.WorldSeconds+30;
@@ -180,6 +180,7 @@ public sealed partial class WorldSimulation
         p.Phase=PregnancyPhase.Gestating;p.EventId=NewFamilyId("birth");p.Elapsed=0;p.WaitingSeconds=0;
         SettleBreedingInterest(mother,father);
         p.PlannedChildren=p.Method==BirthMethod.Live?1:2+(Next()<.25?1:0);
+        InitializeStemBrood(p);
         p.NextDecisionAt=State.WorldSeconds+30;mother.Family.LastEvent="强制干预后开始孕育，需要密切照护身体与情绪。";
         RecordInteraction(mother,"forced-pregnancy",mother.Family.LastEvent,5);
     }

@@ -91,7 +91,7 @@ public sealed partial class WorldSimulation
             mother.Family.CompanionTargetId is { } mt&&mt!=fatherId||father!.Family.CompanionTargetId is { } ft&&ft!=motherId)
             return "先等双方结束眼前的照护、休息或其他相处，再提出孕育安排。";
         p.Phase=PregnancyPhase.Preparing;p.Method=method;p.FatherId=fatherId;
-        p.Elapsed=0;p.WaitingSeconds=0;p.Burden=0;p.PlannedChildren=0;p.EventId=null;p.Outcome="";
+        p.Elapsed=0;p.WaitingSeconds=0;p.Burden=0;p.PlannedChildren=0;p.EventId=null;p.Outcome="";p.Stem=null;
         p.Forced=false;p.InterventionRemaining=0;p.RecoveryDebt=0;p.Decision=PregnancyDecision.Undecided;
         p.PrenatalAttachment=Clamp100(mother.Patience*60+(mother.Family.Peers.GetValueOrDefault(fatherId)?.Affection??0)*.4);
         p.NextDecisionAt=State.WorldSeconds+30;
@@ -187,10 +187,12 @@ public sealed partial class WorldSimulation
                 p.Phase=PregnancyPhase.Gestating;p.Elapsed=0;p.WaitingSeconds=0;p.EventId=NewFamilyId("birth");
                 SettleBreedingInterest(mother,father);
                 p.PlannedChildren=p.Method==BirthMethod.Live?1:2+(Next()<.25?1:0);
+                InitializeStemBrood(p);
                 ClearCompanionship(mother);f.LastEvent=p.Method==BirthMethod.Live?"胎生孕育开始了。":"茎生孕育开始了。";
                 RecordInteraction(mother,"pregnancy",f.LastEvent,3);
                 continue;
             }
+            if(!AdvanceStemBrood(mother,bodyDt))continue;
             bool distressed=mother.Fullness<25||mother.Interaction.Hydration<25||mother.Pain>=40||mother.Interaction.Digestion.Symptomatic||mother.Condition==PhysicalCondition.Critical||
                 mother.Interaction.Water.InWater||WaterEnvironment.IsInWater(State,mother);
             double burdenRate=p.Method==BirthMethod.Live?.22:.12;

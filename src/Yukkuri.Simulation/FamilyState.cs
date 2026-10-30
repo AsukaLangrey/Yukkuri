@@ -24,6 +24,7 @@ public sealed partial class PregnancyState
     public double RetryAt { get; set; }
     public int PlannedChildren { get; set; }
     public string Outcome { get; set; } = "";
+    public StemBroodState? Stem { get; set; }
 }
 public sealed partial class FamilyLife
 {

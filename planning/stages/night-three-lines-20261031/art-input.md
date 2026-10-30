@@ -107,3 +107,16 @@
 - 新增网格挂在 Actor 根节点，避开 `_visual` 的支撑网格收集以及原显式接触射线对象；不改变身体顶点、支撑高度或命中。所有 Ball 缩放均乘回原尺寸，未重犯第五批单位球放大问题。现有持续波纹/挣扎水滴保留，不另造模拟状态。
 
 本批文件：CreatureActor.WaterTransitions.cs（新增）、CreatureActor.Interaction.cs、InteractionRoom.cs、InteractionRoom.Input.cs，以及本交接。只进行了文件读取、rg 检索和补丁编辑；未运行项目、编译、测试、模拟、渲染、预览、转换、项目脚本、钩子或 Git。源码核对覆盖实际水域查询、成功反馈 Changed 默认值、读取存档重建 Actor 路径、效果与接触/支撑树隔离。远端仍需核对：初载水中与旧救援存档不重播；正常丢入/托举离水/自行逃出/成功救援的区别；无库存、固定、岸边无空位等失败不出现成功圈；近看救援不走自然时间；暂停中途冻结再续；换区/隐藏/Actor 重建不残留；救起后再入水覆盖旧信号；分区擦干与水中死亡表现。
+
+## 第七批：附着母体的外茎照护与独立命中
+
+- SurfaceContact 和 Room.Contact 增加独立 `TargetKind` / `ObjectId`，沿用 `BodyPart`，没有把外茎当头部。现有茎、叶、幼芽与新增支护绑带以真实网格参与同一条射线的最近命中排序，身体、发饰、固定具和场景遮挡仍可挡住它们。茎仍是 `_visual` 的附着子节点，随母体实际姿态移动；KeepBodyAboveSupport 继续排除整棵茎，不把柔软外茎当刚性地面支撑。
+- Begin/Continue 传 A 的 `InteractionTargetKind.Stem`，ObjectId 绑定本窝 EventId。连续操作保留初始身份，射线移到母体、另一窝或旧孕育身份时 touching=false；不能降级为对母体的动作。鼠标移出、换工具、暂停、失焦沿用原取消链。食物点击、地面放置的提前分支也保留 Stem 身份交给模拟拒绝；救援用品点击茎只提示重新对准身体，不误救母体。嘴边接食显式要求 Body。
+- 支护工具复用护理垫，无人手外观。对准实际茎网格才向模拟提交连续接触；1.6 秒、一次扣一份 Medicine、同手势只结算一次由 A 的模拟代码负责。完成后悬浮提示已护理，有限支护状态为正才显示附着绑带；没有预播成功。火机增加 stem-burn 的真实持续接触火焰，离开即停止；拳击外茎不调用母体 Hits 登记，同时清掉旧母体连击提示，避免混淆对象。
+- Room 每帧传只读 `StemCareStatus` 给 Actor。Progress 0–1、计划幼芽数、Integrity/Hydration 0–100 和 SupportRemaining 秒直接来自模拟。真实完整度/含水下降时，茎逐渐下垂、叶色枯黄、幼芽肤色变暗、眼睛疲惫，护理后随数值改善逐渐缓解；支护减少摇晃并显示绑带。材质逐份复制后调整，不污染共享颜色；幼芽眼嘴缩放保留单位球原尺寸。
+- 初载当前窝只建立表现基线，不生成出生事件。换 EventId 重设该窝的外观基线；失败、出生结束、死亡、冷藏/纪念时立即移除旧茎命中与可见节点，不残留可点击旧芽。实际母体/幼体出生短反馈仍沿用已有 CompletedBirths 链，本批没有用恢复阶段或护理文字推断出生。
+- 主协调静态审查发现软球点击最初可能取到后方茎的 TargetKind，已改为球分支显式 Body、ObjectId 保持球 ID。真实 touching 与悬浮施力提示统一使用 MatchesGestureContact，避免鼠标已移到身体还显示外茎正在施力。
+- A 后续将完成支护的公开 InteractionGestureTarget 释放为 null，内部惰性手势仍保留到松手。B 已同步：成功即收起药垫；完成标签仅用本次保存的 EventId 与 stem-supported 状态识别，不重新占有母体。持续支护路径没有按公开 target 查找并解引用母体，正常松手/取消仍结束内部手势，成熟出生可以继续。
+- 整合修复：A 也在外茎失去接触时释放公开 target。B 原先依赖该 target 判断接触，移开后会无法重新命中。现保存真实起始母体 ID，与 Kind/EventId 同时建立并在 ResetContactMotion 清除；外茎接触使用 HasInteractionGesture + 母体 ID + Kind + EventId 判断，因此移回原窝可从零重新累计。身体/软球仍沿用公开 target，完成支护的模拟占有仍为 null；本地身份不写回模拟。此项仅静态追踪了初始接触→移开→原窝重新接触、另一窝拒绝和取消清理路径，远端仍需实测。
+
+本批文件：CreatureActor.Contact.cs、CreatureActor.Gestation.cs、InteractionRoom.Input.cs、InteractionRoom.Offering.cs、InteractionRoom.Tools.cs、InteractionRoom.cs，以及本交接。未改 Simulation/checks 或主协调专属 Ui/Vitals/Intervention/Debug/Supplies，未使用 Git。仅文件读取、rg 和补丁编辑，未启动项目/编译/测试/模拟/渲染/预览/转换/项目脚本/钩子。静态核对了 A 的精确查询字段、接口范围、接触丢失归零、单手势成功一次及独立损伤路径。远端需核对细茎可点性、遮挡排序、护理垫贴合、移到母体/另窝归零、暂停失焦取消、同次按住不重复扣药、出生/失败后旧命中消失、外茎击打不增加母体 Hits/头部伤害、球位于茎前时仍可推球、支护颜色/萎顿程度及不同体型姿态的附着表现。

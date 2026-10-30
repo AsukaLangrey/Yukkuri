@@ -28,7 +28,7 @@ public partial class InteractionRoom
         var origin=mouth+normal*.38f;
         // Approach the actual mouth surface. A fixture or another body cannot be fed through.
         var hit=actor.RayContact(origin,-normal);
-        if(hit==null||hit.Blocked||hit.Part!=BodyPart.Mouth||hit.Distance>.42f)return null;
+        if(hit==null||hit.Blocked||hit.TargetKind!=InteractionTargetKind.Body||hit.Part!=BodyPart.Mouth||hit.Distance>.42f)return null;
         if(SceneOcclusionDistance(origin,-normal)<hit.Distance)return null;
         foreach(var other in _actors)
         {
@@ -42,6 +42,7 @@ public partial class InteractionRoom
     private void BeginClickOffer(Contact selectedContact)
     {
         CancelGesture();
+        if(selectedContact.TargetKind!=InteractionTargetKind.Body)return;
         if(!CanUseContact(selectedContact))
         {_message="装置挡住了它。先解除遮挡，再把食水递过去。";return;}
         if(selectedContact.Id!=Sim.State.SelectedId)SelectOil(selectedContact.Id);

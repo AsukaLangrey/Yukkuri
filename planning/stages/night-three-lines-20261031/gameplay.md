@@ -255,3 +255,19 @@ Emit 增加可选 `visibleActor`，默认 null 保留其他调用语义。看见
 最小实际链：正常或既有强制入口开始茎生→随原计时出现并长大的外部茎→母体真实吃喝供应维持茎体，缺水/浸水/真实外力按普通时间或实际事件损伤→人类选择“茎体支护”工具，持续接触完成后消耗一份原护理用品并获得有限支护时间→原计时成熟且茎仍存活时，由既有干燥落点检查整窝出生→同一 EventId 只结算一次并进入原产后恢复。若茎完整度耗尽，则记录实际原因/施害来源，调用孕育失败和恢复流程；不能生成幽灵幼体、退回已用用品或把失败算作 CompletedBirths。第一版维持整窝成功/失败，暂不伪装成已经支持逐个果实脱落。
 
 建议接口：只读 `StemCareStatus(motherId)` 返回本次 EventId、可见/成熟状态、原计划数量、真实完整度/余量/支护剩余与不可护理原因；新增一种连续交互 `InteractionAction.SupportStem`，复用单一手势生命周期及 1.6 秒真实接触，再扣现有 Medicine。输入 ObjectId 绑定当前孕育 EventId，使过期茎、换母体、换次孕育、暂停、近看错误对象或中断接触均无法继续旧进度。B 线建立真正随身体移动的茎节点与命中目标，主协调接工具选择/库存提示；模拟线负责资格、消耗、普通时间、损伤与出生失败结算。开始前需三线约定命中身份；本批没有擅自改跨线 UI、BodyPart 枚举或出生规则。
+
+## 第七批：附着母体的一整窝外茎照护（源码冻结）
+
+已实现上节建议的整窝附着链，未拆成独立脱落幼体。新增 `src/Yukkuri.Simulation/StemCare.cs`，`PregnancyState.Stem` 保存本窝 EventId、完整度、含水余量、有限支护时间、最近护理与损伤时间、实际损伤原因和施害来源。正常、强制孕育两个真实入口都初始化；旧档只在构造世界时补缺失的活动茎生状态，不改原 Elapsed、EventId、PlannedChildren，不重抽数量。只读 `StemCareStatus(string motherId)` 返回 `StemCareView(EventId, PlannedChildren, Progress, Integrity, Hydration, SupportRemaining, CanSupport, RefusalReason, LastDamageCause)`；Progress 为 0–1，完整度/余量为 0–100，支护为秒。非活动窝、死亡母体、错误身份和零完整度不提供可见状态，查询不修档。
+
+输入新增 `InteractionTargetKind { Body, Stem }`；`InteractionInput` 末尾追加默认 Body 的 TargetKind，保留旧调用语义。茎输入必须绑定当前窝 ObjectId；Part 只是占位，绝不落回身体分支。支持 `SupportStem`、原 `Punch` 和 `Burn`，其余工具明确拒绝。拳击/灼烧外茎不调用母体 Hurt，不改母体 Head、局部伤势、身体部位戒备或 HitCount；真实人类威胁仍降低安全/信任并产生连续 Alarm、目击影响，停止自行护伤、取食、递送和同伴相处，未固定母体接触火焰时实际逃开。
+
+支护要求连续 1.6 秒真实茎接触，失去接触累计清零；完成才扣实际 1 包 Medicine，即使 UnlimitedResources 也不免库存。一次手势最多一次；完成补完整度 12、含水 25，支护 60 秒，并有 20 秒观察冷却。支护充足且无明显损伤时拒绝重复包扎。手势保留内部起始母体/Kind/EventId 吞掉后续长按，但失去接触或完成后公开 InteractionGestureTarget 为空，不锁姿势、进食、照护或成熟出生。恢复接触仍用内部起始身份，不允许改对象。B 已获知 UI 必须保存起始母体，不能靠临时公开 target 恢复接触。
+
+外茎按原生物时钟变化：母体吃喝充足可维持含水并缓慢修复；失养/缺水、真实浸水持续损伤，来源分别记录。支护按时间消退，冷藏使用原有生物减速。母体实际外力伤害传导 35% 至外茎，有支护时再乘 40%；支护不能抵消直接击打/火焰或泡损。无伤害的手势不凭采样次数捏造外茎损伤。完整度耗尽调用原失败和恢复流程，保留原因；母体死亡停止可见窝。成熟仍调用原干燥落点、计划数量、EventId 和 CompletedBirths 一次结算。验证拒绝错窝身份、越界/非有限数值、未来时间及零完整度活动窝；推进也防守处理零完整度，不能健康回长后出生。
+
+新增 `checks/Interaction.StemCare/` 的项目和 Program.cs，共 12 组检查源码：默认 Body 和所有不支持工具拒绝；连续接触/移开/暂停；Kind/身份变化及过期窝；无限钱仍要求药包、单手势一次且不锁母体；外茎拳火独立损伤及不同采样率等实际接触时长；母体外力与有限支护；普通时间/暂停/近看/失养；完成长按仍能原事件成熟出生及读档不重复；真实水域泡损、实际解除并救出仍保留伤损、冷藏减速；失败恢复与母体死亡；旧档归一化、只读查询、错身份/NaN/零完整度拒绝；正常与强制两个真实准备入口初始化。组件场景明确采用既有孕育或已建立关系的初始夹具，不冒充从默认陌生开始的爱线旅程；两种入口的 EventId、数量与准备过程通过真实 API 生成。
+
+修改文件：`InteractionState.cs`、`FamilyState.cs`、`WorldSimulation.cs`、`FamilyReproduction.cs`、`FamilyRisk.cs`、`InteractionCatalog.cs`、`MilestoneInteraction.cs`、`InteractionWorld.cs`、`InteractionGesture.cs`、`FamilyValidation.cs`，以及本交接文档；新增 StemCare.cs 和检查项目 2 个文件。没有改 Game、Git 或其他线分配文件。
+
+本批仅源码读写和静态核对，未运行/编译任何项目或检查。静态已修正不存在的 PlayMode 名称，核对原时钟、射线身份接入约定、死亡/出生收尾、实际水域、库存在成功点扣减、完成后不占目标和无身体伤害回落。12 组检查尚待独立远程机器运行；茎模型实际命中、遮挡与表现由 B 接入后仍需远测。

@@ -132,13 +132,15 @@ public sealed partial class WorldSimulation
     private string? ValidateInteraction(Creature? c, InteractionInput input)
     {
         if (c == null) return "先选择当前小院里的一只油。";
-        if (!Enum.IsDefined(input.Action) || !Enum.IsDefined(input.Part) || !Enum.IsDefined(input.Side)||
+        if (!Enum.IsDefined(input.Action) || !Enum.IsDefined(input.Part) || !Enum.IsDefined(input.Side)||!Enum.IsDefined(input.TargetKind)||
             !new[] { input.Force, input.Duration, input.Motion, input.X, input.Z, input.Height,
                 input.DirectionX, input.DirectionZ,input.StopImpact,input.TouchTangentFraction,input.TouchNormalSpeed }.All(double.IsFinite) ||
             input.Force is < 0 or > 1 || input.StopImpact is < 0 or > 1 ||input.TouchTangentFraction is <0 or >1|| input.Duration is < 0 or > 1 || input.Motion < 0 ||
             Math.Abs(input.X) > 8 || Math.Abs(input.Z) > 8 || input.Height is < 0 or > 3)
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
+        if(input.TargetKind==InteractionTargetKind.Stem)return ValidateStemInteraction(c,input);
+        if(input.Action==InteractionAction.SupportStem)return "请把支护工具对准真实外茎，身体不能代替外茎接触。";
         if(input.Action is InteractionAction.Punch or InteractionAction.Burn&&input.Part==BodyPart.Accessory)
             return "这里是饰品，把工具移到实际身体部位。";
         if(c.Family.ColdStorage.Stored)return "它还在冷藏中，先从家庭照护里取出。";
@@ -168,6 +170,8 @@ public sealed partial class WorldSimulation
         var c = InteractionTarget(id);
         var invalid = ValidateInteraction(c, input);
         if (invalid != null) return Unavailable(invalid);
+        if(input.TargetKind==InteractionTargetKind.Stem)
+            return input.Action==InteractionAction.Punch?StrikeStem(c!,input):Unavailable("外茎的支护和灼烧需要持续接触，先开始手势。");
         if(input.Action==InteractionAction.Care&&FamilyRules.UnderIntervention(c!))
             CancelIntervention(c!,"开始伤势护理，繁育干预已停止；已用材料和关系后果保留。");
         BodyPart? requiredPart=input.Action switch

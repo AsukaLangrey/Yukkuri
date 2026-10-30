@@ -61,6 +61,7 @@ public static class InteractionCatalog
         new("P11", "照顾伤处", false, "看看它哪里不舒服。照护后留出真正休息的时间。",
             new(InteractionAction.Inspect,"看看伤处","点一下检查；观察不等于全知诊断。"),
             new(InteractionAction.Care,"护理","按住适用伤处完成护理，消耗一份护理包。",true,BodyPart.Bottom),
+            new(InteractionAction.SupportStem,"茎株支护","对准外茎连续按住 1.6 秒，使用一包护理材料支护这一窝。",true),
             new(InteractionAction.Rest,"安置休息","给它垫好软垫，留一点安静的时间。")),
         new("P12", "逗弄", true, "它可能先当成玩耍，也可能生气或不再相信你。",
             new(InteractionAction.Poke,"戳戳","点一下脸侧。",false,BodyPart.Cheek),

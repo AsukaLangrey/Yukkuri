@@ -7,6 +7,9 @@ public sealed partial class WorldSimulation
     public WorldSimulation(WorldState state, SimulationConfig? config = null)
     {
         State = state; Config = state.InteractionPlaytest ? new() { HungerPerSecond = .025, EnergyPerSecond = .02, MoveSpeed = .72 } : state.MilestoneScenario ? MilestoneConfig() : config ?? new();
+        foreach(var c in state.Creatures)
+            if(c.Family.Pregnancy is { Phase:PregnancyPhase.Gestating, Method:BirthMethod.Stem, Stem:null })
+                InitializeStemBrood(c.Family.Pregnancy);
         if(state.InteractionPlaytest)
             foreach(var c in state.Creatures)
             {

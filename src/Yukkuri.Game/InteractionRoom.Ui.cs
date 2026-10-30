@@ -344,24 +344,28 @@ public partial class InteractionRoom
         }));
         _modalContents.AddChild(Button("关闭面板",CloseModal));
     }
-    private void ShowMedicineSupplies(string? result=null)
+    private void ShowMedicineSupplies(string? result=null,InteractionAction equipAction=InteractionAction.Care)
     {
         OpenModal("护理用品");
+        bool stem=equipAction==InteractionAction.SupportStem;
         int price=WorldSimulation.MedicineBundlePrice,count=WorldSimulation.MedicineBundleCount;
         _modalContents.AddChild(Text($"护理用品 · {count} 包 / {price} 元",20));
-        _modalContents.AddChild(Text("拿出后按住适用伤处，完成护理才结算一包。稳定伤势后仍需进食和休息；反复包扎不会立刻恢复。"));
+        _modalContents.AddChild(Text(stem?
+            "拿出后对准外茎按住1.6秒，完成支护才消耗一包。支护有时限，仍需照顾母体的吃喝和安全。":
+            "拿出后按住适用伤处，完成护理才结算一包。稳定伤势后仍需进食和休息；反复包扎不会立刻恢复。"));
         _modalContents.AddChild(Text(Sim.State.UnlimitedResources?
-            "测试无限资源已开启：购买不扣钱，当前护理也不扣库存。":$"现有金钱：{Sim.State.Money} 元 · 每次完成护理消耗1包"));
+            (stem?"测试无限资源已开启：购买不扣钱，茎部支护仍消耗真实库存。":"测试无限资源已开启：购买不扣钱，身体护理不扣库存。"):
+            $"现有金钱：{Sim.State.Money} 元 · 每次完成护理消耗1包"));
         _modalContents.AddChild(Text($"护理包库存：{Sim.State.Medicine}"));
         if(!string.IsNullOrEmpty(result))_modalContents.AddChild(Text(result,14));
         var buy=Button($"购买{count}包",()=>
         {
             bool purchased=Sim.BuyMedicine();
-            ShowMedicineSupplies(purchased?$"已入库{count}包护理用品。":"金钱不足，尚未购买。");
+            ShowMedicineSupplies(purchased?$"已入库{count}包护理用品。":"金钱不足，尚未购买。",equipAction);
         });
         buy.Disabled=!Sim.State.UnlimitedResources&&Sim.State.Money<price;_modalContents.AddChild(buy);
-        var equip=Button("拿起护理用品",()=>{CloseModal();SelectQuickTool(InteractionAction.Care);});
-        equip.Disabled=!Sim.State.UnlimitedResources&&Sim.State.Medicine<=0;_modalContents.AddChild(equip);
+        var equip=Button(stem?"拿起茎部支护用品":"拿起护理用品",()=>{CloseModal();SelectQuickTool(equipAction);});
+        equip.Disabled=(stem||!Sim.State.UnlimitedResources)&&Sim.State.Medicine<=0;_modalContents.AddChild(equip);
         _modalContents.AddChild(Button("返回小院",CloseModal));
     }
 

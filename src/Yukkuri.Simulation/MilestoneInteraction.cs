@@ -159,6 +159,9 @@ public sealed partial class WorldSimulation
     {
         if(!double.IsFinite(amount)||amount<0)throw new ArgumentOutOfRangeException(nameof(amount));
         if(amount==0||c.Condition==PhysicalCondition.Dead)return;
+        // A blow to the supporting body also shakes its attached brood. Illness
+        // and hunger act through the separate, time-based stem condition path.
+        if(part.HasValue||actor!=null)DamageAttachedStem(c,amount*.35,"母体受到外力："+cause,actor,transmitted:true);
         CancelWildSelfCare(c,"身体再次受到伤害，自行护伤已中断；尚未获得护理效果。");
         if(part.HasValue||actor!=null)
         {

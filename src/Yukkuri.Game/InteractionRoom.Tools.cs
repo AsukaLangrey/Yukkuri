@@ -60,7 +60,7 @@ public partial class InteractionRoom
                 InteractionFoodArt.Sweet(_toolFood,InteractionFoodSurface.SweetHandScale);break;
             case InteractionAction.Drink:
                 _cupWater=InteractionToolArt.Cup(_hand);break;
-            case InteractionAction.Care:
+            case InteractionAction.Care:case InteractionAction.SupportStem:
                 InteractionToolArt.CarePad(_hand);break;
             case InteractionAction.RepairAccessory:
                 InteractionToolArt.RepairNeedle(_hand);break;
@@ -100,7 +100,7 @@ public partial class InteractionRoom
         if(_lighterFlame==null||_lighterCore==null)return;
         bool contact=!paused&&_windowFocused&&_mouseHeld&&_hand.Visible&&_action==InteractionAction.Burn&&
             Sim.CurrentInteractionAction==InteractionAction.Burn&&Sim.InteractionGestureOwnsPose&&
-            _gesturePose is "burn-flee" or "burn-tense";
+            _gesturePose is "burn-flee" or "burn-tense" or "stem-burn";
         _lighterFlame.Visible=_lighterCore.Visible=contact;
         if(!contact){_lighterClock=0;return;}
         _lighterClock+=dt;
