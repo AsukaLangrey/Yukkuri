@@ -3,24 +3,42 @@ using Yukkuri.Simulation;
 
 public partial class CreatureActor
 {
-    private void ApplyHeatBodyPose(Creature c,string pose)
+    private Creature? _heatOwner;
+    private string? _heatRegion;
+    private Vector2 _heatPreviousPosition;
+    private bool _heatTravelReady;
+    private float? _heatHeading;
+
+    private void ApplyHeatBodyPose(Creature c,string pose,float delta,bool paused,bool close)
     {
-        if(c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical||HasWaterBodyPresentation(c))return;
-        float tension=Mathf.Clamp((float)c.Interaction.HeatTension/100,0,1);
-        if(tension<=.001f)return;
-        bool fixedBody=c.Interaction.Restraint!=RestraintKind.None||c.Interaction.Carried;
-        if(fixedBody)
+        var life=c.Interaction;
+        bool eligible=Visible&&c.Condition is not (PhysicalCondition.Dead or PhysicalCondition.Critical)&&
+            !HasWaterBodyPresentation(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine&&!life.Resting&&
+            !c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&!FamilyRules.UnderIntervention(c);
+        bool fleeing=eligible&&pose=="burn-flee"&&WorldSimulation.CanSelfMove(c);
+        bool timely=float.IsFinite(delta)&&delta>0&&delta<=ContactMotion.MaximumSampleSeconds;
+        bool liveTravel=fleeing&&!paused&&!close&&timely;
+        var position=new Vector2((float)c.X,(float)c.Z);
+        bool sameOwner=ReferenceEquals(_heatOwner,c)&&_heatRegion==c.RegionId;
+        Vector2 travel=sameOwner&&_heatTravelReady&&liveTravel?position-_heatPreviousPosition:Vector2.Zero;
+        if(!sameOwner||!fleeing||close)_heatHeading=null;
+        // Read every current position, even when unavailable, so loading, changing
+        // region/view or resuming cannot borrow travel from a hidden interval.
+        _heatOwner=c;_heatRegion=c.RegionId;_heatPreviousPosition=position;_heatTravelReady=liveTravel;
+        if(!eligible)return;
+        bool fixedBody=life.Restraint!=RestraintKind.None;
+        if(ActorHeatPresentation.Sample(life.HeatTension,fixedBody,fleeing,new(travel.X,travel.Y)) is not { } frame)
+        {_heatHeading=null;return;}
+        // Preserve the existing support orientation. Residual heat is a small
+        // contraction, not another burn/escape event or a periodic fake jump.
+        _visual.Scale*=AccessoryPoint(frame.Scale);
+        _visual.RotationDegrees+=new Vector3(frame.Pitch,0,0);
+        if(frame.Heading is { } heading)_heatHeading=heading;
+        // A blocked continuation keeps the last heading actually earned by
+        // travel; it must not turn back to the default front every still frame.
+        if(_heatHeading is { } facing)
         {
-            // Heat tightens the existing pose instead of resetting its support orientation.
-            _visual.Scale*=new Vector3(1+tension*.025f,1-tension*.065f,1+tension*.025f);
-            _visual.Position+=new Vector3(Mathf.Sin(_phase*39)*.008f*tension,0,0)*BodyScale;
-            if(pose=="burn-tense")PoseTag="burn-tense";
-        }
-        else if(pose=="burn-flee")
-        {
-            _visual.Position+=new Vector3(Mathf.Sin(_phase*21)*.012f*tension,Mathf.Abs(Mathf.Sin(_phase*8))*.018f*tension,0)*BodyScale;
-            _visual.RotationDegrees+=new Vector3(-tension*5,0,0);
-            PoseTag="burn-flee";
+            var rotation=_visual.Rotation;rotation.Y=facing;_visual.Rotation=rotation;
         }
     }
 }

@@ -203,3 +203,9 @@ Input将原始sampleSeconds传到持物身体入口，新HeldSupplyContact仅存
 ActorAccessorySurface新增HatBrimBase保留原壳、HatBrimRecess只在.66<u<1内以.0025*sin²径向窗*sin⁶(4角度)形成八道浅凹褶；顶面内收Y，原XZ、内外沿和底面不动，厚度至少.0135。原帽冠包络以外才起褶，原头部净空保持。颜色同一凹深轻暗，不加节点、圆管或缓存；上下网格与支撑共同使用BrimRows24/BrimSides96。
 
 A独立新增ActorGeometry三组检查源码，覆盖有限域、原壳/底面/投影/厚度、周期/边界/封口及真实网格支撑；旧帽头间隙与封口断言保留。ActorArt.Preview仅上下帽檐两处采样常量同步，不运行预览。root已静态核对同源公式与采样顺序；八道布褶的实际清晰度、光照、法线和压扁/掉落后的点击与支撑仍待远测。
+
+## 第二十批：实际热逃与紧绷余波
+
+新增纯ActorHeatPresentation.Sample(heatTension,restrained,fleeing,actualTravel)，输出Scale/Pitch/可空Heading，没有位置、偏移或时钟。固定沿原缩放；自由余热仅小幅收缩，只有当前burn-flee且真实XZ推进才给前倾与朝向。Heat.cs每帧读真实位置建立对象/区基线，首次、隐藏/近看/暂停及上位失能状态不借旧运动；受阻保持本次真实移动取得的朝向，不抬身假跳。停止动作后HeatTension原本的缓降仍可见，不重复产生反应或改变伤害。
+
+删除原固定/自由热姿态的两处sin周期位置叠加，保留主姿态、原平滑与真实装饰/地面支撑。水中、临危死亡、托举跌落、仰倒滚动休息、冷藏/干预优先，工具火焰取消链不改。A新增ActorGeometry三组纯源码检查并显式链接新纯文件，覆盖有限值、幅度边界、受阻/非法运动无朝向、余热不重放及真实方向；root核对调用与依赖，未运行或渲染。

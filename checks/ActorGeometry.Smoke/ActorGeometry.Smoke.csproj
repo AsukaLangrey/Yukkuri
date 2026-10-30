@@ -10,6 +10,7 @@
     <Compile Include="../../src/Yukkuri.Game/ActorPoseSmoothing.cs" Link="ActorPoseSmoothing.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorAccessoryWear.cs" Link="ActorAccessoryWear.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorPoseClock.cs" Link="ActorPoseClock.cs" />
+    <Compile Include="../../src/Yukkuri.Game/ActorHeatPresentation.cs" Link="ActorHeatPresentation.cs" />
     <Compile Include="../../src/Yukkuri.Game/ActorHopMotion.cs" Link="ActorHopMotion.cs" />
     <Compile Include="../../src/Yukkuri.Game/InteractionCameraOrbit.cs" Link="InteractionCameraOrbit.cs" />
     <Compile Include="../../src/Yukkuri.Game/ContactStrokeTracker.cs" Link="ContactStrokeTracker.cs" />

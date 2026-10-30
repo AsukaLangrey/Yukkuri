@@ -287,6 +287,64 @@ Check("guarded impact direction changes only recoil and unrelated or invalid eve
         if(ActorReactionMotion.SampleGuardedImpact(pose,0,new(1,0))!=null)return false;
     return true;
 });
+Check("heat tension is bounded and fades to neutral without inventing translation or a timer",()=>
+{
+    foreach(double heat in new[]{-1d,0,double.NaN,double.NegativeInfinity,double.PositiveInfinity})
+        if(ActorHeatPresentation.Sample(heat,false,true,new(1,0))!=null)return false;
+    foreach(bool restrained in new[]{false,true})foreach(bool fleeing in new[]{false,true})
+    {
+        float previousY=1;
+        for(int n=1;n<=200;n++)
+        {
+            var frame=ActorHeatPresentation.Sample(n,restrained,fleeing,new(1,2))!.Value;
+            var scale=frame.Scale;
+            if(!float.IsFinite(scale.LengthSquared())||!float.IsFinite(frame.Pitch)||
+                scale.X<1||scale.X>1.025001f||scale.Y<.934999f||scale.Y>1||scale.Z!=scale.X||
+                frame.Pitch< -4.000001f||frame.Pitch>0||scale.Y>previousY+1e-7f)return false;
+            if(frame.Heading.HasValue&&!float.IsFinite(frame.Heading.Value))return false;
+            previousY=scale.Y;
+        }
+        if(ActorHeatPresentation.Sample(100,restrained,fleeing,new(1,2))!=
+            ActorHeatPresentation.Sample(double.MaxValue,restrained,fleeing,new(1,2)))return false;
+        var cooled=ActorHeatPresentation.Sample(.0001,restrained,fleeing,new(1,2))!.Value;
+        if(System.Numerics.Vector3.Distance(cooled.Scale,System.Numerics.Vector3.One)>1e-6f||MathF.Abs(cooled.Pitch)>1e-5f)return false;
+    }
+    return true;
+});
+Check("blocked or invalid heat travel never creates a flee heading and residual heat is not a new escape",()=>
+{
+    var idle=ActorHeatPresentation.Sample(65,false,false,System.Numerics.Vector2.Zero)!.Value;
+    foreach(var travel in new[]{System.Numerics.Vector2.Zero,new System.Numerics.Vector2(1e-6f,0),
+        new System.Numerics.Vector2(float.NaN,0),new System.Numerics.Vector2(0,float.PositiveInfinity),
+        new System.Numerics.Vector2(float.MaxValue,float.MaxValue)})
+    {
+        var blocked=ActorHeatPresentation.Sample(65,false,true,travel)!.Value;
+        if(blocked!=idle||blocked.Heading!=null||blocked.Pitch!=0)return false;
+    }
+    foreach(var travel in new[]{new System.Numerics.Vector2(1,0),new System.Numerics.Vector2(-1,2)})
+        if(ActorHeatPresentation.Sample(65,false,false,travel)!.Value!=idle)return false;
+    var restrained=ActorHeatPresentation.Sample(65,true,false,System.Numerics.Vector2.Zero)!.Value;
+    if(restrained.Heading!=null||restrained.Pitch!=0||restrained.Scale.Y>=idle.Scale.Y)return false;
+    return ActorHeatPresentation.Sample(65,true,true,new(1,2))!.Value==restrained&&
+        ActorHeatPresentation.Sample(65,true,true,new(float.NaN,float.PositiveInfinity))!.Value==restrained;
+});
+Check("a heat escape heading follows actual planar travel while speed and reversal cannot change tension",()=>
+{
+    foreach(var travel in new[]{new System.Numerics.Vector2(1,0),new System.Numerics.Vector2(0,1),
+        new System.Numerics.Vector2(-1,0),new System.Numerics.Vector2(0,-1),new System.Numerics.Vector2(2,-3)})
+    {
+        var frame=ActorHeatPresentation.Sample(80,false,true,travel)!.Value;
+        var reverse=ActorHeatPresentation.Sample(80,false,true,-travel)!.Value;
+        var fast=ActorHeatPresentation.Sample(80,false,true,travel*5)!.Value;
+        if(frame.Heading is not float heading||reverse.Heading is not float reverseHeading||fast.Heading is not float fastHeading||
+            frame.Pitch>=0||frame.Scale!=reverse.Scale||frame.Pitch!=reverse.Pitch||frame.Scale!=fast.Scale||frame.Pitch!=fast.Pitch)return false;
+        var direction=System.Numerics.Vector2.Normalize(travel);
+        if(MathF.Abs(MathF.Sin(heading)-direction.X)>1e-6f||MathF.Abs(MathF.Cos(heading)-direction.Y)>1e-6f||
+            MathF.Abs(MathF.Sin(reverseHeading)+direction.X)>1e-6f||MathF.Abs(MathF.Cos(reverseHeading)+direction.Y)>1e-6f||
+            MathF.Abs(heading-fastHeading)>1e-6f)return false;
+    }
+    return true;
+});
 Check("repeated impacts replay their response while speech during a held motion does not restart its cycle",()=>
 {
     var clock=new ActorPoseClock();clock.Advance("flick",1,.1f,false);

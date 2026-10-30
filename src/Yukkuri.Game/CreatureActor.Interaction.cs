@@ -200,7 +200,7 @@ public partial class CreatureActor
         ApplyHumanCompanyBody(c,pose,paused?0:delta);
         ApplyWaterConcernBody(c,pose,paused?0:delta);
         ApplyPregnancyBodyPose(c,pose,paused?0:delta);
-        ApplyHeatBodyPose(c,pose);
+        ApplyHeatBodyPose(c,pose,delta,paused,close);
         ApplyWaterBodyPose(c,pose,paused?0:delta);
         Vector3 targetScale=_visual.Scale,targetOffset=_visual.Position;
         Quaternion targetRotation=_visual.Quaternion;
