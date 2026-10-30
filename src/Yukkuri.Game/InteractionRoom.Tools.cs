@@ -30,7 +30,11 @@ public partial class InteractionRoom
         _landingMarker.Visible=visible;_landingStem!.Visible=visible;
         if(!visible)return;
         Vector2 mouse=GetViewport().GetMousePosition();
-        bool placing=_toolArmed&&_action==InteractionAction.PutDown&&IsScenePoint(mouse);
+        bool palmPlacement=CanPlaceWithIdlePalm()&&!_panning&&
+            (!_orbiting||!_orbitDragged&&_orbitClickAction==InteractionAction.PutDown)&&
+            IsScenePoint(mouse)&&ContactAt(mouse)==null&&ObjectAt(mouse)==null;
+        bool placing=!Sim.State.Settings.Pause&&IsScenePoint(mouse)&&
+            (_toolArmed&&_action==InteractionAction.PutDown||palmPlacement);
         Vector3 point=placing?GroundPoint(mouse):new Vector3((float)c!.X,0,(float)c.Z);
         if(placing&&!TryGroundPoint(mouse,0,out point)){_landingMarker.Visible=false;_landingStem.Visible=false;return;}
         bool clear=Sim.CanPlaceInteractionAt(c!.Id,point.X,point.Z);

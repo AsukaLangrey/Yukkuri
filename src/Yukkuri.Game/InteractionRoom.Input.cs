@@ -145,6 +145,9 @@ public partial class InteractionRoom
         WoodlandOcclusion.RayDistance(new(origin.X,origin.Y,origin.Z),new(direction.X,direction.Y,direction.Z)):float.PositiveInfinity;
     private static string PartName(BodyPart part,SurfaceSide side=SurfaceSide.Whole)=>part switch{BodyPart.Head=>"头顶",BodyPart.Cheek=>side==SurfaceSide.Left?"左脸":side==SurfaceSide.Right?"右脸":"脸侧",BodyPart.Side=>side==SurfaceSide.Left?"身体左侧":side==SurfaceSide.Right?"身体右侧":"身体侧面",BodyPart.Bottom=>"底部",BodyPart.Mouth=>"嘴边",_=>"饰品"};
     private static bool IsGroundPlacement(InteractionAction action)=>action is InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater or InteractionAction.PutDown or InteractionAction.GiveBall;
+    private bool CanPlaceWithIdlePalm()=>_toolArmed&&_action==InteractionAction.Lift&&
+        Sim.Selected?.Interaction.Carried==true&&!_mouseHeld&&!Sim.HasInteractionGesture&&
+        _heldSupplyId==null&&!_waterRescueToolArmed&&!Sim.State.Settings.Pause&&_windowFocused&&!_modalOpen;
 
     private void BeginCloseOrbit(MouseButton button)
     {
@@ -168,6 +171,11 @@ public partial class InteractionRoom
             // A deliberate placement click still works; dragging the environment never places anything.
             if(clickAction is { } action&&!_modalOpen&&!Sim.State.Settings.Pause&&Sim.Selected!=null&&IsScenePoint(released.Position))
             {
+                // A palm click may only finish on empty ground. An interrupted
+                // orbit cannot reuse a body contact or an old drag's throw speed.
+                if(action==InteractionAction.PutDown&&_toolArmed&&_action==InteractionAction.Lift&&
+                    (!CanPlaceWithIdlePalm()||ContactAt(released.Position)!=null||ObjectAt(released.Position)!=null))
+                {GetViewport().SetInputAsHandled();return;}
                 if(TryGroundPoint(released.Position,0,out var landing))
                     AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected.Id,new(action,Force:_force,X:landing.X,Z:landing.Z)));
                 else _message="这个视角看不到落点。先把镜头转向地面，再放置；托举仍保持支撑。";
@@ -291,11 +299,18 @@ public partial class InteractionRoom
         if(Sim.State.Mode==PlayMode.CloseUp&&contact==null&&ObjectAt(mouse.Position)==null)
         {
             InteractionAction? clickAction=_toolArmed&&IsGroundPlacement(_action)?_action:
-                !_toolArmed&&Sim.Selected?.Interaction.Carried==true?InteractionAction.PutDown:null;
+                (CanPlaceWithIdlePalm()||!_toolArmed&&Sim.Selected?.Interaction.Carried==true)?InteractionAction.PutDown:null;
             BeginCloseOrbit(MouseButton.Left);_orbitClickAction=clickAction;
             GetViewport().SetInputAsHandled();return;
         }
         if(Sim.State.Settings.Pause){_message="小院暂停中，先点“继续”或按空格。";return;}
+        if(CanPlaceWithIdlePalm()&&contact==null&&ObjectAt(mouse.Position)==null)
+        {
+            if(TryGroundPoint(mouse.Position,0,out var landing))
+                AcceptFeedback(Sim.ExecuteInteraction(Sim.Selected!.Id,new(InteractionAction.PutDown,X:landing.X,Z:landing.Z)));
+            else _message="这个视角看不到落点。先把镜头转向地面，再放置；托举仍保持支撑。";
+            GetViewport().SetInputAsHandled();return;
+        }
         if(!_toolArmed&&mouse.DoubleClick&&contact!=null){SelectOil(contact.Id);ToggleClose();return;}
         if(!_toolArmed)
         {

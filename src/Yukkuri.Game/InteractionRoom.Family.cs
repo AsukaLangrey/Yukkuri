@@ -154,6 +154,8 @@ public partial class InteractionRoom
         if(first.Family.ChildThreat.TargetId!=null)
             _modalContents.AddChild(Button("制止对幼体的伤害",()=>ApplyFamilyCommand(()=>Sim.ProtectFamilyChild(firstId))));
         AddEndCompanionship(first);
+        var careStops=new HashSet<string>(StringComparer.Ordinal);
+        AddEndFamilyCare(first,careStops);
         bool breeding=first.Family.AllowsBreeding;
         _modalContents.AddChild(Button(breeding?"繁殖许可：允许 · 点击禁止":"繁殖许可：禁止 · 点击允许",
             ()=>ApplyFamilyCommand(()=>Sim.SetBreedingPermission(firstId,!breeding))));
@@ -172,6 +174,7 @@ public partial class InteractionRoom
             if(_familyCareSelection!=careSelection){_familyCareSelection=careSelection;_familyCareFeedback="";}
             _modalContents.AddChild(Text(FamilySummary(second),14));
             if(second.Family.CompanionTargetId!=firstId)AddEndCompanionship(second);
+            AddEndFamilyCare(second,careStops);
             if(_familyCareFeedback.Length>0)
                 _modalContents.AddChild(Text("上次照护安排："+_familyCareFeedback,14,"8a624e"));
             if(first.IsYoung!=second.IsYoung)
@@ -289,6 +292,22 @@ public partial class InteractionRoom
         string id=c.Id;
         _modalContents.AddChild(Button("结束"+c.Name+"与"+companion.Name+"这次相处",
             ()=>ApplyFamilyCommand(()=>Sim.EndCompanionship(id,companionId))));
+    }
+
+    private void AddEndFamilyCare(Creature c,HashSet<string> shown)
+    {
+        foreach(var caregiver in Sim.State.Creatures.Where(o=>o.RegionId==Sim.State.ActiveRegionId&&
+            o.Condition!=PhysicalCondition.Dead&&(o.Id==c.Id||o.Family.CareTargetId==c.Id)).OrderBy(o=>o.Id,StringComparer.Ordinal))
+        {
+            if(caregiver.Family.CareTargetId is not { } recipientId||shown.Contains(caregiver.Id))continue;
+            if(shown.Count==0)
+                _modalContents.AddChild(Text("需要亲自接手时，可以结束当前照护。已取出的食水会留在实际位置，仍可拿起使用。",13,"78816e"));
+            shown.Add(caregiver.Id);
+            string caregiverId=caregiver.Id;
+            string recipientName=Sim.State.Creatures.FirstOrDefault(o=>o.Id==recipientId)?.Name??"原照护对象";
+            _modalContents.AddChild(Button("停止"+caregiver.Name+"对"+recipientName+"的这次照护",
+                ()=>ApplyFamilyCommand(()=>Sim.EndFamilyCare(caregiverId,recipientId))));
+        }
     }
 
     private void AddFamilyCareChoice(Creature caregiver,Creature recipient)

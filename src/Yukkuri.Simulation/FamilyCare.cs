@@ -151,6 +151,18 @@ public sealed partial class WorldSimulation
         if(adult.Condition==PhysicalCondition.Active)adult.Activity=reason;
     }
 
+    public string EndFamilyCare(string caregiverId,string recipientId)
+    {
+        var adult=State.Creatures.Find(c=>c.Id==caregiverId);
+        var error=FamilyCommandError(adult);if(error!=null)return error;
+        // Stopping does not require the recipient to remain available for care.
+        // Only the displayed task identity and the current caregiver are relevant.
+        if(adult!.Family.CareTargetId is not { } current||current!=recipientId)
+            return "这项照护已经结束或对象已改变，请查看当前安排。";
+        CancelFamilyCare(adult,reason:"人类结束了这次照护；如有已取份额，已经留在实际位置，可以接手继续照顾。");
+        return State.LastActionMessage="已结束当前照护；如有已取食水，仍保留为实际物品，过去照护与亲缘关系保留。";
+    }
+
     public string ArrangeCare(string caregiverId,string childId)
     {
         var adult=State.Creatures.Find(c=>c.Id==caregiverId);var child=State.Creatures.Find(c=>c.Id==childId);

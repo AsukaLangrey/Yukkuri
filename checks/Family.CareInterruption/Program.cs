@@ -237,4 +237,80 @@ Check("暂停与读档保留唯一运输份额，中断后双方记录可保存"
     Require(JsonSerializer.Deserialize<FamilyLife>("{}",SaveStore.JsonOptions)!.CareLastEvent=="","缺字段读档默认值不是空记录");
 });
 
+Check("主动结束实际递送后，人类捡起同一份食水并真实送入口",()=>
+{
+    foreach(bool water in new[]{false,true})
+    {
+        var (sim,giver,child,source)=Fixture(water);var parcel=TakePortion(sim,giver,source);
+        int food=sim.State.Food;double money=sim.State.Money,x=giver.X,z=giver.Z;
+        string bonds=JsonSerializer.Serialize(new[]{giver.Family.Peers,child.Family.Peers},SaveStore.JsonOptions);
+        string id=parcel.Id,region=parcel.RegionId;string? owner=parcel.OwnerId;double contamination=parcel.Contamination;
+        Require(sim.EndFamilyCare(giver.Id,child.Id).StartsWith("已结束"),"真实照护不能主动结束");
+        Cleared(giver,child,parcel);Conserved(sim,source,parcel);
+        Require(sim.State.Food==food&&sim.State.Money==money&&parcel.Id==id&&parcel.RegionId==region&&parcel.OwnerId==owner&&
+            parcel.Contamination==contamination&&WorldSimulation.Distance(parcel.X,parcel.Z,x,z)<.001&&parcel.Height==0,
+            "停止照护改变库存、钱、实物来源或实际落点");
+        Require(JsonSerializer.Serialize(new[]{giver.Family.Peers,child.Family.Peers},SaveStore.JsonOptions)==bonds&&child.ParentId==giver.Id,
+            "停止照护改写关系或亲缘");
+        double need=water?child.Interaction.Hydration:child.Fullness;int exposures=child.Interaction.Digestion.Exposures;
+        Require(sim.HoldSupply(id),"落地的同一份食水无法捡起");
+        var input=new InteractionInput(water?InteractionAction.Drink:InteractionAction.FeedMeal,BodyPart.Mouth,Duration:.05,ObjectId:id);
+        Require(sim.BeginInteractionGesture(child.Id,input).Success,"已拾取实物不能实际递给对象");
+        for(int n=0;n<80&&!sim.InteractionIntakeAccepted;n++){sim.ContinueInteractionGesture(input,true);Tick(sim,.05);}
+        Require(sim.InteractionIntakeAccepted&&parcel.Portions==0,"真实手喂没有恰好消费原来的一份");
+        sim.EndInteractionGesture();sim.ReleaseSupply(id);
+        for(int n=0;n<200&&child.Interaction.EatingRemaining>0;n++)Tick(sim,.05);
+        Require(child.Interaction.EatingRemaining==0&&(water?child.Interaction.Hydration:child.Fullness)>need&&
+            child.Interaction.Digestion.Exposures==exposures+1&&source.Portions==2&&Total(sim,source.Kind)==2,
+            "交接食水没有完成一次真实入口/吞咽，或原来源多扣了一份");
+        Require(sim.State.Food==food&&sim.State.Money==money,"接手原实物又消费库存或钱");
+        SaveStore.Validate(sim.State);
+    }
+});
+Check("未取份前可主动停止，重复按钮不推进冷却、不改记录或份额",()=>
+{
+    var (sim,giver,child,source)=Fixture();int food=sim.State.Food;double money=sim.State.Money;
+    Require(giver.Family.CareParcelId==null&&sim.EndFamilyCare(giver.Id,child.Id).StartsWith("已结束"),"尚未取份的照护无法停止");
+    Require(giver.Family.CareTargetId==null&&source.Portions==3&&Total(sim,source.Kind)==3&&sim.State.Food==food&&sim.State.Money==money,
+        "尚未取份却凭空落物或退款");
+    string before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    sim.EndFamilyCare(giver.Id,child.Id);sim.EndFamilyCare(giver.Id,child.Id);
+    Require(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before,"重复停止推进了冷却、记录或状态");
+});
+Check("旧照护按钮不能停止实际改派的新对象，错误与跨区请求不改状态",()=>
+{
+    var (sim,giver,child,source)=Fixture();var parcel=TakePortion(sim,giver,source);var next=sim.State.Creatures[1];
+    // Existing alternative dependent child, matching the original reassignment fixture above.
+    next.IsYoung=true;next.Body.AgeSeconds=next.InnerAgeSeconds=0;next.ParentId=next.Family.MotherId=giver.Id;
+    next.X=next.TargetX=0;next.Z=next.TargetZ=-4;next.Fullness=40;
+    sim.ArrangeCare(giver.Id,next.Id);Require(giver.Family.CareTargetId==next.Id,"实际改派未成功");
+    string before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    sim.EndFamilyCare(giver.Id,child.Id);sim.EndFamilyCare("missing",next.Id);sim.EndFamilyCare(giver.Id,giver.Id);
+    Require(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before&&giver.Family.CareTargetId==next.Id,"旧或错误按钮改变了新任务");
+    Conserved(sim,source,parcel);
+    sim.State.Regions.Add(new(){Id="care-command-other",Name="另一地区",Kind=RegionKind.Wilderness});
+    sim.State.ActiveRegionId="care-command-other";before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    sim.EndFamilyCare(giver.Id,next.Id);
+    Require(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before,"非当前区命令改变了照护");
+    sim.State.ActiveRegionId=giver.RegionId;next.RegionId="care-command-other";
+    // Same explicit region-transition fixture used above, before ordinary task synchronization.
+    Require(sim.EndFamilyCare(giver.Id,next.Id).StartsWith("已结束")&&giver.Family.CareTargetId==null,
+        "对象离区后，仍在当前区的照护者反而无法停止旧任务");
+    Conserved(sim,source,parcel);
+});
+Check("暂停拒绝主动结束，携份保存恢复后仍可停止且只留下同一实物",()=>
+{
+    var (sim,giver,child,source)=Fixture(true);var parcel=TakePortion(sim,giver,source);
+    sim.State.Settings.Pause=true;string before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    Require(sim.EndFamilyCare(giver.Id,child.Id).Contains("恢复时间"),"暂停中没有拒绝命令");
+    Tick(sim,1);Require(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before,"暂停停止操作改变了世界");
+    var restored=Reload(sim);restored.State.Settings.Pause=false;
+    var a=restored.State.Creatures.Find(c=>c.Id==giver.Id)!;var b=restored.State.Creatures.Find(c=>c.Id==child.Id)!;
+    var p=restored.State.RoomObjects.Find(o=>o.Id==parcel.Id)!;var origin=restored.State.RoomObjects.Find(o=>o.Id==source.Id)!;
+    Require(restored.EndFamilyCare(a.Id,b.Id).StartsWith("已结束"),"真实读档后的照护不能结束");
+    Cleared(a,b,p);Conserved(restored,origin,p);SaveStore.Validate(restored.State);
+    before=JsonSerializer.Serialize(restored.State,SaveStore.JsonOptions);restored.EndFamilyCare(a.Id,b.Id);
+    Require(JsonSerializer.Serialize(restored.State,SaveStore.JsonOptions)==before,"读档后重复停止改变了记录");
+});
+
 Environment.ExitCode=failures==0?0:1;
