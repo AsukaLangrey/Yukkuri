@@ -18,7 +18,7 @@
 
 - A `/root/gameplay_2`：`src/Yukkuri.Simulation/`、`checks/`及本目录gameplay.md。负责规则、持久身份/状态、库存、独立检查源码。
 - B `/root/art_input_2`：`src/Yukkuri.Game/`，排除root文件；以及本轮新增资源来源和本目录art-input.md。负责真实器具/动作呈现、鼠标输入、接触几何，不自己改模拟接口。
-- root：`InteractionRoom.Ui.cs`、`Vitals.cs`、`Debug.cs`、`Supplies.cs`、`Intervention.cs`和所有Debug专用文件；本批另经协调负责 `InteractionRoom.SupplyStationsUi.cs` 与 `InteractionRoom.DetachedStemUi.cs` 的互斥选择接线。全局文档、测试请求、交付和Git整合。需要新Game文件时先通知B明确归属。
+- root：`InteractionRoom.Ui.cs`、`Vitals.cs`、`Debug.cs`、`Supplies.cs`、`Intervention.cs`和所有Debug专用文件；另经协调负责 `InteractionRoom.SupplyStationsUi.cs`、`InteractionRoom.SheltersUi.cs` 与 `InteractionRoom.DetachedStemUi.cs` 的互斥选择接线。全局文档、测试请求、交付和Git整合。需要新Game文件时先通知B明确归属。
 - C `/root/guardian_2`：本目录guard.md，每15分钟核对实际A/B状态，异常才接续。正常完成/冻结不重启，不改产品、Git、自动化或Goal；本批收口时由root通知停止。
 
 ## 执行约束

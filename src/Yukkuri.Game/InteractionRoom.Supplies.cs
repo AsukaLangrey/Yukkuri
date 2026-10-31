@@ -12,6 +12,7 @@ public partial class InteractionRoom
         _supplyStockLabel.Text=Sim.UsesConsumableStock?$"食物 {Sim.State.Food} · 护理 {Sim.State.Medicine}":"食物与护理：沙盒不限量";
         _supplyStockLabel.TooltipText=$"救援用品 {Sim.State.WaterRescueTools} · 空瓶 {Sim.State.StemVessels} · 诱导用品 {Sim.State.CourtshipTools}";
         _supplyStockLabel.TooltipText+=$"\n空饭饭供给器 {Sim.State.FoodStationStock} · 空饮水器 {Sim.State.WaterStationStock} · 储备清水 {Sim.State.StationWaterPortions} 份";
+        _supplyStockLabel.TooltipText+=$"\n待摆放小家 {Sim.State.ShelterStock} 间";
     }
 
     private bool SupplyStockMissing(InteractionAction action)=>action switch
@@ -36,6 +37,7 @@ public partial class InteractionRoom
     {
         OpenModal("用品补给");
         _modalContents.AddChild(Button("供给器 · 购买与放置",()=>ShowSupplyStationSupplies()));
+        _modalContents.AddChild(Button("小家 · 购买与放置",()=>ShowShelterSupplies()));
         _modalContents.AddChild(Text("手边的食物与照护用品",20));
         _modalContents.AddChild(Text(Sim.State.UnlimitedResources?
             "测试阶段购买不扣钱；本小院喂食、护理和救援仍消耗实际用品。":$"现有金钱：{Sim.State.Money} 元"));

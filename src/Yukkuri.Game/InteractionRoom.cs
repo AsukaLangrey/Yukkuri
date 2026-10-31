@@ -105,6 +105,7 @@ public partial class InteractionRoom : Node3D
 
     private void BuildActors()
     {
+        ResetShelterActors();
         ResetSupplyStationActors();
         ResetDetachedStemActors();
         _heardReactions.Clear();
@@ -177,6 +178,7 @@ public partial class InteractionRoom : Node3D
         SynchronizeFamilyActors();
         SynchronizeDetachedStemActors();
         SynchronizeSupplyStationActors();
+        SynchronizeShelterActors();
         UpdateRoomCamera(dt);
         foreach(var c in Sim.State.Creatures)
         {
@@ -194,6 +196,7 @@ public partial class InteractionRoom : Node3D
             actor.ObserveWaterState(c,WaterEnvironment.IsInWater(Sim.State,c),paused);
             actor.PrepareWaterAttempt(c,Sim.WaterAttemptStatus(c),Sim.State.WorldSeconds,paused,close);
             actor.PrepareStemPresentation(Sim.StemCareStatus(c.Id));
+            actor.PrepareShelterPassage(c,Sim.CreatureShelterStatus(c));
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
             RefreshFamilyPresentation(c,actor);
         }
@@ -227,6 +230,7 @@ public partial class InteractionRoom : Node3D
         UpdatePointer();
         UpdateLandingPreview();
         UpdateSupplyStationPlacement();
+        UpdateShelterPlacement();
     }
 
     private void UpdateRoomCamera(float dt)

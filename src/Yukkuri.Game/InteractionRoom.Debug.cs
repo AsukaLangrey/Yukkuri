@@ -53,6 +53,7 @@ public partial class InteractionRoom
             string id=_debugCreatureIds[(int)index];
             if(id.StartsWith("stem:",StringComparison.Ordinal))SelectDetachedStem(id[5..]);
             else if(id.StartsWith("station:",StringComparison.Ordinal))SelectSupplyStation(id[8..]);
+            else if(id.StartsWith("shelter:",StringComparison.Ordinal))SelectShelter(id[8..]);
             else SelectOil(id[9..]);
             RefreshDebugPanel(true);
         };
@@ -100,10 +101,12 @@ public partial class InteractionRoom
         if(!DebugPanelVisible||Sim==null)return;
         NormalizeDetachedStemSelection();
         NormalizeSupplyStationSelection();
+        NormalizeShelterSelection();
         float available=Math.Max(200,_ui.Size.X-28);
         _debugPanel.OffsetLeft=-Math.Min(available,Math.Clamp(_ui.Size.X*.38f,330,520))-14;
         RefreshDebugCreatureSelector();
-        string sourceId=_selectedSupplyStationId is { } stationId?"station:"+stationId:
+        string sourceId=_selectedShelterId is { } shelterId?"shelter:"+shelterId:
+            _selectedSupplyStationId is { } stationId?"station:"+stationId:
             _selectedDetachedStemEventId is { } stemId?"stem:"+stemId:"creature:"+Sim.State.SelectedId;
         if(_debugSourceId!=sourceId||!ReferenceEquals(_debugWorldSource,Sim.State))
         {
@@ -120,7 +123,10 @@ public partial class InteractionRoom
         var brood=_selectedDetachedStemEventId is { } selectedStem?Sim.State.DetachedStemBroods.Find(s=>s.EventId==selectedStem):null;
         var station=_selectedSupplyStationId is { } selectedStation?Sim.State.SupplyStations.Find(s=>s.Id==selectedStation):null;
         var stationView=station==null?null:Sim.SupplyStationStatus(station.Id);
-        _debugSummary.Text=stationView!=null?
+        var shelter=_selectedShelterId is { } selectedShelter?Sim.State.Shelters.Find(s=>s.Id==selectedShelter):null;
+        var shelterView=shelter==null?null:Sim.ShelterStatus(shelter.Id);
+        _debugSummary.Text=shelterView!=null?
+            $"小家 · {ShelterPhaseName(shelterView.Phase)}\n门帘{(shelterView.DoorOpen?"开着":"关着")} · 受阻 {shelterView.BlockedSeconds:0.0} 秒\n{shelterView.LastEvent}":stationView!=null?
             $"{SupplyStationName(stationView.Kind)}\n仓内 {stationView.StoredPortions} · 出口 {stationView.OutletPortions} · 总容量 {stationView.Capacity}\n{stationView.LastEvent}":brood!=null?
             $"离体茎 · {brood.Mother.Name}\n完整度 {brood.Integrity:0.0}　水分 {brood.Hydration:0.0}　营养 {brood.Nutrition:0.0}\n"+
             $"瓶体完整 {brood.VesselIntegrity:0.0}　发育 {brood.Elapsed:0.0} 秒\n{brood.LastEvent}":
@@ -141,14 +147,17 @@ public partial class InteractionRoom
                     RescueToolArmed=_waterRescueToolArmed, ClickOfferTarget=_clickOfferId,
                     SelectedDetachedStem=_selectedDetachedStemEventId, HeldSupply=_heldSupplyId,
                     SelectedSupplyStation=_selectedSupplyStationId, PlacingSupplyStation=_placingSupplyStationKind,
+                    SelectedShelter=_selectedShelterId, PlacingShelter=_placingShelter,
                     Sim.CurrentInteractionTargetKind, GestureObject=Sim.InteractionGestureObject,
                     Sim.InteractionCompletionProgress, Sim.UsesConsumableStock,
-                    SelectedCreatureWaterSupport=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&c!=null?Sim.WaterSupportStatus(c):null,
-                    SelectedCreatureWaterAttempt=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&c!=null?Sim.WaterAttemptStatus(c):null,
-                    SelectedCreatureHungerFeeding=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&c!=null?Sim.HungerFeedingStatus(c):null,
+                    SelectedCreatureWaterSupport=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&_selectedShelterId==null&&c!=null?Sim.WaterSupportStatus(c):null,
+                    SelectedCreatureWaterAttempt=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&_selectedShelterId==null&&c!=null?Sim.WaterAttemptStatus(c):null,
+                    SelectedCreatureHungerFeeding=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&_selectedShelterId==null&&c!=null?Sim.HungerFeedingStatus(c):null,
+                    SelectedCreatureShelter=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&_selectedShelterId==null&&c!=null?Sim.CreatureShelterStatus(c):null,
                     Sim.HasInteractionGesture, GestureTarget=Sim.InteractionGestureTarget, Sim.CurrentInteractionAction,
                     Sim.InteractionIntakeAccepted, Sim.State.Mode, Sim.State.WorldSeconds },
-                _=>station is not null?(object)new { State=station, Interaction=stationView }:
+                _=>shelter is not null?(object)new { State=shelter, Interaction=shelterView }:
+                    station is not null?(object)new { State=station, Interaction=stationView }:
                     brood is not null?(object)new { State=brood, Interaction=Sim.DetachedStemStatus(brood.EventId) }:c
             };
             JsonElement snapshot=DebugStateSnapshot.Capture(source);
@@ -172,9 +181,10 @@ public partial class InteractionRoom
     {
         var stems=Sim.State.DetachedStemBroods.Where(s=>s.RegionId==Sim.State.ActiveRegionId).ToArray();
         var stations=Sim.State.SupplyStations.Where(s=>s.RegionId==Sim.State.ActiveRegionId).ToArray();
+        var shelters=Sim.State.Shelters.Where(s=>s.RegionId==Sim.State.ActiveRegionId).ToArray();
         string key=string.Join("\n",Sim.State.Creatures.Select(c=>c.Id+"="+c.Name))+"\nSTEMS\n"+
             string.Join("\n",stems.Select(s=>s.EventId+"="+s.Mother.Name))+"\nSTATIONS\n"+
-            string.Join("\n",stations.Select(s=>s.Id+"="+s.Kind));
+            string.Join("\n",stations.Select(s=>s.Id+"="+s.Kind))+"\nSHELTERS\n"+string.Join("\n",shelters.Select(s=>s.Id));
         if(key!=_debugCreatureList)
         {
             _debugCreatureList=key;_debugCreature.Clear();_debugCreatureIds.Clear();
@@ -183,8 +193,11 @@ public partial class InteractionRoom
             {_debugCreature.AddItem($"离体茎 {n+1} · {stems[n].Mother.Name}");_debugCreatureIds.Add("stem:"+stems[n].EventId);}
             for(int n=0;n<stations.Length;n++)
             {_debugCreature.AddItem($"{SupplyStationName(stations[n].Kind)} {n+1}");_debugCreatureIds.Add("station:"+stations[n].Id);}
+            for(int n=0;n<shelters.Length;n++)
+            {_debugCreature.AddItem($"小家 {n+1}");_debugCreatureIds.Add("shelter:"+shelters[n].Id);}
         }
-        int selected=_debugCreatureIds.IndexOf(_selectedSupplyStationId is { } sid?"station:"+sid:
+        int selected=_debugCreatureIds.IndexOf(_selectedShelterId is { } hid?"shelter:"+hid:
+            _selectedSupplyStationId is { } sid?"station:"+sid:
             _selectedDetachedStemEventId is { } id?"stem:"+id:"creature:"+Sim.State.SelectedId);
         if(_debugCreature.Selected!=selected)_debugCreature.Select(selected);
     }
@@ -209,6 +222,13 @@ public partial class InteractionRoom
 
     private static string DebugParameterLabel(string name)=>name switch
     {
+        "Shelters"=>"小家与藏身处","ShelterStock"=>"待摆放小家库存","ShelterSequence"=>"小家身份序号",
+        "ShelterId"=>"小家身份","GuestId"=>"预留或居住的个体","DoorOpen"=>"门帘打开",
+        "Phase"=>"当前阶段","ReservedById"=>"预留个体","OccupantId"=>"屋内个体",
+        "ExitRequested"=>"已有离屋请求","BlockedSeconds"=>"出入受阻秒数","LastHelpAt"=>"最近求助时间",
+        "CanOpen"=>"目前可开门","CanClose"=>"目前可关门","CanCall"=>"目前可呼唤",
+        "SelectedShelter"=>"选中小家","PlacingShelter"=>"正在摆放小家","SelectedCreatureShelter"=>"选中油的居所状态",
+        "ShelterSearchAfter"=>"下次寻找居所时间",
         "SupplyStations"=>"食水供给器","SupplyStationSequence"=>"供给器身份序号",
         "FoodStationStock"=>"空饭饭供给器库存","WaterStationStock"=>"空饮水器库存","StationWaterPortions"=>"储备清水份数",
         "StoredPortions"=>"仓内份数","OutletPortions"=>"出口实际份数","OutletObjectId"=>"出口物品身份",

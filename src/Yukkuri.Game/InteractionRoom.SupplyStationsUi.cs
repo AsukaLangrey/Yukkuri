@@ -40,6 +40,7 @@ public partial class InteractionRoom
     {
         var station=Sim.SupplyStationStatus(id);
         if(station==null||station.RegionId!=Sim.State.ActiveRegionId)return;
+        ClearShelterSelection();
         if(cancelGesture)CancelGesture();
         _selectedDetachedStemEventId=null;
         _supplyStationSelectionWorld=Sim.State;_selectedSupplyStationId=id;

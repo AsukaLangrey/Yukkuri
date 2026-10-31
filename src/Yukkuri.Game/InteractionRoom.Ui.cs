@@ -107,6 +107,7 @@ public partial class InteractionRoom
         var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         BuildDetachedStemPanel(report);
         BuildSupplyStationPanel(report);
+        BuildShelterPanel(report);
         BuildVitalMeters(report);
         _condition=Text("",14);report.AddChild(_condition);
         _memoryHeading=Text("刚才发生的事",12,"8b927f");report.AddChild(_memoryHeading);_memory=Text("",13);report.AddChild(_memory);
@@ -177,6 +178,8 @@ public partial class InteractionRoom
     }
     private void SelectAction(InteractionAction action)
     {
+        if(action==InteractionAction.PlaceShelter){ArmShelterPlacement();return;}
+        if(action is not (InteractionAction.OpenShelterDoor or InteractionAction.CloseShelterDoor or InteractionAction.CallFromShelter))ClearShelterSelection();
         if(action is InteractionAction.PlaceFoodStation or InteractionAction.PlaceWaterStation)
         {ArmSupplyStationPlacement(action==InteractionAction.PlaceFoodStation?SupplyStationKind.Food:SupplyStationKind.Water);return;}
         if(action is not (InteractionAction.RefillSupplyStation or InteractionAction.Lift))ClearSupplyStationSelection();
@@ -201,6 +204,7 @@ public partial class InteractionRoom
     }
     private void SelectOil(string id)
     {
+        ClearShelterSelection();
         ClearSupplyStationSelection();
         _selectedDetachedStemEventId=null;
         CancelGesture();Sim.State.SelectedId=id;_familyFirstId=id;
@@ -212,7 +216,7 @@ public partial class InteractionRoom
     }
     private void ToggleClose()
     {
-        if(_selectedDetachedStemEventId!=null||_selectedSupplyStationId!=null)return;
+        if(_selectedDetachedStemEventId!=null||_selectedSupplyStationId!=null||_selectedShelterId!=null)return;
         if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected is { } selected&&!HasVisibleFamilyBody(selected))
         {_message=selected.Family.Memorialized?"遗体已经安置，可以在家庭面板查看留下的记录。":"它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
@@ -237,6 +241,7 @@ public partial class InteractionRoom
         if(_who==null||Sim==null)return;
         NormalizeDetachedStemSelection();
         NormalizeSupplyStationSelection();
+        NormalizeShelterSelection();
         RefreshOilSelector();
         RefreshDebugPanel();
         RefreshSupplyStock();
@@ -291,7 +296,7 @@ public partial class InteractionRoom
         {
             _who.Text="观察小院";_condition.Text=_memory.Text="";
             _speechLabel.Text="选择油或离体茎，查看当前状态。";
-            RefreshDetachedStemUi();RefreshSupplyStationUi();RefreshContactProgress();return;
+            RefreshDetachedStemUi();RefreshSupplyStationUi();RefreshShelterUi();RefreshContactProgress();return;
         }
         var i=c.Interaction;
         RefreshVitalMeters(c);
@@ -337,11 +342,16 @@ public partial class InteractionRoom
         if(aftermath.Length>0)_condition.Text+="\n\n"+aftermath;
         string risk=c.Condition==PhysicalCondition.Dead?"":FamilyRules.DescribeRisk(c);
         if(risk.Length>0)_condition.Text+="\n\n"+risk;
+        if(c.Condition!=PhysicalCondition.Dead&&Sim.CreatureShelterStatus(c) is { } shelter)
+            _condition.Text+="\n\n小家："+ShelterPhaseName(shelter.Phase)+
+                (shelter.Blocked?"。出门受阻，需要看看门帘和门口。":"")+
+                (string.IsNullOrEmpty(shelter.RefusalReason)?"":"\n"+shelter.RefusalReason);
         _memory.Text=c.PersonalMemories.Count==0?"还没有一起经历很多事。":string.Join("\n\n",c.PersonalMemories.TakeLast(3).Reverse().Select(m=>m.Text));
         string speech=c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
         RefreshDetachedStemUi();
         RefreshSupplyStationUi();
+        RefreshShelterUi();
         RefreshContactProgress();
     }
 

@@ -4,6 +4,7 @@ using Yukkuri.Simulation;
 public partial class InteractionRoom
 {
     private Button _immediateRescue=null!,_immediateStopThreat=null!,_immediateCare=null!,_immediateRelease=null!,_immediateDry=null!;
+    private Button _immediateShelter=null!;
     private Label _immediateThreatDescription=null!;
     private Button _yardHelpButton=null!;
     private Label _stemCareDescription=null!;
@@ -28,7 +29,7 @@ public partial class InteractionRoom
         _yardHelpButton.Visible=target!=null;
         if(target==null)return;
         string reason=request?.Kind==InteractionHelpKind.Critical?"急需照护":
-            request?.Kind==InteractionHelpKind.Water?"落水求助":"受到威胁";
+            request?.Kind==InteractionHelpKind.Water?"落水求助":request?.Kind==InteractionHelpKind.Shelter?"出门求助":"受到威胁";
         // Keep a long custom name from stretching the entire header. The full
         // name and meaning remain available in the tooltip and selected panel.
         var displayName=new System.Globalization.StringInfo(target.Name);
@@ -54,6 +55,14 @@ public partial class InteractionRoom
 
     private void BuildImmediateInterventions(Control parent)
     {
+        _immediateShelter=Button("查看小家与门口",()=>
+        {
+            if(Sim.Selected is { } selected&&Sim.CreatureShelterStatus(selected) is { } shelter)
+                SelectShelter(shelter.ShelterId);
+            else RefreshRoomUi();
+        });
+        _immediateShelter.TooltipText="只查看住户和门口情况；开门、呼唤仍需在场景中实际点击。";
+        _immediateShelter.Visible=false;parent.AddChild(_immediateShelter);
         _immediateThreatDescription=Text("",12,"a16a51");parent.AddChild(_immediateThreatDescription);
         _immediateStopThreat=Button("制止袭击",StopCurrentThreat);parent.AddChild(_immediateStopThreat);
         _immediateRelease=Button("拿解除工具",ArmImmediateRelease);parent.AddChild(_immediateRelease);
@@ -105,6 +114,7 @@ public partial class InteractionRoom
     {
         bool local=selected.RegionId==Sim.State.ActiveRegionId&&HasVisibleFamilyBody(selected)&&
             selected.Condition!=PhysicalCondition.Dead;
+        _immediateShelter.Visible=local&&Sim.CreatureShelterStatus(selected)!=null;
         bool inWater=local&&WaterEnvironment.IsInWater(Sim.State,selected);
         bool critical=local&&selected.Condition==PhysicalCondition.Critical;
         bool recovery=local&&selected.Interaction.Water.RecoverySeconds>0;
