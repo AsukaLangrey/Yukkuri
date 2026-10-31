@@ -26,7 +26,7 @@ public sealed partial class WorldSimulation
     public bool HoldSupply(string id)
     {
         if(!State.InteractionPlaytest||State.Settings.Pause||State.RoomObjects.Any(o=>o.HeldByHand)||
-            State.DetachedStemBroods.Any(s=>s.HeldByHand))return false;
+            State.DetachedStemBroods.Any(s=>s.HeldByHand)||State.SupplyStations.Any(s=>s.HeldByHand))return false;
         var obj=State.RoomObjects.Find(o=>o.Id==id&&!o.Stored&&o.RegionId==State.ActiveRegionId);
         if(obj==null||obj.Kind is not (RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water))return false;
         if(obj.Portions<=0&&NaturalResources.Consumer(State,obj)==null)return false;
@@ -38,6 +38,8 @@ public sealed partial class WorldSimulation
         obj.CarrierId=null;
         foreach(var c in State.Creatures)
             if(c.Interaction.GroundIntakeSourceId==obj.Id)DetachNaturalIntake(c);
+        foreach(var station in State.SupplyStations)
+            if(station.OutletObjectId==obj.Id)station.OutletObjectId=null;
         return true;
     }
     public bool ReleaseSupply(string id,double? x=null,double? z=null)
@@ -48,6 +50,7 @@ public sealed partial class WorldSimulation
         {
             if(!double.IsFinite(x.Value)||!double.IsFinite(z.Value)||Math.Abs(x.Value)>7.7||Math.Abs(z.Value)>7.7)return false;
             if(!WoodlandLayout.GroundFits(State,obj.RegionId,x.Value,z.Value,.2))return false;
+            if(!ClearOfStations(obj.RegionId,x.Value,z.Value,.2))return false;
             if(State.DetachedStemBroods.Any(s=>s.RegionId==obj.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
                 Distance(s.X,s.Z,x.Value,z.Value)<StemVesselRadius+.2))return false;
             if(State.Creatures.Any(c=>!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&c.RegionId==obj.RegionId&&Distance(c.X,c.Z,x.Value,z.Value)<InteractionFootprint(c)+.2))return false;

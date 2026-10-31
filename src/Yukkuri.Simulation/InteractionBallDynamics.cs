@@ -29,6 +29,8 @@ public sealed partial class WorldSimulation
                     var trunk=tree.TrunkAt(InteractionFixtureGeometry.BallRadius);
                     ResolveBallCircle(ball,trunk.X,trunk.Z,trunk.Radius+.006,.48);
                 }
+            foreach(var station in State.SupplyStations)
+                if(station.RegionId==ball.RegionId)ResolveBallCircle(ball,station.X,station.Z,SupplyStationRadius,.48);
             foreach(var c in State.Creatures)
             {
                 if(c.RegionId!=ball.RegionId||c.Family.ColdStorage.Stored||c.Family.Memorialized)continue;
@@ -64,6 +66,7 @@ public sealed partial class WorldSimulation
         double radius=InteractionFixtureGeometry.BallRadius,edge=InteractionFixtureGeometry.YardFenceInner-radius;
         if(Math.Abs(x)>edge||Math.Abs(z)>edge)return false;
         if(!WoodlandLayout.GroundFits(State,owner.RegionId,x,z,radius))return false;
+        if(!ClearOfStations(owner.RegionId,x,z,radius))return false;
         bool Box(double cx,double cz,double w,double d)
         {
             double dx=Math.Max(0,Math.Abs(x-cx)-w),dz=Math.Max(0,Math.Abs(z-cz)-d);

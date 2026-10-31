@@ -49,6 +49,7 @@ public partial class InteractionRoom
     {
         var stem=Sim.DetachedStemStatus(eventId);
         if(stem==null||stem.RegionId!=Sim.State.ActiveRegionId)return;
+        ClearSupplyStationSelection();
         if(cancelGesture)CancelGesture();
         _detachedSelectionWorld=Sim.State;_selectedDetachedStemEventId=eventId;
         Sim.State.Mode=PlayMode.Management;

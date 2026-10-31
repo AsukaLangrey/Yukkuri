@@ -52,6 +52,7 @@ public partial class InteractionRoom
             _debugFrozen=false;_debugPage=0;
             string id=_debugCreatureIds[(int)index];
             if(id.StartsWith("stem:",StringComparison.Ordinal))SelectDetachedStem(id[5..]);
+            else if(id.StartsWith("station:",StringComparison.Ordinal))SelectSupplyStation(id[8..]);
             else SelectOil(id[9..]);
             RefreshDebugPanel(true);
         };
@@ -98,10 +99,12 @@ public partial class InteractionRoom
     {
         if(!DebugPanelVisible||Sim==null)return;
         NormalizeDetachedStemSelection();
+        NormalizeSupplyStationSelection();
         float available=Math.Max(200,_ui.Size.X-28);
         _debugPanel.OffsetLeft=-Math.Min(available,Math.Clamp(_ui.Size.X*.38f,330,520))-14;
         RefreshDebugCreatureSelector();
-        string sourceId=_selectedDetachedStemEventId is { } stemId?"stem:"+stemId:"creature:"+Sim.State.SelectedId;
+        string sourceId=_selectedSupplyStationId is { } stationId?"station:"+stationId:
+            _selectedDetachedStemEventId is { } stemId?"stem:"+stemId:"creature:"+Sim.State.SelectedId;
         if(_debugSourceId!=sourceId||!ReferenceEquals(_debugWorldSource,Sim.State))
         {
             // Selecting in the scene must not relabel a frozen old creature's
@@ -115,7 +118,10 @@ public partial class InteractionRoom
         _debugSourceId=sourceId;_debugWorldSource=Sim.State;_debugWorldSeconds=Sim.State.WorldSeconds;
         var c=Sim.Selected;
         var brood=_selectedDetachedStemEventId is { } selectedStem?Sim.State.DetachedStemBroods.Find(s=>s.EventId==selectedStem):null;
-        _debugSummary.Text=brood!=null?
+        var station=_selectedSupplyStationId is { } selectedStation?Sim.State.SupplyStations.Find(s=>s.Id==selectedStation):null;
+        var stationView=station==null?null:Sim.SupplyStationStatus(station.Id);
+        _debugSummary.Text=stationView!=null?
+            $"{SupplyStationName(stationView.Kind)}\n仓内 {stationView.StoredPortions} · 出口 {stationView.OutletPortions} · 总容量 {stationView.Capacity}\n{stationView.LastEvent}":brood!=null?
             $"离体茎 · {brood.Mother.Name}\n完整度 {brood.Integrity:0.0}　水分 {brood.Hydration:0.0}　营养 {brood.Nutrition:0.0}\n"+
             $"瓶体完整 {brood.VesselIntegrity:0.0}　发育 {brood.Elapsed:0.0} 秒\n{brood.LastEvent}":
             c==null?"当前未选中对象，可切换到世界范围。":
@@ -134,14 +140,16 @@ public partial class InteractionRoom
                     BaseForce=_force, AppliedForce=_appliedForce, PointerHeld=_mouseHeld, CarryHeight=_height,
                     RescueToolArmed=_waterRescueToolArmed, ClickOfferTarget=_clickOfferId,
                     SelectedDetachedStem=_selectedDetachedStemEventId, HeldSupply=_heldSupplyId,
+                    SelectedSupplyStation=_selectedSupplyStationId, PlacingSupplyStation=_placingSupplyStationKind,
                     Sim.CurrentInteractionTargetKind, GestureObject=Sim.InteractionGestureObject,
                     Sim.InteractionCompletionProgress, Sim.UsesConsumableStock,
-                    SelectedCreatureWaterSupport=_selectedDetachedStemEventId==null&&c!=null?Sim.WaterSupportStatus(c):null,
-                    SelectedCreatureWaterAttempt=_selectedDetachedStemEventId==null&&c!=null?Sim.WaterAttemptStatus(c):null,
-                    SelectedCreatureHungerFeeding=_selectedDetachedStemEventId==null&&c!=null?Sim.HungerFeedingStatus(c):null,
+                    SelectedCreatureWaterSupport=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&c!=null?Sim.WaterSupportStatus(c):null,
+                    SelectedCreatureWaterAttempt=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&c!=null?Sim.WaterAttemptStatus(c):null,
+                    SelectedCreatureHungerFeeding=_selectedDetachedStemEventId==null&&_selectedSupplyStationId==null&&c!=null?Sim.HungerFeedingStatus(c):null,
                     Sim.HasInteractionGesture, GestureTarget=Sim.InteractionGestureTarget, Sim.CurrentInteractionAction,
                     Sim.InteractionIntakeAccepted, Sim.State.Mode, Sim.State.WorldSeconds },
-                _=>brood is not null?(object)new { State=brood, Interaction=Sim.DetachedStemStatus(brood.EventId) }:c
+                _=>station is not null?(object)new { State=station, Interaction=stationView }:
+                    brood is not null?(object)new { State=brood, Interaction=Sim.DetachedStemStatus(brood.EventId) }:c
             };
             JsonElement snapshot=DebugStateSnapshot.Capture(source);
             _debugSnapshotJson=snapshot.GetRawText();
@@ -163,16 +171,21 @@ public partial class InteractionRoom
     private void RefreshDebugCreatureSelector()
     {
         var stems=Sim.State.DetachedStemBroods.Where(s=>s.RegionId==Sim.State.ActiveRegionId).ToArray();
+        var stations=Sim.State.SupplyStations.Where(s=>s.RegionId==Sim.State.ActiveRegionId).ToArray();
         string key=string.Join("\n",Sim.State.Creatures.Select(c=>c.Id+"="+c.Name))+"\nSTEMS\n"+
-            string.Join("\n",stems.Select(s=>s.EventId+"="+s.Mother.Name));
+            string.Join("\n",stems.Select(s=>s.EventId+"="+s.Mother.Name))+"\nSTATIONS\n"+
+            string.Join("\n",stations.Select(s=>s.Id+"="+s.Kind));
         if(key!=_debugCreatureList)
         {
             _debugCreatureList=key;_debugCreature.Clear();_debugCreatureIds.Clear();
             foreach(var c in Sim.State.Creatures){_debugCreature.AddItem(c.Name);_debugCreatureIds.Add("creature:"+c.Id);}
             for(int n=0;n<stems.Length;n++)
             {_debugCreature.AddItem($"离体茎 {n+1} · {stems[n].Mother.Name}");_debugCreatureIds.Add("stem:"+stems[n].EventId);}
+            for(int n=0;n<stations.Length;n++)
+            {_debugCreature.AddItem($"{SupplyStationName(stations[n].Kind)} {n+1}");_debugCreatureIds.Add("station:"+stations[n].Id);}
         }
-        int selected=_debugCreatureIds.IndexOf(_selectedDetachedStemEventId is { } id?"stem:"+id:"creature:"+Sim.State.SelectedId);
+        int selected=_debugCreatureIds.IndexOf(_selectedSupplyStationId is { } sid?"station:"+sid:
+            _selectedDetachedStemEventId is { } id?"stem:"+id:"creature:"+Sim.State.SelectedId);
         if(_debugCreature.Selected!=selected)_debugCreature.Select(selected);
     }
 
@@ -196,6 +209,12 @@ public partial class InteractionRoom
 
     private static string DebugParameterLabel(string name)=>name switch
     {
+        "SupplyStations"=>"食水供给器","SupplyStationSequence"=>"供给器身份序号",
+        "FoodStationStock"=>"空饭饭供给器库存","WaterStationStock"=>"空饮水器库存","StationWaterPortions"=>"储备清水份数",
+        "StoredPortions"=>"仓内份数","OutletPortions"=>"出口实际份数","OutletObjectId"=>"出口物品身份",
+        "OutputSequence"=>"出口物品创建序号","OutletX"=>"出口横坐标","OutletZ"=>"出口纵坐标",
+        "SelectedSupplyStation"=>"选中供给器","PlacingSupplyStation"=>"待放置供给器种类",
+        "CanRefill"=>"目前可以补充","CanMove"=>"目前可以搬动",
         "Health"=>"生命值","Trust"=>"信任度","Fear"=>"恐惧值","Pain"=>"疼痛","Resentment"=>"不满",
         "Fullness"=>"饱食度","Hydration"=>"水分","Energy"=>"精力","TrueDisposition"=>"性格",
         "Comfort"=>"舒适度","Manmanlai"=>"馒馒来度","Safety"=>"对人安全感","Familiarity"=>"熟悉度",

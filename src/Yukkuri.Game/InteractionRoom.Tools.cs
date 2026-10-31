@@ -4,6 +4,7 @@ using Yukkuri.Simulation;
 public partial class InteractionRoom
 {
     private InteractionAction? _shownTool;
+    private bool? _shownStationWater;
     private MeshInstance3D? _landingMarker,_landingStem;
     private MeshInstance3D? _cupWater;
     private Node3D? _toolFood;
@@ -49,7 +50,9 @@ public partial class InteractionRoom
     }
     private void ShowInteractionTool()
     {
-        if(_shownTool==_action)return;_shownTool=_action;
+        bool? stationWater=_action==InteractionAction.RefillSupplyStation?
+            Sim.SupplyStationStatus(_gestureTargetKind==InteractionTargetKind.SupplyStation?_gestureTargetObject??"":_selectedSupplyStationId??"")?.Kind==SupplyStationKind.Water:null;
+        if(_shownTool==_action&&_shownStationWater==stationWater)return;_shownTool=_action;_shownStationWater=stationWater;
         _cupWater=null;_toolFood=null;_lighterFlame=null;_lighterCore=null;_lighterClock=0;
         foreach(var child in _hand.GetChildren()){_hand.RemoveChild(child);child.QueueFree();}
         _hand.Rotation=Vector3.Zero;
@@ -66,6 +69,8 @@ public partial class InteractionRoom
                 _cupWater=InteractionToolArt.Cup(_hand);break;
             case InteractionAction.Care:case InteractionAction.SupportStem:case InteractionAction.UnbottleStem:
                 InteractionToolArt.CarePad(_hand);break;
+            case InteractionAction.RefillSupplyStation:
+                BuildStationRefillTool(_hand,stationWater==true);break;
             case InteractionAction.CutStem:
                 BuildStemScissors(_hand);break;
             case InteractionAction.BottleStem:
@@ -88,6 +93,26 @@ public partial class InteractionRoom
                 break;
         }
         SceneArt.SetRenderLayer(_hand,SceneArt.InteractionLayer);
+    }
+
+    private static void BuildStationRefillTool(Node3D root,bool water)
+    {
+        // Local origin is the real bag opening / jug spout. Local +Y extends
+        // away from the contact normal, without a human hand or a fake pour.
+        if(water)
+        {
+            SceneArt.Mesh(root,new CylinderMesh{TopRadius=.075f,BottomRadius=.09f,Height=.22f,RadialSegments=16},new(0,.21f,.07f),"7faeb3");
+            SceneArt.Mesh(root,new CylinderMesh{TopRadius=.045f,BottomRadius=.055f,Height=.025f,RadialSegments=16},new(0,.332f,.07f),"d0ded7");
+            InteractionToolArt.Tube(root,u=>new Vector3(0,.10f*u,.07f*u),.018f,"a9c9c6",12);
+            InteractionToolArt.Tube(root,u=>new Vector3(Mathf.Sin(u*Mathf.Pi)*.14f,.21f+Mathf.Cos(u*Mathf.Pi)*.085f,.07f),.014f,"96bbba",16);
+        }
+        else
+        {
+            InteractionFixtureArt.RoundedBox(root,new(0,.17f,0),new(.20f,.26f,.13f),"d7c296",.018f);
+            SceneArt.Mesh(root,new CylinderMesh{TopRadius=.048f,BottomRadius=.026f,Height=.042f,RadialSegments=12},new(0,.021f,0),"a9936d");
+            SceneArt.Box(root,new(0,.17f,-.067f),new(.13f,.085f,.004f),"f1e6cc");
+            for(int n=0;n<3;n++)SceneArt.Ball(root,new((n-1)*.033f,.17f,-.073f),new(.022f,.038f,.012f),"b29c71");
+        }
     }
 
     private void BuildLighterTool(Node3D root)

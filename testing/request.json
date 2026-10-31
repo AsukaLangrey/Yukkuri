@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "dot-v52-night-three-lines-K-living-brood-withdrawal-20261031",
+  "revision": "dot-v53-goal-completion-finite-supply-stations-20261031",
   "repository": "AsukaLangrey/Yukkuri",
   "source_branch": "main",
   "results_branch": "codex/dot-test-results",
@@ -9,6 +9,7 @@
   "run_timeout_minutes": 50,
   "watched_paths": ["src/", "checks/", "tools/", "assets-source/", "third-party/", "global.json", "NuGet.Config", "toolchain.lock.json", ".gitattributes", "testing/request.json", "testing/PROTOCOL.md", "testing/report-template.json"],
   "required_checks": [
+    "Interaction.SupplyStations",
     "Family.CompanyCare",
     "Family.CareContinuity",
     "Interaction.PeerCompanyContinuity",
@@ -27,6 +28,11 @@
     "低信任个体的自主解决与求助差异"
   ],
   "targeted_review_documents": [
+    "testing/goal-completion-20261031.md",
+    "planning/stages/goal-completion-20261031/PLAN.md",
+    "planning/stages/goal-completion-20261031/gameplay.md",
+    "planning/stages/goal-completion-20261031/art-input.md",
+    "planning/stages/goal-completion-20261031/root.md",
     "testing/night-20261031-first-pass.md",
     "testing/night-three-lines-20261031.md",
     "planning/stages/night-three-lines-20261031/PLAN.md",

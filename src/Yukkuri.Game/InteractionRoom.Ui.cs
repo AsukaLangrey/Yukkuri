@@ -106,6 +106,7 @@ public partial class InteractionRoom
         var reportScroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(reportScroll);
         var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         BuildDetachedStemPanel(report);
+        BuildSupplyStationPanel(report);
         BuildVitalMeters(report);
         _condition=Text("",14);report.AddChild(_condition);
         _memoryHeading=Text("刚才发生的事",12,"8b927f");report.AddChild(_memoryHeading);_memory=Text("",13);report.AddChild(_memory);
@@ -144,7 +145,7 @@ public partial class InteractionRoom
         _quickTools.Visible=!_browseTools;_groupList.Visible=_browseTools;
         _gentleTab.Visible=_roughTab.Visible=_browseTools;
     }
-    private void SetToolTab(bool rough)
+    private void SetToolTab(bool rough,bool selectGroupAction=true)
     {
         CancelGesture();_roughTabSelected=rough;ClearChildren(_groupList);
         foreach(var pair in new[]{(_gentleTab,!rough),(_roughTab,rough)})
@@ -157,7 +158,8 @@ public partial class InteractionRoom
             var group=g;var b=Button(group.Name,()=>SelectGroup(group),group.Id==_group.Id);
             b.Alignment=HorizontalAlignment.Left;_groupList.AddChild(b);
         }
-        if(_group.Rough!=rough)SelectGroup(InteractionCatalog.Groups.First(g=>g.Rough==rough));else SelectGroup(_group);
+        if(selectGroupAction)
+        {if(_group.Rough!=rough)SelectGroup(InteractionCatalog.Groups.First(g=>g.Rough==rough));else SelectGroup(_group);}
     }
     private void SelectGroup(InteractionGroup group)
     {
@@ -168,10 +170,16 @@ public partial class InteractionRoom
     private void SelectQuickTool(InteractionAction action)
     {
         var group=InteractionCatalog.Groups.First(g=>g.Choices.Any(choice=>choice.Action==action));
-        _group=group;SetToolTab(group.Rough);SelectAction(action);_directToolMode=true;RefreshRoomUi();
+        // Rebuild the tool list without equipping its first action. That action
+        // may place an object or open a shop before the requested tool is selected.
+        _group=group;SetToolTab(group.Rough,false);
+        SelectAction(action);_directToolMode=true;RefreshRoomUi();
     }
     private void SelectAction(InteractionAction action)
     {
+        if(action is InteractionAction.PlaceFoodStation or InteractionAction.PlaceWaterStation)
+        {ArmSupplyStationPlacement(action==InteractionAction.PlaceFoodStation?SupplyStationKind.Food:SupplyStationKind.Water);return;}
+        if(action is not (InteractionAction.RefillSupplyStation or InteractionAction.Lift))ClearSupplyStationSelection();
         CancelGesture();_action=action;_toolArmed=true;ClearChildren(_choiceList);
         _force=_toolForces.TryGetValue(action,out float rememberedForce)?rememberedForce:.25f;_forceSlider.SetValueNoSignal(_force);
         foreach(var option in _group.Choices){var a=option.Action;_choiceList.AddChild(Button(option.Label,()=>SelectAction(a),a==action));}
@@ -193,6 +201,7 @@ public partial class InteractionRoom
     }
     private void SelectOil(string id)
     {
+        ClearSupplyStationSelection();
         _selectedDetachedStemEventId=null;
         CancelGesture();Sim.State.SelectedId=id;_familyFirstId=id;
         bool leftClose=LeaveUnavailableCloseup();
@@ -203,7 +212,7 @@ public partial class InteractionRoom
     }
     private void ToggleClose()
     {
-        if(_selectedDetachedStemEventId!=null)return;
+        if(_selectedDetachedStemEventId!=null||_selectedSupplyStationId!=null)return;
         if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected is { } selected&&!HasVisibleFamilyBody(selected))
         {_message=selected.Family.Memorialized?"遗体已经安置，可以在家庭面板查看留下的记录。":"它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
@@ -227,6 +236,7 @@ public partial class InteractionRoom
     {
         if(_who==null||Sim==null)return;
         NormalizeDetachedStemSelection();
+        NormalizeSupplyStationSelection();
         RefreshOilSelector();
         RefreshDebugPanel();
         RefreshSupplyStock();
@@ -281,7 +291,7 @@ public partial class InteractionRoom
         {
             _who.Text="观察小院";_condition.Text=_memory.Text="";
             _speechLabel.Text="选择油或离体茎，查看当前状态。";
-            RefreshDetachedStemUi();RefreshContactProgress();return;
+            RefreshDetachedStemUi();RefreshSupplyStationUi();RefreshContactProgress();return;
         }
         var i=c.Interaction;
         RefreshVitalMeters(c);
@@ -331,6 +341,7 @@ public partial class InteractionRoom
         string speech=c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
         RefreshDetachedStemUi();
+        RefreshSupplyStationUi();
         RefreshContactProgress();
     }
 

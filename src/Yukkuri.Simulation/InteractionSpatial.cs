@@ -22,6 +22,7 @@ public sealed partial class WorldSimulation
         double own=InteractionFootprint(c,restraint,supine);
         if(Math.Abs(x)>8-own||Math.Abs(z)>8-own)return false;
         if(!WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,allowWater))return false;
+        if(!ClearOfStations(c.RegionId,x,z,own))return false;
         if(State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
             Distance(x,z,s.X,s.Z)<own+StemVesselRadius))return false;
         if((restraint??c.Interaction.Restraint) is RestraintKind.Box or RestraintKind.Frame or RestraintKind.Hanging)

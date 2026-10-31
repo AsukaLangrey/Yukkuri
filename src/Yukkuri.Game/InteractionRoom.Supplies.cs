@@ -11,6 +11,7 @@ public partial class InteractionRoom
         if(_supplyStockLabel==null)return;
         _supplyStockLabel.Text=Sim.UsesConsumableStock?$"食物 {Sim.State.Food} · 护理 {Sim.State.Medicine}":"食物与护理：沙盒不限量";
         _supplyStockLabel.TooltipText=$"救援用品 {Sim.State.WaterRescueTools} · 空瓶 {Sim.State.StemVessels} · 诱导用品 {Sim.State.CourtshipTools}";
+        _supplyStockLabel.TooltipText+=$"\n空饭饭供给器 {Sim.State.FoodStationStock} · 空饮水器 {Sim.State.WaterStationStock} · 储备清水 {Sim.State.StationWaterPortions} 份";
     }
 
     private bool SupplyStockMissing(InteractionAction action)=>action switch
@@ -19,12 +20,14 @@ public partial class InteractionRoom
         InteractionAction.Care=>Sim.UsesConsumableStock&&Sim.State.Medicine<=0,
         InteractionAction.SupportStem or InteractionAction.UnbottleStem=>Sim.State.Medicine<=0,
         InteractionAction.BottleStem=>Sim.State.StemVessels<=0,
+        InteractionAction.RefillSupplyStation=>SupplyStationRefillStockMissing(),
         _=>false
     };
 
     private void ShowMissingToolSupplies(InteractionAction action)
     {
-        if(action is InteractionAction.Care or InteractionAction.SupportStem or InteractionAction.UnbottleStem)ShowMedicineSupplies("手边没有护理包，先补充用品。",action);
+        if(action==InteractionAction.RefillSupplyStation)ShowSupplyStationSupplies("补充器具需要实际食水库存，先购买用品。");
+        else if(action is InteractionAction.Care or InteractionAction.SupportStem or InteractionAction.UnbottleStem)ShowMedicineSupplies("手边没有护理包，先补充用品。",action);
         else if(action==InteractionAction.BottleStem)ShowStemVessels("手边没有空瓶，先补充一个。");
         else ShowSuppliesOverview("食物已经用完，补充后再拿起来。",action);
     }
@@ -32,6 +35,7 @@ public partial class InteractionRoom
     private void ShowSuppliesOverview(string? result=null,InteractionAction? resumeAction=null)
     {
         OpenModal("用品补给");
+        _modalContents.AddChild(Button("供给器 · 购买与放置",()=>ShowSupplyStationSupplies()));
         _modalContents.AddChild(Text("手边的食物与照护用品",20));
         _modalContents.AddChild(Text(Sim.State.UnlimitedResources?
             "测试阶段购买不扣钱；本小院喂食、护理和救援仍消耗实际用品。":$"现有金钱：{Sim.State.Money} 元"));
@@ -54,7 +58,7 @@ public partial class InteractionRoom
         Item("救援用品",Sim.State.WaterRescueTools,1,WaterEnvironment.RescueToolPrice,Sim.BuyWaterRescueTool,Sim.State.WaterRescueTools<99);
         Item("空瓶",Sim.State.StemVessels,1,WorldSimulation.StemVesselPrice,Sim.BuyStemVessel,Sim.State.StemVessels<99);
         Item("繁育诱导用品",Sim.State.CourtshipTools,1,WorldSimulation.CourtshipToolPrice,Sim.BuyCourtshipTool,Sim.State.CourtshipTools<99);
-        _modalContents.AddChild(Text("清水可直接取用。买到用品后仍需拿工具，在场景中实际递送、护理或救援。",13,"78816e"));
+        _modalContents.AddChild(Text("手拿的一杯清水可直接取用；饮水器使用另购的储备清水。买到用品后仍需拿工具，在场景中实际递送、补充、护理或救援。",13,"78816e"));
         if(resumeAction is { } action)
         {
             var equip=Button("拿起刚才选择的工具",()=>{CloseModal();SelectQuickTool(action);});

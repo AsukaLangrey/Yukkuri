@@ -11,6 +11,7 @@ public static class InteractionValidation
         static bool Range(params double[] values) => Finite(values) && values.All(v => v >= 0 && v <= 100);
         Require(s.MilestoneScenario && s.RoomObjects != null && s.InteractionSequence >= 0, "互动世界状态无效");
         Require(s.WaterRescueTools is >=0 and <=99&&s.WaterRescuePurchases>=0,"水域救援用品库存无效");
+        Require(s.Creatures!=null&&s.Creatures.All(c=>c!=null&&c.Interaction!=null),"互动个体数据缺失");
         var ids = s.Creatures.Select(c => c.Id).ToHashSet();
         // Validate object structure before pending-intake references inspect its entries.
         var objectIds = new HashSet<string>();
@@ -125,5 +126,6 @@ public static class InteractionValidation
                 (intake.SourceId==null||!string.IsNullOrWhiteSpace(intake.SourceId))&&
                 (!intake.Kind.HasValue||Enum.IsDefined(intake.Kind.Value)&&NaturalResources.IsResource(intake.Kind.Value))),"最近吃喝记忆无效");
         }
+        SupplyStationValidation.Validate(s);
     }
 }

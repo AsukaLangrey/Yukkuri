@@ -105,6 +105,7 @@ public partial class InteractionRoom : Node3D
 
     private void BuildActors()
     {
+        ResetSupplyStationActors();
         ResetDetachedStemActors();
         _heardReactions.Clear();
         foreach(var actor in _actors.Values)actor.QueueFree();_actors.Clear();
@@ -175,6 +176,7 @@ public partial class InteractionRoom : Node3D
         bool paused=Sim.State.Settings.Pause||_modalOpen;
         SynchronizeFamilyActors();
         SynchronizeDetachedStemActors();
+        SynchronizeSupplyStationActors();
         UpdateRoomCamera(dt);
         foreach(var c in Sim.State.Creatures)
         {
@@ -224,6 +226,7 @@ public partial class InteractionRoom : Node3D
         {_autoClock=0;SaveRoom(0,false);}
         UpdatePointer();
         UpdateLandingPreview();
+        UpdateSupplyStationPlacement();
     }
 
     private void UpdateRoomCamera(float dt)

@@ -29,7 +29,7 @@ public sealed partial class WorldSimulation
     private DetachedStemView DescribeDetachedStem(DetachedStemBrood s)
     {
         var error=DetachedStemError(s);bool free=error==null&&!s.HeldByHand&&
-            !State.Creatures.Any(c=>c.Interaction.Carried)&&!State.DetachedStemBroods.Any(b=>b.HeldByHand);
+            !State.Creatures.Any(c=>c.Interaction.Carried)&&!State.DetachedStemBroods.Any(b=>b.HeldByHand)&&!State.SupplyStations.Any(station=>station.HeldByHand);
         bool vessel=s.Phase==DetachedStemPhase.Bottled&&s.VesselIntegrity>25;
         return new(s.EventId,s.Mother.Id,s.Father.Id,s.RegionId,s.X,s.Z,s.Phase,s.PlannedChildren,
             s.Elapsed/FamilyRules.GestationSeconds(BirthMethod.Stem),s.Integrity,s.Hydration,s.Nutrition,s.VesselIntegrity,s.HeldByHand,
@@ -37,7 +37,7 @@ public sealed partial class WorldSimulation
             CanPlaceDetachedStem(s.RegionId,s.X,s.Z,s.EventId),free&&vessel&&s.Hydration<95,
             free&&vessel&&s.Hydration>=10&&s.Nutrition<95,error,s.LastDamageCause,s.Cleared,
             DetachedStemError(s,allowTerminal:true)==null&&(s.Phase is DetachedStemPhase.Failed or DetachedStemPhase.Born)&&
-            !State.Creatures.Any(c=>c.Interaction.Carried)&&!State.RoomObjects.Any(o=>o.HeldByHand)&&!State.DetachedStemBroods.Any(b=>b.HeldByHand),
+            !State.Creatures.Any(c=>c.Interaction.Carried)&&!State.RoomObjects.Any(o=>o.HeldByHand)&&!State.DetachedStemBroods.Any(b=>b.HeldByHand)&&!State.SupplyStations.Any(station=>station.HeldByHand),
             error==null&&DetachedStemActionError(s,new(InteractionAction.UnbottleStem))==null);
     }
     public IReadOnlyList<DetachedStemView> DetachedStems(string regionId)=>State.DetachedStemBroods
@@ -48,6 +48,7 @@ public sealed partial class WorldSimulation
     private bool CanPlaceDetachedStem(string regionId,double x,double z,string? ignore=null)
     {
         const double radius=StemVesselRadius;
+        if(!ClearOfStations(regionId,x,z,radius))return false;
         if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8-radius||Math.Abs(z)>8-radius||
             !WoodlandLayout.GroundFits(State,regionId,x,z,radius))return false;
         if(State.Creatures.Any(c=>c.RegionId==regionId&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&

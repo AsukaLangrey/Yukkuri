@@ -31,6 +31,7 @@ public sealed partial class WorldSimulation
         {
             if(UsesConsumableStock&&State.Food<=0)return Unavailable("等待练习需要眼前的一份食物。 ");
             if(!WoodlandLayout.GroundFits(State,c.RegionId,waitFoodX,c.Z,.2)||
+                !ClearOfStations(c.RegionId,waitFoodX,c.Z,.2)||
                 State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
                     Distance(s.X,s.Z,waitFoodX,c.Z)<StemVesselRadius+.2)||
                 State.RoomObjects.Count(o=>o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water&&!o.Stored)>=24)
@@ -549,6 +550,10 @@ public sealed partial class WorldSimulation
             c.Body.SpeciesId=="prototype-common"?State.Creatures.IndexOf(c):0);
     private bool RoomFoodPathClear(Creature c,RoomObject food,double? atX=null,double? atZ=null)
     {
+        if(StationForSource(food) is { } sourceStation&&sourceStation.HeldByHand)return false;
+        foreach(var station in State.SupplyStations)
+            if(station.RegionId==c.RegionId&&SegmentMeetsCircle(atX??c.X,atZ??c.Z,food.X,food.Z,
+                station.X,station.Z,SupplyStationRadius))return false;
         foreach(var boxed in State.Creatures.Where(o=>o.RegionId==c.RegionId&&o.Interaction.Restraint==RestraintKind.Box))
         {
             double dx=food.X-(boxed.Id==c.Id?atX??boxed.X:boxed.X),dz=food.Z-(boxed.Id==c.Id?atZ??boxed.Z:boxed.Z);

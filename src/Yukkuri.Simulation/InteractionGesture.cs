@@ -42,7 +42,7 @@ public sealed partial class WorldSimulation
         get
         {
             if(_interactionGesture is not { } g)return null;
-            if(g.Input.TargetKind==InteractionTargetKind.DetachedStem)return null;
+            if(g.Input.TargetKind is InteractionTargetKind.DetachedStem or InteractionTargetKind.SupplyStation)return null;
             if(g.Input.TargetKind==InteractionTargetKind.Stem&&(!g.ContactActive||
                 g.Applied&&g.Input.Action==InteractionAction.SupportStem||
                 State.Creatures.Find(c=>c.Id==g.TargetId) is not { } mother||AttachedStem(mother)?.EventId!=g.ObjectId))return null;
@@ -102,6 +102,7 @@ public sealed partial class WorldSimulation
     public InteractionFeedback BeginInteractionGesture(string id, InteractionInput input)
     {
         EndInteractionGesture(true);
+        if(input.TargetKind==InteractionTargetKind.SupplyStation)return BeginStationCore(id,input);
         if(input.TargetKind==InteractionTargetKind.DetachedStem)return BeginDetachedStemCore(id,input);
         var c = InteractionTarget(id);
         string? invalid = ValidateInteraction(c, input);
@@ -183,6 +184,7 @@ public sealed partial class WorldSimulation
     {
         var g = _interactionGesture;
         if (g == null) return Unavailable("没有进行中的动作。 ");
+        if(g.Input.TargetKind==InteractionTargetKind.SupplyStation)return ContinueStationGesture(g,input,inContact);
         if(g.Input.TargetKind==InteractionTargetKind.DetachedStem)return ContinueDetachedStemGesture(g,input,inContact);
         var c = InteractionTarget(g.TargetId);
         if (c == null || input.Action != g.Input.Action) { EndInteractionGesture(true); return Unavailable("动作对象或工具已改变。 "); }
@@ -569,6 +571,7 @@ public sealed partial class WorldSimulation
         var g = _interactionGesture;
         _interactionGesture = null;
         if (g == null) return new(false, "", "", "idle");
+        if(g.Input.TargetKind==InteractionTargetKind.SupplyStation)return EndStationGesture(g);
         if(g.Input.TargetKind==InteractionTargetKind.DetachedStem)return EndDetachedStemGesture(g,cancelled);
         // Cleanup belongs to the object on which the gesture began, even if the view changed.
         var c = State.Creatures.Find(o=>o.Id==g.TargetId);

@@ -106,7 +106,11 @@ public static class InteractionCatalog
             new(InteractionAction.Lower,"托住解下","先托住，再解除悬挂，稳稳放下。")),
         new("P21","直接工具",true,"工具与鼠标直接作用于实际接触部位。",
             new(InteractionAction.Punch,"拳头","点击身体击打，连续命中累计连击。",false,BodyPart.Side),
-            new(InteractionAction.Burn,"火机","长按实际接触部位灼烧；未固定时会尝试逃离。",true,BodyPart.Side))
+            new(InteractionAction.Burn,"火机","长按实际接触部位灼烧；未固定时会尝试逃离。",true,BodyPart.Side)),
+        new("P22", "食水供给", false, "有限仓储，逐份送到真实出料盘；空仓后需要实际补充。",
+            new(InteractionAction.PlaceFoodStation,"摆放食物供给器","购买空器具后，点击干燥空地摆放。"),
+            new(InteractionAction.PlaceWaterStation,"摆放饮水器","购买空器具后，点击干燥空地摆放。"),
+            new(InteractionAction.RefillSupplyStation,"补充食水","袋装食物或清水壶贴住仓体 1.6 秒，完成才转入库存。",true,BodyPart.Side))
     ];
 
     public static InteractionChoice Choice(InteractionAction action) =>

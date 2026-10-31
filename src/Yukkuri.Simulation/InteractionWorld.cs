@@ -139,6 +139,9 @@ public sealed partial class WorldSimulation
             Math.Abs(input.X) > 8 || Math.Abs(input.Z) > 8 || input.Height is < 0 or > 3)
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
+        if(input.TargetKind==InteractionTargetKind.SupplyStation||input.Action is InteractionAction.PlaceFoodStation or InteractionAction.PlaceWaterStation or InteractionAction.RefillSupplyStation)
+            return "请把器具或补给工具对准小院空地或真实供给器。";
+        if(State.SupplyStations.Any(s=>s.HeldByHand))return "先把供给器放稳，再接触油。";
         if(input.TargetKind==InteractionTargetKind.Stem)return ValidateStemInteraction(c,input);
         if(input.Action is InteractionAction.SupportStem or InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.ClearStem or InteractionAction.UnbottleStem)
             return "请把茎生工具对准真实外茎或离体窝，身体不能代替这些接触。";
@@ -397,6 +400,7 @@ public sealed partial class WorldSimulation
     private InteractionFeedback PlaceFood(string regionId, InteractionInput input)
     {
         bool water=input.Action==InteractionAction.PlaceWater;
+        if(!ClearOfStations(regionId,input.X,input.Z,.2))return Unavailable("供给器仓体占着这里，请把食水放到旁边。");
         if(!WoodlandLayout.GroundFits(State,regionId,input.X,input.Z,.2))return Unavailable("这里是河道，找岸边的干燥空地放食水。 ");
         if(State.DetachedStemBroods.Any(s=>s.RegionId==regionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
             Distance(s.X,s.Z,input.X,input.Z)<StemVesselRadius+.2))return Unavailable("培养瓶或离体茎占着这里，请把食水放到旁边。 ");

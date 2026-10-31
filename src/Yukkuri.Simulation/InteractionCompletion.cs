@@ -11,6 +11,7 @@ public sealed partial class WorldSimulation
             if(_interactionGesture is not { Refused:false } g)return null;
             bool timed=g.Input.TargetKind switch
             {
+                InteractionTargetKind.SupplyStation=>g.Input.Action==InteractionAction.RefillSupplyStation,
                 InteractionTargetKind.Stem=>g.Input.Action is InteractionAction.SupportStem or InteractionAction.CutStem,
                 InteractionTargetKind.DetachedStem=>g.Input.Action is InteractionAction.BottleStem or InteractionAction.ClearStem or
                     InteractionAction.Drink or InteractionAction.FeedMeal or InteractionAction.UnbottleStem,

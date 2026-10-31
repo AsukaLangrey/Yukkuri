@@ -29,6 +29,7 @@ public sealed partial class WorldSimulation
         o.Kind==(input.Action==InteractionAction.Drink?RoomObjectKind.Water:RoomObjectKind.Meal));
     private string? DetachedStemActionError(DetachedStemBrood s,InteractionInput input)
     {
+        if(State.SupplyStations.Any(station=>station.HeldByHand))return "先把供给器放稳。";
         bool vessel=s.Phase==DetachedStemPhase.Bottled&&s.VesselIntegrity>25;
         if(s.HeldByHand)return "先把培养瓶放稳，再进行接触照护。";
         if(State.Creatures.Any(c=>c.Interaction.Carried)||State.DetachedStemBroods.Any(b=>b.HeldByHand)||

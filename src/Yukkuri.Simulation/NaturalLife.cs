@@ -195,6 +195,8 @@ public sealed partial class WorldSimulation
         }
         // A conservative ground-level view, using the same leaning trunk envelope
         // as movement. Foliage overhead is not an opaque ground obstacle.
+        foreach(var station in State.SupplyStations)
+            if(station.RegionId==c.RegionId&&Blocks(station.X,station.Z,SupplyStationRadius))return false;
         if(WoodlandLayout.HasRiver(State,c.RegionId))
             foreach(var tree in WoodlandLayout.Trees)
                 if(Blocks(tree.X,tree.Z,tree.TrunkRadius))return false;
@@ -286,6 +288,8 @@ public sealed partial class WorldSimulation
             {
                 var approach=NaturalResources.Approach(c,target);
                 bool adjusting=false;
+                if(obj!=null&&TryStationApproach(c,obj,out var stationApproach))
+                {approach=stationApproach;adjusting=true;}
                 if(obj!=null&&!obj.Stored&&!obj.HeldByHand&&obj.CarrierId==null&&distance<=NaturalResources.Reach(c)&&NaturalResources.Consumer(State,obj)==null)
                 {
                     // Keep a chosen nearby standing point while approaching it. This
@@ -352,7 +356,7 @@ public sealed partial class WorldSimulation
             double radius=reach*(ring==0?.99:ring==1?.65:.4);
             double x=source.X+Math.Sin(angle*Math.Tau/12)*radius,z=source.Z+Math.Cos(angle*Math.Tau/12)*radius;
             double travel=Distance(c.X,c.Z,x,z);
-            if(travel<.02||travel>=best||!CanOccupyRoom(c,x,z)||!CanReachRoomFood(c,source,x,z))continue;
+            if(travel<.02||travel>=best||!StationSourceFront(c,source,x,z)||!CanOccupyRoom(c,x,z)||!CanReachRoomFood(c,source,x,z))continue;
             best=travel;point=(x,z);
         }
         return double.IsFinite(best);
@@ -403,6 +407,7 @@ public sealed partial class WorldSimulation
         life.GroundIntakeSourceId=null;
     }
     private void PruneConsumedSupplies()=>State.RoomObjects.RemoveAll(o=>o.Portions<=0&&!o.HeldByHand&&
+        !State.SupplyStations.Any(s=>s.OutletObjectId==o.Id)&&
         !NaturalResources.IsWild(o.Kind)&&NaturalResources.Consumer(State,o)==null&&
         !State.Creatures.Any(c=>c.Interaction.NaturalIntakePending&&c.Interaction.GroundIntakeSourceId==o.Id));
 

@@ -304,7 +304,8 @@ public sealed partial class WorldSimulation
                 if(distance>NaturalResources.Reach(adult)||!CanReachRoomFood(adult,source))
                 {
                     var target=(X:source.X,Z:source.Z);
-                    if(distance<=NaturalResources.Reach(adult)&&TryResourceStandingPoint(adult,source,out var standing))target=standing;
+                    if(TryStationApproach(adult,source,out var stationApproach))target=stationApproach;
+                    else if(distance<=NaturalResources.Reach(adult)&&TryResourceStandingPoint(adult,source,out var standing))target=standing;
                     RoomMove(adult,target.X,target.Z,dt);RecordFamilyCareStatus(adult,adult.Activity=water?$"正在寻找能送给{child.Name}的水。":$"正在寻找能送给{child.Name}的食物。");
                     return CareProgress(adult,Distance(adult.X,adult.Z,target.X,target.Z),dt);
                 }

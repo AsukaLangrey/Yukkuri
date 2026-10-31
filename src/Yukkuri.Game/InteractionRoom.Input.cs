@@ -42,7 +42,7 @@ public partial class InteractionRoom
         RestraintKind.Hanging=>_action is InteractionAction.Lower or InteractionAction.AdjustHanging,
         _=>false
     };
-    private static string ContactName(Contact c)=>c.TargetKind==InteractionTargetKind.DetachedStem?"离体茎":c.TargetKind==InteractionTargetKind.Stem?"外茎与幼芽":!c.Blocked?PartName(c.Part,c.Side):c.Fixture switch
+    private static string ContactName(Contact c)=>c.TargetKind==InteractionTargetKind.SupplyStation?"食水器具":c.TargetKind==InteractionTargetKind.DetachedStem?"离体茎":c.TargetKind==InteractionTargetKind.Stem?"外茎与幼芽":!c.Blocked?PartName(c.Part,c.Side):c.Fixture switch
     {RestraintKind.Box=>"箱子",RestraintKind.Wrap=>"包裹",RestraintKind.Frame=>"固定具",RestraintKind.Hanging=>"悬挂支架",_=>"托举支撑"};
     private bool MatchesGestureContact(Contact contact)
     {
@@ -51,7 +51,7 @@ public partial class InteractionRoom
         // actual starting identity solely to recognize contact again, not to own it.
         if(_gestureTargetKind==InteractionTargetKind.Stem)
             return Sim.HasInteractionGesture&&contact.Id==_gestureStemMotherId&&contact.ObjectId==_gestureTargetObject;
-        if(_gestureTargetKind==InteractionTargetKind.DetachedStem)
+        if(_gestureTargetKind is InteractionTargetKind.DetachedStem or InteractionTargetKind.SupplyStation)
             return Sim.HasInteractionGesture&&contact.Id==_gestureTargetObject&&contact.ObjectId==_gestureTargetObject;
         return contact.Id==Sim.InteractionGestureTarget&&contact.ObjectId==null;
     }
@@ -94,7 +94,7 @@ public partial class InteractionRoom
     {
         Contact? best=null;
         Vector3 origin=_camera.ProjectRayOrigin(point),direction=_camera.ProjectRayNormal(point);
-        float nearest=SceneOcclusionDistance(origin,direction);
+        float nearest=EnvironmentOcclusionDistance(origin,direction);
         foreach(var c in Sim.State.Creatures)
         {
             if(!_actors.TryGetValue(c.Id,out var actor)||!actor.Visible)continue;
@@ -124,7 +124,8 @@ public partial class InteractionRoom
             nearest=hit.Distance;
             best=new(pair.Key,hit.Part,hit.Point,hit.Normal,hit.Distance,false,RestraintKind.None,SurfaceSide.Whole,hit.TargetKind,hit.ObjectId);
         }
-        return best;
+        var station=NearestSupplyStationContact(origin,direction,nearest,out bool stationBlocks);
+        return stationBlocks?station:best;
     }
     private RoomObject? ObjectAt(Vector2 pointer)
     {
@@ -141,8 +142,10 @@ public partial class InteractionRoom
         }
         return result;
     }
-    private float SceneOcclusionDistance(Vector3 origin,Vector3 direction)=>WoodlandVisible?
+    private float EnvironmentOcclusionDistance(Vector3 origin,Vector3 direction)=>WoodlandVisible?
         WoodlandOcclusion.RayDistance(new(origin.X,origin.Y,origin.Z),new(direction.X,direction.Y,direction.Z)):float.PositiveInfinity;
+    private float SceneOcclusionDistance(Vector3 origin,Vector3 direction)=>
+        Mathf.Min(EnvironmentOcclusionDistance(origin,direction),SupplyStationOcclusionDistance(origin,direction));
     private static string PartName(BodyPart part,SurfaceSide side=SurfaceSide.Whole)=>part switch{BodyPart.Head=>"头顶",BodyPart.Cheek=>side==SurfaceSide.Left?"左脸":side==SurfaceSide.Right?"右脸":"脸侧",BodyPart.Side=>side==SurfaceSide.Left?"身体左侧":side==SurfaceSide.Right?"身体右侧":"身体侧面",BodyPart.Bottom=>"底部",BodyPart.Mouth=>"嘴边",_=>"饰品"};
     private static bool IsGroundPlacement(InteractionAction action)=>action is InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater or InteractionAction.PutDown or InteractionAction.GiveBall;
     private void PlaceGroundSupply(InteractionInput input)
@@ -276,7 +279,11 @@ public partial class InteractionRoom
         }
         if(mouse.ButtonIndex!=MouseButton.Left)return;
         if(_clickOfferId!=null||_offerReturnId!=null)CancelGesture();
+        if(PlaceSupplyStationAt(mouse.Position)){GetViewport().SetInputAsHandled();return;}
         var contact=ContactAt(mouse.Position);
+        if(contact?.TargetKind==InteractionTargetKind.SupplyStation)
+        {BeginSupplyStationPointer(contact,mouse.Position);GetViewport().SetInputAsHandled();return;}
+        if(contact!=null||ObjectAt(mouse.Position)!=null)ClearSupplyStationSelection();
         if(contact?.TargetKind==InteractionTargetKind.DetachedStem)
         {BeginDetachedPointer(contact,mouse.Position);GetViewport().SetInputAsHandled();return;}
         if(_waterRescueToolArmed)
@@ -425,10 +432,12 @@ public partial class InteractionRoom
         _gestureTargetKind=InteractionTargetKind.Body;_gestureTargetObject=null;_gestureStemMotherId=null;
         _detachedLiveContact=false;_detachedActionComplete=false;
         _detachedSupplyContactId=null;
+        _stationContactId=null;
         ResetBodySupplyContact();
     }
     private void CancelGesture()
     {
+        CancelSupplyStationPlacement();
         _waterRescueToolArmed=false;
         _clickOfferId=null;
         _offerReturnId=null;
@@ -474,6 +483,7 @@ public partial class InteractionRoom
     {
         if(_clickOfferId!=null){ProcessClickOffer(dt);return;}
         if(_heldSupplyId!=null){ProcessHeldSupply(dt,sampleSeconds);return;}
+        if(_gestureTargetKind==InteractionTargetKind.SupplyStation){ProcessSupplyStationGesture(dt,sampleSeconds,releasing);return;}
         if(_gestureTargetKind==InteractionTargetKind.DetachedStem){ProcessDetachedGesture(dt,sampleSeconds,releasing);return;}
         if(!_mouseHeld)return;
         if(!Sim.HasInteractionGesture){CancelGesture();return;}
@@ -586,7 +596,11 @@ public partial class InteractionRoom
             ResetBodySupplyContact();
         if(ProcessDetachedSupply(obj,contact,point,dt)){ResetBodySupplyContact();return;}
         bool mouth=contact is {Part:BodyPart.Mouth,Blocked:false,TargetKind:InteractionTargetKind.Body};
-        if(mouth&&_selectedDetachedStemEventId!=null){_selectedDetachedStemEventId=null;RefreshRoomUi();}
+        if(mouth)
+        {
+            ClearSupplyStationSelection();
+            if(_selectedDetachedStemEventId!=null){_selectedDetachedStemEventId=null;RefreshRoomUi();}
+        }
         if(Sim.HasInteractionGesture&&contact?.Id!=Sim.InteractionGestureTarget)AcceptFeedback(Sim.EndInteractionGesture(true));
         // Establish this frame's visible, real contact before admitting any dwell.
         if(!_hand.Visible)ResetBodySupplyContact();
@@ -656,6 +670,7 @@ public partial class InteractionRoom
                     _hand.GlobalPosition=contact.World+normal*.034f;
                 else if(_action is InteractionAction.Press or InteractionAction.Squeeze or InteractionAction.Hold or InteractionAction.Slap)
                     _hand.GlobalPosition=contact.World+normal*.052f;
+                else if(_action==InteractionAction.RefillSupplyStation)_hand.GlobalPosition=contact.World+normal*.004f;
                 else if(_action is InteractionAction.Care or InteractionAction.SupportStem or InteractionAction.UnbottleStem)_hand.GlobalPosition=contact.World+normal*(-InteractionCareSurface.PadBottom+.003f);
                 else if(_action is InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.ClearStem)
                 {
@@ -726,7 +741,7 @@ public partial class InteractionRoom
         }
         else if(contact!=null)
         {
-            _hoverLabel.Text=contact.TargetKind==InteractionTargetKind.DetachedStem?DetachedStemHint(contact):contact.TargetKind==InteractionTargetKind.Stem?StemContactHint(contact):ContactName(contact)+(MatchesGestureContact(contact)?
+            _hoverLabel.Text=contact.TargetKind==InteractionTargetKind.SupplyStation?SupplyStationHint(contact):contact.TargetKind==InteractionTargetKind.DetachedStem?DetachedStemHint(contact):contact.TargetKind==InteractionTargetKind.Stem?StemContactHint(contact):ContactName(contact)+(MatchesGestureContact(contact)?
                 " · "+(_appliedForce<.35?"轻触":_appliedForce<.62?"稍重":"用力"):
                 !_toolArmed||_action==InteractionAction.Lift?" · 按住抓起 / 松手放下 / 甩手抛出":
                 IsFoodTool(_action)?" · 点击递食 / 点地面放下":
