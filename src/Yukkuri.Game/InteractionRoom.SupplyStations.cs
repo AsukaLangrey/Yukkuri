@@ -19,7 +19,7 @@ public partial class InteractionRoom
     }
     private void ArmSupplyStationPlacement(SupplyStationKind kind)
     {
-        CancelGesture();ClearSupplyStationSelection();_selectedDetachedStemEventId=null;
+        CancelGesture();ClearSupplyStationSelection();ClearShelterSelection();_selectedDetachedStemEventId=null;
         Sim.State.Mode=PlayMode.Management;
         _action=kind==SupplyStationKind.Water?InteractionAction.PlaceWaterStation:InteractionAction.PlaceFoodStation;
         _group=InteractionCatalog.Group(_action);_directToolMode=true;
@@ -114,7 +114,7 @@ public partial class InteractionRoom
             if(actor.RayContact(origin,direction) is { } hit)nearest=Mathf.Min(nearest,hit.Distance);
         return nearest;
     }
-    private Contact? NearestSupplyStationContact(Vector3 origin,Vector3 direction,float maximum,out bool blocks)
+    private Contact? NearestSupplyStationContact(Vector3 origin,Vector3 direction,ref float maximum,out bool blocks)
     {
         Contact? best=null;blocks=false;
         foreach(var pair in _supplyStationActors)

@@ -53,6 +53,8 @@ public sealed partial class WorldSimulation
                 }
             }
             // A narrow gap behind a body is not an exit through the fence.
+            if(!ShelterObjectPathClear(ball.RegionId,previousX,previousZ,ball.X,ball.Z,InteractionFixtureGeometry.BallRadius))
+            {ball.X=previousX;ball.Z=previousZ;ball.VelocityX*= -.48;ball.VelocityZ*= -.48;}
             if(Math.Abs(ball.X)>edge||Math.Abs(ball.Z)>edge){ball.X=previousX;ball.Z=previousZ;}
         }
         bool inWater=woodland&&RoomBallEnvironment.InWater(State,ball);
@@ -64,6 +66,7 @@ public sealed partial class WorldSimulation
     private bool CanPlaceRoomBall(Creature owner,double x,double z)
     {
         double radius=InteractionFixtureGeometry.BallRadius,edge=InteractionFixtureGeometry.YardFenceInner-radius;
+        if(!ShelterGroundFits(owner.RegionId,x,z,radius))return false;
         if(Math.Abs(x)>edge||Math.Abs(z)>edge)return false;
         if(!WoodlandLayout.GroundFits(State,owner.RegionId,x,z,radius))return false;
         if(!ClearOfStations(owner.RegionId,x,z,radius))return false;

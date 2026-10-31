@@ -1,6 +1,6 @@
 namespace Yukkuri.Simulation;
 
-public enum InteractionHelpKind { Critical, Water, Threat }
+public enum InteractionHelpKind { Critical, Water, Threat, Shelter }
 public sealed record InteractionHelpRequest(Creature Target,InteractionHelpKind Kind,string Description,
     Creature? ThreateningCreature=null);
 
@@ -116,6 +116,8 @@ public sealed partial class WorldSimulation
             return new(c,InteractionHelpKind.Critical,"伤势危急，需要及时稳定伤势",attacker);
         if(WaterEnvironment.IsInWater(State,c))
             return new(c,InteractionHelpKind.Water,"正在水里，需要脱险或救援",attacker);
+        if(attacker==null&&CreatureShelterStatus(c) is {Blocked:true} visit)
+            return new(c,InteractionHelpKind.Shelter,visit.RefusalReason??"居所门口受阻，需要打开门或移开障碍",null);
         return attacker==null?null:new(c,InteractionHelpKind.Threat,$"正受到{attacker.Name}的威胁，需要及时隔开",attacker);
     }
 

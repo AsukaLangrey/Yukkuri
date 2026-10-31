@@ -5,7 +5,7 @@ public sealed partial class WorldSimulation
     public bool CanPlaceInteractionAt(string id,double x,double z)
     {
         var c=InteractionTarget(id);
-        return c!=null&&double.IsFinite(x)&&double.IsFinite(z)&&CanOccupyRoom(c,x,z,allowWater:true);
+        return c!=null&&double.IsFinite(x)&&double.IsFinite(z)&&ShelterMovePathClear(c,x,z,0)&&CanOccupyRoom(c,x,z,allowWater:true);
     }
     public static double InteractionFootprint(Creature c,RestraintKind? restraint=null,bool? supine=null)
     {
@@ -20,6 +20,7 @@ public sealed partial class WorldSimulation
     private bool CanOccupyRoom(Creature c,double x,double z,RestraintKind? restraint=null,bool? supine=null,bool allowWater=false)
     {
         double own=InteractionFootprint(c,restraint,supine);
+        if(!ShelterBodyFits(c,x,z,own))return false;
         if(Math.Abs(x)>8-own||Math.Abs(z)>8-own)return false;
         if(!WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,allowWater))return false;
         if(!ClearOfStations(c.RegionId,x,z,own))return false;
@@ -51,7 +52,7 @@ public sealed partial class WorldSimulation
         bool complete=true;
         for(int n=0;n<slices;n++)
         {
-            if(CanOccupyRoom(c,c.X+dx,c.Z+dz,allowWater:allowWater)){c.X+=dx;c.Z+=dz;continue;}
+            if(ShelterMovePathClear(c,c.X+dx,c.Z+dz)&&CanOccupyRoom(c,c.X+dx,c.Z+dz,allowWater:allowWater)){c.X+=dx;c.Z+=dz;continue;}
             complete=false;
             if(!slide)break;
             // Try a small turn around the obstacle. Never displace a restrained or injured neighbor.
@@ -59,7 +60,7 @@ public sealed partial class WorldSimulation
             foreach(double angle in new[]{Math.PI/4,-Math.PI/4,Math.PI/2,-Math.PI/2})
             {
                 double sx=dx*Math.Cos(angle)-dz*Math.Sin(angle),sz=dx*Math.Sin(angle)+dz*Math.Cos(angle);
-                if(!CanOccupyRoom(c,c.X+sx,c.Z+sz,allowWater:allowWater))continue;
+                if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanOccupyRoom(c,c.X+sx,c.Z+sz,allowWater:allowWater))continue;
                 c.X+=sx;c.Z+=sz;moved=true;break;
             }
             if(!moved)break;
@@ -74,7 +75,7 @@ public sealed partial class WorldSimulation
             for(int angle=0;angle<32;angle++)
             {
                 double x=originX+Math.Cos(angle*Math.Tau/32)*radius,z=originZ+Math.Sin(angle*Math.Tau/32)*radius;
-                if(!CanOccupyRoom(c,x,z,allowWater:true))continue;
+                if(!ShelterMovePathClear(c,x,z)||!CanOccupyRoom(c,x,z,allowWater:true))continue;
                 c.X=x;c.Z=z;c.TargetX=x;c.TargetZ=z;return;
             }
     }

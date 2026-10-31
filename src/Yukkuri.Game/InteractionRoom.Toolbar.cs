@@ -7,7 +7,7 @@ public partial class InteractionRoom
 {
     private enum RoomMode { Observe,Grab,Pet,Tidy,Poke,Pressure,Meal,Sweet,Water,FoodStation,WaterStation,
         Ball,Treasure,Wrap,Stretch,Greeting,Scold,Sing,Teaching,Commands,Company,Towel,Inspect,Accessory,Care,Juice,Cold,Bury,
-        Breeding,Induce,Suppress,Stem,Frame,Lighter,Box,Hanging }
+        Breeding,Induce,Suppress,Stem,Frame,Lighter,Box,Hanging,Shelter }
     private sealed record ToolbarEntry(RoomMode Mode,string Name,InteractionAction Action);
     private static ToolbarEntry E(RoomMode m,string n,InteractionAction a=InteractionAction.Inspect)=>new(m,n,a);
     private static readonly (string Name,ToolbarEntry[] Entries)[] Toolbar =
@@ -19,7 +19,7 @@ public partial class InteractionRoom
         ("交流",[E(RoomMode.Greeting,"打招呼",InteractionAction.Greet),E(RoomMode.Scold,"训诫",InteractionAction.Scold),E(RoomMode.Sing,"唱歌",InteractionAction.Sing),E(RoomMode.Teaching,"教学"),E(RoomMode.Commands,"指令",InteractionAction.Follow),E(RoomMode.Company,"相处")]),
         ("养护",[E(RoomMode.Towel,"毛巾",InteractionAction.Clean),E(RoomMode.Inspect,"检查身体",InteractionAction.Inspect),E(RoomMode.Accessory,"饰品",InteractionAction.TakeAccessoryCare),E(RoomMode.Care,"护理面粉",InteractionAction.Care),E(RoomMode.Juice,"救护橙汁"),E(RoomMode.Cold,"冷藏与复苏"),E(RoomMode.Bury,"埋葬")]),
         ("繁育",[E(RoomMode.Breeding,"繁殖状态"),E(RoomMode.Induce,"诱导繁育喷剂"),E(RoomMode.Suppress,"抑制发情喷剂"),E(RoomMode.Stem,"油茎养护",InteractionAction.SupportStem)]),
-        ("工具",[E(RoomMode.Frame,"固定具",InteractionAction.Pin),E(RoomMode.Lighter,"火机",InteractionAction.Burn),E(RoomMode.Box,"箱子",InteractionAction.Box),E(RoomMode.Hanging,"悬挂装置",InteractionAction.Hang)])
+        ("工具",[E(RoomMode.Shelter,"小家与藏身处",InteractionAction.PlaceShelter),E(RoomMode.Frame,"固定具",InteractionAction.Pin),E(RoomMode.Lighter,"火机",InteractionAction.Burn),E(RoomMode.Box,"箱子",InteractionAction.Box),E(RoomMode.Hanging,"悬挂装置",InteractionAction.Hang)])
     ];
     private RoomMode _roomMode=RoomMode.Observe;
     private void SelectActionOwner(InteractionAction action)
@@ -27,6 +27,7 @@ public partial class InteractionRoom
         RoomMode mode=action switch
         {
             InteractionAction.Inspect=>RoomMode.Inspect,
+            InteractionAction.OpenShelterDoor or InteractionAction.CloseShelterDoor or InteractionAction.CallFromShelter=>RoomMode.Shelter,
             InteractionAction.Clean or InteractionAction.Dry=>RoomMode.Towel,
             InteractionAction.CleanAccessory or InteractionAction.RepairAccessory or InteractionAction.ReplaceAccessory or InteractionAction.TakeAccessory or InteractionAction.ReturnAccessory or InteractionAction.DamageAccessory or InteractionAction.HangAccessory or InteractionAction.StoreAccessory=>RoomMode.Accessory,
             InteractionAction.SupportStem or InteractionAction.CutStem or InteractionAction.BottleStem or InteractionAction.UnbottleStem or InteractionAction.ClearStem=>RoomMode.Stem,
@@ -66,6 +67,7 @@ public partial class InteractionRoom
         if(entry.Mode==RoomMode.Teaching)ShowTeachingChoices();
         if(entry.Mode==RoomMode.Stem)ShowStemChoices();
         if(entry.Mode==RoomMode.Breeding)ShowBreedingStatus();
+        if(entry.Mode==RoomMode.Shelter)ArmShelterPlacement();
         if(entry.Mode is RoomMode.FoodStation or RoomMode.WaterStation)ArmSupplyStationPlacement(entry.Mode==RoomMode.FoodStation?SupplyStationKind.Food:SupplyStationKind.Water);
         RefreshRoomUi();
         if(!_modalOpen&&SupplyStockMissing(entry.Action))ShowMissingToolSupplies(entry.Action);

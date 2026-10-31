@@ -59,6 +59,8 @@ public sealed partial class WorldSimulation
 
     private string? PregnancyEligibility(Creature mother,Creature father,BirthMethod method)
     {
+        if(State.Shelters.Any(s=>ShelterBodyPresent(mother,s)||ShelterBodyPresent(father,s)))
+            return "先让双方沿门口走到屋外的干燥空地，再安排孕育。";
         if(!mother.Family.AllowsBreeding||!father.Family.AllowsBreeding)return "有一方的新繁育许可已关闭，仍可以相处和结伴。";
         if(mother.Id==father.Id||mother.Body.ReproductionRole!=ReproductionRole.Maternal||father.Body.ReproductionRole!=ReproductionRole.Paternal)
             return "需要出生角色分别为母体与父体的两只成熟油。";
@@ -225,6 +227,8 @@ public sealed partial class WorldSimulation
             i.EatingRemaining>0||i.Physiology.Active||InteractionGestureTarget==mother.Id||mother.RetreatRemaining>0||
             mother.Family.FlightRemaining>0||mother.Family.Conflict.TargetId!=null||mother.Family.ChildThreat.TargetId!=null)return;
         if(father==null){EndPregnancy(mother,"孕育记录缺少父体来源，停止结算并保留母体状态。");return;}
+        if(State.Shelters.Any(s=>ShelterBodyPresent(mother,s)))
+        {mother.Family.LastEvent="生产需要屋外足够的干燥空地，先沿门洞走出；受阻时需要打开门或让路。";return;}
         if(!TryCreateFamilyChildren(mother,father,p,mother.RegionId,mother.X,mother.Z))return;
         Hurt(mother,p.Method==BirthMethod.Live?7+p.Burden*.12:2+p.Burden*.05,"生产负担",null);
         EndPregnancy(mother,$"{p.PlannedChildren}只宝宝出生了，母体需要恢复，幼体需要吃喝与保暖。"+

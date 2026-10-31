@@ -141,6 +141,8 @@ public sealed partial class WorldSimulation
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
         if(ShopActionError(input.Action) is { } shopError)return shopError;
+        if(input.TargetKind==InteractionTargetKind.Shelter||input.Action is InteractionAction.PlaceShelter or InteractionAction.OpenShelterDoor or InteractionAction.CloseShelterDoor or InteractionAction.CallFromShelter)
+            return "请对准真实居所的门帘或门边；摆放请点干燥空地。";
         if(input.TargetKind==InteractionTargetKind.SupplyStation||input.Action is InteractionAction.PlaceFoodStation or InteractionAction.PlaceWaterStation or InteractionAction.RefillSupplyStation)
             return "请把器具或补给工具对准小院空地或真实供给器。";
         if(State.SupplyStations.Any(s=>s.HeldByHand))return "先把供给器放稳，再接触油。";
@@ -176,6 +178,7 @@ public sealed partial class WorldSimulation
 
     private InteractionFeedback ExecuteInteractionCore(string id, InteractionInput input)
     {
+        if(input.TargetKind==InteractionTargetKind.Shelter)return ExecuteShelterCore(id,input);
         if(input.TargetKind==InteractionTargetKind.DetachedStem)return ExecuteDetachedStemInteraction(id,input);
         var c = InteractionTarget(id);
         var invalid = ValidateInteraction(c, input);
@@ -213,6 +216,7 @@ public sealed partial class WorldSimulation
                 return BeginConversation(oil,input.Action);
             case InteractionAction.PutDown:
                 if (!life.Carried) return Unavailable("先把它托起来，再选择落点。 ");
+                if(!ShelterMovePathClear(oil,input.X,input.Z,0))return Unavailable("门墙挡着落点，先从打开的门洞托出来，再放稳。");
                 if(!CanOccupyRoom(oil,input.X,input.Z,allowWater:true))return Unavailable("这里被身体或装置占着，仍在托着它；换一个空落点。 ");
                 life.Lowering=false;life.Carried = false; life.Height = 0; life.Falling = false;
                 MoveCreature(oil.Id, input.X, input.Z);
@@ -409,6 +413,7 @@ public sealed partial class WorldSimulation
     private InteractionFeedback PlaceFood(string regionId, InteractionInput input)
     {
         bool water=input.Action==InteractionAction.PlaceWater;
+        if(!ShelterGroundFits(regionId,input.X,input.Z,water?.18:.32))return Unavailable("这里被居所门墙占着，请从门洞放到实际空地。");
         if(!ClearOfStations(regionId,input.X,input.Z,.2))return Unavailable("供给器仓体占着这里，请把食水放到旁边。");
         if(!WoodlandLayout.GroundFits(State,regionId,input.X,input.Z,.2))return Unavailable("这里是河道，找岸边的干燥空地放食水。 ");
         if(State.DetachedStemBroods.Any(s=>s.RegionId==regionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&

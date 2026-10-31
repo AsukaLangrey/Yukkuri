@@ -81,7 +81,7 @@ public sealed partial class WorldSimulation
         for(int n=1;n<=steps;n++)
         {
             double nx=startX+(x-startX)*n/steps,nz=startZ+(z-startZ)*n/steps;
-            if(!CanOccupyRoom(c,nx,nz))break;c.X=nx;c.Z=nz;
+            if(!ShelterMovePathClear(c,nx,nz)||!CanOccupyRoom(c,nx,nz))break;c.X=nx;c.Z=nz;
         }
         c.TargetX=c.X;c.TargetZ=c.Z;c.Interaction.VelocityX=c.Interaction.VelocityZ=0;return true;
     }

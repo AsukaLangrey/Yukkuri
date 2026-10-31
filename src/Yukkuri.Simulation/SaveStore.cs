@@ -71,5 +71,6 @@ public sealed class SaveStore
         InteractionValidation.Validate(s);
         FamilyRules.ValidateFamily(s);
         WorldSimulation.ValidateShop(s);
+        ShelterValidation.Validate(s);
     }
 }

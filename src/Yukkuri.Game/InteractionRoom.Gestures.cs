@@ -53,6 +53,7 @@ public partial class InteractionRoom
     }
     private void SelectObserved(Contact? contact,RoomObject? obj)
     {
+        ClearShelterSelection();
         _observedStemMotherId=null;
         if(contact?.TargetKind==InteractionTargetKind.SupplyStation){_selectedRoomObjectId=null;SelectSupplyStation(contact.Id);}
         else if(contact?.TargetKind==InteractionTargetKind.DetachedStem){_selectedRoomObjectId=null;SelectDetachedStem(contact.Id);}

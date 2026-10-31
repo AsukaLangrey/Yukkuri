@@ -64,7 +64,7 @@ public sealed partial class WorldSimulation
         State.StationWaterPortions+=StationWaterBundleCount;Log($"购入 {StationWaterBundleCount} 份供给器清水。");return true;
     }
     private bool StationIdentityUsed(string id)=>State.SupplyStations.Any(s=>s.Id==id)||State.RoomObjects.Any(o=>o.Id==id)||
-        State.Creatures.Any(c=>c.Id==id)||State.DetachedStemBroods.Any(s=>s.EventId==id);
+        State.Creatures.Any(c=>c.Id==id)||State.DetachedStemBroods.Any(s=>s.EventId==id)||State.Shelters.Any(s=>s.Id==id);
     public InteractionFeedback PlaceSupplyStation(SupplyStationKind kind,double x,double z)
     {
         if(StationWorldError() is { } error)return Unavailable(error);

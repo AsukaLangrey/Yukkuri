@@ -56,7 +56,8 @@ public partial class Main : Node3D
             }
             _config=SimulationConfig.Parse(Godot.FileAccess.GetFileAsString("res://Data/simulation.json"));
             Sim=(!_verification||_milestoneVerification)&&_population<50?WorldSimulation.CreateMilestone():WorldSimulation.Create(_population,false,_config);
-            if(Sim.State.MilestoneScenario)GetWindow().Title="油库里乐园 · 小园初晴";
+            GetWindow().Title=$"油库里乐园 · {(Sim.State.MilestoneScenario?"小园初晴":"基础框架")} · {GameVersion.Display}";
+            GD.Print("YUKKURI_VERSION: "+GameVersion.Display);
             _font=new FontVariation { BaseFont=GD.Load<FontFile>("res://Assets/Fonts/NotoSansSC.ttf"),VariationOpentype=new Godot.Collections.Dictionary{[TextServerManager.GetPrimaryInterface().NameToTag("wght")]=500.0},VariationEmbolden=.35f };
             string saveDirectory=_verification
                 ? (_smokeOutput!=null?Path.Combine(Path.GetDirectoryName(Path.GetFullPath(_smokeOutput))!,"saves"):ProjectSettings.GlobalizePath("user://verification-saves/run-"+OS.GetProcessId()))

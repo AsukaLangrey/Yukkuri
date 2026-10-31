@@ -49,6 +49,8 @@ public sealed partial class WorldSimulation
     private bool CanPlaceDetachedStem(string regionId,double x,double z,string? ignore=null)
     {
         const double radius=StemVesselRadius;
+        if(!ShelterGroundFits(regionId,x,z,radius,false)||ignore!=null&&DetachedStem(ignore) is { } moving&&
+            !ShelterObjectPathClear(regionId,moving.X,moving.Z,x,z,radius))return false;
         if(!ClearOfStations(regionId,x,z,radius))return false;
         if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8-radius||Math.Abs(z)>8-radius||
             !WoodlandLayout.GroundFits(State,regionId,x,z,radius))return false;

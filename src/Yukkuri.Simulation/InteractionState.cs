@@ -1,7 +1,7 @@
 namespace Yukkuri.Simulation;
 
 public enum BodyPart { Head, Cheek, Side, Bottom, Mouth, Accessory }
-public enum InteractionTargetKind { Body, Stem, DetachedStem, SupplyStation }
+public enum InteractionTargetKind { Body, Stem, DetachedStem, SupplyStation, Shelter }
 public enum SurfaceSide { Whole, Left, Right }
 public enum RestraintKind { None, Hand, Frame, Box, Hanging, Wrap }
 public enum AccessoryPlace { Worn, Hand, Ground, Stored, Hung }
@@ -20,7 +20,8 @@ public enum InteractionAction
     Flip, Hold, Pin, Release, Box, OpenBox,
     TakeAccessory, StoreAccessory, HangAccessory, DamageAccessory, BurnFeet, Hang, AdjustHanging, Lower,
     Touch, PlaceWater, Punch, Burn, SupportStem, CutStem, BottleStem, ClearStem, UnbottleStem,
-    PlaceFoodStation, PlaceWaterStation, RefillSupplyStation
+    PlaceFoodStation, PlaceWaterStation, RefillSupplyStation,
+    PlaceShelter, OpenShelterDoor, CloseShelterDoor, CallFromShelter
 }
 
 public sealed class AccessoryState

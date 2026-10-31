@@ -168,6 +168,7 @@ public sealed partial class WorldSimulation
     }
     private bool HasGroundSightLine(Creature c,double x,double z)
     {
+        if(!ShelterSightClear(c.RegionId,c.X,c.Z,x,z))return false;
         double dx=x-c.X,dz=z-c.Z,len=dx*dx+dz*dz;
         if(c.Interaction.Restraint==RestraintKind.Box)
         {

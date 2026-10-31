@@ -9,6 +9,8 @@ public sealed partial class WorldSimulation
             !WoodlandLayout.GroundFits(State,o.RegionId,x,z,.2)||!ClearOfStations(o.RegionId,x,z,.2)||
             State.Creatures.Any(c=>!c.Family.Memorialized&&!c.Family.ColdStorage.Stored&&c.RegionId==o.RegionId&&Distance(c.X,c.Z,x,z)<InteractionFootprint(c)+.2))return false;
         double distance=Distance(o.X,o.Z,x,z);int steps=Math.Max(1,(int)Math.Ceiling(distance/.08));
+        double shelterRadius=o.Kind==RoomObjectKind.Cushion?1.3:StationObjectRadius(o.Kind);
+        if(!ShelterObjectPathClear(o.RegionId,o.X,o.Z,x,z,shelterRadius))return false;
         double ox=o.X,oz=o.Z;
         for(int n=1;n<=steps;n++)
         {
@@ -31,7 +33,7 @@ public sealed partial class WorldSimulation
         for(int n=1;n<=steps;n++)
         {
             double nx=ox+(x-ox)*n/steps,nz=oz+(z-oz)*n/steps;
-            if(!CanOccupyRoom(c,nx,nz,c.Interaction.Restraint))break;
+            if(!ShelterMovePathClear(c,nx,nz)||!CanOccupyRoom(c,nx,nz,c.Interaction.Restraint))break;
             c.X=nx;c.Z=nz;
         }
         c.TargetX=c.X;c.TargetZ=c.Z;return true;

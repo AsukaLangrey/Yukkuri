@@ -61,7 +61,7 @@ public partial class InteractionRoom
         layer.AddChild(_ui);_ui.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         var top=Panel(_ui);top.AnchorRight=1;top.OffsetLeft=14;top.OffsetTop=12;top.OffsetRight=-14;top.OffsetBottom=76;
         var header=Row(top,16);var identity=Column(header,0);identity.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
-        identity.AddChild(Text("慢慢来，相处小院",23));identity.AddChild(Text("人油互动 · 第一批试玩",12,"7c8876"));
+        identity.AddChild(Text("慢慢来，相处小院",23));identity.AddChild(Text($"人油互动 · {GameVersion.Display}",12,"7c8876"));
         _clockLabel=Text("",13);_clockLabel.CustomMinimumSize=new(190,0);header.AddChild(_clockLabel);
         BuildYardHelpButton(header);
         _pauseButton=Button("停一停",()=>TogglePause());header.AddChild(_pauseButton);
@@ -84,6 +84,7 @@ public partial class InteractionRoom
         var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         BuildDetachedStemPanel(report);
         BuildSupplyStationPanel(report);
+        BuildShelterPanel(report);
         _objectDetails=Text("",14);report.AddChild(_objectDetails);
         _objectActions=Column(_ui,4);_objectActions.CustomMinimumSize=new(176,0);
         BuildVitalMeters(report);
@@ -130,6 +131,8 @@ public partial class InteractionRoom
     private void SelectAction(InteractionAction action)
     {
         SelectActionOwner(action);
+        if(action==InteractionAction.PlaceShelter){ArmShelterPlacement();return;}
+        if(action is not (InteractionAction.OpenShelterDoor or InteractionAction.CloseShelterDoor or InteractionAction.CallFromShelter))ClearShelterSelection();
         if(action is InteractionAction.PlaceFoodStation or InteractionAction.PlaceWaterStation)
         {ArmSupplyStationPlacement(action==InteractionAction.PlaceFoodStation?SupplyStationKind.Food:SupplyStationKind.Water);return;}
         if(action is not (InteractionAction.RefillSupplyStation or InteractionAction.Lift))ClearSupplyStationSelection();
@@ -147,6 +150,7 @@ public partial class InteractionRoom
     private void DisarmTool()=>SelectToolbarCategory(0);
     private void SelectOil(string id)
     {
+        ClearShelterSelection();
         ClearSupplyStationSelection();
         _selectedRoomObjectId=null;
         _observedStemMotherId=null;
@@ -160,7 +164,7 @@ public partial class InteractionRoom
     }
     private void ToggleClose()
     {
-        if(_selectedDetachedStemEventId!=null||_selectedSupplyStationId!=null)return;
+        if(_selectedDetachedStemEventId!=null||_selectedSupplyStationId!=null||_selectedShelterId!=null)return;
         if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected is { } selected&&!HasVisibleFamilyBody(selected))
         {_message=selected.Family.Memorialized?"遗体已经安置，可以在家庭面板查看留下的记录。":"它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
@@ -185,6 +189,7 @@ public partial class InteractionRoom
         if(_who==null||Sim==null)return;
         NormalizeDetachedStemSelection();
         NormalizeSupplyStationSelection();
+        NormalizeShelterSelection();
         RefreshOilSelector();
         RefreshDebugPanel();
         RefreshSupplyStock();
@@ -231,7 +236,7 @@ public partial class InteractionRoom
         {
             _who.Text="观察小院";_condition.Text=_memory.Text="";
             _speechLabel.Text="选择油或离体茎，查看当前状态。";
-            RefreshDetachedStemUi();RefreshSupplyStationUi();RefreshRedesignProperties();RefreshContactProgress();return;
+            RefreshDetachedStemUi();RefreshSupplyStationUi();RefreshShelterUi();RefreshRedesignProperties();RefreshContactProgress();return;
         }
         var i=c.Interaction;
         RefreshVitalMeters(c);
@@ -282,6 +287,7 @@ public partial class InteractionRoom
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
         RefreshDetachedStemUi();
         RefreshSupplyStationUi();
+        RefreshShelterUi();
         RefreshRedesignProperties();
         RefreshContactProgress();
     }

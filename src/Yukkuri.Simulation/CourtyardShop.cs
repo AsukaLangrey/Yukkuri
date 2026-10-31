@@ -15,7 +15,8 @@ public static class CourtyardShop
         new("frame","工具与装置","固定具",25,Reusable:true),new("lighter","工具与装置","火机",10,Reusable:true),
         new("box","工具与装置","箱子",18,Reusable:true),new("hanger","工具与装置","悬挂装置",30,Reusable:true),
         new("food-station","食水供给设施","食物供给器",WorldSimulation.FoodStationPrice,Reusable:true),
-        new("water-station","食水供给设施","饮水器",WorldSimulation.WaterStationPrice,Reusable:true)
+        new("water-station","食水供给设施","饮水器",WorldSimulation.WaterStationPrice,Reusable:true),
+        new("shelter","居所","单住户小家",WorldSimulation.ShelterPrice,Reusable:true)
     ];
 }
 public sealed partial class WorldState
@@ -29,7 +30,7 @@ public sealed partial class WorldSimulation
     {
         "food"=>State.Food,"water"=>State.StationWaterPortions,"medicine"=>State.Medicine,
         "rescue"=>State.WaterRescueTools,"vessel"=>State.StemVessels,"inducer"=>State.CourtshipTools,
-        "food-station"=>State.FoodStationStock,"water-station"=>State.WaterStationStock,
+        "food-station"=>State.FoodStationStock,"water-station"=>State.WaterStationStock,"shelter"=>State.ShelterStock,
         _=>State.ShopStock.GetValueOrDefault(id)
     };
     public long ShopOwnedQuantity(string id)
@@ -49,6 +50,7 @@ public sealed partial class WorldSimulation
             "treasure"=>State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Treasure&&!o.Stored),
             "food-station"=>State.SupplyStations.Count(s=>s.Kind==SupplyStationKind.Food),
             "water-station"=>State.SupplyStations.Count(s=>s.Kind==SupplyStationKind.Water),
+            "shelter"=>State.Shelters.Count,
             "vessel"=>State.DetachedStemBroods.Count(s=>s.Phase==DetachedStemPhase.Bottled&&!s.Cleared),
             _=>0
         });
@@ -61,6 +63,7 @@ public sealed partial class WorldSimulation
             case "medicine":State.Medicine+=delta;break;case "rescue":State.WaterRescueTools+=delta;break;
             case "vessel":State.StemVessels+=delta;break;case "inducer":State.CourtshipTools+=delta;break;
             case "food-station":State.FoodStationStock+=delta;break;case "water-station":State.WaterStationStock+=delta;break;
+            case "shelter":State.ShelterStock+=delta;break;
             default:State.ShopStock[id]=ShopQuantity(id)+delta;break;
         }
     }
@@ -69,7 +72,7 @@ public sealed partial class WorldSimulation
         var p=CourtyardShop.Products.FirstOrDefault(p=>p.Id==id);
         if(!State.InteractionPlaytest||p==null||packs is <1 or >99)return false;
         long cost=(long)p.Price*packs, count=(long)p.Pack*packs;
-        int limit=id is "rescue" or "vessel" or "inducer" or "food-station" or "water-station"?99:int.MaxValue;
+        int limit=id is "rescue" or "vessel" or "inducer" or "food-station" or "water-station" or "shelter"?99:int.MaxValue;
         if(State.Money<cost||ShopQuantity(id)>limit-count)return false;
         State.Money-=(int)cost;ChangeShopQuantity(id,(int)count);
         if(id=="inducer")State.CourtshipToolPurchases=(int)Math.Min(int.MaxValue-1,(long)State.CourtshipToolPurchases+packs);

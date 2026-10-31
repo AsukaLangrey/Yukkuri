@@ -79,12 +79,20 @@ public partial class CreatureActor
             &&!life.Carried&&!life.Falling&&!life.Supine&&!life.Rolling&&!life.Resting&&life.EatingRemaining<=0)
             pose=life.Physiology.Excreting==ExcretionKind.Urine?"urinate":"defecate";
         Position=new((float)c.X,.46f*BodyScale+(float)life.Height,(float)c.Z);
+        if(_startShelterPassage)
+        {
+            // The doorway follows real ground motion. Drop only an old hop's
+            // display lag; retain its local shape/rotation for the usual easing.
+            _poseSmoothing.BeginFrom(new(previousBodyScale.X,previousBodyScale.Y,previousBodyScale.Z),
+                System.Numerics.Vector3.Zero,new(previousBodyRotation.X,previousBodyRotation.Y,previousBodyRotation.Z,previousBodyRotation.W));
+            _startShelterPassage=false;
+        }
         bool canHop=ActorHopMotion.AllowsView(close,paused,_hadHopPresentation)&&WorldSimulation.CanSelfMove(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine
-            &&!waterBody
+            &&!waterBody&&!_shelterPassage
             &&!life.Resting&&life.Restraint==RestraintKind.None&&life.Height<=.001
             &&System.Math.Abs(life.VelocityX)+System.Math.Abs(life.VelocityZ)<.005
             &&pose is "idle" or "guard" or "stomach" or "careful-step";
-        bool smoothHandoff=close||life.Physiology.Active||pose=="help-look"||life.GroundIntake&&life.EatingRemaining>0&&pose is "eat" or "sip";
+        bool smoothHandoff=!_shelterPassage&&(close||life.Physiology.Active||pose=="help-look"||life.GroundIntake&&life.EatingRemaining>0&&pose is "eat" or "sip");
         bool physicalHandoff=(life.Carried||life.Falling)&&!waterBody&&!life.Supine&&!life.Rolling&&
             life.Restraint==RestraintKind.None&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering;
         if(!paused&&_hadHopPresentation&&!canHop&&physicalHandoff)
@@ -202,6 +210,7 @@ public partial class CreatureActor
         ApplyPregnancyBodyPose(c,pose,paused?0:delta);
         ApplyHeatBodyPose(c,pose,delta,paused,close);
         ApplyWaterBodyPose(c,pose,paused?0:delta);
+        FaceShelterPassage(c,pose);
         Vector3 targetScale=_visual.Scale,targetOffset=_visual.Position;
         Quaternion targetRotation=_visual.Quaternion;
         _poseSmoothing.Advance(new(targetScale.X,targetScale.Y,targetScale.Z),new(targetOffset.X,targetOffset.Y,targetOffset.Z),

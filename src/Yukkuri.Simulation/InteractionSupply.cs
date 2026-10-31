@@ -51,6 +51,7 @@ public sealed partial class WorldSimulation
             if(!double.IsFinite(x.Value)||!double.IsFinite(z.Value)||Math.Abs(x.Value)>7.7||Math.Abs(z.Value)>7.7)return false;
             if(!WoodlandLayout.GroundFits(State,obj.RegionId,x.Value,z.Value,.2))return false;
             if(!ClearOfStations(obj.RegionId,x.Value,z.Value,.2))return false;
+            if(!ShelterGroundFits(obj.RegionId,x.Value,z.Value,StationObjectRadius(obj.Kind)))return false;
             if(State.DetachedStemBroods.Any(s=>s.RegionId==obj.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
                 Distance(s.X,s.Z,x.Value,z.Value)<StemVesselRadius+.2))return false;
             if(State.Creatures.Any(c=>!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&c.RegionId==obj.RegionId&&Distance(c.X,c.Z,x.Value,z.Value)<InteractionFootprint(c)+.2))return false;

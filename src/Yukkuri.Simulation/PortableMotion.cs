@@ -38,7 +38,7 @@ public sealed partial class WorldSimulation
         else if(InteractionTarget(id) is { } c)
             valid=!c.Family.Memorialized&&!c.Family.ColdStorage.Stored&&(c.Condition==PhysicalCondition.Dead||c.Interaction.Restraint!=RestraintKind.None);
         if(!valid)return false;
-        State.PortableMotions.Add(new(){Id=id,Height=.65,Held=true});SetPortableOccupancy(id,true);return true;
+        State.PortableMotions.Add(new(){Id=id,Height=ShelterPortableHeight(id,.65),Held=true});SetPortableOccupancy(id,true);return true;
     }
     private void SetPortableOccupancy(string id,bool held)
     {
@@ -50,7 +50,8 @@ public sealed partial class WorldSimulation
     {
         var m=PortableStatus(id);
         if(m==null||!m.Held||State.Settings.Pause||!double.IsFinite(height))return false;
-        m.Height=Math.Clamp(height,.15,3);return MovePortable(id,x,z);
+        m.Height=ShelterPortableHeight(id,Math.Clamp(height,.15,3));
+        bool moved=MovePortable(id,x,z);m.Height=ShelterPortableHeight(id,m.Height);return moved;
     }
     private bool MovePortable(string id,double x,double z)
     {
@@ -104,6 +105,8 @@ public sealed partial class WorldSimulation
             if(m.Held)continue;
             MovePortable(m.Id,position.X+m.VelocityX*dt,position.Y+m.VelocityZ*dt);
             m.VerticalVelocity-=9.8*dt;m.Height=Math.Clamp(m.Height+m.VerticalVelocity*dt,0,3);
+            double roofHeight=ShelterPortableHeight(m.Id,m.Height);
+            if(m.Height>roofHeight){m.Height=roofHeight;m.VerticalVelocity=Math.Min(0,m.VerticalVelocity);}
             if(m.Height>0)continue;
             SetPortableOccupancy(m.Id,false);State.PortableMotions.Remove(m);
         }

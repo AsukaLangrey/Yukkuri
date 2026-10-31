@@ -110,7 +110,12 @@ public static class InteractionCatalog
         new("P22", "食水供给", false, "有限仓储，逐份送到真实出料盘；空仓后需要实际补充。",
             new(InteractionAction.PlaceFoodStation,"摆放食物供给器","购买空器具后，点击干燥空地摆放。"),
             new(InteractionAction.PlaceWaterStation,"摆放饮水器","购买空器具后，点击干燥空地摆放。"),
-            new(InteractionAction.RefillSupplyStation,"补充食水","袋装食物或清水壶贴住仓体 1.6 秒，完成才转入库存。",true,BodyPart.Side))
+            new(InteractionAction.RefillSupplyStation,"补充食水","袋装食物或清水壶贴住仓体 1.6 秒，完成才转入库存。",true,BodyPart.Side)),
+        new("P23","小家与藏身处",false,"一间小家留给一只油，门前需要真实通路。",
+            new(InteractionAction.PlaceShelter,"摆放小家","购买后点击干燥空地，前门朝向小院前方。"),
+            new(InteractionAction.OpenShelterDoor,"打开门帘","点击前门帘或门框拉环，打开实际出口。",false,BodyPart.Side),
+            new(InteractionAction.CloseShelterDoor,"关闭门帘","点击门边拉环；门槛有身体或物件时不能关门。",false,BodyPart.Side),
+            new(InteractionAction.CallFromShelter,"轻声呼唤","点击小家邀请住户出来；是否回应取决于它的状态与信任。",false,BodyPart.Side))
     ];
 
     public static InteractionChoice Choice(InteractionAction action) =>

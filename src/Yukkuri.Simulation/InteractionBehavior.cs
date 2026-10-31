@@ -170,6 +170,8 @@ public sealed partial class WorldSimulation
             {
                 i.VerticalVelocity -= 8 * dt;
                 i.Height += i.VerticalVelocity * dt;
+                double roofHeight=ShelterSafeHeight(c,i.Height);
+                if(i.Height>roofHeight){i.Height=roofHeight;i.VerticalVelocity=Math.Min(0,i.VerticalVelocity);}
                 if (i.Height <= 0)
                 {
                     double speed = Math.Abs(i.VerticalVelocity);
@@ -187,7 +189,7 @@ public sealed partial class WorldSimulation
             if (Math.Abs(i.VelocityX) + Math.Abs(i.VelocityZ) > .005)
             {
                 double nextX=Math.Clamp(c.X+i.VelocityX*dt,-7.5,7.5),nextZ=Math.Clamp(c.Z+i.VelocityZ*dt,-6,6);
-                if(i.Height>1){c.X=nextX;c.Z=nextZ;}
+                if(i.Height>1&&ShelterMovePathClear(c,nextX,nextZ)&&ShelterBodyFits(c,nextX,nextZ)){c.X=nextX;c.Z=nextZ;}
                 else if(!GroundMove(c,nextX,nextZ,false,allowWater:true)){i.VelocityX*= -.18;i.VelocityZ*= -.18;}
                 double drag = Math.Exp(-dt * (i.Falling ? .4 : 4));
                 i.VelocityX *= drag; i.VelocityZ *= drag;
@@ -309,6 +311,7 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if((c.Fullness<12||i.Hydration<12)&&i.ActiveCue!=null)CompleteCue(c,false);
+            if(TryActiveShelter(c,dt))continue;
             if(TryRespondToWater(c,dt))continue;
             if(TryHungerAggression(c,dt))continue;
             if(TryMaternalCrisis(c,dt))continue;
@@ -389,6 +392,7 @@ public sealed partial class WorldSimulation
             if(TickNaturalNeeds(c,dt))continue;
             if(TryFamilyCare(c,dt))continue;
             if(TryWaterAftercare(c,dt))continue;
+            if(TrySeekShelter(c,dt))continue;
             if(TryKeepHumanDistance(c,dt))continue;
             if (i.FollowPlayer && CanSelfMove(c)&&SeesHelpingHand(c))
             {
@@ -556,6 +560,7 @@ public sealed partial class WorldSimulation
             c.Body.SpeciesId=="prototype-common"?State.Creatures.IndexOf(c):0);
     private bool RoomFoodPathClear(Creature c,RoomObject food,double? atX=null,double? atZ=null)
     {
+        if(!ShelterSightClear(c.RegionId,atX??c.X,atZ??c.Z,food.X,food.Z))return false;
         if(StationForSource(food) is { } sourceStation&&sourceStation.HeldByHand)return false;
         foreach(var station in State.SupplyStations)
             if(station.RegionId==c.RegionId&&SegmentMeetsCircle(atX??c.X,atZ??c.Z,food.X,food.Z,

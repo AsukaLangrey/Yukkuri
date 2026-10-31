@@ -34,7 +34,8 @@ public partial class InteractionRoom : Node3D
             var args=OS.GetCmdlineUserArgs();
             if(args.Any(a=>a.StartsWith("--m01-")||a=="--integration"||a=="--legacy"))
             {GetTree().ChangeSceneToFile("res://Main.tscn");return;}
-            GetWindow().Title="油库里乐园 · 慢慢来，相处小院 · 人油互动试玩";
+            GetWindow().Title=$"油库里乐园 · 慢慢来，相处小院 · {GameVersion.Display}";
+            GD.Print("YUKKURI_VERSION: "+GameVersion.Display);
             Sim=WorldSimulation.CreateInteractionPlaytest();
             _font=new FontVariation { BaseFont=GD.Load<FontFile>("res://Assets/Fonts/NotoSansSC.ttf"),
                 VariationOpentype=new Godot.Collections.Dictionary { [TextServerManager.GetPrimaryInterface().NameToTag("wght")]=500.0 },
@@ -107,6 +108,7 @@ public partial class InteractionRoom : Node3D
     {
         _selectedRoomObjectId=_observedStemMotherId=null;_objectActionSignature="";
         ResetSupplyStationActors();
+        ResetShelterActors();
         ResetDetachedStemActors();
         _heardReactions.Clear();
         foreach(var actor in _actors.Values)actor.QueueFree();_actors.Clear();
@@ -178,6 +180,7 @@ public partial class InteractionRoom : Node3D
         SynchronizeFamilyActors();
         SynchronizeDetachedStemActors();
         SynchronizeSupplyStationActors();
+        SynchronizeShelterActors();
         UpdateRoomCamera(dt);
         foreach(var c in Sim.State.Creatures)
         {
@@ -195,6 +198,7 @@ public partial class InteractionRoom : Node3D
             actor.ObserveWaterState(c,WaterEnvironment.IsInWater(Sim.State,c),paused);
             actor.PrepareWaterAttempt(c,Sim.WaterAttemptStatus(c),Sim.State.WorldSeconds,paused,close);
             actor.PrepareStemPresentation(Sim.StemCareStatus(c.Id));
+            actor.PrepareShelterPassage(c,Sim.CreatureShelterStatus(c));
             actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
             RefreshFamilyPresentation(c,actor);
         }
@@ -228,6 +232,7 @@ public partial class InteractionRoom : Node3D
         UpdatePointer();
         UpdateLandingPreview();
         UpdateSupplyStationPlacement();
+        UpdateShelterPlacement();
         PresentPortableObjects();
         PresentGravestones();
     }

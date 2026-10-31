@@ -22,6 +22,7 @@ public sealed partial class WorldSimulation
                 NormalizeWaterEpisode(c);
                 SynchronizeWaterSupport(c);
             }
+        if(state.InteractionPlaytest)SynchronizeShelters();
     }
     public Creature? Selected => State.Creatures.Find(c => c.Id == State.SelectedId);
     public RegionState ActiveRegion => State.Regions.Single(r => r.Id == State.ActiveRegionId);
@@ -84,12 +85,14 @@ public sealed partial class WorldSimulation
         {
             foreach(var c in State.Creatures)SynchronizeWaterAftercare(c);
             SynchronizeCareParcels();
+            SynchronizeShelters();
             TickSupplyStations();
             TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickDetachedStems(dt);TickFamilySocial(dt);
             TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);
             TickSupplyStations();
             foreach(var c in State.Creatures)SynchronizeWildSelfCare(c);
             TickCourtyardLearning(dt);
+            SynchronizeShelters();
             return;
         }
         foreach(var c in State.Creatures)AdvanceMouthProgress(c,dt);
@@ -286,6 +289,7 @@ public sealed partial class WorldSimulation
     {
         if(!double.IsFinite(x)||!double.IsFinite(z))return;
         var c=State.Creatures.Find(c=>c.Id==id);if(c==null)return;
+        if(State.InteractionPlaytest&&(!ShelterMovePathClear(c,x,z)||!ShelterBodyFits(c,x,z)))return;
         CancelWildSelfCare(c,"身体被移动，自行护伤已中断；尚未获得护理效果。");
         c.X=Math.Clamp(x,-8,8);c.Z=Math.Clamp(z,-8,8);c.TargetX=c.X;c.TargetZ=c.Z;
         SynchronizeWaterSupport(c);

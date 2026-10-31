@@ -102,6 +102,7 @@ public sealed partial class WorldSimulation
     public InteractionFeedback BeginInteractionGesture(string id, InteractionInput input)
     {
         EndInteractionGesture(true);
+        if(input.TargetKind==InteractionTargetKind.Shelter)return ExecuteShelterCore(id,input);
         if(ShopActionError(input.Action) is { } shopError)return Unavailable(shopError);
         if(input.TargetKind==InteractionTargetKind.SupplyStation)return BeginStationCore(id,input);
         if(input.TargetKind==InteractionTargetKind.DetachedStem)return BeginDetachedStemCore(id,input);
@@ -152,7 +153,7 @@ public sealed partial class WorldSimulation
             ClearCompanionship(oil);
             i.Lowering=false;
             i.Resting=false;
-            i.Height=i.Carried?Math.Clamp(input.Height,.4,3):Math.Max(.8,input.Height);
+            i.Height=ShelterSafeHeight(oil,i.Carried?Math.Clamp(input.Height,.4,3):Math.Max(.8,input.Height));
             i.Carried = true; i.Supine = false;i.SupineRemaining=0;i.WetRestRemaining=0;
             i.VelocityX = 0; i.VelocityZ = 0; g.Applied = true;
             g.Last = Feedback(oil, oil.Fear > 50 || i.Memories.GetValueOrDefault("fall") > 0 ? "lift-fear" : "lift",
@@ -356,7 +357,8 @@ public sealed partial class WorldSimulation
                 return Say(nuzzle ? c.Trust < 35 ? "nuzzle-shy" : "nuzzle" : "stroke", Expression.Content,
                     nuzzle ? "它贴着脸侧，轻轻回蹭。" : "它压低身子，顺着手的方向放松。");
             case InteractionAction.Lift:
-                MoveCreature(c.Id, input.X, input.Z); i.Height = InteractionFixtureGeometry.ClampSupportHeight(input.Height,1,false);
+                i.Height=ShelterSafeHeight(c,InteractionFixtureGeometry.ClampSupportHeight(input.Height,1,false));
+                MoveCreature(c.Id,input.X,input.Z);
                 if(i.Height>=1.8&&(c.Fear>35||i.Memories.GetValueOrDefault("fall")>0))g.CarryHeightConcern=true;
                 if(g.CarryHeightConcern&&i.Height>1.2)
                     return Say("lift-high",Expression.Frightened,"它缩紧身体，请求放低；保持托住，Shift＋滚轮可以慢慢降下来。","carry-tense");

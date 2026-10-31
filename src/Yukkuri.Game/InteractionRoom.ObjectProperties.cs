@@ -17,10 +17,11 @@ public partial class InteractionRoom
         else if(_roomMode==RoomMode.Poke)_hint.Text="轻点部位；空地按住后挥向身体，速度决定掌掴或拳击。长按部位拖动可拉拽。";
         else if(_roomMode==RoomMode.Pressure)_hint.Text="按住部位按压；从下半部向上推可推翻。身旁可保持或解除按压。";
         else if(_roomMode==RoomMode.Teaching)_hint.Text="点击脏处附近的油，示范自己打扫卫生。";
+        else if(_roomMode==RoomMode.Shelter)_hint.Text=ToolHint(_action);
         var c=Sim.Selected;
         var obj=Sim.State.RoomObjects.Find(o=>o.Id==_selectedRoomObjectId&&!o.Stored);
         var attached=_observedStemMotherId==null?null:Sim.StemCareStatus(_observedStemMotherId);
-        bool independent=obj!=null||attached!=null||_selectedSupplyStationId!=null||_selectedDetachedStemEventId!=null;
+        bool independent=obj!=null||attached!=null||_selectedSupplyStationId!=null||_selectedDetachedStemEventId!=null||_selectedShelterId!=null;
         _objectActions.Visible=!independent&&c!=null&&!_modalOpen&&_objectActions.GetChildCount()>0;
         if(c!=null&&_actors.TryGetValue(c.Id,out var actor))
         {
