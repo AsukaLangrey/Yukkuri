@@ -2,6 +2,14 @@ using System.Text.Json;
 using Yukkuri.Simulation;
 
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
 void Check(string name,Action check)
 {try{check();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
@@ -60,7 +68,7 @@ void StartIntervention(WorldSimulation sim,Creature mother,bool pendingGreeting=
 Check("冷藏拒绝旧接触和喂食入口且读档后仍拒绝",()=>
 {
     var sim=Create();var c=sim.Selected!;c.Health=60;c.Pain=15;
-    sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"夹具未进入冷藏");
+    BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"夹具未进入冷藏");
     RejectLegacyActions(sim,c);
     var copy=Reload(sim);Require(copy.Selected!.Family.ColdStorage.Stored,"读档丢失冷藏状态");
     RejectLegacyActions(copy,copy.Selected!);
@@ -161,9 +169,10 @@ Check("必要护理明确中断强制准备并保留已发生代价",()=>
 Check("收起原坐标旁的宝物不会唤起冷藏个体的反应和怨恨",()=>
 {
     var sim=Create();var c=sim.Selected!;
+    BuyTool(sim,"treasure");
     Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure)).Success,"夹具未放置宝物");
     var treasure=sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure&&o.OwnerId==c.Id);
-    sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"夹具未冷藏");
+    BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"夹具未冷藏");
     string before=Snapshot(sim,c);
     Require(sim.PutAwayRoomObject(treasure.Id)&&treasure.Stored,"地上的宝物没有正常收起");
     Require(Snapshot(sim,c)==before,"冷藏者仍看到收物、增长怨恨/记忆或回应");

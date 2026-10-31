@@ -4,6 +4,13 @@ using Yukkuri.Simulation;
 // Source for the independently authorized remote machine. Never run locally.
 int failures=0;
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
+void BuyFixtureProduct(WorldSimulation sim,string id,int packs=1)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id,packs)&&sim.State.Money==money-product.Price*packs&&
+        sim.ShopQuantity(id)==stock+product.Pack*packs,"fixture purchase failed exact debit/stock: "+id);
+}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
 void Tick(WorldSimulation sim,double seconds)
@@ -126,6 +133,7 @@ Check("冷藏双方任意一只都中断递送且不把食物藏入冷藏",()=>
     foreach(bool storeGiver in new[]{false,true})
     {
         var (sim,giver,child,source)=Fixture();var parcel=TakePortion(sim,giver,source);var stored=storeGiver?giver:child;
+        BuyFixtureProduct(sim,"freezer");
         sim.SetColdStorage(stored.Id,true);Require(stored.Family.ColdStorage.Stored,"冷藏入口没有生效");
         Cleared(giver,child,parcel);Conserved(sim,source,parcel);
         Require(!parcel.Stored&&!parcel.HeldByHand&&parcel.Height==0,"口粮也被冷藏或留在空中");

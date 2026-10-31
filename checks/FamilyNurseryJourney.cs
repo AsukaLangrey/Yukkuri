@@ -125,8 +125,17 @@ static class FamilyNurseryJourney
             }
         }
 
+        private void EnsureWaterStock()
+        {
+            if(!sim.UsesConsumableStock||sim.State.StationWaterPortions!=0)return;
+            int money=sim.State.Money,water=sim.State.StationWaterPortions;
+            Require(sim.BuyShopProduct("water")&&sim.State.Money==money-6&&sim.State.StationWaterPortions==water+12,
+                "actual nursery water replenishment failed exact 6 yuan / 12 portion transaction");
+        }
+
         private void OfferAdult(Creature c,InteractionAction action)
         {
+            if(action==InteractionAction.Drink)EnsureWaterStock();
             if(action==InteractionAction.FeedMeal&&sim.UsesConsumableStock&&sim.State.Food==0)
                 Require(sim.BuyFood(),"actual adult food replenishment failed");
             var input=new InteractionInput(action,BodyPart.Mouth,Force:.15,Duration:.1);
@@ -163,13 +172,16 @@ static class FamilyNurseryJourney
                 double angle=n*Math.Tau/16,x=parent.X+Math.Cos(angle)*.75,z=parent.Z+Math.Sin(angle)*.75;
                 if(Math.Abs(x)>7.5||Math.Abs(z)>7.5||!WoodlandLayout.GroundFits(sim.State,parent.RegionId,x,z,.2)||
                     babies.Any(c=>WorldSimulation.Distance(c.X,c.Z,x,z)<=NaturalResources.Reach(c)+.1))continue;
-                var before=sim.State.RoomObjects.Select(o=>o.Id).ToHashSet();int stock=sim.State.Food;
+                if(kind==RoomObjectKind.Water)EnsureWaterStock();
+                var before=sim.State.RoomObjects.Select(o=>o.Id).ToHashSet();int stock=sim.State.Food,water=sim.State.StationWaterPortions;
                 var result=sim.ExecuteInteraction(parent.Id,new(kind==RoomObjectKind.Water?InteractionAction.PlaceWater:InteractionAction.PlaceMeal,
                     BodyPart.Side,X:x,Z:z));
                 if(!result.Success)continue;
                 var source=sim.State.RoomObjects.Single(o=>!before.Contains(o.Id));
                 Require(source.Kind==kind&&source.Portions==1&&source.CarrierId==null&&
-                    sim.State.Food==stock-(kind==RoomObjectKind.Meal&&sim.UsesConsumableStock?1:0),"real source placement/stock transaction was not one portion");
+                    sim.State.Food==stock-(kind==RoomObjectKind.Meal&&sim.UsesConsumableStock?1:0)&&
+                    sim.State.StationWaterPortions==water-(kind==RoomObjectKind.Water&&sim.UsesConsumableStock?1:0),
+                    "real source placement/stock transaction was not one portion");
                 return;
             }
         }

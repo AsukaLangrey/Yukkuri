@@ -3,6 +3,14 @@ using Yukkuri.Simulation;
 
 // Written for the independently authorized remote test machine. Do not run on the source workstation.
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
 void Check(string name,Action action)
 {try{action();Console.WriteLine("PASS "+name);}catch(Exception error){failures++;Console.WriteLine("FAIL "+name+": "+error);}}
@@ -102,7 +110,7 @@ Check("目标被抱走、入箱、冷藏、长大或逃离立即解除搬运",()
         var (sim,adult,child,source)=Delivery();var parcel=WaitForParcel(sim,adult);double x=adult.X,z=adult.Z;
         if(mode=="carried"){child.Interaction.Carried=true;child.Interaction.Height=2;}
         else if(mode=="box")child.Interaction.Restraint=RestraintKind.Box;
-        else if(mode=="cold")sim.SetColdStorage(child.Id,true);
+        else if(mode=="cold"){BuyTool(sim,"freezer");sim.SetColdStorage(child.Id,true);Require(child.Family.ColdStorage.Stored,"中断夹具未进入冷藏");}
         else if(mode=="grown")child.IsYoung=false;
         else if(mode=="flight"){child.Family.FlightRemaining=8;child.Family.FlightX=5;child.Family.FlightZ=3;}
         else if(mode=="retreat")child.RetreatRemaining=8;
@@ -203,7 +211,7 @@ Check("冷藏、暂停和近看不凭空增加照护经验",()=>
     {
         var sim=Fixture();var adult=sim.State.Creatures[0];var child=sim.State.Creatures[2];
         child.X=child.TargetX=1.5;child.Family.Warmth=20;adult.Family.NextCareAt=0;
-        if(mode=="cold")sim.SetColdStorage(child.Id,true);
+        if(mode=="cold"){BuyTool(sim,"freezer");sim.SetColdStorage(child.Id,true);Require(child.Family.ColdStorage.Stored,"经验夹具未进入冷藏");}
         else if(mode=="pause")sim.State.Settings.Pause=true;
         else sim.State.Mode=PlayMode.CloseUp;
         Tick(sim,30);Require(adult.Family.Peers[child.Id].CareSeconds==0&&!child.Family.CaregiverIds.Contains(adult.Id),"无实际照护却形成经验："+mode);

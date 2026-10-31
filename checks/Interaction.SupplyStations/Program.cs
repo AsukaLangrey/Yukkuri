@@ -229,13 +229,18 @@ Check("family collection delivers the actual dispenser portion to a dependent ch
 Check("empty feedback, blocked output and no creature target keep warehouse stock intact",()=>
 {
     var s=Stocked(SupplyStationKind.Food,false);var station=Station(s);int stored=station.StoredPortions;
+    Require(s.BuyShopProduct("ball"),"blocking ball purchase failed");
     Require(s.ExecuteInteraction(s.Selected!.Id,new(InteractionAction.GiveBall,X:0,Z:.85)).Success,"blocking real ball placement failed");
     Seconds(s,.25);Require(station.StoredPortions==stored&&station.OutletObjectId==null&&station.LastEvent.Contains("占用"),"blocked outlet lost a portion");
     var ball=s.State.RoomObjects.Single();Require(s.PutAwayRoomObject(ball.Id),"ball removal failed");Seconds(s,.25);
     Require(Outlet(s).Portions==1&&station.StoredPortions==stored-1,"cleared outlet did not resume");
     s.State.SelectedId=null;Require(s.BuySupplyStation(SupplyStationKind.Water)&&s.PlaceSupplyStation(SupplyStationKind.Water,-3,2).Success,"empty selection blocked device placement");
     var empty=s.State.SupplyStations.Single(t=>t.Kind==SupplyStationKind.Water);Require(empty.StoredPortions==0&&empty.OutletObjectId==null&&empty.LastEvent.Contains("空仓"),"empty device fabricated water");
-    var input=Input(empty);Require(!s.BeginSupplyStationGesture(empty.Id,input).Success,"refill without real bulk water succeeded");
+    // The paid courtyard starts with bulk water. This branch specifically tests
+    // an exhausted warehouse, not an empty device while real refill stock exists.
+    s.State.StationWaterPortions=0;
+    var input=Input(empty);string depleted=Snapshot(s);
+    Require(!s.BeginSupplyStationGesture(empty.Id,input).Success&&Snapshot(s)==depleted,"refill without real bulk water succeeded or changed state");
     s.State.Settings.Pause=true;Require(s.BuyStationWater(),"paused supply menu could not purchase");string before=Snapshot(s);
     Require(!s.BeginSupplyStationGesture(empty.Id,input).Success&&Snapshot(s)==before,"paused actual refill changed stock");
 });

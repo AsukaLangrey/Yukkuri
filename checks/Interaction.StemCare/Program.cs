@@ -3,6 +3,13 @@ using Yukkuri.Simulation;
 
 int failures=0;
 void Require(bool ok,string why){if(!ok)throw new Exception(why);}
+void BuyFixtureProduct(WorldSimulation sim,string id,int packs=1)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id,packs)&&sim.State.Money==money-product.Price*packs&&
+        sim.ShopQuantity(id)==stock+product.Pack*packs,"fixture purchase failed exact debit/stock: "+id);
+}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
 string Snapshot(WorldSimulation sim)=>JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
@@ -79,8 +86,8 @@ Check("gesture identity cannot change to body, another brood or an expired event
 {
     foreach(bool body in new[]{false,true})
     {
-        var sim=Brood();var c=sim.Selected!;var input=Input(sim,InteractionAction.Burn);
-        sim.BeginInteractionGesture(c.Id,input);var before=Snapshot(sim);
+        var sim=Brood();BuyFixtureProduct(sim,"lighter");var c=sim.Selected!;var input=Input(sim,InteractionAction.Burn);
+        Require(sim.BeginInteractionGesture(c.Id,input).Success,"identity fixture burn did not begin");var before=Snapshot(sim);
         var changed=body?input with{TargetKind=InteractionTargetKind.Body}:input with{ObjectId="another-brood"};
         Require(!sim.ContinueInteractionGesture(changed,true).Success&&!sim.HasInteractionGesture,"changed identity accepted");
         Require(Snapshot(sim)==before,"changed identity inflicted damage");
@@ -115,10 +122,16 @@ Check("stem punch and burn damage brood without head damage or maternal Hits; eq
     Require(c.Trust<trust&&c.Interaction.Emotion.Alarm>0&&c.Interaction.HumanBond.LastHarmAt==sim.State.WorldSeconds,"real human threat had no continuity");
     double BurnAt(double dt,int samples)
     {
-        var s=Brood();var input=Input(s,InteractionAction.Burn,dt,1);s.BeginInteractionGesture(s.Selected!.Id,input);
-        for(int n=0;n<samples;n++)s.ContinueInteractionGesture(input,true);
+        var s=Brood();var input=Input(s,InteractionAction.Burn,dt,1);string before=Snapshot(s);
+        Require(!s.BeginInteractionGesture(s.Selected!.Id,input).Success&&!s.HasInteractionGesture&&Snapshot(s)==before,
+            "unbought lighter unexpectedly started or changed state");
+        BuyFixtureProduct(s,"lighter");
+        Require(s.BeginInteractionGesture(s.Selected.Id,input).Success,"paid lighter did not start real stem contact");
+        for(int n=0;n<samples;n++)Require(s.ContinueInteractionGesture(input,true).Success,"actual stem burn contact failed");
         Require(s.Selected.Health==100&&s.Selected.Interaction.HitCount==0,"burn damaged maternal body");
-        return s.Selected.Family.Pregnancy.Stem!.Integrity;
+        double integrity=s.Selected.Family.Pregnancy.Stem!.Integrity;
+        Require(Math.Abs(integrity-82)<1e-8,"two seconds of real stem burn did not apply 18 damage");
+        return integrity;
     }
     Require(Math.Abs(BurnAt(.1,20)-BurnAt(.02,100))<1e-8,"burn damage depends on sample count");
 });
@@ -181,6 +194,7 @@ Check("immersion damages supported stems and cold storage uses the existing biol
     Require(!WaterEnvironment.IsInWater(wet.State,c)&&c.Family.Pregnancy.Stem.Integrity==damage,
         "rescue erased existing brood damage");
     var cold=Brood();Support(cold);cold.EndInteractionGesture();var m=cold.Selected!;
+    BuyFixtureProduct(cold,"freezer");
     cold.SetColdStorage(m.Id,true);Require(m.Family.ColdStorage.Stored,"cold storage refused fixture");
     double before=m.Family.Pregnancy.Elapsed;for(int n=0;n<10;n++)Frame(cold);
     Require(Math.Abs(m.Family.Pregnancy.Elapsed-before-.1)<1e-7&&Math.Abs(m.Family.Pregnancy.Stem!.SupportRemaining-59.9)<1e-7,
@@ -221,8 +235,16 @@ Check("legacy normalization preserves identity and clock; read-only status and r
     var exhausted=Brood();exhausted.Selected!.Family.Pregnancy.Stem!.Integrity=0;
     rejected=false;try{SaveStore.Validate(exhausted.State);}catch(InvalidDataException){rejected=true;}
     Require(rejected&&exhausted.StemCareStatus(exhausted.Selected.Id)==null,"zero-integrity active brood was accepted or visible");
-    Frame(exhausted);
-    Require(exhausted.Selected.Family.Pregnancy.Phase==PregnancyPhase.Recovering&&
+    // Prove the old 0.1s frame has not reached the default 0.25s world tick.
+    // Finish that same tick without weakening the zero-integrity/no-birth check.
+    double time=exhausted.State.WorldSeconds,partial=exhausted.Config.TickSeconds*.4;
+    Frame(exhausted,partial);
+    Require(exhausted.State.WorldSeconds==time&&exhausted.Selected.Family.Pregnancy.Phase==PregnancyPhase.Gestating&&
+        exhausted.Selected.Family.Pregnancy.Stem.Integrity==0&&!exhausted.State.CompletedBirths.Any(),
+        "partial tick unexpectedly advanced the zero-integrity fixture");
+    Frame(exhausted,exhausted.Config.TickSeconds-partial);
+    Require(exhausted.State.WorldSeconds==time+exhausted.Config.TickSeconds&&
+        exhausted.Selected.Family.Pregnancy.Phase==PregnancyPhase.Recovering&&
         exhausted.Selected.Family.Pregnancy.Stem.Integrity==0&&!exhausted.State.CompletedBirths.Any(),"zero brood regrew or delivered");
 });
 

@@ -4,6 +4,7 @@ using Yukkuri.Simulation;
 // Source-only here; execute only on the authorised independent remote test machine.
 int failures=0;
 void Require(bool ok,string message){if(!ok)throw new Exception(message);}
+string Snapshot(WorldSimulation sim)=>JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
 void Check(string name,Action test)
 {try{test();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e.Message);}}
 void Tick(WorldSimulation sim,double seconds)
@@ -50,7 +51,8 @@ Check("paused shop accounts for money and stock without advancing biology",()=>
     sim.State.Money=24;Require(sim.BuyCourtshipTool(),"paused purchase refused");
     Require(sim.State.Money==0&&sim.State.CourtshipTools==1,"wrong debit or stock");
     Require(sim.BreedingInductionReason(c.Id)==null,"read-only eligibility cannot be inspected in paused panel");
-    Require(!sim.InduceBreedingInterest(c.Id).Success,"paused action accepted");
+    string pausedBefore=Snapshot(sim);
+    Require(!sim.InduceBreedingInterest(c.Id).Success&&Snapshot(sim)==pausedBefore,"paused action accepted or mutated state");
     Tick(sim,10);Require(sim.State.WorldSeconds==time&&sim.State.CourtshipTools==1&&c.Family.BreedingInterest==0,"purchase or pause advanced state");
     sim.State.UnlimitedResources=true;sim.State.CourtshipTools=99;
     Require(!sim.BuyCourtshipTool()&&sim.State.CourtshipTools==99,"inventory cap bypassed");
@@ -62,27 +64,58 @@ Check("induction consumes one supply but never creates trust consent or pregnanc
     c.Family.PartnerIds.Clear();other.Family.PartnerIds.Clear();c.Family.Peers.Clear();other.Family.Peers.Clear();
     double trust=c.Trust;int stock=sim.State.CourtshipTools;
     Require(sim.InduceBreedingInterest(c.Id).Success,"eligible induction refused");
-    Require(sim.State.CourtshipTools==stock-1&&c.Family.BreedingInterest==20,"effect or finite consumption wrong");
+    // v54 FamilyDesire.cs sets suitable interest to max(40, previous+20).
+    // The new floor does not create partner acceptance, trust or a pregnancy.
+    Require(sim.State.CourtshipTools==stock-1&&c.Family.BreedingInterest==40&&
+        c.Family.InducedInterestRemaining==90&&c.Family.NextInductionAt==sim.State.WorldSeconds+180,
+        "effect, finite consumption or induction clock wrong");
     Require(c.Trust==trust&&c.Family.PartnerIds.Count==0&&c.Family.Pregnancy.Phase==PregnancyPhase.None,"induction fabricated consent or pregnancy");
     sim.State.AutonomousBreeding=true;Tick(sim,10);
-    Require(c.Family.BreedingInterest>20&&c.Family.Pregnancy.Phase==PregnancyPhase.None,"interest did not grow or bypassed missing bond");
-    Require(!sim.InduceBreedingInterest(c.Id).Success,"cooldown bypassed");
+    Require(c.Family.BreedingInterest>40&&c.Family.Pregnancy.Phase==PregnancyPhase.None,"interest did not grow or bypassed missing bond");
+    int money=sim.State.Money,remaining=sim.State.CourtshipTools;
+    Require(sim.BuyShopProduct("inducer")&&sim.State.Money==money-WorldSimulation.CourtshipToolPrice&&
+        sim.State.CourtshipTools==remaining+1,"cooldown fixture failed its real replenishment");
+    string beforeRepeat=Snapshot(sim);
+    Require(!sim.InduceBreedingInterest(c.Id).Success&&Snapshot(sim)==beforeRepeat,"cooldown bypassed or repeated action spent stock");
     var copy=Reload(sim);var saved=copy.State.Creatures[0];
     Require(saved.Family.InducedInterestRemaining==c.Family.InducedInterestRemaining&&saved.Family.NextInductionAt==c.Family.NextInductionAt&&
         copy.State.CourtshipTools==sim.State.CourtshipTools&&!copy.InduceBreedingInterest(saved.Id).Success,"save reset duration cooldown or stock");
 });
 
-Check("young ill pregnant and physically submerged bodies refuse without consumption",()=>
+Check("young refusal is free; unsuitable mature induction spends once and worsens only the real body",()=>
 {
-    var sim=Fixture();var c=sim.State.Creatures[0];int stock=sim.State.CourtshipTools;
-    c.IsYoung=true;Require(!sim.InduceBreedingInterest(c.Id).Success,"young accepted");c.IsYoung=false;
-    c.Pain=30;Require(!sim.InduceBreedingInterest(c.Id).Success,"pain ignored");c.Pain=0;
-    c.Family.Pregnancy.Phase=PregnancyPhase.Recovering;
-    Require(!sim.InduceBreedingInterest(c.Id).Success,"recovery ignored");c.Family.Pregnancy.Phase=PregnancyPhase.None;
-    c.X=7.1;c.Z=0;Require(!c.Interaction.Water.InWater,"fixture needs stale cache");
-    Require(!sim.InduceBreedingInterest(c.Id).Success&&sim.State.CourtshipTools==stock,"physical water or refusal consumption wrong");
-    sim.RequestPregnancy(c.Id,sim.State.Creatures[1].Id,BirthMethod.Stem);
-    Require(c.Family.Pregnancy.Phase==PregnancyPhase.None,"direct breeding request bypassed geometric water before the next tick");
+    // v54 interaction-redesign DELIVERY specifies actual damage for unsuitable
+    // induction. FamilyDesire.cs:47-65 implements one debit and a 30s cooldown.
+    var young=Fixture();var child=young.State.Creatures[0];child.IsYoung=true;
+    string youngBefore=Snapshot(young);
+    Require(!young.InduceBreedingInterest(child.Id).Success&&Snapshot(young)==youngBefore,"young accepted or refusal consumed state");
+    foreach(string boundary in new[]{"pain","recovery","physical-water"})
+    {
+        var sim=Fixture();var c=sim.State.Creatures[0];
+        if(boundary=="pain")c.Pain=30;
+        if(boundary=="recovery")c.Family.Pregnancy.Phase=PregnancyPhase.Recovering;
+        if(boundary=="physical-water")
+        {c.X=7.1;c.Z=0;Require(!c.Interaction.Water.InWater,"fixture needs stale water cache");}
+        int stock=sim.State.CourtshipTools;double health=c.Health,energy=c.Energy,water=c.Interaction.Hydration,trust=c.Trust;
+        var phase=c.Family.Pregnancy.Phase;var partners=c.Family.PartnerIds.ToArray();
+        Require(sim.InduceBreedingInterest(c.Id).Success,"unsuitable mature action did not execute: "+boundary);
+        Require(sim.State.CourtshipTools==stock-1&&c.Health==health-12&&c.Energy==energy-12&&c.Interaction.Hydration==water-10&&
+            c.Family.BreedingInterest==0&&c.Family.InducedInterestRemaining==0&&
+            c.Family.NextInductionAt==sim.State.WorldSeconds+30,"unsuitable action lost exact finite debit or real worsening: "+boundary);
+        Require(c.Trust<=trust&&c.Family.PartnerIds.SequenceEqual(partners)&&c.Family.Pregnancy.Phase==phase&&
+            sim.State.CompletedBirths.Count==0,"unsafe induction invented trust, partner or pregnancy: "+boundary);
+        int money=sim.State.Money;
+        Require(sim.BuyShopProduct("inducer")&&sim.State.Money==money-WorldSimulation.CourtshipToolPrice&&
+            sim.State.CourtshipTools==stock,"unsafe cooldown fixture replenishment changed price or stock");
+        string after=Snapshot(sim);
+        Require(!sim.InduceBreedingInterest(c.Id).Success&&Snapshot(sim)==after,
+            "unsafe repeated action bypassed cooldown or repeated damage/debit: "+boundary);
+        if(boundary=="physical-water")
+        {
+            sim.RequestPregnancy(c.Id,sim.State.Creatures[1].Id,BirthMethod.Stem);
+            Require(c.Family.Pregnancy.Phase==PregnancyPhase.None,"direct breeding request bypassed physical water before next tick");
+        }
+    }
 });
 
 Check("deep safe reciprocal partners develop natural interest",()=>

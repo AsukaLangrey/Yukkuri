@@ -16,6 +16,7 @@ void Check(string name,Action test)
     catch(Exception e){failures++;results.Add(new{name,passed=false,error=e.Message});Console.WriteLine("FAIL "+name+": "+e.Message);}
 }
 void Require(bool v,string why){if(!v)throw new Exception(why);}
+string NaturalTrace(Creature c)=>JsonSerializer.Serialize(new{c.X,c.Z,c.Activity,c.Fullness,c.Interaction.Hydration,c.Interaction.EatingRemaining,c.Interaction.GroundIntake,c.Interaction.NaturalIntakePending,c.Interaction.Digestion.Exposures,c.Interaction.Water.InWater,c.Interaction.LastHelpAt,c.Interaction.ReactionSituation});
 WorldSimulation Fresh(ulong seed=20261029)
 {
     var s=WorldSimulation.CreateInteractionPlaytest(seed);var c=s.Selected!;
@@ -220,10 +221,11 @@ Check("hungry creature discovers reaches and consumes leaves without human input
 });
 Check("thirsty creature walks to the bank and drinks without filling its stomach",()=>
 {
-    var s=Fresh();var c=s.Selected!;c.Interaction.Hydration=20;double food=c.Fullness;var water=Source(s,RoomObjectKind.RiverWater,2.5,portions:1);
+    var s=Fresh();s.State.Settings.Accidents=false; // Isolate intake from the separately tested random river-fall journey.
+        var c=s.Selected!;c.Interaction.Hydration=20;double food=c.Fullness;var water=Source(s,RoomObjectKind.RiverWater,2.5,portions:1);
     for(int n=0;n<300&&c.Interaction.Hydration<=65;n++)Tick(s,.05);
     Require(c.Interaction.Hydration>65&&c.Fullness<=food&&water.Portions==1,"river failed or was consumed as a cup");
-    Require(c.X>1&&c.X<water.X,"did not use a dry approach position");
+    Require(c.X>1&&c.X<water.X,"did not use a dry approach position: "+NaturalTrace(c));
 });
 Check("water supply is finite while a river remains available",()=>
 {
@@ -312,7 +314,11 @@ Check("putting away food before or after contact returns only uneaten inventory"
     {
         var s=Fresh();s.State.UnlimitedResources=false;s.State.Food=0;var c=s.Selected!;c.Fullness=30;
         var food=Source(s,RoomObjectKind.Meal,.5,portions:1);Tick(s,entered?.75:.25);
-        Require(s.PutAwayRoomObject(food.Id)&&s.State.Food==(entered?0:1),"inventory did not distinguish reserved from eaten food");
+        string active=JsonSerializer.Serialize(s.State,SaveStore.JsonOptions);
+        Require(!s.PutAwayRoomObject(food.Id)&&JsonSerializer.Serialize(s.State,SaveStore.JsonOptions)==active,"recycling interrupted an active mouthful");
+        Require(s.HoldSupply(food.Id)&&s.ReleaseSupply(food.Id,2,0),"actual pickup/release did not cancel intake");
+        Require(s.PutAwayRoomObject(food.Id)==!entered&&s.State.Food==(entered?0:1),"inventory did not distinguish reserved from eaten food: "+NaturalTrace(c));
+        Require(!s.PutAwayRoomObject(food.Id)&&s.State.Food==(entered?0:1),"repeated recycling duplicated a portion");
         s.State.Mode=PlayMode.CloseUp;Tick(s,2);
         Require(c.Interaction.Digestion.Exposures==(entered?1:0)&&s.State.RoomObjects.Count==0,"stored food replayed consumption");
     }
@@ -388,13 +394,14 @@ Check("wrapping cannot drink below its mouth but nearby cup water and unwrapping
 {
     foreach(double size in new[]{.73,1,1.03})
     {
-        var s=Fresh();var c=s.Selected!;c.IsYoung=size<1;c.IsElder=size>1;c.Interaction.Restraint=RestraintKind.Wrap;c.Interaction.Hydration=30;
+        var s=Fresh();s.State.Settings.Accidents=false; // Isolate intake from the separately tested random river-fall journey.
+        var c=s.Selected!;c.IsYoung=size<1;c.IsElder=size>1;c.Interaction.Restraint=RestraintKind.Wrap;c.Interaction.Hydration=30;
         var river=Source(s,RoomObjectKind.RiverWater,.7*size);Tick(s,2);
         Require(c.Interaction.Hydration<30&&c.Interaction.Digestion.Exposures==0&&c.Interaction.EatingRemaining==0&&c.Activity.Contains("够不到"),"wrap drank from below its supported mouth");
         var cup=Source(s,RoomObjectKind.Water,0,.55*size);Tick(s,1);
         Require(c.Interaction.Hydration>40&&c.Interaction.Digestion.Exposures==1&&cup.Portions==9,"low river also disabled reachable cup water");
         Tick(s,2);s.State.RoomObjects.Remove(cup);c.Interaction.Restraint=RestraintKind.None;c.Interaction.Hydration=30;Tick(s,2);
-        Require(c.Interaction.Hydration>40&&c.Interaction.Digestion.Exposures>=2&&river.Portions==10,"unwrapping did not restore river access");
+        Require(c.Interaction.Hydration>40&&c.Interaction.Digestion.Exposures>=2&&river.Portions==10,"unwrapping did not restore river access: "+NaturalTrace(c));
     }
 });
 Check("wrapped low-source access follows body size and height rather than a blanket resource ban",()=>
@@ -497,8 +504,9 @@ Check("high trust increases help requests without removing self care",()=>
 });
 Check("no nearby human means no automatic water begging for mobile oil",()=>
 {
-    var s=Fresh();var c=s.Selected!;c.Trust=90;c.Interaction.Hydration=20;Source(s,RoomObjectKind.RiverWater,1.2);
-    Tick(s,5);Require(c.Interaction.LastHelpAt<0&&c.Interaction.Hydration>20,"mobile oil waited for absent hand");
+    var s=Fresh();s.State.Settings.Accidents=false; // Isolate intake from the separately tested random river-fall journey.
+        var c=s.Selected!;c.Trust=90;c.Interaction.Hydration=20;Source(s,RoomObjectKind.RiverWater,1.2);
+    Tick(s,5);Require(c.Interaction.LastHelpAt<0&&c.Interaction.Hydration>20,"mobile oil waited for absent hand: "+NaturalTrace(c));
 });
 Check("dirty intake is riskier than clean intake and is not guaranteed illness",()=>
 {
@@ -630,10 +638,11 @@ Check("self feeding completion does not invent a person holding a cup or spoon",
 {
     foreach(var kind in new[]{RoomObjectKind.Leaves,RoomObjectKind.Meal,RoomObjectKind.RiverWater,RoomObjectKind.Water})
     {
-        var s=Fresh();var c=s.Selected!;
+        var s=Fresh();s.State.Settings.Accidents=false; // Isolate intake from the separately tested random river-fall journey.
+        var c=s.Selected!;
         c.Fullness=NaturalResources.IsFood(kind)?65:90;c.Interaction.Hydration=NaturalResources.IsWater(kind)?60:90;
         Source(s,kind,.4,portions:1);Tick(s,2);
-        Require(c.Interaction.ReactionSituation=="mouthful-done","natural mouthful did not finish");
+        Require(c.Interaction.ReactionSituation=="mouthful-done","natural mouthful did not finish: "+NaturalTrace(c));
         Require(!c.LastReaction.Contains("收回")&&!c.LastReaction.Contains("手")&&!c.LastReaction.Contains("空勺"),"natural feeding requested phantom human action");
     }
 });
@@ -819,7 +828,8 @@ Check("natural drinking access fits the actual dry bank and never heals immersio
     c.Interaction.FootIntegrity=70;Tick(s,15);
     Require(c.Interaction.Hydration>60&&WoodlandLayout.GroundFits(s.State,"home",c.X,c.Z,WorldSimulation.InteractionFootprint(c)),"drinking required entering water");
     Require(c.Interaction.FootIntegrity==70,"drinking healed damaged feet");
-    Require(!s.CanPlaceInteractionAt(c.Id,7,2),"river falsely treated as dry placement ground");
+    Require(s.CanPlaceInteractionAt(c.Id,7,2)&&!WoodlandLayout.GroundFits(s.State,c.RegionId,7,2,WorldSimulation.InteractionFootprint(c)),
+        "allowed water release was confused with a dry autonomous standing point");
 });
 Check("young adult and elder can independently reach the river from dry ground",()=>
 {

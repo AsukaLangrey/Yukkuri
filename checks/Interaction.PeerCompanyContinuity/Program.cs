@@ -113,10 +113,14 @@ Check("automatic selection cannot choose the recently interrupted aggressor",()=
     var s=HarmStoppedAndFed();var a=s.State.Creatures[0];var v=s.State.Creatures[2];
     // Scheduling eligibility is the explicit component input; actual pair
     // selection still uses the real remembered bite and current body state.
+    // Isolate the social selection from the unrelated idle-walk destination
+    // accumulated during real feeding. Mobility and social movement remain enabled.
+    a.DecisionIn=10000;a.TargetX=a.X;a.TargetZ=a.Z;
     a.Family.NextSocialAt=0;double x=a.X,z=a.Z;Tick(s,.2);
     Require(a.Family.NextSocialAt>s.State.WorldSeconds&&a.Family.CompanionTargetId==null&&v.Family.CompanionTargetId==null,
         "automatic selection skipped its memory gate or the fixture never reached selection");
-    Require(a.X==x&&a.Z==z,"failed automatic invitation moved toward its recent victim");
+    Require(a.X==x&&a.Z==z,"failed automatic invitation moved toward its recent victim"+
+        $" position={x},{z}->{a.X},{a.Z}, target={a.TargetX},{a.TargetZ}, activity={a.Activity}, decision={a.DecisionIn}");
 });
 Check("a stale saved companionship cannot continue movement or gain after actual harm",()=>
 {

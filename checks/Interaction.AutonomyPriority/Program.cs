@@ -14,6 +14,14 @@ void Tick(WorldSimulation sim,double seconds,bool keepHand=false)
         sim.AdvanceInteractionPresentation(.05);sim.Advance(.05);
     }
 }
+// Fixture equipment is acquired through the current paid shop, not injected stock.
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&sim.ShopQuantity(id)==stock+product.Pack,
+        "paid fixture purchase failed: "+id);
+}
 WorldSimulation Fresh(bool readyPeers=false)
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();sim.State.RoomObjects.Clear();var c=sim.Selected!;
@@ -104,7 +112,7 @@ Check("吃喝休息和危险逃离优先于短回应",()=>
 });
 Check("收纳宝物读档后归属仍在且自主惦记真正有机会表达",()=>
 {
-    var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;
+    var sim=WorldSimulation.CreateInteractionPlaytest();BuyTool(sim,"treasure");var c=sim.Selected!;
     Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure)).Success,"宝物前置失败");
     var item=sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure);Require(sim.PutAwayRoomObject(item.Id),"收纳失败");
     string id=item.Id;sim=Reload(sim);c=sim.Selected!;c.Fullness=c.Interaction.Hydration=90;c.Interaction.NextAutonomyAt=0;

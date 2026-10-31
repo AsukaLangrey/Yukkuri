@@ -8,6 +8,14 @@ void Check(string name,Action test)
     catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e.Message);}
 }
 void Require(bool value,string why){if(!value)throw new Exception(why);}
+// Fixture equipment is acquired through the current paid shop, not injected stock.
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&sim.ShopQuantity(id)==stock+product.Pack,
+        "paid fixture purchase failed: "+id);
+}
 WorldSimulation Fresh()
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;
@@ -195,7 +203,7 @@ Check("lighter causes actual local damage and escape while fixed bodies tense",(
 {
     foreach(bool fixedBody in new[]{false,true})
     {
-        var sim=Fresh();var c=sim.Selected!;if(fixedBody)c.Interaction.Restraint=RestraintKind.Frame;
+        var sim=Fresh();BuyTool(sim,"lighter");var c=sim.Selected!;if(fixedBody)c.Interaction.Restraint=RestraintKind.Frame;
         double x=c.X,z=c.Z;
         var input=new InteractionInput(InteractionAction.Burn,BodyPart.Head,.5,.1,X:c.X,Z:c.Z);
         Require(sim.BeginInteractionGesture(c.Id,input).Success,"lighter could not start on a non-foot body part");
@@ -211,7 +219,7 @@ Check("lighter causes actual local damage and escape while fixed bodies tense",(
 
 Check("legacy continuous harm shares witnesses without per-frame public incident spam",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;var witness=AddNeighbor(sim,"目击者",0,2);
+    var sim=Fresh();BuyTool(sim,"lighter");var c=sim.Selected!;var witness=AddNeighbor(sim,"目击者",0,2);
     var input=new InteractionInput(InteractionAction.BurnFeet,BodyPart.Bottom,.2,.1);
     sim.BeginInteractionGesture(c.Id,input);
     for(int n=0;n<20;n++)sim.ContinueInteractionGesture(input,true);
@@ -278,7 +286,7 @@ Check("held harm depends on contact duration rather than input sampling rate",()
         (double Health,double Pain,double Alarm,double Comfort,double Trust,double WitnessFear,double WitnessAlarm,double WitnessTrust,double HeardFear,double HeardAlarm)? expected=null;
         foreach(double sample in new[]{.1,.05,.02,.01})
         {
-            var sim=Fresh();var c=sim.Selected!;sim.State.Mode=PlayMode.CloseUp;
+            var sim=Fresh();if(action is InteractionAction.Burn or InteractionAction.BurnFeet)BuyTool(sim,"lighter");var c=sim.Selected!;sim.State.Mode=PlayMode.CloseUp;
             var witness=AddNeighbor(sim,"近处目击者",0,2);
             var listener=AddNeighbor(sim,"远处只听见的油",0,6);
             c.Interaction.Restraint=RestraintKind.Frame;
@@ -326,7 +334,7 @@ Check("water concern presentation query rejects stale hidden or inaccessible tar
 
 Check("continuous witness event survives a save without restarting or remembering each sample",()=>
 {
-    var sim=Fresh();var target=sim.Selected!;target.Interaction.Restraint=RestraintKind.Frame;
+    var sim=Fresh();BuyTool(sim,"lighter");var target=sim.Selected!;target.Interaction.Restraint=RestraintKind.Frame;
     var witness=AddNeighbor(sim,"目击者",0,2);
     var input=new InteractionInput(InteractionAction.Burn,BodyPart.Side,.4,.05);
     sim.BeginInteractionGesture(target.Id,input);
@@ -352,7 +360,7 @@ Check("continuous witness event survives a save without restarting or rememberin
 
 Check("hearing then seeing the actor adds one first-sight response without replaying each contact",()=>
 {
-    var sim=Fresh();var target=sim.Selected!;target.Interaction.Restraint=RestraintKind.Frame;
+    var sim=Fresh();BuyTool(sim,"lighter");var target=sim.Selected!;target.Interaction.Restraint=RestraintKind.Frame;
     var listener=AddNeighbor(sim,"先听后看的油",0,6);
     var input=new InteractionInput(InteractionAction.Burn,BodyPart.Side,.4,.1);
     sim.BeginInteractionGesture(target.Id,input);

@@ -76,7 +76,12 @@ public sealed partial class WorldSimulation
     }
     private bool MoveShelterStep(ShelterState s,Creature c,double x,double z,double dt)
     {
-        double before=Distance(c.X,c.Z,x,z);RoomMove(c,x,z,dt);
+        // Door traversal follows an aligned route. A generic avoidance turn can
+        // move sideways, trigger a retreat to the room centre on the next tick,
+        // then repeat forever while each retreat clears the blocked timer.
+        // Keep avoidance for the outdoor approach; wait on the actual doorway
+        // route until its obstruction is removed.
+        double before=Distance(c.X,c.Z,x,z);RoomMove(c,x,z,dt,slide:s.Phase==ShelterVisitPhase.Approaching);
         if(Distance(c.X,c.Z,x,z)<before-.0001){s.BlockedSeconds=0;return true;}
         ShelterWait(s,c,dt,"门口或通路被挡住，等一等再走。");return false;
     }

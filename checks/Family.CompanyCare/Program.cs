@@ -75,8 +75,15 @@ Check("保暖继续要求身体余力、真实接触与当前准确同伴",()=>
         if(boundary=="pain")a.Pain=30; // Existing body-state boundary; no claim of a player injury journey.
         // One-sided references are an old-save boundary, not a gameplay action.
         if(boundary=="one-sided")child.Family.CompanionTargetId=null;
-        double warmth=child.Family.Warmth;Step(s);
-        Require(child.Family.Warmth<warmth,"invalid warmth source warmed child: "+boundary);
+        double warmth=child.Family.Warmth,started=s.State.WorldSeconds;Step(s);
+        Require(s.State.WorldSeconds==started&&child.Family.Warmth==warmth,
+            "sub-tick presentation advanced family warmth: "+boundary);
+        // Step advances 0.1 seconds, while ordinary world ticks are 0.25 seconds.
+        // Observe the first actual tick before requiring passive cooling.
+        for(int n=0;n<10&&s.State.WorldSeconds==started;n++)Step(s);
+        Require(s.State.WorldSeconds>started&&child.Family.Warmth<warmth,
+            "invalid warmth source did not cool after a world tick: "+boundary+
+            $" (before={warmth}, after={child.Family.Warmth}, time={s.State.WorldSeconds})");
     }
 });
 

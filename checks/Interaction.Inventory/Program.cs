@@ -31,11 +31,15 @@ RoomObject Reserve(WorldSimulation s)
     return obj;
 }
 
-Check("playtest free purchases replenish actual inventory and a held offer consumes once",()=>
+Check("playtest paid purchases replenish actual inventory and a held offer consumes once",()=>
 {
     var s=Fresh();var c=s.Selected!;s.State.Food=0;s.State.Money=0;
-    Require(s.UsesConsumableStock&&s.State.UnlimitedResources&&!s.BeginInteractionGesture(c.Id,Meal()).Success,"free money granted invisible food");
-    Require(s.BuyFood()&&s.State.Money==0&&s.State.Food==WorldSimulation.FoodBundleCount,"free purchase skipped real inventory");
+    Require(s.UsesConsumableStock&&!s.State.UnlimitedResources&&!s.BeginInteractionGesture(c.Id,Meal()).Success,"new courtyard bypassed finite inventory");
+    s.State.UnlimitedResources=true;
+    Require(!s.BeginInteractionGesture(c.Id,Meal()).Success,"unlimited flag granted invisible food");
+    string before=Snapshot(s);Require(!s.BuyFood()&&Snapshot(s)==before,"courtyard purchase bypassed payment");
+    s.State.Money=WorldSimulation.FoodBundlePrice;
+    Require(s.BuyFood()&&s.State.Money==0&&s.State.Food==WorldSimulation.FoodBundleCount,"paid purchase skipped real inventory");
     Offer(s);int stock=s.State.Food;double fullness=c.Fullness;
     Hold(s,Meal(),30);s.EndInteractionGesture(cancelled:true);
     Require(stock==WorldSimulation.FoodBundleCount-1&&s.State.Food==stock&&c.Fullness==fullness,"hold or cancel duplicated or refunded accepted food");
@@ -60,7 +64,7 @@ Check("placing then hand-feeding a real supply consumes its portion without char
     s.EndInteractionGesture(cancelled:true);Require(s.ReleaseSupply(obj.Id,1.2,0),"empty held object failed to release");
     Require(!s.PutAwayRoomObject(obj.Id)&&s.State.Food==0,"consumed physical portion refunded after release");
 });
-Check("natural reserved food returns once before entry and never after entry",()=>
+Check("recycling waits for intake and physical cancellation returns only unaccepted food",()=>
 {
     foreach(bool accepted in new[]{false,true})
     {
@@ -68,20 +72,32 @@ Check("natural reserved food returns once before entry and never after entry",()
         if(accepted)
             for(int n=0;n<50&&c.Interaction.NaturalIntakePending;n++)s.AdvanceInteractionPresentation(.05);
         Require(!accepted||!c.Interaction.NaturalIntakePending&&c.Interaction.Digestion.Exposures==1,"natural mouthful never entered");
-        // The fully consumed source can already be pruned; either way it cannot refund.
-        bool removed=s.PutAwayRoomObject(obj.Id);
-        Require(accepted?s.State.Food==0:removed&&s.State.Food==1&&!c.Interaction.NaturalIntakePending,
-            "return confused a reservation with food already accepted");
+        string before=Snapshot(s);
+        Require(!s.PutAwayRoomObject(obj.Id)&&Snapshot(s)==before,"recycling interrupted an active mouthful");
+        // Actual pickup, rather than recycling, interrupts the contact. A pending
+        // portion returns to its source; an accepted portion must never return.
+        Require(s.HoldSupply(obj.Id),"physical pickup did not interrupt intake");
+        Require(!c.Interaction.NaturalIntakePending&&obj.Portions==(accepted?0:1)&&s.State.Food==0,
+            "pickup confused a reservation with food already accepted");
+        Require(s.ReleaseSupply(obj.Id,2,0),"picked-up source could not be placed clear of the body");
+        Require(s.PutAwayRoomObject(obj.Id)==!accepted&&s.State.Food==(accepted?0:1),
+            "idle source returned the wrong number of portions");
         Require(!s.PutAwayRoomObject(obj.Id)&&s.State.Food==(accepted?0:1),"repeated return cloned a portion");
         SaveStore.Validate(s.State);
     }
 });
-Check("full inventory refuses reserved-food return before cancelling any intake",()=>
+Check("recycling preserves active intake and full inventory refuses an idle portion atomically",()=>
 {
     var s=Fresh();var obj=Reserve(s);s.State.Food=int.MaxValue;
     string before=Snapshot(s);Require(!s.PutAwayRoomObject(obj.Id)&&Snapshot(s)==before,"full return cancelled the reserved intake or overflowed stock");
     s.State.Food=int.MaxValue-1;
-    Require(s.PutAwayRoomObject(obj.Id)&&s.State.Food==int.MaxValue&&!s.Selected!.Interaction.NaturalIntakePending,"one exact remaining slot did not accept one returned reservation");
+    before=Snapshot(s);Require(!s.PutAwayRoomObject(obj.Id)&&Snapshot(s)==before,"available stock space interrupted active intake");
+    Require(s.HoldSupply(obj.Id)&&s.ReleaseSupply(obj.Id,2,0)&&obj.Portions==1&&!s.Selected!.Interaction.NaturalIntakePending,
+        "physical pickup did not restore the unaccepted portion");
+    s.State.Food=int.MaxValue;before=Snapshot(s);
+    Require(!s.PutAwayRoomObject(obj.Id)&&Snapshot(s)==before,"full return lost the idle portion or overflowed stock");
+    s.State.Food=int.MaxValue-1;
+    Require(s.PutAwayRoomObject(obj.Id)&&s.State.Food==int.MaxValue,"one exact remaining slot did not accept one idle portion");
     SaveStore.Validate(s.State);
 });
 Check("ordinary care requires real medicine and cancelled or completed contact cannot duplicate a dose",()=>
@@ -89,7 +105,8 @@ Check("ordinary care requires real medicine and cancelled or completed contact c
     var s=Fresh();var c=s.Selected!;s.Hurt(c,12,"检查护理用实际伤害",null,BodyPart.Side);s.State.Medicine=0;
     var input=new InteractionInput(InteractionAction.Care,BodyPart.Side,Duration:.1);double health=c.Health;
     Require(!s.BeginInteractionGesture(c.Id,input).Success&&c.Health==health,"empty test-mode stock supplied treatment");
-    Require(s.BuyMedicine()&&s.State.Money==0&&s.State.Medicine==WorldSimulation.MedicineBundleCount,"free medicine purchase failed");
+    int money=s.State.Money;
+    Require(s.BuyMedicine()&&s.State.Money==money-WorldSimulation.MedicineBundlePrice&&s.State.Medicine==WorldSimulation.MedicineBundleCount,"paid medicine purchase failed");
     Require(s.BeginInteractionGesture(c.Id,input).Success,"care begin refused");Hold(s,input,7);s.EndInteractionGesture(cancelled:true);
     Require(s.State.Medicine==3&&c.Health==health&&c.Interaction.Injuries.At(BodyPart.Side)!.CareRemaining==0,"partial care granted a dose");
     Require(s.BeginInteractionGesture(c.Id,input).Success,"care restart refused");Hold(s,input,20);
@@ -118,21 +135,24 @@ Check("wait training and teasing require an existing portion and cancellation do
     string id=s.State.RoomObjects[0].Id;s.ExecuteInteraction(c.Id,new(InteractionAction.Stop));
     Require(s.State.Food==0&&s.PutAwayRoomObject(id)&&s.State.Food==1&&!s.PutAwayRoomObject(id),"cancelled cue refunded separately from its actual object");
 });
-Check("free and paid purchasing reject full bundles atomically without changing old legal stocks",()=>
+Check("courtyard purchasing always charges and rejects full bundles atomically",()=>
 {
-    foreach(bool free in new[]{false,true})
+    foreach(bool unlimited in new[]{false,true})
     {
-        var s=Fresh();s.State.UnlimitedResources=free;s.State.Money=100;
+        var s=Fresh();s.State.UnlimitedResources=unlimited;s.State.Money=100;
         s.State.Food=int.MaxValue-WorldSimulation.FoodBundleCount+1;s.State.Medicine=int.MaxValue-WorldSimulation.MedicineBundleCount+1;
         SaveStore.Validate(s.State);string before=Snapshot(s);
         Require(!s.BuyFood()&&!s.BuyMedicine()&&Snapshot(s)==before,"full-stock purchase lost money or truncated a bundle");
         s.State.Food=int.MaxValue-WorldSimulation.FoodBundleCount;s.State.Medicine=int.MaxValue-WorldSimulation.MedicineBundleCount;
         Require(s.BuyFood()&&s.BuyMedicine()&&s.State.Food==int.MaxValue&&s.State.Medicine==int.MaxValue&&
-            s.State.Money==(free?100:75),"exact-capacity purchase did not preserve original price and bundle");
+            s.State.Money==100-WorldSimulation.FoodBundlePrice-WorldSimulation.MedicineBundlePrice,"exact-capacity purchase did not preserve paid price and bundle");
         SaveStore.Validate(s.State);
     }
-    var poor=Fresh();poor.State.UnlimitedResources=false;poor.State.Money=0;string snapshot=Snapshot(poor);
-    Require(!poor.BuyFood()&&!poor.BuyMedicine()&&Snapshot(poor)==snapshot,"insufficient money partially committed a purchase");
+    foreach(bool unlimited in new[]{false,true})
+    {
+        var poor=Fresh();poor.State.UnlimitedResources=unlimited;poor.State.Money=0;string snapshot=Snapshot(poor);
+        Require(!poor.BuyFood()&&!poor.BuyMedicine()&&Snapshot(poor)==snapshot,"insufficient money partially committed a purchase");
+    }
 });
 Check("feeder refilling respects actual stock and refuses overflowing storage before debiting",()=>
 {
@@ -149,6 +169,9 @@ Check("non-playtest unlimited sandbox keeps its legacy unlimited materials",()=>
     Require(s.Contact(c.Id,new(ContactAction.Treat)).Success&&s.State.Medicine==0,"legacy sandbox treatment lost its unlimited mode");
     int stock=s.ActiveRegion.Facilities.Single(f=>f.Kind==FacilityKind.Feeder).Stock;
     Require(s.Refill()&&s.ActiveRegion.Facilities.Single(f=>f.Kind==FacilityKind.Feeder).Stock==stock+10&&s.State.Food==0,"legacy sandbox refill began charging inventory");
+    s.State.Money=0;
+    Require(s.BuyFood()&&s.BuyMedicine()&&s.State.Money==0&&s.State.Food==WorldSimulation.FoodBundleCount&&
+        s.State.Medicine==WorldSimulation.MedicineBundleCount,"non-courtyard sandbox lost its free purchases");
 });
 Check("staff care consumes only actual successful doses in a finite-resource world",()=>
 {

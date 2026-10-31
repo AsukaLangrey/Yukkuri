@@ -70,7 +70,11 @@ public sealed partial class WorldSimulation
             if(obj.CarrierId is { } carrierId&&State.Creatures.Find(c=>c.Id==carrierId) is { } carrier)
                 CancelFamilyCare(carrier,reason:"食水移入仓库，原来的递送已停止。");
             foreach(var s in State.SupplyStations)if(s.OutletObjectId==id)s.OutletObjectId=null;
-            State.RoomObjects.Remove(obj);if(item!=null)ChangeShopQuantity(item,count);
+            // A treasure is personally remembered. Returning its warehouse token
+            // must not erase its identity and turn the same item into a new gift.
+            if(obj.Kind==RoomObjectKind.Treasure)obj.Stored=true;
+            else State.RoomObjects.Remove(obj);
+            if(item!=null)ChangeShopQuantity(item,count);
             if(PortableStatus(id) is { } removedMotion)State.PortableMotions.Remove(removedMotion);
             return item==null?"已收拾废弃物。":"物品已回仓，未退钱。";
         }

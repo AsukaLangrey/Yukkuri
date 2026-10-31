@@ -4,6 +4,14 @@ using Yukkuri.Simulation;
 
 // For the independently authorized Alice/dot test host only. Never run on the development workstation.
 int failures = 0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok, string message) { if (!ok) throw new Exception(message); }
 void Check(string name, Action action)
 {
@@ -65,7 +73,7 @@ Check("后来发现只确认已经离世，不编造亲眼经过或死因", () =
 Check("冷藏内部死亡不广播，取出后才可能被发现", () =>
 {
     var sim = Fixture(); var deceased = sim.State.Creatures[0]; var observer = sim.State.Creatures[1];
-    sim.SetColdStorage(deceased.Id, true); Require(deceased.Family.ColdStorage.Stored, "冷藏前置失败");
+    BuyTool(sim,"freezer");sim.SetColdStorage(deceased.Id, true); Require(deceased.Family.ColdStorage.Stored, "冷藏前置失败");
     Kill(sim, deceased); Tick(sim, .5);
     Require(!observer.Family.KnownLosses.ContainsKey(deceased.Id), "隔着冷藏获知死亡");
     sim.LayToRest(deceased.Id); Require(!deceased.Family.Memorialized, "未取出就安置了冷藏遗体");

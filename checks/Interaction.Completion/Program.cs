@@ -3,6 +3,13 @@ using Yukkuri.Simulation;
 
 int failures=0;
 void Require(bool condition,string why){if(!condition)throw new Exception(why);}
+void BuyFixtureProduct(WorldSimulation sim,string id,int packs=1)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id,packs)&&sim.State.Money==money-product.Price*packs&&
+        sim.ShopQuantity(id)==stock+product.Pack*packs,"fixture purchase failed exact debit/stock: "+id);
+}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
 string Snapshot(WorldSimulation sim)=>JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
@@ -27,7 +34,7 @@ void Complete(WorldSimulation sim,InteractionInput input)
 {for(int n=0;n<16;n++)Require(sim.ContinueInteractionGesture(input,true).Success,"continuous action refused");}
 WorldSimulation Loose()
 {
-    var sim=Brood();var input=Stem(InteractionAction.CutStem);
+    var sim=Brood();BuyFixtureProduct(sim,"scissors");var input=Stem(InteractionAction.CutStem);
     Require(sim.BeginInteractionGesture(sim.Selected!.Id,input).Success,"cut begin refused");Complete(sim,input);
     Require(sim.InteractionCompletionProgress==1,"cut did not expose completed contact");sim.EndInteractionGesture();return sim;
 }
@@ -56,6 +63,7 @@ Check("cut bottle and clearing share one timed channel while burn and carry expo
     Complete(sim,input);Require(sim.InteractionCompletionProgress==1,"bottle completion missing");sim.EndInteractionGesture();
     input=Detached(InteractionAction.Lift);Require(sim.BeginDetachedStemGesture("completion-fixture",input).Success,"lift refused");
     Require(sim.InteractionCompletionProgress==null,"carry invented completion");sim.EndInteractionGesture();
+    BuyFixtureProduct(sim,"lighter");
     input=Detached(InteractionAction.Burn);Require(sim.BeginDetachedStemGesture("completion-fixture",input).Success,"burn refused");
     sim.ContinueInteractionGesture(input,true);Require(sim.InteractionCompletionProgress==null,"burn invented completion");sim.EndInteractionGesture();
     for(int n=0;n<6&&sim.State.DetachedStemBroods[0].Phase!=DetachedStemPhase.Failed;n++)
@@ -82,7 +90,7 @@ Check("real held meal and water expose timed contact but normal body actions do 
         for(int n=0;n<8;n++)sim.ContinueInteractionGesture(input,true);
         Require(sim.InteractionCompletionProgress==1&&source.Portions==0,"refill did not settle once");sim.EndInteractionGesture();
     }
-    var body=Brood();Require(body.BeginInteractionGesture(body.Selected!.Id,new(InteractionAction.Burn,BodyPart.Side,Duration:.1)).Success,"body burn refused");
+    var body=Brood();BuyFixtureProduct(body,"lighter");Require(body.BeginInteractionGesture(body.Selected!.Id,new(InteractionAction.Burn,BodyPart.Side,Duration:.1)).Success,"body burn refused");
     Require(body.InteractionCompletionProgress==null,"ordinary body action got a stem completion bar");
 });
 

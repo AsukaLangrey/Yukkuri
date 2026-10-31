@@ -60,6 +60,12 @@ foreach(ulong seed in seeds)
             if(c.Interaction.Digestion.Symptomatic)m.SickSeconds++;
             m.Exposures=c.Interaction.Digestion.Exposures;m.Episodes=c.Interaction.Digestion.Episodes;
             m.FinalHealth=c.Health;m.FinalEnergy=c.Energy;m.FinalFullness=c.Fullness;m.FinalWater=c.Interaction.Hydration;
+            // A real water attempt may advance within water, but only a valid
+            // full-body landing may release it to ordinary dry-ground movement.
+            if(c.Interaction.Water.EventId!=null&&!WaterEnvironment.IsInWater(sim.State,c)&&
+                !c.Interaction.Carried&&!c.Interaction.Falling&&c.Interaction.Height<=.1&&
+                !WoodlandLayout.GroundFits(sim.State,c.RegionId,c.X,c.Z,WorldSimulation.InteractionFootprint(c)))
+                m.InvalidDryBankSeconds++;
         }
         if(step%600==0)
         {
@@ -74,6 +80,7 @@ foreach(ulong seed in seeds)
         if(scenario!="scarcity"&&m.MinimumEnergy<1)errors.Add(m.Name+": exhausted despite reachable rest");
         if(m.LongestBedSearch>60)errors.Add(m.Name+": cushion search did not fall back within a minute");
         if(m.RestStarts>40)errors.Add(m.Name+": rest oscillated instead of finishing sustained sessions");
+        if(m.InvalidDryBankSeconds>0)errors.Add(m.Name+": water exit left body straddling an impassable dry bank");
         if(scenario is "clean-supply" or "fatigue" or "blocked-cushion" or "illness" or "injured-ground" or "injured-cushion" or "wrapped")
         {
             if(m.MinimumFullness<12||m.MinimumWater<12)errors.Add(m.Name+": available clean supply did not sustain basic needs");
@@ -118,4 +125,5 @@ sealed class Measure
     public double FinalEnergy {get;set;}
     public double FinalFullness {get;set;}
     public double FinalWater {get;set;}
+    public double InvalidDryBankSeconds {get;set;}
 }

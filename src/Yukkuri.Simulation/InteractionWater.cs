@@ -187,8 +187,14 @@ public sealed partial class WorldSimulation
                     return false;
                 }
                 // Each attempt can make real progress toward the bank, but exhaustion/disability matters.
-                double xNext=c.X-Math.Min(.18,.04+c.Energy*.0014);
-                bool advanced=CanOccupyRoom(c,xNext,c.Z,allowWater:true);
+                // Progress is not a successful landing. Keep the centre on the
+                // water side until the existing full-body bank-spot check above
+                // succeeds. Crossing only the centre would clear InWater while
+                // the footprint still overlaps the bank, where every small dry
+                // movement step is rejected and the creature cannot move away.
+                double xNext=Math.Max(WoodlandLayout.RiverEdge(c.Z)+.001,
+                    c.X-Math.Min(.18,.04+c.Energy*.0014));
+                bool advanced=xNext<c.X-1e-9&&CanOccupyRoom(c,xNext,c.Z,allowWater:true);
                 if(advanced)c.X=xNext;
                 RecordWaterAttempt(c,advanced?WaterAttemptOutcome.Advanced:WaterAttemptOutcome.Blocked);
                 c.TargetX=c.X;c.TargetZ=c.Z;

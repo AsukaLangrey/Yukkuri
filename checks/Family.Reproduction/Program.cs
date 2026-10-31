@@ -87,7 +87,13 @@ Check("茎生与胎生都能完整经过孕育出生恢复，时间数量负担�
         Require(babies.All(c=>c.Fullness>0&&c.Interaction.Hydration>0),"出生没有可继续照护的需求状态");
         // This branch starts from the explicit deep-bond fixture above. Birth,
         // the whole brood's actual nursery care and recovery use real clocks/actions.
+        int wraps=sim.ShopQuantity("wrap"),money=sim.State.Money;
+        int price=CourtyardShop.Products.Single(p=>p.Id=="wrap").Price;
+        Require(sim.BuyShopProduct("wrap",babies.Length)&&sim.ShopQuantity("wrap")==wraps+babies.Length&&
+            sim.State.Money==money-price*babies.Length,"本窝实际保暖包裹购买未按数量扣款入库");
         FamilyNurseryJourney.Run(sim,m,sim.State.Creatures[1],m.Family.Pregnancy.EventId!);
+        Require(babies.All(c=>c.Interaction.Restraint!=RestraintKind.Wrap)&&
+            sim.ShopQuantity("wrap")==wraps+babies.Length,"育幼结束后包裹没有逐件真实归还");
     }
     Require(FamilyRules.GestationSeconds(BirthMethod.Live)>FamilyRules.GestationSeconds(BirthMethod.Stem),"胎生周期没有更长");
     Require(counts[BirthMethod.Live]<counts[BirthMethod.Stem],"胎生数量没有更少");

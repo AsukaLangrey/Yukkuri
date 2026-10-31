@@ -2,7 +2,15 @@ using System.Text.Json;
 using Yukkuri.Simulation;
 
 // Execute only on the authorised independent remote host, never the original workstation.
-int failures=0;const string key="safe:Meal";
+int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+const string key="safe:Meal";
 void Require(bool ok,string message){if(!ok)throw new Exception(message);}
 void Check(string name,Action action)
 {try{action();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
@@ -119,7 +127,7 @@ Check("冷藏打断不学会，重复点击不跳过过程或完成冷却",()=>
     double elapsed=teacher.Family.Lesson!.Elapsed;
     for(int n=0;n<20;n++)sim.TeachFamilyKnowledge(teacher.Id,child.Id,key);
     Require(teacher.Family.Lesson!.Elapsed==elapsed&&!child.Family.LifeKnowledge.ContainsKey(key),"重复点击跳过教导");
-    sim.SetColdStorage(child.Id,true);
+    BuyTool(sim,"freezer");sim.SetColdStorage(child.Id,true);
     Require(child.Family.ColdStorage.Stored&&teacher.Family.Lesson==null&&!child.Family.LifeKnowledge.ContainsKey(key),"冷藏打断未清课程或奖励了没听完的知识");
     Require(teacher.Family.NextLessonAt>sim.State.WorldSeconds&&child.Family.NextLessonAt>sim.State.WorldSeconds,"打断没有留下消化间隔");
     var complete=Fixture();Start(complete);Finish(complete);teacher=complete.State.Creatures[0];child=complete.State.Creatures[1];

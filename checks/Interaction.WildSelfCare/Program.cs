@@ -8,6 +8,13 @@ using Yukkuri.Simulation;
 int failures=0;
 void Require(bool value,string message){if(!value)throw new Exception(message);}
 void Near(double a,double b,string message,double tolerance=1e-7)=>Require(Math.Abs(a-b)<=tolerance,message+$" ({a} != {b})");
+void BuyFixtureProduct(WorldSimulation sim,string id,int packs=1)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id,packs)&&sim.State.Money==money-product.Price*packs&&
+        sim.ShopQuantity(id)==stock+product.Pack*packs,"fixture purchase failed exact debit/stock: "+id);
+}
 void Check(string name,Action check)
 {try{check();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
 void Tick(WorldSimulation sim,double seconds)
@@ -191,7 +198,7 @@ Check("真实托举、冷藏、新伤与死亡立即取消未完成效果",()=>
     {
         var sim=Branch(true);var c=sim.Selected!;var wound=c.Interaction.Injuries.At(BodyPart.Side)!;
         if(interruption=="lift")Require(sim.BeginInteractionGesture(c.Id,new(InteractionAction.Lift,BodyPart.Side,Height:1)).Success&&c.Interaction.Carried,"前置托举失败");
-        if(interruption=="cold"){sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"前置冷藏失败");}
+        if(interruption=="cold"){BuyFixtureProduct(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"前置冷藏失败");}
         if(interruption=="injury")sim.Hurt(c,1,"再次擦碰",null,BodyPart.Side);
         if(interruption=="death")
         {c.FillingIntegrity=1;sim.Hurt(c,30,"致命创伤",null);Require(c.Condition==PhysicalCondition.Dead,"前置未真实死亡");}

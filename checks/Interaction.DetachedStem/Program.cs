@@ -3,6 +3,13 @@ using Yukkuri.Simulation;
 
 int failures=0;
 void Require(bool ok,string why){if(!ok)throw new Exception(why);}
+void BuyFixtureProduct(WorldSimulation sim,string id,int packs=1)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id,packs)&&sim.State.Money==money-product.Price*packs&&
+        sim.ShopQuantity(id)==stock+product.Pack*packs,"fixture purchase failed exact debit/stock: "+id);
+}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
 string Snapshot(WorldSimulation sim)=>JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
@@ -15,6 +22,8 @@ void Frame(WorldSimulation sim,double dt=.1){sim.AdvanceInteractionPresentation(
 WorldSimulation Attached(double elapsed=0)
 {
     var sim=WorldSimulation.CreateInteractionPlaytest(20261031);sim.State.RoomObjects.Clear();
+    // Cutting requires one reusable purchased tool in the v54 courtyard.
+    BuyFixtureProduct(sim,"scissors");
     for(int n=0;n<sim.State.Creatures.Count;n++)
     {
         var c=sim.State.Creatures[n];c.X=-2+n*2;c.Z=0;c.TargetX=c.X;c.TargetZ=0;
@@ -251,7 +260,7 @@ Check("burn sampling and visible/unknown witnesses use the independent object's 
 {
     (double Integrity,double Trust,double Alarm) Burn(double dt,int samples)
     {
-        var sim=Loose();Bottle(sim);var s=Brood(sim);var observer=sim.State.Creatures[1];
+        var sim=Loose();Bottle(sim);BuyFixtureProduct(sim,"lighter");var s=Brood(sim);var observer=sim.State.Creatures[1];
         observer.X=s.X+2;observer.Z=s.Z;observer.TargetX=observer.X;observer.TargetZ=observer.Z;
         double trust=observer.Trust,alarm=observer.Interaction.Emotion.Alarm;
         var input=Input(sim,InteractionAction.Burn,dt:dt,force:1);Hold(sim,input,0);
@@ -317,6 +326,7 @@ Check("pause, close-up, cross-region and wrong object reject without spending or
 Check("mother cold storage and new pregnancy cannot take ownership of detached life",()=>
 {
     var sim=Loose();Bottle(sim);var s=Brood(sim);var mother=sim.Selected!;
+    BuyFixtureProduct(sim,"freezer");
     sim.SetColdStorage(mother.Id,true);Require(mother.Family.ColdStorage.Stored,"mother cold storage fixture failed");
     double elapsed=s.Elapsed;for(int n=0;n<10;n++)Frame(sim);
     Require(Math.Abs(s.Elapsed-elapsed-1)<1e-7,"mother's cold clock slowed independent brood");
@@ -392,8 +402,8 @@ Check("independent bottle receives bought ground supplies after every adult has 
     Require(!sim.ExecuteInteraction(mother.Id,new(InteractionAction.PlaceWater,X:-5,Z:-5)).Success&&Snapshot(sim)==before,
         "legacy body path bypassed its original death qualification");
     int stock=sim.State.Food,money=sim.State.Money;
-    Require(sim.BuyFood()&&sim.State.Food==stock+WorldSimulation.FoodBundleCount&&sim.State.Money==money,
-        "real testing purchase failed to add finite food stock");
+    Require(sim.BuyFood()&&sim.State.Food==stock+WorldSimulation.FoodBundleCount&&sim.State.Money==money-WorldSimulation.FoodBundlePrice,
+        "real paid purchase failed exact debit or finite food stock");
     int meals=0,waters=0;
     void Give(InteractionAction action)
     {
@@ -464,10 +474,14 @@ Check("independent ground placement retains world gates and failed transactions 
     Reject(InteractionAction.PlaceMeal,s.X,s.Z);
     int food=sim.State.Food;sim.State.Food=0;Reject(InteractionAction.PlaceMeal);sim.State.Food=food;
     NaturalResources.AddWoodland(sim.State,region);Reject(InteractionAction.PlaceWater,7.1,0);
+    // Isolate the object-cap boundary from the separate finite-water budget.
+    BuyFixtureProduct(sim,"water");int water=sim.State.StationWaterPortions;
+    Require(water>24,"capacity fixture needs stock left after all 24 placements");
     for(int n=0;n<24;n++)Require(sim.PlaceInteractionSupply(InteractionAction.PlaceWater,-5,-5).Success,"existing ground-object capacity changed");
     Reject(InteractionAction.PlaceWater);Reject(InteractionAction.PlaceMeal);
-    Require(sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Water)==24&&sim.State.Food==food,
-        "water invented stock costs or the 24 object cap was bypassed");
+    Require(sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Water)==24&&sim.State.Food==food&&
+        sim.State.StationWaterPortions==water-24,
+        "water debit changed or the 24 object cap was bypassed");
 });
 
 return failures==0?0:1;

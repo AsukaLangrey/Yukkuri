@@ -36,18 +36,27 @@ Check("all three peer strike paths apply one injury, one incident and one victim
         var sim=Fixture(kind);var actor=sim.State.Creatures[0];var observer=sim.State.Creatures[1];var victim=sim.State.Creatures[2];
         double trust=victim.Trust,observerTrust=observer.Trust,humanHarm=victim.Interaction.HumanBond.LastHarmAt;
         double damage=kind=="family"?10.5:kind=="child"?12:6.5;
+        double alarmBeforeStrike=victim.Interaction.Emotion.Alarm;
         if(kind=="hunger")
         {
             // Hunger now has a real interruptible contact preparation. Keep the
             // original one-injury/one-memory assertions at the first real strike.
             for(int n=0;n<40&&!sim.State.Incidents.Any(e=>e.Kind==IncidentKind.Attack&&e.ActorId==actor.Id&&e.TargetId==victim.Id);n++)
-                sim.Advance(.25);
+            {alarmBeforeStrike=victim.Interaction.Emotion.Alarm;sim.Advance(.25);}
         }
         else sim.Advance(.25);
         var incident=Attack(sim);
         Require(100-victim.Health>=damage-.1&&100-victim.Health<=damage+.1,"bodily damage was omitted or applied twice");
-        Require(victim.Interaction.Emotion.Alarm>=damage*2&&victim.Interaction.Emotion.Alarm<=damage*2+.2,
-            "actual harm was absent from continuity, or old hunger/warning consequences were double counted");
+        // The real interruptible preparation may already have raised alarm.
+        // Keep that history; this strike must add exactly one damage contribution
+        // plus at most one ordinary 0.25-second warning sample (0.15).
+        if(kind=="hunger")Require(alarmBeforeStrike>0,"real interruptible hunger preparation never warned the victim");
+        Require(alarmBeforeStrike<=sim.State.WorldSeconds*.6+.000001,
+            "pre-strike warning alarm exceeded its actual elapsed-time budget");
+        Require(victim.Interaction.Emotion.Alarm>=alarmBeforeStrike+damage*2&&
+            victim.Interaction.Emotion.Alarm<=alarmBeforeStrike+damage*2+.2,
+            "actual harm was absent from continuity, or old hunger/warning consequences were double counted"+
+            $" kind={kind}, alarm={victim.Interaction.Emotion.Alarm}, expectedDamageAlarm={damage*2}, world={sim.State.WorldSeconds}");
         Require(victim.PersonalMemories.Count(m=>m.IncidentId==incident.Id)==1&&incident.Severity==(kind=="family"?damage:8),
             "strike identity, original severity, or victim memory duplicated");
         Require(victim.Trust==trust&&observer.Trust==observerTrust&&victim.Interaction.HumanBond.LastHarmAt==humanHarm,

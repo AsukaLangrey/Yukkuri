@@ -509,7 +509,7 @@ public sealed partial class WorldSimulation
                 (o.Stored||o.RegionId==c.RegionId&&Distance(c.X,c.Z,o.X,o.Z)<1.8))||c.Fear<30&&c.Pain<20;
     }
 
-    private void RoomMove(Creature c, double x, double z, double dt)
+    private void RoomMove(Creature c, double x, double z, double dt, bool slide=true)
     {
         if (!CanSelfMove(c)) return;
         double speed = UsesGroundFoot(c) ? Math.Clamp(c.Interaction.FootIntegrity / 100, .3, 1) : 1;
@@ -520,7 +520,7 @@ public sealed partial class WorldSimulation
         double dx = (x - c.X) / distance, dz = (z - c.Z) / distance;
         double previousX=c.X,previousZ=c.Z;
         double edge=8-InteractionFootprint(c);
-        GroundMove(c,Math.Clamp(c.X+dx*step,-edge,edge),Math.Clamp(c.Z+dz*step,-edge,edge),true);
+        GroundMove(c,Math.Clamp(c.X+dx*step,-edge,edge),Math.Clamp(c.Z+dz*step,-edge,edge),slide);
         var life=c.Interaction;
         // A finished mouthful may acknowledge swallowing while planted. Once
         // actual autonomous travel begins, hand its pose back to the walking gait.
@@ -580,7 +580,7 @@ public sealed partial class WorldSimulation
     {
         var obj = State.RoomObjects.Find(o => o.Id == id);
         if (obj == null || obj.Stored || obj.HeldByHand || obj.Kind == RoomObjectKind.Cushion || NaturalResources.IsWild(obj.Kind)) return false;
-        if(State.InteractionPlaytest){RecycleCourtyardObject(id);return !State.RoomObjects.Contains(obj);}
+        if(State.InteractionPlaytest){RecycleCourtyardObject(id);return obj.Stored||!State.RoomObjects.Contains(obj);}
         bool returnsFood=UsesConsumableStock&&obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet;
         // Pending natural intake reserved a portion but has not accepted it.
         // Include that returned reservation before interrupting any real care.

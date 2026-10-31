@@ -67,6 +67,21 @@ WorldSimulation AfterHarm(string need="warmth",bool adultRecipient=false,bool es
     }
     throw new Exception("no actual interrupted early-recovery fixture was reached");
 }
+void BringBeside(WorldSimulation s,Creature caregiver,Creature recipient)
+{
+    // Waiting for recovery does not suspend ordinary wandering. Rejoin through
+    // actual supported placement before testing close physical warmth/care.
+    double gap=WorldSimulation.InteractionFootprint(caregiver)+WorldSimulation.InteractionFootprint(recipient)+.1;
+    Require(s.BeginInteractionGesture(caregiver.Id,new(InteractionAction.Lift,BodyPart.Side,.1,Height:.8)).Success,
+        "caregiver could not actually be lifted to rejoin the recipient");
+    Require(s.ExecuteInteraction(caregiver.Id,new(InteractionAction.PutDown,BodyPart.Side,X:recipient.X,Z:recipient.Z+gap)).Success,
+        "caregiver could not actually be placed beside the recipient");
+    s.EndInteractionGesture();
+    for(int n=0;n<100&&(caregiver.Interaction.Falling||caregiver.Interaction.Lowering||caregiver.Interaction.Height>.05);n++)Step(s);
+    Require(!caregiver.Interaction.Falling&&!caregiver.Interaction.Lowering&&caregiver.Interaction.Height<=.05&&
+        WorldSimulation.Distance(caregiver.X,caregiver.Z,recipient.X,recipient.Z)<=gap+.05,
+        "real caregiver placement never established nearby ground contact");
+}
 void Arrange(WorldSimulation s,Creature caregiver,Creature recipient)
 {
     Require(s.FamilyCareReason(caregiver.Id,recipient.Id)==null,"necessary physical care was refused: "+s.FamilyCareReason(caregiver.Id,recipient.Id));
@@ -154,11 +169,13 @@ Check("care remains physical after thirty seconds while the same recent injury i
 {
     var s=AfterHarm();var a=s.State.Creatures[0];var r=s.State.Creatures[2];double harm=r.Family.Peers[a.Id].LastHarmAt;
     while(s.State.WorldSeconds-harm<35)Step(s);
+    BringBeside(s,a,r);
     Require(!EmotionalReadiness.Settled(r),"the actual substantial injury unexpectedly lost its aftermath");
     var beforeA=Earned(a,r);var beforeR=Earned(r,a);double warmth=r.Family.Warmth;
     Arrange(s,a,r);Tick(s,4);
     Require(r.Family.Warmth>warmth&&Earned(a,r)==beforeA&&Earned(r,a)==beforeR,
-        "thirty seconds alone converted necessary care into forgiveness");
+        "thirty seconds alone converted necessary care into forgiveness"+
+        $" warmth={warmth}->{r.Family.Warmth}, A={beforeA}->{Earned(a,r)}, R={beforeR}->{Earned(r,a)}, positions={a.X},{a.Z}/{r.X},{r.Z}, activity={a.Activity}, care={a.Family.CareLastEvent}");
 });
 Check("paused and reloaded transport preserves the portion and the original harmful-care restriction",()=>
 {
@@ -182,6 +199,7 @@ Check("real safe recovery and subsequent sustained care can establish a stable r
         if(a.Fullness<75)Meal(s,a);Tick(s,1);
     }
     Require(Earned(a,r).Care==0&&!r.Family.CaregiverIds.Contains(a.Id),"waiting alone earned stable care credit");
+    BringBeside(s,a,r);
     double start=s.State.WorldSeconds;
     while(!r.Family.CaregiverIds.Contains(a.Id)&&s.State.WorldSeconds-start<180)
     {

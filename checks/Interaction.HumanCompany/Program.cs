@@ -2,6 +2,14 @@ using System.Text.Json;
 using Yukkuri.Simulation;
 
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string message){if(!ok)throw new Exception(message);}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
@@ -104,7 +112,7 @@ Check("暂停和近看不会增长陪伴时间、记忆或关系",()=>
 });
 Check("冷藏立即结束主动陪伴，冷藏内无隔空关系增长",()=>
 {
-    var sim=Create();var c=sim.Selected!;Start(sim);Step(sim,10);sim.SetColdStorage(c.Id,true);
+    var sim=Create();var c=sim.Selected!;Start(sim);Step(sim,10);BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
     Require(c.Family.ColdStorage.Stored&&c.Interaction.HumanCompany.Until==0,"冷藏保留陪伴请求");
     double trust=c.Trust,attachment=c.Attachment;Step(sim,80);
     Require(c.Interaction.HumanCompany.ContactSeconds==0&&Memory(c)==0&&c.Trust==trust&&c.Attachment==attachment,
@@ -193,7 +201,7 @@ Check("冷藏濒危死亡与强制准备整档不能夹带已清理的活动陪�
         var old=JsonSerializer.Deserialize<HumanCompanyState>(Company(c),SaveStore.JsonOptions)!;
         switch(transition)
         {
-            case "cold":sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"冷藏夹具失败");break;
+            case "cold":BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"冷藏夹具失败");break;
             case "critical":
             case "dead":
                 sim.Hurt(c,100,"严重外伤","player",BodyPart.Head);
@@ -316,16 +324,26 @@ Check("受伤后仍可信的手可在保留距离时陪伴，不能把重新接�
 Check("跟随的大步终点留在舒适距离外，不在靠近和退避之间来回",()=>
 {
     var sim=Create();var c=sim.Selected!;
-    sim.ExecuteInteraction(c.Id,new(InteractionAction.Punch,BodyPart.Side,0));
-    // Existing completed follow intent is a fixture; the injury and its
-    // changing distance still come from the real interaction above.
-    c.Interaction.FollowPlayer=true;c.X=sim.PreferredHumanDistance(c)+.04;c.Z=0;
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Punch,BodyPart.Side,0)).Success,"真实受击前置失败");
+    double harmAt=c.Interaction.HumanBond.LastHarmAt;
+    bool Moving()=>c.Interaction.Falling||c.Interaction.Carried||c.Interaction.Lowering||c.Interaction.Height>.05||
+        Math.Abs(c.Interaction.VelocityX)+Math.Abs(c.Interaction.VelocityZ)>.005;
+    // Let the real impact settle through the normal clock before measuring follow.
+    // Do not erase the impulse, damage or emotional response to manufacture a quiet body.
+    for(int n=0;n<200&&Moving();n++){sim.AdvanceInteractionPresentation(.05);sim.Advance(.05);}
+    Require(!Moving()&&c.Health<100&&c.Interaction.Emotion.Alarm>0&&c.Interaction.HumanBond.LastHarmAt==harmAt,
+        "受击未实际停稳，或前置抹除了伤势和惊惧");
+    Console.WriteLine($"TRACE follow settled world={sim.State.WorldSeconds:R}, vx={c.Interaction.VelocityX:R}, health={c.Health:R}, alarm={c.Interaction.Emotion.Alarm:R}");
+    // Existing completed follow intent and a legal initial position are fixtures;
+    // the injury and changing distance still come from the real interaction above.
+    c.Interaction.FollowPlayer=true;c.X=c.TargetX=sim.PreferredHumanDistance(c)+.04;c.Z=c.TargetZ=0;
     double previous=c.X;
     for(int n=0;n<20;n++)
     {
         sim.SetInteractionHand(0,0,true);sim.AdvanceInteractionPresentation(.1);sim.Advance(.25);
         Require(c.X>=sim.PreferredHumanDistance(c)-.001&&c.X<=previous+.001,
-            "跟随朝手中心跨过了安全圈，或下一步又向外退开");
+            "跟随朝手中心跨过了安全圈，或下一步又向外退开"+
+            $" (step={n}, x={c.X:R}, z={c.Z:R}, preferred={sim.PreferredHumanDistance(c):R}, previous={previous:R}, activity={c.Activity}, falling={c.Interaction.Falling}, height={c.Interaction.Height:R}, vx={c.Interaction.VelocityX:R}, vz={c.Interaction.VelocityZ:R}, vy={c.Interaction.VerticalVelocity:R}, cue={c.Interaction.ActiveCue})");
         previous=c.X;
     }
 });

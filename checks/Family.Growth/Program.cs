@@ -3,6 +3,14 @@ using Yukkuri.Simulation;
 
 // Only run on an independently authorised remote machine.
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string why){if(!ok)throw new Exception(why);}
 void Check(string name,Action run)
 {try{run();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
@@ -66,7 +74,7 @@ Check("暂停和近看不推进成长，恢复普通时间后才到龄",()=>
 Check("冷藏中成长使用十分之一身体时间而非全局时间",()=>
 {
     var sim=Fixture();var c=sim.Selected!;double age=c.Body.AgeSeconds;
-    sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"冷藏前置失败");
+    BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"冷藏前置失败");
     Tick(sim,1);
     Require(c.IsYoung&&Math.Abs(c.Body.AgeSeconds-age-.1)<1e-7,"冷藏用全速年龄使幼体过早成熟");
     Tick(sim,5);

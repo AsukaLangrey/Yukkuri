@@ -3,6 +3,14 @@ using Yukkuri.Simulation;
 
 // Remote-only check source. Never execute on the original development workstation.
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
 void Near(double value,double expected,string reason,double tolerance=1e-7)=>Require(Math.Abs(value-expected)<=tolerance,reason+$" ({value} != {expected})");
 void Check(string name,Action action)
@@ -55,7 +63,7 @@ Check("冷藏十倍延缓实际年龄与消耗，普通时间仍前进",()=>
 {
     var warm=Fixture();var cold=Reload(warm);var a=warm.State.Creatures[0];var b=cold.State.Creatures[0];
     double age=a.Body.AgeSeconds,inner=a.InnerAgeSeconds,full=a.Fullness,water=a.Interaction.Hydration;
-    cold.SetColdStorage(b.Id,true);Require(b.Family.ColdStorage.Stored,"未进入冷藏");
+    BuyTool(cold,"freezer");cold.SetColdStorage(b.Id,true);Require(b.Family.ColdStorage.Stored,"未进入冷藏");
     Tick(warm,10);Tick(cold,10);
     Near(a.Body.AgeSeconds-age,10,"普通年龄未推进");Near(b.Body.AgeSeconds-age,1,"冷藏年龄不是十分之一");
     Near(b.InnerAgeSeconds-inner,(a.InnerAgeSeconds-inner)/10,"内馅年龄未同速延缓");
@@ -68,7 +76,7 @@ Check("濒危救治时间只延缓，取出和读档不重新派发",()=>
 {
     var sim=Fixture();var c=sim.State.Creatures[0];c.Health=1;sim.Hurt(c,2,"冷藏前重伤",null);
     Require(c.Condition==PhysicalCondition.Critical,"前置未进入濒危");double before=c.CriticalRemaining;
-    sim.SetColdStorage(c.Id,true);Tick(sim,20);
+    BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"救治夹具未进入冷藏");Tick(sim,20);
     Near(before-c.CriticalRemaining,2,"冷藏把救治期冻结或按正常速度耗尽");
     double saved=c.CriticalRemaining;var loaded=Reload(sim);var copy=loaded.State.Creatures[0];
     Near(copy.CriticalRemaining,saved,"读档重置救治窗口");
@@ -77,7 +85,8 @@ Check("濒危救治时间只延缓，取出和读档不重新派发",()=>
 });
 Check("冷藏有保存期限，到期不能无限暂停生命过程",()=>
 {
-    var sim=Fixture();var c=sim.State.Creatures[0];sim.SetColdStorage(c.Id,true);
+    var sim=Fixture();var c=sim.State.Creatures[0];BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
+    Require(c.Family.ColdStorage.Stored,"前置未真正进入冷藏");
     // Near-expiry fixture tests the actual boundary without fabricating elapsed biological age.
     c.Family.ColdStorage.Elapsed=WorldSimulation.ColdStorageLimitSeconds-.5;Tick(sim,1);
     Require(!c.Family.ColdStorage.Stored,"空院保存到期仍未取出");
@@ -86,7 +95,8 @@ Check("冷藏有保存期限，到期不能无限暂停生命过程",()=>
 });
 Check("到期没有空位时仍留冷藏但不再延缓，腾空后可以取出",()=>
 {
-    var sim=Fixture();var c=sim.State.Creatures[0];sim.SetColdStorage(c.Id,true);
+    var sim=Fixture();var c=sim.State.Creatures[0];BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
+    Require(c.Family.ColdStorage.Stored,"前置未真正进入冷藏");
     for(int x=-8;x<=8;x++)for(int z=-8;z<=8;z++)
     {
         string id=$"cold-blocker-{x}-{z}";
@@ -105,7 +115,8 @@ Check("到期没有空位时仍留冷藏但不再延缓，腾空后可以取出"
 });
 Check("冷藏中死者仍能取出，不能复活或再次制造死亡",()=>
 {
-    var sim=Fixture();var c=sim.State.Creatures[0];sim.SetColdStorage(c.Id,true);
+    var sim=Fixture();var c=sim.State.Creatures[0];BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
+    Require(c.Family.ColdStorage.Stored,"前置未真正进入冷藏");
     c.FillingIntegrity=1;sim.Hurt(c,30,"冷藏中不可逆重伤",null);
     Require(c.Condition==PhysicalCondition.Dead,"前置未死亡");
     int deaths=sim.State.Incidents.Count(e=>e.Kind==IncidentKind.Death&&e.TargetId==c.Id);
@@ -116,7 +127,7 @@ Check("冷藏中死者仍能取出，不能复活或再次制造死亡",()=>
 });
 Check("暂停与近看不推进冷藏期限，原暂停不改变保存状态",()=>
 {
-    var sim=Fixture();var c=sim.State.Creatures[0];sim.State.Settings.Pause=true;sim.SetColdStorage(c.Id,true);
+    var sim=Fixture();var c=sim.State.Creatures[0];BuyTool(sim,"freezer");sim.State.Settings.Pause=true;sim.SetColdStorage(c.Id,true);
     Require(!c.Family.ColdStorage.Stored,"暂停仍进入冷藏");
     sim.State.Settings.Pause=false;sim.SetColdStorage(c.Id,true);double age=c.Body.AgeSeconds;
     sim.State.Mode=PlayMode.CloseUp;Tick(sim,20);

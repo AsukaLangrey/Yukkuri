@@ -12,6 +12,10 @@ WorldSimulation Fixture(ulong seed=1)
 {
     var sim=WorldSimulation.CreateInteractionPlaytest(unchecked(seed*11400714819323198485UL));
     sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAt(2);
+    // This component journey isolates the explicitly requested pregnancy.
+    // New courtyards allow autonomous breeding; disable that separate source
+    // through its public permission rather than assuming an old default.
+    sim.SetAutonomousBreeding(false);
     for(int n=0;n<sim.State.Creatures.Count;n++)
     {
         var c=sim.State.Creatures[n];c.IsYoung=false;c.Body.AgeSeconds=c.InnerAgeSeconds=2000;

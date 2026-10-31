@@ -3,6 +3,14 @@ using Yukkuri.Simulation;
 
 // Independent authorised test host only. Never run on the development workstation.
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
 void Check(string name,Action action)
 {try{action();Console.WriteLine("PASS "+name);}catch(Exception error){failures++;Console.WriteLine("FAIL "+name+": "+error);}}
@@ -175,6 +183,7 @@ Check("逃离冲突伤幼嘴忙排泄手势及支撑不稳时等待分娩",()=>
         {
             // Lowering is intentionally not writable here; both the suspension
             // and supported release must succeed through their actual entries.
+            BuyTool(sim,"hanger");
             Require(sim.ExecuteInteraction(m.Id,new(InteractionAction.Hang)).Success,"分娩悬挂前置入口失败");
             Require(sim.ExecuteInteraction(m.Id,new(InteractionAction.Lower)).Success,"分娩放下前置入口失败");
             Require(i.Lowering&&i.Carried&&!i.Falling&&i.Restraint==RestraintKind.None&&i.Height>0,"没有实际进入托住放下过程");

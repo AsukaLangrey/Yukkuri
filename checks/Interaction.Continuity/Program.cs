@@ -9,6 +9,14 @@ void Check(string name,Action test)
     catch(Exception e){failures++;results.Add(new{name,passed=false,error=e.Message});Console.WriteLine("FAIL "+name+": "+e.Message);}
 }
 void Require(bool condition,string why){if(!condition)throw new Exception(why);}
+// Fixture equipment is acquired through the current paid shop, not injected stock.
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&sim.ShopQuantity(id)==stock+product.Pack,
+        "paid fixture purchase failed: "+id);
+}
 WorldSimulation Fresh()=>WorldSimulation.CreateInteractionPlaytest();
 InteractionFeedback Feed(WorldSimulation sim,InteractionAction action,double seconds=.8)
 {
@@ -210,7 +218,7 @@ Check("suspended lowering and sliding bodies retain unmet excretion until ground
 {
     foreach(string situation in new[]{"suspended","lowering","sliding"})
     {
-        var sim=CompletionFixture();var c=sim.Selected!;var p=c.Interaction.Physiology;p.Bladder=100;
+        var sim=CompletionFixture();if(situation!="sliding")BuyTool(sim,"hanger");var c=sim.Selected!;var p=c.Interaction.Physiology;p.Bladder=100;
         if(situation=="sliding")c.Interaction.VelocityX=.2;
         else
         {
@@ -513,7 +521,7 @@ Check("completed or already intact repair releases movement without repeating re
 {
     foreach(bool intact in new[]{false,true})
     {
-        var sim=CompletionFixture();var c=sim.Selected!;c.Fullness=25;
+        var sim=CompletionFixture();BuyTool(sim,"sewing-kit");var c=sim.Selected!;c.Fullness=25;
         var a=c.Interaction.Accessory;a.Place=AccessoryPlace.Hand;a.Integrity=intact?100:90;
         sim.State.RoomObjects.Add(new(){Id="destination",Kind=RoomObjectKind.Meal,X=2,Z=0,Portions=5});
         var input=new InteractionInput(InteractionAction.RepairAccessory,BodyPart.Accessory,Duration:.05);
@@ -546,7 +554,7 @@ Check("releasing or cancelling completed repair clears only its own body respons
 {
     foreach(bool cancel in new[]{false,true})foreach(bool newerPain in new[]{false,true})
     {
-        var sim=CompletionFixture();var c=sim.Selected!;var a=c.Interaction.Accessory;
+        var sim=CompletionFixture();BuyTool(sim,"sewing-kit");var c=sim.Selected!;var a=c.Interaction.Accessory;
         a.Place=AccessoryPlace.Hand;a.Integrity=99.5;c.Fullness=25;
         sim.State.RoomObjects.Add(new(){Id="destination",Kind=RoomObjectKind.Meal,X=2,Z=0,Portions=5});
         var input=new InteractionInput(InteractionAction.RepairAccessory,BodyPart.Accessory,Duration:.1);
@@ -578,7 +586,7 @@ Check("completed nursing does not replay treatment or erase a newer painful resp
 });
 Check("continuing to wipe a clean cheek cannot farm affection after the first dirt was removed",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;c.Interaction.Dirt=.1;c.Interaction.SurfaceDirt.Clear();
+    var sim=Fresh();BuyTool(sim,"towel");var c=sim.Selected!;c.Interaction.Dirt=.1;c.Interaction.SurfaceDirt.Clear();
     var input=new InteractionInput(InteractionAction.Clean,BodyPart.Cheek,.25,.1,.05);
     sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);
     Require(c.Interaction.DirtAt(BodyPart.Cheek)==0,"fixture did not clean the cheek");double trust=c.Trust;
@@ -587,7 +595,7 @@ Check("continuing to wipe a clean cheek cannot farm affection after the first di
 });
 Check("wiping an already clean accessory does not invent another meaningful repair event",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;c.Trust=70;
+    var sim=Fresh();BuyTool(sim,"towel");var c=sim.Selected!;c.Trust=70;
     sim.ExecuteInteraction(c.Id,new(InteractionAction.TakeAccessoryCare,BodyPart.Accessory));c.Interaction.Accessory.Dirt=0;
     int memories=c.PersonalMemories.Count;
     var input=new InteractionInput(InteractionAction.CleanAccessory,BodyPart.Accessory,.25,.1,.05);
@@ -596,7 +604,7 @@ Check("wiping an already clean accessory does not invent another meaningful repa
 });
 Check("completing repair records one completion and a new tear resets work but not history",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;c.Trust=70;
+    var sim=Fresh();BuyTool(sim,"sewing-kit");var c=sim.Selected!;c.Trust=70;
     sim.ExecuteInteraction(c.Id,new(InteractionAction.TakeAccessoryCare,BodyPart.Accessory));var a=c.Interaction.Accessory;string id=a.Id;
     sim.ExecuteInteraction(c.Id,new(InteractionAction.DamageAccessory,BodyPart.Accessory,.3));
     var input=new InteractionInput(InteractionAction.RepairAccessory,BodyPart.Accessory,.25,.1);
@@ -752,7 +760,7 @@ Check("voice intent follows the oil's actual response instead of the last select
 });
 Check("one mouse jump during gentle rocking is a slow-down cue rather than abusive handling",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.ExecuteInteraction(c.Id,new(InteractionAction.Wrap));
+    var sim=Fresh();BuyTool(sim,"wrap");var c=sim.Selected!;sim.ExecuteInteraction(c.Id,new(InteractionAction.Wrap));
     Require(c.Interaction.Restraint==RestraintKind.Wrap,"fixture did not prepare wrapping");
     double fear=c.Fear,trust=c.Trust;
     var input=new InteractionInput(InteractionAction.Rock,BodyPart.Side,.2,.016,.15);
@@ -761,7 +769,7 @@ Check("one mouse jump during gentle rocking is a slow-down cue rather than abusi
 });
 Check("sustained harsh rocking prompts refusal while leaving the physical support in place",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.ExecuteInteraction(c.Id,new(InteractionAction.Wrap));
+    var sim=Fresh();BuyTool(sim,"wrap");var c=sim.Selected!;sim.ExecuteInteraction(c.Id,new(InteractionAction.Wrap));
     var input=new InteractionInput(InteractionAction.Rock,BodyPart.Side,.2,.1,.21);
     sim.BeginInteractionGesture(c.Id,input);InteractionFeedback reply=new(true,"","","idle");
     for(int n=0;n<5;n++)reply=sim.ContinueInteractionGesture(input,true);double fear=c.Fear;
@@ -797,7 +805,7 @@ Check("holding bait in reach without pulling it away does not continuously inven
 });
 Check("wiping the left cheek leaves the right cheek dirty and makes only the left cheek wet",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;c.Interaction.Dirt=18;c.Interaction.Wetness=0;
+    var sim=Fresh();BuyTool(sim,"towel");var c=sim.Selected!;c.Interaction.Dirt=18;c.Interaction.Wetness=0;
     var input=new InteractionInput(InteractionAction.Clean,BodyPart.Cheek,.25,.1,.1,Side:SurfaceSide.Left);
     sim.BeginInteractionGesture(c.Id,input);for(int n=0;n<15;n++)sim.ContinueInteractionGesture(input,true);sim.EndInteractionGesture();
     Require(c.Interaction.DirtAt(BodyPart.Cheek,SurfaceSide.Left)==0&&c.Interaction.DirtAt(BodyPart.Cheek,SurfaceSide.Right)==18,"left wipe changed both cheeks");
@@ -842,7 +850,7 @@ Check("inspection reports a remaining local wet patch even when the body average
 });
 Check("partial face drying does not claim that the feet or the whole body are already dry",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;c.Interaction.Wetness=20;
+    var sim=Fresh();BuyTool(sim,"towel");var c=sim.Selected!;c.Interaction.Wetness=20;
     var input=new InteractionInput(InteractionAction.Dry,BodyPart.Cheek,.25,.1,.05,Side:SurfaceSide.Left);
     sim.BeginInteractionGesture(c.Id,input);var first=sim.ContinueInteractionGesture(input,true);
     Require(c.Interaction.ReactionSituation=="drying"&&!first.Speech.Contains("脚脚"),"partial cheek drying used a completed foot-drying line");
@@ -851,7 +859,7 @@ Check("partial face drying does not claim that the feet or the whole body are al
 });
 Check("a frightened oil can refuse wiping without becoming visibly pleased or losing the dirt",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;c.Fear=80;c.Trust=5;
+    var sim=Fresh();BuyTool(sim,"towel");var c=sim.Selected!;c.Fear=80;c.Trust=5;
     double dirt=c.Interaction.DirtAt(BodyPart.Cheek,SurfaceSide.Left);
     var input=new InteractionInput(InteractionAction.Clean,BodyPart.Cheek,.25,.1,.1,Side:SurfaceSide.Left);
     sim.BeginInteractionGesture(c.Id,input);var reply=sim.ContinueInteractionGesture(input,true);
@@ -872,7 +880,7 @@ Check("turning a hat-wearing oil or placing its frame reserves the changed silho
 {
     foreach(var action in new[]{InteractionAction.TurnDry,InteractionAction.Flip,InteractionAction.Pin})
     {
-        var sim=Fresh();var c=sim.State.Creatures[1];var neighbor=sim.State.Creatures[0];
+        var sim=Fresh();if(action==InteractionAction.Pin)BuyTool(sim,"frame");var c=sim.State.Creatures[1];var neighbor=sim.State.Creatures[0];
         c.X=c.Z=0;neighbor.X=1.7;neighbor.Z=0;sim.State.Creatures.RemoveAt(2);
         var reply=sim.ExecuteInteraction(c.Id,new(action));
         Require(!reply.Success&&!c.Interaction.Supine&&c.Interaction.Restraint==RestraintKind.None,$"{action} entered a neighbor's space");
@@ -893,7 +901,7 @@ Check("lifting or righting an oil ends its special upside-down drying period",()
 {
     foreach(var action in new[]{InteractionAction.Lift,InteractionAction.Flip,InteractionAction.Wrap})
     {
-        var sim=Fresh();var c=sim.Selected!;c.Interaction.Wetness=30;
+        var sim=Fresh();if(action==InteractionAction.Wrap)BuyTool(sim,"wrap");var c=sim.Selected!;c.Interaction.Wetness=30;
         Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.TurnDry)).Success,"turning fixture failed");
         if(action==InteractionAction.Lift)sim.BeginInteractionGesture(c.Id,new(action,Height:1));
         else sim.ExecuteInteraction(c.Id,new(action));
@@ -904,7 +912,7 @@ Check("rigid fixtures cannot be assembled through a resting cushion",()=>
 {
     foreach(var action in new[]{InteractionAction.Box,InteractionAction.Pin,InteractionAction.Hang})
     {
-        var sim=Fresh();var c=sim.Selected!;var bed=sim.State.RoomObjects.First(o=>o.Kind==RoomObjectKind.Cushion);
+        var sim=Fresh();if(action==InteractionAction.Box)BuyTool(sim,"box");if(action==InteractionAction.Pin)BuyTool(sim,"frame");if(action==InteractionAction.Hang)BuyTool(sim,"hanger");var c=sim.Selected!;var bed=sim.State.RoomObjects.First(o=>o.Kind==RoomObjectKind.Cushion);
         c.X=bed.X;c.Z=bed.Z;
         var reply=sim.ExecuteInteraction(c.Id,new(action));
         Require(!reply.Success&&c.Interaction.Restraint==RestraintKind.None,$"{action} assembled its base through the cushion");
@@ -948,7 +956,7 @@ Check("hanging height controls use the actual body-size limits and reverse immed
 {
     foreach(var profile in new[]{(young:true,elder:false,scale:.73),(young:false,elder:false,scale:1.0),(young:false,elder:true,scale:1.03)})
     {
-        var sim=Fresh();var c=sim.Selected!;c.IsYoung=profile.young;c.IsElder=profile.elder;
+        var sim=Fresh();BuyTool(sim,"hanger");var c=sim.Selected!;c.IsYoung=profile.young;c.IsElder=profile.elder;
         sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();
         Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Hang)).Success,"fixture setup failed");
         var input=new InteractionInput(InteractionAction.AdjustHanging,Duration:.1,X:c.X,Z:c.Z,Height:3);
@@ -996,7 +1004,7 @@ Check("care at a second site preserves the first site's dressing and both cheek 
 });
 Check("new bottom damage invalidates only the old bottom treatment without resurrecting it next tick",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;var life=c.Interaction;life.FootIntegrity=30;life.FootTreated=true;life.FootRecovery=60;
+    var sim=Fresh();BuyTool(sim,"lighter");var c=sim.Selected!;var life=c.Interaction;life.FootIntegrity=30;life.FootTreated=true;life.FootRecovery=60;
     life.Dress(BodyPart.Bottom,SurfaceSide.Whole);life.Dress(BodyPart.Head,SurfaceSide.Whole);
     var input=new InteractionInput(InteractionAction.BurnFeet,BodyPart.Bottom,Duration:.1);
     sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);sim.EndInteractionGesture();
@@ -1160,7 +1168,7 @@ Check("a fast soft ball rebounds from the body with a brief reaction and no inju
 });
 Check("ball collisions respect box walls and the visible yard fence instead of an inner invisible rectangle",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;
+    var sim=Fresh();BuyTool(sim,"box");var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;
     sim.ExecuteInteraction(c.Id,new(InteractionAction.Box));var ball=new RoomObject{Kind=RoomObjectKind.Ball,X=-2,Z=0,VelocityX=6};sim.State.RoomObjects.Add(ball);
     for(int n=0;n<5;n++)sim.AdvanceInteractionPresentation(.1);
     Require(ball.X<-InteractionFixtureGeometry.BoxWidth*.5-InteractionFixtureGeometry.BallRadius&&ball.VelocityX<0,"ball entered the closed box");
@@ -1171,7 +1179,7 @@ Check("ball collisions respect box walls and the visible yard fence instead of a
 });
 Check("a ball must be placed in clear space and a cushion absorbs its approach",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=-4;c.Z=0;
+    var sim=Fresh();BuyTool(sim,"ball");var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=-4;c.Z=0;
     Require(!sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveBall,X:c.X,Z:c.Z)).Success,"ball spawned through the selected oil");
     sim.State.RoomObjects.Add(new(){Kind=RoomObjectKind.Cushion,X=0,Z=0});
     Require(!sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveBall,X:0,Z:0)).Success,"ball spawned in the cushion");
@@ -1184,7 +1192,7 @@ Check("woodland balls rebound from the visible trunk section and cannot be place
 {
     foreach(var tree in WoodlandLayout.Trees)
     {
-        var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.RemoveAll(o=>o.Kind!=RoomObjectKind.RiverWater);
+        var sim=Fresh();BuyTool(sim,"ball");var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.RemoveAll(o=>o.Kind!=RoomObjectKind.RiverWater);
         c.X=c.Z=0;var trunk=tree.TrunkAt(InteractionFixtureGeometry.BallRadius);
         Require(!sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveBall,X:trunk.X,Z:trunk.Z)).Success,"ball spawned inside a tree");
         var ball=new RoomObject{Kind=RoomObjectKind.Ball,X=trunk.X-1,Z=trunk.Z,VelocityX=6};sim.State.RoomObjects.Add(ball);
@@ -1364,7 +1372,7 @@ Check("verbal comfort refusal describes distance without inventing physical touc
 });
 Check("a stored treasure returns as the same object without farming a fresh gift",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;
+    var sim=Fresh();BuyTool(sim,"treasure");var c=sim.Selected!;
     Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure)).Success,"first treasure was refused");
     var treasure=sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure);string id=treasure.Id;
     Require(sim.PutAwayRoomObject(id)&&treasure.Stored&&sim.State.RoomObjects.Contains(treasure),"taking away destroyed the owned item");
@@ -1374,9 +1382,43 @@ Check("a stored treasure returns as the same object without farming a fresh gift
     Require(treasure.Id==id&&!treasure.Stored&&sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Treasure)==1&&c.Trust==trust,"return spawned another item or farmed gift affection");
     Require(c.Interaction.ReactionSituation=="treasure-return"&&c.Interaction.Memories.GetValueOrDefault("treasure")==2,"return erased its history or counted as another first gift");
 });
+Check("recycling and returning a paid treasure cannot farm trust or duplicate inventory",()=>
+{
+    var sim=Fresh();BuyTool(sim,"treasure");var c=sim.Selected!;
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure)).Success,"initial paid gift failed");
+    string id=sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure).Id;
+    int money=sim.State.Money;double trust=c.Trust;
+    for(int cycle=0;cycle<3;cycle++)
+    {
+        Require(sim.PutAwayRoomObject(sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure&&!o.Stored).Id),"recycling failed");
+        Require(sim.ShopQuantity("treasure")==1,"recycling did not return exactly one token");
+        Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure)).Success,"returning the paid treasure failed");
+    }
+    var current=sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure&&!o.Stored);
+    Console.WriteLine("TREASURE_RECYCLE_AUDIT "+JsonSerializer.Serialize(new{moneyBefore=money,moneyAfter=sim.State.Money,trustBefore=trust,trustAfter=c.Trust,stock=sim.ShopQuantity("treasure"),initialId=id,currentId=current.Id,current.OwnerId}));
+    Require(sim.State.Money==money&&sim.ShopQuantity("treasure")==0&&current.Id==id&&current.OwnerId==c.Id&&c.Trust==trust,
+        "recycling and re-gifting changed identity, duplicated stock, or rewarded the same paid item again");
+});
+Check("paused and full warehouse treasure recycling preserves identity and ownership atomically",()=>
+{
+    var sim=Fresh();BuyTool(sim,"treasure");var c=sim.Selected!;
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure)).Success,"paid treasure setup failed");
+    var item=sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure);
+    sim.State.Settings.Pause=true;string before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    Require(!sim.PutAwayRoomObject(item.Id)&&JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before,"paused recycling changed treasure or stock");
+    sim.State.Settings.Pause=false;sim.State.ShopStock["treasure"]=int.MaxValue;
+    before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    Require(!sim.PutAwayRoomObject(item.Id)&&JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before,"full warehouse erased or overflowed treasure");
+    sim.State.ShopStock["treasure"]=0;int money=sim.State.Money;
+    Require(sim.PutAwayRoomObject(item.Id)&&item.Stored&&item.OwnerId==c.Id&&sim.ShopQuantity("treasure")==1&&sim.State.Money==money,
+        "successful recycling lost identity or refunded money");
+    before=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    Require(!sim.PutAwayRoomObject(item.Id)&&JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==before,"duplicate recycling returned another token");
+    SaveStore.Validate(sim.State);
+});
 Check("treasure placement clears a turned body and stays in its current region",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
+    var sim=Fresh();BuyTool(sim,"treasure");var c=sim.Selected!;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
     sim.State.Regions.Add(new(){Id="second",Name="第二小院",Kind=RegionKind.Sanctuary});sim.State.ActiveRegionId=c.RegionId="second";
     c.Interaction.Supine=true;
     Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure)).Success,"clear position near a turned oil was not found");
@@ -1385,7 +1427,7 @@ Check("treasure placement clears a turned body and stays in its current region",
 });
 Check("stored treasure keeps ownership through save and cannot be displayed as present",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure));
+    var sim=Fresh();BuyTool(sim,"treasure");var c=sim.Selected!;sim.ExecuteInteraction(c.Id,new(InteractionAction.GiveTreasure));
     var item=sim.State.RoomObjects.Single(o=>o.Kind==RoomObjectKind.Treasure);sim.PutAwayRoomObject(item.Id);
     var state=JsonSerializer.Deserialize<WorldState>(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions),SaveStore.JsonOptions)!;
     SaveStore.Validate(state);sim=new WorldSimulation(state);c=sim.Selected!;c.Fullness=90;c.Interaction.Hydration=90;c.Interaction.NextAutonomyAt=0;
@@ -1447,7 +1489,7 @@ Check("belittling can provoke resistance or hurt without turning either into aff
 });
 Check("moving the holding hand away releases only the hand restraint and contact can resume",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;var input=new InteractionInput(InteractionAction.Hold,BodyPart.Side,Duration:.1);
+    var sim=Fresh();BuyTool(sim,"frame");var c=sim.Selected!;var input=new InteractionInput(InteractionAction.Hold,BodyPart.Side,Duration:.1);
     sim.BeginInteractionGesture(c.Id,input);Require(c.Interaction.Restraint==RestraintKind.Hand,"hold fixture failed");
     sim.ContinueInteractionGesture(input,false);
     Require(c.Interaction.Restraint==RestraintKind.None&&WorldSimulation.CanSelfMove(c),"hand restraint remained after contact ended");
@@ -1471,9 +1513,11 @@ Check("an off-contact pressed mouse does not freeze the oil's own movement or ke
 {
     var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;c.Fullness=90;
     // The first damaging press intentionally cancels FollowPlayer. Give the
-    // retained positive-X assertion an explicit independent walking target.
+    // retained positive-X assertion an urgent real food goal, not idle wandering.
+    // Recent harm legitimately pauses idle wandering; it must not block food.
     // No position, target, need or willingness is rewritten after the contact.
-    c.TargetX=3;c.TargetZ=0;
+    c.TargetX=3;c.TargetZ=0;c.Fullness=10;
+    sim.State.RoomObjects.Add(new(){Id="independent-food",Kind=RoomObjectKind.Meal,RegionId=c.RegionId,X=3,Z=0,Portions=5});
     sim.SetInteractionHand(3,0,true);c.Interaction.FollowPlayer=true;c.Interaction.Hydration=90;
     var input=new InteractionInput(InteractionAction.Press,BodyPart.Side,Force:.3,Duration:.1);
     sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);double health=c.Health;
@@ -1487,10 +1531,12 @@ Check("an off-contact pressed mouse does not freeze the oil's own movement or ke
 Check("a harmful press cancels following but an off-contact held mouse preserves independent movement",()=>
 {
     // Preserve c08's original default negative target and 1.5-second sequence as
-    // a separate control. The hand on the right must not force obedience again.
+    // a separate control, with real food already at that destination before harm.
+    // The hand on the right must not force obedience again.
     var sim=Fresh();var c=sim.Selected!;sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);sim.State.RoomObjects.Clear();c.X=c.Z=0;c.Fullness=90;
     double targetX=c.TargetX,targetZ=c.TargetZ,initialDistance=WorldSimulation.Distance(c.X,c.Z,targetX,targetZ);
     Require(targetX<0,"control lost the original independent walking target");
+    c.Fullness=10;sim.State.RoomObjects.Add(new(){Id="independent-food",Kind=RoomObjectKind.Meal,RegionId=c.RegionId,X=targetX,Z=targetZ,Portions=5});
     sim.SetInteractionHand(3,0,true);c.Interaction.FollowPlayer=true;c.Interaction.Hydration=90;
     var input=new InteractionInput(InteractionAction.Press,BodyPart.Side,Force:.3,Duration:.1);
     double before=c.Health;sim.BeginInteractionGesture(c.Id,input);sim.ContinueInteractionGesture(input,true);double health=c.Health;
@@ -1551,7 +1597,7 @@ Check("changing active region during a gesture still cleans up the original oil'
 });
 Check("unhanging transfers support and lowers continuously without healing or passive time",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.State.Mode=PlayMode.CloseUp;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
+    var sim=Fresh();BuyTool(sim,"hanger");var c=sim.Selected!;sim.State.Mode=PlayMode.CloseUp;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
     c.Interaction.FootIntegrity=20;sim.ExecuteInteraction(c.Id,new(InteractionAction.Hang));double height=c.Interaction.Height,health=c.Health;
     sim.ExecuteInteraction(c.Id,new(InteractionAction.Lower));
     Require(c.Interaction.Carried&&c.Interaction.Lowering&&c.Interaction.Height==height&&!c.Interaction.Falling,"unhanging teleported to ground or lost support");
@@ -1562,7 +1608,7 @@ Check("unhanging transfers support and lowers continuously without healing or pa
 });
 Check("saving during supported lowering preserves support without replaying its transient motion",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
+    var sim=Fresh();BuyTool(sim,"hanger");var c=sim.Selected!;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
     sim.ExecuteInteraction(c.Id,new(InteractionAction.Hang));sim.ExecuteInteraction(c.Id,new(InteractionAction.Lower));sim.AdvanceInteractionPresentation(.1);
     var state=JsonSerializer.Deserialize<WorldState>(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions),SaveStore.JsonOptions)!;SaveStore.Validate(state);
     sim=new WorldSimulation(state);c=sim.Selected!;double height=c.Interaction.Height;sim.AdvanceInteractionPresentation(.1);
@@ -1570,7 +1616,7 @@ Check("saving during supported lowering preserves support without replaying its 
 });
 Check("taking manual control of supported lowering does not keep moving or drop on cancellation",()=>
 {
-    var sim=Fresh();var c=sim.Selected!;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
+    var sim=Fresh();BuyTool(sim,"hanger");var c=sim.Selected!;sim.State.RoomObjects.Clear();sim.State.Creatures.RemoveAll(o=>o.Id!=c.Id);
     sim.ExecuteInteraction(c.Id,new(InteractionAction.Hang));sim.ExecuteInteraction(c.Id,new(InteractionAction.Lower));sim.AdvanceInteractionPresentation(.1);
     double height=c.Interaction.Height;Require(sim.BeginInteractionGesture(c.Id,new(InteractionAction.Throw)).Success,"manual aim refused supported oil");
     sim.AdvanceInteractionPresentation(.1);sim.EndInteractionGesture(true);

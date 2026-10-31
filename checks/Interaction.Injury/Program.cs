@@ -3,6 +3,14 @@ using System.Text.Json.Nodes;
 using Yukkuri.Simulation;
 
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
 void Check(string name,Action check)
 {try{check();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
@@ -130,7 +138,7 @@ Check("旧档默认身体状态，显式空或坏伤势拒绝",()=>
 Check("冷藏只以十分之一速度累积生理负荷",()=>
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var p=c.Interaction.Physiology;
-    p.Bladder=10;p.Bowel=10;
+    p.Bladder=10;p.Bowel=10;BuyTool(sim,"freezer");
     sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"冷藏夹具未进入");
     Tick(sim,10);
     // At hydration/fullness 0..100 the rates bound the biological ten-second interval.
@@ -141,7 +149,8 @@ Check("冷藏只以十分之一速度累积生理负荷",()=>
 Check("冷藏达到排泄阈值不产物，取出后才完成一次",()=>
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var p=c.Interaction.Physiology;
-    p.Bladder=99;p.Bowel=10;sim.SetColdStorage(c.Id,true);Tick(sim,20);
+    p.Bladder=99;p.Bowel=10;BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
+    Require(c.Family.ColdStorage.Stored,"排泄阈值夹具未进入冷藏");Tick(sim,20);
     Require(!p.Active&&p.Urinations==0&&!sim.State.RoomObjects.Any(o=>o.OwnerId==c.Id&&WorldSimulation.IsWaste(o.Kind)),"冷藏个体在院内留下排泄物");
     var copy=Reload(sim);var patient=copy.Selected!;
     copy.SetColdStorage(patient.Id,false);Require(!patient.Family.ColdStorage.Stored,"夹具无法取出冷藏");
@@ -169,7 +178,8 @@ Check("死亡释放手持但保留原有固定装置的支撑",()=>
 Check("冷藏危重时钟只减一次身体时间",()=>
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;
-    c.Health=1;sim.Hurt(c,2,"待救伤势",null);sim.SetColdStorage(c.Id,true);
+    c.Health=1;sim.Hurt(c,2,"待救伤势",null);BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
+    Require(c.Family.ColdStorage.Stored,"危重时钟夹具未进入冷藏");
     double before=c.CriticalRemaining;Tick(sim,10);
     Require(Math.Abs(c.CriticalRemaining-(before-1))<.0001,"冷藏救治时钟多减、未减或未按十分之一速度");
     Require(Math.Abs(c.Interaction.Injuries.CriticalCareBudget-c.CriticalRemaining)<.0001,"累计救治余量和实际时钟分离");

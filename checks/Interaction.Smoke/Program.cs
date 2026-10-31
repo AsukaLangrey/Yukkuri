@@ -23,6 +23,16 @@ InteractionFeedback Gesture(WorldSimulation sim, Creature c, InteractionAction a
     return result;
 }
 WorldSimulation Fresh() => WorldSimulation.CreateInteractionPlaytest();
+// Current courtyard tools must be bought through the real paid inventory path.
+void BuyTool(WorldSimulation sim,string item)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==item);
+    int money=sim.State.Money,stock=sim.ShopQuantity(item);
+    Require(sim.BuyShopProduct(item),"tool purchase refused: "+item);
+    Require(sim.State.Money==money-product.Price&&sim.ShopQuantity(item)==stock+product.Pack,
+        "tool purchase did not charge once and add actual inventory: "+item);
+}
+
 
 Check("cheek invitation receives an answer before movement earns affection", () =>
 {
@@ -66,9 +76,10 @@ Check("nuzzle guidance names the wrong body part before inviting", () =>
     sim.BeginInteractionGesture(c.Id,input);var reply=sim.ContinueInteractionGesture(input,true);
     Require(reply.Message.Contains("脸侧")&&!reply.Message.Contains("等它回应"),"off-cheek hit pretended an invitation was underway");
 });
-Check("first batch contains twenty groups and unique reachable actions", () =>
+Check("catalog contains the twenty-three authored groups and unique reachable actions", () =>
 {
-    Require(InteractionCatalog.Groups.Length == 20, "group lost");
+    Require(InteractionCatalog.Groups.Select(g=>g.Id).SequenceEqual(Enumerable.Range(1,23).Select(n=>$"P{n:00}")),
+        "authored group missing, duplicated or out of order");
     var choices = InteractionCatalog.Groups.SelectMany(g => g.Choices).ToArray();
     Require(choices.Select(c => c.Action).Distinct().Count() == Enum.GetValues<InteractionAction>().Length, "missing action definition");
     Require(choices.Length == choices.Select(c => c.Action).Distinct().Count(), "duplicate action");
@@ -93,8 +104,9 @@ Check("motion differentiates a stroke from a stationary hold", () =>
 Check("leaving contact never continues hidden effects", () =>
 {
     var sim = Fresh(); var c = sim.Selected!;
+    BuyTool(sim,"lighter");
     var input = new InteractionInput(InteractionAction.BurnFeet, BodyPart.Bottom, .6, .1, .1);
-    sim.BeginInteractionGesture(c.Id, input);
+    Require(sim.BeginInteractionGesture(c.Id, input).Success,"purchased lighter did not begin real off-contact fixture");
     for (int n = 0; n < 100; n++) sim.ContinueInteractionGesture(input, false);
     Require(c.Interaction.FootIntegrity == 100, "out of contact still hurts");
 });
@@ -148,22 +160,25 @@ Check("taking and returning an accessory cannot farm trust", () =>
 Check("repair respects partial work and destroyed items", () =>
 {
     var sim = Fresh(); var c = sim.Selected!;
+    BuyTool(sim,"sewing-kit");
     sim.ExecuteInteraction(c.Id, new(InteractionAction.TakeAccessoryCare,BodyPart.Accessory));
     sim.ExecuteInteraction(c.Id, new(InteractionAction.DamageAccessory));
     double damaged = c.Interaction.Accessory.Integrity;
     Gesture(sim, c, InteractionAction.RepairAccessory, seconds: 1, part: BodyPart.Accessory, cancelled: true);
     Require(c.Interaction.Accessory.Integrity > damaged && c.Interaction.Accessory.Integrity < 100, "partial repair lost");
+    Require(sim.ShopQuantity("sewing-kit")==1,"repair consumed its reusable tool");
     c.Interaction.Accessory.Integrity = 0;
-    Require(!sim.BeginInteractionGesture(c.Id, new(InteractionAction.RepairAccessory)).Success, "destroyed item silently repaired");
+    Require(!sim.BeginInteractionGesture(c.Id, new(InteractionAction.RepairAccessory,BodyPart.Accessory)).Success, "destroyed item silently repaired");
 });
 Check("hand hold releases but fixed restraints require an explicit release", () =>
 {
     var sim = Fresh(); var c = sim.Selected!;
+    BuyTool(sim,"frame");
     Gesture(sim, c, InteractionAction.Hold);
     Require(c.Interaction.Restraint == RestraintKind.None, "hand restraint stuck");
-    sim.ExecuteInteraction(c.Id, new(InteractionAction.Pin)); sim.EndInteractionGesture(true);
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Pin)).Success&&sim.ShopQuantity("frame")==0,"actual frame did not install once"); sim.EndInteractionGesture(true);
     Require(c.Interaction.Restraint == RestraintKind.Frame, "cancel erased physical fixture");
-    Require(sim.ExecuteInteraction(c.Id, new(InteractionAction.Release)).Success, "cannot remove fixture");
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Release)).Success&&sim.ShopQuantity("frame")==1,"cannot remove fixture and return its one owned frame");
 });
 Check("cancelled carry stays supported, deliberate drop has a trajectory", () =>
 {
@@ -178,10 +193,13 @@ Check("cancelled carry stays supported, deliberate drop has a trajectory", () =>
 Check("foot injury persists through feeding and removal of restraints", () =>
 {
     var sim = Fresh(); var c = sim.Selected!;
+    BuyTool(sim,"lighter");BuyTool(sim,"frame");
     Gesture(sim, c, InteractionAction.BurnFeet, 8, part: BodyPart.Bottom, force: .8);
     Require(c.Interaction.FootIntegrity <= 25 && !WorldSimulation.CanSelfMove(c), "foot injury does not limit motion");
     double feet = c.Interaction.FootIntegrity;
-    sim.ExecuteInteraction(c.Id, new(InteractionAction.Pin)); sim.ExecuteInteraction(c.Id, new(InteractionAction.Release));
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Pin)).Success&&sim.ShopQuantity("frame")==0,"frame was not actually installed");
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Release)).Success&&sim.ShopQuantity("frame")==1,"frame was not returned once");
+    Require(sim.ShopQuantity("lighter")==1,"burn consumed the reusable lighter");
     Gesture(sim, c, InteractionAction.FeedMeal, part: BodyPart.Mouth);
     Require(c.Interaction.FootIntegrity == feet && !WorldSimulation.CanSelfMove(c), "food or release healed feet");
 });
@@ -248,9 +266,10 @@ Check("dialogue expresses needs without leaking hidden counters", () =>
 Check("save-load preserves injury accessory memory and does not replay gestures", () =>
 {
     var sim = Fresh(); var c = sim.Selected!;
+    BuyTool(sim,"lighter");BuyTool(sim,"box");
     Gesture(sim, c, InteractionAction.BurnFeet, 8, part: BodyPart.Bottom, force: .8);
     sim.ExecuteInteraction(c.Id, new(InteractionAction.TakeAccessory,BodyPart.Accessory));
-    sim.ExecuteInteraction(c.Id, new(InteractionAction.Box));
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Box)).Success&&sim.ShopQuantity("box")==0,"saved box was not physically installed once");
     var directory = Path.Combine(Path.GetTempPath(), "Yukkuri-Interaction-" + Guid.NewGuid().ToString("N"));
     var store = new SaveStore(directory); store.Save(sim.State, 1);
     var loaded = new WorldSimulation(store.Load(1).State); var restored = loaded.Selected!;
@@ -287,6 +306,7 @@ Check("leaving the mouth interrupts readiness to take food", () =>
 Check("repair touches the removed accessory rather than any body point", () =>
 {
     var sim=Fresh();var c=sim.Selected!;c.Interaction.Accessory.Place=AccessoryPlace.Hand;c.Interaction.Accessory.Integrity=40;
+    BuyTool(sim,"sewing-kit");
     Gesture(sim,c,InteractionAction.RepairAccessory,part:BodyPart.Cheek);
     Require(c.Interaction.Accessory.Integrity==40,"repairing cheek repaired remote accessory");
 });
@@ -301,7 +321,8 @@ Check("a stop can interrupt an unfinished follow without awarding completion", (
 Check("closed box does not let an oil eat through its back wall", () =>
 {
     var sim=Fresh();var c=sim.Selected!;c.Fullness=30;
-    sim.ExecuteInteraction(c.Id,new(InteractionAction.Box));
+    BuyTool(sim,"box");
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Box)).Success&&sim.ShopQuantity("box")==0,"closed box fixture was never installed");
     sim.ExecuteInteraction(c.Id,new(InteractionAction.PlaceMeal,X:c.X,Z:c.Z-.8));
     Step(sim,.5);Require(c.Fullness<30,"ate food outside the closed rear wall");
 });
@@ -339,7 +360,8 @@ Check("food seeking does not merge multiple bodies",()=>
 Check("pushing into a fixed box does not pass through the occupant",()=>
 {
     var sim=Fresh();var c=sim.Selected!;var boxed=sim.State.Creatures[1];
-    c.X=-2;c.Z=0;boxed.X=0;boxed.Z=0;sim.ExecuteInteraction(boxed.Id,new(InteractionAction.Box));
+    BuyTool(sim,"box");
+    c.X=-2.4;c.Z=0;boxed.X=0;boxed.Z=0;Require(sim.ExecuteInteraction(boxed.Id,new(InteractionAction.Box)).Success&&sim.ShopQuantity("box")==0,"physical boxed obstacle was never installed");
     double bx=boxed.X,bz=boxed.Z;
     c.Interaction.VelocityX=12;
     for(int n=0;n<10;n++)sim.AdvanceInteractionPresentation(.1);
@@ -349,20 +371,24 @@ Check("pushing into a fixed box does not pass through the occupant",()=>
 Check("wiping a cheek leaves dirt elsewhere and preserves local progress",()=>
 {
     var sim=Fresh();var c=sim.Selected!;double before=c.Interaction.DirtAt(BodyPart.Bottom);
+    BuyTool(sim,"towel");
     Gesture(sim,c,InteractionAction.Clean,part:BodyPart.Cheek);
     Require(c.Interaction.DirtAt(BodyPart.Cheek)<18&&c.Interaction.DirtAt(BodyPart.Bottom)==before,"wipe affected the whole body");
+    Require(sim.ShopQuantity("towel")==1,"wiping consumed the reusable towel");
     var loaded=JsonSerializer.Deserialize<WorldState>(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions),SaveStore.JsonOptions)!;
     Require(loaded.Creatures[0].Interaction.DirtAt(BodyPart.Cheek)==c.Interaction.DirtAt(BodyPart.Cheek),"local wipe lost in save");
 });
 Check("hanging adjustment persists after cancellation without becoming a drop",()=>
 {
     var sim=Fresh();var c=sim.Selected!;
-    sim.ExecuteInteraction(c.Id,new(InteractionAction.Hang));
+    BuyTool(sim,"hanger");
+    Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Hang)).Success&&sim.ShopQuantity("hanger")==0,"actual hanger was not installed once");
     var input=new InteractionInput(InteractionAction.AdjustHanging,BodyPart.Side,.3,.1,.1,c.X-.5,c.Z,1.1);
     Require(sim.BeginInteractionGesture(c.Id,input).Success,"adjustment not available");
     sim.ContinueInteractionGesture(input,true);sim.EndInteractionGesture(true);
     Require(c.Interaction.Restraint==RestraintKind.Hanging&&!c.Interaction.Falling&&c.Interaction.Height==1.1,"cancel discarded the supporting fixture");
     Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Lower)).Success&&c.Interaction.Carried&&!c.Interaction.Falling,"lower does not transfer support to the hand");
+    Require(sim.ShopQuantity("hanger")==1,"lowering did not return exactly one hanger");
     for(int n=0;n<20;n++)sim.AdvanceInteractionPresentation(.1);
     Require(c.Interaction.Height==0&&!c.Interaction.Carried,"supported lower did not finish on the ground");
 });
@@ -391,11 +417,26 @@ Check("voices differ by individual and never promise impossible movement",()=>
 
 Check("instant contact targets the named anatomical part",()=>
 {
-    foreach(var action in new[]{InteractionAction.Flick,InteractionAction.Slap,InteractionAction.Poke,InteractionAction.TakeAccessory})
+    foreach(var action in new[]{InteractionAction.Flick,InteractionAction.TakeAccessory})
     {
         var sim=Fresh();var c=sim.Selected!;double health=c.Health,trust=c.Trust;
         var result=sim.ExecuteInteraction(c.Id,new(action,BodyPart.Bottom));
         Require(!result.Success&&c.Health==health&&c.Trust==trust&&c.Interaction.HasAccessory,"wrong body part executed "+action);
+    }
+    // The new empty-hand selector dispatches Slap/Poke to any actual body
+    // contact. Keep anatomical protection rather than the obsolete cheek-only
+    // rejection: direct damage and sensitivity must remain at the contacted site.
+    foreach(var action in new[]{InteractionAction.Slap,InteractionAction.Poke})
+    foreach(var part in new[]{BodyPart.Side,BodyPart.Bottom})
+    {
+        var sim=Fresh();var c=sim.Selected!;
+        double cheek=c.Interaction.CheekSensitivity,head=c.Interaction.HeadSensitivity,health=c.Health;
+        var result=sim.ExecuteInteraction(c.Id,new(action,part,Force:.3));
+        Require(result.Success&&!result.Refused,"actual body contact was refused: "+action+"/"+part);
+        Require(action==InteractionAction.Slap?c.Interaction.Injuries.At(part)?.Damage>0:c.Health==health,
+            "contact damage did not match its actual site and action: "+action+"/"+part);
+        Require(c.Interaction.Injuries.At(BodyPart.Cheek)==null&&c.Interaction.CheekSensitivity==cheek&&c.Interaction.HeadSensitivity==head,
+            $"off-face contact changed face injury/sensitivity: {action}/{part}, cheek={cheek}->{c.Interaction.CheekSensitivity}, head={head}->{c.Interaction.HeadSensitivity}");
     }
 });
 Check("head care cannot secretly treat a damaged foot",()=>

@@ -45,7 +45,13 @@ void Reject(WorldSimulation s,Action change)
 Check("real preparation precedes one bodily injury and one finite accepted portion",()=>
 {
     var s=Fixture();var a=s.State.Creatures[0];var t=s.State.Creatures[2];double trust=t.Trust,harm=t.Interaction.HumanBond.LastHarmAt;
-    Step(s);Require(s.HungerFeedingStatus(a)?.Phase==HungerFeedingPhase.Preparing&&a.Personality.HungerFeeding.ContactSeconds==0,
+    double started=s.State.WorldSeconds;Step(s);
+    Require(s.State.WorldSeconds==started&&s.HungerFeedingStatus(a)==null&&a.Personality.HungerFeeding.ContactSeconds==0,
+        "sub-tick presentation started an autonomous hunger bite");
+    // Preparation starts on an actual world tick, not the first 0.1-second frame.
+    for(int n=0;n<10&&s.State.WorldSeconds==started;n++)Step(s);
+    Require(s.State.WorldSeconds>started&&s.HungerFeedingStatus(a)?.Phase==HungerFeedingPhase.Preparing&&
+        a.Personality.HungerFeeding.ContactSeconds==0&&a.Personality.HungerFeeding.ContactStartedAt==s.State.WorldSeconds,
         "first observed contact borrowed time from before its start");
     for(int n=0;n<5;n++)Step(s);
     Require(t.Health==100&&t.Personality.RemainsNutrition==24&&a.Interaction.EatingRemaining==0,"preparation already applied harm or nutrition");

@@ -65,10 +65,13 @@ Check("hungry helpers call without reserving their movement or blocking real foo
 
 Check("actual witnesses keep short shore concern while mean and remote creatures do not acquire it",()=>
 {
-    var sim=Fresh();var good=Neighbor(sim);var mean=Neighbor(sim,.05,4.5,-1.7);var far=Neighbor(sim,.8,-6,-5);
+    var sim=Fresh();var good=Neighbor(sim);
+    // Keep this witness visible without occupying every legal rescue landing.
+    // A body at the old (4.5,-1.7) plus the approaching good witness blocks them all.
+    var mean=Neighbor(sim,.05,3.3,-1.7);var far=Neighbor(sim,.8,-6,-5);
     Seconds(sim,.25);string eventId=sim.Selected!.Interaction.Water.EventId!;
     Require(sim.WaterConcernTarget(good)==sim.Selected,"good helper did not notice actual water");
-    Require(sim.RescueFromWater(sim.Selected.Id).Success,"rescue failed");
+    var rescue=sim.RescueFromWater(sim.Selected.Id);Require(rescue.Success,"rescue failed: "+rescue.Message);
     Require(sim.WaterConcernTarget(good)==null,"shore survivor still represented as drowning");
     Require(good.Personality.WaterAftercare.EventId==eventId&&mean.Personality.WaterAftercare.TargetId==null&&far.Personality.WaterAftercare.TargetId==null,"aftercare ignored participation or personality");
     bool observed=false;
@@ -90,6 +93,31 @@ Check("shore contact yields to child care and hunger without false contact accum
     Require(sim.WaterSupportStatus(helper)==null,"hungry dependent child lost priority to shore watching");
     Seconds(sim,1);Require(helper.Personality.WaterAftercare.ContactSeconds==0,"interrupted care accumulated invisible contact");
     helper.Fullness=8;Require(sim.WaterSupportStatus(helper)==null,"hungry guardian remained in care presentation");
+});
+
+Check("actual companionship interrupts unfinished shore contact and only later uninterrupted care earns its reward",()=>
+{
+    var sim=Fresh();var target=sim.Selected!;var helper=Neighbor(sim);Seconds(sim,.25);
+    Require(sim.RescueFromWater(target.Id).Success,"rescue failed");
+    for(int n=0;n<60&&helper.Personality.WaterAftercare.ContactSeconds<2;n++)Seconds(sim,.25);
+    Require(helper.Personality.WaterAftercare.ContactSeconds>=2&&!helper.Personality.WaterAftercare.Remembered,
+        "fixture never reached real unfinished shore contact");
+    Require(sim.InviteCompanion(target.Id,helper.Id).Contains("愿意")&&target.Family.CompanionTargetId==helper.Id,
+        "real social invitation did not begin");
+    Seconds(sim,1);
+    Require(sim.WaterSupportStatus(helper)==null&&helper.Personality.WaterAftercare.ContactSeconds==0&&
+        !helper.Personality.WaterAftercare.Remembered,"companionship secretly continued or completed shore care");
+    Require(sim.EndCompanionship(target.Id,helper.Id).Contains("已结束"),"actual companionship did not end");
+    double affection=target.Family.Peers[helper.Id].Affection;
+    for(int n=0;n<80&&!helper.Personality.WaterAftercare.Remembered;n++)
+    {
+        Seconds(sim,.25);
+        if(helper.Personality.WaterAftercare.ContactSeconds<6)
+            Require(!helper.Personality.WaterAftercare.Remembered,"interrupted contact lowered the original six-second threshold");
+    }
+    Require(helper.Personality.WaterAftercare.Remembered&&helper.Personality.WaterAftercare.ContactSeconds==6&&
+        Math.Abs(target.Family.Peers[helper.Id].Affection-affection-2)<.000001,
+        "later uninterrupted contact did not earn exactly one shore-care reward");
 });
 
 Check("real rescue uses shared care budget and never removes water fear or recent human harm",()=>
@@ -200,6 +228,10 @@ Check("real thirsty river approach can slip, receive different peer responses, a
         target.X=source.X-2.4;target.Z=source.Z;target.TargetX=target.X;target.TargetZ=target.Z;
         target.Fullness=90;target.Energy=90;target.Interaction.Hydration=50;
         target.Personality=new(){Initialized=true,Kindness=.8,Carelessness=1,Pride=.2};
+        // This component measures six uninterrupted seconds of shore care, not
+        // an unrelated 24-second social invitation that legally preempts it.
+        // Keep healthy locomotion and resource autonomy; isolate only new social invitations.
+        target.Family.NextSocialAt=10000;
         var good=Neighbor(sim,.8,source.X-2.3,source.Z+2.2);
         var mean=Neighbor(sim,.05,source.X-2.3,source.Z-2.2);
         Require(WorldSimulation.CanSelfMove(target)&&!WaterEnvironment.IsInWater(sim.State,target)&&
@@ -246,7 +278,7 @@ Check("real thirsty river approach can slip, receive different peer responses, a
         double goodTrust=good.Trust,meanTrust=mean.Trust,hydration=target.Interaction.Hydration;
         int supplies=sim.State.WaterRescueTools,purchases=sim.State.WaterRescuePurchases,money=sim.State.Money;
         Require(sim.BuyWaterRescueTool()&&sim.State.WaterRescueTools==supplies+1&&
-            sim.State.WaterRescuePurchases==purchases+1&&sim.State.Money==money,"free testing purchase did not create one real rescue supply");
+            sim.State.WaterRescuePurchases==purchases+1&&sim.State.Money==money-WaterEnvironment.RescueToolPrice,"paid rescue purchase did not create exactly one supply for its price");
         Require(sim.RescueFromWater(target.Id).Success&&sim.State.WaterRescueTools==supplies&&
             !water.InWater&&!WaterEnvironment.IsInWater(sim.State,target)&&water.EventId==eventId&&water.HumanRescueCredited&&
             water.RecoverySeconds>0&&target.Interaction.Hydration==hydration&&
@@ -281,7 +313,8 @@ Check("real thirsty river approach can slip, receive different peer responses, a
         Require(watching&&good.Personality.WaterAftercare.Remembered&&
             target.Family.Peers[good.Id].Affection>=2&&target.Family.Peers[mean.Id].Resentment>0&&
             target.Fear>0&&target.Interaction.Emotion.Alarm>0&&!EmotionalReadiness.Settled(target),
-            "actual short shore contact or continuing fear/peer consequences was missing");
+            "actual short shore contact or continuing fear/peer consequences was missing"+
+            $" watching={watching}, remembered={good.Personality.WaterAftercare.Remembered}, affection={target.Family.Peers[good.Id].Affection}, resentment={target.Family.Peers[mean.Id].Resentment}, fear={target.Fear}, alarm={target.Interaction.Emotion.Alarm}, settled={EmotionalReadiness.Settled(target)}, helper={good.X},{good.Z}, target={target.X},{target.Z}, care={good.Personality.WaterAftercare.ContactSeconds}, status={sim.WaterSupportStatus(good)}");
         double affection=target.Family.Peers[good.Id].Affection;
         Seconds(sim,2);
         Require(sim.WaterSupportStatus(good)==null&&target.Family.Peers[good.Id].Affection==affection,

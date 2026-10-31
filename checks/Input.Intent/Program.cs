@@ -23,6 +23,14 @@ ContactMotionSample Stop(ContactMotion t,double dt=1.0/60)
     }
     return result;
 }
+// Fixture equipment is acquired through the current paid shop, not injected stock.
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&sim.ShopQuantity(id)==stock+product.Pack,
+        "paid fixture purchase failed: "+id);
+}
 WorldSimulation Fresh(){var s=WorldSimulation.CreateInteractionPlaytest();s.Selected!.Trust=60;return s;}
 
 Check("unengaged fast motion and its sudden stop never become contact",()=>
@@ -373,7 +381,7 @@ Check("idle rubbing tools release autonomous needs after a brief nuzzle invitati
 {
     foreach(var action in new[]{InteractionAction.Stroke,InteractionAction.Nuzzle,InteractionAction.Clean,InteractionAction.Dry,InteractionAction.CleanAccessory})
     {
-        var s=Fresh();var c=s.Selected!;s.State.Creatures.RemoveAll(o=>o.Id!=c.Id);s.State.RoomObjects.Clear();
+        var s=Fresh();if(action is InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory)BuyTool(s,"towel");var c=s.Selected!;s.State.Creatures.RemoveAll(o=>o.Id!=c.Id);s.State.RoomObjects.Clear();
         c.Fullness=35;c.Energy=90;c.Fear=0;c.Interaction.Hydration=90;c.X=0;c.Z=0;
         c.Interaction.NextAutonomyAt=10000;
         var part=action==InteractionAction.Nuzzle?BodyPart.Cheek:action==InteractionAction.CleanAccessory?BodyPart.Accessory:BodyPart.Head;
@@ -420,7 +428,7 @@ Check("care and repair at the wrong site leave autonomous feeding available",()=
 {
     foreach(var action in new[]{InteractionAction.Care,InteractionAction.RepairAccessory})
     {
-        var s=Fresh();var c=s.Selected!;s.State.Creatures.RemoveAll(o=>o.Id!=c.Id);s.State.RoomObjects.Clear();
+        var s=Fresh();if(action==InteractionAction.RepairAccessory)BuyTool(s,"sewing-kit");var c=s.Selected!;s.State.Creatures.RemoveAll(o=>o.Id!=c.Id);s.State.RoomObjects.Clear();
         s.State.UnlimitedResources=false;c.Fullness=10;c.Energy=90;c.Fear=0;c.Interaction.Hydration=90;
         c.X=c.TargetX=0;c.Z=c.TargetZ=0;c.Interaction.NextAutonomyAt=10000;
         c.Interaction.HeadSensitivity=30;c.Interaction.Accessory.Place=AccessoryPlace.Hand;c.Interaction.Accessory.Integrity=80;
@@ -457,7 +465,7 @@ Check("moving care off a local injury resets dwell without losing completed care
 });
 Check("moving off partial repair releases its pose and switching settles it once",()=>
 {
-    var s=Fresh();var c=s.Selected!;c.Interaction.Accessory.Place=AccessoryPlace.Hand;c.Interaction.Accessory.Integrity=80;
+    var s=Fresh();BuyTool(s,"sewing-kit");var c=s.Selected!;c.Interaction.Accessory.Place=AccessoryPlace.Hand;c.Interaction.Accessory.Integrity=80;
     var valid=new InteractionInput(InteractionAction.RepairAccessory,BodyPart.Accessory,Force:.2,Duration:.05);
     Require(s.BeginInteractionGesture(c.Id,valid).Success,"partial repair could not start");
     s.ContinueInteractionGesture(valid,true);double integrity=c.Interaction.Accessory.Integrity;

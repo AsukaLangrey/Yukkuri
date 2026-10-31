@@ -332,8 +332,10 @@ public sealed partial class WorldSimulation
                 life.SetReactionDirection(input.DirectionX,input.DirectionZ);
                 if(input.Part==BodyPart.Accessory)
                     return Feedback(oil,"poke",Expression.Curious,"饰品轻轻晃动，它抬眼看向你的手。","poke");
-                life.ChangeCheekSensitivity(input.Side,2); Distress(oil, 1);
-                return Feedback(oil, "poke", Expression.Defiant, "脸颊缩了一下，它鼓起脸抗议。", "poke");
+                if(input.Part==BodyPart.Cheek)life.ChangeCheekSensitivity(input.Side,2);
+                Distress(oil, 1);
+                return Feedback(oil, "poke", Expression.Defiant,
+                    input.Part==BodyPart.Cheek?"脸颊缩了一下，它鼓起脸抗议。":"被戳到的部位缩了一下，它转头抗议。", "poke");
             case InteractionAction.Scold:
             case InteractionAction.Cold:
             case InteractionAction.Belittle:
@@ -344,7 +346,7 @@ public sealed partial class WorldSimulation
                 double severity = input.Action == InteractionAction.Flick ? 1.2 + input.Force * 3 :
                     input.Action==InteractionAction.Punch?4+input.Force*9:3 + input.Force * 7;
                 Distress(oil, severity, Math.Max(0, severity - 1), input.Action == InteractionAction.Flick ? "弹额" : input.Action==InteractionAction.Punch?"拳头击打":"掌掴",input.Part,input.Side);
-                if(input.Action==InteractionAction.Slap)life.ChangeCheekSensitivity(input.Side,severity);
+                if(input.Action==InteractionAction.Slap&&input.Part==BodyPart.Cheek)life.ChangeCheekSensitivity(input.Side,severity);
                 else if(input.Action==InteractionAction.Flick)life.HeadSensitivity = Clamp100(life.HeadSensitivity + severity);
                 if(input.Action is InteractionAction.Punch or InteractionAction.Slap)
                 {

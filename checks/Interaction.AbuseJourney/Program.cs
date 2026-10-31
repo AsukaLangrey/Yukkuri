@@ -6,6 +6,7 @@ using Yukkuri.Simulation;
 try
 {
     var sim=WorldSimulation.CreateInteractionPlaytest(20261031);
+    BuyFixtureProduct(sim,"frame",2);BuyFixtureProduct(sim,"lighter");
     var victim=sim.State.Creatures[0];var witness=sim.State.Creatures[1];
     Require(sim.State.Settings.LethalInjuries&&victim.Condition==PhysicalCondition.Active&&victim.Health==100&&
         victim.Interaction.FootIntegrity==100&&victim.Interaction.Injuries.Sites.Count==0,"default healthy starting state changed");
@@ -83,6 +84,13 @@ try
 catch(Exception e){Console.WriteLine("FAIL abuse journey: "+e);return 1;}
 
 static void Require(bool ok,string why){if(!ok)throw new Exception(why);}
+static void BuyFixtureProduct(WorldSimulation sim,string id,int packs=1)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id,packs)&&sim.State.Money==money-product.Price*packs&&
+        sim.ShopQuantity(id)==stock+product.Pack*packs,"fixture purchase failed exact debit/stock: "+id);
+}
 static void Frame(WorldSimulation sim){sim.AdvanceInteractionPresentation(.1);sim.Advance(.1);}
 static void Act(WorldSimulation sim,Creature c,InteractionAction action,BodyPart part=BodyPart.Head,double force=.3)
 {
@@ -96,6 +104,7 @@ static void Trace(WorldSimulation sim,Creature c,string stage)=>Console.WriteLin
 static void LighterJourney()
 {
     var sim=WorldSimulation.CreateInteractionPlaytest(20261031);
+    BuyFixtureProduct(sim,"frame",2);BuyFixtureProduct(sim,"lighter");
     var victim=sim.State.Creatures[0];var witness=sim.State.Creatures[1];
     Require(sim.State.Mode!=PlayMode.CloseUp&&!sim.State.Settings.Pause&&victim.Health==100&&
         victim.Interaction.Injuries.Sites.Count==0,"lighter journey did not start healthy in ordinary world time");

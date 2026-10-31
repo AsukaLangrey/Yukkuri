@@ -90,6 +90,24 @@ string ProtectionState(WorldSimulation sim,bool maternal)=>JsonSerializer.Serial
     Require(sim.CanPlaceInteractionAt(protector.Id,point.X,point.Z),"保护站位被实体或地形占用");
     return point;
 }
+// Cold protection fixtures must really acquire the reusable paid freezer.
+void StoreWithPurchasedFreezer(WorldSimulation sim,Creature creature)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id=="freezer");
+    int money=sim.State.Money,stock=sim.ShopQuantity("freezer");
+    Require(sim.BuyShopProduct("freezer"),"冷藏箱实际购买失败");
+    Require(sim.State.Money==money-product.Price&&sim.ShopQuantity("freezer")==stock+product.Pack,
+        "冷藏箱购买未精确扣费或增加实际库存");
+    int purchasedMoney=sim.State.Money,purchasedStock=sim.ShopQuantity("freezer");
+    string result=sim.SetColdStorage(creature.Id,true);
+    Require(creature.Family.ColdStorage.Stored,"购置后未实际进入冷藏："+result);
+    Require(sim.State.Money==purchasedMoney&&sim.ShopQuantity("freezer")==purchasedStock,
+        "冷藏额外扣费或消耗了可复用冷藏箱");
+    string snapshot=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);
+    sim.SetColdStorage(creature.Id,true);
+    Require(JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions)==snapshot,
+        "重复冷藏命令改变状态或再次扣费");
+}
 void Busy(WorldSimulation sim,string mode)
 {
     var protector=sim.State.Creatures[1];
@@ -107,7 +125,7 @@ void Busy(WorldSimulation sim,string mode)
         protector.Family.Pregnancy=new(){Phase=PregnancyPhase.Preparing,Forced=true,InterventionRemaining=4,FatherId=sim.State.Creatures[0].Id};
     }
     else if(mode=="hand")Require(sim.BeginInteractionGesture(protector.Id,new(InteractionAction.Stroke,BodyPart.Head)).Success,"手势前置失败");
-    else if(mode=="cold")sim.SetColdStorage(protector.Id,true);
+    else if(mode=="cold")StoreWithPurchasedFreezer(sim,protector);
     else if(mode=="high")protector.Interaction.Height=2;
 }
 
@@ -287,7 +305,7 @@ Check("冷藏打断双方危险状态，暂停近看不推进预警和出手间�
         Require((maternal?actor.Family.ChildThreat.WarningRemaining:actor.Family.Conflict.WarningRemaining)==warning&&target.Health==100,"近看推进预警");
         sim.State.Mode=PlayMode.Management;sim.State.Settings.Pause=true;Tick(sim,10);
         Require((maternal?actor.Family.ChildThreat.WarningRemaining:actor.Family.Conflict.WarningRemaining)==warning&&target.Health==100,"暂停推进预警");
-        sim.State.Settings.Pause=false;sim.SetColdStorage(target.Id,true);Tick(sim,.25);
+        sim.State.Settings.Pause=false;StoreWithPurchasedFreezer(sim,target);Tick(sim,.25);
         Require(target.Family.ColdStorage.Stored&&!HasThreat(actor,maternal)&&target.Health==100,"冷藏仍受追击");
     }
 });

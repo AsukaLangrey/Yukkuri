@@ -104,11 +104,114 @@ Check("real doorway object blocks exit and removal restores travel",()=>
     var sim=Entered();var home=Home(sim);var c=sim.State.Creatures[0];
     // A ball at the threshold is a physical obstacle, not a simulated closed-door flag.
     var ball=new RoomObject{Id="door-ball",RegionId=c.RegionId,Kind=RoomObjectKind.Ball,X=0,Z=1.25};
-    sim.State.RoomObjects.Add(ball);c.Fullness=10;Seconds(sim,3);
-    Require(home.GuestId==c.Id&&home.BlockedSeconds>=1&&sim.InteractionHelpFor(c)?.Kind==InteractionHelpKind.Shelter,"blocked doorway did not retain guest and help");
+    sim.State.RoomObjects.Add(ball);c.Fullness=10;
+    string Trace()=>$"phase={home.Phase}, guest={home.GuestId}, position=({c.X:F4},{c.Z:F4}), blocked={home.BlockedSeconds:F3}, help={sim.InteractionHelpFor(c)?.Kind}";
+    for(int n=0;n<60;n++)
+    {
+        double z=c.Z,blocked=home.BlockedSeconds;Step(sim);
+        Require(c.Z>=z-.0001,"exit retreated to realign after avoidance: "+Trace());
+        Require(Math.Abs(c.X-home.X)<.025,"blocked traversal slid off its doorway route: "+Trace());
+        Require(home.BlockedSeconds>=blocked,"stationary obstacle reset blocked time: "+Trace());
+    }
+    Require(home.GuestId==c.Id,"blocked doorway released its guest: "+Trace());
+    Require(home.Phase==ShelterVisitPhase.Exiting&&home.ExitRequested,"blocked guest lost exit intent: "+Trace());
+    Require(home.BlockedSeconds>=1,"blocked doorway did not accumulate waiting time: "+Trace());
+    Require(home.LastHelpAt>=0,"blocked doorway never emitted a help response: "+Trace());
+    Require(sim.InteractionHelpFor(c)?.Kind==InteractionHelpKind.Shelter,"blocked doorway missing from help list: "+Trace());
+    double waited=home.BlockedSeconds;sim=Reload(sim);home=Home(sim);c=sim.State.Creatures[0];
+    ball=sim.State.RoomObjects.Single(o=>o.Id=="door-ball");
+    Require(home.GuestId==c.Id&&home.ExitRequested&&home.BlockedSeconds==waited,"reload lost blocked visit: "+Trace());
+    Seconds(sim,.5);Require(home.BlockedSeconds>waited&&sim.InteractionHelpFor(c)?.Kind==InteractionHelpKind.Shelter,
+        "reloaded obstruction stopped waiting or help: "+Trace());
     Require(sim.MoveLooseObject(ball.Id,0,3.5),"could not remove threshold obstacle through the open door");
-    for(int n=0;n<500&&home.GuestId!=null;n++)Step(sim);
-    Require(home.GuestId==null,"removed obstacle left stale blocked occupancy");
+    Require(ball.X==0&&Math.Abs(ball.Z-3.5)<.0001,"obstacle removal reported success without clearing the doorway");
+    for(int n=0;n<500&&home.GuestId!=null;n++)CheckedShelterStep(sim,home,c,"exit after obstacle removal");
+    Require(home.GuestId==null&&c.Z-home.Z>ShelterGeometry.OuterDepth*.5,"removed obstacle left stale blocked occupancy or no real exit");
+    Require(home.Phase==ShelterVisitPhase.Empty&&home.BlockedSeconds==0&&!home.ExitRequested&&
+        sim.CreatureShelterStatus(c)==null,"actual exit left stale waiting state");
+});
+
+string VisitTrace(ShelterState home,Creature c)=>$"phase={home.Phase}, guest={home.GuestId}, position=({c.X:F4},{c.Z:F4}), blocked={home.BlockedSeconds:F3}";
+void CheckedShelterStep(WorldSimulation sim,ShelterState home,Creature c,string context)
+{
+    double x=c.X,z=c.Z;Step(sim);double radius=WorldSimulation.ShelterPassageRadius(c);
+    Require(WorldSimulation.Distance(x,z,c.X,c.Z)<.25,context+": body teleported: "+VisitTrace(home,c));
+    Require(ShelterGeometry.FitsLocalCircle(c.X-home.X,c.Z-home.Z,radius,home.DoorOpen),context+": body overlaps a wall: "+VisitTrace(home,c));
+    Require(ShelterGeometry.SweptCircleClear(x-home.X,z-home.Z,c.X-home.X,c.Z-home.Z,radius,home.DoorOpen),
+        context+": movement crossed a wall: "+VisitTrace(home,c));
+    if(home.GuestId==null)Require(!ShelterGeometry.OverlapsInterior(c.X-home.X,c.Z-home.Z,radius),
+        context+": occupancy released before the body left: "+VisitTrace(home,c));
+}
+
+Check("entering waits for a real indoor obstacle and resumes after recycling it",()=>
+{
+    var sim=Built();var home=Home(sim);var c=sim.State.Creatures[0];
+    c.X=c.TargetX=0;c.Z=c.TargetZ=3;c.Fear=50;c.Interaction.Emotion.Alarm=30;c.Interaction.Emotion.SafeSeconds=0;
+    for(int n=0;n<300&&home.Phase!=ShelterVisitPhase.Entering;n++)CheckedShelterStep(sim,home,c,"initial approach");
+    Require(home.Phase==ShelterVisitPhase.Entering&&home.GuestId==c.Id,"clear approach did not begin real entry");
+    var ball=new RoomObject{Id="entry-ball",RegionId=c.RegionId,Kind=RoomObjectKind.Ball,X=0,Z=0};
+    sim.State.RoomObjects.Add(ball);
+    for(int n=0;n<60;n++)CheckedShelterStep(sim,home,c,"blocked entry");
+    Require(home.Phase==ShelterVisitPhase.Entering&&home.GuestId==c.Id&&home.BlockedSeconds>=1,
+        "real obstacle did not retain waiting entry: "+VisitTrace(home,c));
+    Console.WriteLine("TRACE blocked entry "+VisitTrace(home,c));
+    double waited=home.BlockedSeconds;sim=Reload(sim);home=Home(sim);c=sim.State.Creatures[0];
+    Require(home.Phase==ShelterVisitPhase.Entering&&home.GuestId==c.Id&&home.BlockedSeconds==waited&&
+        sim.State.RoomObjects.Any(o=>o.Id==ball.Id),"reload lost actual entering obstruction");
+    int stock=sim.ShopQuantity("ball"),money=sim.State.Money;
+    Require(sim.PutAwayRoomObject(ball.Id)&&!sim.State.RoomObjects.Any(o=>o.Id==ball.Id)&&
+        sim.ShopQuantity("ball")==stock+1&&sim.State.Money==money,"recycling did not remove the real obstacle exactly once");
+    Require(!sim.PutAwayRoomObject(ball.Id)&&sim.ShopQuantity("ball")==stock+1,"repeated removal duplicated inventory");
+    for(int n=0;n<300&&home.Phase!=ShelterVisitPhase.Inside;n++)CheckedShelterStep(sim,home,c,"resumed entry");
+    Require(home.Phase==ShelterVisitPhase.Inside&&home.GuestId==c.Id&&home.BlockedSeconds==0&&
+        ShelterGeometry.FullyInside(c.X-home.X,c.Z-home.Z,WorldSimulation.ShelterPassageRadius(c)),
+        "removing the obstacle did not finish actual entry: "+VisitTrace(home,c));
+    Console.WriteLine("TRACE entry recovered "+VisitTrace(home,c));
+});
+
+Check("reserved side and rear approaches go around walls instead of through them",()=>
+{
+    foreach(var origin in new[]{(-3.0,0.0),(3.0,0.0),(-3.0,-3.0),(3.0,-3.0),(0.0,-3.0)})
+    {
+        var sim=Built();var home=Home(sim);var c=sim.State.Creatures[0];
+        c.X=c.TargetX=origin.Item1;c.Z=c.TargetZ=origin.Item2;c.Fear=50;c.Interaction.Emotion.Alarm=30;c.Interaction.Emotion.SafeSeconds=0;
+        // This is an existing valid reservation, e.g. restored after a position change.
+        // A rear wall blocks sight of the door; this does not claim fresh discovery through it.
+        home.GuestId=c.Id;home.Phase=ShelterVisitPhase.Approaching;sim=Reload(sim);home=Home(sim);c=sim.State.Creatures[0];
+        bool reachedFront=false;
+        for(int n=0;n<800&&home.Phase!=ShelterVisitPhase.Inside;n++)
+        {
+            CheckedShelterStep(sim,home,c,$"approach from {origin}");
+            reachedFront|=c.Z-home.Z>ShelterGeometry.OuterDepth*.5;
+            Require(home.GuestId==c.Id,"clear reserved route abandoned its guest: "+VisitTrace(home,c));
+        }
+        Require(reachedFront&&home.Phase==ShelterVisitPhase.Inside&&
+            ShelterGeometry.FullyInside(c.X-home.X,c.Z-home.Z,WorldSimulation.ShelterPassageRadius(c)),
+            $"side/rear route did not enter through the front from {origin}: "+VisitTrace(home,c));
+        Console.WriteLine($"TRACE side/rear {origin} "+VisitTrace(home,c));
+    }
+});
+
+Check("off-centre inside guest realigns and leaves through the open doorway",()=>
+{
+    foreach(double offset in new[]{-.15,.15})
+    {
+        var sim=Entered();var home=Home(sim);var c=sim.State.Creatures[0];
+        // A legal persisted off-centre body position, not a teleport by the tested exit code.
+        c.X=c.TargetX=home.X+offset;c.Z=c.TargetZ=home.Z+.1;c.Fullness=10;
+        Require(ShelterGeometry.FullyInside(c.X-home.X,c.Z-home.Z,WorldSimulation.ShelterPassageRadius(c)),"off-centre fixture does not fit inside");
+        sim=Reload(sim);home=Home(sim);c=sim.State.Creatures[0];bool aligned=false;
+        for(int n=0;n<500&&home.GuestId!=null;n++)
+        {
+            CheckedShelterStep(sim,home,c,"off-centre exit");
+            aligned|=Math.Abs(c.X-home.X)<=.025;
+        }
+        Require(aligned&&home.GuestId==null&&home.Phase==ShelterVisitPhase.Empty&&
+            c.Z-home.Z>ShelterGeometry.OuterDepth*.5&&
+            !ShelterGeometry.OverlapsInterior(c.X-home.X,c.Z-home.Z,WorldSimulation.ShelterPassageRadius(c)),
+            "off-centre guest did not physically clear the doorway: "+VisitTrace(home,c));
+        Console.WriteLine($"TRACE off-centre {offset} "+VisitTrace(home,c));
+    }
 });
 
 Check("door rejects body, object and invalid surface",()=>

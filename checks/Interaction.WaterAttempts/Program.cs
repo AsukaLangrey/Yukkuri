@@ -8,6 +8,21 @@ void Require(bool ok,string why){if(!ok)throw new Exception(why);}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
 string Snapshot(WorldSimulation s)=>JsonSerializer.Serialize(s.State,SaveStore.JsonOptions);
+// Fixture equipment is acquired through the current paid shop, not injected stock.
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&sim.ShopQuantity(id)==stock+product.Pack,
+        "paid fixture purchase failed: "+id);
+}
+// Close-up may finish the visible reaction, but not advance saved world facts.
+string WorldFacts(WorldSimulation s)
+{
+    var root=JsonNode.Parse(Snapshot(s))!;
+    foreach(var creature in root["Creatures"]!.AsArray())creature!.AsObject().Remove("ReactionRemaining");
+    return root.ToJsonString();
+}
 WorldSimulation Fresh(ulong seed=20261031)
 {
     var s=WorldSimulation.CreateInteractionPlaytest(seed);var c=s.Selected!;
@@ -82,7 +97,7 @@ Check("a successful real bank attempt keeps the original escape and recovery set
     // Exercise the real probability and real dry landing search; no injected success.
     for(ulong seed=1;seed<=32&&!escaped;seed++)
     {
-        var s=Fresh(seed);Immerse(s,WoodlandLayout.RiverEdge(0)+.12);var c=s.Selected!;
+        var s=Fresh(seed);BuyTool(s,"freezer");Immerse(s,WoodlandLayout.RiverEdge(0)+.12);var c=s.Selected!;
         FirstAttempt(s);var view=s.WaterAttemptStatus(c);
         if(view?.Outcome!=WaterAttemptOutcome.Escaped)continue;
         escaped=true;Require(!c.Interaction.Water.InWater&&!WaterEnvironment.IsInWater(s.State,c)&&
@@ -103,11 +118,17 @@ Check("queries are pure pause preserves facts and close-up hides rather than adv
     Require(Snapshot(s)==before,"read-only fact query changed random time or position");
     s.State.Settings.Pause=true;before=Snapshot(s);for(int n=0;n<30;n++)Frame(s);
     Require(Snapshot(s)==before&&s.WaterAttemptStatus(c)==beforeView,"pause advanced attempts or erased the recorded fact");
-    s.State.Settings.Pause=false;Require(s.EnterCloseUp(),"close-up failed");before=Snapshot(s);
+    s.State.Settings.Pause=false;Require(s.EnterCloseUp(),"close-up failed");before=WorldFacts(s);double reaction=c.ReactionRemaining;
     for(int n=0;n<30;n++)Frame(s);
-    Require(s.WaterAttemptStatus(c)==null&&Snapshot(s)==before,"close-up generated a new attempt or advanced its clock");
+    Require(s.WaterAttemptStatus(c)==null&&WorldFacts(s)==before,"close-up generated a new attempt or advanced saved world facts");
+    Require(Math.Abs(c.ReactionRemaining-Math.Max(0,reaction-3))<.000001,"close-up did not advance only its allowed visual reaction timer");
     s.ExitCloseUp();for(int n=0;n<12;n++)Frame(s);
-    Require(c.Interaction.Water.AttemptSequence==1&&s.WaterAttemptStatus(c)==null,"expired fact remained a current pulse");
+    double elapsed=s.State.WorldSeconds-c.Interaction.Water.AttemptAt;
+    Console.WriteLine($"WATER_PULSE_CLOCK after12Frames={elapsed:R}, visible={WorldSimulation.WaterAttemptVisibleSeconds:R}");
+    Require((s.WaterAttemptStatus(c)!=null)==(elapsed<=WorldSimulation.WaterAttemptVisibleSeconds),"pulse lifetime disagreed with the actual world clock");
+    for(int n=0;n<10&&s.State.WorldSeconds-c.Interaction.Water.AttemptAt<=WorldSimulation.WaterAttemptVisibleSeconds;n++)Frame(s);
+    Require(s.State.WorldSeconds<c.Interaction.Water.NextAttemptAt&&c.Interaction.Water.AttemptSequence==1&&s.WaterAttemptStatus(c)==null,
+        "expired fact remained a current pulse or expiry invented another attempt");
 });
 Check("rescue and a real second immersion do not reuse the previous attempt identity",()=>
 {

@@ -2,6 +2,14 @@ using System.Text.Json;
 using Yukkuri.Simulation;
 
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
 void Near(double actual,double expected,string reason)=>Require(Math.Abs(actual-expected)<.000001,reason+$" ({actual} != {expected})");
 void Check(string name,Action body)
@@ -169,7 +177,7 @@ Check("临时口伤通过真实护理和普通时间改善，近看不会修好"
 });
 Check("慢速嘴内动作仍受暂停和冷藏入口约束",()=>
 {
-    var sim=Create();var c=sim.Selected!;Mouth(c,80);sim.EnterCloseUp();Accept(sim,IntakeKind.Meal);
+    var sim=Create();var c=sim.Selected!;BuyTool(sim,"freezer");Mouth(c,80);sim.EnterCloseUp();Accept(sim,IntakeKind.Meal);
     double remaining=c.Interaction.EatingRemaining,full=c.Fullness;sim.State.Settings.Pause=true;Tick(sim,5);
     Require(c.Interaction.EatingRemaining==remaining&&c.Fullness==full,"暂停推进了慢速口部动作");
     sim.State.Settings.Pause=false;sim.ExitCloseUp();sim.SetColdStorage(c.Id,true);

@@ -46,7 +46,15 @@ try
         "autonomous family journey lost its continuous safety prerequisites");
     SaveStore.Validate(sim.State);
     journey.Trace("birth and maternal recovery");
-    FamilyNurseryJourney.Run(sim,mother,father,birthId);
+    // Purchase precisely the wraps needed by this actual litter; no injected stock.
+    int nurseryMoney=sim.State.Money,wrapStock=sim.ShopQuantity("wrap");
+    int wrapPrice=CourtyardShop.Products.Single(p=>p.Id=="wrap").Price;
+    Require(sim.BuyShopProduct("wrap",planned)&&sim.State.Money==nurseryMoney-wrapPrice*planned&&
+        sim.ShopQuantity("wrap")==wrapStock+planned,"actual nursery wrap purchase failed exact debit/stock");
+    Console.WriteLine($"nursery inventory before: money={sim.State.Money}, food={sim.State.Food}, water={sim.State.StationWaterPortions}, wraps={sim.ShopQuantity("wrap")}");
+    try{FamilyNurseryJourney.Run(sim,mother,father,birthId);}
+    catch{Console.WriteLine($"nursery inventory on failure: money={sim.State.Money}, food={sim.State.Food}, water={sim.State.StationWaterPortions}, objects={sim.State.RoomObjects.Count}");throw;}
+    Require(sim.ShopQuantity("wrap")==wrapStock+planned,"nursery did not return the same reusable wraps after release");
     journey.Trace("actual nursery care and completed maternal recovery");
     Console.WriteLine("PASS default stranger -> trusted company -> reciprocal partnership -> autonomous pregnancy -> birth -> actual nursery and maternal recovery");
     return 0;

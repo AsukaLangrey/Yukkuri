@@ -3,6 +3,14 @@ using Yukkuri.Simulation;
 
 // Remote-only source. Never run on the original development workstation.
 int failures=0;
+void BuyTool(WorldSimulation sim,string id)
+{
+    var product=CourtyardShop.Products.Single(p=>p.Id==id);
+    int money=sim.State.Money,stock=sim.ShopQuantity(id);
+    Require(sim.BuyShopProduct(id)&&sim.State.Money==money-product.Price&&
+        sim.ShopQuantity(id)==stock+product.Pack,"required paid fixture purchase failed: "+id);
+}
+
 void Require(bool ok,string reason){if(!ok)throw new Exception(reason);}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
@@ -124,6 +132,7 @@ Check("地面包裹可实际接下食水，箱子悬挂和不稳支撑不能冒�
     foreach(bool water in new[]{false,true})
     {
         var (sim,a,b,source)=Delivery(water,arrange:false);
+        BuyTool(sim,"wrap");
         Require(sim.ExecuteInteraction(b.Id,new(InteractionAction.Wrap)).Success,"实际包裹入口失败");
         Require(sim.FamilyCareReason(a.Id,b.Id)==null,"地面包裹被当作密闭限制");sim.ArrangeCare(a.Id,b.Id);
         var parcel=WaitForParcel(sim,a);FinishDelivery(sim,a,b,parcel);
@@ -156,6 +165,7 @@ Check("本人需要和对象支撑各自给明确原因，不靠UI猜测",()=>
         var (sim,a,b,source)=Delivery(arrange:false);
         // Use both real actions. The product owns Lowering and keeps the hand
         // supporting the creature until the lowering process has completed.
+        BuyTool(sim,"hanger");
         Require(sim.ExecuteInteraction(b.Id,new(InteractionAction.Hang)).Success,"照护悬挂前置入口失败");
         Require(sim.ExecuteInteraction(b.Id,new(InteractionAction.Lower)).Success,"照护放下前置入口失败");
         Require(b.Interaction.Lowering&&b.Interaction.Carried&&!b.Interaction.Falling&&
@@ -226,7 +236,7 @@ Check("收件人濒危死亡或冷藏中断搬运，不直接灌食",()=>
     foreach(string change in new[]{"critical","dead","cold"})
     {
         var (sim,a,b,source)=Delivery(water:true);var parcel=WaitForParcel(sim,a);double water=b.Interaction.Hydration;
-        if(change=="cold"){sim.SetColdStorage(b.Id,true);Require(b.Family.ColdStorage.Stored,"未实际进入冷藏");}
+        if(change=="cold"){BuyTool(sim,"freezer");sim.SetColdStorage(b.Id,true);Require(b.Family.ColdStorage.Stored,"未实际进入冷藏");}
         else sim.Hurt(b,change=="dead"?200:100,"收件人突发重伤",null);
         sim.AdvanceInteractionPresentation(.05);
         Require(a.Family.CareTargetId==null&&a.Family.CareParcelId==null&&parcel.CarrierId==null&&Portions(sim,RoomObjectKind.Water)==3,
