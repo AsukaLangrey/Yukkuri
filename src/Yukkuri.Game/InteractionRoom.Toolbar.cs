@@ -49,6 +49,7 @@ public partial class InteractionRoom
         var scroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};parent.AddChild(scroll);
         _groupList=Column(scroll,5);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         for(int i=0;i<Toolbar.Length;i++){int index=i;_groupList.AddChild(Button(Toolbar[i].Name,()=>SelectToolbarCategory(index)));}
+        parent.AddChild(Button("投放新油",ShowCreatureArrival));
         parent.AddChild(Button("商店",()=>ShowShop()));
         _supplyStockLabel=Text("",12);parent.AddChild(_supplyStockLabel);
         parent.AddChild(Text("右键：停止使用工具\n中键拖动画面，滚轮缩放",12,"78816e"));
@@ -114,6 +115,7 @@ public partial class InteractionRoom
             void RefreshPrice(){buy.Text=$"购买 · 总价 {p.Price*(int)quantity.Value} 元";buy.Disabled=Sim.State.Money<(long)p.Price*(int)quantity.Value;}
             quantity.ValueChanged+=_=>RefreshPrice();RefreshPrice();row.AddChild(buy);
         }
+        _modalContents.AddChild(Button("购入新油 · 选择场景落点",ShowCreatureArrival));
         _modalContents.AddChild(Button("查看收容箱",ShowContainer));
         _modalContents.AddChild(Button("返回小院",CloseModal));
     }

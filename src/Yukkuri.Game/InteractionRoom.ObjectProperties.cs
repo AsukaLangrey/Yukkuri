@@ -11,6 +11,8 @@ public partial class InteractionRoom
         var entry=Toolbar[_toolbarCategory].Entries.FirstOrDefault(e=>e.Mode==_roomMode);
         _title.Text=Toolbar[_toolbarCategory].Name+(entry!=null&&_toolbarCategory!=0?" · "+entry.Name:"");
         if(_waterRescueToolArmed){_title.Text="水域救援用品";_hint.Text="点击落水的油，成功救援才消耗一份用品。";}
+        else if(_arrivingCreature!=null)
+        {_title.Text="投放新油";_hint.Text=$"点击干燥空地放下一只新油；绿色可放，红色需换位置。成功后扣 {WorldSimulation.NewCreaturePrice} 元，右键取消。";}
         else if(_roomMode==RoomMode.Observe)_hint.Text="只选中查看，不接触、不抓取。右侧显示对象属性和家庭记录。";
         else if(_roomMode==RoomMode.Grab)_hint.Text="按住抓取，松手放下；释放速度决定抛出。拖到右下收容箱可回收，资源不退款。";
         else if(_roomMode==RoomMode.Pet)_hint.Text="停在头顶或脸侧即可接触；按住轻拖贴地挪动，障碍仍阻挡。";

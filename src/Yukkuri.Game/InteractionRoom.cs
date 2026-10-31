@@ -233,6 +233,7 @@ public partial class InteractionRoom : Node3D
         UpdateLandingPreview();
         UpdateSupplyStationPlacement();
         UpdateShelterPlacement();
+        UpdateCreatureArrivalPreview();
         PresentPortableObjects();
         PresentGravestones();
     }

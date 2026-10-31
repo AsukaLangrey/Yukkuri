@@ -282,6 +282,7 @@ public partial class InteractionRoom
         }
         if(mouse.ButtonIndex!=MouseButton.Left)return;
         if(_clickOfferId!=null||_offerReturnId!=null)CancelGesture();
+        if(PlaceNewCreatureAt(mouse.Position)){GetViewport().SetInputAsHandled();return;}
         if(PlaceShelterAt(mouse.Position)){GetViewport().SetInputAsHandled();return;}
         if(PlaceSupplyStationAt(mouse.Position)){GetViewport().SetInputAsHandled();return;}
         var contact=ContactAt(mouse.Position);
@@ -445,6 +446,7 @@ public partial class InteractionRoom
     }
     private void CancelGesture()
     {
+        CancelCreatureArrival();
         CancelShelterPlacement();
         string? carriedTarget=_directGesture&&_action==InteractionAction.Lift?Sim?.InteractionGestureTarget:null;
         ResetRedesignGesture();
