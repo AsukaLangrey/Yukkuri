@@ -5,9 +5,9 @@ using Yukkuri.Simulation;
 public partial class InteractionRoom
 {
     private VBoxContainer _creatureVitalMeters=null!;
-    private Label _fullnessLabel=null!,_thirstLabel=null!,_healthLabel=null!;
-    private ProgressBar _fullnessMeter=null!,_thirstMeter=null!;
-    private StyleBoxFlat _fullnessFill=null!,_thirstFill=null!;
+    private Label _fullnessLabel=null!,_hydrationLabel=null!,_healthLabel=null!;
+    private ProgressBar _fullnessMeter=null!,_hydrationMeter=null!;
+    private StyleBoxFlat _fullnessFill=null!,_hydrationFill=null!;
     private Label _comfortLabel=null!,_trustLabel=null!,_lifeLabel=null!,_fearLabel=null!,_continuityLabel=null!,_personalityLabel=null!;
     private Label _waterSupportLabel=null!,_hungerFeedingLabel=null!,_familyNeedsLabel=null!;
     private ProgressBar _comfortMeter=null!,_trustMeter=null!,_lifeMeter=null!,_fearMeter=null!;
@@ -17,8 +17,8 @@ public partial class InteractionRoom
         var meters=Column(parent,5);_creatureVitalMeters=meters;
         _fullnessLabel=Text("饱食度",13);meters.AddChild(_fullnessLabel);
         _fullnessMeter=NeedMeter(meters,"8aa576",out _fullnessFill);
-        _thirstLabel=Text("口渴度",13);meters.AddChild(_thirstLabel);
-        _thirstMeter=NeedMeter(meters,"7cabc0",out _thirstFill);
+        _hydrationLabel=Text("水分",13);meters.AddChild(_hydrationLabel);
+        _hydrationMeter=NeedMeter(meters,"7cabc0",out _hydrationFill);
         _healthLabel=Text("身体状态：正常",14);meters.AddChild(_healthLabel);
         BuildImmediateInterventions(meters);
         _personalityLabel=Text("",12,"78816e");meters.AddChild(_personalityLabel);
@@ -47,12 +47,12 @@ public partial class InteractionRoom
     }
     private void RefreshVitalMeters(Creature c)
     {
-        double full=Math.Clamp(c.Fullness,0,100),thirst=100-Math.Clamp(c.Interaction.Hydration,0,100);
-        _fullnessMeter.Value=full;_thirstMeter.Value=thirst;
+        double full=Math.Clamp(c.Fullness,0,100),hydration=Math.Clamp(c.Interaction.Hydration,0,100);
+        _fullnessMeter.Value=full;_hydrationMeter.Value=hydration;
         _fullnessLabel.Text=$"饱食度  {Math.Round(full):0}/100";
-        _thirstLabel.Text=$"口渴度  {Math.Round(thirst):0}/100 · 越高越渴";
+        _hydrationLabel.Text=$"水分  {Math.Round(hydration):0}/100";
         _fullnessFill.BgColor=new Color(full<25?"bd795d":"8aa576");
-        _thirstFill.BgColor=new Color(thirst>75?"bd795d":"7cabc0");
+        _hydrationFill.BgColor=new Color(hydration<25?"bd795d":"7cabc0");
         _healthLabel.Text="身体状态："+(c.HealthStatus switch
         {
             HealthStatus.Dead=>"死亡",HealthStatus.Critical=>"重伤 · 急需救治",
