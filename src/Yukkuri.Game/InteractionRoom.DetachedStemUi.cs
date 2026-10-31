@@ -106,23 +106,5 @@ public partial class InteractionRoom
         _speechLabel.Text="离体茎 · "+phase;
     }
 
-    private void ShowStemVessels(string? result=null)
-    {
-        OpenModal("瓶养用品");
-        _modalContents.AddChild(Text($"空瓶 · 每个 {WorldSimulation.StemVesselPrice} 元",20));
-        _modalContents.AddChild(Text("拿空瓶对准离体茎，按住完成装瓶。成功后消耗一个真实空瓶；水和营养需要继续补给。"));
-        _modalContents.AddChild(Text(Sim.State.UnlimitedResources?"测试阶段购买不扣钱，装瓶仍消耗库存。":$"现有金钱：{Sim.State.Money} 元"));
-        _modalContents.AddChild(Text($"空瓶库存：{Sim.State.StemVessels}"));
-        if(!string.IsNullOrEmpty(result))_modalContents.AddChild(Text(result,14));
-        var buy=Button("购买一个空瓶",()=>
-        {
-            bool purchased=Sim.BuyStemVessel();
-            ShowStemVessels(purchased?"空瓶已入库。":"未能购买，请检查金钱和库存。已持有的用品不会减少。");
-        });
-        buy.Disabled=Sim.State.StemVessels>=99||!Sim.State.UnlimitedResources&&Sim.State.Money<WorldSimulation.StemVesselPrice;
-        _modalContents.AddChild(buy);
-        var equip=Button("拿起空瓶",()=>{CloseModal();SelectQuickTool(InteractionAction.BottleStem);});
-        equip.Disabled=Sim.State.StemVessels<=0;_modalContents.AddChild(equip);
-        _modalContents.AddChild(Button("返回小院",CloseModal));
-    }
+    private void ShowStemVessels(string? result=null)=>ShowShop(result,"繁育与油茎用品");
 }

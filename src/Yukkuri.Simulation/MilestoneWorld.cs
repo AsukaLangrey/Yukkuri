@@ -192,6 +192,7 @@ public sealed partial class WorldSimulation
     public const int MedicineBundleCount=3;
     public bool BuyMedicine()
     {
+        if(State.InteractionPlaytest)return BuyShopProduct("medicine");
         if(State.Medicine>int.MaxValue-MedicineBundleCount||!State.UnlimitedResources&&State.Money<MedicineBundlePrice)return false;
         if(!State.UnlimitedResources)State.Money-=MedicineBundlePrice;
         State.Medicine+=MedicineBundleCount;Log($"补给：{MedicineBundleCount}份护理包入库。");return true;
@@ -202,6 +203,7 @@ public sealed partial class WorldSimulation
         var home=State.Creatures.Where(c=>c.RegionId=="home"&&!c.Quarantine&&IsAvailable(c)).ToArray();
         if(home.Length==0||home.Count(c=>c.Health>=65&&c.Fullness>=55)<Math.Min(3,home.Length))return new(false,"至少照顾好3只园内油库里：身体≥65、饱腹≥55。不足3只时需全部达标。","",Expression.Neutral);
         if(State.Progress.CareActions<3)return new(false,"需要再完成3次主动照护，才能整理新一份养护记录。","",Expression.Neutral);
+        if(State.Money>int.MaxValue-40)return new(false,"金钱记录已满，养护记录仍保留。","",Expression.Neutral);
         State.Progress.CareActions-=3;State.Progress.CareContracts++;State.Progress.NextContractAt=State.WorldSeconds+90;
         int amount=30+Math.Min(10,State.Progress.Rescued*5);State.Money+=amount;
         State.Progress.Completed.Add("contract");Log($"完成第{State.Progress.CareContracts}次养护委托，获得{amount}资金。");

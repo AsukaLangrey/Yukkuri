@@ -469,14 +469,18 @@ public sealed partial class WorldSimulation
             RoomMove(c, companion.X, companion.Z, dt); c.Activity = $"慢慢靠近{companion.Name}"; return true;
         }
         c.Activity = c.Family.PartnerIds.Contains(companion.Id) ? $"陪在{companion.Name}身边" : $"和{companion.Name}相处";
+        bool playing=!c.Family.PartnerIds.Contains(companion.Id)&&c.IsYoung==companion.IsYoung&&c.Energy>45&&companion.Energy>45&&
+            c.Interaction.ToyInterest>.5&&companion.Interaction.ToyInterest>.5&&EmotionalReadiness.Settled(c)&&EmotionalReadiness.Settled(companion);
+        if(playing){c.Activity=$"和{companion.Name}一起伸展玩耍";c.Energy=Math.Max(0,c.Energy-dt*.05);c.Interaction.ToySkill=Math.Min(100,c.Interaction.ToySkill+dt*.02);}
         c.Family.LastCompanionActivityAt = State.WorldSeconds;
         if (State.WorldSeconds >= c.Family.NextCompanionReactionAt)
         {
             c.Family.NextCompanionReactionAt = State.WorldSeconds + 10;
             bool settled = EmotionalReadiness.Settled(c);
             React(c, settled ? FamilyBond(c, companion).Affection >= 35 ? Expression.Content : Expression.Curious : Expression.Worried,
-                settled ? "一起慢慢来。" : "陪我待一会儿……",
+                playing?"一起伸伸，再缩回来！":settled ? "一起慢慢来。" : "陪我待一会儿……",
                 settled ? $"留在{companion.Name}身旁，轻轻回应。" : $"仍有些不安，留在{companion.Name}身旁慢慢缓和。", 3);
+            if(playing){c.Interaction.ReactionPose="stretch";c.Interaction.ReactionPoseRemaining=3;}
         }
         return true;
     }

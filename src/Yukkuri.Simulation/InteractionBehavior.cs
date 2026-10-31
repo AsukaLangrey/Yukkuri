@@ -110,12 +110,17 @@ public sealed partial class WorldSimulation
         }
         SynchronizeCareParcels();
         SettleRoomSupplies();
+        TickPortableMotion(dt);
         foreach (var c in State.Creatures)
         {
             var i = c.Interaction;
             SynchronizeWaterSupport(c);
             SynchronizeHungerThreat(c);
             i.HitRemaining=Math.Max(0,i.HitRemaining-dt);
+            i.PullRemaining=Math.Max(0,i.PullRemaining-dt);
+            if(i.PullRemaining<=0)i.PullAmount=0;
+            i.ImpactCompressionRemaining=Math.Max(0,i.ImpactCompressionRemaining-dt);
+            if(i.ImpactCompressionRemaining<=0)i.ImpactCompression=0;
             if(i.HitRemaining<=0)i.HitCount=0;
             if(CurrentInteractionAction!=InteractionAction.Burn||InteractionGestureTarget!=c.Id||
                 _interactionGesture?.ContactActive!=true)i.HeatTension=Math.Max(0,i.HeatTension-dt*12);
@@ -296,6 +301,7 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if (i.Carried || i.Falling) continue;
+            if(_groundHandTarget==c.Id||i.CleaningTargetId!=null)continue;
             if(InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy)
             {
                 if(CurrentInteractionAction==InteractionAction.Tease&&CanSelfMove(c)&&i.FoodSuspicion<75)
@@ -569,6 +575,7 @@ public sealed partial class WorldSimulation
     {
         var obj = State.RoomObjects.Find(o => o.Id == id);
         if (obj == null || obj.Stored || obj.HeldByHand || obj.Kind == RoomObjectKind.Cushion || NaturalResources.IsWild(obj.Kind)) return false;
+        if(State.InteractionPlaytest){RecycleCourtyardObject(id);return !State.RoomObjects.Contains(obj);}
         bool returnsFood=UsesConsumableStock&&obj.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet;
         // Pending natural intake reserved a portion but has not accepted it.
         // Include that returned reservation before interrupting any real care.

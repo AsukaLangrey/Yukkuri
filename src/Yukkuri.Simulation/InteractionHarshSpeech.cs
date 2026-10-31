@@ -19,12 +19,13 @@ public sealed partial class WorldSimulation
             bool reason=c.CurrentOffenseId!=null&&c.OffenseRemaining>0&&State.PlayerKnownIncidents.Contains(c.CurrentOffenseId)&&
                 State.Incidents.Any(e=>e.Id==c.CurrentOffenseId&&e.ActorId==c.Id&&!e.Resolved&&e.RegionId==c.RegionId&&e.Kind is IncidentKind.Attack or IncidentKind.Theft or IncidentKind.Intrusion);
             bool immobile=!CanSelfMove(c);
+            if(reason){i.RuleLearning=Math.Min(100,i.RuleLearning+10);c.Aggression=Math.Max(0,c.Aggression-.025);}
             i.ActiveCue=null;i.FollowPlayer=false;i.WaitRemaining=1;c.TargetX=c.X;c.TargetZ=c.Z;
             Distress(c,reason?.4:1.5);
             RecordInteraction(c,reason?"scold-context":"scold-confused",reason?"眼前的事件被喝止，但停止不代表已经学会规则。":"没有明白缘由，就听见了严厉的喝止。",reason?.3:1);
             return Feedback(c,immobile?"scold-immobile":reason?"scold":"confused-scold",
                 c.Fear>60?Expression.Frightened:c.Courage>.6?Expression.Defiant:Expression.Worried,
-                immobile?"它本来就无法走动，听见喝止后缩了一下；这不代表学会了停下。":reason?"它暂时停住动作，事件和学习结果都没有被自动判定为完成。":"它没有明白缘由，暂时停住看着你。","startle");
+                immobile?"它本来就无法走动，听见喝止后缩了一下。":reason?"它停住了，记住这次行为被制止；之后冲动行事的倾向略有降低。":"它不明白为什么被训斥，开始怀疑油生。","startle");
         }
         bool belittle=action==InteractionAction.Belittle;
         bool request=c.ReactionRemaining>0&&i.ReactionSituation is "request-nuzzle" or "request-company" or "request-comfort" or "thirsty" or "cannot-walk" or "box" or "hang" or "restrained" or "treasure-missing" or "accessory-high" or "accessory-taken";

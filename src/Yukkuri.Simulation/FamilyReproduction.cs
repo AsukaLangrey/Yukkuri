@@ -38,10 +38,10 @@ public sealed partial class WorldSimulation
                 f.Pregnancy.Phase!=PregnancyPhase.None||State.WorldSeconds<Math.Max(f.NextBreedingDecisionAt,f.Pregnancy.RetryAt))continue;
             f.NextBreedingDecisionAt=State.WorldSeconds+120;
             // Existing dependent children and the parents' own needs take precedence.
-            if(!FamilyActionReady(mother)||!SecureForBreeding(mother)||f.BreedingInterest<40||mother.Fullness<80||mother.Interaction.Hydration<80||mother.Energy<65||
+            if(!MayChooseBreeding(mother)||!FamilyActionReady(mother)||!SecureForBreeding(mother)||f.BreedingInterest<40||mother.Fullness<80||mother.Interaction.Hydration<80||mother.Energy<65||
                 State.Creatures.Any(c=>c.IsYoung&&c.Condition!=PhysicalCondition.Dead&&c.Family.CaregiverIds.Contains(mother.Id)))continue;
             var father=State.Creatures.Where(c=>f.PartnerIds.Contains(c.Id)&&c.Body.ReproductionRole==ReproductionRole.Paternal&&
-                FamilyActionReady(c)&&FamilyVisible(mother,c)&&SecureForBreeding(c)&&c.Family.BreedingInterest>=40&&
+                MayChooseBreeding(c)&&FamilyActionReady(c)&&FamilyVisible(mother,c)&&SecureForBreeding(c)&&c.Family.BreedingInterest>=40&&
                 DeepPairBond(mother,c)&&DeepPairBond(c,mother)&&c.Fullness>70&&c.Interaction.Hydration>70)
                 .OrderBy(c=>c.Id,StringComparer.Ordinal).FirstOrDefault();
             if(father==null)continue;

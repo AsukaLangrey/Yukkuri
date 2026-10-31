@@ -44,6 +44,7 @@ public static partial class FamilyRules
             var f = c.Family;
             Require(f != null && f.KnownLosses != null && f.KnownLosses.Count <= creatures.Count, "离世知情记录缺失或越界");
             Require(!f!.DeathWitnessesRecorded || c.Condition == PhysicalCondition.Dead, "生者不能有自己的死亡见证结算");
+            Require(!f.HasGravestone||f.Memorialized,"墓碑缺少实际埋葬记录");
             Require(f.Memorialized
                 ? c.Condition == PhysicalCondition.Dead && f.MemorializedAt.HasValue && Number(f.MemorializedAt.Value, state.WorldSeconds + .001) &&
                     f.MemorializedAt.Value + .001 >= c.Interaction.Injuries.DeathAt &&
@@ -191,6 +192,7 @@ public sealed partial class WorldSimulation
         ResetNaturalResourceSearch(deceased);
         if (InteractionGestureTarget == id) _interactionGesture = null;
         var i = deceased.Interaction;
+        if(State.InteractionPlaytest&&InstalledItem(i.Restraint) is { } reusable)ChangeShopQuantity(reusable,1);
         i.Restraint = RestraintKind.None; i.Carried = false; i.Falling = false; i.Lowering = false;
         i.Height = 0; i.VerticalVelocity = i.VelocityX = i.VelocityZ = 0;
         i.Supine = false; i.SupineRemaining = 0; i.EndRoll(); i.RestRemaining = 0;

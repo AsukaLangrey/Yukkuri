@@ -231,6 +231,7 @@ public partial class CreatureActor
         // Keep the protective pose. This short, already resolved hit bypasses
         // its low-pass filter, then shares the final accessory/support geometry.
         ApplyGuardedImpact(c);
+        ApplyContactDeformation(c);
         if(_accessoryRoot!=null)
         {
             _accessoryRoot.Visible=life.HasAccessory;

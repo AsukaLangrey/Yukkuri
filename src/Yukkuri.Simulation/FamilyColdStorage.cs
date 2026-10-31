@@ -28,6 +28,7 @@ public sealed partial class WorldSimulation
         if(cold.Stored==stored)return stored?"它已经在冷藏中。":"它已经在小院里。";
         if(stored)
         {
+            if(State.InteractionPlaytest&&ShopQuantity("freezer")<=0)return "先在商店购买冷藏箱。";
             if(WaterEnvironment.IsInWater(State,c))return "先用救援用品带回岸上，冷藏不能代替水域救援。";
             if(State.Mode==PlayMode.CloseUp)return "先回到小院，再安排冷藏。";
             if(cold.RecoveryRemaining>0)return "取出后还需要恢复，不能立即反复冷藏。";

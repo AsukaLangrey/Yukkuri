@@ -21,6 +21,7 @@ public sealed partial class WorldSimulation
 
     public bool BuyCourtshipTool()
     {
+        if(State.InteractionPlaytest)return BuyShopProduct("inducer");
         if(!State.InteractionPlaytest||State.CourtshipTools>=99||
             !State.UnlimitedResources&&State.Money<CourtshipToolPrice)return false;
         if(!State.UnlimitedResources)State.Money-=CourtshipToolPrice;
@@ -37,10 +38,7 @@ public sealed partial class WorldSimulation
         if(c.Condition==PhysicalCondition.Dead)return "它已经离世，不能再接受诱导。";
         if(c.IsYoung||!FamilyRules.SupportedSpecies(c.Body.SpeciesId))
             return "只适用于已成熟、已制作繁育规则的个体。";
-        if(c.Condition!=PhysicalCondition.Active||!InterventionBodyAvailable(c)||
-            c.Family.Pregnancy.Phase!=PregnancyPhase.None||c.Pain>=25||c.Fear>=55||
-            c.Fullness<50||c.Interaction.Hydration<50||c.Energy<50)
-            return "先让身体安稳、吃喝和休息充足；孕育或恢复中的个体不能再次诱导。";
+        if(c.Family.ColdStorage.Stored)return "先从冷藏取出。";
         if(State.WorldSeconds<c.Family.NextInductionAt)return "刚进行过诱导，需要留出恢复间隔。";
         if(State.CourtshipTools<=0)return "需要先购买繁育诱导用品。";
         return null;
@@ -54,8 +52,19 @@ public sealed partial class WorldSimulation
         var c=InteractionTarget(id)!;
         var f=c.Family;
         State.CourtshipTools--;
+        bool suitable=c.Condition==PhysicalCondition.Active&&InterventionBodyAvailable(c)&&
+            f.Pregnancy.Phase==PregnancyPhase.None&&c.Pain<25&&c.Fear<55&&c.Fullness>=50&&c.Interaction.Hydration>=50&&c.Energy>=50;
+        if(!suitable)
+        {
+            f.NextInductionAt=State.WorldSeconds+30;
+            Hurt(c,12+Math.Max(0,50-c.Health)*.35+Math.Max(0,30-c.Energy)*.2,"身体不适合时使用繁育诱导喷剂","player");
+            c.Energy=Math.Max(0,c.Energy-12);c.Interaction.Hydration=Math.Max(0,c.Interaction.Hydration-10);
+            RecordInteraction(c,"unsafe-induction","身体未能承受诱导，出现真实身体恶化。",8);
+            return new(true,"身体不适合，诱导造成恶化；严重时可能进入濒危或死亡。",c.Speech,"guard",Changed:true);
+        }
         f.InducedInterestRemaining=90;f.NextInductionAt=State.WorldSeconds+180;
-        f.BreedingInterest=Clamp100(f.BreedingInterest+20);
+        f.BreedingInterest=Clamp100(Math.Max(40,f.BreedingInterest+20));
+        f.NextBreedingDecisionAt=State.WorldSeconds;
         c.Fullness=Math.Max(0,c.Fullness-3);c.Energy=Math.Max(0,c.Energy-3);
         RecordInteraction(c,"breeding-induction","人类使用普通诱导用品，使身体暂时更容易产生繁育兴趣；对伴侣的意愿仍由自己决定。",2);
         return Feedback(c,"courtship-interest",Expression.Curious,
@@ -87,6 +96,13 @@ public sealed partial class WorldSimulation
             c.Condition!=PhysicalCondition.Active||c.Pain>=25||c.Fear>=55||WaterEnvironment.IsInWater(State,c))
         {f.BreedingInterest=Math.Max(0,f.BreedingInterest-dt*.35);return;}
         bool comfortable=c.Fullness>=60&&c.Interaction.Hydration>=60&&c.Energy>=50&&SecureForBreeding(c);
+        if(induced&&comfortable&&MayChooseBreeding(c)&&f.CompanionTargetId==null&&State.WorldSeconds-f.LastInterestEventAt>=12)
+        {
+            var interested=State.Creatures.Where(other=>other!=c&&!other.IsYoung&&other.Body.ReproductionRole!=c.Body.ReproductionRole&&
+                other.RegionId==c.RegionId&&MayChooseBreeding(other)&&SecureForBreeding(other)&&FamilyRules.WillPair(c,other)&&FamilyRules.WillPair(other,c))
+                .OrderBy(other=>Distance(c.X,c.Z,other.X,other.Z)).FirstOrDefault();
+            if(interested!=null){f.LastInterestEventAt=State.WorldSeconds;InviteCompanion(c.Id,interested.Id);}
+        }
         var partner=comfortable?State.Creatures.FirstOrDefault(other=>other!=c&&
             !other.IsYoung&&other.Body.ReproductionRole!=c.Body.ReproductionRole&&
             FamilyVisible(c,other,4.5)&&DeepPairBond(c,other)&&DeepPairBond(other,c)&&SecureForBreeding(other)):null;

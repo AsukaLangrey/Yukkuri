@@ -36,6 +36,11 @@ public static class InteractionValidation
             var i = c.Interaction;
             Require(i != null && i.Accessory != null && i.Learning != null && i.Memories != null, "互动个体数据缺失");
             Require(i!.IntakeSequence>=0&&(i.IntakeGeneration==null||Guid.TryParseExact(i.IntakeGeneration,"N",out _)),"入口序号无效");
+            Require(Range(i.CleaningLearning,i.RuleLearning)&&Finite(i.LastCleaningLessonAt,i.NextCleaningAt,i.CleaningSeconds,i.LastExaminationAt)&&
+                i.LastCleaningLessonAt>=-100&&i.LastCleaningLessonAt<=s.WorldSeconds+.001&&i.NextCleaningAt>=0&&i.CleaningSeconds is >=0 and <=3&&
+                i.LastExaminationAt>=-1&&i.LastExaminationAt<=s.WorldSeconds+.001&&i.Examination!=null,"教学或身体检查记录无效");
+            Require(Enum.IsDefined(i.PulledPart)&&Enum.IsDefined(i.PulledSide)&&Finite(i.PullAmount,i.PullRemaining,i.ImpactCompression,i.ImpactCompressionRemaining)&&
+                i.PullAmount is >=0 and <=1&&i.PullRemaining is >=0 and <=.3&&i.ImpactCompression is >=0 and <=.35&&i.ImpactCompressionRemaining is >=0 and <=.7,"接触变形状态无效");
             HungerFeedingValidation.Validate(c,s);
             BodyInjuryState.Validate(i!.Injuries,s.WorldSeconds);
             var emotion=i.Emotion;var water=i.Water;

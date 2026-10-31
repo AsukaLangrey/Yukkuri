@@ -245,6 +245,7 @@ public sealed partial class WorldSimulation
         i.VerticalVelocity=0;i.VelocityX=0;i.VelocityZ=0;
         i.EndRoll();i.ReactionPose="dead";i.ReactionPoseRemaining=0;
         if(i.Restraint==RestraintKind.Hand)i.Restraint=RestraintKind.None;
+        i.PersistentPressure=false;
         if(releasedSupport)ClearLandingOverlap(c);
         c.TargetX=c.X;c.TargetZ=c.Z;
     }

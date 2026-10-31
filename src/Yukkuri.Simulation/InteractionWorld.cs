@@ -7,7 +7,8 @@ public sealed partial class WorldSimulation
         var s = new WorldState
         {
             MilestoneScenario = true, InteractionPlaytest = true, RandomState = seed == 0 ? 20261028 : seed,
-            UnlimitedResources = true, Food = 50, Medicine = 12, Money = 0,
+            UnlimitedResources = false, Food = 50, Medicine = 12, Money = 240, StationWaterPortions = 20,
+            AutonomousBreeding = true,
             Settings = new() { Invasions = false, Accidents = true, LethalInjuries = true },
             Regions = [new() { Id = "home", Name = "慢慢来 · 相处小院", Kind = RegionKind.Sanctuary }]
         };
@@ -41,7 +42,7 @@ public sealed partial class WorldSimulation
         s.RoomObjects.Add(new() { Kind = RoomObjectKind.Cushion, X = 3.8, Z = -3.4 });
         NaturalResources.AddWoodland(s,"home");
         var sim = new WorldSimulation(s);
-        sim.Log("小院里有三只性情不同的油。先打个招呼，再慢慢熟悉。饭饭、工具与护理用品已备好。 ");
+        sim.Log("小院里有三只性情不同的油。先打个招呼，再慢慢熟悉。已备有有限食水与护理面粉，其他用品可到商店购买。");
         return sim;
     }
 
@@ -139,6 +140,7 @@ public sealed partial class WorldSimulation
             Math.Abs(input.X) > 8 || Math.Abs(input.Z) > 8 || input.Height is < 0 or > 3)
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
+        if(ShopActionError(input.Action) is { } shopError)return shopError;
         if(input.TargetKind==InteractionTargetKind.SupplyStation||input.Action is InteractionAction.PlaceFoodStation or InteractionAction.PlaceWaterStation or InteractionAction.RefillSupplyStation)
             return "请把器具或补给工具对准小院空地或真实供给器。";
         if(State.SupplyStations.Any(s=>s.HeldByHand))return "先把供给器放稳，再接触油。";
@@ -164,7 +166,10 @@ public sealed partial class WorldSimulation
 
     public InteractionFeedback ExecuteInteraction(string id, InteractionInput input)
     {
+        if(ShopActionError(input.Action) is { } shopError)return Unavailable(shopError);
+        var before=InteractionTarget(id)?.Interaction.Restraint??RestraintKind.None;
         var result=ExecuteInteractionCore(id,input);
+        SettleShopAction(input.Action,before,result);
         if(InteractionTarget(id) is { } target)SynchronizeWildSelfCare(target);
         return result;
     }
@@ -180,7 +185,6 @@ public sealed partial class WorldSimulation
         BodyPart? requiredPart=input.Action switch
         {
             InteractionAction.Flick=>BodyPart.Head,
-            InteractionAction.Slap or InteractionAction.Poke=>BodyPart.Cheek,
             InteractionAction.TakeAccessory or InteractionAction.TakeAccessoryCare=>BodyPart.Accessory,
             _=>null
         };
@@ -322,6 +326,8 @@ public sealed partial class WorldSimulation
                 return Feedback(oil, "rest-invite", Expression.Curious, "先安置到能休息的位置。行动不便时请托过去，再观察它是否真正放松。", "rest-invite");
             case InteractionAction.Poke:
                 life.SetReactionDirection(input.DirectionX,input.DirectionZ);
+                if(input.Part==BodyPart.Accessory)
+                    return Feedback(oil,"poke",Expression.Curious,"饰品轻轻晃动，它抬眼看向你的手。","poke");
                 life.ChangeCheekSensitivity(input.Side,2); Distress(oil, 1);
                 return Feedback(oil, "poke", Expression.Defiant, "脸颊缩了一下，它鼓起脸抗议。", "poke");
             case InteractionAction.Scold:
@@ -336,12 +342,15 @@ public sealed partial class WorldSimulation
                 Distress(oil, severity, Math.Max(0, severity - 1), input.Action == InteractionAction.Flick ? "弹额" : input.Action==InteractionAction.Punch?"拳头击打":"掌掴",input.Part,input.Side);
                 if(input.Action==InteractionAction.Slap)life.ChangeCheekSensitivity(input.Side,severity);
                 else if(input.Action==InteractionAction.Flick)life.HeadSensitivity = Clamp100(life.HeadSensitivity + severity);
-                if(input.Action==InteractionAction.Punch)
+                if(input.Action is InteractionAction.Punch or InteractionAction.Slap)
                 {
                     life.HitCount=life.HitRemaining>0&&State.WorldSeconds-life.LastHitAt<=1.5?Math.Min(999,life.HitCount+1):1;
                     life.LastHitAt=State.WorldSeconds;life.HitRemaining=1.5;
                 }
                 Impulse(oil, input.DirectionX, input.DirectionZ, severity * .16);
+                if(input.Action==InteractionAction.Slap&&life.Restraint==RestraintKind.None&&!life.Carried)
+                {life.Falling=true;life.VerticalVelocity=1.2+input.Force;life.Height=Math.Max(.05,life.Height);}
+                if(input.Action==InteractionAction.Punch){life.ImpactCompression=Math.Min(.35,.12+input.Force*.2);life.ImpactCompressionRemaining=.7;}
                 RecordInteraction(oil, "hand-hurt", "手的突然接触让自己疼痛。", severity);
                 return Feedback(oil, "hurt", Expression.Hurt, "接触产生了位移，它护住刚被碰到的部位。", input.Action == InteractionAction.Flick ? "flick" : "slap");
             case InteractionAction.Drop:
@@ -404,10 +413,11 @@ public sealed partial class WorldSimulation
         if(!WoodlandLayout.GroundFits(State,regionId,input.X,input.Z,.2))return Unavailable("这里是河道，找岸边的干燥空地放食水。 ");
         if(State.DetachedStemBroods.Any(s=>s.RegionId==regionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
             Distance(s.X,s.Z,input.X,input.Z)<StemVesselRadius+.2))return Unavailable("培养瓶或离体茎占着这里，请把食水放到旁边。 ");
+        if (water&&UsesConsumableStock&&State.StationWaterPortions<=0)return Unavailable("清水库存不足，请先购买清水。");
         if (!water&&UsesConsumableStock && State.Food <= 0) return Unavailable("没有食物了。 ");
         if (State.RoomObjects.Count(o => o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water && !o.Stored) >= 24)
             return Unavailable("先收起或吃完地上的食物。 ");
-        if (!water&&UsesConsumableStock) State.Food--;
+        if (UsesConsumableStock) { if(water)State.StationWaterPortions--;else State.Food--; }
         State.RoomObjects.Add(new() { Kind = water?RoomObjectKind.Water:input.Action == InteractionAction.PlaceSweet ? RoomObjectKind.Sweet : RoomObjectKind.Meal,
             RegionId=regionId,X = input.X, Z = input.Z,Height=RoomSupplySupport.Height(State,regionId,input.X,input.Z,
                 water?RoomObjectKind.Water:input.Action==InteractionAction.PlaceSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal) });

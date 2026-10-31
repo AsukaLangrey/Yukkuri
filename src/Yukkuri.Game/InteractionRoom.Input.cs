@@ -88,6 +88,7 @@ public partial class InteractionRoom
     {
         if(_modalOpen)return false;
         if(DebugPanelVisible&&DebugContainsPoint(point))return false;
+        if(_objectActions!=null&&_objectActions.Visible&&_objectActions.GetGlobalRect().HasPoint(point))return false;
         return point.Y>82&&point.Y<_ui.Size.Y-216&&point.X>226&&point.X<_ui.Size.X-282;
     }
     private Contact? ContactAt(Vector2 point)
@@ -170,6 +171,7 @@ public partial class InteractionRoom
     public override void _Input(InputEvent input)
     {
         if(!_ready||!_windowFocused)return;
+        if(HandleRedesignRelease(input)){GetViewport().SetInputAsHandled();return;}
         if(input is InputEventKey{Pressed:true,Echo:false} debugKey&&
             (debugKey.Keycode==Key.F3||debugKey.Keycode==Key.Escape&&DebugPanelVisible&&!_modalOpen))
         {ToggleDebugPanel();GetViewport().SetInputAsHandled();return;}
@@ -237,10 +239,9 @@ public partial class InteractionRoom
             else if(!_modalOpen&&key.Keycode==Key.Tab){ToggleClose();GetViewport().SetInputAsHandled();}
             else if(!_modalOpen&&key.Keycode==Key.Delete&&IsScenePoint(GetViewport().GetMousePosition()))
             {
+                if(_roomMode!=RoomMode.Tidy){_message="请先选择空手里的收拾。";return;}
                 var obj=ObjectAt(GetViewport().GetMousePosition());
-                if(obj!=null&&WorldSimulation.IsWaste(obj.Kind))_message=Sim.CleanRoomWaste(obj.Id)?"已经清理干净。":"这里没有可以清理的排泄物。";
-                else if(obj!=null)_message=Sim.PutAwayRoomObject(obj.Id)?"已经收起地上的物品。":
-                    NaturalResources.IsWild(obj.Kind)?"这是野外的资源，不能直接收进物品栏。":"这件物品现在不能收起。";
+                if(obj!=null)_message=Sim.CleanSceneObject(obj.Id);
             }
         }
     }
@@ -281,6 +282,7 @@ public partial class InteractionRoom
         if(_clickOfferId!=null||_offerReturnId!=null)CancelGesture();
         if(PlaceSupplyStationAt(mouse.Position)){GetViewport().SetInputAsHandled();return;}
         var contact=ContactAt(mouse.Position);
+        if(HandleRedesignPress(mouse,contact)){GetViewport().SetInputAsHandled();return;}
         if(contact?.TargetKind==InteractionTargetKind.SupplyStation)
         {BeginSupplyStationPointer(contact,mouse.Position);GetViewport().SetInputAsHandled();return;}
         if(contact!=null||ObjectAt(mouse.Position)!=null)ClearSupplyStationSelection();
@@ -437,6 +439,9 @@ public partial class InteractionRoom
     }
     private void CancelGesture()
     {
+        string? carriedTarget=_directGesture&&_action==InteractionAction.Lift?Sim?.InteractionGestureTarget:null;
+        ResetRedesignGesture();
+        _pressureOrigin=null;
         CancelSupplyStationPlacement();
         _waterRescueToolArmed=false;
         _clickOfferId=null;
@@ -446,6 +451,8 @@ public partial class InteractionRoom
         _orbitDragged=false;_orbitTravel=Vector2.Zero;_orbitClickAction=null;
         ResetContactMotion();_directGesture=false;
         if(Sim?.HasInteractionGesture==true)AcceptFeedback(Sim.EndInteractionGesture(true));
+        if(carriedTarget!=null&&Sim?.State.Creatures.Find(c=>c.Id==carriedTarget&&c.Interaction.Carried) is { } carried)
+            AcceptFeedback(Sim.ExecuteInteraction(carried.Id,new(InteractionAction.PutDown,X:carried.X,Z:carried.Z)),carried.Id);
         if(_heldSupplyId is { } supply){Sim?.ReleaseSupply(supply);_heldSupplyId=null;}
         _mouseHeld=false;_ballDragId=null;if(_hand!=null)_hand.Visible=false;
     }
@@ -467,6 +474,7 @@ public partial class InteractionRoom
             Vector2 point=GetViewport().GetMousePosition();
             bool placed=IsScenePoint(point)&&TryGroundPoint(point,0,out var drop)&&Sim.ReleaseSupply(supply,drop.X,drop.Z);
             if(!placed)Sim.ReleaseSupply(supply);
+            else Sim.LaunchReleasedSupply(supply,_portableRelease.Velocity);
             _heldSupplyId=null;_message=placed?"已经放到地面，可以让它自己过来吃喝。":"没有安全落点，剩余食水放回原处。";
         }
         if(place&&target!=null)
@@ -491,6 +499,17 @@ public partial class InteractionRoom
         ulong sampleUsec=Time.GetTicksUsec();
         double gestureSeconds=(sampleUsec-_lastGestureSampleUsec)/1_000_000.0;_lastGestureSampleUsec=sampleUsec;
         Vector2 current=GetViewport().GetMousePosition();var contact=IsScenePoint(current)?ContactAt(current):null;
+        if(_roomMode==RoomMode.Towel&&contact is {Blocked:false,TargetKind:InteractionTargetKind.Body} towelContact&&
+            towelContact.Id==Sim.InteractionGestureTarget&&Sim.State.Creatures.Find(o=>o.Id==towelContact.Id) is { } towelTarget)
+        {
+            var towelAction=towelTarget.Interaction.DirtAt(towelContact.Part,towelContact.Side)>1?InteractionAction.Clean:InteractionAction.Dry;
+            if(_action!=towelAction)
+            {
+                Sim.EndInteractionGesture(true);_action=towelAction;
+                var start=Sim.BeginInteractionGesture(towelContact.Id,new(_action,towelContact.Part,Force:.12,Side:towelContact.Side));
+                _mouseHeld=Sim.HasInteractionGesture;_gesturePose=start.Pose;if(!_mouseHeld){AcceptFeedback(start);return;}
+            }
+        }
         bool touching=contact!=null&&MatchesGestureContact(contact);
         var ground=GroundPoint(current);var worldMotion=ground-GroundPoint(_lastPointer);
         bool surfaceMotion=_action is InteractionAction.Stroke or InteractionAction.Nuzzle or InteractionAction.Clean or InteractionAction.Dry or InteractionAction.CleanAccessory or InteractionAction.Rock;
@@ -632,6 +651,9 @@ public partial class InteractionRoom
         if(!Sim.HasInteractionGesture||!_hand.Visible||obj.Portions<=0)ResetBodySupplyContact();
         if(_toolFood!=null)_toolFood.Visible=obj.Portions>0;
         if(_cupWater!=null)SetCupFill(_cupWater,(float)NaturalResources.VisibleWaterFill(Sim.State,obj));
+        if(IsScenePoint(point)&&IsScenePoint(_lastPointer)&&TryGroundPoint(point,.6f,out var now)&&TryGroundPoint(_lastPointer,.6f,out var prior))
+            _portableRelease.Sample(new(now.X-prior.X,now.Z-prior.Z),sampleSeconds);
+        else _portableRelease.Reset();
         _lastPointer=point;
     }
 
@@ -752,7 +774,8 @@ public partial class InteractionRoom
         if(!rescuePointer&&roomObject!=null){_hoverLabel.Text=WorldSimulation.IsWaste(roomObject.Kind)?WasteLabel(roomObject):RoomResourceText.Label(roomObject,Sim.State);_hoverLabel.Position=point+new Vector2(18,18);}
         _pointer.Point=point;_pointer.Active=scene&&(contact!=null||roomObject!=null);
         _pointer.Rescue=rescuePointer;_pointer.RescueCandidate=rescueHint.Candidate;
-        _pointer.Rough=_mouseHeld?_appliedForce>.62f:_toolArmed&&_group.Rough;_pointer.Pressed=_mouseHeld;
+        _pointer.Rough=_swingArmed||(_mouseHeld?_appliedForce>.62f:_toolArmed&&_group.Rough);_pointer.Pressed=_mouseHeld||_swingArmed;
+        _pointer.Fist=_swingArmed;
         _pointer.DragOrigin=_dragStart;_pointer.Aim=_mouseHeld&&_action is InteractionAction.Push or InteractionAction.Throw or InteractionAction.PlayBall;
         var releaseVelocity=_carryReleaseMotion.Velocity;
         bool carryRelease=scene&&_mouseHeld&&_directGesture&&_action==InteractionAction.Lift&&
@@ -798,11 +821,16 @@ public partial class RoomPointer : Control
 {
     public Vector2 Point,DragOrigin,ImpactPoint,ReleaseVector;
     public float ImpactAge;
-    public bool Active,Rough,Pressed,Aim,Rescue,RescueCandidate,Impact,CarryThrow;
+    public bool Active,Rough,Pressed,Aim,Rescue,RescueCandidate,Impact,CarryThrow,Fist;
     public override void _Draw()
     {
         var color=new Color(Rescue?"518caa":CarryThrow?"c37b39":Rough?"ae6e51":"62846d");
-        if(Rescue)
+        if(Fist)
+        {
+            DrawRect(new Rect2(Point-new Vector2(9,5),new Vector2(18,14)),color);
+            for(int n=0;n<4;n++)DrawCircle(Point+new Vector2(-7+n*4.5f,-6),3,color);
+        }
+        else if(Rescue)
         {
             // A tool symbol only: no rescue progress or success is predicted.
             var ring=new Color(RescueCandidate?"518caa":"87949a");

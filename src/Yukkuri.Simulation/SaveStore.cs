@@ -70,5 +70,6 @@ public sealed class SaveStore
         MilestoneValidation.Validate(s);
         InteractionValidation.Validate(s);
         FamilyRules.ValidateFamily(s);
+        WorldSimulation.ValidateShop(s);
     }
 }

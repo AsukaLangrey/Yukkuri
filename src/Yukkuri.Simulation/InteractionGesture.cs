@@ -102,6 +102,7 @@ public sealed partial class WorldSimulation
     public InteractionFeedback BeginInteractionGesture(string id, InteractionInput input)
     {
         EndInteractionGesture(true);
+        if(ShopActionError(input.Action) is { } shopError)return Unavailable(shopError);
         if(input.TargetKind==InteractionTargetKind.SupplyStation)return BeginStationCore(id,input);
         if(input.TargetKind==InteractionTargetKind.DetachedStem)return BeginDetachedStemCore(id,input);
         var c = InteractionTarget(id);
@@ -136,6 +137,7 @@ public sealed partial class WorldSimulation
         if(input.Action==InteractionAction.Tease&&UsesConsumableStock&&State.Food<=0)return Unavailable("手边没有甜甜，先准备一份食物。 ");
         bool foodAction=input.Action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink;
         if(foodAction&&input.ObjectId!=null&&OfferedSupply(input,oil)==null)return Unavailable("刚才拿起的食水已经不在手里。 ");
+        if(foodAction&&input.Action==InteractionAction.Drink&&input.ObjectId==null&&UsesConsumableStock&&State.StationWaterPortions<=0)return Unavailable("清水库存不足，请先购买清水。");
         if(foodAction&&input.Action!=InteractionAction.Drink&&input.ObjectId==null&&UsesConsumableStock&&State.Food<=0)
             return Unavailable("食物已经用完，先准备一份。 ");
         var g = new ContactGesture { TargetId = id, Input = input,ObjectId=foodAction?input.ObjectId:ball?.Id };
@@ -147,6 +149,7 @@ public sealed partial class WorldSimulation
         oil.LastPlayerTouchAt = State.WorldSeconds;
         if (input.Action == InteractionAction.Lift)
         {
+            ClearCompanionship(oil);
             i.Lowering=false;
             i.Resting=false;
             i.Height=i.Carried?Math.Clamp(input.Height,.4,3):Math.Max(.8,input.Height);
@@ -182,6 +185,7 @@ public sealed partial class WorldSimulation
 
     public InteractionFeedback ContinueInteractionGesture(InteractionInput input, bool inContact)
     {
+        if(ShopActionError(input.Action) is { } shopError){EndInteractionGesture(true);return Unavailable(shopError);}
         var g = _interactionGesture;
         if (g == null) return Unavailable("没有进行中的动作。 ");
         if(g.Input.TargetKind==InteractionTargetKind.SupplyStation)return ContinueStationGesture(g,input,inContact);
@@ -411,7 +415,9 @@ public sealed partial class WorldSimulation
                 if(input.ObjectId!=null&&supply==null)return Refuse("suspicious-food","手里的这一份已经没有了，先收手。 ");
                 if (input.ObjectId==null&&input.Action != InteractionAction.Drink && UsesConsumableStock && State.Food <= 0)
                     return Refuse("hungry", "食物已经用完。 ");
+                if(input.ObjectId==null&&drinking&&UsesConsumableStock&&State.StationWaterPortions<=0)return Refuse("thirsty","清水库存已经用完。");
                 if(supply!=null)supply.Portions--;
+                else if(drinking&&UsesConsumableStock)State.StationWaterPortions--;
                 else if (input.Action != InteractionAction.Drink && UsesConsumableStock) State.Food--;
                 c.Fullness = Clamp100(c.Fullness + (input.Action == InteractionAction.FeedMeal ? 19 : input.Action == InteractionAction.FeedSweet ? 9 : 0));
                 i.BeginIntake(drinking?IntakeKind.Water:input.Action==InteractionAction.FeedSweet?IntakeKind.Sweet:IntakeKind.Meal);
@@ -419,6 +425,7 @@ public sealed partial class WorldSimulation
                 if(drinking)i.Hydration=Clamp100(i.Hydration+28);
                 i.FoodSuspicion = Math.Max(0, i.FoodSuspicion - 2);
                 ImproveAffection(c, input.Action == InteractionAction.FeedSweet ? .8 : .5);
+                State.Progress.CareActions=Math.Min(int.MaxValue-1,State.Progress.CareActions+1);
                 g.Applied = true;
                 if(!i.Digestion.Symptomatic)LearnFoodExperience(c,drinking?RoomObjectKind.Water:
                     input.Action==InteractionAction.FeedSweet?RoomObjectKind.Sweet:RoomObjectKind.Meal,true);
@@ -485,6 +492,7 @@ public sealed partial class WorldSimulation
                 if(i.Digestion.Symptomatic&&input.Part==BodyPart.Side)
                     i.Digestion.CareRemaining=Math.Max(i.Digestion.CareRemaining,60);
                 ImproveAffection(c, .8); g.Applied = true;
+                State.Progress.CareActions=Math.Min(int.MaxValue-1,State.Progress.CareActions+1);
                 return Say("care", Expression.Shy, "护理完成。实际身体恢复需要普通时间、进食与休息。", "nursing");
             case InteractionAction.Block:
                 c.TargetX = c.X; c.TargetZ = c.Z; i.WaitRemaining = .5; g.Applied = true;

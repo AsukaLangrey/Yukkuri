@@ -228,7 +228,7 @@ public partial class InteractionRoom
             }
         }
         else _modalContents.AddChild(Text("这里暂时没有另一只可以邀请的油。冷藏中的个体需要先取出。",14));
-        AddBreedingIntervention(first,other);
+        // This redesign exposes no coercive breeding action.
         _modalContents.AddChild(Button("制止这只油的家庭冲突",()=>ApplyFamilyCommand(()=>Sim.InterruptFamilyConflict(firstId))));
         _modalContents.AddChild(Text("冷藏只让相关生命过程以正常速度的十分之一推进。有保存期限和复苏风险，需要及时取出照护；旧伤仍会保留，不能无限拖住濒危状态。",13,"78816e"));
         bool stored=first.Family.ColdStorage.Stored;

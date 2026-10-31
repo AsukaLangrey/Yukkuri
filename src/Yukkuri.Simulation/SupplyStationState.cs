@@ -11,6 +11,8 @@ public sealed class SupplyStationState
     public int StoredPortions { get; set; }
     public string? OutletObjectId { get; set; }
     public long OutputSequence { get; set; }
+    public int RefillIntervalSeconds { get; set; } = 30;
+    public double NextRefillAt { get; set; }
     public string LastEvent { get; set; }="空仓，先补充实际食水。";
     // The last legal ground position remains occupied while dragging.
     [System.Text.Json.Serialization.JsonIgnore] public bool HeldByHand { get; set; }

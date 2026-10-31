@@ -9,6 +9,7 @@ public sealed partial class WorldSimulation
         State = state; Config = state.InteractionPlaytest ? new() { HungerPerSecond = .025, EnergyPerSecond = .02, MoveSpeed = .72 } : state.MilestoneScenario ? MilestoneConfig() : config ?? new();
         foreach(var brood in state.DetachedStemBroods)brood.HeldByHand=false;
         foreach(var station in state.SupplyStations)station.HeldByHand=false;
+        foreach(var motion in state.PortableMotions){motion.Held=false;SetPortableOccupancy(motion.Id,true);}
         foreach(var c in state.Creatures)
             if(c.Family.Pregnancy is { Phase:PregnancyPhase.Gestating, Method:BirthMethod.Stem, Stem:null })
                 InitializeStemBrood(c.Family.Pregnancy);
@@ -16,7 +17,7 @@ public sealed partial class WorldSimulation
             foreach(var c in state.Creatures)
             {
                 InitializePersonality(c);
-                if(c.Interaction.Restraint==RestraintKind.Hand)c.Interaction.Restraint=RestraintKind.None;
+                if(c.Interaction.Restraint==RestraintKind.Hand&&!c.Interaction.PersistentPressure)c.Interaction.Restraint=RestraintKind.None;
                 NormalizeDeadInteractionSupport(c);
                 NormalizeWaterEpisode(c);
                 SynchronizeWaterSupport(c);
@@ -88,6 +89,7 @@ public sealed partial class WorldSimulation
             TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);
             TickSupplyStations();
             foreach(var c in State.Creatures)SynchronizeWildSelfCare(c);
+            TickCourtyardLearning(dt);
             return;
         }
         foreach(var c in State.Creatures)AdvanceMouthProgress(c,dt);
@@ -260,6 +262,7 @@ public sealed partial class WorldSimulation
     }
     public bool BuyFood()
     {
+        if(State.InteractionPlaytest)return BuyShopProduct("food");
         if(State.Food>int.MaxValue-FoodBundleCount||!State.UnlimitedResources && State.Money<FoodBundlePrice)return false;
         if(!State.UnlimitedResources)State.Money-=FoodBundlePrice;
         State.Food+=FoodBundleCount;Log($"补给：{FoodBundleCount}份食物入库。");return true;

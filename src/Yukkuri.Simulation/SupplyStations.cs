@@ -44,6 +44,8 @@ public sealed partial class WorldSimulation
     }
     public bool BuySupplyStation(SupplyStationKind kind)
     {
+        if(State.InteractionPlaytest)return Enum.IsDefined(kind)&&BuyShopProduct(kind==SupplyStationKind.Food?"food-station":"water-station");
+        if(State.InteractionPlaytest)return Enum.IsDefined(kind)&&BuyShopProduct(kind==SupplyStationKind.Food?"food-station":"water-station");
         if(!State.InteractionPlaytest||!Enum.IsDefined(kind))return false;
         int stock=kind==SupplyStationKind.Food?State.FoodStationStock:State.WaterStationStock;
         int price=kind==SupplyStationKind.Food?FoodStationPrice:WaterStationPrice;
@@ -54,6 +56,8 @@ public sealed partial class WorldSimulation
     }
     public bool BuyStationWater()
     {
+        if(State.InteractionPlaytest)return BuyShopProduct("water");
+        if(State.InteractionPlaytest)return BuyShopProduct("water");
         if(!State.InteractionPlaytest||State.StationWaterPortions>int.MaxValue-StationWaterBundleCount||
             !State.UnlimitedResources&&State.Money<StationWaterBundlePrice)return false;
         if(!State.UnlimitedResources)State.Money-=StationWaterBundlePrice;
@@ -79,6 +83,18 @@ public sealed partial class WorldSimulation
     {
         foreach(var s in State.SupplyStations)
         {
+            if(!s.HeldByHand&&s.RefillIntervalSeconds>0&&State.WorldSeconds>=s.NextRefillAt)
+            {
+                s.NextRefillAt=State.WorldSeconds+s.RefillIntervalSeconds;
+                int available=s.Kind==SupplyStationKind.Food?State.Food:State.StationWaterPortions;
+                int amount=Math.Min(available,Math.Max(0,StationCapacity(s)-s.StoredPortions-StationOutletPortions(s)));
+                if(amount>0)
+                {
+                    if(s.Kind==SupplyStationKind.Food)State.Food-=amount;else State.StationWaterPortions-=amount;
+                    s.StoredPortions+=amount;s.LastEvent=$"按频率从仓库补充{amount}份。";
+                }
+                else if(available==0)s.LastEvent="仓库食水已用完，等待补充；没有自动购买。";
+            }
             var outlet=StationOutlet(s);
             if(s.OutletObjectId!=null&&outlet==null)s.OutletObjectId=null;
             if(s.HeldByHand||StationOutletBusy(s)||outlet is { Portions:>0 }||s.StoredPortions<=0)continue;
@@ -102,5 +118,12 @@ public sealed partial class WorldSimulation
             outlet.Height=RoomSupplySupport.Height(State,s.RegionId,outlet.X,outlet.Z,outlet.Kind);
             outlet.Portions=1;s.StoredPortions--;s.LastEvent=s.StoredPortions==0?"最后一份已送到出口，仓内已空。":"一份实际食水已送到出口。";
         }
+    }
+
+    public bool SetStationRefillInterval(string id,int seconds)
+    {
+        var s=Station(id);
+        if(s==null||s.RegionId!=State.ActiveRegionId||seconds is not (0 or 10 or 30 or 60 or 120))return false;
+        s.RefillIntervalSeconds=seconds;s.NextRefillAt=State.WorldSeconds+seconds;return true;
     }
 }

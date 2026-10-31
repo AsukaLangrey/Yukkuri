@@ -6,6 +6,7 @@ public sealed partial class WorldSimulation
     public const double StemVesselRadius=.38;
     public bool BuyStemVessel()
     {
+        if(State.InteractionPlaytest)return BuyShopProduct("vessel");
         if(!State.InteractionPlaytest||State.StemVessels>=99||!State.UnlimitedResources&&State.Money<StemVesselPrice)return false;
         if(!State.UnlimitedResources)State.Money-=StemVesselPrice;
         State.StemVessels++;State.StemVesselPurchases++;

@@ -45,6 +45,7 @@ public sealed partial class WorldSimulation
 {
     public bool BuyWaterRescueTool()
     {
+        if(State.InteractionPlaytest)return BuyShopProduct("rescue");
         if(!State.InteractionPlaytest||State.WaterRescueTools>=99||
             !State.UnlimitedResources&&State.Money<WaterEnvironment.RescueToolPrice)return false;
         if(!State.UnlimitedResources)State.Money-=WaterEnvironment.RescueToolPrice;

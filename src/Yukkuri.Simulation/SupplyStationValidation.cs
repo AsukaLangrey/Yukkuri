@@ -13,6 +13,7 @@ public static class SupplyStationValidation
         var outputs=new HashSet<string>(StringComparer.Ordinal);
         foreach(var s in state.SupplyStations!)
         {
+            Require(s!=null&&s.RefillIntervalSeconds is 0 or 10 or 30 or 60 or 120&&double.IsFinite(s.NextRefillAt)&&s.NextRefillAt>=0,"供给器补充频率无效");
             Require(s!=null&&!string.IsNullOrWhiteSpace(s.Id)&&ids.Add(s.Id)&&Enum.IsDefined(s.Kind)&&
                 state.Regions.Any(r=>r.Id==s.RegionId)&&double.IsFinite(s.X)&&double.IsFinite(s.Z)&&
                 Math.Abs(s.X)<=8-WorldSimulation.SupplyStationRadius&&Math.Abs(s.Z)<=8-WorldSimulation.SupplyStationRadius&&

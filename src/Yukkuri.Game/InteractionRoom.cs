@@ -105,6 +105,7 @@ public partial class InteractionRoom : Node3D
 
     private void BuildActors()
     {
+        _selectedRoomObjectId=_observedStemMotherId=null;_objectActionSignature="";
         ResetSupplyStationActors();
         ResetDetachedStemActors();
         _heardReactions.Clear();
@@ -168,7 +169,7 @@ public partial class InteractionRoom : Node3D
         if(LeaveUnavailableCloseup())_message="当前对象已冷藏或安置，回到小院视角；家庭记录仍可查看，原暂停设置保持不变。";
         if(!_modalOpen)
         {
-            if(_windowFocused)ProcessRoomGesture(dt,delta);
+            if(_windowFocused){ProcessRedesignGestures(dt);ProcessRoomGesture(dt,delta);}
             UpdateInteractionHand();
             Sim.AdvanceInteractionPresentation(dt);Sim.Advance(dt);
         }
@@ -222,11 +223,13 @@ public partial class InteractionRoom : Node3D
         if(_uiClock>.1){_uiClock=0;RefreshRoomUi();}
         // Background saving must wait for the whole pointer operation, including
         // carrying a supply away from a mouth or orbiting without a body gesture.
-        if(_autoClock>60&&!Sim.HasInteractionGesture&&!_mouseHeld&&_heldSupplyId==null&&!_orbiting&&!_panning&&_tapContact==null&&!_modalOpen&&!_recovered)
+        if(_autoClock>60&&!Sim.HasInteractionGesture&&!_mouseHeld&&_heldSupplyId==null&&_sceneDragId==null&&_pokeContact==null&&!_swingArmed&&!_orbiting&&!_panning&&_tapContact==null&&!_modalOpen&&!_recovered)
         {_autoClock=0;SaveRoom(0,false);}
         UpdatePointer();
         UpdateLandingPreview();
         UpdateSupplyStationPlacement();
+        PresentPortableObjects();
+        PresentGravestones();
     }
 
     private void UpdateRoomCamera(float dt)
@@ -255,6 +258,7 @@ public partial class InteractionRoom : Node3D
 
     private void UpdateInteractionHand()
     {
+        if(_roomMode==RoomMode.Observe&&!_waterRescueToolArmed){Sim.SetInteractionHand(0,0,false);return;}
         bool quietCompany=_toolArmed&&_action==InteractionAction.Comfort&&!_mouseHeld&&_tapContact==null;
         if(quietCompany)_hand.Visible=false;
         if(!_windowFocused||_panning||Sim.State.Settings.Pause||Sim.State.Mode==PlayMode.CloseUp)

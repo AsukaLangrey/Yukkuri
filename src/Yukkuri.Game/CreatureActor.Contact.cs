@@ -29,7 +29,7 @@ public partial class CreatureActor
         }
         Visit(root);_contactMeshes[root]=found;return found;
     }
-    public SurfaceContact? RayContact(Vector3 origin,Vector3 direction)
+    public SurfaceContact? RayContact(Vector3 origin,Vector3 direction,bool ignoreLooseAccessory=false)
     {
         SurfaceContact? nearest=null;
         void Test(MeshInstance3D mesh,BodyPart part,bool blocked=false,bool skin=false,RestraintKind fixture=RestraintKind.None,
@@ -65,7 +65,7 @@ public partial class CreatureActor
         {if(root?.IsVisibleInTree()!=true)return;foreach(var mesh in ContactMeshes(root))Test(mesh,part,blocked,fixture:fixture);}
         if(_skinContact!=null)Test(_skinContact,BodyPart.Side,skin:true);
         TestRoot(_hairContact,BodyPart.Head);
-        TestRoot(_accessoryRoot,BodyPart.Accessory);TestRoot(_looseAccessory,BodyPart.Accessory);
+        TestRoot(_accessoryRoot,BodyPart.Accessory);if(!ignoreLooseAccessory)TestRoot(_looseAccessory,BodyPart.Accessory);
         if(_stemContactEventId!=null&&_gestationPlant?.IsVisibleInTree()==true)
             foreach(var mesh in ContactMeshes(_gestationPlant))
                 Test(mesh,BodyPart.Side,targetKind:InteractionTargetKind.Stem,objectId:_stemContactEventId);

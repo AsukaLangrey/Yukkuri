@@ -9,17 +9,13 @@ public partial class InteractionRoom
     private Control _ui=null!,_modalShade=null!;
     private PanelContainer _leftPanel=null!,_rightPanel=null!,_bottomPanel=null!,_modalPanel=null!;
     private VBoxContainer _groupList=null!,_modalContents=null!;
-    private VBoxContainer _quickTools=null!;
     private HFlowContainer _choiceList=null!;
     private Label _title=null!,_hint=null!,_feedback=null!,_speechLabel=null!,_who=null!,_condition=null!,_memory=null!,_clockLabel=null!,_hoverLabel=null!,_forceLabel=null!;
-    private Button _closeButton=null!,_pauseButton=null!,_gentleTab=null!,_roughTab=null!,_resetViewButton=null!,_rescueQuickTool=null!;
-    private bool _roughTabSelected,_modalOpen,_pauseBeforeModal;
-    private bool _browseTools,_directToolMode;
+    private Button _closeButton=null!,_pauseButton=null!,_resetViewButton=null!;
+    private bool _modalOpen,_pauseBeforeModal;
+    private bool _directToolMode;
     private HSlider _forceSlider=null!;
     private readonly System.Collections.Generic.Dictionary<InteractionAction,float> _toolForces=new();
-    private readonly System.Collections.Generic.Dictionary<InteractionAction,Button> _directToolButtons=new();
-    private InteractionAction? _highlightedDirectTool;
-    private bool _directHighlightInitialized,_highlightedRescueTool;
     private InteractionGroup _group=InteractionCatalog.Groups[0];
 
     private StyleBoxFlat RoomStyle(string color,int radius=12,int pad=14,string? border=null)
@@ -73,26 +69,7 @@ public partial class InteractionRoom
         header.AddChild(Button("怎么玩",ShowHelp));header.AddChild(Button("存档与设置",ShowSettings));
 
         _leftPanel=Panel(_ui);_leftPanel.OffsetLeft=14;_leftPanel.OffsetTop=88;_leftPanel.OffsetRight=218;_leftPanel.AnchorBottom=1;_leftPanel.OffsetBottom=-218;
-        var left=Column(_leftPanel,9);left.AddChild(Text("手边物品",16));
-        left.AddChild(Button("空手 · 直接接触",DisarmTool));var tabs=Row(left,5);
-        _gentleTab=Button("爱油",()=>SetToolTab(false),true);_gentleTab.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;tabs.AddChild(_gentleTab);
-        _roughTab=Button("虐油",()=>SetToolTab(true));_roughTab.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;tabs.AddChild(_roughTab);
-        var scroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};left.AddChild(scroll);
-        var toolLists=Column(scroll,6);toolLists.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
-        _quickTools=Column(toolLists,6);
-        foreach(var entry in new[]{("手掌 · 拖拽搬动",InteractionAction.Lift),("抚摸 · 轻轻划过",InteractionAction.Stroke),
-            ("拳头 · 点击击打",InteractionAction.Punch),("火机 · 按住灼烧",InteractionAction.Burn),
-            ("零食 · 点油喂 / 点地放",InteractionAction.FeedSweet),("饭饭 · 点油喂 / 点地放",InteractionAction.FeedMeal),
-            ("清水 · 点油喂 / 点地放",InteractionAction.Drink)})
-        {var action=entry.Item2;var button=Button(entry.Item1,()=>SelectQuickTool(action));_directToolButtons[action]=button;_quickTools.AddChild(button);}
-        _rescueQuickTool=Button("救援用品 · 点油救起",ArmWaterRescueTool);_quickTools.AddChild(_rescueQuickTool);
-        _quickTools.AddChild(Button("用品补给 · 查看库存",()=>ShowSuppliesOverview()));
-        _supplyStockLabel=Text("",12,"78816e");_quickTools.AddChild(_supplyStockLabel);
-        foreach(var entry in new[]{("说话","P01"),("毛巾","P07"),("护理用品","P11"),("包裹","P05"),("球与小宝物","P09")})
-        {string id=entry.Item2;_quickTools.AddChild(Button(entry.Item1,()=>SelectGroup(InteractionCatalog.Groups.Single(g=>g.Id==id))));}
-        _groupList=Column(toolLists,6);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
-        left.AddChild(Button("展开 / 收起全部工具",()=>{_browseTools=!_browseTools;RefreshToolBrowser();}));
-        left.AddChild(Text("右键切回空手。\n按住抓起，松手放下；甩手抛出。\n空手拿食水、推球；双击近看。\n小院中键拖动画面，滚轮缩放。",12,"7c8876"));
+        var left=Column(_leftPanel,9);BuildToolbar(left);
 
         _rightPanel=Panel(_ui);_rightPanel.AnchorLeft=1;_rightPanel.AnchorRight=1;_rightPanel.AnchorBottom=1;
         _rightPanel.OffsetLeft=-274;_rightPanel.OffsetRight=-14;_rightPanel.OffsetTop=88;_rightPanel.OffsetBottom=-218;
@@ -102,11 +79,13 @@ public partial class InteractionRoom
         var viewControls=Row(right,5);
         _closeButton=Button("靠近看看 · 双击",ToggleClose);_closeButton.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;viewControls.AddChild(_closeButton);
         _resetViewButton=Button("正面",ResetCloseView);viewControls.AddChild(_resetViewButton);
-        _familyPanelButton=Button("同伴、家庭与照护",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamily();});right.AddChild(_familyPanelButton);
+        _familyPanelButton=Button("详细家庭记录",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamilyDetails();});right.AddChild(_familyPanelButton);
         var reportScroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(reportScroll);
         var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         BuildDetachedStemPanel(report);
         BuildSupplyStationPanel(report);
+        _objectDetails=Text("",14);report.AddChild(_objectDetails);
+        _objectActions=Column(_ui,4);_objectActions.CustomMinimumSize=new(176,0);
         BuildVitalMeters(report);
         _condition=Text("",14);report.AddChild(_condition);
         _memoryHeading=Text("刚才发生的事",12,"8b927f");report.AddChild(_memoryHeading);_memory=Text("",13);report.AddChild(_memory);
@@ -135,54 +114,28 @@ public partial class InteractionRoom
         _modalPanel=Panel(_modalShade);_modalPanel.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.Center);_modalPanel.OffsetLeft=-310;_modalPanel.OffsetRight=310;_modalPanel.OffsetTop=-290;_modalPanel.OffsetBottom=290;
         var modalScroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};_modalPanel.AddChild(modalScroll);
         _modalContents=Column(modalScroll,12);_modalContents.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
-        SetToolTab(false);
-        RefreshToolBrowser();
+        BuildRecycleBox();
+        SelectToolbarCategory(0);
     }
 
     private static void ClearChildren(Node parent){foreach(var n in parent.GetChildren()){parent.RemoveChild(n);n.QueueFree();}}
-    private void RefreshToolBrowser()
-    {
-        _quickTools.Visible=!_browseTools;_groupList.Visible=_browseTools;
-        _gentleTab.Visible=_roughTab.Visible=_browseTools;
-    }
-    private void SetToolTab(bool rough,bool selectGroupAction=true)
-    {
-        CancelGesture();_roughTabSelected=rough;ClearChildren(_groupList);
-        foreach(var pair in new[]{(_gentleTab,!rough),(_roughTab,rough)})
-        {
-            pair.Item1.AddThemeStyleboxOverride("normal",RoomStyle(pair.Item2?"566e5d":"eae9d9",8,9));
-            pair.Item1.AddThemeColorOverride("font_color",new Color(pair.Item2?"fff7df":"405247"));
-        }
-        foreach(var g in InteractionCatalog.Groups.Where(g=>g.Rough==rough))
-        {
-            var group=g;var b=Button(group.Name,()=>SelectGroup(group),group.Id==_group.Id);
-            b.Alignment=HorizontalAlignment.Left;_groupList.AddChild(b);
-        }
-        if(selectGroupAction)
-        {if(_group.Rough!=rough)SelectGroup(InteractionCatalog.Groups.First(g=>g.Rough==rough));else SelectGroup(_group);}
-    }
-    private void SelectGroup(InteractionGroup group)
-    {
-        CancelGesture();_directToolMode=false;_group=group;SelectAction(group.Choices[0].Action);
-        foreach(var child in _groupList.GetChildren())if(child is Button b)
-        {bool active=b.Text==group.Name;b.AddThemeStyleboxOverride("normal",RoomStyle(active?"566e5d":"eae9d9",8,9));b.AddThemeColorOverride("font_color",new Color(active?"fff7df":"405247"));}
-    }
+    // Kept for legacy automation callers; the live UI has only the new toolbar.
+    private void RefreshToolBrowser()=>RebuildToolbarChoices();
+    private void SetToolTab(bool rough,bool selectGroupAction=true) { if(selectGroupAction)SelectToolbarCategory(rough?1:0); }
+    private void SelectGroup(InteractionGroup group)=>SelectQuickTool(group.Choices[0].Action);
     private void SelectQuickTool(InteractionAction action)
     {
-        var group=InteractionCatalog.Groups.First(g=>g.Choices.Any(choice=>choice.Action==action));
-        // Rebuild the tool list without equipping its first action. That action
-        // may place an object or open a shop before the requested tool is selected.
-        _group=group;SetToolTab(group.Rough,false);
-        SelectAction(action);_directToolMode=true;RefreshRoomUi();
+        SelectAction(action);
     }
     private void SelectAction(InteractionAction action)
     {
+        SelectActionOwner(action);
         if(action is InteractionAction.PlaceFoodStation or InteractionAction.PlaceWaterStation)
         {ArmSupplyStationPlacement(action==InteractionAction.PlaceFoodStation?SupplyStationKind.Food:SupplyStationKind.Water);return;}
         if(action is not (InteractionAction.RefillSupplyStation or InteractionAction.Lift))ClearSupplyStationSelection();
         CancelGesture();_action=action;_toolArmed=true;ClearChildren(_choiceList);
         _force=_toolForces.TryGetValue(action,out float rememberedForce)?rememberedForce:.25f;_forceSlider.SetValueNoSignal(_force);
-        foreach(var option in _group.Choices){var a=option.Action;_choiceList.AddChild(Button(option.Label,()=>SelectAction(a),a==action));}
+        _group=InteractionCatalog.Group(action);RebuildToolbarChoices();
         _title.Text=_group.Name+" · "+InteractionCatalog.Choice(_action).Label;
         _hint.Text=ToolHint(action);
         _message=_group.Description;RefreshRoomUi();
@@ -191,17 +144,12 @@ public partial class InteractionRoom
     private static string ToolHint(InteractionAction action)=>
         action is InteractionAction.FeedMeal or InteractionAction.FeedSweet or InteractionAction.Drink?
             "点油：递到嘴边，等它接下一口；点地面：放下一份。右键收回，换工具也会停止递送。":InteractionCatalog.Choice(action).Hint;
-    private void DisarmTool()
-    {
-        CancelGesture();_toolArmed=false;
-        _message=Sim?.Selected?.Interaction.Carried==true?"仍在稳稳托着它。在空地上点一下放稳。":"手已经收回。可以观察它自己生活，也可以直接轻轻接触。";
-        foreach(var child in _choiceList.GetChildren())if(child is Button b)
-        {b.AddThemeStyleboxOverride("normal",RoomStyle("eae9d9",8,9));b.AddThemeColorOverride("font_color",new Color("405247"));}
-        RefreshRoomUi();
-    }
+    private void DisarmTool()=>SelectToolbarCategory(0);
     private void SelectOil(string id)
     {
         ClearSupplyStationSelection();
+        _selectedRoomObjectId=null;
+        _observedStemMotherId=null;
         _selectedDetachedStemEventId=null;
         CancelGesture();Sim.State.SelectedId=id;_familyFirstId=id;
         bool leftClose=LeaveUnavailableCloseup();
@@ -241,15 +189,7 @@ public partial class InteractionRoom
         RefreshDebugPanel();
         RefreshSupplyStock();
         RefreshYardHelpButton();
-        _choiceList.Visible=_toolArmed&&!_directToolMode&&!_waterRescueToolArmed;
-        InteractionAction? highlighted=_toolArmed&&!_waterRescueToolArmed?_action:null;
-        if(!_directHighlightInitialized||highlighted!=_highlightedDirectTool||_highlightedRescueTool!=_waterRescueToolArmed)
-        {
-            _directHighlightInitialized=true;_highlightedDirectTool=highlighted;_highlightedRescueTool=_waterRescueToolArmed;
-            foreach(var pair in _directToolButtons)
-                SetQuickToolHighlight(pair.Value,highlighted==pair.Key);
-            SetQuickToolHighlight(_rescueQuickTool,_waterRescueToolArmed);
-        }
+        _choiceList.Visible=_toolbarCategory!=0;
         var c=Sim.Selected;
         _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
         _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";
@@ -291,7 +231,7 @@ public partial class InteractionRoom
         {
             _who.Text="观察小院";_condition.Text=_memory.Text="";
             _speechLabel.Text="选择油或离体茎，查看当前状态。";
-            RefreshDetachedStemUi();RefreshSupplyStationUi();RefreshContactProgress();return;
+            RefreshDetachedStemUi();RefreshSupplyStationUi();RefreshRedesignProperties();RefreshContactProgress();return;
         }
         var i=c.Interaction;
         RefreshVitalMeters(c);
@@ -342,6 +282,7 @@ public partial class InteractionRoom
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
         RefreshDetachedStemUi();
         RefreshSupplyStationUi();
+        RefreshRedesignProperties();
         RefreshContactProgress();
     }
 
@@ -355,27 +296,20 @@ public partial class InteractionRoom
     private void ShowModalMessage(string message){OpenModal("没有完成这次操作");_modalContents.AddChild(Text(message));_modalContents.AddChild(Button("知道了",CloseModal));}
     private void ShowHelp()
     {
-        OpenModal("先慢慢熟悉它");
-        _modalContents.AddChild(Text("1  右键或点“空手”收回工具。空手按住身体抓起，拖动搬运；慢慢松手放下，快速甩动后松手会沿甩动方向抛出，速度越快力度越大。停住后再松手不会沿用之前的甩动速度。"));
-        _modalContents.AddChild(Text("2  左侧直接选择手掌、抚摸、拳头、火机或食水。手掌按住身体拖动搬运，松开放下；落点被占用或鼠标离开操作区时继续托着，在空地再点一下放稳。抚摸按住轻轻划过；拳头连续点击；火机按住实际接触部位，松手就停止。按住托举时 Shift＋滚轮调高度。"));
-        _modalContents.AddChild(Text("3  零食、饭饭或清水工具：点油是递到嘴边手喂，松开鼠标也会递完这一份；点地面是放下一份。它需要时间接食，也可能拒绝，嘴边不能被障碍挡住。换工具、右键、暂停或离开窗口会收回递送。空手也能拿起地上的食水：递到嘴边等它接一口，移到空地松开放下；右键把剩余食水放回原处。"));
-        _modalContents.AddChild(Text("4  小院里按住中键拖动画面，滚轮缩放，“居中”回到中央。空手双击小油，或按 Tab 近看；使用工具时双击仍是操作工具。近看暂停自然时间，回到小院才继续自主找食水、跟随、休息和恢复。近看时用中键转视角，空手也可左键按住环境拖动；装备工具时左键按工具规则交互。滚轮调远近，“正面”恢复视角。转镜头时托举仍保持支撑；要放下小油或放置物品，在空地单击后松开，不要拖动。"));
-        _modalContents.AddChild(Text("5  空手按住软球，拖动后松开推球。跟随练习时移动鼠标指路，不用操作人类角色。空格暂停；Del 收起指向的可收纳物品，树叶、河水和软垫不能收起。"));
-        _modalContents.AddChild(Text("6  固定具、箱子和悬挂装置要用各自的解除动作；切回空手不会解除装置。脚脚受伤时，把食水放到能吃到的地方，再护理和休息。左右脸可以分别擦洗和护理。"));
-        _modalContents.AddChild(Text("7  油可以落入水中并挣扎，长时间泡水会恶化。选择“救援用品”后点击落水的油，带回有空位的岸边；每次成功救助用掉1份。左侧“用品补给”可补充食物、护理包和救援用品；测试阶段购买不扣钱，使用仍消耗库存。救起后仍要擦干、检查伤势。"));
-        _modalContents.AddChild(Text("8  茎生时可以按住外茎支护，也可以拿剪具持续接触剪下整窝。离体后先购买空瓶，再对准茎按住装瓶；空手拿起地面水杯或饭饭，对准瓶口持续补给。进度条显示这次连续接触，移开就重新计时。整瓶用手掌拖动，松手放稳；失败或出生后的残留可以收拾，亲缘和经历会保留。"));
-        _modalContents.AddChild(Text("招呼、夸奖、安慰不必连点。嘴里有食物时会先咽下再回应，歇着时也可能慢一点；先看它的表情和回应。",13,"78816e"));
-        _modalContents.AddChild(Text("嘴边受伤会让接食和咽下更慢；严重时说话含混，暂时唱不清小调或完整讲述。它仍能听懂，也能用声音和动作表达需要。",13,"78816e"));
-        _modalContents.AddChild(Text("工具的基础力度分别记住，实际接触速度也会影响作用。更多言语、照护和装置在“展开 / 收起全部工具”里。",13,"78816e"));
-        _modalContents.AddChild(Text("不用一直逗它：它会自己找食水、休息和活动。树叶和河水也能自己取用，但吃喝后可能不舒服。把干净食水放下并收手，给它一点时间。",13,"78816e"));
-        _modalContents.AddChild(Text("测试阶段购买用品不扣钱，但救援用品、茎部支护材料和空瓶仍有库存，用完可从左侧补充。每分钟自动保存；读档不计算离线时间。",13,"78816e"));
-        _modalContents.AddChild(Text("右侧“同伴、家庭与照护”可以邀请两只油相处、安排孕育和幼体照护。邀请不保证接受，需要双方成熟、愿意且身体适合。出生后宝宝会出现在小院和个体名单中。冷藏只会有限地十倍延缓，取出后仍需照护。",13,"78816e"));
-        _modalContents.AddChild(Text("右侧的馒馒来是当前心情，信任来自相处经历；生命和恐惧能帮助你判断身体与情绪。吃到好东西可以开心，但不会马上忘掉刚才的伤害。持续安全、吃喝与休息才有助于慢慢恢复；重伤需要及时护理。",13,"78816e"));
-        _modalContents.AddChild(Text("同院出现真实危机时，顶部会显示求助。点击可找到需要帮助的油，暂停设置保持原样。落水时拿救援用品，再点油救起；正在受袭时，可从施害者或受害者的观察面板制止。救助不会直接消除伤势、饥饿或关系问题。",13,"78816e"));
-        _modalContents.AddChild(Text("善良同伴可能接应落水者，也会在救起后靠近守候。它们需要先顾好自己的食水、伤势和幼体，守候也不能代替护理。救过一次不等于消除以前的伤害。",13,"78816e"));
-        _modalContents.AddChild(Text("水分会逐渐下降，越低越需要喝水，喝水后回升。吃喝后会逐渐产生尿意和便意，排泄物留在原地；鼠标指向后按 Del 清理。按 F3 或点顶部“调试”可查看完整状态、筛选参数和切换个体；冻结读数只固定显示，不冻结小院时间。",13,"78816e"));
-        _modalContents.AddChild(Text("想比较操作效果，可以先在调试面板点“记下当前读数”，操作后点“只看变化”。切换对象、查看范围或读档会清除对照，避免把两只油或两窝茎的读数混在一起。",13,"78816e"));
-        _modalContents.AddChild(Button("关闭面板",CloseModal));
+        OpenModal("小院操作");
+        foreach(var line in new[]{
+            "观察只选中对象。空手分为抓取、抚摸、收拾、戳碰、按压。右键停止使用工具并回到观察。",
+            "抓取按住拖动，松手放下；快速甩动后松手抛出。抓取时右下浮出收容箱，物品入仓不退款。",
+            "抚摸停在头顶或脸侧即可接触，按住轻拖可贴地挪动。戳碰轻点部位，空地按住后挥向身体按速度击打，长按部位拖动可拉拽。",
+            "按压从身体下半部向上推可推翻；身旁按住与解除按压按钮控制持续按压。切换工具不解除固定装置。",
+            "饭饭、零食、清水点油手喂，点地放下。零食停在油身边可逗食。所有清水使用同一份有限库存。",
+            "供给器点击查看补充频率，按时从仓库取食水，缺货停止补充。商店购买实际花钱，不自动采购。",
+            "玩具包括软球、小宝物、包裹、伸展。包裹后按住缓慢左右轻摇，身旁可解开。",
+            "交流可招呼、训诫、唱歌、教学、指令、相处。教学目前示范自己清扫；相处依次指定两只油，抓取会打断。",
+            "养护可擦拭、检查、整理饰品、护理面粉、救护橙汁、冷藏复苏、埋葬。取下的饰品拖回原主身体即可归还。",
+            "繁育入口查看个体许可、使用成熟个体喷剂和照护油茎。全局自主繁育开关沿用旧设置，不等于个体行为要求。",
+            "中键拖动画面，滚轮缩放；Shift＋滚轮调支点高度。空格暂停，Tab近看。每分钟自动保存，读档不结算离线时间。"})_modalContents.AddChild(Text(line,14));
+        _modalContents.AddChild(Button("返回",CloseModal));
     }
     private void ShowSettings()
     {
@@ -386,6 +320,7 @@ public partial class InteractionRoom
         _modalContents.AddChild(Button("读取最近的自动存档",()=>LoadRoom(0)));
         _modalContents.AddChild(Button(_muted?"声音：关":"声音：开",()=>{SetRoomMuted(!_muted);ShowSettings();}));
         _modalContents.AddChild(Button(Sim.State.Settings.LethalInjuries?"致命后果：开":"致命后果：关",()=>{Sim.State.Settings.LethalInjuries=!Sim.State.Settings.LethalInjuries;ShowSettings();}));
+        _modalContents.AddChild(Button(Sim.State.AutonomousBreeding?"全局自主繁育：开":"全局自主繁育：关",()=>{Sim.State.AutonomousBreeding=!Sim.State.AutonomousBreeding;ShowSettings();}));
         _modalContents.AddChild(Button("重新开一间小院",()=>
         {
             OpenModal("重新开始这次相处？");_modalContents.AddChild(Text("当前状态先保存到自动存档，手动槽位保留。新小院的三只油将从初始状态开始。"));
@@ -398,52 +333,6 @@ public partial class InteractionRoom
         }));
         _modalContents.AddChild(Button("关闭面板",CloseModal));
     }
-    private void ShowMedicineSupplies(string? result=null,InteractionAction equipAction=InteractionAction.Care)
-    {
-        OpenModal("护理用品");
-        bool stem=equipAction is InteractionAction.SupportStem or InteractionAction.UnbottleStem;
-        bool unbottle=equipAction==InteractionAction.UnbottleStem;
-        int price=WorldSimulation.MedicineBundlePrice,count=WorldSimulation.MedicineBundleCount;
-        _modalContents.AddChild(Text($"护理用品 · {count} 包 / {price} 元",20));
-        _modalContents.AddChild(Text(unbottle?
-            "用支护垫对准瓶身或枝芽外表按住1.6秒，完成撤出才消耗一包。原窝身份、进度和伤势保留，旧瓶不退回库存；撤出后需及时重新装瓶。":stem?
-            "拿出后对准外茎按住1.6秒，完成支护才消耗一包。支护有时限，仍需照顾母体的吃喝和安全。":
-            "拿出后按住适用伤处，完成护理才结算一包。稳定伤势后仍需进食和休息；反复包扎不会立刻恢复。"));
-        _modalContents.AddChild(Text(Sim.State.UnlimitedResources?
-            (Sim.UsesConsumableStock||stem?"测试阶段购买不扣钱；每次实际完成护理仍消耗1包库存。":"沙盒无限物资已开启，身体护理不扣库存。"):
-            $"现有金钱：{Sim.State.Money} 元 · 每次完成护理消耗1包"));
-        _modalContents.AddChild(Text($"护理包库存：{Sim.State.Medicine}"));
-        if(!string.IsNullOrEmpty(result))_modalContents.AddChild(Text(result,14));
-        var buy=Button($"购买{count}包",()=>
-        {
-            bool purchased=Sim.BuyMedicine();
-            ShowMedicineSupplies(purchased?$"已入库{count}包护理用品。":"未能购买，请检查金钱和库存；原用品没有减少。",equipAction);
-        });
-        buy.Disabled=Sim.State.Medicine>int.MaxValue-count||!Sim.State.UnlimitedResources&&Sim.State.Money<price;_modalContents.AddChild(buy);
-        var equip=Button(unbottle?"拿起撤茎支护用品":stem?"拿起茎部支护用品":"拿起护理用品",()=>{CloseModal();SelectQuickTool(equipAction);});
-        equip.Disabled=(stem||Sim.UsesConsumableStock)&&Sim.State.Medicine<=0;_modalContents.AddChild(equip);
-        _modalContents.AddChild(Button("返回小院",CloseModal));
-    }
-
-    private void ShowRescueSupplies(string? result=null)
-    {
-        OpenModal("救援用品");
-        int price=WaterEnvironment.RescueToolPrice;
-        _modalContents.AddChild(Text($"水域救援用品 · 每份 {price} 元",20));
-        _modalContents.AddChild(Text("点击落水的油，将它带到可用岸边。每次成功救助消耗1份；岸边无处落脚或目标不适用时不会消耗。救回后仍需擦干和照护。"));
-        _modalContents.AddChild(Text(Sim.State.UnlimitedResources?"测试阶段：无限金钱，购买不扣钱；使用仍消耗真实库存。":$"现有金钱：{Sim.State.Money} 元"));
-        _modalContents.AddChild(Text($"救援用品库存：{Sim.State.WaterRescueTools} / 99 份"));
-        if(!string.IsNullOrEmpty(result))_modalContents.AddChild(Text(result,14));
-        var buy=Button("购买1份",()=>
-        {
-            bool purchased=Sim.BuyWaterRescueTool();
-            ShowRescueSupplies(purchased?"已入库1份救援用品。":Sim.State.WaterRescueTools>=99?"库存已满，先使用现有用品。":
-                !Sim.State.UnlimitedResources&&Sim.State.Money<price?"金钱不足，尚未购买。":"当前不能购买，库存与金钱未改变。");
-        });
-        buy.Disabled=Sim.State.WaterRescueTools>=99||!Sim.State.UnlimitedResources&&Sim.State.Money<price;
-        _modalContents.AddChild(buy);
-        var equip=Button("拿起救援用品",()=>{CloseModal();ArmWaterRescueTool();});
-        equip.Disabled=Sim.State.WaterRescueTools<=0;_modalContents.AddChild(equip);
-        _modalContents.AddChild(Button("返回小院",CloseModal));
-    }
+    private void ShowMedicineSupplies(string? result=null,InteractionAction equipAction=InteractionAction.Care)=>ShowShop(result,"养护用品");
+    private void ShowRescueSupplies(string? result=null)=>ShowShop(result,"养护用品");
 }

@@ -235,7 +235,7 @@ public partial class InteractionRoom
         "TakenNutrition"=>"本次实际摄食量","Committed"=>"本次已入口结算","ContactProgress"=>"实际接触准备进度",
         "ContactStartedAt"=>"本次接触开始时间","LastContactAt"=>"上次有效接触时间","EntryAt"=>"实际入口时间",
         "IntakeSequence"=>"入口序号","IntakeGeneration"=>"入口序号换代标识",
-        "Money"=>"金钱","Food"=>"食物库存","Medicine"=>"护理包库存","CriticalRemaining"=>"救治剩余时间","UnlimitedResources"=>"免费购买（旧沙盒也不限物资）","UsesConsumableStock"=>"实际消耗食物与护理库存","WorldSeconds"=>"世界时间",
+        "Money"=>"金钱","Food"=>"食物库存","Medicine"=>"护理面粉库存","CriticalRemaining"=>"救治剩余时间","UnlimitedResources"=>"旧沙盒设置（不豁免小院购买）","UsesConsumableStock"=>"实际消耗食物与护理库存","WorldSeconds"=>"世界时间",
         "WaterRescueTools"=>"救援用品库存","WaterRescuePurchases"=>"救援用品购买次数",
         "CourtshipTools"=>"诱导用品库存","CourtshipToolPurchases"=>"诱导用品购买次数",
         "BreedingInterest"=>"繁育兴趣","InducedInterestRemaining"=>"诱导剩余时间","NextInductionAt"=>"下次可诱导时间",
