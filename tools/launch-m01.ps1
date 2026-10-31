@@ -42,9 +42,27 @@ if($LocalCompatibility){
 }
 if($CheckOnly){[ordered]@{build_id=$info.build_id;executable=$exe;validated=$true;local_compatibility=[bool]$LocalCompatibility;requested_process_affinity=$mask;started=$false}|ConvertTo-Json;return}
 # The user runs this launcher to open an interactive game window.
-$p=Start-Process -FilePath $exe -WorkingDirectory $directory -WindowStyle Normal -PassThru
+# Set the launching process first: Windows passes its affinity to the new child,
+# so the game cannot briefly run on an excluded processor before the check below.
+$launcher=[Diagnostics.Process]::GetCurrentProcess()
+$previousMask=$launcher.ProcessorAffinity
+try{
+    if($mask){
+        $launcher.ProcessorAffinity=[IntPtr]$mask
+        if($launcher.ProcessorAffinity.ToInt64() -ne $mask){throw 'Launch affinity was not applied; game was not started.'}
+        Write-Output ('Local compatibility affinity applied before game startup: 0x'+$mask.ToString('X'))
+    }
+    $startInfo=New-Object Diagnostics.ProcessStartInfo
+    $startInfo.FileName=$exe
+    $startInfo.WorkingDirectory=$directory
+    $startInfo.UseShellExecute=$false
+    $startInfo.WindowStyle=[Diagnostics.ProcessWindowStyle]::Normal
+    $p=[Diagnostics.Process]::Start($startInfo)
+}finally{
+    if($mask){$launcher.ProcessorAffinity=$previousMask}
+}
 if($mask){
-    try{$p.ProcessorAffinity=[IntPtr]$mask;if($p.ProcessorAffinity.ToInt64() -ne $mask){throw 'Requested process affinity was not applied.'}}
+    try{if($p.ProcessorAffinity.ToInt64() -ne $mask){throw 'Game did not inherit the requested process affinity.'}}
     catch{if(!$p.HasExited){$p.Kill()};throw}
 }
 $local=Join-Path $root '.local';New-Item -ItemType Directory -Path $local -Force|Out-Null
