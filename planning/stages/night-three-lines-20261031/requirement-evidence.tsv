@@ -11,6 +11,6 @@
 10 救助道具、花钱、测试免费购买	src/Yukkuri.Simulation/ConsumableInventory.cs;src/Yukkuri.Game/InteractionRoom.Supplies.cs;src/Yukkuri.Game/InteractionRoom.RescueTool.cs	checks/Interaction.Inventory/Program.cs;checks/Interaction.WaterEmotion/Program.cs	测试购买不扣钱，食物药品救助等保留真实库存和一次消耗，交易价格结构保留	检查未运行；经营平衡属于后续稳定基础玩法后工作，不宣称经济系统已平衡
 11 茎生胎生、自主繁育、人类诱导和干预	src/Yukkuri.Simulation/FamilyDesire.cs;src/Yukkuri.Simulation/StemCare.cs;src/Yukkuri.Simulation/DetachedStemLife.cs;src/Yukkuri.Game/InteractionRoom.Intervention.cs	checks/Family.Desire/Program.cs;checks/Family.Reproduction/Program.cs;checks/Interaction.StemCare/Program.cs;checks/Interaction.DetachedStem/Program.cs	自主资格、用品干预、原出生结算、外茎支护、独立断茎瓶养、真实撤出活窝及成功失败状态已接	普通两方式/默认爱线有育幼尾段；Family.Risk新增真实强制两方式出生和恢复债中断组件检查，均未执行；自由生活、全窝落点及长期照护仍需远测
 执行约束 原机不运行	AGENTS.md;PLAN.md;STATUS.md	各批交接与Git记录	本轮只源码文档读写、静态审查和Git管理；不运行项目、编译或检查	源码断言存在不等于通过；旧远测报告不能证明本轮
-执行约束 三线七小时与15分钟守护	PLAN.md;guard.md	代理实际状态与15分钟检查记录	起点01:00:35，截止08:00:35；两开发线加守护线持续推进	截至当前仍在时间窗口内，不能提前宣称七小时目标完成
-执行约束 CPU4和5避让	PLAN.md;STATUS.md	进程亲和性只读回执	当前进程FFFFFFCF，新工具进程已读回相同允许集合	重启后需复核；不据此宣称硬件故障已修复
+执行约束 三线七小时与15分钟守护	PLAN.md;guard.md	代理实际状态与15分钟检查记录	01:00:35至08:00:35窗口已结束；01:49实际缺失后接替，08:00:42守护最终交接并停止，备用heartbeat已删除	本轮时间与守护收尾不等于11项全部验收；实际玩法未测及八景缺项继续保留
+执行约束 CPU4和5避让	PLAN.md;STATUS.md	整个所属进程树亲和性读回	07:46补设35个遗漏工具子进程；07:59:28全树104个均FFFFFFCF，新工具壳同样排除4/5	不声称七小时全程全部子进程始终规避；重启后需复核，不据此宣称硬件故障已修复
 交付 最新代码和源码包	GitHub main;STATUS.md;DELIVERY.md;testing/request.json	固定4a2adc6c4c137e7e98387def474177f0bab3d034公开Release、标签与匿名下载哈希核对	夜间源码ZIP已发布：1410跟踪文件、51份真实LFS素材及3份交付记录；链接和完整校验见DELIVERY.md	源码/文件交付已完成，程序检查与实际玩法未运行；未联系Alice或恢复周期测试；旧包保持
