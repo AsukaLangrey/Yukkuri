@@ -36,6 +36,7 @@ public partial class InteractionRoom
             InteractionAction.Lower or InteractionAction.AdjustHanging=>RoomMode.Hanging,
             InteractionAction.Rock or InteractionAction.Unwrap=>RoomMode.Wrap,
             InteractionAction.Follow or InteractionAction.Stop or InteractionAction.Wait=>RoomMode.Commands,
+            InteractionAction.TeachFollow or InteractionAction.TeachStop or InteractionAction.TeachWait=>RoomMode.Commands,
             _=>Toolbar.SelectMany(t=>t.Entries).FirstOrDefault(e=>e.Action==action)?.Mode??_roomMode
         };
         _roomMode=mode;for(int i=0;i<Toolbar.Length;i++)if(Toolbar[i].Entries.Any(e=>e.Mode==mode)){_toolbarCategory=i;break;}
@@ -123,8 +124,11 @@ public partial class InteractionRoom
     }
     private void ShowTeachingChoices()
     {
-        OpenActivityPanel("教学",ShowTeachingChoices);_panelContents.AddChild(Text("点击油示范自己打扫卫生。多次实际练习后，它会主动走到垃圾旁清理。"));
+        OpenActivityPanel("教学",ShowTeachingChoices);_panelContents.AddChild(Text("清洁示范必须有身旁的真实脏处。愿不愿主动做取决于性格、规则教育与牌照；独立完成后才记入实际能力。"));
         _panelContents.AddChild(PanelButton("教自己打扫卫生",CloseActivityPanel));
+        foreach(var action in new[]{InteractionAction.TeachFollow,InteractionAction.TeachStop,InteractionAction.TeachWait})
+        {var selected=action;_panelContents.AddChild(PanelButton(InteractionCatalog.Choice(selected).Label,()=>{CloseActivityPanel();SelectAction(selected);}));}
+        _panelContents.AddChild(PanelButton("能力记录与持续分工",()=>ShowDevelopment()));
     }
     private void ShowStemChoices()
     {

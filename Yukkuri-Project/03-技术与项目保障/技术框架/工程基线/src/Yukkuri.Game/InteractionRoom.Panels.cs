@@ -42,6 +42,7 @@ public partial class InteractionRoom
 
     private string CurrentInlineFeedback()
     {
+        if(Time.GetTicksMsec()<_actionResultUntil)return _message;
         var control=_inlineHintControl;
         if(control!=null&&GodotObject.IsInstanceValid(control)&&control.IsVisibleInTree())
             return control.GetMeta("inline_hint").AsString();
@@ -126,6 +127,7 @@ public partial class InteractionRoom
     }
     private void ResetRoomUiSession()
     {
+        _dutyRecipientDrafts.Clear();_developmentCreatureId=null;_actionResultUntil=0;
         _pageInputs.Clear();_pageScroll.Clear();_shopQuantities.Clear();++_pageGeneration;_eventFeed.ResetSession();_sceneHoverHint="";_inlineHintControl=null;
     }
     private void RefreshRoomEvents()

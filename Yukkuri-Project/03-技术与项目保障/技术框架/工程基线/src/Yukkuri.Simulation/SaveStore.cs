@@ -70,6 +70,7 @@ public sealed class SaveStore
         MilestoneValidation.Validate(s);
         InteractionValidation.Validate(s);
         FamilyRules.ValidateFamily(s);
+        LifeDevelopmentRules.Validate(s);
         WorldSimulation.ValidateShop(s);
         ShelterValidation.Validate(s);
     }

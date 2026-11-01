@@ -123,7 +123,7 @@ public sealed partial class WorldSimulation
         return bond;
     }
 
-    private bool FamilyActionReady(Creature c) => FamilyRules.WillSocialize(c) && !c.Quarantine &&
+    private bool FamilyActionReady(Creature c,bool allowCleaning=false) => (allowCleaning||c.Interaction.CleaningTargetId==null)&&FamilyRules.WillSocialize(c) && !c.Quarantine &&
         !c.IsIntruder && c.RetreatRemaining <= 0 && !c.Interaction.Resting && c.Interaction.RestRemaining <= 0 &&
         c.Interaction.Height <= .25 && c.Interaction.WaitRemaining <= 0 && !c.Interaction.FollowPlayer &&
         InteractionGestureTarget != c.Id && c.Family.Conflict.TargetId == null &&

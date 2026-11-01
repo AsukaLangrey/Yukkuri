@@ -304,7 +304,7 @@ public partial class InteractionRoom : Node3D
 
     private void AcceptFeedback(InteractionFeedback result,string? id=null)
     {
-        if(result.Message.Length>0)_message=result.Message;
+        if(result.Message.Length>0){_message=result.Message;_actionResultUntil=Time.GetTicksMsec()+3000;}
     }
     private bool SaveRoom(int slot,bool announce=true)
     {

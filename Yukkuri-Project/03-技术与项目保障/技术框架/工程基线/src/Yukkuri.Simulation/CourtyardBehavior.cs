@@ -28,34 +28,32 @@ public sealed partial class WorldSimulation
     }
     public string TeachCleaning(string id)
     {
-        var c=InteractionTarget(id);var error=FamilyCommandError(c);if(error!=null)return error;
-        if(!FamilyActionReady(c!)||c!.Fear>50||c.Fullness<30)return "它现在无法专心，先照顾身体并让它安稳下来。";
-        if(State.WorldSeconds-c.Interaction.LastCleaningLessonAt<12)return "先让它消化刚才的示范。";
-        var waste=State.RoomObjects.FirstOrDefault(o=>o.RegionId==c.RegionId&&!o.Stored&&IsWaste(o.Kind)&&Distance(c.X,c.Z,o.X,o.Z)<2);
+        var error=CleaningLessonReason(id);if(error!=null)return error;
+        var c=InteractionTarget(id)!;
+        var waste=State.RoomObjects.FirstOrDefault(o=>o.RegionId==c.RegionId&&!o.Stored&&IsWaste(o.Kind)&&Distance(c.X,c.Z,o.X,o.Z)<2&&HasGroundSightLine(c,o.X,o.Z));
         if(waste==null)return "先带它到需要清理的脏处，再示范实际打扫。";
         if(!CleanRoomWaste(waste.Id))return "这处已经清理过了。";
         c.Interaction.LastCleaningLessonAt=State.WorldSeconds;
         c.Interaction.CleaningLearning=Math.Min(100,c.Interaction.CleaningLearning+25);
+        RecordAbility(c,LifeSkill.Cleaning,SkillEvidenceKind.Demonstration,"在身旁脏处看过一次实际清洁示范，尚不等同于独立完成。");
         RecordInteraction(c,"cleaning-lesson","看见并参与了清理身旁脏处的示范。",1);
-        return c.Interaction.CleaningLearning>=75?"已经学会自己打扫，会在身体安稳时主动清理。":"完成一次实际清扫示范，还需要练习。";
+        return "完成一次实际示范；清洁熟悉度提高。是否主动做取决于性格、教育与牌照，也可明确安排清洁。";
     }
     private void TickCourtyardLearning(double dt)
     {
         foreach(var c in State.Creatures)
         {
             var i=c.Interaction;
-            if(!CanSelfMove(c)||i.CleaningLearning<75||c.Fullness<35||i.Hydration<30||c.Fear>50||c.Energy<25||
-                InteractionGestureTarget==c.Id||c.Family.CompanionTargetId!=null||c.Family.CareTargetId!=null)
-            {i.CleaningTargetId=null;i.CleaningSeconds=0;continue;}
+            if(CleaningWorkReason(c) is { } reason){if(i.CleaningTargetId!=null)StopCleaningTask(c,reason);continue;}
             var waste=State.RoomObjects.Find(o=>o.Id==i.CleaningTargetId&&!o.Stored&&IsWaste(o.Kind)&&o.RegionId==c.RegionId);
             if(waste==null)
             {
-                i.CleaningTargetId=null;i.CleaningSeconds=0;
+                if(i.CleaningTargetId!=null){StopCleaningTask(c,"脏处已被他人清理或移走，本次未计为完成。");continue;}
+                i.CleaningSeconds=0;
                 if(State.WorldSeconds<i.NextCleaningAt)continue;
-                i.NextCleaningAt=State.WorldSeconds+10;
-                waste=State.RoomObjects.Where(o=>!o.Stored&&IsWaste(o.Kind)&&o.RegionId==c.RegionId&&Distance(c.X,c.Z,o.X,o.Z)<4)
-                    .OrderBy(o=>Distance(c.X,c.Z,o.X,o.Z)).FirstOrDefault();
-                if(waste==null)continue;i.CleaningTargetId=waste.Id;
+                i.NextCleaningAt=State.WorldSeconds+CleaningRetryDelay(c);
+                waste=FindCleaningWaste(c);
+                if(waste==null)continue;BeginCleaningTask(c,waste);
             }
             c.Activity="自己打扫卫生";
             double distance=Distance(c.X,c.Z,waste.X,waste.Z);
@@ -63,12 +61,21 @@ public sealed partial class WorldSimulation
             {
                 i.CleaningSeconds=0;double step=Math.Min(distance,dt*.65);
                 SlideAlongGround(c.Id,c.X+(waste.X-c.X)/distance*step,c.Z+(waste.Z-c.Z)/distance*step,false);
+                bool progressed=Distance(c.X,c.Z,waste.X,waste.Z)<distance-.001;
+                i.Development.CleaningStalledSeconds=progressed?0:i.Development.CleaningStalledSeconds+dt;
+                if(i.Development.CleaningStalledSeconds>=8)StopCleaningTask(c,"走不到脏处，先停下；请整理通路或换一个位置。",SkillEvidenceKind.Failed);
                 continue;
             }
+            if(!HasGroundSightLine(c,waste.X,waste.Z)){StopCleaningTask(c,"脏处被障碍隔开，不能隔墙清理。",SkillEvidenceKind.Failed);continue;}
             c.TargetX=c.X;c.TargetZ=c.Z;i.CleaningSeconds+=dt;
-            if(i.CleaningSeconds<2)continue;
-            if(CleanRoomWaste(waste.Id)){c.Energy=Math.Max(0,c.Energy-1);i.PendingPraise="自己打扫卫生";i.PraiseRemaining=12;RecordInteraction(c,"self-clean","自己清理了一处脏污。",.5);}
-            i.CleaningTargetId=null;i.CleaningSeconds=0;i.NextCleaningAt=State.WorldSeconds+12;
+            double required=i.CleaningLearning>=75||CleaningLicenseLevel(c)>=2?1.5:2;
+            if(i.CleaningSeconds<required)continue;
+            if(CleanRoomWaste(waste.Id))
+            {c.Energy=Math.Max(0,c.Energy-1);i.PendingPraise="自己打扫卫生";i.PraiseRemaining=12;i.CleaningLearning=Math.Min(100,i.CleaningLearning+10);i.RuleLearning=Math.Min(100,i.RuleLearning+2);
+                RecordAbility(c,LifeSkill.Cleaning,SkillEvidenceKind.Completed,"实际走到脏处并独立完成清理。");RecordInteraction(c,"self-clean","自己清理了一处脏污。",.5);}
+            else RecordAbility(c,LifeSkill.Cleaning,SkillEvidenceKind.Interrupted,"清理目标已改变，没有记为完成。");
+            ClearPeerCleaningOrder(c);
+            i.CleaningTargetId=null;i.CleaningSeconds=0;i.Development.CleaningStalledSeconds=0;i.NextCleaningAt=State.WorldSeconds+CleaningRetryDelay(c);
         }
     }
     public bool SlideAlongGround(string id,double x,double z,bool manual=true)

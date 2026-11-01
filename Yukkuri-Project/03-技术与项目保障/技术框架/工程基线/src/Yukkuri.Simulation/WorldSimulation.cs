@@ -87,11 +87,13 @@ public sealed partial class WorldSimulation
             SynchronizeCareParcels();
             SynchronizeShelters();
             TickSupplyStations();
+            TickLifeDuties();
             TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickDetachedStems(dt);TickFamilySocial(dt);
             TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);
             TickSupplyStations();
             foreach(var c in State.Creatures)SynchronizeWildSelfCare(c);
             TickCourtyardLearning(dt);
+            foreach(var c in State.Creatures)SynchronizeAbilityAttempts(c);
             SynchronizeShelters();
             return;
         }

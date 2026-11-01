@@ -783,6 +783,7 @@ public partial class InteractionRoom
             
         }
         if(!rescuePointer&&roomObject!=null){_sceneHoverHint=WorldSimulation.IsWaste(roomObject.Kind)?WasteLabel(roomObject):RoomResourceText.Label(roomObject,Sim.State);}
+        RefreshOperationPreview(scene,roomObject==null?contact:null,point);
         _feedback.Text=CurrentInlineFeedback();
         _pointer.Point=point;_pointer.Active=scene&&(contact!=null||roomObject!=null);
         _pointer.Rescue=rescuePointer;_pointer.RescueCandidate=rescueHint.Candidate;

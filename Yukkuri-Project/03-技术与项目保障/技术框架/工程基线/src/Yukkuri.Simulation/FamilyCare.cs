@@ -144,6 +144,7 @@ public sealed partial class WorldSimulation
         if(adult.Family.CareTargetId==null&&adult.Family.CareParcelId==null)
         {adult.Family.CareApproachSeconds=0;adult.Family.CareBestDistance=100;return;}
         var recipient=State.Creatures.Find(c=>c.Id==adult.Family.CareTargetId);
+        RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Interrupted,reason);
         DropCareParcel(adult);adult.Family.CareTargetId=null;adult.Family.CareApproachSeconds=0;
         adult.Family.CareBestDistance=100;adult.Family.NextCareAt=Math.Max(adult.Family.NextCareAt,State.WorldSeconds+cooldown);
         RecordFamilyCareStatus(adult,reason);
@@ -159,6 +160,8 @@ public sealed partial class WorldSimulation
         // Only the displayed task identity and the current caregiver are relevant.
         if(adult!.Family.CareTargetId is not { } current||current!=recipientId)
             return "这项照护已经结束或对象已改变，请查看当前安排。";
+        if(adult.Interaction.Development.Duty==LifeDuty.Care)
+        {adult.Interaction.Development.Duty=LifeDuty.None;adult.Interaction.Development.RecipientId=null;}
         CancelFamilyCare(adult,reason:"人类结束了这次照护；如有已取份额，已经留在实际位置，可以接手继续照顾。");
         return State.LastActionMessage="已结束当前照护；如有已取食水，仍保留为实际物品，过去照护与亲缘关系保留。";
     }
@@ -170,8 +173,12 @@ public sealed partial class WorldSimulation
         if(error!=null)return error;
         error=FamilyCareReason(caregiverId,childId);if(error!=null)return error;
         if(adult!.Family.CareTargetId==child!.Id)return "已经在照护这个对象，给实际靠近和递送留一点时间。";
+        if(adult.Interaction.Development.Duty==LifeDuty.Care)
+        {adult.Interaction.Development.Duty=LifeDuty.None;adult.Interaction.Development.RecipientId=null;}
         CancelFamilyCare(adult,reason:"照护已改派给另一位对象；旧递送已中断，如有已取份额，已经留在身旁。");
         adult.Family.CareTargetId=child!.Id;adult.Family.CareApproachSeconds=0;adult.Family.CareBestDistance=100;
+        if(adult.Interaction.CleaningTargetId!=null)StopCleaningTask(adult,"开始手动安排的照护，暂停清洁。");
+        RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Attempt,$"接受本次安排，尝试照看{child.Name}。");
         RecordFamilyCareStatus(adult,!CanSelfMove(adult)?"留在已贴近的幼体旁照看；身体走不开，无法搬运食水。":
             child.IsYoung?"已安排照看幼体，会在有余力时靠近保暖并寻找实际食水。":"已安排为行动不便的亲近对象送食水，需要实际取到并送达。");
         return State.LastActionMessage=adult.Family.CareLastEvent;
@@ -256,6 +263,7 @@ public sealed partial class WorldSimulation
                 .ThenBy(c=>c.Id,StringComparer.Ordinal).FirstOrDefault();
             if(child==null)return false;
             f.CareTargetId=child.Id;f.CareBestDistance=100;f.CareApproachSeconds=0;
+            RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Attempt,$"自主发现{child.Name}需要照护，开始尝试。");
             RecordFamilyCareStatus(adult,$"正在留意{child.Name}的食水与照护需要。");
         }
         // A stationary caregiver can share warmth at real contact only. It must
@@ -283,6 +291,7 @@ public sealed partial class WorldSimulation
             f.CareParcelId=null;f.NextCareAt=State.WorldSeconds+8;f.CareTargetId=null;
             f.CareApproachSeconds=0;f.CareBestDistance=100;
             adult.Energy=Math.Max(0,adult.Energy-.5);RegisterFamilyCare(adult,child,5);
+            RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Completed,$"实际送达一份食水给{child.Name}；送达不等于对方已经吃喝。");
             RecordFamilyCareStatus(adult,adult.Activity=$"已把一份食水放到{child.Name}嘴边，等待它实际取用。");
             RecordFamilyCareStatus(child,$"{adult.Name}送来的一份食水已经放在可达处，还需要自己接这一口。");
             React(adult,Expression.Content,NaturalResources.IsWater(parcel.Kind)?"水水在这里，慢慢喝。":"饭饭在这里，慢慢吃。",
@@ -334,7 +343,8 @@ public sealed partial class WorldSimulation
         RecordFamilyCareStatus(adult,adult.Activity=stationary?"留在已贴近的幼体旁保暖；身体走不开，无法搬运食水。":"留在幼体旁边照看。");
         f.CareApproachSeconds+=dt;
         if(f.CareApproachSeconds>12)
-        {f.CareTargetId=null;f.NextCareAt=State.WorldSeconds+12;f.CareApproachSeconds=0;f.CareBestDistance=100;
+        {RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Completed,$"完成一段与{child.Name}实际接触的保暖陪护。");
+            f.CareTargetId=null;f.NextCareAt=State.WorldSeconds+12;f.CareApproachSeconds=0;f.CareBestDistance=100;
             RecordFamilyCareStatus(adult,"这一段近旁陪护已完成，先歇一会儿再留意需要。");}
         return true;
     }

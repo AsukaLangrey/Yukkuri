@@ -7,6 +7,7 @@ public partial class InteractionRoom
 {
     private void RefreshRedesignProperties()
     {
+        RefreshDevelopmentUi();
         if(_objectDetails==null)return;
         var entry=Toolbar[_toolbarCategory].Entries.FirstOrDefault(e=>e.Mode==_roomMode);
         _title.Text=Toolbar[_toolbarCategory].Name+(entry!=null&&_toolbarCategory!=0?" · "+entry.Name:"");

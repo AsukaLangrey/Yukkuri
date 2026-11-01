@@ -5,6 +5,7 @@ public sealed partial class WorldSimulation
     private InteractionFeedback ApplyCue(Creature c, InteractionAction action)
     {
         var i = c.Interaction;
+        SynchronizeAbilityAttempts(c);
         if (c.Energy < 20 || c.Fullness < 20 || c.Fear > 65)
             return Feedback(c, "too-tired", Expression.Exhausted, "先处理疲劳、饥饿或恐惧，才能专心练习。", "withdraw", false, true);
         if (!CanSelfMove(c) && action is InteractionAction.TeachFollow or InteractionAction.Follow or InteractionAction.TeachStop)
@@ -15,7 +16,7 @@ public sealed partial class WorldSimulation
         {
             if(action is not (InteractionAction.Stop or InteractionAction.TeachStop))return Unavailable("先完成眼前这次练习，或让它停下来。 ");
             // An interruption ends the attempt; it is not a successful lesson.
-            i.ActiveCue=null;i.FollowPlayer=false;i.WaitRemaining=0;
+            i.ActiveCue=null;i.FollowPlayer=false;i.WaitRemaining=0;SynchronizeAbilityAttempts(c);
         }
         var cue = action switch
         {
@@ -47,6 +48,9 @@ public sealed partial class WorldSimulation
         double understanding = (demonstration ? .55 : .12) + c.Patience * .2 + learning.Familiarity / 140;
         i.CueUnderstood = Next() < Math.Clamp(understanding, .05, .98);
         learning.Attempts++; learning.LastPracticeAt = State.WorldSeconds;
+        i.Development.RecordedCue=cue;
+        if(demonstration)RecordAbility(c,LifeDevelopmentRules.CueSkill(cue),SkillEvidenceKind.Demonstration,"开始一次实际动作示范。");
+        RecordAbility(c,LifeDevelopmentRules.CueSkill(cue),SkillEvidenceKind.Attempt,demonstration?"跟着示范尝试动作。":"在没有本次示范的情况下尝试执行指令。");
         if (demonstration) { learning.HasDemonstration = true; learning.DemonstrationX = c.X; learning.DemonstrationZ = c.Z; }
         i.FollowPlayer = cue == LearnedCue.Follow;
         if (cue == LearnedCue.Wait)
@@ -70,6 +74,10 @@ public sealed partial class WorldSimulation
         var i = c.Interaction;
         if (i.ActiveCue is not { } cue) return;
         var learning = i.Learning[cue];
+        RecordAbility(c,LifeDevelopmentRules.CueSkill(cue),success?SkillEvidenceKind.Completed:SkillEvidenceKind.Failed,
+            success?(i.CueDemonstration?"跟随示范实际完成了动作。":"没有本次示范，实际完成了指令动作。"):
+            "这次动作没有实际完成；需要调整情境，或先处理身体需要。");
+        i.Development.RecordedCue=null;
         if (success)
         {
             learning.Successes++;
@@ -303,7 +311,7 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if (i.Carried || i.Falling) continue;
-            if(_groundHandTarget==c.Id||i.CleaningTargetId!=null)continue;
+            if(_groundHandTarget==c.Id)continue;
             if(InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy)
             {
                 if(CurrentInteractionAction==InteractionAction.Tease&&CanSelfMove(c)&&i.FoodSuspicion<75)
@@ -311,11 +319,13 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if((c.Fullness<12||i.Hydration<12)&&i.ActiveCue!=null)CompleteCue(c,false);
-            if(TryActiveShelter(c,dt))continue;
-            if(TryRespondToWater(c,dt))continue;
-            if(TryHungerAggression(c,dt))continue;
-            if(TryMaternalCrisis(c,dt))continue;
-            if((c.Family.Conflict.TargetId!=null||c.Family.FlightRemaining>0)&&i.EatingRemaining<=0&&TryFamilyActivity(c,dt))continue;
+            if(TryActiveShelter(c,dt)){StopCleaningTask(c,"先完成居所内的生活需要，暂停清洁。");continue;}
+            if(TryRespondToWater(c,dt)){StopCleaningTask(c,"先处理水域危险，暂停清洁。");continue;}
+            if(TryHungerAggression(c,dt)){StopCleaningTask(c,"饥饿引发其他行为，暂停清洁。");continue;}
+            if(TryMaternalCrisis(c,dt)){StopCleaningTask(c,"先处理家庭危机，暂停清洁。");continue;}
+            if((c.Family.Conflict.TargetId!=null||c.Family.FlightRemaining>0)&&i.EatingRemaining<=0&&TryFamilyActivity(c,dt))
+            {StopCleaningTask(c,"先处理冲突或躲避，暂停清洁。");continue;}
+            if(i.CleaningTargetId!=null)continue;
             if (i.ActiveCue is { } cue)
             {
                 i.CueElapsed += dt;

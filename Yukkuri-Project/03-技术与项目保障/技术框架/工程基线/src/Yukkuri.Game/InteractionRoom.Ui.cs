@@ -91,11 +91,13 @@ public partial class InteractionRoom
         _closeButton=Button("靠近看看 · 双击",ToggleClose);_closeButton.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;viewControls.AddChild(_closeButton);
         _resetViewButton=Button("正面",ResetCloseView);viewControls.AddChild(_resetViewButton);
         var records=Row(right,6);
-        _familyPanelButton=PanelButton("详细家庭记录",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamilyDetails();});records.AddChild(_familyPanelButton);
-        records.AddChild(PanelButton("事件与完整记录",ShowRoomRecords));
+        _familyPanelButton=PanelButton("家庭记录",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamilyDetails();});records.AddChild(_familyPanelButton);
+        records.AddChild(PanelButton("事件记录",ShowRoomRecords));
+        records.AddChild(PanelButton("能力分工",()=>ShowDevelopment()));
         var reportScroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(reportScroll);
         var report=Column(reportScroll,6);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         _speechLabel=Text("慢慢来……",14);report.AddChild(_speechLabel);
+        _lifeOverview=Text("",12);report.AddChild(_lifeOverview);
         BuildVitalMeters(report);
         BuildDetachedStemPanel(report);
         BuildSupplyStationPanel(report);
@@ -113,6 +115,8 @@ public partial class InteractionRoom
         _eventFeed=new CanvasEventFeed();_ui.AddChild(_eventFeed);_eventFeed.TargetRequested+=FocusRoomEvent;
         _canvasEffects=new Control{ClipContents=true,MouseFilter=Control.MouseFilterEnum.Ignore};_ui.AddChild(_canvasEffects);
         _pointer=new RoomPointer{MouseFilter=Control.MouseFilterEnum.Ignore};_canvasEffects.AddChild(_pointer);
+        _actionPreview=Text("",12,"fff8e6");_actionPreview.Size=new(260,0);_actionPreview.Visible=false;
+        _actionPreview.AddThemeColorOverride("font_outline_color",new Color("253b32"));_actionPreview.AddThemeConstantOverride("outline_size",4);_canvasEffects.AddChild(_actionPreview);
         void LayoutWidgets()
         {
             GameUiLayout.CanvasWidget(_ui,_eventFeed,false,90);GameUiLayout.CanvasWidget(_ui,_forceWidget,true,36);
