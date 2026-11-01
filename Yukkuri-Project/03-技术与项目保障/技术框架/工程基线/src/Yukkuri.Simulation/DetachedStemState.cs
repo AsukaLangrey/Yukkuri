@@ -11,8 +11,11 @@ public sealed class StemParentSource
     public double Courage { get; set; }
     public double Patience { get; set; }
     public double Aggression { get; set; }
+    public double Kindness { get; set; } = .5;
+    public double Carelessness { get; set; } = .25;
+    public double Pride { get; set; } = .3;
     public static StemParentSource Capture(Creature c)=>new(){Id=c.Id,BodyId=c.Body.Id,Name=c.Name,
-        SpeciesId=c.Body.SpeciesId,Disposition=c.TrueDisposition,Courage=c.Courage,Patience=c.Patience,Aggression=c.Aggression};
+        SpeciesId=c.Body.SpeciesId,Disposition=c.TrueDisposition,Courage=c.Courage,Patience=c.Patience,Aggression=c.Aggression,Kindness=c.Personality.Kindness,Carelessness=c.Personality.Carelessness,Pride=c.Personality.Pride};
 }
 public sealed class DetachedStemBrood
 {

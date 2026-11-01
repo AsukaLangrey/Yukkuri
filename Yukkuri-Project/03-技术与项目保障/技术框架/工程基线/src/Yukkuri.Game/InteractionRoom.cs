@@ -36,7 +36,7 @@ public partial class InteractionRoom : Node3D
             {GetTree().ChangeSceneToFile("res://Main.tscn");return;}
             GetWindow().Title=$"油库里乐园 · 慢慢来，相处小院 · {GameVersion.Display}";
             GD.Print("YUKKURI_VERSION: "+GameVersion.Display);
-            Sim=WorldSimulation.CreateInteractionPlaytest();
+            Sim=WorldSimulation.CreateCourtyardEconomy();
             _font=new FontVariation { BaseFont=GD.Load<FontFile>("res://Assets/Fonts/NotoSansSC.ttf"),
                 VariationOpentype=new Godot.Collections.Dictionary { [TextServerManager.GetPrimaryInterface().NameToTag("wght")]=500.0 },
                 VariationEmbolden=.15f };
@@ -70,6 +70,7 @@ public partial class InteractionRoom : Node3D
             UpdateRoomCamera(1);_ready=true;RefreshRoomUi();
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
+            StartMarketVerificationIfRequested(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }

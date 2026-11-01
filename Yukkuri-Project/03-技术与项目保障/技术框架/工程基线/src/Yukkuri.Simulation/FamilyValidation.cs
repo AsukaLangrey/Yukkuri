@@ -10,7 +10,7 @@ public static partial class FamilyRules
         {if(!valid)throw new InvalidDataException(message);}
         static bool Number(double n,double max=double.MaxValue)=>double.IsFinite(n)&&n>=0&&n<=max;
         static bool Text(string? value,int max=512)=>value!=null&&value.Length<=max;
-        var creatures=s.Creatures.ToDictionary(c=>c.Id,StringComparer.Ordinal);
+        var creatures=s.KnownCreatures.ToDictionary(c=>c.Id,StringComparer.Ordinal);
         Require(s.FamilySequence>=0&&s.CompletedBirths!=null&&s.CompletedBirths.Count<=10000&&
             s.CompletedBirths.All(id=>!string.IsNullOrWhiteSpace(id)&&id.Length<=128),"出生结算记录无效");
         Require(s.CourtshipTools is >=0 and <=99&&s.CourtshipToolPurchases>=0,"繁育诱导用品库存无效");
@@ -78,7 +78,7 @@ public static partial class FamilyRules
         // Iterative ancestry validation avoids recursion over corrupted deep saves.
         var children=creatures.Keys.ToDictionary(id=>id,_=>new List<string>(),StringComparer.Ordinal);
         var incoming=creatures.Keys.ToDictionary(id=>id,_=>0,StringComparer.Ordinal);
-        foreach(var c in s.Creatures)
+        foreach(var c in s.KnownCreatures)
             foreach(var id in new[]{c.Family.MotherId,c.Family.FatherId}.Where(id=>id!=null).Distinct())
             {children[id!].Add(c.Id);incoming[c.Id]++;}
         var queue=new Queue<string>(incoming.Where(p=>p.Value==0).Select(p=>p.Key));int visited=0;

@@ -25,7 +25,7 @@ Check("each species age and role creates one paid independent identity and survi
     foreach(string species in new[]{"reimu","marisa"})foreach(bool young in new[]{false,true})
     foreach(var role in Enum.GetValues<ReproductionRole>())
     {
-        var s=Empty();s.State.WorldSeconds=500;
+        var s=Empty();s.State.WorldSeconds=500;s.State.Money=2*WorldSimulation.NewCreaturePrice;
         var p=new CreatureArrival(species,young,role," 小团子 ");
         int money=s.State.Money;string before=Snapshot(s);
         for(int n=0;n<20;n++)Require(s.NewCreaturePlacementReason(p,0,2)==null,"clear ground rejected");

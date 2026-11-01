@@ -5,7 +5,7 @@ public sealed record CreatureArrival(string SpeciesId,bool Young=false,
 
 public sealed partial class WorldSimulation
 {
-    public const int NewCreaturePrice=30;
+    public const int NewCreaturePrice=240;
     public const int ArrivalPopulationLimit=200;
 
     // Read-only: previews and rejected purchases must not advance the world RNG.

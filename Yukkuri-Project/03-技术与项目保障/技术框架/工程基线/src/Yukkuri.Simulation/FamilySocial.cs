@@ -65,7 +65,7 @@ public static partial class FamilyRules
         static void Require(bool condition, string message)
         { if (!condition) throw new InvalidDataException(message); }
         static bool Number(double v, double max = double.MaxValue) => double.IsFinite(v) && v >= 0 && v <= max;
-        var ids = state.Creatures.Select(c => c.Id).ToHashSet();
+        var ids = state.KnownCreatures.Select(c => c.Id).ToHashSet();
         Require(state.FamilyRelationshipEvents != null && state.FamilyRelationshipEvents.Count <= 256, "家庭事件记录无效");
         var eventIds = new HashSet<string>();
         foreach (var e in state.FamilyRelationshipEvents!)

@@ -70,7 +70,7 @@ public sealed partial class WorldSimulation
     public bool BuyShopProduct(string id,int packs=1)
     {
         var p=CourtyardShop.Products.FirstOrDefault(p=>p.Id==id);
-        if(!State.InteractionPlaytest||p==null||packs is <1 or >99)return false;
+        if(!State.InteractionPlaytest||p==null||ShopUnlockReason(id)!=null||packs is <1 or >99)return false;
         long cost=(long)p.Price*packs, count=(long)p.Pack*packs;
         int limit=id is "rescue" or "vessel" or "inducer" or "food-station" or "water-station" or "shelter"?99:int.MaxValue;
         if(State.Money<cost||ShopQuantity(id)>limit-count)return false;

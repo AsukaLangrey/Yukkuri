@@ -38,7 +38,7 @@ public static partial class FamilyRules
         { if (!valid) throw new InvalidDataException(message); }
         static bool Number(double value, double max = double.MaxValue) => double.IsFinite(value) && value >= 0 && value <= max;
         static bool LossSource(KnowledgeSource source) => source is KnowledgeSource.Witness or KnowledgeSource.Discovered or KnowledgeSource.Told;
-        var creatures = state.Creatures.ToDictionary(c => c.Id, StringComparer.Ordinal);
+        var creatures = state.KnownCreatures.ToDictionary(c => c.Id, StringComparer.Ordinal);
         foreach (var c in state.Creatures)
         {
             var f = c.Family;

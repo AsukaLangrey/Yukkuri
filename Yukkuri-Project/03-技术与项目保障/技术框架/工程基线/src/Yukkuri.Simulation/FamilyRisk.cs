@@ -56,7 +56,7 @@ public static partial class FamilyRules
     {
         static bool N(double v,double max=double.MaxValue)=>double.IsFinite(v)&&v>=0&&v<=max;
         static void Require(bool ok,string message){if(!ok)throw new InvalidDataException(message);}
-        var ids=s.Creatures.Select(c=>c.Id).ToHashSet();
+        var ids=s.KnownCreatures.Select(c=>c.Id).ToHashSet();
         Require(s.BreedingMaterials!=null&&s.BreedingMaterials.Count<=8,"繁育材料列表无效");
         foreach(var material in s.BreedingMaterials!)
             Require(material!=null&&ids.Contains(material.FatherId)&&!string.IsNullOrWhiteSpace(material.BodyId)&&

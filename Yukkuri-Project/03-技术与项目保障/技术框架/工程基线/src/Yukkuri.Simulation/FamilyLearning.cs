@@ -39,7 +39,7 @@ public static partial class FamilyRules
     {
         static void Require(bool valid,string message){if(!valid)throw new InvalidDataException(message);}
         static bool Time(double value,double max=double.MaxValue)=>double.IsFinite(value)&&value>=0&&value<=max;
-        var ids=s.Creatures.Select(c=>c.Id).ToHashSet(StringComparer.Ordinal);
+        var ids=s.KnownCreatures.Select(c=>c.Id).ToHashSet(StringComparer.Ordinal);
         var learners=new HashSet<string>(StringComparer.Ordinal);
         foreach(var c in s.Creatures)
         {

@@ -11,13 +11,13 @@ public static partial class FamilyRules
         static bool Number(double n,double max=double.MaxValue)=>double.IsFinite(n)&&n>=0&&n<=max;
         static bool Text(string? s,int max=512)=>s!=null&&s.Length<=max;
         static bool Identity(string? s)=>!string.IsNullOrWhiteSpace(s)&&s.Length<=128;
-        var creatures=state.Creatures.ToDictionary(c=>c.Id,StringComparer.Ordinal);
+        var creatures=state.KnownCreatures.ToDictionary(c=>c.Id,StringComparer.Ordinal);
         Require(state.DetachedStemBroods!=null&&state.DetachedStemBroods.Count<=10000&&state.StemVessels is >=0 and <=99&&
             state.StemVesselPurchases>=0,"离体茎或培养瓶库存无效");
         var ids=new HashSet<string>(StringComparer.Ordinal);
         bool Source(StemParentSource? p)=>p!=null&&Identity(p.Id)&&creatures.ContainsKey(p.Id)&&Identity(p.BodyId)&&
             Text(p.Name,128)&&Identity(p.SpeciesId)&&SupportedSpecies(p.SpeciesId)&&Text(p.Disposition,128)&&
-            Number(p.Courage,1)&&Number(p.Patience,1)&&Number(p.Aggression,1);
+            Number(p.Courage,1)&&Number(p.Patience,1)&&Number(p.Aggression,1)&&Number(p.Kindness,1)&&Number(p.Carelessness,1)&&Number(p.Pride,1);
         foreach(var s in state.DetachedStemBroods!)
         {
             Require(s!=null&&Identity(s.EventId)&&ids.Add(s.EventId)&&Enum.IsDefined(s.Phase)&&
@@ -34,7 +34,7 @@ public static partial class FamilyRules
             Require(s.Phase==DetachedStemPhase.Failed?s.Integrity==0:s.Integrity>0,"离体茎活性与阶段不一致");
             Require(s.Phase!=DetachedStemPhase.Loose||s.VesselIntegrity==0,"未入瓶的茎出现瓶体");
             Require(s.Phase==DetachedStemPhase.Born?state.CompletedBirths.Contains(s.EventId)&&
-                state.Creatures.Count(c=>c.Family.BirthEventId==s.EventId)==s.PlannedChildren:
+                state.KnownCreatures.Count(c=>c.Family.BirthEventId==s.EventId)==s.PlannedChildren:
                 !state.CompletedBirths.Contains(s.EventId),"离体茎与出生结算不一致");
             Require(!state.Creatures.Any(c=>c.Family.Pregnancy.Phase==PregnancyPhase.Gestating&&c.Family.Pregnancy.EventId==s.EventId),
                 "同一窝同时依附母体并独立存活");

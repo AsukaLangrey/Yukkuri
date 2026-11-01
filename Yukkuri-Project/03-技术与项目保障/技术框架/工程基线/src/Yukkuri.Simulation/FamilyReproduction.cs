@@ -264,7 +264,7 @@ public sealed partial class WorldSimulation
         if(attached)YieldActivitiesForDelivery(mother);
         foreach(var baby in babies)
         {
-            baby.Name=$"{maternal.Name}的宝宝{State.Creatures.Count(c=>c.Family.MotherId==mother.Id)+1}";
+            baby.Name=$"{maternal.Name}的宝宝{State.KnownCreatures.Count(c=>c.Family.MotherId==mother.Id)+1}";
             baby.Body=new(){Id=baby.Id+"-body",SpeciesId=Next()<.5?maternal.SpeciesId:paternal.SpeciesId,
                 ReproductionRole=Next()<.5?ReproductionRole.Maternal:ReproductionRole.Paternal};
             baby.Registration=new(){IdentityId=baby.Id+"-identity"};
@@ -273,6 +273,10 @@ public sealed partial class WorldSimulation
             baby.Courage=Math.Clamp(maternal.Courage*.8+paternal.Courage*.2+(Next()-.5)*.08,0,1);
             baby.Patience=Math.Clamp(maternal.Patience*.8+paternal.Patience*.2+(Next()-.5)*.08,0,1);
             baby.Aggression=Math.Clamp(maternal.Aggression*.8+paternal.Aggression*.2+(Next()-.5)*.08,0,1);
+            baby.Personality=new(){Initialized=true,Kindness=InheritTrait(maternal.Kindness,paternal.Kindness),
+                Carelessness=InheritTrait(maternal.Carelessness,paternal.Carelessness),Pride=InheritTrait(maternal.Pride,paternal.Pride)};
+            baby.Patience=InheritTrait(maternal.Patience,paternal.Patience);
+            baby.Aggression=InheritTrait(maternal.Aggression,paternal.Aggression);
             baby.Health=(p.Method==BirthMethod.Live?100:92)-p.Burden*.2;
             baby.Energy=p.Method==BirthMethod.Live?78:68;baby.Fullness=55;baby.Trust=10;baby.Attachment=5;
             baby.ParentId=mother.Id;

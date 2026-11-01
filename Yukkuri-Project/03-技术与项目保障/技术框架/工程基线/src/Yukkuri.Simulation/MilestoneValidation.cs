@@ -14,7 +14,7 @@ public static class MilestoneValidation
         Require(Finite(settings.Speed,settings.MusicVolume,settings.EffectsVolume)&&settings.Speed is >=.25 and <=3&&settings.MusicVolume is >=0 and <=1&&settings.EffectsVolume is >=0 and <=1,"设置数值无效");
         Require(progress.Completed!=null&&progress.CareActions>=0&&progress.TrainingSessions>=0&&progress.Rescued>=0&&progress.Defenses>=0&&progress.CareContracts>=0&&Finite(progress.NextContractAt),"阶段进展无效");
         Require(Enum.IsDefined(threat.Phase)&&Finite(threat.NextAt,threat.PhaseTime,threat.EncounterCooldown)&&threat.PhaseTime>=0&&threat.Sequence>=0,"入侵状态无效");
-        var ids=s.Creatures.Select(c=>c.Id).ToHashSet();
+        var ids=s.KnownCreatures.Select(c=>c.Id).ToHashSet();
         Require((threat.IntruderId==null||ids.Contains(threat.IntruderId))&&(threat.DefenderId==null||ids.Contains(threat.DefenderId))&&(s.HelpTargetId==null||ids.Contains(s.HelpTargetId)),"事件对象引用无效");
         var incidentIds=new HashSet<string>();
         foreach(var e in s.Incidents!)
