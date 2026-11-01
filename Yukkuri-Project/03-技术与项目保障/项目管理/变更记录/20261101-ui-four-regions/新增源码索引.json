@@ -1,0 +1,23 @@
+[
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CanvasEventFeed.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "introducedBy": "UI-002",
+    "sha256AtCreation": "07FE362A41894FCC21D3E0D35D37603565276F6DC3E282E579D07924AA979B41"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CanvasNoticeSource.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "introducedBy": "UI-002",
+    "sha256AtCreation": "327E76632499EEE3E0CBAEE67BF6AD91C6871C44982AB1DE2C7445BB318AE936"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameUiLayout.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "introducedBy": "UI-002",
+    "sha256AtCreation": "1492632732E604E8A0545A43F3C39626D2DED0760A00BCE1A25FB046A74A2EB1"
+  }
+]

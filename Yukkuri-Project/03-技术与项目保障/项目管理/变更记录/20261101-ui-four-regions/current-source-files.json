@@ -1,0 +1,934 @@
+[
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessoryPlacement.cs",
+    "sha256": "F04742365C623B0CC7389C5F22ACE840008FB3BC612AFE0887D1539670CCF285"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessorySupport.cs",
+    "sha256": "64B61623CA11A566B3DE99835C485CC4E04C74A003B18066A3489784C4EF0D7B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessorySurface.cs",
+    "sha256": "0A9D3FFD529BA9AF84DA012B4C453A7CC0029C6297D30DE2634F387B93C7306D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessoryWear.cs",
+    "sha256": "B0A6FE613F6B964022BA0F8774A220ED58E16CDCBCE607083A7C265A486EFBD2"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorBodyBounds.cs",
+    "sha256": "0186FC1D6A59D2A2470502150A31F215D205200956ED9A4FC6EFB8D6036918DE"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorBrowSurface.cs",
+    "sha256": "F10F0C7C70A2D5F0D603560E49107439C32172ABA6A8C7BDCB8150091494D820"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorCradleSurface.cs",
+    "sha256": "08296B7A1C4822B9CAB35B49480B6B05596C2FB6B1A1B33CAAB0B0381F441502"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorCushionSurface.cs",
+    "sha256": "CB91DE21BEE30FA896FD3B5652B817F945291E86DD78B5BE445C0AC9EF81C95C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorDressingSurface.cs",
+    "sha256": "93FF20C785F3A3C7DEFB2907A0FEE668C1E72BD4F602DAAEA2B65DF7C74A44B7"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorEyeSurface.cs",
+    "sha256": "0D84E5F3019764BD568EE72847583E0564F31C83D1287F0083254E0CA0BACB36"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorFaceSurface.cs",
+    "sha256": "C53712632CD666F853B4713B7FF56B05EF58743B1E31D1EBD46167194FFC5957"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHairSurface.cs",
+    "sha256": "96E17C43A2EBE667F866276BD7AC3FA287E8DD995E4B1BAFF6666CFAD066D071"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHarnessSurface.cs",
+    "sha256": "903F100140A88A0C56D7D334B51039D3106D835F076D31B5B3A2FD8165953DC1"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHeatPresentation.cs",
+    "sha256": "8A549406775DD1D24A67564CF1F962ACFBED649FD29AFB57C264ED9C92DEB16E"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHopMotion.cs",
+    "sha256": "B5FCA37EAD2950BBA147F97B9A049AC01772704A2C29F420F7093A43680FC30C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorInjuryPresentation.cs",
+    "sha256": "885C3C8AD34998FB3AEF8385236EF79C04F775FFFC9B41B87A2CD39DF6D20A09"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorInjurySurface.cs",
+    "sha256": "69A5D3E420EAB9336489E552905F15DE86BFE9BA4039C4651F1B91BDBE5B0B21"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorIntakeMouthSurface.cs",
+    "sha256": "1D5AF7B5F62C927244E63579382C706DC762F4AAFCC8FFC9A68F8AE4D3AA7D35"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorIntakePresentation.cs",
+    "sha256": "18D71727BEC4B8B7B4C67FF0B55CA27BA11F2327ED392EC1326B4E5463CFE8B0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorMeshSupport.cs",
+    "sha256": "CB82451B3853F4923EFF9B90A4904B8DF69A9E5D0EFE5558F25900C1B678F9A3"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorMouthSurface.cs",
+    "sha256": "AA82E4A05A8273C7F5DA12973B98A22A06395D748161E960700EB229DA7D2C0A"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorNaturalPose.cs",
+    "sha256": "764951AC57A304E317F2526EF9F12A4643F6A09CCB4ADC6F62421C15885E032D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorNaturalSupport.cs",
+    "sha256": "B6BF9CBFFFE17FB09D0036B2C5B495A4FE1F7525C99CE76F15A8ED71A2961B4D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorPoseClock.cs",
+    "sha256": "866D0614BABA54FCFD752B011E1B44AF1D95DC000547017E86578A4D1D4F2857"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorPoseSmoothing.cs",
+    "sha256": "1E868B109589ED208251E7E4ABBCD3CD6CD381F28169776490B52632995E2003"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorReactionMotion.cs",
+    "sha256": "FFDF0A062EADBB98045D7CD79FC30C4E7EBF57DEE5CB7809B22E28F521F37189"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorStemBudPresentation.cs",
+    "sha256": "DC2336AF969B4F7C8B1222B1D6CDFB9967BBB23C62BA8EA1634382712A5F3476"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorSurfaceMarks.cs",
+    "sha256": "3C86CD8583F7B5F87C6148DC31E6D3F1FF6BBF3B8594AF70AB937954255489C8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorTearSurface.cs",
+    "sha256": "1E81C2B78D64A548F027F34DE779364CD586EF927AB9CF4278853F81DEA0FF45"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorTouchShape.cs",
+    "sha256": "17A373963A719B090197A62ECDF776E804FE12FFAC2DA5E3C41BEE6E7B384210"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorWaterDropletSurface.cs",
+    "sha256": "EAABEED1E2ACBDA2E2F4A8B5EF62314F15A067B41F48CBF2001D4ABA0019E8C9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CanvasEventFeed.cs",
+    "sha256": "07FE362A41894FCC21D3E0D35D37603565276F6DC3E282E579D07924AA979B41"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CanvasNoticeSource.cs",
+    "sha256": "327E76632499EEE3E0CBAEE67BF6AD91C6871C44982AB1DE2C7445BB318AE936"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ContactStrokeTracker.cs",
+    "sha256": "81A25C98DE934D25F85794468E99336CBEE2952D6B9EE847DDFA61459213FCD0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Accessory.cs",
+    "sha256": "B98C5E2AD7B2FFC3D1500C6FF51D9376A385AA1CBCB64B799B5C8E4BD0C09D8F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Contact.cs",
+    "sha256": "7FF05CFBFA45C6BDAC68B36E596C6CBC95A8A62566EE157FB1C8350FA95C5E28"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.cs",
+    "sha256": "D4608B6625BF686C9C67728AE3AB98D0445D75A89CF979AD43B078CEC3BCA6E0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Deformation.cs",
+    "sha256": "0C2D7A96ED182B775CCF6AF157C27137AF452BFB88C1889AD5E149FFC00B4BC8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Dressing.cs",
+    "sha256": "4CA05E0D4D786D5D62E5220BEFF188FBC8A2EAF715B5581CC92A45B0E33AE9F0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Face.cs",
+    "sha256": "A33AFB7933D082D37EADCCC416DCFB2CC90AE348B23DB3CE8572D5575A879B70"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.FaceMotion.cs",
+    "sha256": "D96DF47E01C668055918F541008FD6CEDFBF0C4B1E09823C26D52A7D5BEFACC5"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Gestation.cs",
+    "sha256": "12293BAB0B0BC9644D311908F78E1A37013B559EDF5E233C7208726C0863E44E"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Harness.cs",
+    "sha256": "736819C544522FA52B43A7C04DEEA99AE6CD52BB096330E73CAD6A9F3449BEE7"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Heat.cs",
+    "sha256": "031D53662A5748F22843E892D64D349C555B5041C179B0DBE84C1CAC40BB5C10"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.HumanCompany.cs",
+    "sha256": "CAD041E75BA9A2BCB30EBABFEEB248AAE860AE6C9E8AA64435C9B6A7C8DCAD10"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.HungerFeeding.cs",
+    "sha256": "5762A021A2F508E3727E8062C1ACB0ED8AEF80F410562FE476F58035D422BEE4"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.ImpactFeedback.cs",
+    "sha256": "94F313C47B0761F0AFFF68260E3BA28271CA6BB88D11C47E60B8F33D07166F3B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Injury.cs",
+    "sha256": "A470A39E03CDE747A96C366B07A4F606F6109211EBB523C1429C63D724F7B148"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Intake.cs",
+    "sha256": "14BD5E96BF25BF2833A49986242B87BB9A6619B70973CF1701798DC2C2699DCD"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Interaction.cs",
+    "sha256": "6587E687430A852EE549EAB412BE460E874E3DA223A3F45B1379511163D5D0D8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Materials.cs",
+    "sha256": "978056C82185922FF46196A8DC4ACEF8A19A9CCE5AEA482D12D57D0A263EF18D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Sculpt.cs",
+    "sha256": "8350FF731DD22F54D9CB5D2E15DE689E0D6B821C6BE6CABEB8F1668BBF7A3D91"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Shelter.cs",
+    "sha256": "6D241696F95980DE827E6367F1F6231C753CF25A38C7A5BEA833C459ECF4882F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Support.cs",
+    "sha256": "AC97486C18588D9512A9D8700455838D09003C419AD0F5D4F9097D1C84F6CD5E"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.SurfaceMarks.cs",
+    "sha256": "4446702DA89CC427352F4DDE388291725C80A5F47176DBF15103AEEBA1ABC2F5"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Tears.cs",
+    "sha256": "DF24025E8FA441F6C19F8FE8228FE4B506DD30CFD5DA4151627A1FA175891A0F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Water.cs",
+    "sha256": "BDDB16615C42DFC47F6BBC2F116C6FDCC78CD9551B4B159F6D1E6CE481E62274"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterAttempt.cs",
+    "sha256": "DF433DBB53BF0BF5AEE7749D09B9C85D80E4215A193B7FB634472A1B38DE053E"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterConcern.cs",
+    "sha256": "C5543759E01B7735172BF699DC0D283A3BF42E20C3E38878E0D56E51F0DF1ADD"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterTransitions.cs",
+    "sha256": "C782663468943A31E9DC0E8715BFA4407473C1F66AD158FBC55E2E4997B9C4C3"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Data/simulation.json",
+    "sha256": "CDE295670C07287B734A711B8F1153A9D6607B5ACC1489110C2AD8BCF586D505"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Data/species-routes.json",
+    "sha256": "70CE92A81AC2489D61EC45A25C0226B8BC8A381B64C533F451FE1BB9826F3B40"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/DebugStateSnapshot.cs",
+    "sha256": "85FD7F7882AF421F0096CB61B145D123C40F0C8F8B4D23AA696770C3BE04E608"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/DetachedStemActor.cs",
+    "sha256": "3439B75D0A3E24FC1FD17735BD442185E5C2A25BA7A973E50230FBD23188EBB3"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/export_presets.cfg",
+    "sha256": "1963A2DE8BF6E3D5A89C74F81A42120E8A006486DD95A8BA56DC7B6905E186B0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameUiLayout.cs",
+    "sha256": "1492632732E604E8A0545A43F3C39626D2DED0760A00BCE1A25FB046A74A2EB1"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameVersion.cs",
+    "sha256": "00295F6DB0FBDF7D297E6F3AB98BC78F54A2CF12AE9C78C353582F2F4408F221"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InlineChoice.cs",
+    "sha256": "55B1076BAC875BC73022BDD5CD1F95730AB540CA3496ABA8A465AED8F9F8A157"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionBallSurface.cs",
+    "sha256": "181634AE9F7EF0AA470039E0E27854C16F354AA75C96ED2A33C1CB4A53EC6DDD"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionCameraOrbit.cs",
+    "sha256": "6261AA5BA5EC87508A27867BFC2D484301CF324733D6FD3D00B4AE9D0DBE581B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionCareSurface.cs",
+    "sha256": "B1E05D013F9419EFBF61A9C932850B43CE8E35ED0272DF09E097332A52D7874C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFixtureArt.cs",
+    "sha256": "AA73F6A9DEDB627782D6A3F569DD4AFAD8ED97019F1B81BD311B02CEB43D0617"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFixtureSurface.cs",
+    "sha256": "A0EDAF47573300FD3A6BAACBF2ECF45BE9AEDF8995784CBBCF2ECEF915D8DD0F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFoodArt.cs",
+    "sha256": "A9BF4FFE9F10C647D784A91D0594063574A69E1FA6430B53826C30D1CEB8B890"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFoodSurface.cs",
+    "sha256": "DE30D94C8A8EEAA7FCEDEBAD807CB625087AC7480E4BA98CD81A063B36E55897"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionLighterSurface.cs",
+    "sha256": "33AA9FF04308D70D6E8463667140108F5F87D700B98F89FDCA2C265C792DC316"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionPropContact.cs",
+    "sha256": "8378EDF6055E95C97F9A57DA5B4843FB17CE1954F13A141F79ED198994026DF2"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ActionProgress.cs",
+    "sha256": "406FE2DB15703B01013150C5CEB0933AB69C819B688FF73AB03F5D3EFAD31119"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Audio.cs",
+    "sha256": "ADEC7D506465FE9EC0B9F0590AACEDEF2876836F7FFE8F45F0A02939BF40A061"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ContactVerification.cs",
+    "sha256": "7B6E66E628E5CDF788F5E518B8AE396F017610E53A052AAF6D8ED451B61C1315"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+    "sha256": "9668E2F1A338F40102D46E8466F19BCAA5AB3872676C9B5A2825816943573BD1"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.cs",
+    "sha256": "58C053001F1F6AB9D8293D8EE1ACF89F22F7FFE24A81E0E82D0FB6673A03571F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Debug.cs",
+    "sha256": "98D80AFD20A43F4AC4FD8F3267D35CDE538E4D298659CA0033A90017D4B5D7D9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DebugComparison.cs",
+    "sha256": "6D8179693D44A9620FD9B5C1C7B79C1990DC0CFF8686EC451861D8D1321B6D75"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemInput.cs",
+    "sha256": "F8D07CEB61C8772ACEE4DE9A0E4A57B3B8C7748149EA264BAEA1B1CF3DA04FC8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs",
+    "sha256": "A6C52A6593C12D2020195C8DC80ACC9C0A8362837275B68DEDEAFBBE8117FD44"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Family.cs",
+    "sha256": "381199269D4A2F3565A4AB8A7202C16A63E0E286E639EFF8E4479706AB088D9C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+    "sha256": "CDA6E6270D6CC5819F62FDE817DCF9B3F1E2FF96F3487B8D70AF7E30C027DB19"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.HeldSupplyContact.cs",
+    "sha256": "F34B334C8A461A3E400D36FBFB678E3D333FD14C9DD360911CC76C7E9D9A553A"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.HitFeedback.cs",
+    "sha256": "9BB767E2BE42B6A7DEC68AB0AE4F91F43008C8B403C2D335FD3AD750F2929FBC"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Input.cs",
+    "sha256": "8D0BADFFFAC1FA2D666323F4A6811B7BC68482F50F2967FB07E4D2845DEA0CA8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Intervention.cs",
+    "sha256": "C925FA39541D3D343651CC1F14272BC03594E22D7B275FAE674D868B44F15E44"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectPresentation.cs",
+    "sha256": "DDE7C86D2BEACC7C269B3388622C5476B3BE5FB008CE993DC23C6715D640293C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+    "sha256": "E259C1B603193D4A1716F650402FAF3B11C6B8CE4FF9B865DDB09627FD97B590"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Offering.cs",
+    "sha256": "37E3D6492B76C3C73155730381BC158580CD502EB5FA2F7C1FDBD32629C7652B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Panels.cs",
+    "sha256": "B851E6FAC1D3F8220E7846FBA0E5B2093830A5D65811746DE517A8CC4B724133"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.RescueTool.cs",
+    "sha256": "717BB623CA5EC9CEB7EBC4CAD9571D603D8BEC277D7CC2B0736D6168D79D3743"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Shelters.cs",
+    "sha256": "783CD8AA9E75149DF4D3C0733D4422526E5FE7EF612035A9ABE5624397C1D487"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SheltersUi.cs",
+    "sha256": "5C7A3B36427F6486CD3952AD541510BCBEC2D7900C9886981CDE9824B40DF190"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Supplies.cs",
+    "sha256": "A0917E7FBB324E44E73041BDB0ECBE2C158C5EAAFB1D604E27973FB6B09725DF"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStations.cs",
+    "sha256": "C7D8DAA7213F422F8B9E163DF39B71A7278C852A4AD5BF6EF707DA4E7D846228"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs",
+    "sha256": "1AD34E0646B808E80FC33356CC569A5CC285D52A49C90C05CBD365D566932172"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+    "sha256": "D561FC13343AF2708A128BFD3C7816CE4A3279F5010CFBA082886CC7908B4EBB"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Tools.cs",
+    "sha256": "5365DA038F1D4E6FBF48F1BEF25B93BCF4E96CED910446157D2808207D808C97"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.tscn",
+    "sha256": "B94C5555BFCAAC9F62FCE37D5816C6FCB92AF33A3DB44EB9FAC954A580C91AA9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Ui.cs",
+    "sha256": "5839240B1759BB0A79E01B07A50069779C8386969B3091DA6D1753D0F68E4513"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Verification.cs",
+    "sha256": "ACFFC3D4C7906BE25A24EE8B4C016D4B299F7561DDF8C58A1402158EBE34F025"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Vitals.cs",
+    "sha256": "2796AD3D60DB3CC28CCC1979C5446904E42572C6225DDB66AE3F490613FB6971"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionToolArt.cs",
+    "sha256": "28F16932B22FB3D3C433B8B9EA610ECF3F70E2037917584EF6055F086F67C36F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionToolSurface.cs",
+    "sha256": "87C28D0E88CF5799373D81E6AB9F228378F34EF5A4DDFA0241367BA2A48BD7A0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionTreasureSurface.cs",
+    "sha256": "0F931F00FE19C9DE29D479F5DFB149C6B7FFCF1C2EE5342BFB61BB7B245D4645"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.cs",
+    "sha256": "8B0306E24FB8D724CCFF3E0A74D01722857D7D01E4A527AD411248D4085CCC56"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Input.cs",
+    "sha256": "8CA11416ED8072B7330FDF25D73CD9D268245C6B74CB7E9F080F0E45E64510AF"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Lifecycle.cs",
+    "sha256": "4FCC9A142E68DB227ADE2FCA159F187618894CD20445407CC76F2D5A9832F706"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneArt.cs",
+    "sha256": "7BC068124050A0C51D48ABDD6CF20F981CC7D4C59BCB596EDE0C65E0ADB3B6F5"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAudio.cs",
+    "sha256": "EFBD42A67487CA33C42C3BC2E2C832708D57590FBE8878602B0EFA8F45F1BF6C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAutosave.cs",
+    "sha256": "849E060E10568BB854E235C232CD9552BCCB851C532760A0396EDE26B4F4F5F4"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneHelp.cs",
+    "sha256": "393F71C753A8336DD21884CFE4A88693EEFCEC95A4825CC9EF246F0D90DEA9F0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneInput.cs",
+    "sha256": "A52237A838CB8E8486AAB673E0AE350E7566A56303B8F9902BFC63DCEA3290BE"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneSoak.cs",
+    "sha256": "1B008D2FB14709E3E11F9BBF82F9E9DAE47A2F05AB380B9DB1B6675A7B47BBF4"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStates.cs",
+    "sha256": "9B337F4BF06FA74ABF60A2F2148274EB5940CDB8E1B5533780C3EC19467DDB78"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStress.cs",
+    "sha256": "6F7E61D1DEBE8F942C5683724022EEF3153601F4D287B64FD6BBEB920D5F1CFA"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneUi.cs",
+    "sha256": "3BAABBD816C3FBFF50B31653D1445941C39948D6442C6FCAB0B22646026D3BE9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneVerification.cs",
+    "sha256": "986DF0A2E56D4E7BA40E8045AC00ED069FBE62F9AF2BF7A14503E9D980C39FE6"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Panels.cs",
+    "sha256": "55366834DE9A8F2DAE71F194E1DCCD4C973FF0A3187C49D1F45669D9FB6329A3"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.RegionPresentation.cs",
+    "sha256": "E600C1E28A04958B293D5BC4FDFBA087C821EE3D4C13AC200ECDA084D0731D67"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.tscn",
+    "sha256": "AE5E71D60C21F2F9916BDC453A871AF982583AEA436ED9BEC4EC4BC5B53A7810"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Ui.cs",
+    "sha256": "5ABC4F57B2CE70207F4A4D96ECBCC48920B92194826714B6FB629BCF8BE3BE32"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Verification.cs",
+    "sha256": "42289D0EDF96BBD01D5556273695EA2EE91B7E9156112819A0569F92F0F090CD"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/project.godot",
+    "sha256": "A7105852FA7BFB75EEF559F338DDE938F66403AAD764B381B568384B47B6EF47"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/RoomBallActor.cs",
+    "sha256": "F7345A4959A4E7A7C32C55990D07BBCCC24A32309128929634B8EA7ED404A9E4"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/RoomSupplyStationActor.cs",
+    "sha256": "68ECA4C848C40162E818B6A3BAAC2FDE8E44950D1D47BD1FBEE457FDB1B16FAF"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/SceneArt.cs",
+    "sha256": "755B4A7EA8758DB836110DF7D8589CCA2BE09AE8DCD3CAA71D189144F1995826"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ShelterActor.cs",
+    "sha256": "A230CE6C769CF9695B8BF7710754698AF820F60782B4BE2A59893AF967E14FA0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandArt.cs",
+    "sha256": "C7D2502BAADFFD63448FB48B94DDF5AB516B965F09F5719B5DD6A5FF416A6FAE"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandDecorations.cs",
+    "sha256": "930B513E49C20C4B32B9C2C1302527AD110359E48CB4A0FA987615559E7908D8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandOcclusion.cs",
+    "sha256": "39444DDA2C20E5CC3D2E043943BCF47FECC3E6811A7146B1572C8ACF2E23B1F8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandSurface.cs",
+    "sha256": "5524F4B3F8F5668CD9794A5F4B171EB23BDE162648045B49D2DC75B83BF010E1"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Yukkuri.Game.csproj",
+    "sha256": "66CFA41064E55362F15958AB67B12A8C23CFB9506F21BF9195F10CAEF15F62BF"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Yukkuri.Game.sln",
+    "sha256": "46549E1B30D0CC2DCDE0DF719F6FD69DCC732947D8F0CC091F00EDBE0D495E2D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/BodyContactGeometry.cs",
+    "sha256": "0531C6716F35E6AED6D1914D379F6C9EB4EFA7BDF0245EF174BE5F7D02E60D4D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CarryReleaseMotion.cs",
+    "sha256": "589033F115682BCA2253F4FD22F77B630C5074262C764078A926706287E08679"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ConsumableInventory.cs",
+    "sha256": "EAB876FD403D0224C6E9A4C301981CA457F692ABD5139149EAEA02EBF1B9C5BB"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactDeformation.cs",
+    "sha256": "5A8D55CAD9B55F2470526B5E89ABF38AB7B947081CA0C4AC343B4C657A6C4479"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactMotion.cs",
+    "sha256": "A77B5DCE6776AEFCC56E0717634452CC549954533A17E8BDE141923A4AA13B80"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardBehavior.cs",
+    "sha256": "0CD9E2321670C0F4C37C6C5B83F6EECC2E8874C7FDE8009794282C0509518EE9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardObjects.cs",
+    "sha256": "BE16AA79789D2C18884FE9278A0CB774FC15184EB43EA73D4D058B0010B6E26A"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardShop.cs",
+    "sha256": "6D6063B69C0E56F6CA7162044E6231689A028B7AE55B0B6FA1C4A2409096E7FD"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreatureAppearance.cs",
+    "sha256": "6D1EB277D20DEEC106127748092170584FDC303B5706F3A399933C4EB547DA4B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreatureArrival.cs",
+    "sha256": "F4E6D83AE20D9D5268B34BF9927E746072C68396FE9DAB8FF6608551C169C1B6"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreaturePersonality.cs",
+    "sha256": "E788396B4F8340B1393CE0B234107AE8E5C8976F62318E44FEB3C2468A33447F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CushionGeometry.cs",
+    "sha256": "A8077965AA815D7FFACF400543ACA890C5E8A664C98F352F131CB920CFDE2DF0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemGesture.cs",
+    "sha256": "4B9B33F3255056E22E6A296F0890D741E2E4D1D8CBA94DBE67770570ED262335"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemLife.cs",
+    "sha256": "F5048889BAE8817D2FCF34B62DACED4EED991C119A94483BE7D933ABBE1CFE2D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemState.cs",
+    "sha256": "CAD5E74CD94EBFEFA86137B2A1661575F5A613B8ECE316C82E75F621B81965CB"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemValidation.cs",
+    "sha256": "5393D62B80EB9C1E8CF9BD09EB13B50EB76E3FC3007F9F53870196E896EEFD09"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemWitness.cs",
+    "sha256": "22C868C3F14D23C0368AF82D75BD96E2E66007DEED4EE54AFC63C4D8703C97BE"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/EmotionalContinuity.cs",
+    "sha256": "D9B21416EF7EDD3CEFFC77358977A97FF45580E0B57731DC90622D5795B65A17"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyAftermath.cs",
+    "sha256": "87FA3343BDAF632F40A23D77196AADAEACDBC793019BDF135FBA968DB4881705"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyCare.cs",
+    "sha256": "4D9836D01AE480406230267963D96657119C9A0D1D82B5BCCB1C5A13E3DB4529"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyColdStorage.cs",
+    "sha256": "31E250206B191838ED1102E9F0BF8B8862774A92089504052F778B8584119216"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyDesire.cs",
+    "sha256": "131019DF08011C02FAFDEE4E5F13EFBA726D38CA74A4CD19D2DF70B8F5EA1630"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyLearning.cs",
+    "sha256": "EC84EFD6D3665F62A46F3378DA364532F210025C732202AE1568D23DC870B714"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyReproduction.cs",
+    "sha256": "43F34FF9DDBCDC7E5BA00B98C6D5354DA891E29B90C6CFFF964E096A621578DF"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyRisk.cs",
+    "sha256": "03189D2B4002690D6BD28ED340534672A130F9F6D1CA1AB18DA616FCF2D37362"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilySocial.cs",
+    "sha256": "57FA9BBA9C5E264AE14F5997CB83B94851233460491C3F892D531B2696A17F0D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyState.cs",
+    "sha256": "62639AF7347CF3AAFF18356AA2C21AC1E17153C8D6CB14E145EA9DBB580B7256"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyValidation.cs",
+    "sha256": "FAFB1669A67ACC25405909E5357652DCF5E8FD4EFC076F9E9E3B107D225099D9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/HumanCompanionship.cs",
+    "sha256": "83F1975FE6E9437D85AE024D3B8703AB4EC1046FA2734CD3D072A89CFFB0C8E1"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/HungerFeeding.cs",
+    "sha256": "66F65B70C60F76301D4C729626800B15C5B5FBDE58947458E739A08E4D6A2ABA"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+    "sha256": "6EFD66716DEC5799275505BD37A45A2152436EC210203C3C9025D5ABCC8AAA1B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBehavior.cs",
+    "sha256": "B4D7532B0E927B8E0144F68EA09AF07DB79C841013BC41FD7FEB6610BEADFCFB"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBond.cs",
+    "sha256": "5D04ABCC25B833C464866C6C183136F9D2A9E3022C23AE5465AB990157CA4B2C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionCatalog.cs",
+    "sha256": "3E10C47117FBB8EDB2199405348EC22FF022179BAAA39CDBACF5DFABEC37B8B7"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionCompletion.cs",
+    "sha256": "1F73B99F0B01550FD57F7CABBED23188A6288EA4B6A9B1460F1F5A55A770BF1E"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionConversation.cs",
+    "sha256": "E5E800F526B7F391D043CB4301927CAF2277EDF78EA2E78D06D4ABCF63D568D5"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionDressings.cs",
+    "sha256": "45B8DF122B1A07CD950DEDE51B8F3951A54F882E6EC2BBEB5EB5D0B0C0888DC2"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionFixtureGeometry.cs",
+    "sha256": "9CAA19FA04F9167B711636D67ED493012AC7DAD97807D9699761E3480F695878"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionGesture.cs",
+    "sha256": "AD9C506F45295E69C149A2FE2D74A1671363A5B6B7C3392E9DDD61F4073807F9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionHarshSpeech.cs",
+    "sha256": "5BECE1E4D52D73286D29E581AB5E94BC3DAB179BF5413D0E4F863E9685C630AA"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionHelp.cs",
+    "sha256": "1237FCF58380ED90D1360AEDF75D232299E70C7BFF9FE950B47C69A29E9464D4"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionInjury.cs",
+    "sha256": "6143C3C729F16843D38E828AEA7889E6346800537DE7969F77754ABECABDFF83"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionLowering.cs",
+    "sha256": "BA8FC964F762D594FAE03B079467C719C64D7FE06F7EB6B8A0F68D6DC1CC3142"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionMouth.cs",
+    "sha256": "25663199D950E9879EEB2654936851F396898B3C1EFA6713BEAB7B8F1D31FAD8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionPhysiology.cs",
+    "sha256": "875E5511AB9FBEC37A91C308537535A59B66CCE6972BFF6D67ABB1D37327C333"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionPresentation.cs",
+    "sha256": "6AB72440FC15035A63B64DF620B4CADE2AF592536907D50313C987BAF85B4E4E"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionRest.cs",
+    "sha256": "B843F6636C39EA80F0291C14B704B2173498EBEEFCA2D4088A1B06FE9587E85A"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionRolling.cs",
+    "sha256": "D05146F27EA76B392D7F848A053FD041AE220D96212AB01BF185695A56EA07BE"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSensitivity.cs",
+    "sha256": "6FEC77A4C7C91E0FE89F659190C2949DF798467395F4990079C64C2CE4DFFB32"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSpatial.cs",
+    "sha256": "9D6E74F5A6A2350DA72F8189E037803410D3A6E28937770EF9F329FDA6554920"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionState.cs",
+    "sha256": "97D3847DD1B5D58B2829E1D111E7C57BD9567A58D612EAAFCE09D1E97DAC1A62"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSupply.cs",
+    "sha256": "BA7EB93437F347F2F76E4838579654D73752521605D11D3FEB984D46D41375CC"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurface.cs",
+    "sha256": "FD3F441D1E5F504554DA4F9151A8D06A4531185C96525D353D76663B9A46EBF5"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurfaceObservation.cs",
+    "sha256": "58C8675F5EADB7DC127FCF267D7DF56A549BBA9F109DEDD4C067BD45FEFE36F2"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionTreasure.cs",
+    "sha256": "106DAC74C91134664281C53D60A13E3F5EA0D75AC338A0FF5ED53EBA7BF83438"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionValidation.cs",
+    "sha256": "B3210D93EA69291E8F537E378024C6B968CA8CCA29174F5AA85761AB05D4B0A2"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWater.cs",
+    "sha256": "5B82434F299897BD756585B252D12CF531104208EDD35DAC971883EA856A9F5B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWorld.cs",
+    "sha256": "C0526628D4BD5B603443DE8F5E6E051513BF239F0574FF13C543020F58D14CFA"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneBehavior.cs",
+    "sha256": "CAB827E71AF8FB4A337DA895941FD548D80E873BFE429BA412B6D6524AF0C0B9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneInteraction.cs",
+    "sha256": "2734B233C883697B15D92438D17723AD8BF7F146D3B7FE29341FC4B7CC951BE0"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneState.cs",
+    "sha256": "F96843024AEECC743CEF4DD6225ED4AF64EE7E4CCD4BFA63B853262A00B13DBC"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneValidation.cs",
+    "sha256": "AA3D0CD98F2190910CCF52FBD4F6E169EA381B9D2BA9E4DF18839DB8D14363BC"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneWorld.cs",
+    "sha256": "F6FF83BFD7540B0B9222B72B65E7CC6BAED70CE8884525D405035F6C987DE168"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MouthIntake.cs",
+    "sha256": "5DFCAEE8FEA3C45399471FEBF9D44FF3A688FAFC45D5C8E7871A20C82B233087"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+    "sha256": "63B466FA21A3D2C313087EEF7E03283C63003A41A9B5D6D170B3D2D8C70E3719"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/NaturalLife.cs",
+    "sha256": "3281C9C554A9F8A8781C2A1EAD8F9907B88205B3BBE9FB7346F857BBEFF97695"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/OilDialogue.cs",
+    "sha256": "31E63162D55B82C1585A82482EA368B1925DE1BF409457D2E2F11C144874768C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PeerAttackContinuity.cs",
+    "sha256": "49F0D8D7E8DF5F8181D05F6C17D09D49C22E1CD9891FF757611AE3AC4563DFC2"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PortableMotion.cs",
+    "sha256": "B5A9850DBA5D1AFD38674A8A4214CF33E70255F5087B827D6ABC982F11D262B9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/RoomBallEnvironment.cs",
+    "sha256": "4B3AF34B5CC225A82DF3BE025E103D6DA435B0A87C716CBC75C994559DC070AE"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/RoomResourceText.cs",
+    "sha256": "431113245F55A7DD83F04C2D1F9F1832832820AB453262FAD3B5FBCA55DBE85B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SaveStore.cs",
+    "sha256": "C8BDEDD05197F80F462439058FC7487EFB4B0E7C81231FC6985E3B9876C21FD4"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterBodyEnvelope.cs",
+    "sha256": "563685F5532903E63D04F248106C715EF16A13BBBB838E0095F65F9C3717E30D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterGeometry.cs",
+    "sha256": "816B33C43B5B0E549558697217E589A14F2FE8E1746F545086F999D0D9FFD896"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterLife.cs",
+    "sha256": "5220BE7CF08302F842806662AAEBB9B8C3117675A72760629E4772EC415C73C9"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/Shelters.cs",
+    "sha256": "AB51708B75AEFC90674692354F9852D39F4D84C0368AA3040B1C3A664798DEC8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterSpatial.cs",
+    "sha256": "DB2493D9B7D409EB6363CAE7D98AC952EB3FE9F28C28FEB4BF45C21D5139EB96"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterState.cs",
+    "sha256": "ED9B598450E637351A4720F42B4A683BFBAD7673772A7625F8519A731239E846"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterValidation.cs",
+    "sha256": "EC70215A45878D5516DDA4998DAE630A05E3D772C7450E329B69EAD96D6C1993"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/StemCare.cs",
+    "sha256": "804193B3F2E06349792B87C18E4AE7A2D6A85B4DBE82AD37F98969AE1ADB5BB8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationGesture.cs",
+    "sha256": "D1142A7CC7AFD3303CA35122E231087A384722D0BF4C6AC03898B866CFE565D8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStations.cs",
+    "sha256": "3329D5D4D00D40B0892B062F69729FB0D5A4CD569E7D7AECF89B24C186E5DE97"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationSpatial.cs",
+    "sha256": "7740374DE0476AEF78CA9D3A2A95418D501C79D9E3838D695075810D57365C91"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationState.cs",
+    "sha256": "08B2BD48776F105D520B5E4CAAF51708841EC408E563451346717F154F2DE515"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationValidation.cs",
+    "sha256": "FA34EBC2CD2355598E1F2542AE2DF6D6DF8343AB449B5FCF0739FFC7778986F8"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ToolContactState.cs",
+    "sha256": "F7A9558FF78700F23E8C87A2620EE95B0C587A1CF7CA65DA9CB37EB815FDAA2C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WaterAttempts.cs",
+    "sha256": "5250013D031F1FF2FF8576842F330FFA0EEDAF58F6B810358D5C91C8173EB96F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WaterRescueContinuity.cs",
+    "sha256": "A2C8CCFD291ED8EEB7ABAF34CACA3114AF057522EFF58D00364FBBB34C42E411"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WildSelfCare.cs",
+    "sha256": "094B013E7E01AE8E3EF02DB65CAA3F1E800D3B9959DC248CB734C51026B71E82"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WoodlandLayout.cs",
+    "sha256": "839A97F4AA0663ADCA122F8E0EF7EE4EDB8C78017EFA714E432FE555E6B2E97D"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldSimulation.cs",
+    "sha256": "F08CA2DB9F49EF81142A2B84EDFE65FACB1003A0D0ECFAB8CD817BD0F966B706"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldState.cs",
+    "sha256": "61A3F5205B3466D58E90C44E4B1F316144BAF681F20A546CC5A60E9910942549"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj",
+    "sha256": "B2A628148C71F951825F190887552D6D0357B4AC1E218ADAAF840EB3438FE92A"
+  }
+]

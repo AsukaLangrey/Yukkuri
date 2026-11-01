@@ -121,7 +121,7 @@ public partial class Main : Node3D
         }
         _human.Position=new((float)Sim.State.PlayerX,0,(float)Sim.State.PlayerZ);
         UpdateCamera(dt);
-        if(_foodInHand&&close&&Sim.Selected!=null)
+        if(_foodInHand&&close&&Sim.Selected!=null&&MainScenePoint(GetViewport().GetMousePosition()))
         {
             _foodVisual.Visible=true;_foodVisual.GlobalPosition=PointerOnPlane(GetViewport().GetMousePosition(),.8f);
         }
@@ -162,7 +162,7 @@ public partial class Main : Node3D
         Vector3 desired=focus+(close?new Vector3(0,2.5f,5.8f):new Vector3(16,20,24));
         Camera.Position=Camera.Position.Lerp(desired,Mathf.Min(1,dt*7));
         Camera.Size=Mathf.Lerp(Camera.Size,close?(Sim.State.MilestoneScenario?4.4f:6.5f):Sim.State.MilestoneScenario?_mapZoom:25,Mathf.Min(1,dt*7));Camera.LookAt(focus,Vector3.Up);
-        if(Sim.State.MilestoneScenario){Camera.VOffset=Mathf.Lerp(Camera.VOffset,close?-.9f:-3f,Mathf.Min(1,dt*7));Camera.HOffset=close?.18f:1;}
+        if(_uiRoot!=null)GameUiLayout.CenterCamera(Camera,_uiRoot);
     }
     private void RebuildRegion(bool resetCamera=true)
     {
@@ -260,6 +260,7 @@ public partial class Main : Node3D
             var loaded=_saves.Load(slot);
             if(Sim.State.MilestoneScenario&&!loaded.State.MilestoneScenario)throw new InvalidDataException("这是早期框架存档，请使用小园初晴的存档槽位。");
             Sim=new WorldSimulation(loaded.State,_config);
+            _canvasEvents?.ResetSession();
             // Closing a menu after loading must restore the loaded clock state.
             _menuPreviousPause=Sim.State.Settings.Pause;
             // Interaction holds are transient and must not survive a reload.

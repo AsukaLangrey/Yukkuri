@@ -33,9 +33,7 @@ public partial class InteractionRoom
     {
         _debugPanel=Panel(_ui,"f3f0e6");
         _debugPanel.Name="LiveDebugPanel";
-        _debugPanel.AnchorLeft=1;_debugPanel.AnchorRight=1;_debugPanel.AnchorBottom=1;
-        _debugPanel.OffsetLeft=-490;_debugPanel.OffsetRight=-14;
-        _debugPanel.OffsetTop=88;_debugPanel.OffsetBottom=-218;_debugPanel.Visible=false;
+        GameUiLayout.Right(_debugPanel);_debugPanel.Visible=false;
         var scroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,
             SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,SizeFlagsVertical=Control.SizeFlags.ExpandFill};
         _debugPanel.AddChild(scroll);
@@ -103,8 +101,6 @@ public partial class InteractionRoom
         NormalizeDetachedStemSelection();
         NormalizeSupplyStationSelection();
         NormalizeShelterSelection();
-        float available=Math.Max(200,_ui.Size.X-28);
-        _debugPanel.OffsetLeft=-Math.Min(available,Math.Clamp(_ui.Size.X*.38f,330,520))-14;
         RefreshDebugCreatureSelector();
         string sourceId=_selectedShelterId is { } shelterId?"shelter:"+shelterId:
             _selectedSupplyStationId is { } stationId?"station:"+stationId:

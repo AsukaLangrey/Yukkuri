@@ -17,8 +17,10 @@ public partial class Main
             await Screenshot("m01-menu");
             await ClickButton("menu-help");await Screenshot("m01-user-guide");
             Assert(_helpPanel.Visible&&!Sim.State.Settings.Pause&&!_modalShield.Visible,"guide opens as a non-blocking dock");
-            int guideFood=Sim.State.Food;await ClickButton("supplies");
-            Assert(_helpPanel.Visible&&Sim.State.Food>guideFood,"guide permits other gameplay controls");
+            await ClickButton("pause");
+            Assert(_helpPanel.Visible&&Sim.State.Settings.Pause,"guide permits explicit toolbar pause");
+            await ClickButton("pause");
+            Assert(_helpPanel.Visible&&!Sim.State.Settings.Pause,"guide permits explicit toolbar resume");
             await LogicalShortcut(Key.Escape);
             Assert(!_helpPanel.Visible&&!Sim.State.Settings.Pause,"closing guide preserves the running world");
             OpenMilestoneMenu();

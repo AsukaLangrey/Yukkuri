@@ -25,7 +25,6 @@ public partial class InteractionRoom
         bool visible=progress.HasValue;
         _contactProgressRow.Visible=visible;
         if(progress is not { } amount)return;
-        _forceLabel.Visible=_forceSlider.Visible=false;
         _contactProgressMeter.Value=amount*100;
         _contactProgressText.Text=amount>=1?"已完成 · 松手":"保持接触";
         // This reads uninterrupted contact time from the simulation, not pointer

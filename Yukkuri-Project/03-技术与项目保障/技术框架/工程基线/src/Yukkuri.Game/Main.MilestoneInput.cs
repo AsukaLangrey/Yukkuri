@@ -101,6 +101,7 @@ public partial class Main
     }
     private void ProcessMilestone(float dt)
     {
+        if(!MainScenePoint(GetViewport().GetMousePosition())){CancelGesture();ReleaseGrabSafely();}
         if(CloseInteractionSuspended)SuspendCloseInteraction();
         if(Sim.State.HelpTargetId!=_audibleHelpId)
         {

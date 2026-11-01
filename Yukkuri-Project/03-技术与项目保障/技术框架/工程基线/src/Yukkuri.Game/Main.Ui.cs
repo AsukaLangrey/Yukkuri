@@ -23,11 +23,6 @@ public partial class Main
     {
         var l=new Label{Text=text,AutowrapMode=TextServer.AutowrapMode.WordSmart};l.AddThemeFontSizeOverride("font_size",size);l.AddThemeColorOverride("font_color",new Color(color));box.AddChild(l);return l;
     }
-    private VBoxContainer Panel(Control parent,Vector2 pos,Vector2 size,string color="f7f2e4ed")
-    {
-        var panel=new PanelContainer{Position=pos,Size=size,CustomMinimumSize=size};panel.AddThemeStyleboxOverride("panel",PanelStyle(color));parent.AddChild(panel);
-        var box=new VBoxContainer();box.AddThemeConstantOverride("separation",6);panel.AddChild(box);return box;
-    }
     private Button Action(VBoxContainer parent,string id,string text,Action action)
     {
         var b=new Button{Text=text,CustomMinimumSize=new Vector2(100,38),AutowrapMode=TextServer.AutowrapMode.WordSmart,Alignment=HorizontalAlignment.Left,FocusMode=Control.FocusModeEnum.None};
@@ -52,9 +47,8 @@ public partial class Main
         foreach(string state in new[]{"normal","hover","pressed","disabled"})
         {var s=(StyleBoxFlat)theme.GetStylebox(state,"Button");s.ContentMarginTop=6;s.ContentMarginBottom=6;s.ContentMarginLeft=12;s.ContentMarginRight=12;s.ShadowSize=0;}
         _uiRoot.Theme=theme;
-        var top=Panel(_uiRoot,new(24,20),new(1392,75));
-        _top=Text(top,"油库里乐园",24);_top.AutowrapMode=TextServer.AutowrapMode.Off;
-        var left=Panel(_uiRoot,new(24,112),new(250,652));
+        var header=BuildMainHeader();
+        var left=CreateSidebar(true);
         Text(left,"慢慢来，慢慢生活。",20);_modeLabel=Text(left,"管理视角",14,"79926a");
         _regionInfo=Text(left,"",15);
         Action(left,"home","乐园 · 返回照护",()=>Travel("home"));
@@ -69,7 +63,7 @@ public partial class Main
         Action(left,"music","音乐：开",()=>{_muted=!_muted;_music.VolumeDb=_muted?-80:-15;});
         Action(left,"guide","玩法提示 / 素材预览",()=>ShowGameplayDock(_welcome));
 
-        var right=Panel(_uiRoot,new(1090,112),new(326,652));
+        var right=CreateSidebar(false);
         Text(right,"个体档案",14,"8b967e");_selectedName=Text(right,"",25);_detail=Text(right,"",14);
         _fullness=Meter(right,"饱腹","b9c98f");_energy=Meter(right,"精力","ddb87c");_health=Meter(right,"身体","91bca8");
         _observation=Text(right,"",15);_observation.CustomMinimumSize=new(0,72);
@@ -86,21 +80,21 @@ public partial class Main
         Action(right,"commission","提交照护记录 · 奖励 40",()=>Toast(Sim.CompleteCareRecord()?"照护记录完成，收到示例委托奖励。":"需已接纳、饱腹≥70、身体≥80、观察2次与喂食2次；每只仅一次。"));
         Text(right,"委托要求：已接纳、饱腹≥70、身体≥80、观察2次并手动喂食2次；每个个体只奖励一次。",12);
 
-        var bottom=Panel(_uiRoot,new(24,782),new(1392,98));
-        var row=new HBoxContainer();row.AddThemeConstantOverride("separation",12);bottom.AddChild(row);
+        var row=new HBoxContainer();row.AddThemeConstantOverride("separation",12);header.AddChild(row);
         var slot=new OptionButton{CustomMinimumSize=new(130,36)};for(int i=1;i<=3;i++)slot.AddItem("存档槽位 "+i,i);slot.ItemSelected+=i=>_slot=(int)i+1;row.AddChild(slot);
         foreach(var item in new[]{("save","F5 保存",(Action)(()=>Save(_slot))),("load","F9 读取",(Action)(()=>Load(_slot))),("backup","读自动档",(Action)(()=>Load(0)))})
         {var b=new Button{Text=item.Item2,CustomMinimumSize=new(120,36),FocusMode=Control.FocusModeEnum.None};b.Pressed+=item.Item3;row.AddChild(b);Buttons[item.Item1]=b;}
-        _hint=new Label{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,AutowrapMode=TextServer.AutowrapMode.WordSmart};_hint.AddThemeColorOverride("font_color",new Color("526c58"));row.AddChild(_hint);
-        Text(bottom,"原型框架 · 设定未决项尚未实现 · 本地单人 · 存档不计算离线变化",12,"87917e");
+        _hint=new Label{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,AutowrapMode=TextServer.AutowrapMode.WordSmart};_hint.AddThemeColorOverride("font_color",new Color("526c58"));left.AddChild(_hint);
+        Text(left,"原型框架 · 设定未决项尚未实现 · 本地单人 · 存档不计算离线变化",12,"87917e");
 
-        var eventBox=Panel(_uiRoot,new(300,635),new(358,128),"344a42df");
-        Text(eventBox,"乐园日志",14,"e4d6b4");_events=Text(eventBox,"",13,"f6edd8");
-        var residentBox=Panel(_uiRoot,new(840,635),new(225,128),"f7f2e4e8");
+        var eventBox=right;
+        Text(eventBox,"乐园日志",14);_events=Text(eventBox,"",13);
+        var residentBox=left;
         Text(residentBox,"附近的居民",14,"71836b");
         var scroll=new ScrollContainer{CustomMinimumSize=new(0,64),HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};residentBox.AddChild(scroll);
         _residents=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};scroll.AddChild(_residents);
 
+        BuildCanvasEvents();
         _welcome=CreateGameplayDock();
         var welcomeScroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};_welcome.AddChild(welcomeScroll);
         var welcomeBox=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};welcomeBox.AddThemeConstantOverride("separation",10);welcomeScroll.AddChild(welcomeBox);
@@ -114,12 +108,13 @@ public partial class Main
     }
     private void UpdateUi()
     {
+        UpdateSharedPanels();
         if(Sim.State.MilestoneScenario){UpdateMilestoneUi();return;}
         if(_top==null)return;
         var s=Sim.State;var c=Sim.Selected;bool close=s.Mode==PlayMode.CloseUp;
         var view=c==null?null:Sim.View(c);
         _sandbox.SetPressedNoSignal(s.UnlimitedResources);
-        _top.Text=$"油库里乐园    /    {Sim.ActiveRegion.Name}                          资金 {s.Money}     食物 {s.Food}     第 {(int)(s.WorldSeconds/600)+1} 天 · {WorldSimulation.FormatClock(s.WorldSeconds)}";
+        _top.Text=$"油库里乐园    /    {Sim.ActiveRegion.Name} · 资金 {s.Money}     食物 {s.Food}     第 {(int)(s.WorldSeconds/600)+1} 天 · {WorldSimulation.FormatClock(s.WorldSeconds)}";
         _modeLabel.Text=s.Mode switch{PlayMode.Human=>"人类视角 · WASD 移动",PlayMode.CloseUp=>"互动特写 · 被动时间暂停",_=>"管理视角 · 点击选择"};
         _regionInfo.Text=$"本区 {Actors.Count} 只 · 观察技能 {s.ObservationSkill:F1}\n{(s.ActiveRegionId=="home"?"生活设施与员工提供基础照护":"野生个体尚未筛查，先观察再接纳")}";
         _selectedName.Text=view?.Name??"未选择个体";
@@ -133,8 +128,8 @@ public partial class Main
         foreach(var id in new[]{"home","wild","feeder","bed","refill","rescue","save","load","backup","staff"})Buttons[id].Disabled=close;
         Buttons["rescue"].Disabled=close||s.ActiveRegionId=="home"||c==null;
         Buttons["admit"].Disabled=c?.Quarantine!=true||close;
-        _events.Text=string.Join("\n",s.Journal.TakeLast(3));
-        _hint.Text=_toastTime>0?_toast:close?$"左键拖拽 / 松开放下 · 滚轮调高度 · 接触力度 {_force:F0} · Esc 返回":_buildKind!=null?"点击地面放置设施；右键取消":"Tab 人类视角 · E 特写 · O 观察 · F 喂食 · F5 保存";
+        _events.Text=string.Join("\n",_canvasEvents.History.Reverse())+"\n"+string.Join("\n",s.Journal.AsEnumerable().Reverse());
+        _hint.Text=_toastTime>0?_toast:close?$"左键拖拽 / 松开放下 · 滚轮调高度 · Esc 返回":_buildKind!=null?"点击地面放置设施；右键取消":"Tab 人类视角 · E 特写 · O 观察 · F 喂食 · F5 保存";
         string key=string.Join(',',Actors.Keys);
         if(key!=_residentKey)
         {

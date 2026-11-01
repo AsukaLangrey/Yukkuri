@@ -7,7 +7,10 @@ using Expression = Yukkuri.Simulation.Expression;
 public partial class InteractionRoom
 {
     private Control _ui=null!,_modalShade=null!;
-    private PanelContainer _leftPanel=null!,_rightPanel=null!,_bottomPanel=null!,_modalPanel=null!;
+    private PanelContainer _leftPanel=null!,_rightPanel=null!,_modalPanel=null!;
+    private HBoxContainer _forceWidget=null!;
+    private CanvasEventFeed _eventFeed=null!;
+    private Control _canvasEffects=null!;
     private VBoxContainer _groupList=null!,_modalContents=null!;
     private HFlowContainer _choiceList=null!;
     private Label _title=null!,_hint=null!,_feedback=null!,_speechLabel=null!,_who=null!,_condition=null!,_memory=null!,_clockLabel=null!,_forceLabel=null!;
@@ -56,10 +59,11 @@ public partial class InteractionRoom
 
     private void BuildRoomUi()
     {
+        GameUiLayout.Configure(GetWindow());
         var layer=new CanvasLayer();AddChild(layer);
         _ui=new Control{MouseFilter=Control.MouseFilterEnum.Ignore,Theme=new Theme{DefaultFont=_font,DefaultFontSize=15}};
         layer.AddChild(_ui);_ui.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        var top=Panel(_ui);top.AnchorRight=1;top.OffsetLeft=14;top.OffsetTop=12;top.OffsetRight=-14;top.OffsetBottom=76;
+        var top=Panel(_ui);GameUiLayout.TopBar(top);
         var header=Row(top,16);var identity=Column(header,0);identity.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         identity.AddChild(Text("慢慢来，相处小院",23));identity.AddChild(Text($"人油互动 · {GameVersion.Display}",12,"7c8876"));
         _clockLabel=Text("",13);_clockLabel.CustomMinimumSize=new(190,0);header.AddChild(_clockLabel);
@@ -68,11 +72,18 @@ public partial class InteractionRoom
         header.AddChild(Button("调试 · F3",ToggleDebugPanel));
         header.AddChild(Button("怎么玩",ShowHelp));header.AddChild(Button("存档与设置",ShowSettings));
 
-        _leftPanel=Panel(_ui);_leftPanel.OffsetLeft=14;_leftPanel.OffsetTop=88;_leftPanel.OffsetRight=218;_leftPanel.AnchorBottom=1;_leftPanel.OffsetBottom=-218;
-        var left=Column(_leftPanel,9);BuildToolbar(left);
+        _leftPanel=Panel(_ui);GameUiLayout.Left(_leftPanel);
+        var left=Column(_leftPanel,9);
+        _title=Text("",19);left.AddChild(_title);
+        var toolScroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,SizeFlagsVertical=Control.SizeFlags.ExpandFill};left.AddChild(toolScroll);
+        var tools=Column(toolScroll,8);tools.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;BuildToolbar(tools);
+        _choiceList=new HFlowContainer();_choiceList.AddThemeConstantOverride("h_separation",7);tools.AddChild(_choiceList);
+        BuildContactProgress(left);
+        _hint=Text("",13,"78816e");left.AddChild(_hint);
+        _feedback=Text("",15);left.AddChild(_feedback);
+        BuildRecycleBox(left);
 
-        _rightPanel=Panel(_ui);_rightPanel.AnchorLeft=1;_rightPanel.AnchorRight=1;_rightPanel.AnchorBottom=1;
-        _rightPanel.OffsetLeft=-274;_rightPanel.OffsetRight=-14;_rightPanel.OffsetTop=88;_rightPanel.OffsetBottom=-218;
+        _rightPanel=Panel(_ui);GameUiLayout.Right(_rightPanel);
         var right=Column(_rightPanel,10);right.AddChild(Text("正在相处",12,"8b927f"));
         BuildOilSelector(right);
         _who=Text("",21);right.AddChild(_who);
@@ -82,6 +93,8 @@ public partial class InteractionRoom
         _familyPanelButton=Button("详细家庭记录",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamilyDetails();});right.AddChild(_familyPanelButton);
         var reportScroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(reportScroll);
         var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        _speechLabel=Text("慢慢来……",17);report.AddChild(_speechLabel);
+        report.AddChild(PanelButton("事件与完整记录",ShowRoomRecords));
         BuildDetachedStemPanel(report);
         BuildSupplyStationPanel(report);
         BuildShelterPanel(report);
@@ -91,24 +104,21 @@ public partial class InteractionRoom
         _condition=Text("",14);report.AddChild(_condition);
         _memoryHeading=Text("刚才发生的事",12,"8b927f");report.AddChild(_memoryHeading);_memory=Text("",13);report.AddChild(_memory);
 
-        _bottomPanel=Panel(_ui);_bottomPanel.AnchorTop=1;_bottomPanel.AnchorBottom=1;_bottomPanel.AnchorRight=1;
-        _bottomPanel.OffsetLeft=14;_bottomPanel.OffsetRight=-14;_bottomPanel.OffsetTop=-206;_bottomPanel.OffsetBottom=-12;
-        var bottom=Column(_bottomPanel,7);var titleRow=Row(bottom,16);
-        _title=Text("",19);_title.CustomMinimumSize=new(100,24);_title.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;titleRow.AddChild(_title);
-        _forceLabel=Text("",13);_forceLabel.AutowrapMode=TextServer.AutowrapMode.Off;_forceLabel.CustomMinimumSize=new(90,24);titleRow.AddChild(_forceLabel);
-        _forceSlider=new HSlider{MinValue=.1,MaxValue=1,Step=.05,Value=_force,CustomMinimumSize=new(150,24),FocusMode=Control.FocusModeEnum.None};
-        _forceSlider.ValueChanged+=v=>{_force=(float)v;_toolForces[_action]=_force;RefreshRoomUi();};titleRow.AddChild(_forceSlider);
-        BuildContactProgress(titleRow);
-        BuildRecycleBox(titleRow);
-        _choiceList=new HFlowContainer();_choiceList.AddThemeConstantOverride("h_separation",7);bottom.AddChild(_choiceList);
-        _hint=Text("",13,"78816e");bottom.AddChild(_hint);
-        _feedback=Text("",15);bottom.AddChild(_feedback);
-
-        var speechPanel=Panel(_ui,"f6f2e5e8");speechPanel.AnchorLeft=.28f;speechPanel.AnchorRight=.70f;
-        speechPanel.OffsetTop=100;speechPanel.OffsetBottom=164;speechPanel.MouseFilter=Control.MouseFilterEnum.Ignore;
-        speechPanel.AddThemeStyleboxOverride("panel",RoomStyle("f6f2e5e8",12,10));
-        _speechLabel=Text("慢慢来……",18);_speechLabel.HorizontalAlignment=HorizontalAlignment.Center;speechPanel.AddChild(_speechLabel);
-        _pointer=new RoomPointer{MouseFilter=Control.MouseFilterEnum.Ignore};_ui.AddChild(_pointer);_pointer.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        _forceWidget=Row(_ui,12);_forceWidget.MouseFilter=Control.MouseFilterEnum.Ignore;
+        _forceLabel=Text("力度设定",15,"fff8e6");_forceLabel.AutowrapMode=TextServer.AutowrapMode.Off;
+        _forceLabel.AddThemeColorOverride("font_outline_color",new Color("253b32"));_forceLabel.AddThemeConstantOverride("outline_size",5);_forceWidget.AddChild(_forceLabel);
+        _forceSlider=new HSlider{MinValue=.1,MaxValue=1,Step=.05,Value=_force,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,CustomMinimumSize=new(220,30),FocusMode=Control.FocusModeEnum.None};
+        _forceSlider.ValueChanged+=v=>{_force=(float)v;_toolForces[_action]=_force;RefreshRoomUi();};_forceWidget.AddChild(_forceSlider);
+        _eventFeed=new CanvasEventFeed();_ui.AddChild(_eventFeed);_eventFeed.TargetRequested+=FocusRoomEvent;
+        _canvasEffects=new Control{ClipContents=true,MouseFilter=Control.MouseFilterEnum.Ignore};_ui.AddChild(_canvasEffects);
+        _pointer=new RoomPointer{MouseFilter=Control.MouseFilterEnum.Ignore};_canvasEffects.AddChild(_pointer);
+        void LayoutWidgets()
+        {
+            GameUiLayout.CanvasWidget(_ui,_eventFeed,false,90);GameUiLayout.CanvasWidget(_ui,_forceWidget,true,36);
+            var bounds=GameUiLayout.Canvas(_ui);_canvasEffects.Position=bounds.Position;_canvasEffects.Size=bounds.Size;
+            _pointer.Position=-bounds.Position;_pointer.Size=_ui.Size;
+        }
+        _ui.Resized+=LayoutWidgets;LayoutWidgets();
         BuildDebugPanel();
         BuildActivityPanel();
         _modalShade=new ColorRect{Color=new Color(0.10f,.16f,.12f,.64f),Visible=false};_ui.AddChild(_modalShade);_modalShade.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
@@ -198,10 +208,9 @@ public partial class InteractionRoom
         _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
         _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";
         _resetViewButton.Text=Sim.State.Mode==PlayMode.CloseUp?"正面":"居中";
-        float shownForce=_mouseHeld?_appliedForce:_force;
-        _forceLabel.Text="接触 · "+(shownForce<.35?"轻":shownForce<.62?"稍重":"用力");
-        _forceSlider.Visible=_toolArmed&&InteractionCatalog.UsesForce(_action);
-        _forceLabel.Visible=_forceSlider.Visible||_mouseHeld&&_action==InteractionAction.Touch;
+        _forceLabel.Text=$"力度设定 · {_force*100:0}%";
+        _forceWidget.Visible=!_modalOpen&&_toolArmed&&InteractionCatalog.UsesForce(_action);
+        RefreshRoomEvents();
         _feedback.Text=CurrentInlineFeedback();
         var heldSupply=_heldSupplyId==null?null:Sim.State.RoomObjects.Find(o=>o.Id==_heldSupplyId&&o.HeldByHand);
         if(_waterRescueToolArmed)
@@ -306,7 +315,7 @@ public partial class InteractionRoom
         OpenActivityPanel("小院操作",ShowHelp);
         foreach(var line in new[]{
             "观察只选中对象。空手分为抓取、抚摸、收拾、戳碰、按压。右键停止使用工具并回到观察。",
-            "抓取按住拖动，松手放下；快速甩动后松手抛出。收容箱常驻底部工具栏，抓取后拖入回收，物品入仓不退款。",
+            "抓取按住拖动，松手放下；快速甩动后松手抛出。收容箱常驻左侧栏，抓取后拖入回收，物品入仓不退款。",
             "抚摸停在头顶或脸侧即可接触，按住轻拖可贴地挪动。戳碰轻点部位，空地按住后挥向身体按速度击打，长按部位拖动可拉拽。",
             "按压从身体下半部向上推可推翻；右侧属性栏的按住与解除按压按钮控制持续按压。切换工具不解除固定装置。",
             "饭饭、零食、清水点油手喂，点地放下。零食停在油身边可逗食。所有清水使用同一份有限库存。",
@@ -334,7 +343,7 @@ public partial class InteractionRoom
             _modalContents.AddChild(Button("保存并重新开始",()=>
             {
                 if(!SaveRoom(0,false)){ShowSystemMessage(SystemDialogKind.Save,_message);return;}
-                Sim=WorldSimulation.CreateInteractionPlaytest();_recovered=false;_pauseBeforeModal=false;BuildActors();CloseModal();
+                Sim=WorldSimulation.CreateInteractionPlaytest();ResetRoomUiSession();_recovered=false;_pauseBeforeModal=false;BuildActors();CloseModal();
             }));
             _modalContents.AddChild(Button("继续原来的相处",CloseModal));
         }));

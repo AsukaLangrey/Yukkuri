@@ -38,6 +38,9 @@ public partial class InteractionRoom
         if(!IsScenePoint(screen)){_hitFeedback.Visible=false;return;}
         _hitFeedback.Text=$"{count} hits";
         _hitFeedback.Position=screen+new Vector2(28,-34-(float)System.Math.Min(age,.3)*25);
+        var bounds=GameUiLayout.Canvas(_ui);
+        _hitFeedback.Position=new(Mathf.Clamp(_hitFeedback.Position.X,bounds.Position.X,Mathf.Max(bounds.Position.X,bounds.End.X-_hitFeedback.Size.X)),
+            Mathf.Clamp(_hitFeedback.Position.Y,bounds.Position.Y,Mathf.Max(bounds.Position.Y,bounds.End.Y-_hitFeedback.Size.Y)));
         float fade=Mathf.Clamp((float)(remaining/.35),0,1);
         _hitFeedback.Modulate=new Color(1,1,1,fade);
     }

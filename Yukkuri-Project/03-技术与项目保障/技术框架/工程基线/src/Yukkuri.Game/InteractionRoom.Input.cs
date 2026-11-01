@@ -90,7 +90,7 @@ public partial class InteractionRoom
         if(ActivityContainsPoint(point))return false;
         if(DebugPanelVisible&&DebugContainsPoint(point))return false;
         if(_objectActions!=null&&_objectActions.IsVisibleInTree()&&_objectActions.GetGlobalRect().HasPoint(point))return false;
-        return point.Y>82&&point.Y<_ui.Size.Y-216&&point.X>226&&point.X<_ui.Size.X-282;
+        return GameUiLayout.Canvas(_ui).HasPoint(point)&&!GameUiLayout.Hit(_forceSlider,point)&&!_eventFeed.BlocksPoint(point);
     }
     private Contact? ContactAt(Vector2 point)
     {
@@ -232,7 +232,7 @@ public partial class InteractionRoom
             EndPointerGesture();
             GetViewport().SetInputAsHandled();
         }
-        if(input is InputEventMouseButton{ButtonIndex:MouseButton.Right,Pressed:true})
+        if(input is InputEventMouseButton{ButtonIndex:MouseButton.Right,Pressed:true} rightClick&&IsScenePoint(rightClick.Position))
         {if(!_modalOpen)DisarmTool();GetViewport().SetInputAsHandled();}
         if(input is InputEventKey{Pressed:true,Echo:false} key)
         {

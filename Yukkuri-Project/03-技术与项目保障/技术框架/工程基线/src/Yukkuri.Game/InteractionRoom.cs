@@ -260,6 +260,7 @@ public partial class InteractionRoom : Node3D
         _camera.Position=_camera.Position.Lerp(focus+offset,speed);
         if(!close||!Sim.HasInteractionGesture||supportGesture)_camera.Size=Mathf.Lerp(_camera.Size,close?InteractionCameraOrbit.Size(closeSize,_closeZoom):_zoom,speed);
         _camera.LookAt(focus,Vector3.Up);
+        if(_ui!=null)GameUiLayout.CenterCamera(_camera,_ui);
     }
 
     private void UpdateInteractionHand()
@@ -327,7 +328,7 @@ public partial class InteractionRoom : Node3D
         try
         {
             var load=_saves.Load(slot);if(!load.State.InteractionPlaytest)throw new InvalidDataException("这个槽位不是相处小院存档。");
-            CancelGesture();Sim=new WorldSimulation(load.State);
+            CancelGesture();Sim=new WorldSimulation(load.State);ResetRoomUiSession();
             // Closing the old menu must restore the loaded world's choice,
             // rather than borrowing the previous world's paused/running state.
             _pauseBeforeModal=Sim.State.Settings.Pause;

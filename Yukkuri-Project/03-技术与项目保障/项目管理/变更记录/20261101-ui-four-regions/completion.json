@@ -1,0 +1,15 @@
+{
+  "rule": "UI-002",
+  "baseCommit": "02ca01fe8e7d8750224b11a43d5e14b2bc897dea",
+  "sourceModified": 20,
+  "sourceAdded": 3,
+  "sourceSnapshotFiles": 233,
+  "oldAreaChecked": 1559,
+  "oldAreaDifferences": [],
+  "finalSourceCompiled": false,
+  "runtimeVerified": false,
+  "checksExecuted": false,
+  "gitDiffCheck": "passed",
+  "minimumWindow": "1440x900",
+  "status": "source-and-documentation-complete"
+}

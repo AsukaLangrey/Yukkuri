@@ -46,12 +46,6 @@ public partial class Main
         CancelGesture();_held=null;_foodInHand=false;_mapDragging=false;_force=0;
         foreach(var actor in Actors.Values)actor.Freeze=true;
     }
-    private VBoxContainer ScrollPanel(Vector2 position,Vector2 size,string color)
-    {
-        var panel=new PanelContainer{Position=position,Size=size,CustomMinimumSize=size};panel.AddThemeStyleboxOverride("panel",PanelStyle(color));_uiRoot.AddChild(panel);
-        var scroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,SizeFlagsVertical=Control.SizeFlags.ExpandFill};panel.AddChild(scroll);
-        var box=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};box.AddThemeConstantOverride("separation",6);scroll.AddChild(box);return box;
-    }
 
     private void BuildMilestoneUi()
     {
@@ -67,9 +61,8 @@ public partial class Main
         theme.SetColor("font_pressed_color","Button",new Color("263d31"));theme.SetColor("font_disabled_color","Button",new Color("a3aa9a"));
         theme.SetColor("font_color","CheckButton",new Color("42584f"));theme.SetColor("font_color","Label",new Color("42584f"));
         _uiRoot.Theme=theme;
-        var top=Panel(_uiRoot,new(22,18),new(1396,64),"f7f2e6f5");
-        _top=Text(top,"油库里乐园",21);_top.AutowrapMode=TextServer.AutowrapMode.Off;
-        var left=ScrollPanel(new(22,96),new(236,650),"f7f2e6f0");
+        var header=BuildMainHeader();
+        var left=CreateSidebar(true);
         Text(left,"小园初晴",25);Text(left,"一座小小的乐园，从相遇开始",12,"8b937d");
         _modeLabel=Text(left,"",14,"648561");
         _threatInfo=Text(left,"",14,"9b7650");_threatInfo.CustomMinimumSize=new(0,44);
@@ -83,7 +76,7 @@ public partial class Main
         var scroll=new ScrollContainer{CustomMinimumSize=new(0,110),HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};left.AddChild(scroll);
         _residents=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};scroll.AddChild(_residents);
 
-        var right=Panel(_uiRoot,new(1110,96),new(308,650),"f7f2e6f0");
+        var right=CreateSidebar(false);
         Text(right,"慢慢认识它",13,"89917c");_selectedName=Text(right,"",25);_detail=Text(right,"",13);
         Action(right,"diary","经历与观察记录",OpenDiary);
         _fullness=Meter(right,"饱腹","aabf81");_energy=Meter(right,"精力","d2b274");_health=Meter(right,"身体","82ad9d");
@@ -100,17 +93,17 @@ public partial class Main
         Action(right,"admit","结束观察 · 正式接纳",()=>{if(Sim.AdmitSelected()){Sound("select");Toast("它在这里有自己的位置了。");}});
         Action(right,"close","E  靠近与互动",CloseUp);
 
-        var eventBox=Panel(_uiRoot,new(278,538),new(812,114),"344c42e5");
-        Text(eventBox,"乐园里的小事",13,"c9d5b6");_events=Text(eventBox,"",14,"f6edda");_events.CustomMinimumSize=new(0,48);
-        var tools=Panel(_uiRoot,new(278,666),new(812,176),"f7f2e6f5");_toolPanel=tools.GetParent<Control>();
-        var heading=new HBoxContainer();heading.AddThemeConstantOverride("separation",12);tools.AddChild(heading);
-        _toolHint=new Label{Text="选择一种互动，靠近后按住目标。",SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};heading.AddChild(_toolHint);
+        var eventBox=right;
+        Text(eventBox,"乐园里的小事",13);_events=Text(eventBox,"",14);_events.CustomMinimumSize=new(0,48);
+        var tools=new VBoxContainer();left.AddChild(tools);_toolPanel=tools;
+        var heading=new VBoxContainer();heading.AddThemeConstantOverride("separation",12);tools.AddChild(heading);
+        _toolHint=new Label{Text="选择一种互动，靠近后按住目标。",AutowrapMode=TextServer.AutowrapMode.WordSmart,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};heading.AddChild(_toolHint);
         _contactReadout=new Label{Text="力度 25%"};_contactReadout.AddThemeColorOverride("font_color",new Color("a3784d"));heading.AddChild(_contactReadout);
         var leaveClose=new LinkButton{Text="返回场景 · E",FocusMode=Control.FocusModeEnum.None,Visible=false};
         leaveClose.AddThemeFontSizeOverride("font_size",14);leaveClose.AddThemeColorOverride("font_color",new Color("42584f"));
         leaveClose.Pressed+=ExitCloseUp;heading.AddChild(leaveClose);
         _leaveCloseButton=leaveClose;
-        var grid=new GridContainer{Columns=4};grid.AddThemeConstantOverride("h_separation",6);grid.AddThemeConstantOverride("v_separation",5);tools.AddChild(grid);
+        var grid=new GridContainer{Columns=1};grid.AddThemeConstantOverride("h_separation",6);grid.AddThemeConstantOverride("v_separation",5);tools.AddChild(grid);
         var toolNames=new[]{("stroke","抚摸",ContactAction.Stroke),("hug","抱抱",ContactAction.Hug),("nuzzle","蹭蹭",ContactAction.Nuzzle),("train","一起练习",ContactAction.Train),
             ("grab","拿起 / 放下",ContactAction.Stroke),("warn","警告",ContactAction.Warn),("discipline","惩戒",ContactAction.Discipline),("treat","护理 · 1包",ContactAction.Treat)};
         foreach(var (id,label,action) in toolNames)
@@ -118,27 +111,25 @@ public partial class Main
             var b=new Button{Text=label,ToggleMode=true,CustomMinimumSize=new(187,32),FocusMode=Control.FocusModeEnum.None};
             b.Pressed+=()=>ChooseContact(action,id=="grab");grid.AddChild(b);Buttons[id]=b;
         }
-        var forceRow=new HBoxContainer();forceRow.AddThemeConstantOverride("separation",10);tools.AddChild(forceRow);
-        forceRow.AddChild(new Label{Text="轻柔"});_pressure=new HSlider{MinValue=.05,MaxValue=1,Step=.05,Value=.25,CustomMinimumSize=new(220,26),SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,FocusMode=Control.FocusModeEnum.None};forceRow.AddChild(_pressure);
-        forceRow.AddChild(new Label{Text="用力"});_toolMaterial=new InlineChoice{CustomMinimumSize=new(150,28)};
+        var forceRow=new HBoxContainer{MouseFilter=Control.MouseFilterEnum.Ignore};forceRow.AddThemeConstantOverride("separation",10);_uiRoot.AddChild(forceRow);_forceParameters=forceRow;
+        _forceSetting=new Label{Text="力度设定",MouseFilter=Control.MouseFilterEnum.Ignore};_forceSetting.AddThemeColorOverride("font_color",new Color("fff8e6"));_forceSetting.AddThemeColorOverride("font_outline_color",new Color("253b32"));_forceSetting.AddThemeConstantOverride("outline_size",5);forceRow.AddChild(_forceSetting);_pressure=new HSlider{MinValue=.05,MaxValue=1,Step=.05,Value=.25,CustomMinimumSize=new(220,26),SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,FocusMode=Control.FocusModeEnum.None};forceRow.AddChild(_pressure);
+        _toolMaterial=new InlineChoice{CustomMinimumSize=new(150,28)};
         _toolMaterial.AddItem("手掌");_toolMaterial.AddItem("软手套");_toolMaterial.AddItem("训练教具");
-        _toolMaterial.ItemSelected+=index=>_contactTool=(ContactTool)index;forceRow.AddChild(_toolMaterial);
+        _toolMaterial.ItemSelected+=index=>_contactTool=(ContactTool)index;tools.AddChild(_toolMaterial);
         _pressure.ValueChanged+=value=>_gestureForce=(float)value;
 
-        var footer=Panel(_uiRoot,new(22,858),new(1396,34),"f7f2e6f0");
-        var footerStyle=(StyleBoxFlat)footer.GetParent<PanelContainer>().GetThemeStylebox("panel");footerStyle.ContentMarginTop=4;footerStyle.ContentMarginBottom=4;
-        _hint=Text(footer,"",13);_hint.AutowrapMode=TextServer.AutowrapMode.Off;
-        var controls=Panel(_uiRoot,new(22,758),new(236,84),"f7f2e6f0");
-        var controlsRow=new HBoxContainer();controls.AddChild(controlsRow);
+        _hint=Text(left,"",13);
+
+        var controlsRow=new HBoxContainer();header.AddChild(controlsRow);
         AddCompact(controlsRow,"pause","暂停",ToggleMilestonePause);
         AddCompact(controlsRow,"settings","设置",OpenSettings);
         AddCompact(controlsRow,"guide","菜单",OpenMilestoneMenu);
         AddCompact(controlsRow,"manual","帮助",OpenHelp);
-        var saveRow=new HBoxContainer();controls.AddChild(saveRow);
+        var saveRow=new HBoxContainer();header.AddChild(saveRow);
         AddCompact(saveRow,"save","F5 保存",()=>Save(_slot));
         AddCompact(saveRow,"load","F9 读取",()=>{if(Load(_slot))CloseMilestoneMenu();});
         var slot=new OptionButton{CustomMinimumSize=new(52,28)};for(int i=1;i<=3;i++)slot.AddItem(i.ToString());slot.ItemSelected+=i=>_slot=(int)i+1;saveRow.AddChild(slot);_saveSlotOption=slot;
-        var supplies=Panel(_uiRoot,new(1110,758),new(308,84),"f7f2e6f0");
+        var supplies=right;
         var supplyRow=new HBoxContainer();supplies.AddChild(supplyRow);
         AddCompact(supplyRow,"supplies","食物 +20 · 10",()=>Toast(Sim.BuyFood()?"食物已入库。":"资金不足。"));
         AddCompact(supplyRow,"medicine","护理 +3 · 15",()=>Toast(Sim.BuyMedicine()?"护理包已入库。":"资金不足。"));
@@ -146,6 +137,7 @@ public partial class Main
         AddCompact(supplies2,"refill","补充食盆",()=>{Toast(Sim.Refill()?"已补充食物。":"没有食盆或食物不足。");RebuildRegion();});
         AddCompact(supplies2,"commission","提交养护记录",()=>ShowResult(Sim.ClaimCareContract()));
 
+        BuildCanvasEvents();
         _modalShield=new ColorRect{Color=new Color(0.12f,.18f,.14f,.22f),MouseFilter=Control.MouseFilterEnum.Stop,Visible=false};
         _uiRoot.AddChild(_modalShield);_modalShield.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         BuildMilestoneMenu();BuildMilestoneSettings();BuildDiary();BuildHelp();
@@ -201,6 +193,7 @@ public partial class Main
     private void StartNewMilestone()
     {
         Sim=WorldSimulation.CreateMilestone();_config=Sim.Config;_recovered=false;_autosaveTimer=0;_milestoneStarted=true;
+        _canvasEvents.ResetSession();
         _gestureActive=false;_held=null;_foodInHand=false;_residentKey="";_visibleActorKey="";
         _contactAction=ContactAction.Stroke;_contactTool=ContactTool.Hand;_grabTool=false;
         _pressure.Value=.25;_toolMaterial.Select(0);
@@ -233,18 +226,24 @@ public partial class Main
         var scroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};box.AddChild(scroll);
         var entries=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};scroll.AddChild(entries);
         _diaryText=Text(entries,"",16);
+        Action(box,"refresh-diary","刷新记录",OpenDiary);
         Action(box,"close-diary","收好记录",CloseDiary);
     }
     private void OpenDiary()
     {
-        var c=Sim.Selected;if(c==null)return;
+        var c=Sim.Selected;
         ShowGameplayDock(_diaryPanel);
+        if(c==null)
+        {
+            _diaryText.Text="重点事件\n"+string.Join("\n",_canvasEvents.History.Reverse())+"\n\n世界记录\n"+string.Join("\n",Sim.State.Journal.AsEnumerable().Reverse());
+            return;
+        }
         var known=Sim.State.Incidents.Where(e=>Sim.State.PlayerKnownIncidents.Contains(e.Id)&&(e.TargetId==c.Id||e.ActorId==c.Id)).TakeLast(14);
         _diaryText.Text=$"{c.Name} · {c.Activity}\n\n观察笔记\n"+string.Join("\n",c.Observation.Notes.TakeLast(6))+
             "\n\n已知经历\n"+string.Join("\n",known.Select(e=>$"[{WorldSimulation.FormatClock(e.At)}] {e.Description}"))+
             "\n\n眼前的反应\n"+c.LastReaction+
             (c.Condition==PhysicalCondition.Critical?$"\n需要立即护理：剩余约 {Math.Ceiling(c.CriticalRemaining)} 秒。":"")+
-            "\n\n这些是当前已获得的线索；未知的事情不会提前写进记录。";
+            "\n\n重点事件\n"+string.Join("\n",_canvasEvents.History.Reverse())+"\n\n世界记录\n"+string.Join("\n",Sim.State.Journal.AsEnumerable().Reverse())+"\n\n这些是当前已获得的线索；未知的事情不会提前写进记录。";
         _diaryPanel.Visible=true;UpdateUi();
     }
     private void CloseDiary(){_diaryPanel.Visible=false;UpdateUi();}
@@ -285,7 +284,7 @@ public partial class Main
         if(_top==null)return;var s=Sim.State;var c=Sim.Selected;bool close=s.Mode==PlayMode.CloseUp;
         if(_profileCreatureId!=c?.Id){_profileCreatureId=c?.Id;_profileScroll.ScrollVertical=0;}
         if(_modalShield!=null)_modalShield.Visible=MilestoneModalOpen;
-        _top.Text=$"油库里乐园    /    {Sim.ActiveRegion.Name}                    资金 {s.Money}     食物 {s.Food}     护理包 {s.Medicine}                    {WorldSimulation.FormatClock(s.WorldSeconds)}";
+        _top.Text=$"油库里乐园    /    {Sim.ActiveRegion.Name} · 资金 {s.Money}     食物 {s.Food}     护理包 {s.Medicine} · {WorldSimulation.FormatClock(s.WorldSeconds)}";
         _modeLabel.Text=s.Settings.Pause?"暂停中":close?"互动特写 · 世界暂停":s.Mode==PlayMode.Human?"主角视角 · WASD 移动":"管理视角 · 点击选择";
         _threatInfo.Text=s.Threat.Phase switch{ThreatPhase.Approaching=>"林缘有动静，留意乐园入口。",ThreatPhase.Intruding=>s.Threat.HelpRequested?"油库里正在求助！":"油库里正在守护乐园。",ThreatPhase.Retreating=>"入侵者正在离开。",_=>"慢慢照顾，慢慢认识。"};
         string Task(string key,string text)=>$"{(s.Progress.Completed.Contains(key)?"✓":"○")}  {text}";
@@ -317,7 +316,7 @@ public partial class Main
         {ContactAction.Stroke=>"stroke",ContactAction.Hug=>"hug",ContactAction.Nuzzle=>"nuzzle",ContactAction.Train=>"train",ContactAction.Warn=>"warn",ContactAction.Discipline=>"discipline",_=>"treat"};
         foreach(string id in new[]{"stroke","hug","nuzzle","train","grab","warn","discipline","treat"})
             Buttons[id].SetPressedNoSignal(id==activeTool);
-        _contactReadout.Text=_gestureActive?$"{AreaLabel(_contactArea)} · {_gestureDuration:F1}秒 · {_gestureForce:P0}":$"力度 {_pressure.Value:P0}";
+        _contactReadout.Text=_gestureActive?$"{AreaLabel(_contactArea)} · 已接触 {_gestureDuration:F1}秒":"在画布底部调整力度设定";
         _events.Text=string.Join("\n",s.Journal.TakeLast(3));
         _hint.Text=_toastTime>0?_toast:close?"按住目标互动 · 滚轮调整拿取高度 · E / Esc 返回":"滚轮缩放 · 中键拖动视野 · E 靠近 · Tab 主角 · WASD 移动 · 空格暂停 · F5 保存";
         _sandbox.SetPressedNoSignal(s.UnlimitedResources);

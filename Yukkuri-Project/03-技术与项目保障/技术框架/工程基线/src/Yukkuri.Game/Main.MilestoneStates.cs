@@ -87,8 +87,10 @@ public partial class Main
             await ClickButton("diary");
             await Wait(.2);await Screenshot("m01-diary-nonmodal");
             Assert(!suspended.Freeze&&!Sim.State.Settings.Pause&&!_modalShield.Visible,"diary leaves close-up physics and scene interaction active");
-            int pausedFood=Sim.State.Food;await ClickButton("supplies");
-            Assert(Sim.State.Food>pausedFood&&_diaryPanel.Visible,"diary permits other gameplay controls");
+            await ClickButton("pause");
+            Assert(Sim.State.Settings.Pause&&_diaryPanel.Visible,"diary permits explicit toolbar pause");
+            await ClickButton("pause");
+            Assert(!Sim.State.Settings.Pause&&_diaryPanel.Visible,"diary permits explicit toolbar resume");
             await ClickButton("close-diary");
             await Wait(.2);Assert(!suspended.Freeze&&!Sim.State.Settings.Pause,"closing diary preserves the running world");
             suspended.Position+=Vector3.Up*2;suspended.LinearVelocity=Vector3.Zero;

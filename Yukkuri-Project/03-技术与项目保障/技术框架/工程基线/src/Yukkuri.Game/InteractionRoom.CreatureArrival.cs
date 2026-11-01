@@ -5,6 +5,7 @@ using Yukkuri.Simulation;
 public partial class InteractionRoom
 {
     private CreatureArrival? _arrivingCreature;
+    private int _arrivalSpecies,_arrivalAge,_arrivalRole;
     private Node3D? _arrivalPreview;
     private readonly List<MeshInstance3D> _arrivalLines=new();
 
@@ -19,6 +20,8 @@ public partial class InteractionRoom
         var age=new InlineChoice();age.AddItem("成体");age.AddItem("幼体 · 需要保暖和照护");_panelContents.AddChild(age);
         _panelContents.AddChild(Text("繁育角色"));
         var role=new InlineChoice();role.AddItem("母方");role.AddItem("父方");_panelContents.AddChild(role);
+        species.Select(_arrivalSpecies);age.Select(_arrivalAge);role.Select(_arrivalRole);
+        species.ItemSelected+=i=>_arrivalSpecies=(int)i;age.ItemSelected+=i=>_arrivalAge=(int)i;role.ItemSelected+=i=>_arrivalRole=(int)i;
         var name=new LineEdit{PlaceholderText="名字（可留空）",MaxLength=24,ContextMenuEnabled=false};_panelContents.AddChild(name);
         var place=PanelButton("选择落点",()=>
         {

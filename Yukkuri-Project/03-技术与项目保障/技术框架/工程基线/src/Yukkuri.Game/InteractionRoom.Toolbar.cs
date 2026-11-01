@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Yukkuri.Simulation;
 
@@ -46,8 +47,7 @@ public partial class InteractionRoom
     private string _objectActionSignature="";
     private void BuildToolbar(Control parent)
     {
-        var scroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};parent.AddChild(scroll);
-        _groupList=Column(scroll,5);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        _groupList=Column(parent,5);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         for(int i=0;i<Toolbar.Length;i++){int index=i;_groupList.AddChild(Button(Toolbar[i].Name,()=>SelectToolbarCategory(index)));}
         parent.AddChild(Button("投放新油",ShowCreatureArrival));
         parent.AddChild(Button("商店",()=>ShowShop()));
@@ -97,8 +97,11 @@ public partial class InteractionRoom
         {var action=a;_panelContents.AddChild(PanelButton(InteractionCatalog.Choice(a).Label,()=>{CloseActivityPanel();SelectAction(action);}));}
         _panelContents.AddChild(Text("搬瓶用空手抓取。瓶口食水使用食物入口拿取的同一份物品。"));
     }
+    private string? _shopCategory;
+    private readonly System.Collections.Generic.Dictionary<string,double> _shopQuantities=new();
     private void ShowShop(string? result=null,string? category=null)
     {
+        category??=_shopCategory;_shopCategory=category;
         OpenActivityPanel("商店",() => ShowShop(category:category));_panelContents.AddChild(Text($"余额 {Sim.State.Money} 元",20));
         _panelContents.AddChild(PanelButton("提交实际养护记录 · 领取委托收入",()=>ShowShop(Sim.ClaimCareContract().Message,category)));
         if(result!=null)_panelContents.AddChild(Text(result,14));
@@ -110,11 +113,11 @@ public partial class InteractionRoom
         foreach(var p in CourtyardShop.Products.Where(p=>p.Category==(category??names[0])))
         {
             _panelContents.AddChild(Text($"{p.Name} · 每包{p.Pack}份 · {p.Price}元 · 持有{Sim.ShopOwnedQuantity(p.Id)} / 仓库{Sim.ShopQuantity(p.Id)}",14));
-            var row=Row(_panelContents,6);var quantity=new SpinBox{MinValue=1,MaxValue=99,Step=1,Value=1,CustomMinimumSize=new(100,36)};row.AddChild(quantity);
+            var row=Row(_panelContents,6);var quantity=new SpinBox{MinValue=1,MaxValue=99,Step=1,Value=_shopQuantities.GetValueOrDefault(p.Id,1),CustomMinimumSize=new(100,36)};row.AddChild(quantity);
             quantity.GetLineEdit().ContextMenuEnabled=false;
             var buy=PanelButton($"购买 · 总价 {p.Price} 元",()=>{bool ok=Sim.BuyShopProduct(p.Id,(int)quantity.Value);ShowShop(ok?"购买成功，已入库。":"余额不足或库存已满，未扣款。",p.Category);RefreshSupplyStock();});
             void RefreshPrice(){buy.Text=$"购买 · 总价 {p.Price*(int)quantity.Value} 元";buy.Disabled=Sim.State.Money<(long)p.Price*(int)quantity.Value;}
-            quantity.ValueChanged+=_=>RefreshPrice();RefreshPrice();row.AddChild(buy);
+            quantity.ValueChanged+=value=>{_shopQuantities[p.Id]=value;RefreshPrice();};RefreshPrice();row.AddChild(buy);
         }
         _panelContents.AddChild(PanelButton("购入新油 · 选择场景落点",ShowCreatureArrival));
         _panelContents.AddChild(PanelButton("查看收容箱",ShowContainer));

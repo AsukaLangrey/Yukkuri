@@ -33,9 +33,11 @@ public partial class InteractionRoom
                 var error=picture.SavePng(Path.Combine(directory,name+".png"));
                 if(error!=Error.Ok)throw new IOException("截图失败："+error);
                 Rect2 viewport=_ui.GetGlobalRect();
-                bool bottomFits=viewport.Encloses(_bottomPanel.GetGlobalRect())&&viewport.Encloses(_feedback.GetGlobalRect());
+                bool sidebarsFit=viewport.Encloses(_leftPanel.GetGlobalRect())&&viewport.Encloses(_rightPanel.GetGlobalRect());
+                bool forceFits=GameUiLayout.Canvas(_ui).Encloses(_forceWidget.GetGlobalRect());
                 bool forceSingleLine=_forceLabel.Size.Y<40;
-                results.Add(new{name,bottomFits,forceSingleLine,viewport=new{viewport.Size.X,viewport.Size.Y},
+                if(!sidebarsFit||!forceFits||!forceSingleLine)throw new InvalidOperationException("侧栏或画布参数组件超出布局范围");
+                results.Add(new{name,sidebarsFit,forceFits,forceSingleLine,viewport=new{viewport.Size.X,viewport.Size.Y},
                     feedback=new{x=_feedback.GlobalPosition.X,y=_feedback.GlobalPosition.Y,width=_feedback.Size.X,height=_feedback.Size.Y},
                     action=_action.ToString(),mode=Sim.State.Mode.ToString()});
             }
@@ -56,7 +58,7 @@ public partial class InteractionRoom
                 {
                     page.open();await RenderFrames(2);
                     bool valid=ActivityPanelVisible&&!_modalOpen&&!_modalShade.Visible&&Sim.State.Settings.Pause==paused&&
-                        IsScenePoint(new Vector2(250,_ui.Size.Y*.5f))&&!IsScenePoint(_activityPanel.GetGlobalRect().GetCenter());
+                        IsScenePoint(GameUiLayout.Canvas(_ui).GetCenter())&&!IsScenePoint(_activityPanel.GetGlobalRect().GetCenter());
                     if(!valid)throw new InvalidOperationException("玩法侧栏阻断场景或改变暂停状态："+page.name);
                     CloseActivityPanel();
                     if(Sim.State.Settings.Pause!=paused)throw new InvalidOperationException("关闭侧栏改变暂停状态："+page.name);
@@ -67,6 +69,17 @@ public partial class InteractionRoom
                 CloseModal();
                 if(Sim.State.Settings.Pause!=paused)throw new InvalidOperationException("系统设置未恢复原暂停状态");
             }
+            var canvas=GameUiLayout.Canvas(_ui);
+            if(!IsScenePoint(new Vector2(canvas.Position.X+20,canvas.End.Y-20)))
+                throw new InvalidOperationException("旧底部区域仍有不可操作的空白带");
+            if(_forceWidget.Visible&&(IsScenePoint(_forceSlider.GetGlobalRect().GetCenter())||!IsScenePoint(_forceLabel.GetGlobalRect().GetCenter())))
+                throw new InvalidOperationException("力度控件与透明区域的输入边界不正确");
+            ShowCreatureArrival();await RenderFrames(2);
+            var draft=_panelContents.GetChildren().OfType<LineEdit>().Single();draft.Text="保留输入";
+            ShowHelp();ShowCreatureArrival();await RenderFrames(2);
+            if(_panelContents.GetChildren().OfType<LineEdit>().Single().Text!="保留输入")
+                throw new InvalidOperationException("切换右侧页面丢失了未提交输入");
+            CloseActivityPanel();
             Sim.State.Settings.Pause=false;
             if(OS.GetCmdlineUserArgs().Contains("--art-gallery"))
             {

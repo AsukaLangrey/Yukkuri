@@ -23,6 +23,8 @@ public partial class Main
     public override void _UnhandledInput(InputEvent input)
     {
         if(!_ready)return;
+        if(input is InputEventMouseButton pointerButton&&!MainScenePoint(pointerButton.Position))return;
+        if(input is InputEventMouseMotion pointerMotion&&!MainScenePoint(pointerMotion.Position))return;
         if(Sim.State.MilestoneScenario&&HandleMilestoneInput(input))return;
         if(input is InputEventKey key&&key.Pressed&&!key.Echo)
         {
@@ -88,9 +90,11 @@ public partial class Main
         if(_ready&&CloseInteractionSuspended)SuspendCloseInteraction();
         if(input is InputEventKey traceKey&&System.Array.Exists(OS.GetCmdlineUserArgs(),arg=>arg=="--trace-keys"))
             GD.Print($"INPUT_KEY physical={traceKey.PhysicalKeycode} logical={traceKey.Keycode} unicode={traceKey.Unicode} pressed={traceKey.Pressed} echo={traceKey.Echo}");
-        if(_ready&&Sim.State.MilestoneScenario&&input is InputEventMouseButton {ButtonIndex:MouseButton.Left,Pressed:false}&&_gestureActive)FinishGesture();
+        if(_ready&&Sim.State.MilestoneScenario&&input is InputEventMouseButton {ButtonIndex:MouseButton.Left,Pressed:false} release&&_gestureActive)
+        {if(MainScenePoint(release.Position))FinishGesture();else CancelGesture();}
         // Releasing over a UI panel must still release the physics grab.
-        if(input is InputEventMouseButton {ButtonIndex:MouseButton.Left,Pressed:false})_held=null;
+        if(input is InputEventMouseButton {ButtonIndex:MouseButton.Left,Pressed:false} pointerRelease)
+        {if(_ready&&!MainScenePoint(pointerRelease.Position))ReleaseGrabSafely();else _held=null;}
         if(input is InputEventMouseButton {ButtonIndex:MouseButton.Middle,Pressed:false})_mapDragging=false;
     }
 }
