@@ -25,7 +25,15 @@ public partial class Main
     }
     private Button Action(VBoxContainer parent,string id,string text,Action action)
     {
-        var b=new Button{Text=text,CustomMinimumSize=new Vector2(100,38),AutowrapMode=TextServer.AutowrapMode.WordSmart,Alignment=HorizontalAlignment.Left,FocusMode=Control.FocusModeEnum.None};
+        var b=new Button{Text=text,CustomMinimumSize=new Vector2(100,32),AutowrapMode=TextServer.AutowrapMode.WordSmart,Alignment=HorizontalAlignment.Left,FocusMode=Control.FocusModeEnum.None};
+        b.AddThemeFontSizeOverride("font_size",14);
+        UiActionIcons.Apply(b,id switch
+        {
+            "home" or "bed"=>"home","wild"=>"leaf","human" or "close"=>"hand",
+            "feeder" or "supplies" or "refill" or "feed"=>"food","staff" or "rescue"=>"care",
+            "music"=>"music","guide" or "diary"=>"book","observe"=>"eye",
+            "help" or "protect"=>"care","admit"=>"add",_=>"chat"
+        });
         b.Pressed+=()=>{action();UpdateUi();};parent.AddChild(b);Buttons[id]=b;return b;
     }
     private ProgressBar Meter(VBoxContainer parent,string text,string color)
@@ -66,7 +74,7 @@ public partial class Main
         var right=CreateSidebar(false);
         Text(right,"个体档案",14,"8b967e");_selectedName=Text(right,"",25);_detail=Text(right,"",14);
         _fullness=Meter(right,"饱腹","b9c98f");_energy=Meter(right,"精力","ddb87c");_health=Meter(right,"身体","91bca8");
-        _observation=Text(right,"",15);_observation.CustomMinimumSize=new(0,72);
+        _observation=Text(right,"",14);
         Action(right,"observe","O  观察并记入档案",()=>{Sim.Observe();Toast("行为已记录，判断会随证据修正。");});
         Action(right,"close","E  进入互动特写",CloseUp);
         Action(right,"feed","F  喂食 · 1份",()=>
@@ -103,8 +111,6 @@ public partial class Main
         Text(welcomeBox,"点击居民查看档案；Tab 切换人类，WASD 移动。\nE 进入特写：鼠标按住拿起，松开放下，滚轮调高度。\nF 拿取食物，在嘴部点击。建造后给食盆补充库存。\n野地可观察并带回个体；F5 / F9 保存和读取。",17);
         _sandbox=new CheckButton{Text="自由沙盒：资源不限",ButtonPressed=Sim.State.UnlimitedResources};_sandbox.Toggled+=enabled=>{Sim.State.UnlimitedResources=enabled;Toast(enabled?"已启用无限资源。":"已恢复有限资源。");};welcomeBox.AddChild(_sandbox);
         Action(welcomeBox,"dismiss","回到乐园",()=>_welcome.Visible=false);
-        foreach(var icon in new[]{("home","home"),("observe","observe"),("close","hand"),("feed","food")})
-        {Buttons[icon.Item1].Icon=GD.Load<Texture2D>("res://Assets/Icons/"+icon.Item2+".svg");Buttons[icon.Item1].AddThemeConstantOverride("h_separation",8);}
     }
     private void UpdateUi()
     {

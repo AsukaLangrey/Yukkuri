@@ -1,7 +1,8 @@
 界面管理｜源码导航
 以下路径均相对于Yukkuri-Project根目录。工程内部保留统一源码位置，后续修改以变更记录为准。
 
-主归属入口（21项）
+主归属入口（22项）
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/UiActionIcons.cs
 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameUiLayout.cs
 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CanvasEventFeed.cs
 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CanvasNoticeSource.cs

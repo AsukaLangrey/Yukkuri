@@ -14,7 +14,7 @@ public partial class InteractionRoom
         else if(_arrivingCreature!=null)
         {_title.Text="投放新油";_hint.Text=$"点击干燥空地放下一只新油；绿色可放，红色需换位置。成功后扣 {WorldSimulation.NewCreaturePrice} 元，右键取消。";}
         else if(_roomMode==RoomMode.Observe)_hint.Text="只选中查看，不接触、不抓取。右侧显示对象属性和家庭记录。";
-        else if(_roomMode==RoomMode.Grab)_hint.Text="按住抓取，松手放下；释放速度决定抛出。拖到右下收容箱可回收，资源不退款。";
+        else if(_roomMode==RoomMode.Grab)_hint.Text="按住抓取，松手放下；释放速度决定抛出。拖到左侧收容箱可回收，资源不退款。";
         else if(_roomMode==RoomMode.Pet)_hint.Text="停在头顶或脸侧即可接触；按住轻拖贴地挪动，障碍仍阻挡。";
         else if(_roomMode==RoomMode.Poke)_hint.Text="轻点部位；空地按住后挥向身体，速度决定掌掴或拳击。长按部位拖动可拉拽。";
         else if(_roomMode==RoomMode.Pressure)_hint.Text="按住部位按压；从下半部向上推可推翻。身旁可保持或解除按压。";

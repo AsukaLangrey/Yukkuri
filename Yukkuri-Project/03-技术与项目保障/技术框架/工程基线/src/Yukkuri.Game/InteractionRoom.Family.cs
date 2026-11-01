@@ -40,7 +40,7 @@ public partial class InteractionRoom
     private void BuildOilSelector(Control parent)
     {
         _oilSelector=new InlineChoice{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,
-            CustomMinimumSize=new(0,38),
+            CustomMinimumSize=new(0,32),
             FocusMode=Control.FocusModeEnum.None};
         _oilSelector.ItemSelected+=index=>
         {

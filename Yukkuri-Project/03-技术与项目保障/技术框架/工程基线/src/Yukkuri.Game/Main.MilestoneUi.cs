@@ -67,25 +67,25 @@ public partial class Main
         _modeLabel=Text(left,"",14,"648561");
         _threatInfo=Text(left,"",14,"9b7650");_threatInfo.CustomMinimumSize=new(0,44);
         Text(left,"今天可以做的事",14,"89917c");
-        _objectives=Text(left,"",15);_objectives.CustomMinimumSize=new(0,142);
+        _objectives=Text(left,"",13);
         Action(left,"home","乐园 · 回家照护",()=>Travel("home"));
         Action(left,"wild","林缘 · 观察与相遇",()=>Travel("wild"));
         Action(left,"human","Tab  主角视角",HumanMode);
         Action(left,"help","查看求助 · 前去帮助",()=>{if(Sim.FocusHelp()){RebuildRegion();Toast("已定位求助的油库里。可以保护它、制止入侵者，或先护理伤势。");}else Toast("目前没有未处理的求助。");});
         Text(left,"附近的油库里",13,"89917c");
-        var scroll=new ScrollContainer{CustomMinimumSize=new(0,110),HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};left.AddChild(scroll);
+        var scroll=new ScrollContainer{CustomMinimumSize=new(0,72),HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};left.AddChild(scroll);
         _residents=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};scroll.AddChild(_residents);
 
         var right=CreateSidebar(false);
         Text(right,"慢慢认识它",13,"89917c");_selectedName=Text(right,"",25);_detail=Text(right,"",13);
         Action(right,"diary","经历与观察记录",OpenDiary);
         _fullness=Meter(right,"饱腹","aabf81");_energy=Meter(right,"精力","d2b274");_health=Meter(right,"身体","82ad9d");
-        var profileScroll=new ScrollContainer{CustomMinimumSize=new(0,240),SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(profileScroll);
+        var profileScroll=new ScrollContainer{CustomMinimumSize=new(0,180),SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(profileScroll);
         _profileScroll=profileScroll;
         right=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};right.AddThemeConstantOverride("separation",6);profileScroll.AddChild(right);
-        _relationship=Text(right,"",14,"718568");_relationship.CustomMinimumSize=new(0,36);
-        _reaction=Text(right,"",16,"a5765b");_reaction.CustomMinimumSize=new(0,56);
-        _observation=Text(right,"",13);_observation.CustomMinimumSize=new(0,52);
+        _relationship=Text(right,"",13,"718568");
+        _reaction=Text(right,"",14,"a5765b");
+        _observation=Text(right,"",13);
         Action(right,"observe","O  观察与记录",()=>{Sim.Observe();Sim.State.Progress.ResearchObservations++;Toast("已记录眼前的行为。判断需要更多经历来验证。");});
         Action(right,"feed","F  喂食 · 1份",MilestoneFeed);
         Action(right,"protect","保护它 · 制止威胁",()=>ShowResult(Sim.ProtectSelected()));
@@ -96,19 +96,21 @@ public partial class Main
         var eventBox=right;
         Text(eventBox,"乐园里的小事",13);_events=Text(eventBox,"",14);_events.CustomMinimumSize=new(0,48);
         var tools=new VBoxContainer();left.AddChild(tools);_toolPanel=tools;
-        var heading=new VBoxContainer();heading.AddThemeConstantOverride("separation",12);tools.AddChild(heading);
+        var heading=new VBoxContainer();heading.AddThemeConstantOverride("separation",4);tools.AddChild(heading);
         _toolHint=new Label{Text="选择一种互动，靠近后按住目标。",AutowrapMode=TextServer.AutowrapMode.WordSmart,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};heading.AddChild(_toolHint);
         _contactReadout=new Label{Text="力度 25%"};_contactReadout.AddThemeColorOverride("font_color",new Color("a3784d"));heading.AddChild(_contactReadout);
         var leaveClose=new LinkButton{Text="返回场景 · E",FocusMode=Control.FocusModeEnum.None,Visible=false};
         leaveClose.AddThemeFontSizeOverride("font_size",14);leaveClose.AddThemeColorOverride("font_color",new Color("42584f"));
         leaveClose.Pressed+=ExitCloseUp;heading.AddChild(leaveClose);
         _leaveCloseButton=leaveClose;
-        var grid=new GridContainer{Columns=1};grid.AddThemeConstantOverride("h_separation",6);grid.AddThemeConstantOverride("v_separation",5);tools.AddChild(grid);
+        var grid=new GridContainer{Columns=2};grid.AddThemeConstantOverride("h_separation",6);grid.AddThemeConstantOverride("v_separation",4);tools.AddChild(grid);
         var toolNames=new[]{("stroke","抚摸",ContactAction.Stroke),("hug","抱抱",ContactAction.Hug),("nuzzle","蹭蹭",ContactAction.Nuzzle),("train","一起练习",ContactAction.Train),
-            ("grab","拿起 / 放下",ContactAction.Stroke),("warn","警告",ContactAction.Warn),("discipline","惩戒",ContactAction.Discipline),("treat","护理 · 1包",ContactAction.Treat)};
+            ("grab","拿起/放下",ContactAction.Stroke),("warn","警告",ContactAction.Warn),("discipline","惩戒",ContactAction.Discipline),("treat","护理·1包",ContactAction.Treat)};
         foreach(var (id,label,action) in toolNames)
         {
-            var b=new Button{Text=label,ToggleMode=true,CustomMinimumSize=new(187,32),FocusMode=Control.FocusModeEnum.None};
+            var b=new Button{Text=label,ToggleMode=true,CustomMinimumSize=new(0,32),SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,Alignment=HorizontalAlignment.Left,FocusMode=Control.FocusModeEnum.None};
+            b.AddThemeFontSizeOverride("font_size",13);
+            UiActionIcons.Apply(b,id=="treat"?"care":id is "warn" or "discipline"?"chat":"hand");
             b.Pressed+=()=>ChooseContact(action,id=="grab");grid.AddChild(b);Buttons[id]=b;
         }
         var forceRow=new HBoxContainer{MouseFilter=Control.MouseFilterEnum.Ignore};forceRow.AddThemeConstantOverride("separation",10);_uiRoot.AddChild(forceRow);_forceParameters=forceRow;

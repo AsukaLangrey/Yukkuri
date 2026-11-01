@@ -14,16 +14,14 @@ public partial class InteractionRoom
     private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
     {
-        var meters=Column(parent,5);_creatureVitalMeters=meters;
-        _fullnessLabel=Text("饱食度",13);meters.AddChild(_fullnessLabel);
-        _fullnessMeter=NeedMeter(meters,"8aa576",out _fullnessFill);
-        _hydrationLabel=Text("水分",13);meters.AddChild(_hydrationLabel);
-        _hydrationMeter=NeedMeter(meters,"7cabc0",out _hydrationFill);
+        var meters=Column(parent,4);_creatureVitalMeters=meters;
         _healthLabel=Text("身体状态：正常",14);meters.AddChild(_healthLabel);
         BuildImmediateInterventions(meters);
         _personalityLabel=Text("",12,"78816e");meters.AddChild(_personalityLabel);
         var overview=new GridContainer{Columns=2,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
-        overview.AddThemeConstantOverride("h_separation",10);overview.AddThemeConstantOverride("v_separation",7);meters.AddChild(overview);
+        overview.AddThemeConstantOverride("h_separation",10);overview.AddThemeConstantOverride("v_separation",4);meters.AddChild(overview);
+        BuildRelationshipMeter(overview,"饱食度","8aa576",out _fullnessLabel,out _fullnessMeter,out _fullnessFill);
+        BuildRelationshipMeter(overview,"水分","7cabc0",out _hydrationLabel,out _hydrationMeter,out _hydrationFill);
         BuildRelationshipMeter(overview,"馒馒来", "91aa79",out _comfortLabel,out _comfortMeter,out _comfortFill);
         BuildRelationshipMeter(overview,"信任", "779c9c",out _trustLabel,out _trustMeter,out _trustFill);
         BuildRelationshipMeter(overview,"生命", "88a877",out _lifeLabel,out _lifeMeter,out _lifeFill);
@@ -35,7 +33,7 @@ public partial class InteractionRoom
     }
     private void BuildRelationshipMeter(Control parent,string name,string color,out Label label,out ProgressBar bar,out StyleBoxFlat fill)
     {
-        var column=Column(parent,3);column.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        var column=Column(parent,2);column.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
         label=Text(name,12);column.AddChild(label);bar=NeedMeter(column,color,out fill);
         bar.CustomMinimumSize=new(0,7);
     }

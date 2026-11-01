@@ -6,7 +6,7 @@ public partial class InteractionRoom
     private Label _supplyStockLabel=null!;
     private void RefreshSupplyStock()
     {
-        if(_supplyStockLabel!=null)_supplyStockLabel.Text=$"余额 {Sim.State.Money}元\n食物 {Sim.State.Food} · 清水 {Sim.State.StationWaterPortions}\n护理 {Sim.State.Medicine}";
+        if(_supplyStockLabel!=null)_supplyStockLabel.Text=$"余额 {Sim.State.Money}元 · 护理 {Sim.State.Medicine}\n食物 {Sim.State.Food} · 清水 {Sim.State.StationWaterPortions}";
     }
     private bool SupplyStockMissing(InteractionAction action)=>action switch
     {

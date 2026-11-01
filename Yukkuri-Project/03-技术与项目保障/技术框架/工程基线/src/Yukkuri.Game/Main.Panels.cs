@@ -21,10 +21,12 @@ public partial class Main
     private VBoxContainer CreateSidebar(bool left)
     {
         GameUiLayout.Configure(GetWindow());
-        var panel=new PanelContainer();panel.AddThemeStyleboxOverride("panel",PanelStyle("faf5e9"));_uiRoot.AddChild(panel);
+        var panel=new PanelContainer();var style=PanelStyle("faf5e9");
+        style.ContentMarginLeft=10;style.ContentMarginRight=10;style.ContentMarginTop=10;style.ContentMarginBottom=10;
+        panel.AddThemeStyleboxOverride("panel",style);_uiRoot.AddChild(panel);
         if(left)GameUiLayout.Left(panel);else {GameUiLayout.Right(panel);_objectSidebar=panel;}
         var scroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};panel.AddChild(scroll);
-        var contents=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};contents.AddThemeConstantOverride("separation",8);scroll.AddChild(contents);
+        var contents=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};contents.AddThemeConstantOverride("separation",4);scroll.AddChild(contents);
         return contents;
     }
     private void BuildCanvasEvents()

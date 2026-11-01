@@ -26,7 +26,7 @@ public partial class InteractionRoom
         var button=Button(value,action,active);
         button.AutowrapMode=TextServer.AutowrapMode.WordSmart;
         button.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
-        button.CustomMinimumSize=new(100,38);
+        button.CustomMinimumSize=new(100,32);
         return button;
     }
 
@@ -52,7 +52,7 @@ public partial class InteractionRoom
     {
         _activityPanel=Panel(_ui,"f3f0e6");_activityPanel.Name="GameplaySidebar";
         GameUiLayout.Right(_activityPanel);_activityPanel.Visible=false;
-        var column=Column(_activityPanel,8);
+        var column=Column(_activityPanel,6);
         var heading=Row(column,5);
         _panelTitle=Text("",19);_panelTitle.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;heading.AddChild(_panelTitle);
         heading.AddChild(Button("刷新",()=>_refreshActivityPanel?.Invoke()));
@@ -61,7 +61,7 @@ public partial class InteractionRoom
         _panelScroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,
             SizeFlagsVertical=Control.SizeFlags.ExpandFill,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
         column.AddChild(_panelScroll);
-        _panelContents=Column(_panelScroll,10);_panelContents.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        _panelContents=Column(_panelScroll,6);_panelContents.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
     }
 
     private void OpenActivityPanel(string title,Action refresh)

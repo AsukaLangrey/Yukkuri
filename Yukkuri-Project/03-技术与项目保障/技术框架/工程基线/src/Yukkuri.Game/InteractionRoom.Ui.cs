@@ -11,8 +11,8 @@ public partial class InteractionRoom
     private HBoxContainer _forceWidget=null!;
     private CanvasEventFeed _eventFeed=null!;
     private Control _canvasEffects=null!;
-    private VBoxContainer _groupList=null!,_modalContents=null!;
-    private HFlowContainer _choiceList=null!;
+    private VBoxContainer _modalContents=null!;
+    private GridContainer _groupList=null!,_choiceList=null!;
     private Label _title=null!,_hint=null!,_feedback=null!,_speechLabel=null!,_who=null!,_condition=null!,_memory=null!,_clockLabel=null!,_forceLabel=null!;
     private Button _closeButton=null!,_pauseButton=null!,_resetViewButton=null!;
     private bool _modalOpen,_pauseBeforeModal;
@@ -21,7 +21,7 @@ public partial class InteractionRoom
     private readonly System.Collections.Generic.Dictionary<InteractionAction,float> _toolForces=new();
     private InteractionGroup _group=InteractionCatalog.Groups[0];
 
-    private StyleBoxFlat RoomStyle(string color,int radius=12,int pad=14,string? border=null)
+    private StyleBoxFlat RoomStyle(string color,int radius=12,int pad=10,string? border=null)
     {
         var s=new StyleBoxFlat{BgColor=new Color(color),CornerRadiusTopLeft=radius,CornerRadiusTopRight=radius,
             CornerRadiusBottomLeft=radius,CornerRadiusBottomRight=radius,ContentMarginLeft=pad,ContentMarginRight=pad,ContentMarginTop=pad,ContentMarginBottom=pad};
@@ -34,21 +34,22 @@ public partial class InteractionRoom
     }
     private Button Button(string value,Action action,bool active=false)
     {
-        var b=new Button{Text=value,FocusMode=Control.FocusModeEnum.None,CustomMinimumSize=new(0,38),MouseDefaultCursorShape=Control.CursorShape.PointingHand};
-        b.AddThemeStyleboxOverride("normal",RoomStyle(active?"566e5d":"eae9d9",8,9));
-        b.AddThemeStyleboxOverride("hover",RoomStyle(active?"647d6a":"dedfca",8,9));
-        b.AddThemeStyleboxOverride("pressed",RoomStyle("c6cfb9",8,9));
+        var b=new Button{Text=value,FocusMode=Control.FocusModeEnum.None,CustomMinimumSize=new(0,32),MouseDefaultCursorShape=Control.CursorShape.PointingHand};
+        b.AddThemeStyleboxOverride("normal",RoomStyle(active?"566e5d":"eae9d9",6,5));
+        b.AddThemeStyleboxOverride("hover",RoomStyle(active?"647d6a":"dedfca",6,5));
+        b.AddThemeStyleboxOverride("pressed",RoomStyle("c6cfb9",6,5));
         b.AddThemeColorOverride("font_color",new Color(active?"fff7df":"405247"));
         b.Pressed+=action;return b;
     }
     private void SetQuickToolHighlight(Button button,bool active)
     {
-        button.AddThemeStyleboxOverride("normal",RoomStyle(active?"566e5d":"eae9d9",8,9));
-        button.AddThemeStyleboxOverride("hover",RoomStyle(active?"647d6a":"dedfca",8,9));
+        button.AddThemeStyleboxOverride("normal",RoomStyle(active?"566e5d":"eae9d9",6,5));
+        button.AddThemeStyleboxOverride("hover",RoomStyle(active?"647d6a":"dedfca",6,5));
         var textColor=new Color(active?"fff7df":"405247");
         button.AddThemeColorOverride("font_color",textColor);
         button.AddThemeColorOverride("font_hover_color",textColor);
         button.AddThemeColorOverride("font_pressed_color",new Color("405247"));
+        UiActionIcons.Tint(button,active);
     }
     private PanelContainer Panel(Control parent,string color="f6f2e5")
     {var p=new PanelContainer();p.AddThemeStyleboxOverride("panel",RoomStyle(color));parent.AddChild(p);return p;}
@@ -73,35 +74,35 @@ public partial class InteractionRoom
         header.AddChild(Button("怎么玩",ShowHelp));header.AddChild(Button("存档与设置",ShowSettings));
 
         _leftPanel=Panel(_ui);GameUiLayout.Left(_leftPanel);
-        var left=Column(_leftPanel,9);
-        _title=Text("",19);left.AddChild(_title);
+        var left=Column(_leftPanel,6);
+        _title=Text("",17);left.AddChild(_title);
         var toolScroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,SizeFlagsVertical=Control.SizeFlags.ExpandFill};left.AddChild(toolScroll);
-        var tools=Column(toolScroll,8);tools.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;BuildToolbar(tools);
-        _choiceList=new HFlowContainer();_choiceList.AddThemeConstantOverride("h_separation",7);tools.AddChild(_choiceList);
+        var tools=Column(toolScroll,6);tools.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;BuildToolbar(tools);
         BuildContactProgress(left);
         _hint=Text("",13,"78816e");left.AddChild(_hint);
-        _feedback=Text("",15);left.AddChild(_feedback);
+        _feedback=Text("",13);left.AddChild(_feedback);
         BuildRecycleBox(left);
 
         _rightPanel=Panel(_ui);GameUiLayout.Right(_rightPanel);
-        var right=Column(_rightPanel,10);right.AddChild(Text("正在相处",12,"8b927f"));
+        var right=Column(_rightPanel,5);
         BuildOilSelector(right);
-        _who=Text("",21);right.AddChild(_who);
+        _who=Text("",18);right.AddChild(_who);
         var viewControls=Row(right,5);
         _closeButton=Button("靠近看看 · 双击",ToggleClose);_closeButton.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;viewControls.AddChild(_closeButton);
         _resetViewButton=Button("正面",ResetCloseView);viewControls.AddChild(_resetViewButton);
-        _familyPanelButton=Button("详细家庭记录",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamilyDetails();});right.AddChild(_familyPanelButton);
+        var records=Row(right,6);
+        _familyPanelButton=PanelButton("详细家庭记录",()=>{_familyFirstId=Sim.Selected?.Id;ShowFamilyDetails();});records.AddChild(_familyPanelButton);
+        records.AddChild(PanelButton("事件与完整记录",ShowRoomRecords));
         var reportScroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled};right.AddChild(reportScroll);
-        var report=Column(reportScroll,14);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
-        _speechLabel=Text("慢慢来……",17);report.AddChild(_speechLabel);
-        report.AddChild(PanelButton("事件与完整记录",ShowRoomRecords));
+        var report=Column(reportScroll,6);report.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        _speechLabel=Text("慢慢来……",14);report.AddChild(_speechLabel);
+        BuildVitalMeters(report);
         BuildDetachedStemPanel(report);
         BuildSupplyStationPanel(report);
         BuildShelterPanel(report);
-        _objectDetails=Text("",14);report.AddChild(_objectDetails);
+        _objectDetails=Text("",13);report.AddChild(_objectDetails);
         _objectActions=Column(report,4);
-        BuildVitalMeters(report);
-        _condition=Text("",14);report.AddChild(_condition);
+        _condition=Text("",13);report.AddChild(_condition);
         _memoryHeading=Text("刚才发生的事",12,"8b927f");report.AddChild(_memoryHeading);_memory=Text("",13);report.AddChild(_memory);
 
         _forceWidget=Row(_ui,12);_forceWidget.MouseFilter=Control.MouseFilterEnum.Ignore;
@@ -290,7 +291,8 @@ public partial class InteractionRoom
         if(aftermath.Length>0)_condition.Text+="\n\n"+aftermath;
         string risk=c.Condition==PhysicalCondition.Dead?"":FamilyRules.DescribeRisk(c);
         if(risk.Length>0)_condition.Text+="\n\n"+risk;
-        _memory.Text=c.PersonalMemories.Count==0?"还没有一起经历很多事。":string.Join("\n\n",c.PersonalMemories.TakeLast(3).Reverse().Select(m=>m.Text));
+        _condition.Text=_condition.Text.Replace("\n\n","\n");
+        _memory.Text=c.PersonalMemories.Count==0?"还没有一起经历很多事。":string.Join("\n",c.PersonalMemories.TakeLast(3).Reverse().Select(m=>m.Text));
         string speech=c.Condition==PhysicalCondition.Critical?c.Speech:MouthFunction.FormatSpeech(c,c.Speech);
         _speechLabel.Text=c.Condition!=PhysicalCondition.Dead&&c.ReactionRemaining>0&&speech.Length>0?c.Name+"：「"+speech+"」":c.Name+" · "+state;
         RefreshDetachedStemUi();

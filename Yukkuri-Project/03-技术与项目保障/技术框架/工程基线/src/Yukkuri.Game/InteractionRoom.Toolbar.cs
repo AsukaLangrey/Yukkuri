@@ -45,14 +45,50 @@ public partial class InteractionRoom
     private Label _objectDetails=null!;
     private string? _selectedRoomObjectId;
     private string _objectActionSignature="";
+    private GridContainer ToolGrid(Control parent)
+    {
+        var grid=new GridContainer{Columns=2,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
+        grid.AddThemeConstantOverride("h_separation",6);grid.AddThemeConstantOverride("v_separation",4);
+        parent.AddChild(grid);return grid;
+    }
+    private Button ToolButton(string label,string icon,Action action,bool active=false)
+    {
+        var button=Button(label,action,active);
+        button.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        button.Alignment=HorizontalAlignment.Left;
+        button.AddThemeFontSizeOverride("font_size",13);
+        UiActionIcons.Apply(button,icon);SetQuickToolHighlight(button,active);
+        return button;
+    }
+    private static string ToolIcon(RoomMode mode)=>mode switch
+    {
+        RoomMode.Observe or RoomMode.Inspect=>"eye",
+        RoomMode.Grab or RoomMode.Pet or RoomMode.Poke or RoomMode.Pressure=>"hand",
+        RoomMode.Tidy or RoomMode.Towel=>"clean",
+        RoomMode.Meal or RoomMode.Sweet or RoomMode.FoodStation=>"food",
+        RoomMode.Water or RoomMode.WaterStation=>"water",
+        RoomMode.Ball or RoomMode.Treasure or RoomMode.Stretch=>"ball",
+        RoomMode.Wrap or RoomMode.Box=>"box",
+        RoomMode.Sing=>"music",RoomMode.Teaching=>"book",
+        RoomMode.Greeting or RoomMode.Scold or RoomMode.Commands or RoomMode.Company=>"chat",
+        RoomMode.Accessory=>"bow",RoomMode.Care or RoomMode.Juice=>"care",
+        RoomMode.Cold=>"cold",RoomMode.Bury=>"leaf",
+        RoomMode.Breeding or RoomMode.Stem=>"sprout",
+        RoomMode.Induce or RoomMode.Suppress=>"spray",
+        RoomMode.Shelter=>"home",RoomMode.Lighter=>"flame",_=>"tool"
+    };
     private void BuildToolbar(Control parent)
     {
-        _groupList=Column(parent,5);_groupList.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
-        for(int i=0;i<Toolbar.Length;i++){int index=i;_groupList.AddChild(Button(Toolbar[i].Name,()=>SelectToolbarCategory(index)));}
-        parent.AddChild(Button("投放新油",ShowCreatureArrival));
-        parent.AddChild(Button("商店",()=>ShowShop()));
+        _groupList=ToolGrid(parent);
+        string[] categoryIcons=["eye","hand","food","ball","chat","care","sprout","tool"];
+        for(int i=0;i<Toolbar.Length;i++){int index=i;_groupList.AddChild(ToolButton(Toolbar[i].Name,categoryIcons[i],()=>SelectToolbarCategory(index)));}
+        // Keep the active category's operations directly below its navigation.
+        _choiceList=ToolGrid(parent);
+        var services=ToolGrid(parent);
+        services.AddChild(ToolButton("投放新油","add",ShowCreatureArrival));
+        services.AddChild(ToolButton("商店","shop",()=>ShowShop()));
         _supplyStockLabel=Text("",12);parent.AddChild(_supplyStockLabel);
-        parent.AddChild(Text("右键：停止使用工具\n中键拖动画面，滚轮缩放",12,"78816e"));
+        parent.AddChild(Text("右键收起 · 中键平移 · 滚轮缩放",12,"78816e"));
     }
     private void SelectToolbarCategory(int index)
     {
@@ -77,7 +113,7 @@ public partial class InteractionRoom
     {
         ClearChildren(_choiceList);
         if(_toolbarCategory!=0)foreach(var e in Toolbar[_toolbarCategory].Entries)
-        {_choiceList.AddChild(Button(e.Name,()=>SelectRoomMode(e),_roomMode==e.Mode));}
+        {_choiceList.AddChild(ToolButton(e.Name,ToolIcon(e.Mode),()=>SelectRoomMode(e),_roomMode==e.Mode));}
         int i=0;foreach(var child in _groupList.GetChildren())if(child is Button b)SetQuickToolHighlight(b,i++==_toolbarCategory);
     }
     private void ShowCommandChoices()

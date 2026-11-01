@@ -20,7 +20,7 @@ public partial class InteractionRoom
     {
         _recycleBox=Panel(parent,"d9dfcbea");_recycleBox.CustomMinimumSize=new(160,38);
         _recycleBox.AddThemeStyleboxOverride("panel",RoomStyle("d9dfcbea",8,8));
-        _recycleBox.AddChild(Text("收容箱 · 拖入回收\n入仓不退款",12));
+        _recycleBox.AddChild(Text("收容箱 · 拖入回收，不退款",12));
         _recycleBox.Modulate=new Color(1,1,1,.65f);
     }
     private bool HandleRedesignRelease(InputEvent input)
