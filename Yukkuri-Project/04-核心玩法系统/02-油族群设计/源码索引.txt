@@ -1,0 +1,66 @@
+油族群设计｜源码导航
+以下路径均相对于Yukkuri-Project根目录。原文件未按类别拆分或改写。
+
+主归属入口（10项）
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Family.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyAftermath.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyCare.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyDesire.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyRisk.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilySocial.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyState.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyValidation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/OilDialogue.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PeerAttackContinuity.cs
+
+相关共享文件（50项）
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardBehavior.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreatureArrival.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreaturePersonality.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemGesture.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemLife.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemState.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemValidation.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemWitness.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/EmotionalContinuity.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyColdStorage.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyLearning.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyReproduction.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/HumanCompanionship.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/HungerFeeding.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBehavior.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBond.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionCatalog.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionCompletion.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionConversation.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionDressings.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionGesture.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionHarshSpeech.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionHelp.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionInjury.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionLowering.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionMouth.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionPhysiology.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionRest.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionRolling.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSensitivity.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSpatial.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionState.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurface.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionTreasure.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionValidation.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWater.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWorld.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneState.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneValidation.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MouthIntake.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/NaturalLife.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SaveStore.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterLife.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/StemCare.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ToolContactState.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WaterAttempts.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WaterRescueContinuity.cs
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WildSelfCare.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldSimulation.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldState.cs

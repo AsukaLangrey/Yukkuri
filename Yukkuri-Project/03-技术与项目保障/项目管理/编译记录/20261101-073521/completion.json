@@ -1,0 +1,32 @@
+{
+  "host": "SHIKI-GAME-4080",
+  "buildResult": "passed",
+  "configuration": "Debug",
+  "errors": 0,
+  "warnings": 2,
+  "warningLocations": [
+    "src/Yukkuri.Simulation/SupplyStationValidation.cs:12 CS8604",
+    "src/Yukkuri.Simulation/InteractionValidation.cs:15 CS8604"
+  ],
+  "originalFilesChecked": 1559,
+  "originalFilesChanged": [],
+  "newSourceFilesChangedDuringBuild": [],
+  "sourceManifestSha256": "AC76EED67D370C435CB953F62A2ADC4175F29213EE414271FF9DC8A762A60BAB",
+  "artifacts": [
+    {
+      "file": "src/Yukkuri.Game/.godot/mono/temp/bin/Debug/Yukkuri.Game.dll",
+      "bytes": 905216,
+      "sha256": "EE7F63DDCCA927358C7E87133587757BAA3BCCA6D8507081AC02EE84C6BCEE8E"
+    },
+    {
+      "file": "src/Yukkuri.Simulation/bin/Debug/net10.0/Yukkuri.Simulation.dll",
+      "bytes": 822784,
+      "sha256": "8A0C1213110CA438CCC92AB7B7B8DBA71824266423AEE05402D76E68CE320172"
+    }
+  ],
+  "sourceBaselineHead": "bf274206fcd451d989dd7895f5c28addd499e857",
+  "gameStarted": false,
+  "testsExecuted": false,
+  "rendererStarted": false,
+  "previewStarted": false
+}

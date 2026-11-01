@@ -1,0 +1,162 @@
+油库里乐园｜项目分类与职责边界
+整理日期：2026-11-01（北京时间）
+用途：按本次讨论重新整理项目内容，作为查资料、拆任务和归属判断的入口。
+
+一、整理原则
+
+保留原十二类的编号。第01类由“世界观设定”扩为“总设计与世界观”，容纳整体玩法、模式、难度与全局时间规则；这些内容不能只放进项目管理。
+十二类分成四组：总纲、玩法系统、内容与表现、工程与制作保障。
+一个具体规则、状态或制作产物只有一个主责类别；其他类别通过约定使用它。完整功能可以拆成多个不同产物，不重复定义同一条规则。
+分类回答“这件事由谁负责”，源码路径回答“现在实现在哪里”。当前许多文件包含多种职责，不能只按文件名前缀硬划分。
+本次建立内容和职责索引，未移动源码、素材或历史文件，未完成程序层面的解耦。下列源码均为查找入口，不表示相关功能已完整实现或验证。
+
+二、十二类及边界
+
+【总纲】
+
+01 总设计与世界观
+负责：游戏定位、整体玩法循环、世界背景、物种背景、社会文化、历史、模式与难度原则、全局时间与暂停规则。
+产物：全项目共同遵守的规则、体验目标、背景设定和系统之间的约定。
+边界：物种具体身体参数归05；个体与群体的具体机制归05/06；经营与探索的具体流程归08/09；排期和交付归12。
+现有入口：planning/game-design-20261029.txt 第1、3、11章；planning/settings/handbook-v004.txt；planning/design-overview-v002.txt。
+来源：planning/requirements-v*.txt 与后续明确要求。旧汇编的覆盖范围以其说明为准，不能替代后续要求。
+
+【玩法系统】
+
+05 油个体设计
+负责：一只油自身的身体、营养、寿命、疾病、伤势、情绪、性格、记忆、能力、学习、评级、形态成长和自主决策。
+包括：繁育中的个体生理条件、孕育、出生后个体成长；是否饥渴、能否行动、如何响应刺激等个体规则。
+产物：个体状态、状态变化规则、个人行动选择和能力约束。
+边界：油油关系与共同生活归06；玩家如何施加动作归07；身体外观与动作制作归02。家庭共同照护不放进个体规则重复实现。
+现有入口：src/Yukkuri.Simulation/ 下 NaturalLife.cs、InteractionPhysiology.cs、InteractionInjury.cs、CreaturePersonality.cs、EmotionalContinuity.cs、HungerFeeding.cs、WildSelfCare.cs；Data/species-routes.json 位于 src/Yukkuri.Game/。
+交叉入口：FamilyReproduction.cs、FamilyLearning.cs、FamilyCare.cs 等含个体与家庭职责，按实际规则区分。
+策划入口：游戏策划书第5、7、8章及第6章的个体性格、记忆部分。
+
+06 油族群设计
+负责：两只及以上油之间的关系、交流、配对、亲缘、家庭、育幼协作、群体冲突、互助、分工协调和群体生活。
+产物：油油关系、群体行动约定、家庭与群体状态。
+边界：“族群”包含家庭和普通油油社交，不限于大型群体；个体孕育与健康归05；岗位产出、工资和经营结算归08；人与油的关系归07。
+现有入口：src/Yukkuri.Simulation/ 下 FamilyState.cs、FamilySocial.cs、FamilyDesire.cs、FamilyCare.cs、FamilyAftermath.cs、PeerAttackContinuity.cs；FamilyReproduction.cs 中的双方配对与家庭关系部分。
+策划入口：planning/oil-social-interactions-v003.txt、planning/reproduction-pairing-review-2026-10-26.txt；游戏策划书第6、8章的关系与家庭部分。
+
+07 人油互动
+负责：玩家对油的动作、接近方式、力度与接触过程、喂食与照护流程、教学与干预，以及人与油之间的信任、熟悉和陪伴关系。
+包括：选择互动目标、互动镜头手感、抓取、托举、抛出、抚摸、递送、工具接触、救援等。
+产物：玩家动作语义、互动流程、人油关系和动作成功/中断条件。
+边界：动作造成的饱腹、伤势或情绪变化由05计算；动画由02表现；购买和扣库存由08处理；按钮布局归10；通用输入和接触计算底层归11。
+现有入口：src/Yukkuri.Simulation/ 下 InteractionGesture.cs、InteractionMouth.cs、InteractionBond.cs、HumanCompanionship.cs、InteractionHelp.cs；src/Yukkuri.Game/ 下 InteractionRoom.Input.cs、InteractionRoom.Gestures.cs、InteractionRoom.Offering.cs、InteractionRoom.Tools.cs、InteractionCameraOrbit.cs。
+策划入口：planning/interaction-catalog-v003.txt、planning/interaction-dialogue-v001.txt；游戏策划书第4章。
+
+08 乐园经营
+负责：资源所有权、金钱、购买与消耗、库存、设施使用条件、建造升级、经营服务、岗位需求、生产与结算、园区评价和防卫资源安排。
+包括：居所的购买、占用与使用，有限食水供给器的容量、补充与消耗。
+产物：经营状态、交易和库存规则、设施生命周期、成本与收益、经营目标。
+边界：场地容纳什么、哪里可达归04；建筑外形归02；油是否愿意去设施以及身体是否能用归05；油之间怎样协调归06。
+现有入口：src/Yukkuri.Simulation/ 下 CourtyardShop.cs、ConsumableInventory.cs、SupplyStations.cs、SupplyStationState.cs、Shelters.cs、ShelterState.cs；src/Yukkuri.Game/ 下 InteractionRoom.Supplies.cs、InteractionRoom.SupplyStations.cs、InteractionRoom.Shelters.cs。
+策划入口：planning/park-management-loop-v005-oil-autonomy.txt、planning/park-management/、planning/requirements-park-v*.txt；游戏策划书第9、10章。
+
+09 世界探索
+负责：地区发现与开放、外出旅程、跨地区移动的玩法条件、遭遇、采集与发现、探索任务、地区事件、剧情推进和探索后果。
+产物：探索流程、任务与事件条件、发现记录、地区进程。
+边界：世界背景和全局时间原则归01；地图空间与行走路线归04；探索期间个体饥渴照常由05处理；所得物资的入库与使用归08；园内日常经营事件仍归08。
+现有入口：src/Yukkuri.Simulation/ 下 MilestoneWorld.cs、MilestoneBehavior.cs、MilestoneInteraction.cs、WorldSimulation.cs 的地区与探索相关部分；src/Yukkuri.Game/Main.RegionPresentation.cs。
+策划入口：游戏策划书第11章；planning/milestones-v003.txt 中相关阶段。现有入口包括原型与历史阶段内容，不能据此认定完整探索已落地。
+
+【内容与表现】
+
+04 场景设计
+负责：可活动空间的布局、尺度、地形、水域、动线、通行与遮挡、设施落位约束、资源点和事件点的位置。
+产物：空间方案、场景布局、摆放规则和空间数据。
+边界：负责“在哪里、能否到达、如何摆放”；场景模型与视觉风格归02；事件发生条件归09或08；自主选择路线的个体行为归05；通用碰撞与几何算法归11。
+现有入口：src/Yukkuri.Simulation/WoodlandLayout.cs、SupplyStationSpatial.cs、ShelterSpatial.cs；src/Yukkuri.Game/InteractionRoom.tscn、Main.tscn 及 InteractionRoom.cs、Main.cs 中的场景组装部分。
+策划入口：游戏策划书第3.5、10章及 planning/park-management/ 中的空间方案。
+
+02 美术动画
+负责：角色、场景和道具的视觉资产；外形、材质、贴图、表情、动作、形变、视觉特效、图标与字体视觉规范。
+产物：视觉素材、动画与表现组件、视觉制作规范。
+边界：表现既有状态，不自行决定是否受伤、怀孕、死亡或动作成功；场景空间方案归04；界面布局与信息显示规则归10；碰撞是否命中由规则与底层处理。
+现有入口：src/Yukkuri.Game/ 下 CreatureActor.*、Actor*Surface.cs、Actor*Presentation.cs、Actor*Motion.cs、Interaction*Art.cs、WoodlandArt.cs、SceneArt.cs 的视觉部分；Assets/Art、Assets/Icons、Assets/Fonts、Assets/ThirdParty；assets-source/ 中美术源文件与候选素材。
+注意：CreatureActor.* 等文件也含接触与状态接线，文件整体不能一律认定为纯美术。
+
+03 音乐音效
+负责：配乐、环境声、油的叫声、互动音效、混音、声音过渡与声音表现规则。
+产物：声音素材、声音触发映射和播放表现。
+边界：依据已发生的动作或状态播放，不由声音代码判定互动成功；音量设置界面归10；通用音频设施归11。
+现有入口：src/Yukkuri.Game/Assets/Audio、InteractionRoom.Audio.cs、Main.MilestoneAudio.cs；assets-source/audio-polish-20261029.txt；tools/make-audio.py、make-m01-audio.ps1。
+
+10 界面管理
+负责：菜单、面板、工具栏、信息层级、可见信息、提示、操作导航、教程、帮助、设置界面、多语言文案和调试界面。
+产物：界面结构、显示规则、交互入口和文案。
+边界：界面提交操作请求并显示结果，不另写购买、繁育、伤害等规则；互动手势语义归07；视觉素材归02；数据与规则由相应玩法类别提供。
+现有入口：src/Yukkuri.Game/ 下 InteractionRoom.Ui.cs、InteractionRoom.Toolbar.cs、InteractionRoom.*Ui.cs、InteractionRoom.Vitals.cs、InteractionRoom.Debug.cs、Main.Ui.cs、Main.MilestoneUi.cs、Main.MilestoneHelp.cs；src/Yukkuri.Simulation/RoomResourceText.cs。
+策划入口：游戏策划书第12.1节及各系统的信息展示要求。
+
+【工程与制作保障】
+
+11 技术框架
+负责：工程结构、运行入口、通用输入与物理支持、渲染和音频基础、数据加载、存档与版本兼容、时间推进机制、性能、平台适配和依赖。
+产物：各系统共用的技术能力与接口。
+边界：时间如何推进归本类，实现须遵守01的时间规则；何时受伤、购买花多少钱等游戏规则仍归玩法类别。不能因为某项由代码实现，就全部归入技术框架。
+现有入口：src/Yukkuri.Game/project.godot、Yukkuri.Game.csproj、InteractionRoom.cs、Main.cs 的启动接线；src/Yukkuri.Simulation/SaveStore.cs、WorldState.cs、WorldSimulation.cs 的公共结构与推进部分；通用接触、几何和运动计算文件。
+支持资料：global.json、NuGet.Config、toolchain.lock.json、.tools、assets-source/engine-provenance、tools/ 中环境、构建与底层诊断工具。
+
+12 项目管理
+负责：需求追踪、计划、分工、版本、问题跟踪、测试组织、验收记录、发布、交接、证据归档、素材来源与许可台账。
+产物：明确的任务归属、版本与证据关系、待办与交付记录。
+边界：组织验证并保留报告，具体缺陷由所属类别修复；整体游戏设计归01，不能把未归类的玩法塞进项目管理。
+现有入口：AGENTS.md、README.md、planning/CURRENT.txt、planning/stages、planning/handoffs、planning/history、checks、testing、builds、artifacts、third-party、.local；tools/ 中测试组织、打包、发布与归档工具。
+研究资料：research/ 作为来源档案归本类管理，内容同时关联01—10的使用方；收录不表示已采用或已取得素材许可。
+
+三、交界处理示例
+
+喂食：
+07负责递送和接触过程；05负责能否进食与身体变化；08负责食物份数消耗；02/03负责画面和声音；10负责提示。完整功能以07为主协调，每条规则只有一个计算来源。
+
+繁育与家庭：
+06负责配对及家庭关系；05负责个体生理与孕育；07负责玩家干预方式；02/03负责表现。家庭任务以06协调，单独的孕育生理任务归05。
+
+居所：
+08负责购买、占用和设施使用规则；04负责空间落位与入口约束；05负责个体进出意愿与自身条件；02负责外形；10负责购买和管理面板。
+
+探索河岸：
+09负责地区发现及遭遇；04负责河岸、水域和路线；05负责涉水后的身体变化；07负责玩家救援；02/03负责表现。
+
+界面与存档：
+10显示各系统提供的状态，不复制系统规则；11保存和恢复各系统提供的数据，不重新定义关系、库存和生理含义。
+
+四、现有策划章节重新归属
+
+planning/game-design-20261029.txt 的正文和历史章节号保留，按以下目录取用：
+第1章 游戏定位 → 01。
+第2章 阅读与证据边界 → 12。
+第3章 核心循环 → 总体01；相处07；生活05；培养按05/06/07拆分；经营08；小院空间04。
+第4章 人油互动 → 07。
+第5章 自主生活与身体需求 → 05；资源点布局关联04。
+第6章 性格、记忆与油油相处 → 个体05；油油关系06；信息展示10。
+第7章 成长与奖牌 → 05；经营用途关联08。
+第8章 物种、形态、寿命与救治 → 背景01；个体机制05；配对与家庭06；玩家救治动作07。
+第9章 乐园经营 → 08；油油协作约定关联06。
+第10章 区域与房屋升级 → 建造和升级08；空间布局04；视觉制作02。
+第11章 世界、剧情、防卫与时间 → 共同原则01；探索与剧情进程09；园区防卫经营08；群体响应06；底层推进11。
+第12章 界面、美术与声音 → 信息展示10；美术动画02；声音03；油话按对话对象归06/07，显示与本地化归10。
+第13章 存档与技术 → 11；各玩法数据含义仍由所属类别负责。
+第14章 实现与证据快照 → 12。
+第15章 开发分期与验收 → 12。
+第16章 开放问题与来源 → 12管理索引，具体设计问题回到对应类别。
+
+五、项目目录的使用方式
+
+src/Yukkuri.Game、src/Yukkuri.Simulation：跨类别的实现目录，按具体职责查阅，不直接当一级分类。
+assets-source、src/Yukkuri.Game/Assets：02/03的主要素材目录；来源、许可和引擎记录分别关联12/11。
+planning：01—10的设计资料，以及12的计划与历史记录；不因存放在planning就全部视为项目管理内容。
+research：来源证据由12管理，具体研究内容按主题关联玩法或表现类别。
+checks、testing：12组织验证，检查对象关联对应类别。
+tools：按用途关联02/03/11/12，不运行工具来完成本次分类。
+builds、artifacts：12管理版本和证据，保留冻结包、失败证据及既有启动器。
+third-party：12管理许可台账，关联对应素材或依赖。
+.tools、.cache、.godot、bin、obj：11的工具与生成内容。
+.git、.local、根目录说明及启动脚本：按版本/本地协作归12，按环境与入口实现关联11；不在分类文档复制凭据或私密配置。
+
+后续任务写法：主类编号与名称 + 具体产物 + 必要协作类别 + 完成依据。
+例如：“07 人油互动：递食中途松手；依赖05判断进食、08扣库存；02补动作，10补提示。”
+编号表示职责归属，不表示开发顺序。既有明确文件分工仍按当轮计划执行，分类本身不重新授权其他对话修改文件。

@@ -1,0 +1,1058 @@
+[
+  {
+    "path": "checks\\verify-launcher-offline.ps1",
+    "sha256": "3F6360A2103A276A3BACB5CF7CCDE46CFBE1B77D23E022183949E682349F4F47"
+  },
+  {
+    "path": "checks\\Simulation.Smoke\\Simulation.Smoke.csproj",
+    "sha256": "FA5A375FC8191331FFFE02C9A330CADD37F22F144B2B53AF98602CC37585B972"
+  },
+  {
+    "path": "checks\\Simulation.Smoke\\Program.cs",
+    "sha256": "82296006C21D994BE049F8C87E907518354E78652712E2E3AD36E0406AFD997A"
+  },
+  {
+    "path": "checks\\Save.Compatibility\\Save.Compatibility.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks\\Save.Compatibility\\Program.cs",
+    "sha256": "052581744579FB43657F54AD5A25A751B66662F30DC265F6EC32E7289DBBDE76"
+  },
+  {
+    "path": "tools\\watch-m01-render-list.ps1",
+    "sha256": "2F95AFD4CF073EB671C7A40F438C8A874020F1BE305BF04B66CA4BB8E25031CD"
+  },
+  {
+    "path": "tools\\verify-runtime-candidate.ps1",
+    "sha256": "BB7AFF3784BF96B18F9F8DC04A7D4B9F4BF51CB028B9136F9A3AE9DF01FF39E4"
+  },
+  {
+    "path": "tools\\verify-render.ps1",
+    "sha256": "77ACA85D780404E08B40656449A77AB0BFE780301B3B839D5F27FAC931132A2F"
+  },
+  {
+    "path": "tools\\verify-release-package.ps1",
+    "sha256": "36F2CF858E52E6A3FE0190B0BD92B659E2B34F592F6B7B4D43D573EAE014513B"
+  },
+  {
+    "path": "tools\\verify-m01.ps1",
+    "sha256": "35AEE4C137AEF8A5B6EDA4EF2E623BDD869766A689F2FD585CCDEA61AD3014FF"
+  },
+  {
+    "path": "tools\\verify-framework.ps1",
+    "sha256": "C05EB0B6C652402071AF8F7B5C476CEB6C1D61399EA514327716C0A7CBECC5D9"
+  },
+  {
+    "path": "tools\\verify-asan-game.ps1",
+    "sha256": "ABBA4588137C7493EC223347F9C5E881C75EBFB896BFE09B14C35E076AAC5DCA"
+  },
+  {
+    "path": "tools\\trace-interaction-exit.ps1",
+    "sha256": "F4AE491E298D1F81EDAFD26BDCDDD36A7F3E05686E984EEA824936EC91C21041"
+  },
+  {
+    "path": "tools\\test-milestone-gate.ps1",
+    "sha256": "AD282BA5D0638CC6C6E103E4047FA635D5D63A2912A42379BA902BD05D04D04E"
+  },
+  {
+    "path": "tools\\setup.ps1",
+    "sha256": "12B7352B9541804337C13FEE8B5D949C3BC8212FA145368848475066F706F8F1"
+  },
+  {
+    "path": "tools\\run.ps1",
+    "sha256": "4F2FF5AC327F0094DD18CD362F52700673F6837469D90562E4D86DCB2217B33D"
+  },
+  {
+    "path": "tools\\run-native-render-probe.ps1",
+    "sha256": "2D654AB6C5D0B04BA12629CF0A634320D7E0829AE2CFF8EBC2BC91C50AE9FBDB"
+  },
+  {
+    "path": "tools\\resume-m01.ps1",
+    "sha256": "89E30657AA1C1B7C837DE9C7F28B0A179E5187F9F16D6D18D182E7F497003681"
+  },
+  {
+    "path": "tools\\render-actor-surface-audit.py",
+    "sha256": "3C7C753D54F00908E39D245310B9648815A6B614BD76B18E5A00EBEDAAABB776"
+  },
+  {
+    "path": "tools\\record-v051.ps1",
+    "sha256": "4F2D84186E6B748560F7ED88BF4E87A1CD55A421580E3C8B2EC9A81E7FF741BA"
+  },
+  {
+    "path": "tools\\record-v050.ps1",
+    "sha256": "2E056D87A3A3E198823C8F9F6D975D5CD4256887364E1116322902BB3F84014A"
+  },
+  {
+    "path": "tools\\record-v049.ps1",
+    "sha256": "81885AE3578BCF2D0F424BE87FCC71F8286F89AB894BE232DC97B18E4729C451"
+  },
+  {
+    "path": "tools\\rebuild-engine-isolated.ps1",
+    "sha256": "28CF15228532CE5234EB4272738A13B0A83FC6AC66880201A52709891A423BC3"
+  },
+  {
+    "path": "tools\\process-affinity.ps1",
+    "sha256": "15658748E9FC96643E02E98BB71B0198A7993A2669C78DB549298E4AB77DD045"
+  },
+  {
+    "path": "tools\\probe-model-matrix.ps1",
+    "sha256": "34AB5478F9FE76D9790FF988683CE318462AA16090A8CC75435117D3159566A8"
+  },
+  {
+    "path": "tools\\prepare-local-playtest.ps1",
+    "sha256": "D1F2D1BDEED963C86665C5CE0B19CD18DCFAEF1C716DE0469837B24A68E620EF"
+  },
+  {
+    "path": "tools\\package-m01.ps1",
+    "sha256": "0BDCAAAFA1B3DD9EEB32FD43362F752B764258F24BBA907C3CF79BE65D77688E"
+  },
+  {
+    "path": "tools\\package-framework.ps1",
+    "sha256": "AE3DCE231C0D63437AFDF1519E581623144CEFD4A37AC1033368B67337253F16"
+  },
+  {
+    "path": "tools\\open-editor.ps1",
+    "sha256": "70768AADF7ED0880DC953D095A0FC92DC645CAA3E2EA5A68AF14D4E8CC89E86D"
+  },
+  {
+    "path": "tools\\new-engine-candidate.ps1",
+    "sha256": "04BC2F4B283A4CC2C301F789787C736C6BC5CC57CBFD6A74C9168F44ED5A62B6"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\Yukkuri.Simulation.csproj",
+    "sha256": "3472FCCCE5613343D3B55F6C2BBC48CBFD3DE01F9CF32FD8607B8AC3A7E26395"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\WorldState.cs",
+    "sha256": "61A3F5205B3466D58E90C44E4B1F316144BAF681F20A546CC5A60E9910942549"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\WorldSimulation.cs",
+    "sha256": "4E22F228991E718239A256E675872852BFD67B8D090A620FA2FA98B731531319"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\SaveStore.cs",
+    "sha256": "7D733B6C290EAFE18E3DA63AF113C3CB3EB921D15D4D39657023AD04C827297E"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\OilDialogue.cs",
+    "sha256": "F07C18F90F3597E447AC537CDE4DC6E4EBBB0321E2FB4627A4CEE3BA6BAD71CA"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\MilestoneWorld.cs",
+    "sha256": "E50D3678747960D2F29566EFD8B2FD040BFCC190BE00AB8656BCD9A657BC030D"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\MilestoneValidation.cs",
+    "sha256": "AA3D0CD98F2190910CCF52FBD4F6E169EA381B9D2BA9E4DF18839DB8D14363BC"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\MilestoneState.cs",
+    "sha256": "F96843024AEECC743CEF4DD6225ED4AF64EE7E4CCD4BFA63B853262A00B13DBC"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\MilestoneInteraction.cs",
+    "sha256": "3B469CE61BB4D336E79B636504C0D483B77FD8C15E8D93DE9D5EC0BCCD4FB9F5"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\MilestoneBehavior.cs",
+    "sha256": "B7F20152E234C736D5D44B2FAE079421DA96FFCACBEA499FF3A7A839297B7E84"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionWorld.cs",
+    "sha256": "C7FE06C3ABA7A5640ABBAB996AC82C81235B8C2AAC68352E80EA61D57C46524C"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionValidation.cs",
+    "sha256": "8376AAD1AB3848183558F68F9E53A91AC31AAFF891DD5BD510E61167E0A1F24C"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionTreasure.cs",
+    "sha256": "106DAC74C91134664281C53D60A13E3F5EA0D75AC338A0FF5ED53EBA7BF83438"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionSurfaceObservation.cs",
+    "sha256": "58C8675F5EADB7DC127FCF267D7DF56A549BBA9F109DEDD4C067BD45FEFE36F2"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionSurface.cs",
+    "sha256": "4D825E18BDEAE2757D16635B0D068CF166E5EB914FE42500F109A4730CC1B058"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionState.cs",
+    "sha256": "065D4BA165A077DD94E5B346F268CDA6C9941B6EFF1316C3BD9E88450E3484C7"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionSpatial.cs",
+    "sha256": "AAC31EC81B0BFA519817538A1D4502F7DDEE8CF819EE7D450005C5E6406B8D73"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionSensitivity.cs",
+    "sha256": "6FEC77A4C7C91E0FE89F659190C2949DF798467395F4990079C64C2CE4DFFB32"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionRolling.cs",
+    "sha256": "D05146F27EA76B392D7F848A053FD041AE220D96212AB01BF185695A56EA07BE"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionRest.cs",
+    "sha256": "8FCC5F213E7E6AD7ABEE75C00BBC1FC6B3008B107726280457799492561E265D"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionPresentation.cs",
+    "sha256": "9948044D60F339A7C5A0ACEC3188CD8D582B1F5094B4760D75B77C2B08E1C84A"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionLowering.cs",
+    "sha256": "FFA0DB8BCB0F689A48BA7918D8C50881183034B0E5F201548012F3AE8B07702A"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionHarshSpeech.cs",
+    "sha256": "5E4E029765F21091C3BCB8F66190F7C89430BE2D4F8F52CF867141C209FCA24F"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionGesture.cs",
+    "sha256": "DE14B8BE122A631B5081A441E541D5940B6E539DE207E3F60EECE0A72538A863"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionFixtureGeometry.cs",
+    "sha256": "9CAA19FA04F9167B711636D67ED493012AC7DAD97807D9699761E3480F695878"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionDressings.cs",
+    "sha256": "96DF22B5947C7BAFA75036C0B609E0C0F5C4BB744008086FE7F0FAA541F67257"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionConversation.cs",
+    "sha256": "96749FF772B29CF4EA14C87103795175873D49457E98C25B6DE14EC34081092D"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionCatalog.cs",
+    "sha256": "9C304B1062958A2CD25892F519E7E18EAF9C1D23B696733C53C6682C46784CC1"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionBehavior.cs",
+    "sha256": "258E59B43F732D7939B30C3AFFACB487D64C257D668E53055A455DFA65081354"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\InteractionBallDynamics.cs",
+    "sha256": "900B40A021514B3A8100D01509C19442D25F65744A4B6AD92CA1A85E0E87A3FC"
+  },
+  {
+    "path": "checks\\Renderer.Probe461\\Renderer.Probe.csproj",
+    "sha256": "7B0B98366382319B0CDE9028530345235C0AE2A675070E1F3B7B9FE694C62698"
+  },
+  {
+    "path": "checks\\Renderer.Probe461\\project.godot",
+    "sha256": "C79AFFBE1EF29131D5EBD7D3EDE091F2BDB9029BBFED37C1F6E3636A04B39292"
+  },
+  {
+    "path": "checks\\Renderer.Probe461\\Probe.tscn",
+    "sha256": "1773F534271E1F49CB93ED8A35AE38E460CFF04DD1FF8B37223350B1D8EDDCF4"
+  },
+  {
+    "path": "checks\\Renderer.Probe461\\Probe.cs",
+    "sha256": "2F207F9292FA098320AFB0EE1792F6575933AB5C7CA76D602EED7C7526FA292A"
+  },
+  {
+    "path": "tools\\import-assets.ps1",
+    "sha256": "377D2D6EE8822FFB91FB4812636EE891CE7C422C4E23A2098715E1AA51519495"
+  },
+  {
+    "path": "tools\\freeze-candidate-source.ps1",
+    "sha256": "66BAA7F64D5D593FCA1F6DCF8D1157CAD328BA30D24D954383860426BAB00DC5"
+  },
+  {
+    "path": "tools\\export-windows.ps1",
+    "sha256": "3FF6B74B170C850F727776B9692A39AC7F812521C381D82F8DF4F48A8DEB6684"
+  },
+  {
+    "path": "tools\\explore-m01-simulation.ps1",
+    "sha256": "00192B6BCCC0158EF21FAAAC9DE9A2D4A93D69A42AFA055D64E58CE5C632946C"
+  },
+  {
+    "path": "tools\\env.ps1",
+    "sha256": "50379644A2283F6A8209482CD41F1F59CD916EBD19008EA6ADDA4BFE3891E64B"
+  },
+  {
+    "path": "tools\\engine-provenance.ps1",
+    "sha256": "6C9A54C93EDDEF3CD58CE84DE8F3E07B9F11D565982958BF75E04E907D587840"
+  },
+  {
+    "path": "tools\\native\\zlib-repeat.cpp",
+    "sha256": "C156058B7E5F2FEFB26AABB08F9D20D85B9C09419A8994F9C3D048E2D4064C4E"
+  },
+  {
+    "path": "tools\\native\\watch-render-list.cpp",
+    "sha256": "EC93799C904D71A8EF4BA450AB78BB859A2967D2ECE2B0952245858A85FB65A4"
+  },
+  {
+    "path": "tools\\native\\read-minidump.py",
+    "sha256": "C138C6E82E32AAE70C82896ECF76BF93954544B5B70B0FA1C8D99AEC4C29AF1F"
+  },
+  {
+    "path": "tools\\native\\cpu-topology-probe.cpp",
+    "sha256": "244A149142973EE6A5EDC26054E8D39F5F0C36C7A42F4035976D4933CBD9B6E3"
+  },
+  {
+    "path": "tools\\native\\capture-game-crash.cpp",
+    "sha256": "7381C854FF1D8621F024E3A0F030014BC1B82A130D345868B4D66D7769ED2B68"
+  },
+  {
+    "path": "tools\\monitor-m01-processes.ps1",
+    "sha256": "2FE50700E86B458DE759E0A97D08E13D8DCBBD716C8BE23417E64DF126FBBDA6"
+  },
+  {
+    "path": "tools\\make-probe.py",
+    "sha256": "E4838EC8E48CBD60C0D78BD620598A4380EAA58392B48A5AF196621EE19462EB"
+  },
+  {
+    "path": "tools\\make-m01-audio.ps1",
+    "sha256": "7F4929B156EA56F1CA8DFEEDEF10BCD25E1CDADB124AC93845628387D111FF4F"
+  },
+  {
+    "path": "tools\\make-icons.py",
+    "sha256": "BC7BCD8CDA1AC99890AEB42C7999DC2014BC379F8C5D6E9729BC0DCECB7B7197"
+  },
+  {
+    "path": "tools\\make-audio.py",
+    "sha256": "852FBA75FB765284BD13B71CA8DE0755468C7075656CAD94E87224EF4C4E0630"
+  },
+  {
+    "path": "tools\\m01-release-rules.ps1",
+    "sha256": "2A8BC2CD4B6DF16F521148DF747B4CD8C056CFCFF56E4CAF47FF50FE2816505D"
+  },
+  {
+    "path": "tools\\launch-m01.ps1",
+    "sha256": "12EEA274E022839433E96F2A8F0DA768A57C68D219B834E00558B0B49CFDF08E"
+  },
+  {
+    "path": "tools\\inspect-png-stream.py",
+    "sha256": "D96D73A27A638104E3D8E38E7963BC4433C9979417A524704E10A7F21291C9E8"
+  },
+  {
+    "path": "tools\\inspect-pck.py",
+    "sha256": "E2974303FAC0EC767254F469FF7C8B1FA52D1BF3167685FD87337B87A2399696"
+  },
+  {
+    "path": "tools\\inspect-frame-colors.py",
+    "sha256": "DC8D1BE8E70CE8DE65E6C6FD6E0A8ED808B054EDC0AC55BE66355CE21EAA343B"
+  },
+  {
+    "path": "tools\\index-m01-evidence.ps1",
+    "sha256": "268D85A5EA4BFBD9C7532DDCEA96EBD9C187E525B6A1FDFB22C5DB9B8EEAED16"
+  },
+  {
+    "path": "checks\\Renderer.Probe\\Renderer.Probe.csproj",
+    "sha256": "251268F991885D3D6D82CE17F971329FC82B744B476BDA627C6094FDF5130091"
+  },
+  {
+    "path": "checks\\Renderer.Probe\\project.godot",
+    "sha256": "C79AFFBE1EF29131D5EBD7D3EDE091F2BDB9029BBFED37C1F6E3636A04B39292"
+  },
+  {
+    "path": "checks\\Renderer.Probe\\Probe.tscn",
+    "sha256": "1773F534271E1F49CB93ED8A35AE38E460CFF04DD1FF8B37223350B1D8EDDCF4"
+  },
+  {
+    "path": "checks\\Renderer.Probe\\Probe.cs",
+    "sha256": "6EF521827BB06BBB81FA00B2F4CAA7194A91952B78A27F5C68ACA9D106F66B08"
+  },
+  {
+    "path": "checks\\Interaction.Smoke\\Program.cs",
+    "sha256": "D74F2C50A3E8A125067E89BFCF2BF44C3E9F32BA30025C944B2226020BF9DF3F"
+  },
+  {
+    "path": "checks\\Interaction.Smoke\\Interaction.Smoke.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks\\Milestone.Smoke\\Program.cs",
+    "sha256": "FB873DA203CE313EA6D4C9AF0A5CCCD3C92BFD4C70AF1AD96A0E94568C8D47E3"
+  },
+  {
+    "path": "checks\\Milestone.Smoke\\Milestone.Smoke.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks\\Interaction.Continuity\\Program.cs",
+    "sha256": "028752AC22EBAC1C817E4D342A360719FE50317022E727CAF76F932AC3E48737"
+  },
+  {
+    "path": "checks\\Interaction.Continuity\\Interaction.Continuity.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "tools\\diagnostics\\run-png-affinity.ps1",
+    "sha256": "535E077FADA4E8084EA3175A432AB360AF086A8A334F17A48CC0EA9A3096C31C"
+  },
+  {
+    "path": "tools\\diagnostics\\png-roundtrip.gd",
+    "sha256": "761335078883BF41D7B7C202DC4AD981B63A5D106D0E923203AB0C1B5F5A8976"
+  },
+  {
+    "path": "tools\\diagnostics\\pack-png-probe.gd",
+    "sha256": "8280051397D489711658285E835D401238BE5F6987F5ED7DE708988C41D0C792"
+  },
+  {
+    "path": "tools\\diagnostics\\compression-repeat.py",
+    "sha256": "BD6D2FA02B30E6929441E52EAAF2CC9D841B29842AB3276C7AEA938310316A82"
+  },
+  {
+    "path": "tools\\diagnostics\\compare-scene-payloads.gd",
+    "sha256": "33EC7DFB991450A85440554DBDDB2BAB7A57B75C0F67F64BB250F23206662602"
+  },
+  {
+    "path": "tools\\diagnostics\\compare-png-series.py",
+    "sha256": "2F70E5D6E768992ACFE29A86E73872BEAC901BDEB962F042F041145A3E9A9B33"
+  },
+  {
+    "path": "tools\\check-milestone.ps1",
+    "sha256": "D947F4E08B2A1AE6CE1C63E18E15540A907D417C80CA7DA8379A617BEEED8BD4"
+  },
+  {
+    "path": "tools\\catalog-assets.py",
+    "sha256": "161D84185E079E270EFE224138128892B0C3C2E184D4F361E69D3F8913302102"
+  },
+  {
+    "path": "tools\\capture-m01-native.ps1",
+    "sha256": "2FF56D802064A1923718719575DFB84194B8E7EB87DBDD272C6F4CD38C5FD1C4"
+  },
+  {
+    "path": "tools\\capture-integrity.ps1",
+    "sha256": "8E0F2874B1931578FBF1027C6D8B6778A010A10D65209A0075F7D1C87F1F1F25"
+  },
+  {
+    "path": "tools\\build.ps1",
+    "sha256": "E36A7A6165A7A2FD503B0E1DBCF4BD0AF3B6BFA506A948B8A6F879FB271A1F61"
+  },
+  {
+    "path": "tools\\build-msvcrt-comparison.ps1",
+    "sha256": "E3ABB546D9D19E1D9FBF5E6038804D53A21BEF5B601C8A28ED8CFFE0D84D40EC"
+  },
+  {
+    "path": "tools\\build-identity.ps1",
+    "sha256": "BE181AFA620DB968A96F1CD7149F970AA0915DAA2BA564682E48E33EBC78F048"
+  },
+  {
+    "path": "tools\\build-diagnostic-engine.ps1",
+    "sha256": "CE4E4580ABFC9DA73BD04D993182C337A5492E91660C905CD282019DD42AAC25"
+  },
+  {
+    "path": "tools\\build-candidate-template.ps1",
+    "sha256": "C92C77388919393A11E1CC3E65ECC108B99601DFEE4ABC345B26ECB233779CD7"
+  },
+  {
+    "path": "tools\\audit-png-captures.py",
+    "sha256": "6A9C406853A37A590656B2DDA757DFBDE8F52903C7B0EB6119D2127643937FD4"
+  },
+  {
+    "path": "checks\\Milestone.Exploration\\Program.cs",
+    "sha256": "DC127C3E8741AC5C1C2F960D4937F2C905639A26D6D9E9FF1E4587E257A64B22"
+  },
+  {
+    "path": "checks\\Milestone.Exploration\\Milestone.Exploration.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks\\ActorGeometry.Smoke\\Program.cs",
+    "sha256": "6CB88632C10263A3EFABFF7A452AD16EF824DFAB2D25C9197FEA8E2BF7EA5711"
+  },
+  {
+    "path": "checks\\InteractionProp.Preview\\Program.cs",
+    "sha256": "580F38B2F3118BB5932A96E1EFE9BE860FAECD85716B9703D06D25595DF1522D"
+  },
+  {
+    "path": "checks\\ActorGeometry.Smoke\\ActorGeometry.Smoke.csproj",
+    "sha256": "D6B50E3590A3E61BD77E88D3D960F87A830443A55C44966478A80EFDC7D7E236"
+  },
+  {
+    "path": "checks\\InteractionProp.Preview\\InteractionProp.Preview.csproj",
+    "sha256": "C12CC89311C023433A5D5F1060311EB08F8488747D76C76BCBCF43355F14DC0F"
+  },
+  {
+    "path": "checks\\ActorArt.Preview\\ActorArt.Preview.csproj",
+    "sha256": "98C45C7F7E32C9EF342FECB89BFA8EC60B566BF5BEA635E1F56F1118F105D148"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorFaceSurface.cs.uid",
+    "sha256": "34105CDBE520007521D92D4FD3E33A66308B58F04882A615BF901E89343B6AC7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorFaceSurface.cs",
+    "sha256": "AE10B9B9813082BAB3322571022AED2440C6E3BC14FCDC4D72CD037D52A11A22"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorEyeSurface.cs",
+    "sha256": "70CB04748EDA104A702974BF9B92BFBE2EB0ECD714837C829098B24093FD1BDD"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorBrowSurface.cs",
+    "sha256": "1F55B0B53B19217A6D238934C04CDCB2DCDF0A081156F0B9ADA181ACA8A23A35"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorDressingSurface.cs",
+    "sha256": "6092B6D0BFF5F473A1C29D50C87FF0B4A9A943CBCEE2DAEA07424D8730719F9F"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorCushionSurface.cs",
+    "sha256": "8B97DB15DA1DA824937869F92C7634FC6F9AAADD523084AC9E4AC6CC934633B9"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorCradleSurface.cs",
+    "sha256": "BD7148CBEB47B4CD0338D5810B41C92F239673C59AA67B74C2690B9765801F37"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorPoseClock.cs",
+    "sha256": "866D0614BABA54FCFD752B011E1B44AF1D95DC000547017E86578A4D1D4F2857"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorMouthSurface.cs",
+    "sha256": "AA82E4A05A8273C7F5DA12973B98A22A06395D748161E960700EB229DA7D2C0A"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorIntakePresentation.cs",
+    "sha256": "B2F3F533C10A26BF0408976BDF1CB49109C7D6BCD05A5D5E1CBF3A80EDE7C8C5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorHopMotion.cs",
+    "sha256": "4EC8C5949195E1DA69549C87C4C6CE1ED1ADDF18C689807C092CA63468AD9072"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorHarnessSurface.cs",
+    "sha256": "903F100140A88A0C56D7D334B51039D3106D835F076D31B5B3A2FD8165953DC1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorHairSurface.cs",
+    "sha256": "A8B4245322B2C3C2FC75B5BAD7373365CC99E74CA71F1981EF5E13B5F9119BC7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorTouchShape.cs",
+    "sha256": "40AE8087BFAE106E19667876AC87FE6E9F7EC3BA2D7DED66A30B90FE383F345D"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorTearSurface.cs",
+    "sha256": "1CA9292ABC4B5FC24CF15B097C0708C1ECF161FEE08DE68319B9FBD368047D8E"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorSurfaceMarks.cs",
+    "sha256": "EFFF147E56D3F038456D73509FDCD861C1B117AF632C1E81D53F92D9EBD6E8C1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorBodyBounds.cs",
+    "sha256": "0F4C7915A57DF7C29571C241F849793DFDAB9063B1265F7208954DCCF0EE6BD1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorReactionMotion.cs",
+    "sha256": "1ECD92722CD1BCE214E3C5C1DC6B8133A2CA715B5B952CECF594D851AF232126"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorAccessoryWear.cs",
+    "sha256": "B0A6FE613F6B964022BA0F8774A220ED58E16CDCBCE607083A7C265A486EFBD2"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ContactStrokeTracker.cs",
+    "sha256": "9C4A01BDC447D8F4FCC0867D1A721B64DCB8DE90B48F2D41B58475042AEC62A1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorAccessorySurface.cs",
+    "sha256": "3DF2209341A76FB0777F35611EB5A5E88E5F901DB136107988DCA6EAC2806F0E"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorAccessorySupport.cs",
+    "sha256": "92826953E0A65A2FDC24A545442E91F90691CB2AD20150072CBE9EF8211F34E1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ActorAccessoryPlacement.cs",
+    "sha256": "F04742365C623B0CC7389C5F22ACE840008FB3BC612AFE0887D1539670CCF285"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Accessory.cs",
+    "sha256": "B98C5E2AD7B2FFC3D1500C6FF51D9376A385AA1CBCB64B799B5C8E4BD0C09D8F"
+  },
+  {
+    "path": "checks\\ActorArt.Preview\\Program.cs",
+    "sha256": "548421B7DF361906151D00EA475ED420E3D7A68F615E74AB4750619E514FC7E8"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Contact.cs",
+    "sha256": "785A9E9AB0E4846506EB6AF02DC708900D474B041D39323E094123F7214B8B9A"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Accessory.cs.uid",
+    "sha256": "5FA4A6E392ED50F1F9691FD30B2CC49E2C3A973225F3340AB84F7653C75448D4"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.cs",
+    "sha256": "3B4A310380874537E6B64565A1DD9BC64A820F1FAF8288223BBE7B9D0204898F"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.cs.uid",
+    "sha256": "1FE3DEABB7F7D72F2C4FA188FEE55389A5E222721DD3AB20BE8672BDE0F370D7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\pipeline-probe.glb.import",
+    "sha256": "A333B27A4F5DE253D45775A1F4224ADADC01CA675862FE5F25385592585F1CCA"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\pipeline-probe.glb",
+    "sha256": "8C401241F57943F94E797247774CC1EABB42E7D8CE4CDF1E468C4780A2DC2352"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\observe.svg.import",
+    "sha256": "9F7D41CBB876CACE7FFE15171E6A34B64D5AC86686A5A6806DDBEC2F5ACBBEE2"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\observe.svg",
+    "sha256": "A69A74F49BE5DE4C79E4F45711023E70B4C16B6DD4D297479F4D9FFBDD6A6539"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\home.svg.import",
+    "sha256": "7FA7B669A9A90344E09CA96E5B199581D13CEB1D5DA07EE71985BDE8C2AA3C4C"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\home.svg",
+    "sha256": "C016F58330D1806DFD61F4C4459D5430BF9C33A9FE81C8211C1034632AA860B5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\hand.svg.import",
+    "sha256": "1A582F81C8702D4D8CDF41177F0082D345DABEE52F0F614FB898FD98161042D7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\hand.svg",
+    "sha256": "2D74D0F4561FF951C237A8B67D28645096E401EFC244FBE32617870B65B4EC24"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\food.svg.import",
+    "sha256": "83516C3F82383679BDA6CF2D44EF7D2CB21900DF8C2B0887A9E31C9E114567D4"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Icons\\food.svg",
+    "sha256": "E6D3A4C4A096763DB5FB45DB50B2C9B7C985233FA0AA2807E7ACDDF810A243A3"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Fonts\\NotoSansSC.ttf.import",
+    "sha256": "314106103E2DDC51C1630D54C75A8FC1869D2721E5DD2BE47DB22E89A070FF6B"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Fonts\\NotoSansSC.ttf",
+    "sha256": "A3041811A78C361B1DE50F953C805E0244951C21C5BD412F7232EF0D899AF0DA"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionFixtureSurface.cs",
+    "sha256": "A0EDAF47573300FD3A6BAACBF2ECF45BE9AEDF8995784CBBCF2ECEF915D8DD0F"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionFixtureArt.cs",
+    "sha256": "AA73F6A9DEDB627782D6A3F569DD4AFAD8ED97019F1B81BD311B02CEB43D0617"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionCareSurface.cs",
+    "sha256": "BE42864DE4B674F63BF95A4FC4A608CF944B5CE108BCDE6EBEB0F8B3F5CF85F8"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionCameraOrbit.cs",
+    "sha256": "6261AA5BA5EC87508A27867BFC2D484301CF324733D6FD3D00B4AE9D0DBE581B"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionBallSurface.cs",
+    "sha256": "2D338FB0ED1284210D47CEB811088F000F84F67312409F1DD1F6D3EFB9D76690"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\export_presets.cfg",
+    "sha256": "AE20F32CC7686914C0E5BFA2533987CD612D476546EAA483E3277E943FC5D292"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Data\\species-routes.json",
+    "sha256": "70CE92A81AC2489D61EC45A25C0226B8BC8A381B64C533F451FE1BB9826F3B40"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Data\\simulation.json",
+    "sha256": "CDE295670C07287B734A711B8F1153A9D6607B5ACC1489110C2AD8BCF586D505"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Tears.cs",
+    "sha256": "21210CF4BE30C232FC8F04E1350E453877FB61466F76FE0C7440AE16B2405C32"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.SurfaceMarks.cs",
+    "sha256": "4446702DA89CC427352F4DDE388291725C80A5F47176DBF15103AEEBA1ABC2F5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Support.cs.uid",
+    "sha256": "EC92A8D9B63C1F610A8598B94AF68F8B6F1EACC7B4699E0BE33F63247D24B76F"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Support.cs",
+    "sha256": "152A2640A01B8E6610E69060D1A3FD7F2C96170414A99845C2813164BF0383AA"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Sculpt.cs.uid",
+    "sha256": "7239D29E51B882C0CF47AB092D90546C19C8F7D070A82E1923E2A06A49C3B0E5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Sculpt.cs",
+    "sha256": "A8E0E77A2D41DADCF97513EFBCD4687AB3808BA07E3FE0D29B55696B63DB7A35"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Interaction.cs.uid",
+    "sha256": "24B52E23D5143C02C64E5342C791D32675CC553291E593C48A6BB5FAB36113ED"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Interaction.cs",
+    "sha256": "DBCE158EA75E9FB3D576DBDFCCEADD85012C40EAEB30699F948718645CAB5DEF"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Intake.cs",
+    "sha256": "2888C3B23630727DD051FE55ADC182118323056119D41731FC56112697E7F12F"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Harness.cs",
+    "sha256": "736819C544522FA52B43A7C04DEEA99AE6CD52BB096330E73CAD6A9F3449BEE7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Face.cs.uid",
+    "sha256": "E2B2D7DC0348A35004FB3BC08BECCDCBC053CBFE1E024139F2D2550B0A32C5E8"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Face.cs",
+    "sha256": "C78078C85892DC3BDFADD02E2A7FC6AF4243AB2C19DD52EEE30DB7DA16067A58"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\CreatureActor.Dressing.cs",
+    "sha256": "07DF5036DB5E6437DC5973ED2942A5AA5BD4BFE60C5875B0F56CC567B5D96838"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Verification.cs.uid",
+    "sha256": "B97838167A53241498946560923F9CD3EF44366F57D17695989AC4E63A5CA767"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Verification.cs",
+    "sha256": "2CBFB3A8188EDFA6BF3442A55C6CB8234B8083DFED4577FDDFF56A124BBA877A"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Ui.cs.uid",
+    "sha256": "FFC9596BDE720750D1EEEAE719E8A289181D570E61FD066460F17535E7F46A1A"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Ui.cs",
+    "sha256": "7B3D056C748B1EB76D412909932674585BFA677D2AFCBC6E093DFFDF0A7C0F00"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.tscn",
+    "sha256": "B94C5555BFCAAC9F62FCE37D5816C6FCB92AF33A3DB44EB9FAC954A580C91AA9"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Tools.cs.uid",
+    "sha256": "122F4E27B76AF307B41B26D1147432380B37F2ECA9AA156F5250782115E9BAB7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Tools.cs",
+    "sha256": "33C65D94A5B268C656690FA8D335FC15D0AA9B897AE00CA37129812E3EC39435"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Input.cs.uid",
+    "sha256": "20308D41F4E2B675D886ABD455D00401669E32CE61CBA5EF795168C90FDDD75A"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.Input.cs",
+    "sha256": "65510281150B67388E44497B34A708B806AD2A38419D9DFA32FF53968AB4F5F1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.cs.uid",
+    "sha256": "8BDCA823069C011E60E25557FD739AB3EE21614F9449B7B80493B34FCC406AED"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.cs",
+    "sha256": "72B88B798B3507787A9D5F8B201D166214B90F02FA09CE769ECC371BC154BC08"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionRoom.ContactVerification.cs",
+    "sha256": "7B6E66E628E5CDF788F5E518B8AE396F017610E53A052AAF6D8ED451B61C1315"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionPropContact.cs",
+    "sha256": "2F1571C68866B28A4386C7BAFE1DA66B6029547D9EC5498D1FC789F3F9BFFF0B"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionFoodSurface.cs",
+    "sha256": "F7FC2C9861324FA69E9116DC11A316A43D7B3D9FFEC64A1FC2B109A6F009F4EF"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionFoodArt.cs",
+    "sha256": "E378AE873B920362C7A9738A995815EDBF9CF6969221E65B1148CC4CCF757D52"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Lifecycle.cs",
+    "sha256": "4FCC9A142E68DB227ADE2FCA159F187618894CD20445407CC76F2D5A9832F706"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Input.cs.uid",
+    "sha256": "E738E1E1E3AF4DFEC81D783F509F27FFA0EDB5A3FF4CBB6DA90774F765BC4662"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Input.cs",
+    "sha256": "6D61A5A08D341E030717C72A5F0550F115963CE805EDB7AF9AB26ADDD4833FE7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.cs.uid",
+    "sha256": "6C97295691A6107A02CCEDEFED927CBE388CD42028C0EEEBF5F476D03BC14384"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.cs",
+    "sha256": "B7AA8FAEC07B7274A1D9359DD8C8129519AD912D4EE007898DF11AB6646A0AD9"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionTreasureSurface.cs",
+    "sha256": "0F931F00FE19C9DE29D479F5DFB149C6B7FFCF1C2EE5342BFB61BB7B245D4645"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionToolSurface.cs",
+    "sha256": "014F043B32C962B74F100A54E3C2D38A808B9B601419846586FCC56E1DE552D2"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\InteractionToolArt.cs",
+    "sha256": "DD5E7E925BA780877431E45704D1E55DDCB6852475A49FF9E1E5407DEAA8981C"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneAudio.cs",
+    "sha256": "799F94F8C4364CDB15905B0744CFD78890361DF06CC908150C694FE2C2A035DC"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneArt.cs.uid",
+    "sha256": "AFB3384B805331E1506A74B2C84658C27A043E1B2D13F498F45D2762ED48432C"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneArt.cs",
+    "sha256": "7BC068124050A0C51D48ABDD6CF20F981CC7D4C59BCB596EDE0C65E0ADB3B6F5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Lifecycle.cs.uid",
+    "sha256": "7E8F7AD24DEBB4308A5FEF4DED0ACD8A271A1296C59E548C32558327AA1C2A02"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneAutosave.cs",
+    "sha256": "849E060E10568BB854E235C232CD9552BCCB851C532760A0396EDE26B4F4F5F4"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneAudio.cs.uid",
+    "sha256": "AC54DAB093659CC060D297540C671FB26D4F0AA73D735E7A2A828362494001E7"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneAutosave.cs.uid",
+    "sha256": "FCBA3FF3B30E808E5E5864118DD07DBFE339317F0D8851F380E1567DB923CF2D"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneHelp.cs",
+    "sha256": "348109F6B01F8AA43F61F886540AF3BF8D4B97A4B4E94EEA362879127E9761A5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\build.wav",
+    "sha256": "6E3756A135836E95EFEC8254C838A24EB883F63364600AEBE54F6D97357AAEF1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\audio-analysis.json",
+    "sha256": "2A78FD5F1BD035AF297AD897E0C198B29A269CAEB16399CDA64A1AC15E3371BE"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Art\\sanctuary-morning.png.import",
+    "sha256": "ECB2E298D27E8080F2AA20005DD2E3E0C5F167628E2F22CE7078F1034EE179E0"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Art\\sanctuary-morning.png",
+    "sha256": "1EAFED66BC8E3A117B84DF85C9C38F3C2AFF86ADFC9AAADADC237163853D6024"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneSoak.cs",
+    "sha256": "1B008D2FB14709E3E11F9BBF82F9E9DAE47A2F05AB380B9DB1B6675A7B47BBF4"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneInput.cs.uid",
+    "sha256": "D254E700BB63B2CEF805251B848E4A67E4E819AB99083710CB4842419742AB8D"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneInput.cs",
+    "sha256": "846A3D7962F6B21F45795DAE35AD581B9AA30AFE4F64EF984A28554D87E6E293"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneHelp.cs.uid",
+    "sha256": "0749E3C60627EF70CB7E6D33264C235BA9F9397A7BD57A7992A2D1ABF9B3D43E"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneStates.cs.uid",
+    "sha256": "0D5414F7B7DE80FD6EBB48C3E905C3D1E4FAB6A68EC45E2FDA24043C275EAB96"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneStates.cs",
+    "sha256": "5EFC7DB86ACB90CFD6C005A3A8802C809F41FEAEAC8A54C69CF5092777FF718B"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneSoak.cs.uid",
+    "sha256": "B817F65A98652A9F9ECC60F38345705AE46F97CA207D2304160DE599B07AD1E5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneStress.cs",
+    "sha256": "6F7E61D1DEBE8F942C5683724022EEF3153601F4D287B64FD6BBEB920D5F1CFA"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneStress.cs.uid",
+    "sha256": "77E0DEECD7B7BF4F472B67033F3DD0C4295C68AEF96B8B9731D2B6C097BE3C56"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-hurt.wav",
+    "sha256": "CD3CA277C9B4A9CA7145DB4D9D530BAF8E6E68128C112525E5E8319D36621F91"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-hug.wav.import",
+    "sha256": "D23FD6D21427B980259283969A363892CB54E404D14C85875FA8B125E782F371"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-hug.wav",
+    "sha256": "35B1F33D01C2B5F009623C8E47E6AE0867CFC7AEFCD4400A367FC4D2EEB8A462"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-help.wav.import",
+    "sha256": "42FA7DA44182A77C80E780C6849B416054A6C54D1703A27AE01A9903A98E6556"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-help.wav",
+    "sha256": "5868016B8DDC94F8674D794D689941D0B95370B31FA24E88D6B6FCFF47314EB4"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\build.wav.import",
+    "sha256": "1946FC443BFE6C0B65DC740AF6847F2F45B6BEF9561232218836B6CAF22911B1"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneUi.cs",
+    "sha256": "66CC42DCD9180BD9B4B85F5DEBDEFF12D28C4D3C7D5CFAD4DF50789C6FBDFE25"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-nuzzle.wav.import",
+    "sha256": "5FC4C9F7358B18893301EDE71AF1D2AC051F8EFB45AF300551DC2E2AC71C9341"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-nuzzle.wav",
+    "sha256": "CA06F9C5BAD578ADFED9F5774D29FB9FEC075B3FCD0B29B66352BB46DABE205E"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-hurt.wav.import",
+    "sha256": "349BEE5138C0598E563AFFEFF6FEF5A3CCA7D43E7FF489E8C34D669081E44419"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-refuse.wav",
+    "sha256": "2B214B1777F26F834093457E7AD024B1D67B7E8BA170448219F9A97887FFF177"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-refuse.wav.import",
+    "sha256": "B322BC90A1B8FAA7CAC26DB45205B90F123BD2D1E7C990B3302C68C2E6E3F2AA"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-stroke.wav",
+    "sha256": "0865402D67FA4A4E6DBB22BA7E782F0417E4F2328A8FEAA05ACFB483EEBA5781"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\wild-edge-loop.wav.import",
+    "sha256": "49156FEEBFE0828A41DE41C14BCECAEC7B2BC8D9DC9949E66474AE047713ABC4"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\wild-edge-loop.wav",
+    "sha256": "1D72103845E2BD6D529C00C8A78659316DC32CAC099A11F9703626B4D9B97A06"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\select.wav.import",
+    "sha256": "8225B6D61809414811B45226D8CF0EFDAAD4728348413642DE310E7A83BD72E5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\select.wav",
+    "sha256": "EFE490C946B376AD5F05EB070D9A9DC8DB7B4CEA4A6A7CB961EF6E24A57169FD"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\sanctuary-loop.wav.import",
+    "sha256": "865A696565CFE4E96E92B3F90E3F5D0CBFA2C1AC022A803E67EBEBCFA8E2B729"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\sanctuary-loop.wav",
+    "sha256": "7044A062FBBE06E56CF46A3A4A072E247C74FD4E3D242B5FEED6C09AB6682852"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\m01-audio-analysis.json",
+    "sha256": "284723A4D772CF8140866E43CC0A2630ABC507C668F98F4A317914B9EC745969"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\feed.wav.import",
+    "sha256": "1591932CFAA6AF559E35815211A5EA20DC52DDFF4728FC500545D48C398F1AC5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\feed.wav",
+    "sha256": "43A0ED0539DB0024E18526C4E7777D1480970EDCE0002FFF5EE20E19CB98F176"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Assets\\Audio\\coo-stroke.wav.import",
+    "sha256": "33F5C5BE24CADF477BFCD970F18807EC395753E67FD8DAD4BC9EC07FF7F84F4F"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Ui.cs",
+    "sha256": "BE16A3E598F757F3F2C9828471D2C7F9950118A7B277884BE88D2EFFECAEB316"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.tscn",
+    "sha256": "AE5E71D60C21F2F9916BDC453A871AF982583AEA436ED9BEC4EC4BC5B53A7810"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.RegionPresentation.cs.uid",
+    "sha256": "260D8A78015E90AA56F19B39792F16B7388AF682496EB3FDAE359BED2B74E1F5"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.RegionPresentation.cs",
+    "sha256": "E600C1E28A04958B293D5BC4FDFBA087C821EE3D4C13AC200ECDA084D0731D67"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneVerification.cs.uid",
+    "sha256": "1C1898D62CC7E1B532F80BDFB0E7BA399D0F77C1DFEACA8F3D4B807D08816214"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneVerification.cs",
+    "sha256": "5DA4B8F3FB8B88B4BD9C5A84081088D94EEAEB96D38E098EE8AA2657C353FA03"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.MilestoneUi.cs.uid",
+    "sha256": "FDCC632B99BAD0B3C2C683FA70B2457FA0160E6EE08E540BB5F1345235DB61A3"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\project.godot",
+    "sha256": "6FBD5F3EC5A0CBF1E6F3CC548702E1A4EA0F4B9879FA1687F1DF01BF78A298AC"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Verification.cs.uid",
+    "sha256": "FCF9611D77B86F451BAE020B1F49A0F09EE4210154D3DC6F5E2F26BA80CBA79D"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Verification.cs",
+    "sha256": "56293927D3A54584995A87F9AE69BF20ECD7A2CD82E4F622EB6A09689F3FE361"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Main.Ui.cs.uid",
+    "sha256": "DD4938C3E4C18045D43829E72724BE68A2968E50968BA3D4521653B73E3200A8"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\SceneArt.cs",
+    "sha256": "755B4A7EA8758DB836110DF7D8589CCA2BE09AE8DCD3CAA71D189144F1995826"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\RoomBallActor.cs",
+    "sha256": "27576766F7100A5A5EC427014CF104A912658B8DE619407FC7F8370C2612AFE2"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\SceneArt.cs.uid",
+    "sha256": "71F6A5339F75B71133811825F44A0643B1315CC8E2E35CE66873FD4FF9932099"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Yukkuri.Game.sln",
+    "sha256": "46549E1B30D0CC2DCDE0DF719F6FD69DCC732947D8F0CC091F00EDBE0D495E2D"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\Yukkuri.Game.csproj",
+    "sha256": "AEEA540E4F35E84EB9C5C708EE2516AEF4F03548A72316E5F5489723DAF44562"
+  }
+]

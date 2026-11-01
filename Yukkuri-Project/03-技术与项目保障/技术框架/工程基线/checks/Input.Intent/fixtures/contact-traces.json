@@ -1,0 +1,32 @@
+[
+  {"name":"slow-stroke","impacts":0,"points":[
+    {"at":0,"x":0,"contact":true,"held":true},
+    {"at":0.6,"x":0.18,"contact":true,"held":true},
+    {"at":0.8,"x":0.18,"contact":true,"held":true}]},
+  {"name":"fast-hover-and-stop","impacts":0,"points":[
+    {"at":0,"x":0,"contact":true,"held":false},
+    {"at":0.2,"x":1,"contact":true,"held":false},
+    {"at":0.4,"x":1,"contact":true,"held":false}]},
+  {"name":"engaged-fast-stop","impacts":1,"points":[
+    {"at":0,"x":0,"contact":true,"held":true},
+    {"at":0.2,"x":1,"contact":true,"held":true},
+    {"at":0.4,"x":1,"contact":true,"held":true}]},
+  {"name":"leaving-before-stop","impacts":0,"points":[
+    {"at":0,"x":0,"contact":true,"held":true},
+    {"at":0.2,"x":1,"contact":false,"held":true},
+    {"at":0.4,"x":1,"contact":false,"held":true}]},
+  {"name":"gradual-braking","impacts":0,"points":[
+    {"at":0,"x":0,"contact":true,"held":true},
+    {"at":0.12,"x":0.6,"contact":true,"held":true},
+    {"at":0.16,"x":0.76,"contact":true,"held":true},
+    {"at":0.2,"x":0.88,"contact":true,"held":true},
+    {"at":0.24,"x":0.96,"contact":true,"held":true},
+    {"at":0.28,"x":1,"contact":true,"held":true},
+    {"at":0.5,"x":1,"contact":true,"held":true}]},
+  {"name":"short-packet-gap-then-real-stop","impacts":1,"points":[
+    {"at":0,"x":0,"contact":true,"held":true},
+    {"at":0.16,"x":0.8,"contact":true,"held":true},
+    {"at":0.177,"x":0.8,"contact":true,"held":true},
+    {"at":0.3,"x":1.415,"contact":true,"held":true},
+    {"at":0.5,"x":1.415,"contact":true,"held":true}]}
+]

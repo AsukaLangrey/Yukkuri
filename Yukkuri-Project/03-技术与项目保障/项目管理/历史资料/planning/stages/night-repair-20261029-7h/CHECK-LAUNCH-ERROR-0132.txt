@@ -1,0 +1,10 @@
+2026-10-29约01:32 +08，纯.NET检查启动异常
+待执行命令：dotnet run --project checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj -- artifacts/night-repair-20261029/natural-life-09.json
+返回：Unhandled exception: An error occurred trying to start process 'D:\Project\Yukkuri\checks\NaturalLife.Smoke\bin\Debug\net10.0\NaturalLife.Smoke.exe' with working directory 'D:\Project\Yukkuri'. 文件或目录损坏且无法读取。
+原文件未删除、未覆盖修复。随后Get-Item及Get-FileHash能够读取它们，不能凭启动错误直接确定硬盘或程序根因。
+exe：162304字节，01:28:40，SHA256 65741FE5337F04D539DF7B0CDE5FE7121F09616E450A8337F2EAC00F08010CA7
+dll：52224字节，01:28:40，SHA256 9137697D70DFC21AFEDEB567046488A5ED4408620A6176A4ACC51B75073F0988
+替代验证：dotnet build checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj --no-restore -o artifacts/night-repair-20261029/check-runtime-0133 /p:UseAppHost=false
+随后 dotnet artifacts/night-repair-20261029/check-runtime-0133/NaturalLife.Smoke.dll artifacts/night-repair-20261029/natural-life-09.json
+独立目录编译0警告0错误；DLL执行43/43通过，observations已写入09报告。原启动异常仍未定因；这一结果不等于原exe/系统稳定性通过。
+未运行游戏、Godot、桌面操作或系统修复命令。

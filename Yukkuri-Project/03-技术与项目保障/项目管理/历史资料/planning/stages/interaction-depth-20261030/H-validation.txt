@@ -1,0 +1,21 @@
+H FamilyValidation 空值数据流修正（仅静态）
+
+证据已通过 GitHub fetch_file 只读核对：
+仓库 AsukaLangrey/Yukkuri，ref=codex/dot-test-results。
+path=testing/results/dot/20261029T174248Z-cc3aecca7663-c06/evidence/game-build.txt。
+日志 blob=ced1547653288486ba403d83ece794c968353de8。
+https://github.com/AsukaLangrey/Yukkuri/blob/codex/dot-test-results/testing/results/dot/20261029T174248Z-cc3aecca7663-c06/evidence/game-build.txt
+对应远端被测源码 cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d；日志记录构建成功、6 Warning(s)、0 Error(s)。这是旧 B 批构建结果，不是本次修正后的构建结果。
+
+六处均为 FamilyValidation.cs 的 CS8602，日志原始位置：
+(21,38)、(24,21)、(27,21)、(31,21)、(40,36)、(53,28)。
+分别涉及已检查的 Interaction、Peers、CaregiverIds、LifeKnowledge、Pregnancy、ColdStorage 后续访问。运行路径已有 Require 条件非空校验，但本地 Require 未声明条件为假不会正常返回，编译器无法沿调用继续收窄空值状态。
+
+修正：
+- 引入 System.Diagnostics.CodeAnalysis，在 Require 的 valid 参数添加 [DoesNotReturnIf(false)]。其声明与既有 if(!valid) throw new InvalidDataException(message) 完全一致。
+- 去掉 f! 和 CompletedBirths! 的三处已有抑制，改由前置条件的数据流证明安全。
+- 保留全部判空、数量、身份、亲缘、出生结算、冷藏与身体动作冲突检查；异常类型和原消息不变。未发现这六处需要另增运行时判空或改变坏档回退语义。
+- 既有亲缘遍历的 id! 是 Where(id != null) 后的 LINQ 类型收窄问题，未由本次改动新增，亦未用于处理这六条警告。
+
+既有检查：checks/Family.Reproduction/Program.cs 的“家庭显式空、非法父体角色与重复生育事件作为坏档拒绝”，以及现有家庭存读/坏档检查仍保留。不新建重复测试。
+本机未运行、编译、测试或执行 Git 操作；只做源码与日志阅读。本次修改后的警告数量仍待独立远端构建确认，不能宣称零警告。

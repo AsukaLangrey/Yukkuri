@@ -1,0 +1,43 @@
+场景设计｜源码导航
+以下路径均相对于Yukkuri-Project根目录。原文件未按类别拆分或改写。
+
+主归属入口（8项）
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.tscn
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.RegionPresentation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.tscn
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandDecorations.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandOcclusion.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterSpatial.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationSpatial.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WoodlandLayout.cs
+
+相关共享文件（29项）
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameVersion.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Lifecycle.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAutosave.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStates.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/BodyContactGeometry.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CarryReleaseMotion.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ConsumableInventory.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactDeformation.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactMotion.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardObjects.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardShop.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CushionGeometry.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBallDynamics.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionFixtureGeometry.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSupply.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/NaturalIntakeGeometry.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PortableMotion.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/RoomBallEnvironment.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterBodyEnvelope.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterGeometry.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/Shelters.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterState.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterValidation.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationGesture.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStations.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationState.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationValidation.cs

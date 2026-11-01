@@ -1,0 +1,151 @@
+饲养筛查与徽章｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C043  Badges条目描述铜牌多为归属标志、银牌涉及训练、金牌涉及较高品质与测试，并明说不同作者采用不同制度。
+适用：英文徽章汇编
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K11（详见 conflicts.json）
+出处：
+S05 Badges
+https://yukkuri.fandom.com/wiki/Badges
+读取状态：body_read
+
+C044  同条目给银及以上写入损害赔偿、把铜牌保护写得薄弱；这些是虚构社会规则，不能当作全体同人统一法律。
+适用：英文徽章汇编
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K10（详见 conflicts.json）
+出处：
+S05 Badges
+https://yukkuri.fandom.com/wiki/Badges
+读取状态：body_read
+
+C045  中文百科全书称铜牌可登记取得、银金需训练考试；其“金牌最高”后又列白金，措辞本身有层级歧义。
+适用：中文徽章汇编
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K11、K12（详见 conflicts.json）
+出处：
+S03 油庫里
+https://www.newton.com.tw/wiki/油庫里
+读取状态：body_read
+
+C046  《八景》让铜银金都参加考试。攻略以ゲス度≤50为前提给智慧参考：铜200—250、银400—450、金700—750。
+适用：《ゆっくり八景》
+证据：B；类别：general
+限制：攻略经验值而非已核对的确定判定公式。
+差异组：K11（详见 conflicts.json）
+出处：
+S07 ステータス
+https://wikiwiki.jp/yukkuri8kei/ステータス
+读取状态：body_read
+S08 外出
+https://wikiwiki.jp/yukkuri8kei/外出
+读取状态：body_read
+
+C047  《八景》协会授牌后会影响部分行为和自动清洁；金牌本身并不直接增加卖价，不能照搬“级别越高售价必涨”。
+适用：《ゆっくり八景》
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K13（详见 conflicts.json）
+出处：
+S08 外出
+https://wikiwiki.jp/yukkuri8kei/外出
+读取状态：body_read
+S09 Ｑ＆Ａ
+https://wikiwiki.jp/yukkuri8kei/Ｑ＆Ａ
+读取状态：body_read
+
+C048  sdkfz251的《バッジシステム》开篇已出现金牌母体和银牌幼体，人类因其佩牌而克制；页面标注最后更新2008-11-17。
+适用：《ゆっくりいじめ系1554 バッジシステム》
+证据：A；类别：general
+限制：本轮找到的较早具体例子；不是最早来源证明，未见该段铜牌。
+出处：
+S12 ゆっくりいじめ系1554 バッジシステム
+https://w.atwiki.jp/yukkuri_gyakutai/pages/2576.html
+读取状态：body_read
+
+C049  《金バッジの価値 後編》写不同公司自行发金牌、标准不透明及第三方评级套利，显示徽章也可成为商业讽刺。
+适用：anko2372
+证据：A；类别：industrial_exploitation / cruelty
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K11、K13（详见 conflicts.json）
+出处：
+S13 anko2372 金バッジの価値　後編
+https://w.atwiki.jp/hutaba_ranking/pages/186.html
+读取状态：body_read
+
+C050  enforcer《試験目前》设铜牌随时、银牌每月、金牌每三月、白金每半年考试，白金候选自行工作支付费用。
+适用：《星を掴むゆっくり》第10章
+证据：A；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K11、K12（详见 conflicts.json）
+出处：
+S14 星を掴むゆっくり：試験目前
+https://ncode.syosetu.com/n1758ed/10/
+读取状态：body_read
+
+C051  同章把训练描述为适应人的要求，并说明教官先解释、只培养理解且同意的对象；不等于所有训练故事都以强制为前提。
+适用：《星を掴むゆっくり》第10章
+证据：A；类别：social / care
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S14 星を掴むゆっくり：試験目前
+https://ncode.syosetu.com/n1758ed/10/
+读取状态：body_read
+
+C052  enforcer《薄っぺらな鍍金》把白金写为能自主决定去留/交易条件、同时失去饲主庇护的地位；与最高级宠物标签并不相同。
+适用：《ゆっくりはゆっくりと歩く》第9章
+证据：A；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K12（详见 conflicts.json）
+出处：
+S15 ゆっくりはゆっくりと歩く：薄っぺらな鍍金
+https://ncode.syosetu.com/n0569hh/9/
+读取状态：body_read
+
+C053  Badges还列假徽章、普通识别牌、社区牌，以及以危险或侮辱用途标记的特殊牌；并把白金例子指向Ammo作品。
+适用：英文徽章汇编
+证据：B；类别：social / cruelty / sexual_violence_reference
+限制：Ammo原图和白金“首次”说未核实，不能宣布起源已查明。
+差异组：K12（详见 conflicts.json）
+出处：
+S05 Badges
+https://yukkuri.fandom.com/wiki/Badges
+读取状态：body_read
+
+C054  《飼育書》的挑选依性格、健康和教育难度，《八景》考试依智慧及性格；未找到全体作品通用的卫生检疫/入园筛查规范。
+适用：具体作品的筛选制度
+证据：A；类别：general
+限制：“未找到统一规范”是本轮覆盖结论，不是证明全网不存在。
+出处：
+S11 ゆっくりいじめ系2585 ゆっくり飼育書
+https://w.atwiki.jp/yukkuri_gyakutai/pages/4249.html
+读取状态：body_read
+S07 ステータス
+https://wikiwiki.jp/yukkuri8kei/ステータス
+读取状态：body_read
+
+C055  Koyukkuri条目写从便宜幼体开始培养、延后或不参加徽章程序；也包含把难训个体退回或送工厂的残酷处理。
+适用：英文幼体宠物条目
+证据：C；类别：care / cruelty / industrial_exploitation
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S37 Koyukkuri
+https://yukkuri.fandom.com/wiki/Koyukkuri
+读取状态：search_text_only
+
+C056  饰品照护条目建议轻柔清洁、干燥后佩戴、可购买替代物；与将失饰永久化的悲剧写法形成对照。
+适用：英文宠物饰品条目
+证据：B；类别：care
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K08（详见 conflicts.json）
+出处：
+S22 Accessory
+https://yukkuri.fandom.com/wiki/Accessory
+读取状态：body_read
+
+

@@ -1,0 +1,2987 @@
+[
+  {
+    "source": "src/Yukkuri.Game/ActorAccessoryPlacement.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessoryPlacement.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "F04742365C623B0CC7389C5F22ACE840008FB3BC612AFE0887D1539670CCF285",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorAccessorySupport.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessorySupport.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "64B61623CA11A566B3DE99835C485CC4E04C74A003B18066A3489784C4EF0D7B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorAccessorySurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessorySurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "0A9D3FFD529BA9AF84DA012B4C453A7CC0029C6297D30DE2634F387B93C7306D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorAccessoryWear.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessoryWear.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "B0A6FE613F6B964022BA0F8774A220ED58E16CDCBCE607083A7C265A486EFBD2",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorBodyBounds.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorBodyBounds.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "02",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "0186FC1D6A59D2A2470502150A31F215D205200956ED9A4FC6EFB8D6036918DE",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorBrowSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorBrowSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "F10F0C7C70A2D5F0D603560E49107439C32172ABA6A8C7BDCB8150091494D820",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorCradleSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorCradleSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "08296B7A1C4822B9CAB35B49480B6B05596C2FB6B1A1B33CAAB0B0381F441502",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorCushionSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorCushionSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "CB91DE21BEE30FA896FD3B5652B817F945291E86DD78B5BE445C0AC9EF81C95C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorDressingSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorDressingSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "93FF20C785F3A3C7DEFB2907A0FEE668C1E72BD4F602DAAEA2B65DF7C74A44B7",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorEyeSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorEyeSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "0D84E5F3019764BD568EE72847583E0564F31C83D1287F0083254E0CA0BACB36",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorFaceSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorFaceSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "C53712632CD666F853B4713B7FF56B05EF58743B1E31D1EBD46167194FFC5957",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorHairSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHairSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "96E17C43A2EBE667F866276BD7AC3FA287E8DD995E4B1BAFF6666CFAD066D071",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorHarnessSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHarnessSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "903F100140A88A0C56D7D334B51039D3106D835F076D31B5B3A2FD8165953DC1",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorHeatPresentation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHeatPresentation.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "8A549406775DD1D24A67564CF1F962ACFBED649FD29AFB57C264ED9C92DEB16E",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorHopMotion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHopMotion.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "B5FCA37EAD2950BBA147F97B9A049AC01772704A2C29F420F7093A43680FC30C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorInjuryPresentation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorInjuryPresentation.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "885C3C8AD34998FB3AEF8385236EF79C04F775FFFC9B41B87A2CD39DF6D20A09",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorInjurySurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorInjurySurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "69A5D3E420EAB9336489E552905F15DE86BFE9BA4039C4651F1B91BDBE5B0B21",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorIntakeMouthSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorIntakeMouthSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "1D5AF7B5F62C927244E63579382C706DC762F4AAFCC8FFC9A68F8AE4D3AA7D35",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorIntakePresentation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorIntakePresentation.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "18D71727BEC4B8B7B4C67FF0B55CA27BA11F2327ED392EC1326B4E5463CFE8B0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorMeshSupport.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorMeshSupport.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "CB82451B3853F4923EFF9B90A4904B8DF69A9E5D0EFE5558F25900C1B678F9A3",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorMouthSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorMouthSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "AA82E4A05A8273C7F5DA12973B98A22A06395D748161E960700EB229DA7D2C0A",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorNaturalPose.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorNaturalPose.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "764951AC57A304E317F2526EF9F12A4643F6A09CCB4ADC6F62421C15885E032D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorNaturalSupport.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorNaturalSupport.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "B6BF9CBFFFE17FB09D0036B2C5B495A4FE1F7525C99CE76F15A8ED71A2961B4D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorPoseClock.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorPoseClock.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "866D0614BABA54FCFD752B011E1B44AF1D95DC000547017E86578A4D1D4F2857",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorPoseSmoothing.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorPoseSmoothing.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "1E868B109589ED208251E7E4ABBCD3CD6CD381F28169776490B52632995E2003",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorReactionMotion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorReactionMotion.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "FFDF0A062EADBB98045D7CD79FC30C4E7EBF57DEE5CB7809B22E28F521F37189",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorStemBudPresentation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorStemBudPresentation.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "DC2336AF969B4F7C8B1222B1D6CDFB9967BBB23C62BA8EA1634382712A5F3476",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorSurfaceMarks.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorSurfaceMarks.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "3C86CD8583F7B5F87C6148DC31E6D3F1FF6BBF3B8594AF70AB937954255489C8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorTearSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorTearSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "1E81C2B78D64A548F027F34DE779364CD586EF927AB9CF4278853F81DEA0FF45",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorTouchShape.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorTouchShape.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "02",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "17A373963A719B090197A62ECDF776E804FE12FFAC2DA5E3C41BEE6E7B384210",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ActorWaterDropletSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorWaterDropletSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "EAABEED1E2ACBDA2E2F4A8B5EF62314F15A067B41F48CBF2001D4ABA0019E8C9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ContactStrokeTracker.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ContactStrokeTracker.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "81A25C98DE934D25F85794468E99336CBEE2952D6B9EE847DDFA61459213FCD0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Accessory.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Accessory.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "B98C5E2AD7B2FFC3D1500C6FF51D9376A385AA1CBCB64B799B5C8E4BD0C09D8F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Contact.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Contact.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "7FF05CFBFA45C6BDAC68B36E596C6CBC95A8A62566EE157FB1C8350FA95C5E28",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "D4608B6625BF686C9C67728AE3AB98D0445D75A89CF979AD43B078CEC3BCA6E0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Deformation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Deformation.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "0C2D7A96ED182B775CCF6AF157C27137AF452BFB88C1889AD5E149FFC00B4BC8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Dressing.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Dressing.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "4CA05E0D4D786D5D62E5220BEFF188FBC8A2EAF715B5581CC92A45B0E33AE9F0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Face.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Face.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "A33AFB7933D082D37EADCCC416DCFB2CC90AE348B23DB3CE8572D5575A879B70",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.FaceMotion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.FaceMotion.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "D96DF47E01C668055918F541008FD6CEDFBF0C4B1E09823C26D52A7D5BEFACC5",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Gestation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Gestation.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "12293BAB0B0BC9644D311908F78E1A37013B559EDF5E233C7208726C0863E44E",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Harness.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Harness.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "736819C544522FA52B43A7C04DEEA99AE6CD52BB096330E73CAD6A9F3449BEE7",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Heat.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Heat.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "031D53662A5748F22843E892D64D349C555B5041C179B0DBE84C1CAC40BB5C10",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.HumanCompany.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.HumanCompany.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "CAD041E75BA9A2BCB30EBABFEEB248AAE860AE6C9E8AA64435C9B6A7C8DCAD10",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.HungerFeeding.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.HungerFeeding.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "5762A021A2F508E3727E8062C1ACB0ED8AEF80F410562FE476F58035D422BEE4",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.ImpactFeedback.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.ImpactFeedback.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "94F313C47B0761F0AFFF68260E3BA28271CA6BB88D11C47E60B8F33D07166F3B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Injury.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Injury.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "A470A39E03CDE747A96C366B07A4F606F6109211EBB523C1429C63D724F7B148",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Intake.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Intake.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "14BD5E96BF25BF2833A49986242B87BB9A6619B70973CF1701798DC2C2699DCD",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Interaction.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Interaction.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "6587E687430A852EE549EAB412BE460E874E3DA223A3F45B1379511163D5D0D8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Materials.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Materials.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "978056C82185922FF46196A8DC4ACEF8A19A9CCE5AEA482D12D57D0A263EF18D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Sculpt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Sculpt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "8350FF731DD22F54D9CB5D2E15DE689E0D6B821C6BE6CABEB8F1668BBF7A3D91",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Shelter.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Shelter.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "6D241696F95980DE827E6367F1F6231C753CF25A38C7A5BEA833C459ECF4882F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Support.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Support.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "AC97486C18588D9512A9D8700455838D09003C419AD0F5D4F9097D1C84F6CD5E",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.SurfaceMarks.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.SurfaceMarks.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "4446702DA89CC427352F4DDE388291725C80A5F47176DBF15103AEEBA1ABC2F5",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Tears.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Tears.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "DF24025E8FA441F6C19F8FE8228FE4B506DD30CFD5DA4151627A1FA175891A0F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.Water.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Water.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "BDDB16615C42DFC47F6BBC2F116C6FDCC78CD9551B4B159F6D1E6CE481E62274",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.WaterAttempt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterAttempt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "DF433DBB53BF0BF5AEE7749D09B9C85D80E4215A193B7FB634472A1B38DE053E",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.WaterConcern.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterConcern.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "C5543759E01B7735172BF699DC0D283A3BF42E20C3E38878E0D56E51F0DF1ADD",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/CreatureActor.WaterTransitions.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterTransitions.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "C782663468943A31E9DC0E8715BFA4407473C1F66AD158FBC55E2E4997B9C4C3",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/DebugStateSnapshot.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/DebugStateSnapshot.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "85FD7F7882AF421F0096CB61B145D123C40F0C8F8B4D23AA696770C3BE04E608",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/DetachedStemActor.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/DetachedStemActor.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "3439B75D0A3E24FC1FD17735BD442185E5C2A25BA7A973E50230FBD23188EBB3",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/export_presets.cfg",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/export_presets.cfg",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [],
+    "sha256AtCopy": "1963A2DE8BF6E3D5A89C74F81A42120E8A006486DD95A8BA56DC7B6905E186B0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/GameVersion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameVersion.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "00295F6DB0FBDF7D297E6F3AB98BC78F54A2CF12AE9C78C353582F2F4408F221",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionBallSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionBallSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "181634AE9F7EF0AA470039E0E27854C16F354AA75C96ED2A33C1CB4A53EC6DDD",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionCameraOrbit.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionCameraOrbit.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "6261AA5BA5EC87508A27867BFC2D484301CF324733D6FD3D00B4AE9D0DBE581B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionCareSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionCareSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "B1E05D013F9419EFBF61A9C932850B43CE8E35ED0272DF09E097332A52D7874C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionFixtureArt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFixtureArt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "AA73F6A9DEDB627782D6A3F569DD4AFAD8ED97019F1B81BD311B02CEB43D0617",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionFixtureSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFixtureSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "A0EDAF47573300FD3A6BAACBF2ECF45BE9AEDF8995784CBBCF2ECEF915D8DD0F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionFoodArt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFoodArt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "A9BF4FFE9F10C647D784A91D0594063574A69E1FA6430B53826C30D1CEB8B890",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionFoodSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFoodSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "DE30D94C8A8EEAA7FCEDEBAD807CB625087AC7480E4BA98CD81A063B36E55897",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionLighterSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionLighterSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "33AA9FF04308D70D6E8463667140108F5F87D700B98F89FDCA2C265C792DC316",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionPropContact.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionPropContact.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "8378EDF6055E95C97F9A57DA5B4843FB17CE1954F13A141F79ED198994026DF2",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.ActionProgress.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ActionProgress.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "DBB3E9584974CE1C99BEE01DCA39D09E85F862B46DB6DD661ED37C997891423F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Audio.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Audio.cs",
+    "primaryCategory": "03",
+    "primaryName": "音乐音效",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "ADEC7D506465FE9EC0B9F0590AACEDEF2876836F7FFE8F45F0A02939BF40A061",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.ContactVerification.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ContactVerification.cs",
+    "primaryCategory": "12",
+    "primaryName": "项目管理",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "7B6E66E628E5CDF788F5E518B8AE396F017610E53A052AAF6D8ED451B61C1315",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "09F163D93C9D8870AE79863F48BFC1C3DCC059E4CC08B7CD32FE2F48306B87F6",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "9E70BAED0804170CCAF5176A0362D5B18FCB5AADE5E337AFD6C99FD4DDC4DF35",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Debug.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Debug.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "3523C3CD63231ADF68C5826AECE78E685663EAFAA2326DDDABD880FED7A3C157",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.DebugComparison.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DebugComparison.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "6D8179693D44A9620FD9B5C1C7B79C1990DC0CFF8686EC451861D8D1321B6D75",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.DetachedStemInput.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemInput.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "F8D07CEB61C8772ACEE4DE9A0E4A57B3B8C7748149EA264BAEA1B1CF3DA04FC8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "DD693AE16AD6DA8609F1B971D3BB3D435BBACD433964D390BED4CF05058190F8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Family.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Family.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "834FCAC0C6736009ED20A86C09DA1428A3EBC977440020DDCE7B609433C48896",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "3036EAABF2E71FF45E1EAFD9AB2D000A6C74DC855A5760EEAEB8D1CE0F51E934",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.HeldSupplyContact.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.HeldSupplyContact.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "F34B334C8A461A3E400D36FBFB678E3D333FD14C9DD360911CC76C7E9D9A553A",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.HitFeedback.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.HitFeedback.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "87035C70BF2CE9748567DCF4A2513392B7016855B558097C540C5724290B5DF9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Input.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Input.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "8F50B1E18274AF2590902D39F6A08E17FEFAE071094AE35E89C1A140E2FF0193",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Intervention.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Intervention.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "AE4FECF79CFD416590D21EE0266265B6234B038B3E4F3724CC3A579D448792EA",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.ObjectPresentation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectPresentation.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "DDE7C86D2BEACC7C269B3388622C5476B3BE5FB008CE993DC23C6715D640293C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "B214D5F20B8C56E9995AFA9CFCFEFACD70F1A1A2FCB2E749F3D3AFBA2E0AE8B5",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Offering.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Offering.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "37E3D6492B76C3C73155730381BC158580CD502EB5FA2F7C1FDBD32629C7652B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.RescueTool.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.RescueTool.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "717BB623CA5EC9CEB7EBC4CAD9571D603D8BEC277D7CC2B0736D6168D79D3743",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Shelters.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Shelters.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "783CD8AA9E75149DF4D3C0733D4422526E5FE7EF612035A9ABE5624397C1D487",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.SheltersUi.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SheltersUi.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "822D663ABBF5258F28EA71C0EEE523CD6ECF6086C9178A43D81433AB2A9FA6DE",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Supplies.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Supplies.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "A0917E7FBB324E44E73041BDB0ECBE2C158C5EAAFB1D604E27973FB6B09725DF",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.SupplyStations.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStations.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "C7D8DAA7213F422F8B9E163DF39B71A7278C852A4AD5BF6EF707DA4E7D846228",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "A912E8DA7E690C2B55074403CF81446A8248AA11BFC312AB84606555C283267A",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "08C11C7D641F1CB3D63A59BD601CDD5C255D7676FDF5385420CDAE9B6423A7F6",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Tools.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Tools.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "5365DA038F1D4E6FBF48F1BEF25B93BCF4E96CED910446157D2808207D808C97",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.tscn",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.tscn",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "07",
+      "09"
+    ],
+    "sha256AtCopy": "B94C5555BFCAAC9F62FCE37D5816C6FCB92AF33A3DB44EB9FAC954A580C91AA9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Ui.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "30CC96B536D42BF5BA9C7E5FBBD83E52D45529AD5DF668D7C7C46338C2221636",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Verification.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Verification.cs",
+    "primaryCategory": "12",
+    "primaryName": "项目管理",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "2CBFB3A8188EDFA6BF3442A55C6CB8234B8083DFED4577FDDFF56A124BBA877A",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionRoom.Vitals.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Vitals.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "2796AD3D60DB3CC28CCC1979C5446904E42572C6225DDB66AE3F490613FB6971",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionToolArt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionToolArt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "28F16932B22FB3D3C433B8B9EA610ECF3F70E2037917584EF6055F086F67C36F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionToolSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionToolSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "87C28D0E88CF5799373D81E6AB9F228378F34EF5A4DDFA0241367BA2A48BD7A0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/InteractionTreasureSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionTreasureSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "0F931F00FE19C9DE29D479F5DFB149C6B7FFCF1C2EE5342BFB61BB7B245D4645",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "E0BAB391D050864E479E44C46F21C92E407D930E02285D8E6CA32079B9BCD08D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.Input.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Input.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "04F6C7CD1BEB8542784C7AE81174338A72D60DB061771992102E7778CA3CD522",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.Lifecycle.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Lifecycle.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "4FCC9A142E68DB227ADE2FCA159F187618894CD20445407CC76F2D5A9832F706",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneArt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneArt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "7BC068124050A0C51D48ABDD6CF20F981CC7D4C59BCB596EDE0C65E0ADB3B6F5",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneAudio.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAudio.cs",
+    "primaryCategory": "03",
+    "primaryName": "音乐音效",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "EFBD42A67487CA33C42C3BC2E2C832708D57590FBE8878602B0EFA8F45F1BF6C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneAutosave.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAutosave.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "849E060E10568BB854E235C232CD9552BCCB851C532760A0396EDE26B4F4F5F4",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneHelp.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneHelp.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "348109F6B01F8AA43F61F886540AF3BF8D4B97A4B4E94EEA362879127E9761A5",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneInput.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneInput.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "11"
+    ],
+    "sha256AtCopy": "A95E49FEA0A4BE31F62F96D94F5C1E87515AEACCC884E9B1D2E12E73490AEF46",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneSoak.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneSoak.cs",
+    "primaryCategory": "12",
+    "primaryName": "项目管理",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "1B008D2FB14709E3E11F9BBF82F9E9DAE47A2F05AB380B9DB1B6675A7B47BBF4",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneStates.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStates.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "B754DF8A9204C6B67790E3B5F2802798EA281484AB032188BF6FEF85156E4901",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneStress.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStress.cs",
+    "primaryCategory": "12",
+    "primaryName": "项目管理",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "6F7E61D1DEBE8F942C5683724022EEF3153601F4D287B64FD6BBEB920D5F1CFA",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneUi.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneUi.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "873A992BCCECB02B710F082058657632AA3362F24C59FF99524D01B11A9AA82D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.MilestoneVerification.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneVerification.cs",
+    "primaryCategory": "12",
+    "primaryName": "项目管理",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "4B55E673D48E2F43F0845FD9EDC6C5323A7E3AED179F2FD47C27BAAF2DF77B13",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.RegionPresentation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.RegionPresentation.cs",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "02",
+      "09"
+    ],
+    "sha256AtCopy": "E600C1E28A04958B293D5BC4FDFBA087C821EE3D4C13AC200ECDA084D0731D67",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.tscn",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.tscn",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "07",
+      "09"
+    ],
+    "sha256AtCopy": "AE5E71D60C21F2F9916BDC453A871AF982583AEA436ED9BEC4EC4BC5B53A7810",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.Ui.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Ui.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "2FCFF4368AF6391778D7F4D1620E350224AFCCCFC29ED6EAA63EF947E0F75CD9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Main.Verification.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Verification.cs",
+    "primaryCategory": "12",
+    "primaryName": "项目管理",
+    "relatedCategories": [
+      "11"
+    ],
+    "sha256AtCopy": "42289D0EDF96BBD01D5556273695EA2EE91B7E9156112819A0569F92F0F090CD",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/project.godot",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/project.godot",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [],
+    "sha256AtCopy": "6FBD5F3EC5A0CBF1E6F3CC548702E1A4EA0F4B9879FA1687F1DF01BF78A298AC",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/RoomBallActor.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/RoomBallActor.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "F7345A4959A4E7A7C32C55990D07BBCCC24A32309128929634B8EA7ED404A9E4",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/RoomSupplyStationActor.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/RoomSupplyStationActor.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "68ECA4C848C40162E818B6A3BAAC2FDE8E44950D1D47BD1FBEE457FDB1B16FAF",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/SceneArt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/SceneArt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "755B4A7EA8758DB836110DF7D8589CCA2BE09AE8DCD3CAA71D189144F1995826",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/ShelterActor.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ShelterActor.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "A230CE6C769CF9695B8BF7710754698AF820F60782B4BE2A59893AF967E14FA0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/WoodlandArt.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandArt.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "C7D2502BAADFFD63448FB48B94DDF5AB516B965F09F5719B5DD6A5FF416A6FAE",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/WoodlandDecorations.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandDecorations.cs",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "02",
+      "09"
+    ],
+    "sha256AtCopy": "930B513E49C20C4B32B9C2C1302527AD110359E48CB4A0FA987615559E7908D8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/WoodlandOcclusion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandOcclusion.cs",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "02",
+      "09"
+    ],
+    "sha256AtCopy": "39444DDA2C20E5CC3D2E043943BCF47FECC3E6811A7146B1572C8ACF2E23B1F8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/WoodlandSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandSurface.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08",
+      "11"
+    ],
+    "sha256AtCopy": "5524F4B3F8F5668CD9794A5F4B171EB23BDE162648045B49D2DC75B83BF010E1",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Yukkuri.Game.csproj",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Yukkuri.Game.csproj",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [],
+    "sha256AtCopy": "66CFA41064E55362F15958AB67B12A8C23CFB9506F21BF9195F10CAEF15F62BF",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Yukkuri.Game.sln",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Yukkuri.Game.sln",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [],
+    "sha256AtCopy": "46549E1B30D0CC2DCDE0DF719F6FD69DCC732947D8F0CC091F00EDBE0D495E2D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Data/simulation.json",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Data/simulation.json",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "08",
+      "13"
+    ],
+    "sha256AtCopy": "CDE295670C07287B734A711B8F1153A9D6607B5ACC1489110C2AD8BCF586D505",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Game/Data/species-routes.json",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Data/species-routes.json",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "01",
+      "13"
+    ],
+    "sha256AtCopy": "70CE92A81AC2489D61EC45A25C0226B8BC8A381B64C533F451FE1BB9826F3B40",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/BodyContactGeometry.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/BodyContactGeometry.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "0531C6716F35E6AED6D1914D379F6C9EB4EFA7BDF0245EF174BE5F7D02E60D4D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CarryReleaseMotion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CarryReleaseMotion.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "589033F115682BCA2253F4FD22F77B630C5074262C764078A926706287E08679",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ConsumableInventory.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ConsumableInventory.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "EAB876FD403D0224C6E9A4C301981CA457F692ABD5139149EAEA02EBF1B9C5BB",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ContactDeformation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactDeformation.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "5A8D55CAD9B55F2470526B5E89ABF38AB7B947081CA0C4AC343B4C657A6C4479",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ContactMotion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactMotion.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "A77B5DCE6776AEFCC56E0717634452CC549954533A17E8BDE141923A4AA13B80",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CourtyardBehavior.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardBehavior.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "0CD9E2321670C0F4C37C6C5B83F6EECC2E8874C7FDE8009794282C0509518EE9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CourtyardObjects.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardObjects.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "BE16AA79789D2C18884FE9278A0CB774FC15184EB43EA73D4D058B0010B6E26A",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CourtyardShop.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardShop.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "6D6063B69C0E56F6CA7162044E6231689A028B7AE55B0B6FA1C4A2409096E7FD",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CreatureAppearance.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreatureAppearance.cs",
+    "primaryCategory": "02",
+    "primaryName": "美术动画",
+    "relatedCategories": [
+      "05"
+    ],
+    "sha256AtCopy": "6D1EB277D20DEEC106127748092170584FDC303B5706F3A399933C4EB547DA4B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CreatureArrival.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreatureArrival.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "F4E6D83AE20D9D5268B34BF9927E746072C68396FE9DAB8FF6608551C169C1B6",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CreaturePersonality.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreaturePersonality.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "E788396B4F8340B1393CE0B234107AE8E5C8976F62318E44FEB3C2468A33447F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/CushionGeometry.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CushionGeometry.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "A8077965AA815D7FFACF400543ACA890C5E8A664C98F352F131CB920CFDE2DF0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/DetachedStemGesture.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemGesture.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "4B9B33F3255056E22E6A296F0890D741E2E4D1D8CBA94DBE67770570ED262335",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/DetachedStemLife.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemLife.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "F5048889BAE8817D2FCF34B62DACED4EED991C119A94483BE7D933ABBE1CFE2D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/DetachedStemState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemState.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "CAD5E74CD94EBFEFA86137B2A1661575F5A613B8ECE316C82E75F621B81965CB",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/DetachedStemValidation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemValidation.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "5393D62B80EB9C1E8CF9BD09EB13B50EB76E3FC3007F9F53870196E896EEFD09",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/DetachedStemWitness.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/DetachedStemWitness.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "22C868C3F14D23C0368AF82D75BD96E2E66007DEED4EE54AFC63C4D8703C97BE",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/EmotionalContinuity.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/EmotionalContinuity.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "D9B21416EF7EDD3CEFFC77358977A97FF45580E0B57731DC90622D5795B65A17",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyAftermath.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyAftermath.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "87FA3343BDAF632F40A23D77196AADAEACDBC793019BDF135FBA968DB4881705",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyCare.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyCare.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "4D9836D01AE480406230267963D96657119C9A0D1D82B5BCCB1C5A13E3DB4529",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyColdStorage.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyColdStorage.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "31E250206B191838ED1102E9F0BF8B8862774A92089504052F778B8584119216",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyDesire.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyDesire.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "131019DF08011C02FAFDEE4E5F13EFBA726D38CA74A4CD19D2DF70B8F5EA1630",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyLearning.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyLearning.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "EC84EFD6D3665F62A46F3378DA364532F210025C732202AE1568D23DC870B714",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyReproduction.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyReproduction.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "43F34FF9DDBCDC7E5BA00B98C6D5354DA891E29B90C6CFFF964E096A621578DF",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyRisk.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyRisk.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "03189D2B4002690D6BD28ED340534672A130F9F6D1CA1AB18DA616FCF2D37362",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilySocial.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilySocial.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "57FA9BBA9C5E264AE14F5997CB83B94851233460491C3F892D531B2696A17F0D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyState.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "62639AF7347CF3AAFF18356AA2C21AC1E17153C8D6CB14E145EA9DBB580B7256",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/FamilyValidation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyValidation.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "FAFB1669A67ACC25405909E5357652DCF5E8FD4EFC076F9E9E3B107D225099D9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/HumanCompanionship.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/HumanCompanionship.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "83F1975FE6E9437D85AE024D3B8703AB4EC1046FA2734CD3D072A89CFFB0C8E1",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/HungerFeeding.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/HungerFeeding.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "66F65B70C60F76301D4C729626800B15C5B5FBDE58947458E739A08E4D6A2ABA",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "6EFD66716DEC5799275505BD37A45A2152436EC210203C3C9025D5ABCC8AAA1B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBehavior.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "B4D7532B0E927B8E0144F68EA09AF07DB79C841013BC41FD7FEB6610BEADFCFB",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionBond.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBond.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "5D04ABCC25B833C464866C6C183136F9D2A9E3022C23AE5465AB990157CA4B2C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionCatalog.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionCatalog.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "3E10C47117FBB8EDB2199405348EC22FF022179BAAA39CDBACF5DFABEC37B8B7",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionCompletion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionCompletion.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "1F73B99F0B01550FD57F7CABBED23188A6288EA4B6A9B1460F1F5A55A770BF1E",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionConversation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionConversation.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "E5E800F526B7F391D043CB4301927CAF2277EDF78EA2E78D06D4ABCF63D568D5",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionDressings.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionDressings.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "45B8DF122B1A07CD950DEDE51B8F3951A54F882E6EC2BBEB5EB5D0B0C0888DC2",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionFixtureGeometry.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionFixtureGeometry.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "9CAA19FA04F9167B711636D67ED493012AC7DAD97807D9699761E3480F695878",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionGesture.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionGesture.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "AD9C506F45295E69C149A2FE2D74A1671363A5B6B7C3392E9DDD61F4073807F9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionHarshSpeech.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionHarshSpeech.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "5BECE1E4D52D73286D29E581AB5E94BC3DAB179BF5413D0E4F863E9685C630AA",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionHelp.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionHelp.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "1237FCF58380ED90D1360AEDF75D232299E70C7BFF9FE950B47C69A29E9464D4",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionInjury.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionInjury.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "6143C3C729F16843D38E828AEA7889E6346800537DE7969F77754ABECABDFF83",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionLowering.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionLowering.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "BA8FC964F762D594FAE03B079467C719C64D7FE06F7EB6B8A0F68D6DC1CC3142",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionMouth.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionMouth.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "25663199D950E9879EEB2654936851F396898B3C1EFA6713BEAB7B8F1D31FAD8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionPhysiology.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionPhysiology.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "875E5511AB9FBEC37A91C308537535A59B66CCE6972BFF6D67ABB1D37327C333",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionPresentation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionPresentation.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "6AB72440FC15035A63B64DF620B4CADE2AF592536907D50313C987BAF85B4E4E",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionRest.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionRest.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "B843F6636C39EA80F0291C14B704B2173498EBEEFCA2D4088A1B06FE9587E85A",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionRolling.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionRolling.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "D05146F27EA76B392D7F848A053FD041AE220D96212AB01BF185695A56EA07BE",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionSensitivity.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSensitivity.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "6FEC77A4C7C91E0FE89F659190C2949DF798467395F4990079C64C2CE4DFFB32",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSpatial.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "9D6E74F5A6A2350DA72F8189E037803410D3A6E28937770EF9F329FDA6554920",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionState.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "97D3847DD1B5D58B2829E1D111E7C57BD9567A58D612EAAFCE09D1E97DAC1A62",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionSupply.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSupply.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "BA7EB93437F347F2F76E4838579654D73752521605D11D3FEB984D46D41375CC",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionSurface.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurface.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "FD3F441D1E5F504554DA4F9151A8D06A4531185C96525D353D76663B9A46EBF5",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionSurfaceObservation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurfaceObservation.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "58C8675F5EADB7DC127FCF267D7DF56A549BBA9F109DEDD4C067BD45FEFE36F2",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionTreasure.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionTreasure.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "106DAC74C91134664281C53D60A13E3F5EA0D75AC338A0FF5ED53EBA7BF83438",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionValidation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionValidation.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "B3210D93EA69291E8F537E378024C6B968CA8CCA29174F5AA85761AB05D4B0A2",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionWater.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWater.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "5B82434F299897BD756585B252D12CF531104208EDD35DAC971883EA856A9F5B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/InteractionWorld.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWorld.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "C0526628D4BD5B603443DE8F5E6E051513BF239F0574FF13C543020F58D14CFA",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/MilestoneBehavior.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneBehavior.cs",
+    "primaryCategory": "09",
+    "primaryName": "世界探索",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "CAB827E71AF8FB4A337DA895941FD548D80E873BFE429BA412B6D6524AF0C0B9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/MilestoneInteraction.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneInteraction.cs",
+    "primaryCategory": "09",
+    "primaryName": "世界探索",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "2734B233C883697B15D92438D17723AD8BF7F146D3B7FE29341FC4B7CC951BE0",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/MilestoneState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneState.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "F96843024AEECC743CEF4DD6225ED4AF64EE7E4CCD4BFA63B853262A00B13DBC",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/MilestoneValidation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneValidation.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "AA3D0CD98F2190910CCF52FBD4F6E169EA381B9D2BA9E4DF18839DB8D14363BC",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneWorld.cs",
+    "primaryCategory": "09",
+    "primaryName": "世界探索",
+    "relatedCategories": [
+      "05",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "F6FF83BFD7540B0B9222B72B65E7CC6BAED70CE8884525D405035F6C987DE168",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/MouthIntake.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MouthIntake.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "5DFCAEE8FEA3C45399471FEBF9D44FF3A688FAFC45D5C8E7871A20C82B233087",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "63B466FA21A3D2C313087EEF7E03283C63003A41A9B5D6D170B3D2D8C70E3719",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/NaturalLife.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/NaturalLife.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "3281C9C554A9F8A8781C2A1EAD8F9907B88205B3BBE9FB7346F857BBEFF97695",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/OilDialogue.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/OilDialogue.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "31E63162D55B82C1585A82482EA368B1925DE1BF409457D2E2F11C144874768C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/PeerAttackContinuity.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PeerAttackContinuity.cs",
+    "primaryCategory": "06",
+    "primaryName": "油族群设计",
+    "relatedCategories": [
+      "05",
+      "07",
+      "10"
+    ],
+    "sha256AtCopy": "49F0D8D7E8DF5F8181D05F6C17D09D49C22E1CD9891FF757611AE3AC4563DFC2",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/PortableMotion.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PortableMotion.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "B5A9850DBA5D1AFD38674A8A4214CF33E70255F5087B827D6ABC982F11D262B9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/RoomBallEnvironment.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/RoomBallEnvironment.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "4B3AF34B5CC225A82DF3BE025E103D6DA435B0A87C716CBC75C994559DC070AE",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/RoomResourceText.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/RoomResourceText.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "relatedCategories": [
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "431113245F55A7DD83F04C2D1F9F1832832820AB453262FAD3B5FBCA55DBE85B",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/SaveStore.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SaveStore.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "C8BDEDD05197F80F462439058FC7487EFB4B0E7C81231FC6985E3B9876C21FD4",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ShelterBodyEnvelope.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterBodyEnvelope.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "563685F5532903E63D04F248106C715EF16A13BBBB838E0095F65F9C3717E30D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ShelterGeometry.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterGeometry.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "816B33C43B5B0E549558697217E589A14F2FE8E1746F545086F999D0D9FFD896",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ShelterLife.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterLife.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "5220BE7CF08302F842806662AAEBB9B8C3117675A72760629E4772EC415C73C9",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/Shelters.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/Shelters.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "AB51708B75AEFC90674692354F9852D39F4D84C0368AA3040B1C3A664798DEC8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ShelterSpatial.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterSpatial.cs",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "08",
+      "09",
+      "11"
+    ],
+    "sha256AtCopy": "DB2493D9B7D409EB6363CAE7D98AC952EB3FE9F28C28FEB4BF45C21D5139EB96",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ShelterState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterState.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "ED9B598450E637351A4720F42B4A683BFBAD7673772A7625F8519A731239E846",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ShelterValidation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterValidation.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "EC70215A45878D5516DDA4998DAE630A05E3D772C7450E329B69EAD96D6C1993",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/StemCare.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/StemCare.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "804193B3F2E06349792B87C18E4AE7A2D6A85B4DBE82AD37F98969AE1ADB5BB8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/SupplyStationGesture.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationGesture.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "D1142A7CC7AFD3303CA35122E231087A384722D0BF4C6AC03898B866CFE565D8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/SupplyStations.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStations.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "3329D5D4D00D40B0892B062F69729FB0D5A4CD569E7D7AECF89B24C186E5DE97",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/SupplyStationSpatial.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationSpatial.cs",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "08",
+      "09",
+      "11"
+    ],
+    "sha256AtCopy": "7740374DE0476AEF78CA9D3A2A95418D501C79D9E3838D695075810D57365C91",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/SupplyStationState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationState.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "08B2BD48776F105D520B5E4CAAF51708841EC408E563451346717F154F2DE515",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/SupplyStationValidation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationValidation.cs",
+    "primaryCategory": "08",
+    "primaryName": "乐园经营",
+    "relatedCategories": [
+      "04",
+      "05",
+      "07"
+    ],
+    "sha256AtCopy": "FA34EBC2CD2355598E1F2542AE2DF6D6DF8343AB449B5FCF0739FFC7778986F8",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/ToolContactState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ToolContactState.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "F7A9558FF78700F23E8C87A2620EE95B0C587A1CF7CA65DA9CB37EB815FDAA2C",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/WaterAttempts.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WaterAttempts.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "5250013D031F1FF2FF8576842F330FFA0EEDAF58F6B810358D5C91C8173EB96F",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/WaterRescueContinuity.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WaterRescueContinuity.cs",
+    "primaryCategory": "07",
+    "primaryName": "人油互动",
+    "relatedCategories": [
+      "05",
+      "06",
+      "08"
+    ],
+    "sha256AtCopy": "A2C8CCFD291ED8EEB7ABAF34CACA3114AF057522EFF58D00364FBBB34C42E411",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/WildSelfCare.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WildSelfCare.cs",
+    "primaryCategory": "05",
+    "primaryName": "油个体设计",
+    "relatedCategories": [
+      "06",
+      "07",
+      "08"
+    ],
+    "sha256AtCopy": "094B013E7E01AE8E3EF02DB65CAA3F1E800D3B9959DC248CB734C51026B71E82",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WoodlandLayout.cs",
+    "primaryCategory": "04",
+    "primaryName": "场景设计",
+    "relatedCategories": [
+      "08",
+      "09",
+      "11"
+    ],
+    "sha256AtCopy": "839A97F4AA0663ADCA122F8E0EF7EE4EDB8C78017EFA714E432FE555E6B2E97D",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/WorldSimulation.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldSimulation.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "F08CA2DB9F49EF81142A2B84EDFE65FACB1003A0D0ECFAB8CD817BD0F966B706",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/WorldState.cs",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldState.cs",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [
+      "05",
+      "06",
+      "07",
+      "08",
+      "09"
+    ],
+    "sha256AtCopy": "61A3F5205B3466D58E90C44E4B1F316144BAF681F20A546CC5A60E9910942549",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  },
+  {
+    "source": "src/Yukkuri.Simulation/Yukkuri.Simulation.csproj",
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj",
+    "primaryCategory": "11",
+    "primaryName": "技术框架",
+    "relatedCategories": [],
+    "sha256AtCopy": "B2A628148C71F951825F190887552D6D0357B4AC1E218ADAAF840EB3438FE92A",
+    "note": "导航级职责关联，共享文件保持原样；不是已完成解耦或实现验收"
+  }
+]

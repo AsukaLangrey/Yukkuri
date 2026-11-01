@@ -1,0 +1,63 @@
+D批：身体、交互、冷藏与存档边界静态交叉审查
+日期：2026-10-30 / Asia/Shanghai
+审查者：body分工
+限制：只读源码与文档、编写获授权的检查源码；没有运行游戏、模拟、检查程序、编译、渲染、截图或Git。以下是源码可推导的路径，不是运行报告。行号指本次读取版本，主线程后续编辑可能移动。
+
+结论
+本轮确认4类入口/续接遗漏，均已报告主线程；主线程已在共享源码补入对应保护，静态复读确认。尚未取得远端检查结果。
+另外撤回一条手持物品存档疑点：HeldByHand带JsonIgnore，不能当作有效漏洞。其余所查死亡清理、护理救治、冷藏跨600秒时钟和合法孕育恢复债存档，未确认新的确定错误。
+
+1. 旧Contact与Feed绕过暂停、冷藏（已由主线程修正）
+入口：src/Yukkuri.Simulation/MilestoneInteraction.cs:5，WorldSimulation.cs:192。
+原最小过程：CreateInteractionPlaytest同时设置MilestoneScenario=true；SetColdStorage(id,true)后调用Contact(id,Treat/Stroke/Train)或Feed(id)，旧入口只判断地区/部分身体状态，没有冷藏或暂停保护。治疗可耗药回血，训练/亲昵可增长身体关系记录，喂食可扣粮并增加饱腹、信任和照护记录。Pause=true同样能走这些入口。
+影响：这是公开模拟接口的确定旁路；小院常规界面通常走新的Execute/Begin入口，不能据此声称用户每次普通点击都会遇到。
+当前保护：MilestoneInteraction.cs:10-11挡Pause/ColdStorage，WorldSimulation.cs:195同时挡Pause/ColdStorage/UnderIntervention。旧入口保留必要濒危Treat，不把护理一并封死。
+
+2. 已积累手势在松手阶段重新绕过状态限制（已由主线程修正）
+入口：src/Yukkuri.Simulation/InteractionGesture.cs:513；投掷结算在原EndInteractionGesture中读取缓存g.Motion，而不是Continue的新输入。
+原最小过程：Begin Lift使Carried=true；Begin Throw并Continue(Duration=.1,Motion=.1,DirectionX=1)积累动作；随后Pause=true，或令Health=1并Hurt(2,actor=null)进入Critical；调用EndInteractionGesture(false)。原实现只对Dead改cancelled，仍可设置Falling、VerticalVelocity和水平冲量。
+影响：Continue/ReleaseDraggedCreature已经禁止对应动作，但末尾松手没有同等保护。濒危情况下尤其会丢掉原本有效的手托支撑。
+当前保护：InteractionGesture.cs:525-526在暂停、冷藏、濒危、换地区、近看非选中目标时只走取消清理。检查还保留正常投掷可执行的对照，以及Critical仍能托起、放稳并护理的正例，防止用一律禁用来绕过断言。
+
+3. 强制准备和旧待回应可同时占用身体（已由主线程修正）
+入口：src/Yukkuri.Simulation/InteractionWorld.cs:129、InteractionGesture.cs:82；待回应由InteractionConversation.cs:29/37续接；开始干预在FamilyRisk.cs:102。
+原最小过程A：收集材料并RequestForcedPregnancy成功；4秒Preparing期间执行Sing/Stretch/TeachWait或Begin Feed/Care。旧ValidateInteraction不看UnderIntervention，可直接增长关系、占用身体或扣资源。进入CloseUp后普通世界不走，4秒准备可保持而普通交互仍继续。
+原最小过程B：先让Resting=true，Greet生成PendingConversation；RequestForcedPregnancy清掉Resting却没有清PendingConversation。AdvanceInteractionPresentation仍会RespondConversation，发生旧待回应的好感增长。该路径不要求继续世界计时。
+当前保护：ValidateInteraction只放行Care/Inspect；旧Feed和非Treat Contact拒绝。开始干预清PendingConversation/ConversationPraise/Delay、PendingPraise、旧回应计时/姿势。开始实际护理会明确取消干预，保留已用材料、关系代价和重试等待，再由原护理过程结算药品与身体恢复。
+
+4. 收起地上宝物让冷藏个体继续目击并增长怨恨（已由主线程修正）
+入口：src/Yukkuri.Simulation/InteractionBehavior.cs:479-488的PutAwayRoomObject观察者及宝物owner分支；NaturalLife.cs:162的CanSeeResource。
+原最小过程：GiveTreasure(A)在A附近生成归属A的实物；SetColdStorage(A,true)；收起这颗仍在院内的Treasure。原旁观者筛选只排Dead，CanSeeResource只查地形/箱子视线。宝物owner分支继续Distress(1)、RecordInteraction、Feedback，冷藏A的Fear、Resentment、Trust、人油记忆和反应发生变化。收起普通供给也会触发冷藏者的新反应。
+影响：此路径可由现有院内物品收起操作到达，不仅是旧接口直接调用。
+当前保护：主线程在CanSeeResource统一排Dead/ColdStorage/Memorialized，两个调用分支都受保护。新增检查要求宝物正常被收起，同时A的完整序列化状态及资源保持不变，不通过禁止收物回避问题。
+
+已排除的疑点（不得作为待修复问题）
+- HoldSupply之后直接SaveStore.Save会不会把HeldByHand=true留在档内、读档变成无主幽灵手：不会。InteractionState.cs:147明确[JsonIgnore]，已有checks/NaturalLife.Smoke/Program.cs:798检查SaveReload后释手并保留坐标。本轮最初报告前漏读此属性，已向主线程撤回；没有为该疑点修改产品或添加重复检查。
+- Lowering/Rolling和PendingConversation同样是JsonIgnore的会话状态；不会因只看WorldSimulation构造里没有清理，就推断它们被存档重新播放。Carried保留属于实际手托支撑，与自动重放投掷不同。
+- 原胎生恢复债250秒切到茎生后中断，曾超过旧180秒校验；当前FamilyValidation及ValidateRisk已支持累计900秒恢复债，不再把此旧问题列为新增。
+
+已追踪的有效保护及实际边界
+- ValidateInteraction覆盖Execute、Begin、Continue和ReleaseDraggedCreature；死者拒绝，Critical只允许Care/Inspect/Lift/PutDown/Lower/Release/OpenBox/Unwrap等救治与支撑动作。结束手势保留已经发生的代价，但不重新发射缓存冲量。
+- Hurt进入Critical立即StopIncapacitatedActions：取消摄入，未入口的预留份额退回，清排泄、照护搬运、陪伴和待回应；Die清手托/下落/水平速度，保留死因和固定悬挂装置的实际支撑。构造恢复死者不会再次结算死亡事件。
+- SetColdStorage拒绝正在手托、下落、下放、约束、进食和当前接触的个体；开始冷藏清照护搬运、待回应、动作和排泄，强制准备明确取消。冷藏无法开始新行动；排泄仅累积身体需求，不在旧坐标产出实物。
+- BiologicalDelta按同一个Elapsed计算600秒前的dt*.1及超时后的dt；TickColdStorage最后推进Elapsed，身体/伤势/孕育没有先后相乘二次减速。到期没空位或不在活动地区时，后续身体时间恢复1倍，不能借阻塞无限延长十倍保存。近看和Pause本来就冻结普通世界，不能把这条既有规则当作冷藏专属漏洞。
+- 死亡、濒危与护理保护依赖真实Condition和Injuries；永久Foot上限在运行恢复和保存校验两端都受约束，不由Trust/Health覆盖。濒危护理允许在低预算时稳定身体，但不把CriticalCareBudget重置为90。
+- 手持食水、卷滚等会话状态不序列化；自然摄入的未入口预约反而是可保存的真实资源状态，按NaturalIntakePending续接或退回。当前小院SaveRoom还会先CancelGesture后保存。
+- Memorialized只允许Dead且无手持/吃喝/搬运/陪伴等占用；院内显示、点击、接触和空间占用另有排除，身份与亲缘保留。
+
+新增远端检查源码（未运行）
+checks/Interaction.StateBoundaries，共10组：
+1 冷藏旧Contact/Feed拒绝，序列化重载后仍拒绝。
+2 暂停旧Contact/Feed拒绝且身体/关系/学习/库存/随机数不变。
+3 已积累投掷在暂停后松手不发射，手托保持。
+4 已积累投掷在濒危后松手不发射，救治窗口和手托保持。
+5 正常投掷仍可松手执行。
+6 Critical允许托起、放稳、实际护理，只扣一份药，恢复状态可重载。
+7 强制Preparing在近看时拒绝普通新旧动作。
+8 开始强制准备清旧待回应，近看不增长旧好感，重载不重扣关系/重发材料。
+9 连续Care和旧Treat都能中断强制准备并真实护理；保留已用材料和重试等待，重载不重启准备。
+10 收起宝物不唤起冷藏者的新反应、记忆或怨恨，保存重载仍一致。
+检查仅引用Simulation，不启动Godot。全体仅源码；远端需记录机器、完整提交SHA、实际输出与未测项。未降低或替换任何原有断言。
+
+本轮改动范围
+仅本审查文档，以及主线程追加授权的checks/Interaction.StateBoundaries工程和Program.cs；产品文件未由本分工修改。主线程负责产品修复、提交和远端验证。

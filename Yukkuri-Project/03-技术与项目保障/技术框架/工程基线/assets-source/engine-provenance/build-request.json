@@ -1,0 +1,24 @@
+{
+  "source_tag": "4.7.2-stable",
+  "source_provenance": "artifacts/m01/renderer-probe/godot-source-provenance.json",
+  "toolchain": "llvm-mingw-20261020-ucrt-x86_64",
+  "arguments": [
+    "-m",
+    "SCons",
+    "platform=windows",
+    "arch=x86_64",
+    "target=template_release",
+    "use_mingw=yes",
+    "use_llvm=yes",
+    "use_asan=no",
+    "dev_build=no",
+    "debug_symbols=yes",
+    "optimize=speed",
+    "d3d12=no",
+    "accesskit=no",
+    "module_mono_enabled=yes",
+    "-j8"
+  ],
+  "started_at": "2026-10-27T11:47:05.1083248+08:00",
+  "purpose": "Unvalidated compiler/runtime candidate, not the default shipping engine"
+}

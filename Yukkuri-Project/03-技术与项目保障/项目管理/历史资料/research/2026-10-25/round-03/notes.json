@@ -1,0 +1,164 @@
+[
+  {
+    "type": "attribution",
+    "detail": "Ammo与ばっちゃあき的关系出现韩文二手解释：外语标签来自署名uzi_ammo_666的拼图，但该拼图是否作者本人所作未确认。不能据此确认为作者正式别名。",
+    "url": "https://seore.org/w/%EB%AC%B8%EC%84%9C%3A%ED%8C%9F%EC%B1%A0%20%EC%95%84%ED%82%A4"
+  },
+  {
+    "type": "unavailable_source",
+    "detail": "《ゆっくりの産卵》原目录链接pages/69返回410 Gone；仅有书目及别作后记指向，未读原文。",
+    "url": "https://w.atwiki.jp/slowlove/pages/69.html"
+  },
+  {
+    "type": "access_limit",
+    "detail": "直接HTTP获取atwiki遭Cloudflare限制，未绕过；继续用可读的检索工具文本。"
+  },
+  {
+    "type": "supplement",
+    "work_id": "W006",
+    "source_ids": [
+      "S69",
+      "S70"
+    ],
+    "detail": "补读续篇及番外：明确可拒绝身后加工、离开或埋葬。人类各自理解不同；番外获另一作品作者许可，舞台此次设为现代。"
+  },
+  {
+    "type": "supplement",
+    "work_id": "W012",
+    "source_ids": [
+      "S71"
+    ],
+    "detail": "下篇完整主线与后记补读：捕食冲动造成伤害，但二者最终由神社及永琳救助并共同生活；作者YT，神社设定称依某少女隊。"
+  },
+  {
+    "type": "conflict",
+    "source_ids": [
+      "S75"
+    ],
+    "detail": "卵生被写作严酷野外或越冬条件下的选项，可反驳中文百科把卵生限定宠物的跨作品概括；双方各自作品规则不能相互抹去。"
+  },
+  {
+    "type": "relation_limit",
+    "source_ids": [
+      "S70",
+      "S77"
+    ],
+    "detail": "S70作者明确感谢并链接《ゆっくりのいる生活》，称获许可；但链接篇结局是失踪，未写死亡。只确认作者自述借用关系，不声称S70是该篇唯一正统后续。"
+  },
+  {
+    "type": "existing_source_supplement",
+    "source_ids": [
+      "S31",
+      "S89"
+    ],
+    "detail": "英文MyFriends与日文育てていってね为同一Miurabo手游，不重复计为新作品。"
+  },
+  {
+    "type": "existing_work_supplement",
+    "work_id": "W010",
+    "source_ids": [
+      "S96"
+    ],
+    "detail": "part2有亡幼悼念与安全网救援；大型魔理沙要求解释为何只装网而不造安全桥，主人介入程度成为争点。未把全系列计为已读。"
+  },
+  {
+    "type": "unread_or_low_priority",
+    "items": [
+      {
+        "title": "The Wolf and the Seven Yukkuri",
+        "author": "Harouki（作者发帖自述）",
+        "url": "https://groups.google.com/g/yufanfics/c/1W35TZ9R6Bg",
+        "scope": "只核实作者提及创作下一章；正文未找到"
+      },
+      {
+        "title": "My Yukkuri",
+        "author": "YAF!nmVOHsTRd.",
+        "url": "https://www.touhou-project.com/th/res/65334.html",
+        "scope": "2008-10-30原帖可读；成人暴力短篇，仅保留书目，不摘录细节"
+      },
+      {
+        "title": "Insert yukkuri title here",
+        "author": "Well Below Average Student",
+        "url": "https://www.touhou-project.com/th/res/67835.html",
+        "scope": "2008-11-16互动开头，内容有限；不列成熟设定案例"
+      },
+      {
+        "title": "(untitled yukkuri story)",
+        "author": "Hungry Youkai",
+        "url": "https://www.touhou-project.com/border/res/9936.html",
+        "scope": "2008-09-03，开头有冬储与稀有型，后含成人暴力；仅书目线索"
+      }
+    ]
+  },
+  {
+    "type": "access_update",
+    "detail": "S97从搜索工具403转为Chrome可读；先前关于贴吧部分受限的概括仅适用于工具，不能一概称原站无法阅读。"
+  },
+  {
+    "kind": "access_limit",
+    "title": "ゆっくり捕り",
+    "author": "ゆっぱい",
+    "translator": "精神有問題的人士（sampos）",
+    "translation_url": "https://home.gamer.com.tw/artwork.php?sn=5819110",
+    "original_url": "https://www.pixiv.net/artworks/111603958",
+    "translation_date": "2023-10-28",
+    "status": "bibliography_only",
+    "note": "Chrome已核译帖署名与原作链接；原作Pixiv被浏览器站点安全策略拒绝。未尝试替代浏览器或相簿绕过；不记录故事内容，非全文已读。"
+  },
+  {
+    "kind": "supplement",
+    "work_id": "W023",
+    "source_ids": [
+      "S114"
+    ],
+    "note": "补读首话：白金个体为自身所有者，可独立受酬；金徽章演员报酬由主人收取。保留与S84白金/自我认知人化机制的差异。"
+  },
+  {
+    "kind": "access_limit",
+    "title": "赤まりさ観察日記",
+    "author": "メカあき（検索索引署名）",
+    "url": "https://blog.livedoor.jp/yukkuri_anko/archives/33404823.html",
+    "status": "lead_only",
+    "note": "搜索结果确认题名，网页抓取失败，Chrome证书不受信任，未绕过；漫画正文未读。"
+  },
+  {
+    "kind": "supplement",
+    "work_id": "W010",
+    "source_ids": [
+      "S96"
+    ],
+    "note": "作者YT已在文末核对；第2篇全文。30厘米高、直径5米桌庇护小型个体，水果换捕食者不攻击；依赖人类供给，不能说自然达成永久共存。Dos来访可能是梦。"
+  },
+  {
+    "kind": "possible_duplicate",
+    "source_ids": [
+      "S117"
+    ],
+    "candidate_work_id": "W019",
+    "note": "英译单页与中文《宠物油库里灵梦》关系待核，先不增加独立作品计数。"
+  },
+  {
+    "kind": "lead",
+    "title": "ゆっくりたまご",
+    "url": "https://dotapps.jp/products/com-atamilab-yuEgg",
+    "note": "二手评测称Narufumi Iwasaki、2016-04-28发行；苹果商店原页未能打开，开发者未核，不计已读原作。"
+  },
+  {
+    "kind": "supplement",
+    "work_id": "W010",
+    "source_ids": [
+      "S118",
+      "S119"
+    ],
+    "note": "第3篇全文和尾声全文补读：明确否定第2篇旧棚的水果交换方案，改为协作启动防御棚；尾声摄影供养及灵梦接管园区。未读第4—8篇，不声称全系列已读。"
+  },
+  {
+    "kind": "same_title_different_work",
+    "work_ids": [
+      "W033",
+      "W051"
+    ],
+    "note": "Atami-lab旧手游《ゆっくりライフ》与あーもんどPCDemo同名，不能合并；Atami-lab《ゆっくり日記》与3D《ゆっくりにっき》也须分开。",
+    "url": "https://www.gameloop.com/jp/game/casual/com.atamilab.yusurvive"
+  }
+]

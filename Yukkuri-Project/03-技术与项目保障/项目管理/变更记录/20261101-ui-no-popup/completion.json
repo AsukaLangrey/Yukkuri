@@ -1,0 +1,13 @@
+{
+  "rule": "UI-001",
+  "atUtc": "2026-11-01T00:11:43.8665282Z",
+  "sourceModified": 20,
+  "sourceAdded": 3,
+  "sourceSnapshotFiles": 230,
+  "oldAreaChecked": 1559,
+  "oldAreaDifferences": 0,
+  "finalSourceCompiled": false,
+  "runtimeVerified": false,
+  "intermediateBuildLog": "build-01/build.log",
+  "sourceManifest": "current-source-files.json"
+}

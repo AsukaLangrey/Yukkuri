@@ -1,0 +1,25 @@
+{
+  "stage_id": "M01",
+  "goal_id": "01a1736f-f7be-7523-b288-9065cc8102c4@1793033449",
+  "goal_reference_type": "threadId@create_goal.createdAt",
+  "started_at": "2026-10-27T00:50:49+08:00",
+  "earliest_round_review": "2026-10-27T06:50:49+08:00",
+  "ready_at": "2026-10-27T21:49:38.0877416+08:00",
+  "minimum_work_hours": 6,
+  "manifest_sha256": "962AFE852F92D24116873B4ED59B7D25A7578E0D0D2761C57B05F987C7554C09",
+  "catalog_sha256": "E9163F593B8760DDD0AC3557583664FCF3E48E9E93A75C1C3FE883CA5C6915EC",
+  "stage_records": [
+    "planning/stages/M01"
+  ],
+  "weekly_usage_start_percent": 16,
+  "status": "delivered_pending_user_playtest",
+  "active_work_segment_started_at": null,
+  "interruption_note": "2026-10-27T02:48:07+08:00 至09:06:22没有工作证据，排除工时；原06:50:49仅为无中断情况下的最早时间，实际交验仍需有效工作累计6小时且完成原范围。",
+  "user_extended_work_until": "2026-10-27T22:00:00+08:00",
+  "extension_quote": "继续goal吧弄到今晚10点",
+  "first_ready_build": "M01-20261027-030100",
+  "current_candidate_status": "074048 delivered: same-build default/compatibility6h exit0; exact-source/runtimeZIP verified, actual unpacked default and compatibilityGUI passed. Host instability remains with optional process-only workaround; user acceptance pending.",
+  "first_ready_at": "2026-10-27T11:14:43.7232497+08:00",
+  "goal_tool_status": "complete",
+  "goal_completed_at": "2026-10-27T21:55:11.2583219+08:00"
+}

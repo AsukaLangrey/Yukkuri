@@ -1,0 +1,309 @@
+{
+  "original_user_request": "好，按这个方案开始做第一批人油互动，爱油和虐油都要有，做好后给我一个能实际试玩的版本，重点看操作手感、油话和持续反馈。继续8小时的goal任务",
+  "start_utc": "2026-10-27T16:21:38Z",
+  "minimum_active_seconds": 28800,
+  "speed_request": "Standard/default；不加速",
+  "speed_verified": false,
+  "speed_limitation": "当前工具没有设置或确认本聊天service tier的接口，不把提示词当成功切换",
+  "status": "in_progress",
+  "scope": "P01-P20全部首批变体；八景完整对标后续范围保留",
+  "user_acceptance": "pending",
+  "groups": [
+    {
+      "id": "P01",
+      "title": "招呼、夸奖、安慰",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "摸摸",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "partial",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json",
+        "planning/stages/interaction-20261028-8h/work-log.jsonl: native art preview checkpoint"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "蹭蹭脸",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "抱起、托着、搬运、放下",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "partial",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json",
+        "planning/stages/interaction-20261028-8h/checkpoint-20261028-0207.txt"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "包裹、轻摇、解开",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "partial",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json",
+        "planning/stages/interaction-20261028-8h/work-log.jsonl: native art preview checkpoint"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P06",
+      "title": "手喂、放食、饮水与辅助进食",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P07",
+      "title": "清洁、擦脸、擦干与晒底照护",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P08",
+      "title": "饰品整理、清洁、修补与戴回",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "partial",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json",
+        "planning/stages/interaction-20261028-8h/checkpoint-20261028-0207.txt"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P09",
+      "title": "玩球、展示宝物与回应唱歌伸展",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P10",
+      "title": "跟随、停下、等待取食的教学",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P11",
+      "title": "查看伤处、基础护理、安置与恢复观察",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P12",
+      "title": "戳脸、挡路与食物逗弄",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P13",
+      "title": "喝止、冷淡回应与贬斥",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P14",
+      "title": "弹额、推拍、掌掴",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "partial",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json",
+        "planning/stages/interaction-20261028-8h/work-log.jsonl: native art preview checkpoint"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P15",
+      "title": "强握、按压、滚动、抛出与跌落",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P16",
+      "title": "翻倒、按住、固定与解除",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "partial",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json",
+        "planning/stages/interaction-20261028-8h/work-log.jsonl: native art preview checkpoint"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P17",
+      "title": "放入箱笼、关闭、观察与释放",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P18",
+      "title": "抢饰、扣留、挂高与损坏",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "partial",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json",
+        "planning/stages/interaction-20261028-8h/checkpoint-20261028-0207.txt"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P19",
+      "title": "烤脚与移动功能后果",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    },
+    {
+      "id": "P20",
+      "title": "惩戒悬挂、调整位置与解救",
+      "implementation": "partial",
+      "simulation": "partial",
+      "native_playtest": "pending",
+      "evidence": [
+        "src/Yukkuri.Simulation/InteractionCatalog.cs",
+        "artifacts/interaction-20261028/mechanisms-04.json"
+      ],
+      "limitations": [
+        "动作目录和部分机制已经接入，不等于全部变体通过；原生逐项操作、音频及持续反馈验收未完成。"
+      ]
+    }
+  ],
+  "art_requirement": "2026-10-28 用户追加：提高模型面数与轮廓质量，修复穿模；几何数学检查与视觉/性能验收分别记录。",
+  "current_checkpoint": "checkpoint-20261028-art-touch.txt",
+  "art_preview": {
+    "build_id": "M01-CLANG-20261027-180146",
+    "path": "builds/playtest/HI01-art03-20261028/Play This PC.cmd",
+    "status": "partial native play observed; full acceptance pending",
+    "source_snapshot": "builds/source/HI01-art03-20261028",
+    "source_has_later_changes": true
+  }
+}

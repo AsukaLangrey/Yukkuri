@@ -1,0 +1,12 @@
+要求	当前实现入口	现有执行证据	仍缺/本批处理	结论
+共同身体状态与接触收尾	InteractionReadiness/InteractionBehavior/InteractionInjury/Input.Intent	c06仅覆盖B，Continuity四项失败；H已提交修复候选	H完整SHA复测与实际输入/表现	未验收
+人油亲密和记忆	InteractionBond/HumanCompanionship/InteractionRoom安慰工具	E之后无对应运行报告	真实手输入、长期相处与伤处警戒的综合体验	源码已接，未验收
+双向伴侣与冲突	FamilySocial/FamilyAftermath/FamilyRisk及家庭面板	c06的B版Family.Social通过，不能推及C至H	后续知情、第三者、幼体保护与当前版本完整复测	部分旧版证据，未验收
+茎生与胎生	FamilyReproduction/FamilyRisk/FamilyLearning	c06的B版Reproduction通过，不能推及后续实际相处修正	完整生产育幼及六种配对当前SHA；外部茎照护干预仍缺	两路径源码存在，未全覆盖
+亲代与非亲代抚育	FamilyCare/FamilySocial/FamilyLearning	既有检查预置非亲代亲近度，不能证明陌生自主接纳	I补陌生善意个体实际相处→照护→养亲的启动路径	原流程不完整，I待远测
+伤残后的持续生活	InteractionInjury/MouthFunction/FamilyCare/实际手喂搬运	c06不含F口部功能与后续代码	I补成年行动不便家人的真实食水递送、近处脚伤亲代保暖和Wrap受助者；完整器官与手术未实现	继续实现，未验收
+濒危死亡与身份	InteractionInjury/FamilyAftermath/FamilyColdStorage	c06仅有限B规则与UI，不含G即时清理	当前SHA抢救/死亡/安置；内馅转移与完整身份连续性仍缺	未验收
+有限十倍冷藏	FamilyColdStorage.BiologicalDelta及各身体计时	c06的B版ColdCare通过且有限UI取回观察	最新SHA边界/复苏/满院到期；不代替真实救治全流程	旧版有证据，当前未验收
+存档与交付	SaveStore/各Validate/每批GitHub完整提交与testing/request.json	c06固定cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d	C以后构建与规则未覆盖；真实历史档缺，不能以合成档代替	交付持续，验证未完成
+六种实际玩法与表现	六种配对核心规则及数据；默认小院仍主要灵梦/魔理沙	72配对检查仅源码，实际模型/入口不能由规则矩阵证明	六种形态、能力、可用入口与完整升级仍缺	未称六种已完成
+原有优势和用户保留项	v024—v060与既有互动/无离线时间规则	本轮静态逐项核对，不修改用户保留规则	秘药暂不加入；141条来源不是141条实现	范围保持

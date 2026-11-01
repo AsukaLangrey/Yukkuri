@@ -1,0 +1,95 @@
+{
+  "checkedDate": "2026-10-28",
+  "sources": [
+    {
+      "id": "H00",
+      "title": "作者商店",
+      "url": "https://booth.pm/ja/items/1727554",
+      "kind": "author",
+      "scope": "页面公开更新记录到1.12b；非已运行版本",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H01",
+      "title": "动作",
+      "url": "https://wikiwiki.jp/yukkuri8kei/アクション",
+      "kind": "community",
+      "scope": "分段核查全部正文；有跨页重复入口、疑问和缺陷记载",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H02",
+      "title": "物品",
+      "url": "https://wikiwiki.jp/yukkuri8kei/アイテム",
+      "kind": "community",
+      "scope": "核查列表与物品细节；效果含待验证项",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H03",
+      "title": "状态",
+      "url": "https://wikiwiki.jp/yukkuri8kei/状態異常",
+      "kind": "community",
+      "scope": "核查状态表；名称部分为社区自定",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H04",
+      "title": "食物",
+      "url": "https://wikiwiki.jp/yukkuri8kei/ごはん",
+      "kind": "community",
+      "scope": "核查投喂模式、反应与食物表",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H05",
+      "title": "教育",
+      "url": "https://wikiwiki.jp/yukkuri8kei/教育",
+      "kind": "community",
+      "scope": "核查禁止/许可、指令和学习表",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H06",
+      "title": "操作",
+      "url": "https://wikiwiki.jp/yukkuri8kei/基本操作",
+      "kind": "community",
+      "scope": "核查鼠标、快捷方式和取消说明",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H07",
+      "title": "保存",
+      "url": "https://wikiwiki.jp/yukkuri8kei/冷凍庫",
+      "kind": "community",
+      "scope": "核查保存功能及附带状态规则",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H08",
+      "title": "外出",
+      "url": "https://wikiwiki.jp/yukkuri8kei/外出",
+      "kind": "community",
+      "scope": "仅外出直接操作与治疗服务相关段落，事件故事未全量核查",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    },
+    {
+      "id": "H09",
+      "title": "自主行为",
+      "url": "https://wikiwiki.jp/yukkuri8kei/水槽内自動発生イベ",
+      "kind": "community",
+      "scope": "只核与第一阶段相关的自主表达和身体活动；不称全量跨系统核查",
+      "checkedDate": "2026-10-28",
+      "gameExecuted": false
+    }
+  ]
+}

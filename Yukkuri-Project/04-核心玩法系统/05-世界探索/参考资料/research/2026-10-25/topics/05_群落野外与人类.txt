@@ -1,0 +1,73 @@
+群落野外与人类｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C036  《冬篭り》用储粮、草垫、围圈睡眠、检查洞口、唱催眠曲描述度冬；不同家庭依体力和技巧分工。
+适用：《待つぜ待つのぜ冬篭り》
+证据：A；类别：survival / affection
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S16 待つぜ待つのぜ冬篭り
+https://w.atwiki.jp/slowlove/pages/666.html
+读取状态：body_read
+
+C037  《ゆちゅりーの性質》描写体弱个体全年储备，其他个体尾随抢食；储粮合作与资源冲突可同时出现。
+适用：《ゆちゅりーの性質》
+证据：A；类别：survival / conflict
+限制：只读到相关段落，不宣称已分析全故事。
+出处：
+S17 ゆちゅりーの性質
+https://w.atwiki.jp/slowlove/pages/76.html
+读取状态：body_partially_read
+
+C038  英文城市野良条目描写翻垃圾觅食、群落排外、鼠鸟猫狗等捕食风险及人类驱除。
+适用：城市生存/残酷同人汇编
+证据：B；类别：survival / predation / cruelty
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S25 Gutter Trash Yukkuris
+https://yukkuri.fandom.com/wiki/Gutter_Trash_Yukkuris
+读取状态：body_read
+
+C039  同一城市野良条目也写到餐馆喂养、提供棚屋、跨宠物/野良友谊和社区贡献徽章，并解释敌意可能由环境与教育循环形成。
+适用：英文城市野良汇编
+证据：B；类别：care / social
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K10（详见 conflicts.json）
+出处：
+S25 Gutter Trash Yukkuris
+https://yukkuri.fandom.com/wiki/Gutter_Trash_Yukkuris
+读取状态：body_read
+
+C040  英文主条目把人类写成既可能暴力排斥，也可能饲养陪伴；工厂有大量繁育、商品化和虐待等不同叙事功能。
+适用：生物系跨作品汇编
+证据：C；类别：care / cruelty / industrial_exploitation
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S24 Yukkuri
+https://yukkuri.fandom.com/wiki/Yukkuri
+读取状态：search_text_only
+
+C041  《八景》不同捕获点出现不同倾向个体；放生、撒食和驱除会影响野生出现数，属于游戏化的人类干预生态。
+适用：《ゆっくり八景》
+证据：B；类别：survival
+限制：攻略部分地区参数有问号，未据其给出确定概率。
+出处：
+S08 外出
+https://wikiwiki.jp/yukkuri8kei/外出
+读取状态：body_read
+
+C042  本轮既有幻想乡人里背景的徽章故事，也有现代城市和家庭背景；不能默认所有资料发生在同一世界。
+适用：作品背景对照
+证据：A；类别：general
+限制：研究者归纳，用于防止跨作品合并。
+出处：
+S12 ゆっくりいじめ系1554 バッジシステム
+https://w.atwiki.jp/yukkuri_gyakutai/pages/2576.html
+读取状态：body_read
+S25 Gutter Trash Yukkuris
+https://yukkuri.fandom.com/wiki/Gutter_Trash_Yukkuris
+读取状态：body_read
+
+

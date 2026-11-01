@@ -1,0 +1,263 @@
+[
+  {
+    "id": "L01",
+    "title": "Know Your Meme: Yukkuri Shiteitte ne!",
+    "url": "https://knowyourmeme.com/memes/yukkuri-shiteitte-ne",
+    "original_language": "en",
+    "read_status": "仅检索摘要",
+    "note": "起源二手入口；优先采用参与者访谈，未把旧起源叙事当已证实。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L02",
+    "title": "油庫里（中文维基百科）",
+    "url": "https://zh.wikipedia.org/wiki/油庫里",
+    "original_language": "zh",
+    "read_status": "检索摘要",
+    "note": "提供日文访谈及2008年插画站的进一步出处；没有追读全部脚注。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L03",
+    "title": "ゆっくりしていってね！！！（アニヲタWiki）",
+    "url": "https://w.atwiki.jp/aniwotawiki/pages/254.html",
+    "original_language": "ja",
+    "read_status": "检索正文片段",
+    "note": "保留多种旧起源说和2020访谈路径；与访谈同源部分不作独立证据。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L04",
+    "title": "ゆっくりはゆっくりと歩く：垣間見える裏",
+    "url": "https://ncode.syosetu.com/n0569hh/8/",
+    "original_language": "ja",
+    "read_status": "检索正文片段",
+    "note": "金牌课堂及个体识别线索；未整章阅读，正文制度以前后章证据为主。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L05",
+    "title": "星を掴むゆっくり：地上に輝く星",
+    "url": "https://ncode.syosetu.com/n1758ed/15/",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "教育与ぷくー行为相关线索，待全文读。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L06",
+    "title": "星を掴むゆっくり：星への道",
+    "url": "https://ncode.syosetu.com/n1758ed/11/",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "白金考试后续故事线索，待全文读。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L07",
+    "title": "SS一覧 更新順",
+    "url": "https://w.atwiki.jp/slowlove/pages/74.html",
+    "original_language": "ja",
+    "read_status": "检索索引",
+    "note": "保留爱护、野生、阴郁、工厂、医护等混合题材入口；名单作品不计已读。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L08",
+    "title": "かわいいゆっくりゲットだぜ！！",
+    "url": "https://w.atwiki.jp/slowlove/pages/653.html",
+    "original_language": "ja",
+    "read_status": "检索正文片段",
+    "note": "冬季食物、人类交换、捕食题材并存，待全篇。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L09",
+    "title": "かわいいゆっくりゲットだぜ！！３－プロローグ",
+    "url": "https://w.atwiki.jp/slowlove/pages/687.html",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "作者提及从其他SS学习胎生知识继承设定，尚未追明被借用作品。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L10",
+    "title": "冬篭り",
+    "url": "https://w.atwiki.jp/yukkuri_gyakutai/pages/2842.html",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "虐待Wiki的另一冬季故事，保留以便与S16比较。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L11",
+    "title": "Yukkuri Diary",
+    "url": "https://yukkuri.fandom.com/wiki/Yukkuri_Diary",
+    "original_language": "en",
+    "read_status": "检索片段",
+    "note": "补充读取搜索返回长段落后加入S42；仍未完整读取原页。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L12",
+    "title": "Theories",
+    "url": "https://yukkuri.fandom.com/wiki/Theories",
+    "original_language": "en",
+    "read_status": "检索片段",
+    "note": "再生等理论汇编，明确不当定论。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L13",
+    "title": "Reimu Hakurei / Marisa Kirisame",
+    "url": "https://yukkuri.fandom.com/wiki/Reimu_Hakurei",
+    "original_language": "en",
+    "read_status": "检索片段",
+    "note": "东方本体人物与油库里互动的同人汇编；魔理沙页 https://yukkuri.fandom.com/wiki/Marisa_Kirisame 。不等于东方官方剧情。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L14",
+    "title": "SimYukkuri GitLab",
+    "url": "https://gitlab.com/simyukkuri/simyukkuri",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "分支与版本关系待查；本轮未误当所有SimYukkuri的统一最新版。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L15",
+    "title": "Simyukkuri2021_Eng",
+    "url": "https://github.com/I-Have-No-Idea-What-IAmDoing/Simyukkuri2021_Eng",
+    "original_language": "en",
+    "read_status": "检索片段",
+    "note": "英文翻译分支；未检验覆盖率或运行。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L16",
+    "title": "シムゆっくり@ウィキ",
+    "url": "https://w.atwiki.jp/simyukkuri/",
+    "original_language": "ja",
+    "read_status": "检索正文",
+    "note": "非官方攻略入口；未逐页读取。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L17",
+    "title": "ゆっくりゲーム制作スレ14（镜像）",
+    "url": "https://www.kyodemo.net/sdemo/r/s_otaku_16333/1419679771/",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "历史分支发布线索；原帖与镜像一致性未验证。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L18",
+    "title": "Ammo: Yukkuri Family from the City",
+    "url": "https://yukkuri.fandom.com/wiki/Badges",
+    "original_language": "en",
+    "read_status": "S05指称，未找到原作",
+    "note": "只有二手指向，不能算白金首例已验证；URL指向线索页而非假造原作链接。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L19",
+    "title": "ゆっくり八景 Tips / アクション",
+    "url": "https://wikiwiki.jp/yukkuri8kei/Tips",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "培育卖出、教育等已与S07-S09主题部分重复；动作页 https://wikiwiki.jp/yukkuri8kei/アクション ，细节待读。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L20",
+    "title": "八景评论与玩家体验",
+    "url": "https://wikiwiki.jp/yukkuri8kei/コメント/情報提供",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "个别版本异议，留作复现实测线索，不作为确定机制。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L21",
+    "title": "ゆっくり八景（製品版）介绍",
+    "url": "https://evo-blog.net/pc-game-introduction-02/",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "玩家介绍与S29作者一致，细节未读，不代替作者材料。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L22",
+    "title": "『ゆっくり八景』をプレイしてわかった、ペットゲームが消えた理由",
+    "url": "https://note.com/rich_bobcat3189/n/n85cce297d29e",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "玩家评论/观点，不当市场或行业消失原因的实证。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L23",
+    "title": "Touhou Garden 聚合页",
+    "url": "https://trynextgame.com/index.php?game=5159730&lang=en",
+    "original_language": "en",
+    "read_status": "检索正文",
+    "note": "出现Coming soon与发行日并存的旧状态；现状以S30开发者商店记录为准。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L24",
+    "title": "Yukkuri Types其余类型",
+    "url": "https://yukkuri.fandom.com/wiki/Yukkuri_Types",
+    "original_language": "en",
+    "read_status": "检索长文本",
+    "note": "保留阿求、恋、心、鵺、Anonymous及非东方角色等进一步条目线索；首轮只摘要部分类型，不声称完整图鉴。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L25",
+    "title": "餡小話について語るスレ54",
+    "url": "https://jbbs.shitaraba.net/bbs/read.cgi/otaku/17279/1729301772/",
+    "original_language": "ja",
+    "read_status": "检索片段",
+    "note": "金牌专用活动空间的读者讨论，未获得被讨论作品的完整对应，保留待查。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L26",
+    "title": "Scarlet Devil Mansion",
+    "url": "https://yukkuri.fandom.com/wiki/Scarlet_Devil_Mansion",
+    "original_language": "en",
+    "read_status": "检索正文片段",
+    "note": "索引正文描述本体人物、宠物与实验等同人关系，待查具体原作。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L27",
+    "title": "Sakuya Izayoi",
+    "url": "https://yukkuri.fandom.com/wiki/Sakuya_Izayoi",
+    "original_language": "en",
+    "read_status": "检索正文片段",
+    "note": "本体人物与油库里咲夜的态度并不等同；仅同人汇编。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L28",
+    "title": "Yukkuri Yuyuko / Suika",
+    "url": "https://yukkuri.fandom.com/wiki/Yukkuri_Yuyuko",
+    "original_language": "en",
+    "read_status": "检索正文片段",
+    "note": "幽幽子的大食量及妖梦侍奉；萃香条目 https://yukkuri.fandom.com/wiki/Yukkuri_Suika 描述酒馅、变体与西瓜笑话；未回溯原作。",
+    "review_status": "pending"
+  },
+  {
+    "id": "L29",
+    "title": "Yukkuri vocabulary",
+    "url": "https://yukkuri.fandom.com/wiki/Yukkuri_vocabulary",
+    "original_language": "en",
+    "read_status": "检索正文片段",
+    "note": "口癖语义与粗俗/性强迫用语的进一步词表，未完整审读。",
+    "review_status": "pending"
+  }
+]

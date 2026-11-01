@@ -1,0 +1,128 @@
+COMMAND: /workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/dotnet run --configuration Release --no-restore --project checks/Interaction.Continuity/Interaction.Continuity.csproj -p:UseAppHost=false -p:UseSharedCompilation=false -- /workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/evidence/Interaction.Continuity.json
+CWD: /workspace/shared/yukkuri-cloud-20261029T174248-cc3aecc/source
+PASS carried release speed is frame independent and clears after stopping or interruption
+PASS carried release uses the latest direction rather than total drag distance
+PASS slow direct release places at the carried position without a fall
+PASS fast direct releases preserve direction and scale launch speed
+PASS invalid or paused direct release keeps hand support
+PASS physiology produces both kinds of persistent waste and cleaning never refunds food
+PASS excretion pauses in close-up and interruption preserves the unmet need
+PASS physiology old missing fields default safely and inconsistent fields are rejected
+PASS hidden health exposes injury and can recover without showing exact health
+PASS local foot injury remains visible above the health cutoff and preserves condition priority
+PASS suspended lowering and sliding bodies retain unmet excretion until grounded and still
+PASS close-up lifting cancels excretion without advancing or consuming its unmet need
+PASS refused and completed held tools do not indefinitely block excretion
+PASS accumulated injury becomes critical then lethal and death stops excretion
+PASS water relieves thirst without filling the stomach or healing an injured foot
+PASS satisfied drinking refuses another cup without farming trust
+PASS sweet food preserves its own intake type and consumes one portion
+PASS closing the mouth or pausing before acceptance consumes nothing
+PASS passive thirst freezes in close-up while a started mouthful may finish
+PASS thirsty immobilized oil can ask for water without pretending it can walk
+PASS save rejects invalid hydration and intake types at its actual entry
+PASS older saves acquire safe hydration defaults and keep an existing mouthful
+PASS accepted food stays consumed after swallowing while the same mouse gesture is held
+FAIL a completed held meal sweet or drink releases needs after its actual swallowing response: Drink/water: holding the finished tool trapped the oil or skipped swallowing; diagnostics={"accepted":true,"sawSwallow":true,"moved":true,"sawNaturalIntake":true,"endX":-0.30000062845401326,"endZ":-0.7917167814584771,"peakX":1.2079999999999997,"maxDistanceFromStart":1.2079999999999997,"totalTravel":3.1880000000000006,"closestDestination":0.7920000000000003,"sawDestinationIntake":true,"returnedAfterDestination":true,"destinationId":"destination","destinationX":2,"destinationZ":0,"destinationPortions":4,"targetX":-0.3862521514355943,"targetZ":-0.9512650943138317,"Activity":"\u6162\u6162\u6765","Fullness":79.70000000000027,"Energy":89.76000000000022,"Hydration":71.70000000000014,"EatingRemaining":0,"GroundIntake":true,"GroundIntakeSourceId":null,"NaturalIntakePending":false,"lastDisplayedPose":"idle","ReactionPose":"idle","ReactionPoseRemaining":0,"ReactionSituation":"mouthful-done","ReactionRefused":false,"HasInteractionGesture":true,"InteractionGestureTarget":"interaction-oil-0","CurrentInteractionAction":12,"InteractionGestureOwnsPose":false,"InteractionIntakeAccepted":true,"Carried":false,"Falling":false,"Restraint":0,"excretionActive":false,"Resting":false}
+PASS returning an unaccepted offer waits for pending and accepted autonomous bites without stealing their source
+PASS completed care keeps its short response then releases food water and rest without repeated medicine
+PASS completed or already intact repair releases movement without repeating repairs
+PASS releasing or cancelling completed repair clears only its own body response
+PASS completed nursing does not replay treatment or erase a newer painful response
+PASS continuing to wipe a clean cheek cannot farm affection after the first dirt was removed
+PASS wiping an already clean accessory does not invent another meaningful repair event
+PASS completing repair records one completion and a new tear resets work but not history
+PASS repair work cannot be negative in a persisted world
+PASS a single mouse jump cannot turn a gentle stroke into recorded rough handling
+PASS one delayed input frame cannot stand in for sustained fast rubbing
+PASS repeating pain care does not restart an already running foot recovery delay
+PASS a rest invitation does not display sleep while walking to a distant cushion
+PASS rest command alone grants no cushioned healing bonus on a bare floor
+PASS an explicit hurtful interruption wakes the oil and ends the rest action
+PASS a rest invitation cancels an unfinished exercise without crediting a lesson
+PASS accepting a new exercise stops the current rest instead of sleeping through practice
+FAIL an autonomous invitation supplies the same body pose used by the renderer: autonomous invitation lacks a pose or matching speech: idle, 
+PASS releasing an accepted meal keeps chewing while releasing pressure stops deformation
+PASS a release-triggered push keeps its recoil instead of immediately returning an idle pose
+PASS save files do not replay an expired held gesture as an active reaction on load
+PASS dressing records actual completed care at its body part and cannot appear on a cancelled attempt
+PASS an injured treated foot keeps its dressing after the initial settling time
+FAIL voice intent follows the oil's actual response instead of the last selected tool group: autonomous nuzzle request has no matching sound intent
+PASS one mouse jump during gentle rocking is a slow-down cue rather than abusive handling
+PASS sustained harsh rocking prompts refusal while leaving the physical support in place
+PASS teasing can move food off the body surface and a real withdrawal changes future food trust once
+PASS holding bait in reach without pulling it away does not continuously invent disappointed experiences
+PASS wiping the left cheek leaves the right cheek dirty and makes only the left cheek wet
+PASS drying one side preserves the opposite wet patch and whole-body soiling still reaches both
+PASS moving care to the opposite cheek restarts the actual treatment dwell and dresses that side
+PASS switching cheeks requires a fresh nuzzle invitation instead of reusing contact on the other side
+PASS inspection reports a remaining local wet patch even when the body average is low
+PASS partial face drying does not claim that the feet or the whole body are already dry
+PASS a frightened oil can refuse wiping without becoming visibly pleased or losing the dirt
+PASS local touch sensitivity can receive matching care even after general health recovers
+PASS turning a hat-wearing oil or placing its frame reserves the changed silhouette
+PASS ground turning actions do not change posture in midair
+PASS lifting or righting an oil ends its special upside-down drying period
+PASS rigid fixtures cannot be assembled through a resting cushion
+PASS resuming a low carry keeps its existing height instead of lifting it again
+PASS a height concern follows an actual rise and easing down changes the response without healing or dropping
+PASS an invitation to sing or stretch waits for the accepted mouthful to finish
+PASS hanging height controls use the actual body-size limits and reverse immediately at an endpoint
+PASS inspection and settled expression still expose a sore head or cheek after general pain has faded
+PASS a thirsty but otherwise healthy oil can explain thirst when inspected
+PASS care at a second site preserves the first site's dressing and both cheek sides
+PASS new bottom damage invalidates only the old bottom treatment without resurrecting it next tick
+PASS each dressing freezes in close-up and expires only after its site has settled
+PASS save validation rejects duplicate and invalid per-site dressing data
+PASS one roll sample cannot teleport across the room or catch up a long frame
+PASS a roll blocked at the room edge causes no stationary dirt or distress
+PASS starting a roll reserves turning room before it can overlap a neighbor
+PASS roll orientation follows signed actual travel and freezes without contact or motion
+PASS rolling a turned oil interrupts drying and never serializes a held input pose
+PASS short contact keeps its actual response direction even when physical support prevents displacement
+PASS a sore cheek can refuse rubbing while the other side remains available
+PASS care must reach the sore cheek and cannot treat it through the healthy side
+PASS old cheek sensitivity imports without healing either side and local sides survive saving
+PASS aiming holds the selected ball and releases only that exact object
+PASS removing or hiding the held ball cannot redirect the release to another ball
+PASS a turned oil cannot kick the ball while it cannot orient itself to play
+PASS a fast soft ball rebounds from the body with a brief reaction and no injury
+PASS ball collisions respect box walls and the visible yard fence instead of an inner invisible rectangle
+PASS a ball must be placed in clear space and a cushion absorbs its approach
+PASS woodland balls rebound from the visible trunk section and cannot be placed inside trees
+PASS a rolling ball enters the river slows and floats instead of bouncing at an invisible bank
+PASS river current freezes in pause and does not start passive drift in close-up
+PASS small presentation steps do not erase gentle river drift
+PASS oil observes a floating ball without repeatedly chasing it into the river
+PASS a floating ball can be pushed back toward shore without moving the oil into water
+PASS practiced ball play returns closer to the player than a beginner's attempt
+PASS a finished mouthful acknowledges swallowing once without another portion or passive recovery
+PASS finishing a mouthful does not replace a newer pain response with cheerful speech
+PASS releasing the empty spoon does not erase the newer swallowing response
+PASS conversation waits for swallowing without early affection or repeated invitations
+PASS a newer painful interaction cancels a waiting conversation
+PASS timely praise keeps its event while swallowing without rewarding the same event twice
+PASS resting oil replies gently without waking or granting passive recovery in close-up
+PASS pause freezes queued conversation and save cannot replay it as a reward
+PASS verbal comfort refusal describes distance without inventing physical touch
+PASS a stored treasure returns as the same object without farming a fresh gift
+PASS treasure placement clears a turned body and stays in its current region
+FAIL stored treasure keeps ownership through save and cannot be displayed as present: saving lost ownership or autonomy displayed a stored object
+PASS rapid harsh speech shares a response interval instead of rewriting the relationship on every click
+PASS scolding interrupts a lesson without recording learning or a completed rule
+PASS a contextual scold requires a current observed unresolved incident for this oil
+PASS immobility and a real unanswered request have distinct harsh speech feedback
+PASS belittling can provoke resistance or hurt without turning either into affection
+PASS moving the holding hand away releases only the hand restraint and contact can resume
+PASS push release off the body cannot apply saved force or a reentry pointer jump
+PASS an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it
+PASS following can reach the rear yard without an invisible inner movement boundary
+PASS food in another region cannot be eaten through matching coordinates
+PASS wait practice and placed meals use actual food in the active region
+PASS changing active region during a gesture still cleans up the original oil's transient hold
+PASS unhanging transfers support and lowers continuously without healing or passive time
+PASS saving during supported lowering preserves support without replaying its transient motion
+PASS taking manual control of supported lowering does not keep moving or drop on cancellation
+Mixed audit: 1440 attempts, 911 accepted; 12 fixed seeds. This is not native play or full action coverage.
+PASS fixed-seed mixed gestures keep saves valid and leave no ghost hands across cancellation and pause
+Continuity checks: 120/124

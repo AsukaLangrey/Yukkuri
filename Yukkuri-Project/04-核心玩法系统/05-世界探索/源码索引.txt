@@ -1,0 +1,34 @@
+世界探索｜源码导航
+以下路径均相对于Yukkuri-Project根目录。原文件未按类别拆分或改写。
+
+主归属入口（3项）
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneBehavior.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneInteraction.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneWorld.cs
+
+相关共享文件（25项）
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameVersion.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.tscn
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Lifecycle.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAutosave.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStates.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.RegionPresentation.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.tscn
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandDecorations.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandOcclusion.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreatureArrival.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSpatial.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionState.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurface.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionValidation.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWorld.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneState.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneValidation.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SaveStore.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterSpatial.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationSpatial.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WoodlandLayout.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldSimulation.cs
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldState.cs

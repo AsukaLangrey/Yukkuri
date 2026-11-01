@@ -1,0 +1,4 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+<PropertyGroup><TargetFramework>net10.0</TargetFramework><EnableDynamicLoading>true</EnableDynamicLoading></PropertyGroup>
+<ItemGroup><ProjectReference Include="../../src/Yukkuri.Simulation/Yukkuri.Simulation.csproj"/><Compile Include="../../src/Yukkuri.Game/SceneArt.cs" Link="SceneArt.cs"/><Compile Include="../../src/Yukkuri.Game/CreatureActor.cs" Link="CreatureActor.cs"/></ItemGroup>
+</Project>

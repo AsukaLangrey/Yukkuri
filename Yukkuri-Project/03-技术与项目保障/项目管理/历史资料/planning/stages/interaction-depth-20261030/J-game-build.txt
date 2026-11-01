@@ -1,0 +1,20 @@
+J c08 游戏构建错误：GetValueOrDefault 扩展方法的命名空间缺失
+
+输入证据范围：主协调提供 c08 固定源码 281d0cf，完整游戏构建在 Main.MilestoneStates.cs 原第 103、112、115 行报三个 CS1061。本代理核对当前这三处源码与项目设置，未独立重新构建。
+
+原因
+- pausedOil.ActionCounts 的声明为 Dictionary<string,int>。
+- 三处调用使用 GetValueOrDefault("Hug")，以缺失记录视为 0 的方式比较暂停前后拥抱结算次数。
+- 该调用依赖 System.Collections.Generic 命名空间中的 CollectionExtensions；Main.MilestoneStates.cs 原先没有导入此命名空间。
+- Yukkuri.Game.csproj 使用 Godot.NET.Sdk/4.7.2、net10.0，没有启用 ImplicitUsings；不能借用 Simulation 项目的隐式 using，也不能借用另一份 Main partial 源文件的普通 using。
+- 静态文件搜索未发现仓库 Directory.Build.props/targets 或显式 global using 为本文件补入 System.Collections.Generic。
+
+最小修复
+只在 Main.MilestoneStates.cs 增加 using System.Collections.Generic;。
+三个 GetValueOrDefault 调用及全部原断言保持不变。没有修改暂停、喂食、护理、拥抱、恢复、存读夹具或操作时序，没有用字段赋值伪造通过。
+
+同类只读扫描
+Game 源码中 GetValueOrDefault 另一个使用点在 InteractionRoom.cs 的食物显示份数缓存读取；该文件已有 using System.Collections.Generic;，未发现相同缺失。未修改它或其他文件。
+
+验证边界
+仅源码静态审查与编辑。没有在原机执行编译、游戏、验证程序、检查程序、项目脚本、预览、截图或 Git 操作。新增 using 符合现有方法解析需求，但 c08 的失败记录仍是失败；新源码是否构建成功、是否出现其他错误/警告，必须由后续独立远端构建确认。不得把这份修正记录当作游戏构建通过。

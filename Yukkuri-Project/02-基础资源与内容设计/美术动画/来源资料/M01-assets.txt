@@ -1,0 +1,25 @@
+M01 资产与表现记录 / 2026-10-27
+
+角色与场景
+src/Yukkuri.Game/CreatureActor.cs：本项目用几何图元绘制的灵梦/魔理沙代表样板，包含发型、红蝴蝶结、黑帽、幼体比例、眉眼、脸红、泪滴和包扎。不是从研究作品提取的贴图或模型。
+src/Yukkuri.Game/SceneArt.cs、Main.MilestoneArt.cs：本项目编写的树、食盆、床、屋棚、花坛、石径、入口、主角、雇员和互动手部。
+M01是表现样板，六种及所有形态、完整材质与动画在原M04/M07范围内保留。美术是否符合用户预期仍待真实试玩反馈，不把模型自评等同画风获批。
+
+参考资料的使用边界
+已阅读本地research/2026-10-25/topics/04_语言行为与关系.txt中C029：亲昵摩擦的参考，支持把蹭蹭做成独立互动；没有复制原文台词或图片。
+已阅读本地research/2026-10-25/topics/05_群落野外与人类.txt中C036/C037/C039：储粮照护、抢食冲突与环境教育差异的对照；本阶段以食盆、培养、个体差异体现用户确认的规则，未自动采纳研究中的所有设定。
+已阅读本地research/2026-10-25/topics/08_已有游戏与证据边界.txt中C064—C067：八景、にっき、SimYukkuri的养育/记录/家庭与考试参考；资料研究不等于实际玩过这些作品，也没有复制其代码、美术或音频。
+作品总览保留54条目录记录的原阅读范围；本阶段未声称全部读完、全部采纳或全部素材可商用。
+
+声音
+Assets/Audio/sanctuary-loop.wav、wild-edge-loop.wav及基础提示音：原tools/make-audio.py确定性合成。
+新增coo-stroke/hug/nuzzle/hurt/refuse/help.wav：tools/make-m01-audio.ps1确定性非语言短音，分别用音高包络和节奏区分接触与求助。
+这些短音没有使用外部采样、真人录音或现成旋律；不是已授权的特定角色配音，也不代替M07完整声音表现。
+新增文件参数与哈希：src/Yukkuri.Game/Assets/Audio/m01-audio-analysis.json；统一来源表assets-source/asset-manifest.json。
+
+其他沿用资产
+标题图sanctuary-morning.png为原项目ImageGen生成的概念插图，游戏中的实时场景是另行构建的3D画面。
+中文字体和引擎运行时的许可文件继续随Windows包提供，详见third-party。
+
+验证状态
+本文件只说明来源及用途。可见效果、音频能否播放、导出是否完整，需要实际运行和交验记录支持。

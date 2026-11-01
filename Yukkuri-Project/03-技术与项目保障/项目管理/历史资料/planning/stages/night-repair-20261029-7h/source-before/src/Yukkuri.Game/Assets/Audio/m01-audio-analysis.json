@@ -1,0 +1,62 @@
+[
+  {
+    "file": "coo-stroke.wav",
+    "sha256": "0865402D67FA4A4E6DBB22BA7E782F0417E4F2328A8FEAA05ACFB483EEBA5781",
+    "sample_rate": 22050,
+    "channels": 1,
+    "bit_depth": 16,
+    "source": "tools/make-m01-audio.ps1",
+    "license": "Project-generated original nonverbal synthesis; no external samples",
+    "role": "M01 reaction cue, not a licensed character voice or speech synthesis"
+  },
+  {
+    "file": "coo-hug.wav",
+    "sha256": "35B1F33D01C2B5F009623C8E47E6AE0867CFC7AEFCD4400A367FC4D2EEB8A462",
+    "sample_rate": 22050,
+    "channels": 1,
+    "bit_depth": 16,
+    "source": "tools/make-m01-audio.ps1",
+    "license": "Project-generated original nonverbal synthesis; no external samples",
+    "role": "M01 reaction cue, not a licensed character voice or speech synthesis"
+  },
+  {
+    "file": "coo-nuzzle.wav",
+    "sha256": "CA06F9C5BAD578ADFED9F5774D29FB9FEC075B3FCD0B29B66352BB46DABE205E",
+    "sample_rate": 22050,
+    "channels": 1,
+    "bit_depth": 16,
+    "source": "tools/make-m01-audio.ps1",
+    "license": "Project-generated original nonverbal synthesis; no external samples",
+    "role": "M01 reaction cue, not a licensed character voice or speech synthesis"
+  },
+  {
+    "file": "coo-hurt.wav",
+    "sha256": "CD3CA277C9B4A9CA7145DB4D9D530BAF8E6E68128C112525E5E8319D36621F91",
+    "sample_rate": 22050,
+    "channels": 1,
+    "bit_depth": 16,
+    "source": "tools/make-m01-audio.ps1",
+    "license": "Project-generated original nonverbal synthesis; no external samples",
+    "role": "M01 reaction cue, not a licensed character voice or speech synthesis"
+  },
+  {
+    "file": "coo-refuse.wav",
+    "sha256": "2B214B1777F26F834093457E7AD024B1D67B7E8BA170448219F9A97887FFF177",
+    "sample_rate": 22050,
+    "channels": 1,
+    "bit_depth": 16,
+    "source": "tools/make-m01-audio.ps1",
+    "license": "Project-generated original nonverbal synthesis; no external samples",
+    "role": "M01 reaction cue, not a licensed character voice or speech synthesis"
+  },
+  {
+    "file": "coo-help.wav",
+    "sha256": "5868016B8DDC94F8674D794D689941D0B95370B31FA24E88D6B6FCFF47314EB4",
+    "sample_rate": 22050,
+    "channels": 1,
+    "bit_depth": 16,
+    "source": "tools/make-m01-audio.ps1",
+    "license": "Project-generated original nonverbal synthesis; no external samples",
+    "role": "M01 reaction cue, not a licensed character voice or speech synthesis"
+  }
+]

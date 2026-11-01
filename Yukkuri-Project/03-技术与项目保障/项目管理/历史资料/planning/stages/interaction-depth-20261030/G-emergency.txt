@@ -1,0 +1,25 @@
+G 批：濒危即时取消尚未完成的强制繁育准备
+日期：2026-10-30
+
+修改范围
+仅修改 InteractionInjury.cs 的 StopIncapacitatedActions，新增 checks/Interaction.EmergencyIntervention 的项目、Program、README 和本交接。
+未运行、未编译、未执行测试/脚本/截图或 Git。
+
+已修缺口
+此前 Hurt 把母体变为 Critical 后只清身体动作，Preparing+Forced 仍保留到下次普通 TickFamilies。近看不推进普通时间，因此这段假操作持续存在，并被 ValidateInteraction 优先判定，挡住原本允许的濒危托举。
+现在 StopIncapacitatedActions 仅在 Critical 且 UnderIntervention 时调用现有 CancelIntervention。它保留原有恢复债务、已用材料与关系后果、重试期限，不创建新孕育。不对 Gestating 调用取消。
+
+死亡边界
+Hurt 在进入 Critical 并清理后，还会立即根据致命设置、FillingIntegrity 和救治窗口决定 Die。
+对本次已经确定立即死亡的情况，不先调用普通 CancelIntervention，避免提前改掉 Preparing，让 Die 失去写“母体离世，孕育中止”的原阶段。Die 及死亡读档调用同一清理时，Condition 已是 Dead，不会再次取消或覆盖结果。
+关闭致命伤害时仍立即取消准备，哪怕 FillingIntegrity 为零，也保留濒危救助路径。
+
+跨文件接线
+已向主协调报告 FamilyRisk.AdvanceForcedIntervention 的 Hurt 后 Critical 分支需要避免二次 CancelIntervention。静态复核确认主协调已改为仅 UnderIntervention 时取消再返回；本子任务未修改该文件。新增第3组要求中断记忆权重恰好一次（既有权重2），不会为旧重复调用放宽断言。
+
+远端检查共6组
+真实 Collect→RequestForced→近看 Hurt 濒危→立即 Lift/PutDown；有无恢复债务；普通时间/暂停外部伤害和读档续接；操作完成时恢复债务引发真实濒危且仅取消一次；已有 Gestating 不被误清；关闭致命伤害；当次直接死亡及读档保留死因、孕育Outcome、单个死亡事件。
+对存档先验证原状态，再序列化/反序列化并验证。恢复债务作为明确初始夹具，材料采集及新操作均走公开入口；成功孕育通过固定种子范围真实到达，不伪造事件编号或孩子数量。
+
+未测项
+六组仅完成静态写入和调用链审查，没有编译/运行结果。实机救助姿态、输入、提示可读性、遥测报告仍需独立远端验证。

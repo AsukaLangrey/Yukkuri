@@ -1,0 +1,21 @@
+{
+  "observedUtc": "2026-10-31T23:49:25.8380153Z",
+  "host": "SHIKI-GAME-4080",
+  "pid": 12960,
+  "running": true,
+  "observedSeconds": 38.6,
+  "roomReady": true,
+  "version": "v0.1.55",
+  "errorLines": [],
+  "actualAffinity": 4294967247,
+  "saveDirectories": [
+    "D:\\Project\\Yukkuri\\Yukkuri-Project\\.local\\trial\\appdata\\Godot\\app_userdata\\油库里乐园 · 基础框架\\interaction-test-saves\\new-region-20261101-074758"
+  ],
+  "originalFilesChanged": [],
+  "originalFilesChecked": 1559,
+  "visualInspectionPerformed": false,
+  "automatedGameplayTestsPerformed": false,
+  "gameLeftRunning": true,
+  "sourceBaselineHead": "bf274206fcd451d989dd7895f5c28addd499e857",
+  "sourceManifestSha256": "AC76EED67D370C435CB953F62A2ADC4175F29213EE414271FF9DC8A762A60BAB"
+}

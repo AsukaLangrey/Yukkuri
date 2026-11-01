@@ -1,0 +1,101 @@
+{
+  "stage_id": "M01",
+  "build_id": "M01-CLANG-20261027-074048",
+  "build_artifact": null,
+  "runtime_evidence": "artifacts/m01/exported-1280x720-20261027-074237-808-aaa4eae0/verification-metadata.json",
+  "feedback_log": "planning/stages/M01/feedback.txt",
+  "known_issues": [
+    {
+      "id": "M01-LONG-RUN-PENDING",
+      "blocking": true,
+      "description": "当前默认/本机兼容21600秒实测均进行中，最早21:42结束。最终包、解压运行和交验尚未完成。"
+    },
+    {
+      "id": "M01-HOST-EXECUTION",
+      "blocking": true,
+      "description": "本机WHEA及独立压缩实验证实存在核心相关错误；排除逻辑4/5的短样本正常。未完成当前长时隔离验证，不能宣布历史原生崩溃已解决。"
+    },
+    {
+      "id": "M01-CAPTURE",
+      "blocking": false,
+      "description": "当前默认运行部分PNG损坏；单独报告、不用于画面验收。本机兼容当前完整GUI21图及状态10图有效。065955原生全流程后采集变黑，原因未定；当前原生键鼠全流程未复验。"
+    },
+    {
+      "id": "M01-SCOPE",
+      "blocking": false,
+      "description": "M01为代表性独立闭环；v1.0后续完整范围保留，用户试玩pending。"
+    }
+  ],
+  "checks": [
+    {
+      "id": "M01-C01",
+      "requirement": "培养与基本照护、资源补给闭环可独立游玩",
+      "status": "runtime_verified_pending_release",
+      "result": "当前完整GUI通过照护、三次训练、真实资源购买与养护收入；独立源码重建同流程通过。当前六小时资源/存活结果未结束。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json"
+      ]
+    },
+    {
+      "id": "M01-C02",
+      "requirement": "抚摸抱抱蹭蹭和一种惩戒有不同反馈与基本物理",
+      "status": "runtime_verified_pending_release",
+      "result": "当前GUI实际输入覆盖三种亲近、惩戒、护理及物理跌落；持续入侵表情修复有真实失败回放，当前特写姿态渲染已查看。原生065955六目标手玩与后续黑色采集分开记录。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/ongoing-expression-before.log",
+        "artifacts/m01/ongoing-expression-after.log",
+        "artifacts/m01/exported-states-20261027-074158-585-74c1e226/m01-ongoing-intruder-expression.png"
+      ]
+    },
+    {
+      "id": "M01-C03",
+      "requirement": "野外观察保护接纳和园内油库里护园呼救可完整经历",
+      "status": "runtime_verified_pending_release",
+      "result": "当前GUI经历野外观察/保护/邀请/正式接纳与自主护园/呼救/玩家介入。当前真实正常速度长测仍在继续，不能拿旧版长测当本版完成。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json"
+      ]
+    },
+    {
+      "id": "M01-C04",
+      "requirement": "有理由惩戒/无理由伤害/未获知者反应对照有效",
+      "status": "runtime_verified_pending_release",
+      "result": "当前GUI用同等惩戒输入比较知情与无理由伤害，近处与远处未知旁观者反应不同；63项规则包含亲油/年长者条件自治。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/ongoing-expression-after.log"
+      ]
+    },
+    {
+      "id": "M01-C05",
+      "requirement": "跨区/特写时钟/存读档保持个体和行为记录",
+      "status": "runtime_verified_pending_release",
+      "result": "当前GUI/状态/自动存档恢复检查正常退出，包含跨区选择、暂停与特写时钟、备份恢复和保存。另抽查3份真实历史存档保留全部原有字段并在副本继续120模拟秒，不代表全库兼容。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/exported-autosave-20261027-074603-229-b54d77b8/verification-metadata.json",
+        "artifacts/m01/historical-save-compatibility-precise-20261027/result.json"
+      ]
+    }
+  ],
+  "user_acceptance": {
+    "message_id": null,
+    "build_id": null,
+    "status": "pending",
+    "evidence": null,
+    "quote": null
+  },
+  "record_status": "candidate evidence draft; not Ready or user accepted",
+  "updated_at": "2026-10-27T16:11:10.3898841+08:00"
+}

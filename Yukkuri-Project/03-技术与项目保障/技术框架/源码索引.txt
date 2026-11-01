@@ -1,0 +1,155 @@
+技术框架｜源码导航
+以下路径均相对于Yukkuri-Project根目录。原文件未按类别拆分或改写。
+
+主归属入口（37项）
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorBodyBounds.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorTouchShape.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/export_presets.cfg
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/GameVersion.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Lifecycle.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAutosave.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStates.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/project.godot
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Yukkuri.Game.csproj
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Yukkuri.Game.sln
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Data/simulation.json
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/BodyContactGeometry.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CarryReleaseMotion.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactDeformation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ContactMotion.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CreatureArrival.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CushionGeometry.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionBallDynamics.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionFixtureGeometry.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSpatial.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionState.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurface.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionValidation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionWorld.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneState.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/MilestoneValidation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/NaturalIntakeGeometry.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PortableMotion.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/RoomBallEnvironment.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SaveStore.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterBodyEnvelope.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterGeometry.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldSimulation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WorldState.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/Yukkuri.Simulation.csproj
+
+相关共享文件（112项）
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessoryPlacement.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessorySupport.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessorySurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorAccessoryWear.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorBrowSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorCradleSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorCushionSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorDressingSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorEyeSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorFaceSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHairSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHarnessSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHeatPresentation.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorHopMotion.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorInjuryPresentation.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorInjurySurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorIntakeMouthSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorIntakePresentation.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorMeshSupport.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorMouthSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorNaturalPose.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorNaturalSupport.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorPoseClock.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorPoseSmoothing.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorReactionMotion.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorStemBudPresentation.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorSurfaceMarks.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorTearSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ActorWaterDropletSurface.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ContactStrokeTracker.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Accessory.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Contact.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Deformation.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Dressing.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Face.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.FaceMotion.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Gestation.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Harness.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Heat.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.HumanCompany.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.HungerFeeding.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.ImpactFeedback.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Injury.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Intake.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Interaction.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Materials.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Sculpt.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Shelter.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Support.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.SurfaceMarks.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Tears.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.Water.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterAttempt.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterConcern.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/CreatureActor.WaterTransitions.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/DebugStateSnapshot.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/DetachedStemActor.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionBallSurface.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionCameraOrbit.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionCareSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFixtureArt.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFixtureSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFoodArt.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionFoodSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionLighterSurface.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionPropContact.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ActionProgress.cs
+[音乐音效] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Audio.cs
+[项目管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ContactVerification.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Debug.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DebugComparison.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemInput.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Gestures.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.HeldSupplyContact.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.HitFeedback.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Input.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Intervention.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectPresentation.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Offering.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.RescueTool.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SheltersUi.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Toolbar.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Tools.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Ui.cs
+[项目管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Verification.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Vitals.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionToolArt.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionToolSurface.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionTreasureSurface.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Input.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneArt.cs
+[音乐音效] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAudio.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneHelp.cs
+[人油互动] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneInput.cs
+[项目管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneSoak.cs
+[项目管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStress.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneUi.cs
+[项目管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneVerification.cs
+[界面管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Ui.cs
+[项目管理] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Verification.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/RoomBallActor.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/RoomSupplyStationActor.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/SceneArt.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ShelterActor.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandArt.cs
+[美术动画] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/WoodlandSurface.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/ShelterSpatial.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/SupplyStationSpatial.cs
+[场景设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/WoodlandLayout.cs

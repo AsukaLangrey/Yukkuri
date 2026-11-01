@@ -1,0 +1,1778 @@
+{
+  "schema_version": 1,
+  "version": "v002",
+  "compiled_on": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "source_through": "requirements-v049",
+  "purpose": "本地设定检索和实施参考，不是运行时配置或完成报告。",
+  "precedence": "用户新指示 > 最新明确需求增量 > 本汇编；草案与研究不自动成为已确认规则。汇编出错须回查原文修正。",
+  "implementation_status": "v049确认与阶段规划已记录，新增机制尚未实施；当前无阶段Goal启动，等待用户指定时间。",
+  "sections": [
+    {
+      "id": "PRD",
+      "title": "产品、平台与交付目标",
+      "rules": [
+        {
+          "id": "PRD-01",
+          "status": "confirmed",
+          "title": "原始目标",
+          "statement": "制作完整Yukkuri乐园游戏并在Steam发行；养成经营、生态沙盒、直接互动三个方向都保留。Demo、基础框架和文档不代替完整游戏或实际发行。",
+          "sources": [
+            "planning/requirements-v001.txt",
+            "planning/requirements-v020.txt"
+          ]
+        },
+        {
+          "id": "PRD-02",
+          "status": "confirmed",
+          "title": "氛围",
+          "statement": "温馨可爱、生存压力与黑色幽默、猎奇与残酷生态均保留，由不同环境与事件呈现。本项目是用户选择的同人世界设定，不宣称为东方官方或全部同人作品统一规则。",
+          "sources": [
+            "planning/requirements-v001.txt",
+            "planning/requirements-v002.txt"
+          ]
+        },
+        {
+          "id": "PRD-03",
+          "status": "confirmed",
+          "title": "平台与操作",
+          "statement": "第一版面向Windows、键鼠，完整单人；后续联机没有交付承诺。",
+          "sources": [
+            "planning/requirements-v017.txt",
+            "planning/requirements-v018.txt",
+            "planning/requirements-v019.txt"
+          ]
+        },
+        {
+          "id": "PRD-04",
+          "status": "confirmed",
+          "title": "发行语言",
+          "statement": "第一版正式发行同时支持简体中文、英文、日文；玩家可见文本及字体排版需实际验收，不等于只提供切换菜单，也未承诺三语完整配音。",
+          "sources": [
+            "planning/requirements-v019.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "PRD-05",
+          "status": "confirmed",
+          "title": "商业阶段",
+          "statement": "买断制抢先体验，先有完整可玩的核心体验，再持续扩展；第一版物种分期不能被擅自解释为其他玩法全部延期。",
+          "sources": [
+            "planning/requirements-v020.txt",
+            "planning/requirements-v042.txt",
+            "planning/requirements-v043.txt"
+          ]
+        },
+        {
+          "id": "PRD-06",
+          "status": "confirmed",
+          "title": "资源与时间",
+          "statement": "主要由AI推进，无其他已投入团队。素材可自制或免费可商用，必要时考虑付费，但无无限采购授权。无硬截止；原本地Demo期望为2026-10-26至11-01，未验证工期承诺。",
+          "sources": [
+            "planning/requirements-v020.txt"
+          ]
+        },
+        {
+          "id": "PRD-07",
+          "status": "confirmed",
+          "title": "技术方向",
+          "statement": "Godot 4 .NET＋C#，真实3D场景斜俯视呈现2.5D，Blender/GLB资产方向已认可。具体工具锁定及已验证结果读取toolchain.lock.json和环境记录，不能从技术选型推断玩法完成。",
+          "sources": [
+            "planning/requirements-v004.txt",
+            "planning/requirements-v021.txt",
+            "planning/requirements-v022.txt"
+          ]
+        },
+        {
+          "id": "PRD-08",
+          "status": "confirmed",
+          "title": "机器安排",
+          "statement": "当前使用Windows进行开发；Mac工作延期，不将远程配置作为当前前置任务。",
+          "sources": [
+            "planning/requirements-v021.txt",
+            "planning/requirements-v022.txt"
+          ]
+        },
+        {
+          "id": "PRD-09",
+          "status": "confirmed",
+          "title": "两类体验回报",
+          "statement": "爱油主要为培养的乐趣；虐油主要为惩戒与研究的乐趣。专门奖励、研究目录和解锁树仍由实施草案具体化，不将助手上轮全部建议视为逐项批准。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MOD",
+      "title": "模式、剧情、难度与存档",
+      "rules": [
+        {
+          "id": "MOD-01",
+          "status": "confirmed",
+          "title": "模式层级",
+          "statement": "剧情/自由是游戏模式，经营/观察/互动是操作方式，宏观管理/人类身份是控制方式，特写是镜头状态。不同层级可组合，切换不重置世界或个体。",
+          "sources": [
+            "planning/requirements-v001.txt",
+            "planning/requirements-v005.txt",
+            "planning/requirements-v006.txt"
+          ]
+        },
+        {
+          "id": "MOD-02",
+          "status": "confirmed",
+          "title": "剧情开局",
+          "statement": "接手小型收容乐园，以有限资金、设施和少量居民开始。初始人物具体名单和主角背景仍需内容草案。",
+          "sources": [
+            "planning/requirements-v006.txt",
+            "planning/requirements-v046.txt"
+          ]
+        },
+        {
+          "id": "MOD-03",
+          "status": "confirmed",
+          "title": "初始居民",
+          "statement": "固定故事角色与模板随机居民并存；模板可固定物种/数量，随机性格、天赋与关系。故事关键背景/关系保留；固定角色不免疫伤病，读档不重新随机。",
+          "sources": [
+            "planning/requirements-v046.txt"
+          ]
+        },
+        {
+          "id": "MOD-04",
+          "status": "confirmed",
+          "title": "章节结构",
+          "statement": "章节目标和自主产生的个体/群落故事并存；达成条件后由玩家确认进入下一章。",
+          "sources": [
+            "planning/requirements-v007.txt",
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "MOD-05",
+          "status": "confirmed",
+          "title": "剧情损失",
+          "statement": "关键角色死亡、永久离开或无法履职后，通常通过替代任务、其他角色或分支接续并保留后果；部分关键损失可导致主线失败，是否结束整局按难度规则。",
+          "sources": [
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "MOD-06",
+          "status": "confirmed",
+          "title": "通关选择",
+          "statement": "通关后可选择继续当前存档的经营、世代生活及重复委托，或继承部分成果进入下一周目；继承清单、存档承接待设计，不能默认全继承或强制新周目。",
+          "sources": [
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "MOD-07",
+          "status": "confirmed",
+          "title": "自由模式",
+          "statement": "可自选地图、初始居民、资源和难度，支持无限资源，可关闭衰老或自然死亡。无限资源/关闭自然死亡不自动消除伤病风险。",
+          "sources": [
+            "planning/requirements-v006.txt",
+            "planning/requirements-v019.txt"
+          ]
+        },
+        {
+          "id": "MOD-08",
+          "status": "confirmed",
+          "title": "难度",
+          "statement": "普通难度经营困境可挽救，困难难度可有破产或其他失败结局。当前存档可以中途调难度，仅影响后续规则，不追溯改写历史。",
+          "sources": [
+            "planning/requirements-v011.txt",
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "MOD-09",
+          "status": "confirmed",
+          "title": "存档",
+          "statement": "所有难度支持手动多存档、自动备份与读档挽回，不擅自改成铁人。需保留身份、关系、观察、跨区状态、期限及路线历史，不能靠读档重置规则。",
+          "sources": [
+            "planning/requirements-v015.txt",
+            "planning/requirements-v019.txt",
+            "planning/requirements-v033.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "MOD-10",
+          "status": "confirmed",
+          "title": "同一世界与空间侧重",
+          "statement": "同一世界规则，可通过预设调整；爱油以园内培养为主，虐油以野外惩戒和研究为主。园内可调教不听话者，野外可照护、保护并接纳有潜力或友善个体，不设空间硬隔离。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "MOD-11",
+          "status": "confirmed",
+          "title": "自由模式保护配置",
+          "statement": "自由模式支持独立入侵、事故、伤病致死等开关与操作保护；剧情保留已定风险。实际规则开关与含蓄/直接画面档位分开，表现变化不改真实伤势和死亡后果。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "MOD-12",
+          "status": "confirmed",
+          "title": "主线多种方式",
+          "statement": "支持玩家按自己的方式走完主线，包括不同管理及惩戒取向；不暗设全部任务只有爱油行为一种解法。保留已定关键损失失败、难度及分支后果，不保证任意破坏任务前提后仍可通关。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "WRL",
+      "title": "地区、时间与接纳",
+      "rules": [
+        {
+          "id": "WRL-01",
+          "status": "confirmed",
+          "title": "地区与授权",
+          "statement": "野生地区危险且有生存压力；公共人类公园中有未经筛查的油库里。乐园和人类生活环境中获授权的金银铜牌个体相对稳定，非绝对安全或固定幸福。牌照不使野外风险消失。",
+          "sources": [
+            "planning/requirements-v002.txt",
+            "planning/requirements-v003.txt"
+          ]
+        },
+        {
+          "id": "WRL-02",
+          "status": "confirmed",
+          "title": "筛查对象",
+          "statement": "筛查对象是油库里，不是人类访客；未经筛查不等于已判危险。",
+          "sources": [
+            "planning/requirements-v003.txt"
+          ]
+        },
+        {
+          "id": "WRL-03",
+          "status": "confirmed",
+          "title": "地图连接",
+          "statement": "大地图选择地区，每地区内自由活动；离开再返回保留当地个体与变化，不重随机。首次前往耗时，建立交通后可快速抵达；快速旅行的具体耗时及费用未定。",
+          "sources": [
+            "planning/requirements-v007.txt",
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "WRL-04",
+          "status": "confirmed",
+          "title": "跨区模拟",
+          "statement": "游戏运行中未访问地区简化模拟资源、关系和生态，重要事件通知玩家；全局暂停时也暂停。",
+          "sources": [
+            "planning/requirements-v013.txt",
+            "planning/requirements-v018.txt"
+          ]
+        },
+        {
+          "id": "WRL-05",
+          "status": "confirmed",
+          "title": "关闭游戏",
+          "statement": "关闭游戏世界完全停止；下次启动或读档不结算现实离线时长造成的消耗、收益、疾病、恢复、年龄、救治期限或生态变化。",
+          "sources": [
+            "planning/requirements-v018.txt"
+          ]
+        },
+        {
+          "id": "WRL-06",
+          "status": "confirmed",
+          "title": "特写时间",
+          "statement": "特写只结算主动互动与物品消耗，目标及所有地区的年龄等被动过程冻结，退出不补时。子弹时间名称不能被解释为后台持续缓慢运行。",
+          "sources": [
+            "planning/requirements-v012.txt",
+            "planning/requirements-v013.txt"
+          ]
+        },
+        {
+          "id": "WRL-07",
+          "status": "confirmed",
+          "title": "接纳决定",
+          "statement": "可带入隔离观察区，筛查提供信息，玩家最终决定安置；隔离可选，不强制所有个体统一隔离时长。入园不等于获正式牌照。",
+          "sources": [
+            "planning/requirements-v007.txt"
+          ]
+        },
+        {
+          "id": "WRL-08",
+          "status": "confirmed",
+          "title": "规模",
+          "statement": "中后期典型地区约50—100只同时生活是设计目标，不是开局数、世界总上限或完整游戏性能已验证结论。",
+          "sources": [
+            "planning/requirements-v017.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OBS",
+      "title": "性格、记忆、观察、知识与关系",
+      "rules": [
+        {
+          "id": "OBS-01",
+          "status": "confirmed",
+          "title": "个体性格",
+          "statement": "先天倾向与后天塑造共同作用，可明显改变，改变能力有个体差异且不保证都能教好。",
+          "sources": [
+            "planning/requirements-v008.txt"
+          ]
+        },
+        {
+          "id": "OBS-02",
+          "status": "confirmed",
+          "title": "记忆多数",
+          "statement": "大多数记得具体对象和重要经历，分辨人类与其他个体，有亲属/朋友/敌对关系，经历影响行为。",
+          "sources": [
+            "planning/requirements-v008.txt"
+          ]
+        },
+        {
+          "id": "OBS-03",
+          "status": "confirmed",
+          "title": "记忆少数",
+          "statement": "少数关系简单，记住玩家和少数伙伴，其中不少适合宠物；另有少数可传播消息、形成名声、结盟/排斥，这类野外居多且部分会变异。简单关系不等于无情绪，复杂关系不只存在野外。",
+          "sources": [
+            "planning/requirements-v008.txt"
+          ]
+        },
+        {
+          "id": "OBS-04",
+          "status": "confirmed",
+          "title": "观察与日记",
+          "statement": "养殖个体有日记但细化词条不全透明；野生个体依靠观察及事件反馈逐步建立档案。不能因知道母系性格就显示全部子代真值。",
+          "sources": [
+            "planning/requirements-v008.txt"
+          ]
+        },
+        {
+          "id": "OBS-05",
+          "status": "confirmed",
+          "title": "共享及误判",
+          "statement": "主角与员工观察技能随历练增长，共享档案；低技能可误判，后续事件/复查可纠正。观察判断与真实状态分开；高技能绝不误判未获承诺。",
+          "sources": [
+            "planning/requirements-v008.txt",
+            "planning/requirements-v009.txt"
+          ]
+        },
+        {
+          "id": "OBS-06",
+          "status": "confirmed",
+          "title": "饰品识别",
+          "statement": "饰品是重要线索，熟悉度、认知与情境共同影响识别；熟人可认出，也可暂时误认，再经交流确认。认出身份与情绪待遇分开；真实ID和血缘不因误认删除。",
+          "sources": [
+            "planning/requirements-v033.txt"
+          ]
+        },
+        {
+          "id": "OBS-07",
+          "status": "confirmed",
+          "title": "后天教育",
+          "statement": "亲代可通过示范、警告、讲述传授知识与对他人的评价；子代可误解并依自身经历修正。认知错误不改变世界真实规则。",
+          "sources": [
+            "planning/requirements-v025.txt",
+            "planning/requirements-v029.txt"
+          ]
+        },
+        {
+          "id": "OBS-08",
+          "status": "confirmed",
+          "title": "收养",
+          "statement": "非亲生个体可依性格、关系与资源接纳幼体，逐渐建立养亲关系；允许自主接纳，非仅玩家安排。养亲不改写血缘或先天遗传。",
+          "sources": [
+            "planning/requirements-v029.txt"
+          ]
+        },
+        {
+          "id": "OBS-09",
+          "status": "confirmed",
+          "title": "自主回应",
+          "statement": "拒绝、躲避、求助、保护同伴、逃跑和反抗均可发生，受个性、能力、经历与情境影响，不统一执行或必定成功。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "OBS-10",
+          "status": "confirmed",
+          "title": "心理维度",
+          "statement": "区分信任、恐惧、依恋、怨恨和服从，允许共存；恐惧服从不等于信任。后续照护可逐渐改善关系，不保证全部影响消除。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "OBS-11",
+          "status": "confirmed",
+          "title": "信息传播",
+          "statement": "信息经目击、声音、交谈、事后发现传播，不全园全图自动知道；按不同认知与关系复杂度处理，不新增园外监管惩罚。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "OBS-12",
+          "status": "confirmed",
+          "title": "归属感与惩戒认知",
+          "statement": "园内居民有归属感，认为惩戒入侵野生坏油是正义的；年长者或亲油有概率主动惩戒园内不听话者；无理由虐待会使园内及野外个体恐惧。认知受已获信息约束，不读取隐藏真值。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BIO",
+      "title": "身体、捕食营养、成长及寿命",
+      "rules": [
+        {
+          "id": "BIO-01",
+          "status": "confirmed",
+          "title": "生命周期",
+          "statement": "幼体、成长、成年、衰老、自然死亡完整世代，各年龄都有伤病与死亡风险。",
+          "sources": [
+            "planning/requirements-v019.txt"
+          ]
+        },
+        {
+          "id": "BIO-02",
+          "status": "confirmed",
+          "title": "捕食营养与冲动",
+          "statement": "替代食物可以满足捕食种生存营养，但不能保证消除捕猎和袭击；个体差异、经历、训练影响风险。吃饱/受训不等于绝对安全，捕食种也不是必然袭击。",
+          "sources": [
+            "planning/requirements-v023.txt"
+          ]
+        },
+        {
+          "id": "BIO-03",
+          "status": "confirmed",
+          "title": "浸水",
+          "statement": "普通种持续浸水逐步软化受伤，有可观察预兆；饮水、短时清洁与持续浸泡分开，特殊种各有耐受性。不能实现为一沾水必死；水生升级延期不删除普通水环境交互。",
+          "sources": [
+            "planning/requirements-v023.txt",
+            "planning/requirements-v043.txt"
+          ]
+        },
+        {
+          "id": "BIO-04",
+          "status": "confirmed",
+          "title": "寿命来源",
+          "statement": "物种有标准寿命，遗传天赋修正个体寿命；后天锻炼和身体健康可延长寿命，伤病可能缩短寿命。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "BIO-05",
+          "status": "confirmed",
+          "title": "寿命上限",
+          "statement": "总寿命最多原本自然寿命5倍，不是额外5倍；身体年龄与内馅年龄分开，连续身份累计年龄不因换体/换物种清零，不可无限刷新。启用自然衰老的模式适用，自由模式例外保留。",
+          "sources": [
+            "planning/requirements-v023.txt",
+            "planning/requirements-v033.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "BIO-06",
+          "status": "confirmed",
+          "title": "基准边界",
+          "statement": "5倍基准具体包含哪些修正尚未明确；固定出生物种×遗传基准是参数草案，不得当用户确认公式。自然寿命上限不保证免于提前死亡。",
+          "sources": [
+            "planning/requirements-v033.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "BIO-07",
+          "status": "confirmed",
+          "title": "能力成长",
+          "statement": "成长难度按物种×能力组合配置，不是一个物种统一速度，也不是仅改变出生数值。天赋、训练方式和条件仍影响结果。",
+          "sources": [
+            "planning/requirements-v045.txt"
+          ]
+        },
+        {
+          "id": "BIO-08",
+          "status": "confirmed",
+          "title": "跨优势学习",
+          "statement": "高天赋且充分训练的非优势个体可以超过其他物种普通个体，成本可能更高；不意味着所有个体都能全科最高或物种差异最终消失。",
+          "sources": [
+            "planning/requirements-v045.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP",
+      "title": "繁殖、遗传与母子风险",
+      "rules": [
+        {
+          "id": "REP-01",
+          "status": "confirmed",
+          "title": "方式与排除",
+          "statement": "当前采用茎生、胎生，不采用卵生或分裂；后两者不是已承诺DLC内容，须未来重新决定。研究中的例子不自动纳入。",
+          "sources": [
+            "planning/requirements-v024.txt"
+          ]
+        },
+        {
+          "id": "REP-02",
+          "status": "confirmed",
+          "title": "繁殖管理",
+          "statement": "支持自主发生、玩家安排和按模式配置。自主选择综合性格、伴侣意愿、食物与环境安全；具体默认配置仍可拟案。",
+          "sources": [
+            "planning/requirements-v009.txt",
+            "planning/requirements-v027.txt"
+          ]
+        },
+        {
+          "id": "REP-03",
+          "status": "confirmed",
+          "title": "父母角色",
+          "statement": "个体出生固定父体/母体角色，普通配对不切换，不按物种固定所有个体角色。生殖角色与照护/收养分开。",
+          "sources": [
+            "planning/requirements-v031.txt"
+          ]
+        },
+        {
+          "id": "REP-04",
+          "status": "confirmed",
+          "title": "方式条件",
+          "statement": "同一母体可在不同繁殖周期采用茎生或胎生；胎生要求成熟度、营养和身体条件。开始后方式不互换，条件恶化也不自动切换。",
+          "sources": [
+            "planning/requirements-v026.txt",
+            "planning/requirements-v027.txt",
+            "planning/requirements-v031.txt"
+          ]
+        },
+        {
+          "id": "REP-05",
+          "status": "confirmed",
+          "title": "正常安排",
+          "statement": "玩家可指定期望方式，个体可拒绝；接受且符合条件才执行正常安排。",
+          "sources": [
+            "planning/requirements-v027.txt"
+          ]
+        },
+        {
+          "id": "REP-06",
+          "status": "confirmed",
+          "title": "强制干预边界",
+          "statement": "保留已确认的虚构强制繁殖干预、好感下降及健康风险；恢复不足也并非统一绝对禁止，母体可能死亡。强制不保证成功、不等于任何年龄/身体状态都可行，也不赋予员工自主强制权限。只作非露骨规则摘要，原始措辞见v027。",
+          "sources": [
+            "planning/requirements-v027.txt",
+            "planning/requirements-v028.txt"
+          ]
+        },
+        {
+          "id": "REP-07",
+          "status": "confirmed",
+          "title": "胎茎比较",
+          "statement": "可比条件下胎生子代初始数据适度较好、周期更长、数量较少、母体负担更大；具体属性与量级未定，不自动宣称全部属性或终身上限更高。",
+          "sources": [
+            "planning/requirements-v025.txt"
+          ]
+        },
+        {
+          "id": "REP-08",
+          "status": "confirmed",
+          "title": "子代知识",
+          "statement": "茎生具基础语言与生存本能、理解不完整需教导；胎生理解较成熟，可继承少量母体生活常识。都不复制成熟技能、具体经历或亲友关系。",
+          "sources": [
+            "planning/requirements-v025.txt"
+          ]
+        },
+        {
+          "id": "REP-09",
+          "status": "confirmed",
+          "title": "错误认知",
+          "statement": "胎生可能继承母体错误常识，之后可纠正；不从母体未知知识凭空生成遗传知识。",
+          "sources": [
+            "planning/requirements-v025.txt",
+            "planning/requirements-v029.txt"
+          ]
+        },
+        {
+          "id": "REP-10",
+          "status": "confirmed",
+          "title": "性格遗传",
+          "statement": "大概率母系为主、父系少量影响，少部分变化、极小概率完全词条变异。具体概率未定，不等权也不把父系归零。",
+          "sources": [
+            "planning/requirements-v008.txt",
+            "planning/requirements-v029.txt"
+          ]
+        },
+        {
+          "id": "REP-11",
+          "status": "confirmed",
+          "title": "孕期风险",
+          "statement": "营养不足或伤势可使发育受阻、素质下降或生产失败；照护可改善，但不保证一切可逆。",
+          "sources": [
+            "planning/requirements-v027.txt"
+          ]
+        },
+        {
+          "id": "REP-12",
+          "status": "confirmed",
+          "title": "吸收机制",
+          "statement": "胎生吸收有生理反应与母体主动选择两种，后者受性格、亲子感情和求生意愿影响；不能混作全主动或全不可控。",
+          "sources": [
+            "planning/requirements-v028.txt"
+          ]
+        },
+        {
+          "id": "REP-13",
+          "status": "confirmed",
+          "title": "母体死亡",
+          "statement": "生产负担/并发问题造成死亡与母体主动坚持保胎分别存在；主动保胎不保证母体必死或子代必活。",
+          "sources": [
+            "planning/requirements-v028.txt"
+          ]
+        },
+        {
+          "id": "REP-14",
+          "status": "confirmed",
+          "title": "茎生杀子",
+          "statement": "可能由饥饿、压力、性格和家庭冲突触发，强制只是诱因之一，不能把任一诱因写成必然结果。",
+          "sources": [
+            "planning/requirements-v028.txt"
+          ]
+        },
+        {
+          "id": "REP-15",
+          "status": "confirmed",
+          "title": "常见跨种",
+          "statement": "多数常见种可跨种繁殖，特殊种具体兼容组合另定。普通子代逐只从双亲物种中判定，同窝可不同，不保证各半或每窝必有两种，不默认混合新品种。",
+          "sources": [
+            "planning/requirements-v030.txt"
+          ]
+        },
+        {
+          "id": "REP-16",
+          "status": "confirmed",
+          "title": "捕食种配对",
+          "statement": "主要捕食种之间繁育；与普通种仅极少个例，在允许组合内生理可行但关系难建立、成功率极低，不增加默认罕见个体基因门槛。不等于任意组合都兼容。",
+          "sources": [
+            "planning/requirements-v031.txt",
+            "planning/requirements-v032.txt"
+          ]
+        },
+        {
+          "id": "REP-17",
+          "status": "confirmed",
+          "title": "母体方向",
+          "statement": "捕食种或普通种作为母体两种方向均可存在，兼容条件、负担和风险分别设定；不代表同一个体临时交换固定角色。",
+          "sources": [
+            "planning/requirements-v032.txt"
+          ]
+        },
+        {
+          "id": "REP-18",
+          "status": "confirmed",
+          "title": "遗传维度分开",
+          "statement": "物种、性格、少量知识、能力/寿命天赋与形态潜力分别表达；普通子代物种规则不取消罕见出生变异。",
+          "sources": [
+            "planning/requirements-v025.txt",
+            "planning/requirements-v029.txt",
+            "planning/requirements-v030.txt",
+            "planning/requirements-v037.txt",
+            "planning/requirements-v048.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EVO",
+      "title": "升级路线、身体形态及装备",
+      "rules": [
+        {
+          "id": "EVO-01",
+          "status": "confirmed",
+          "title": "升级边界",
+          "statement": "保留油库里特征，允许巨型、有身体、飞行、水生及有限特殊能力；不自动开放人形化或接近东方角色的强能力。升级不自动变聪明、温顺或获牌。",
+          "sources": [
+            "planning/requirements-v010.txt",
+            "planning/requirements-v023.txt"
+          ]
+        },
+        {
+          "id": "EVO-02",
+          "status": "confirmed",
+          "title": "触发与变异",
+          "statement": "出生变异、后天变异是两套机制；后天支持条件概率、定向培养、罕见事件，不删减为单一路径。",
+          "sources": [
+            "planning/requirements-v009.txt",
+            "planning/requirements-v010.txt"
+          ]
+        },
+        {
+          "id": "EVO-03",
+          "status": "confirmed",
+          "title": "物种路线",
+          "statement": "逐物种有路线表，部分路线共享而非全物种通用；主要后天路线互斥，不能通用叠加。天生特征与后天路线兼容逐物种规定。",
+          "sources": [
+            "planning/requirements-v037.txt",
+            "planning/requirements-v038.txt",
+            "planning/requirements-v041.txt"
+          ]
+        },
+        {
+          "id": "EVO-04",
+          "status": "confirmed",
+          "title": "路线历史",
+          "statement": "按形态规定可逆性；允许退回的个体退回基础形态后仍只能重新走原路线，不可改走另一主要路线。存读档不能清除路线历史；跨物种转移特殊映射仍需设计。",
+          "sources": [
+            "planning/requirements-v037.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "EVO-05",
+          "status": "confirmed",
+          "title": "潜力继承",
+          "statement": "升级后代通常基础形态，更容易继承对应潜力，不保证后续升级或出生即拥有形态。罕见出生变异以及蕾米/芙兰天生有身体例外保留。",
+          "sources": [
+            "planning/requirements-v037.txt",
+            "planning/requirements-v043.txt"
+          ]
+        },
+        {
+          "id": "EVO-06",
+          "status": "confirmed",
+          "title": "发现与图鉴",
+          "statement": "通过观察、研究和培养发现条件及潜力；已确认通用知识进入图鉴，新个体潜力仍须判断，不开局全透明，也不永久只给模糊线索。",
+          "sources": [
+            "planning/requirements-v038.txt"
+          ]
+        },
+        {
+          "id": "EVO-07",
+          "status": "confirmed",
+          "title": "价值与成本",
+          "statement": "培养投入和升级后的长期需求并存，能力应值得投入、路线各有用途。食物/空间/特殊环境按路线设计，不无差别叠加全部负担。",
+          "sources": [
+            "planning/requirements-v038.txt"
+          ]
+        },
+        {
+          "id": "EVO-08",
+          "status": "confirmed",
+          "title": "巨型能力",
+          "statement": "主要强化身体，部分物种或罕见个体可有有限特殊能力；不人人能量攻击，也不完全排除。",
+          "sources": [
+            "planning/requirements-v039.txt"
+          ]
+        },
+        {
+          "id": "EVO-09",
+          "status": "confirmed",
+          "title": "巨型变化",
+          "statement": "连续成长、条件达到后的明显蜕变、特殊事件快速变化都保留；不要求每个个体按三步依次完成。体型/食量/空间变化可观察。",
+          "sources": [
+            "planning/requirements-v039.txt"
+          ]
+        },
+        {
+          "id": "EVO-10",
+          "status": "confirmed",
+          "title": "巨型恢复",
+          "statement": "通常不自然退回，经特定治疗或事件可恢复普通体型；缺食或环境不适造成健康风险，不能自动退化代替后果。",
+          "sources": [
+            "planning/requirements-v039.txt"
+          ]
+        },
+        {
+          "id": "EVO-11",
+          "status": "confirmed",
+          "title": "有身体外形",
+          "statement": "各物种身体比例不同，保留经典脸和明显大头，不是统一比例或直接人体化。",
+          "sources": [
+            "planning/requirements-v040.txt"
+          ]
+        },
+        {
+          "id": "EVO-12",
+          "status": "confirmed",
+          "title": "工具装备",
+          "statement": "有身体支持专业工作工具、防护和战斗装备，使用效果依赖学习与能力；不是长出身体即全会。没有确认无身体个体完全不能用工具。",
+          "sources": [
+            "planning/requirements-v040.txt"
+          ]
+        },
+        {
+          "id": "EVO-13",
+          "status": "confirmed",
+          "title": "有身体恢复",
+          "statement": "通常保持形态，可经特定治疗或事件退回，非自由随意切换；具体代价与装备处置待设计。",
+          "sources": [
+            "planning/requirements-v040.txt"
+          ]
+        },
+        {
+          "id": "EVO-14",
+          "status": "confirmed",
+          "title": "飞行",
+          "statement": "按物种和培养程度区分滑翔、持续飞行、悬停，受体力及负重约束；不保证每个个体获得全部能力。",
+          "sources": [
+            "planning/requirements-v041.txt",
+            "planning/requirements-v044.txt"
+          ]
+        },
+        {
+          "id": "EVO-15",
+          "status": "confirmed",
+          "title": "水生",
+          "statement": "DLC水生路线按物种分两栖/依水型，分别有环境需求；离水耐受及淡海水要求待设计，恢复规则不照搬巨型。",
+          "sources": [
+            "planning/requirements-v041.txt",
+            "planning/requirements-v043.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SPC",
+      "title": "首版物种和后续范围",
+      "rules": [
+        {
+          "id": "SPC-01",
+          "status": "confirmed",
+          "title": "首版六种",
+          "statement": "第一版纳入灵梦、魔理沙、爱丽丝、帕秋莉、蕾米莉亚、芙兰。形态不是新物种，别名不重复计数。",
+          "sources": [
+            "planning/requirements-v042.txt"
+          ]
+        },
+        {
+          "id": "SPC-02",
+          "status": "confirmed",
+          "title": "灵梦",
+          "statement": "倾向生活适应、育幼与日常照护；首版有身体路线，无巨型、飞行升级、水生升级。优势不固定性格或繁殖角色。",
+          "sources": [
+            "planning/requirements-v044.txt",
+            "planning/requirements-v045.txt"
+          ]
+        },
+        {
+          "id": "SPC-03",
+          "status": "confirmed",
+          "title": "魔理沙",
+          "statement": "倾向体力、采集、搬运、户外；首版巨型或有身体，两条主要路线互斥。无飞行升级、水生升级。",
+          "sources": [
+            "planning/requirements-v043.txt",
+            "planning/requirements-v044.txt",
+            "planning/requirements-v045.txt"
+          ]
+        },
+        {
+          "id": "SPC-04",
+          "status": "confirmed",
+          "title": "爱丽丝",
+          "statement": "倾向精细操作、制作、工具使用；首版有身体，无巨型、飞行升级、水生升级。",
+          "sources": [
+            "planning/requirements-v044.txt",
+            "planning/requirements-v045.txt"
+          ]
+        },
+        {
+          "id": "SPC-05",
+          "status": "confirmed",
+          "title": "帕秋莉",
+          "statement": "倾向学习、知识整理和研究，体质偏弱；首版有身体，无巨型、飞行升级、水生升级。不是出生即拥有完整知识。",
+          "sources": [
+            "planning/requirements-v044.txt",
+            "planning/requirements-v045.txt"
+          ]
+        },
+        {
+          "id": "SPC-06",
+          "status": "confirmed",
+          "title": "蕾米莉亚",
+          "statement": "偏均衡、续航、防护，承担首版飞行玩法；有身体与无身体个体并存，天生有身体较罕见，也可后天升级。首版无巨型/水生升级。",
+          "sources": [
+            "planning/requirements-v043.txt",
+            "planning/requirements-v044.txt"
+          ]
+        },
+        {
+          "id": "SPC-07",
+          "status": "confirmed",
+          "title": "芙兰",
+          "statement": "偏高消耗爆发与破坏力，承担首版飞行玩法；有身体与无身体个体并存，天生有身体较罕见，也可后天升级。首版无巨型/水生升级。不是必然暴躁或邪恶。",
+          "sources": [
+            "planning/requirements-v043.txt",
+            "planning/requirements-v044.txt"
+          ]
+        },
+        {
+          "id": "SPC-08",
+          "status": "confirmed",
+          "title": "DLC名单",
+          "statement": "橙、妖梦、琪露诺、幽香、河童型、村纱后续DLC纳入，水生升级随DLC。包数、收费、顺序和日期未定；不通过变异入口暗加首版。",
+          "sources": [
+            "planning/requirements-v042.txt",
+            "planning/requirements-v043.txt"
+          ]
+        },
+        {
+          "id": "SPC-09",
+          "status": "confirmed",
+          "title": "延期边界",
+          "statement": "其他巨型物种后续扩展名单与批次未定；普通种飞行升级首版不开放，后续是否及如何发布未承诺。其他已确认系统不会因物种分期自动延期。",
+          "sources": [
+            "planning/requirements-v042.txt",
+            "planning/requirements-v043.txt",
+            "planning/requirements-v044.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CRT",
+      "title": "个体综合牌照与单项能力",
+      "rules": [
+        {
+          "id": "CRT-01",
+          "status": "confirmed",
+          "title": "三个评价维度",
+          "statement": "个人金银铜综合评级、单项S/A/B/C、园区环境/管理评级分开；白金独立身份另行处理。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "CRT-02",
+          "status": "confirmed",
+          "title": "综合金银铜",
+          "statement": "金银铜评个体整体，生活适应/行为稳定、资质、能力、培养及稀有性等仍可参与；不再按用途颁金银铜。用途岗位可保留，但不能出现照护金牌/搬运铜牌。",
+          "sources": [
+            "planning/requirements-v010.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "CRT-03",
+          "status": "confirmed",
+          "title": "单项能力",
+          "statement": "单一能力采用S、A、B、C分档；分档阈值未确认，S不等于自动金牌，也不默认能力档位是外部认证。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "CRT-04",
+          "status": "confirmed",
+          "title": "评级流程",
+          "statement": "乐园内部初评后，全部送外部机构正式评级；内部初评不直接颁牌。评级收取费用，通过率与能力相关。",
+          "sources": [
+            "planning/requirements-v011.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "CRT-05",
+          "status": "confirmed",
+          "title": "越级",
+          "statement": "允许尝试越级评级，但难度更高、通过率更低；不能改成一律禁止越级或某单项S保证成功。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "CRT-06",
+          "status": "confirmed",
+          "title": "有效期",
+          "statement": "牌照长期有效，重大事故或能力显著变化触发复查；不日常到期。内馅转移正规重考仍有效。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "CRT-07",
+          "status": "confirmed",
+          "title": "暂停与撤销",
+          "statement": "按严重程度暂停资格、降级或撤销，允许整改后再申请；不因资格变化自动取消白金独立身份。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PLT",
+      "title": "白金身份、工作、迁居及收益",
+      "rules": [
+        {
+          "id": "PLT-01",
+          "status": "confirmed",
+          "title": "独立身份",
+          "statement": "白金是另行取得的独立身份资格，不只是更高分的金牌，不是某项能力S。通常先金牌，特殊贡献/经历可另行申请。",
+          "sources": [
+            "planning/requirements-v023.txt",
+            "planning/requirements-v034.txt"
+          ]
+        },
+        {
+          "id": "PLT-02",
+          "status": "confirmed",
+          "title": "个人财产",
+          "statement": "个人财产暂由乐园代管，工作及支出逐步开放自主；代管不等于财产不存在。具体同意权等法律式细节未全定。",
+          "sources": [
+            "planning/requirements-v034.txt"
+          ]
+        },
+        {
+          "id": "PLT-03",
+          "status": "confirmed",
+          "title": "能力价值",
+          "statement": "保留高级工作（教师/研究助手/训练员等）、协助日常管理、声望及高级委托/合作/事件价值三类。岗位仍看能力，不是人人精通全部。",
+          "sources": [
+            "planning/requirements-v035.txt"
+          ]
+        },
+        {
+          "id": "PLT-04",
+          "status": "confirmed",
+          "title": "不惩罚升级",
+          "statement": "升级白金须值得追求，不自动流失居民、删除成果或只有成本；不保证零冲突、永久留园或始终盈利，需真实玩法验证。",
+          "sources": [
+            "planning/requirements-v034.txt",
+            "planning/requirements-v036.txt"
+          ]
+        },
+        {
+          "id": "PLT-05",
+          "status": "confirmed",
+          "title": "园内收入",
+          "statement": "玩家经营体系的业务收入归园，个人另领代管津贴；不默认全部业务收益转归个人。",
+          "sources": [
+            "planning/requirements-v035.txt"
+          ]
+        },
+        {
+          "id": "PLT-06",
+          "status": "confirmed",
+          "title": "迁居条件",
+          "statement": "迁居需手续和接收地点，不自动随升级离开。个体提出工作去向意向，玩家协商，展示收益方案且不把估计当保证。",
+          "sources": [
+            "planning/requirements-v034.txt",
+            "planning/requirements-v036.txt"
+          ]
+        },
+        {
+          "id": "PLT-07",
+          "status": "confirmed",
+          "title": "迁居路径",
+          "statement": "可成为外部合作伙伴带来委托/资源/推荐，可有培养奖励与联系回访，可迁玩家分园。三类路径保留，不每次叠加全部奖励。",
+          "sources": [
+            "planning/requirements-v035.txt"
+          ]
+        },
+        {
+          "id": "PLT-08",
+          "status": "confirmed",
+          "title": "独立工作收益",
+          "statement": "离开时可继续为玩家工作或自行工作；自行工作同时有一次性买断奖励和随外部发展浮动的定期收益，非二选一、不默认保底或永久无条件收益。买断不取消独立身份。",
+          "sources": [
+            "planning/requirements-v035.txt",
+            "planning/requirements-v036.txt"
+          ]
+        },
+        {
+          "id": "PLT-09",
+          "status": "confirmed",
+          "title": "召回",
+          "statement": "发展不顺可邀请召回，个体考虑后同意或拒绝；同意返园保持原身份/记忆/关系/培养成果，不默认退款、罚金或降级。收益仍服从无离线和全局冻结。",
+          "sources": [
+            "planning/requirements-v036.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MED",
+      "title": "伤病救治、内馅转移与登记身份",
+      "rules": [
+        {
+          "id": "MED-01",
+          "status": "confirmed",
+          "title": "传染范围",
+          "statement": "日常疾病不传播，传播仅用于少数特殊事件；不因此强制全员隔离。",
+          "sources": [
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "MED-02",
+          "status": "confirmed",
+          "title": "可救治性",
+          "statement": "按损伤、死因、难度和个体条件判定；高难度某些情况直接永久死亡，不用所有伤情通用单一阈值。",
+          "sources": [
+            "planning/requirements-v014.txt",
+            "planning/requirements-v015.txt"
+          ]
+        },
+        {
+          "id": "MED-03",
+          "status": "confirmed",
+          "title": "窗口和等待",
+          "statement": "有限救治/稳定窗口与后续恢复等待并存；野外可自行处置，有成败概率差异，非必死或必救活。",
+          "sources": [
+            "planning/requirements-v014.txt"
+          ]
+        },
+        {
+          "id": "MED-04",
+          "status": "confirmed",
+          "title": "暂时稳定",
+          "statement": "保守处置只能暂时稳定，必须期限内恢复或完成转移，否则永久死亡。期限具体长度、起点和可延缓条件待设计，不能通过反复稳定或读档无限刷新。",
+          "sources": [
+            "planning/requirements-v015.txt"
+          ]
+        },
+        {
+          "id": "MED-05",
+          "status": "confirmed",
+          "title": "昂贵转移",
+          "statement": "越过相应临界点但仍可转移者可走昂贵内馅转移；不可逆死亡之后无本流程恢复/转移入口，手动读档权利另保留。",
+          "sources": [
+            "planning/requirements-v013.txt",
+            "planning/requirements-v014.txt",
+            "planning/requirements-v015.txt",
+            "planning/requirements-v019.txt"
+          ]
+        },
+        {
+          "id": "MED-06",
+          "status": "confirmed",
+          "title": "身体来源",
+          "statement": "承接来自另一只个体或专门培育的空身体；原内馅按用户所称人道处理，未展开程序。两种来源都保留，同种转移更理想，不默认任意组合都可行。",
+          "sources": [
+            "planning/requirements-v014.txt",
+            "planning/requirements-v015.txt"
+          ]
+        },
+        {
+          "id": "MED-07",
+          "status": "confirmed",
+          "title": "持续身份",
+          "statement": "转移保留原记忆、关系、性格；身体素质及物种可变。不得用承接原主关系覆盖持续个体历史。",
+          "sources": [
+            "planning/requirements-v014.txt",
+            "planning/requirements-v015.txt"
+          ]
+        },
+        {
+          "id": "MED-08",
+          "status": "confirmed",
+          "title": "繁殖角色变更",
+          "statement": "转移后繁殖角色由新身体决定；不改写过去亲子事实和生育来源，不自动改变旧历史称谓。",
+          "sources": [
+            "planning/requirements-v033.txt"
+          ]
+        },
+        {
+          "id": "MED-09",
+          "status": "confirmed",
+          "title": "牌照与冒用",
+          "statement": "正规转移后须重考；另可沿用承接身体登记身份，但有识别、复查、暴露风险，不等于正规自动继承资格。此机制不因不设一般园外监管而删除。",
+          "sources": [
+            "planning/requirements-v015.txt",
+            "planning/requirements-v048.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEF",
+      "title": "危机、防卫、惩戒与园区评价",
+      "rules": [
+        {
+          "id": "DEF-01",
+          "status": "confirmed",
+          "title": "天气季节",
+          "statement": "影响食物、户外活动、环境需求和部分事件，不仅画面氛围。",
+          "sources": [
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "DEF-02",
+          "status": "confirmed",
+          "title": "危机范围",
+          "statement": "天气灾害、设施事故、野生入侵均支持，以野生入侵为主要风险。频率、预警及难度参数待设计，未选定统一高频突袭。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "DEF-03",
+          "status": "confirmed",
+          "title": "共同防卫",
+          "statement": "玩家可自己驱赶，也可由园区居民参与；能力不足的参与者可能受伤或遭侵害等。仅记录非露骨事件类别，不展开侵害过程。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "DEF-04",
+          "status": "confirmed",
+          "title": "规模协作",
+          "statement": "园区越大越需要居民参与防卫，不应由单个玩家操作无成本覆盖全部大园区；具体覆盖/调度算法属设计。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "DEF-05",
+          "status": "confirmed",
+          "title": "危险入侵者处置",
+          "statement": "人类可惩戒入侵者；悬挂危险入侵者可降低相关风险，同时降低园区环境/管理评级。此处只记规则与代价，不增加动作细节。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "DEF-06",
+          "status": "confirmed",
+          "title": "评分对象",
+          "statement": "用户明确确认惩戒降低园区环境/管理评级，不降低居民个人金银铜，不自动剥夺白金身份，也不额外触发园外监管。具体分值/关联效果未定。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "DEF-07",
+          "status": "confirmed",
+          "title": "园内后果边界",
+          "statement": "主动伤害/危险实验主要影响个体关系与园内情况，不新增园外声望、业务和监管惩罚链；不得擅自从园区扣分推出罚款或业务停业。转移冒用风险是另行已定机制。",
+          "sources": [
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "DEF-08",
+          "status": "confirmed",
+          "title": "主动护园与呼救",
+          "statement": "园内居民主动保护领地免受野生坏油入侵，抵御失败可呼喊主人，玩家可以介入驱赶或惩戒。能力不足风险继续存在，呼救不是保证无损的自动救援。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "DEF-09",
+          "status": "confirmed",
+          "title": "评价与认可分离",
+          "statement": "群体对惩戒的认可、园区环境/管理评级、居民个人牌照分别处理；v048悬挂惩戒降低园区评分的代价不因正义感取消，不新增一般园外监管。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OPS",
+      "title": "经济、员工与建造",
+      "rules": [
+        {
+          "id": "OPS-01",
+          "status": "confirmed",
+          "title": "三类经营",
+          "statement": "培育出售/送养、寄养、训练、委托；游客门票、观赏互动、商店、活动；收容补助、救助、研究、地区治理三类收入全部保留。",
+          "sources": [
+            "planning/requirements-v011.txt"
+          ]
+        },
+        {
+          "id": "OPS-02",
+          "status": "confirmed",
+          "title": "开局重点",
+          "statement": "收容补助和救助委托为主，少量寄养照护为辅；不因此取消其他业务，也不默认全部开局开放。",
+          "sources": [
+            "planning/requirements-v046.txt"
+          ]
+        },
+        {
+          "id": "OPS-03",
+          "status": "confirmed",
+          "title": "业务解锁",
+          "statement": "满足设施、人员能力与资质即可申请，不加统一章节门槛；具体业务条件待拟，特殊剧情事件本身保留。",
+          "sources": [
+            "planning/requirements-v046.txt"
+          ]
+        },
+        {
+          "id": "OPS-04",
+          "status": "confirmed",
+          "title": "员工日常",
+          "statement": "按岗位和预案自治，日常照护、应急稳定并上报；主角跨区不使照护全停，跨区仍服从简化模拟及全局时间规则。",
+          "sources": [
+            "planning/requirements-v016.txt"
+          ]
+        },
+        {
+          "id": "OPS-05",
+          "status": "confirmed",
+          "title": "重大权限",
+          "statement": "昂贵手术、内馅转移、出售等由玩家决定，员工不能借紧急或跨区自动批准；强制繁殖未授予员工自治权限。",
+          "sources": [
+            "planning/requirements-v016.txt",
+            "planning/requirements-v027.txt"
+          ]
+        },
+        {
+          "id": "OPS-06",
+          "status": "confirmed",
+          "title": "重大提醒",
+          "statement": "需批准的紧急重大处置自动减速并提示，期限随游戏时间推进；此规则不覆盖特写世界被动冻结。",
+          "sources": [
+            "planning/requirements-v047.txt"
+          ]
+        },
+        {
+          "id": "OPS-07",
+          "status": "confirmed",
+          "title": "建造范围",
+          "statement": "首版包括成套建筑、内部/室外自由布局、家具设施、墙体、房间、门编辑及地形高低改造；编辑限制/导航/保存须实测。",
+          "sources": [
+            "planning/requirements-v016.txt",
+            "planning/requirements-v047.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "UX",
+      "title": "视觉、物理互动与声音",
+      "rules": [
+        {
+          "id": "UX-01",
+          "status": "confirmed",
+          "title": "视觉基础",
+          "statement": "2.5D斜俯视、立体卡通场景及柔软角色，保留经典脸；宏观与人类控制都能看到场景，人类实体可见且接近目标互动。",
+          "sources": [
+            "planning/requirements-v004.txt",
+            "planning/requirements-v005.txt",
+            "planning/requirements-v017.txt"
+          ]
+        },
+        {
+          "id": "UX-02",
+          "status": "confirmed",
+          "title": "镜头",
+          "statement": "常规移动/缩放；选中同一个体平滑进入特写，突出表情、视线、动作与反应；退出回原地图视角并保留状态。近景素材不能仅放大低清远景。",
+          "sources": [
+            "planning/requirements-v004.txt",
+            "planning/requirements-v005.txt"
+          ]
+        },
+        {
+          "id": "UX-03",
+          "status": "confirmed",
+          "title": "物理操作",
+          "statement": "手动拿取、放置、工具接触、力度反馈是目标，不能纯动作菜单替代；没有要求对全场景所有个体同时高精度软体。",
+          "sources": [
+            "planning/requirements-v016.txt"
+          ]
+        },
+        {
+          "id": "UX-04",
+          "status": "confirmed",
+          "title": "互动范围",
+          "statement": "喂食、抚摸、清洁、医疗、玩耍、训练、惩戒、主动伤害、实验均在已选范围；不无限扩展成未讨论内容。",
+          "sources": [
+            "planning/requirements-v012.txt"
+          ]
+        },
+        {
+          "id": "UX-05",
+          "status": "confirmed",
+          "title": "表现配置",
+          "statement": "先采用风格化且直接的卡通伤亡表现，同时保留含蓄/直接配置；表现档位不得静默改变真实伤势/死亡后果。具体动作和素材另行设计。",
+          "sources": [
+            "planning/requirements-v012.txt"
+          ]
+        },
+        {
+          "id": "UX-06",
+          "status": "confirmed",
+          "title": "交流",
+          "statement": "经典合成音风格短句＋气泡，依据性格/记忆/事件选台词；不能无条件泄露隐藏词条。不默认自由输入、运行时大模型或完整长对白配音；特定音库许可须另核。",
+          "sources": [
+            "planning/requirements-v018.txt"
+          ]
+        },
+        {
+          "id": "UX-07",
+          "status": "confirmed",
+          "title": "互动共同因素",
+          "statement": "接触位置、力度、持续时间、工具和目标状态共同影响结果，具有基础物理效果；不自动承诺完整生物力学或任意精细局部软体。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "UX-08",
+          "status": "confirmed",
+          "title": "作品参考与可爱表现",
+          "statement": "多参考已搜集作品，整体可爱。坏油通过表情、姿态、台词与行为体现顽劣和挑衅；不把整个物种固定为坏，也不以永远准确外观标签泄露未知性格。参考须保留出处，不等于直接复制素材或自动采纳设定。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "UX-09",
+          "status": "confirmed",
+          "title": "差异反应",
+          "statement": "惩戒按具体效果呈现不同状态和反应；抚摸、抱抱、蹭蹭各有不同反应，结合个性与当前状态，不能全部用同一动画或单一好感数值替代。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GOV",
+      "title": "证据、范围维护与后续取用",
+      "rules": [
+        {
+          "id": "GOV-01",
+          "status": "confirmed",
+          "title": "研究与设定",
+          "statement": "研究库保存原作品、来源、不同流派、冲突和证据限制，未经取舍不自动纳入游戏。保留来源与历史，不能把资料里的卵生/分裂或新物种直接加入。",
+          "sources": [
+            "planning/requirements-v005.txt",
+            "planning/requirements-v024.txt",
+            "planning/requirements-v030.txt"
+          ]
+        },
+        {
+          "id": "GOV-02",
+          "status": "confirmed",
+          "title": "访谈方式",
+          "statement": "用户要求按互不依赖问题每批10项；本次20项已答，数值/物品/章节/界面细节先拟草案。出现新增实质决策说明来源，不无限追加或重复问已确认项。",
+          "sources": [
+            "planning/requirements-v026.txt",
+            "planning/requirements-v046.txt",
+            "planning/requirements-v047.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "GOV-03",
+          "status": "confirmed",
+          "title": "验收边界",
+          "statement": "目标包括实际可玩内容与Steam发行；源文件存在、测试数量、局部框架或自评不替代真实体验与最终范围。实现/部分完成/未验证需分开记录。",
+          "sources": [
+            "planning/requirements-v001.txt",
+            "planning/requirements-v020.txt",
+            "planning/requirements-v042.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "GOV-04",
+          "status": "confirmed",
+          "title": "保存历史",
+          "statement": "历次要求按增量累计，冲突以较新用户确认优先；保留原始目标、原话和覆盖关系，不把待定、建议或历史状态当当前事实。",
+          "sources": [
+            "planning/requirements-v001.txt",
+            "planning/requirements-v003.txt",
+            "planning/requirements-v048.txt"
+          ]
+        },
+        {
+          "id": "GOV-05",
+          "status": "confirmed",
+          "title": "完整内容与阶段验收",
+          "statement": "按完整v1.0规划，分阶段实施；每阶段设至少6小时的Goal，夜间工作、次晨用户验收、反馈修正后晚间复验。阶段可跨多个工作夜，不以时长或测试数量替代玩法验收。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "GOV-06",
+          "status": "confirmed",
+          "title": "独立完整里程碑",
+          "statement": "里程碑记录在文件，续接和交验时核对原始范围、验收项、版本、证据、问题和未完成项；每个里程碑必须有相对独立完整的可玩闭环。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        },
+        {
+          "id": "GOV-07",
+          "status": "confirmed",
+          "title": "开工时间",
+          "statement": "用户指定每轮开始时间；目前未给具体时间，不启动阶段Goal或固定自动日程。Goal工具无原生最小时长参数，本地流程检查不等于宿主强制保证。",
+          "sources": [
+            "planning/requirements-v049.txt"
+          ]
+        }
+      ]
+    }
+  ],
+  "supersessions": [
+    {
+      "id": "CHG-01",
+      "topic": "用途金银铜",
+      "historical": "v010/v023/v034等旧用途内等级",
+      "authority": "v048",
+      "current": "金银铜为综合评级，单项SABC。",
+      "rule": "CRT-02"
+    },
+    {
+      "id": "CHG-02",
+      "topic": "语言候选",
+      "historical": "v019日英仅考虑",
+      "authority": "v048",
+      "current": "正式首版简中/英/日三语。",
+      "rule": "PRD-04"
+    },
+    {
+      "id": "CHG-03",
+      "topic": "寿命倍数歧义",
+      "historical": "v023总计还是额外5倍待核",
+      "authority": "v033",
+      "current": "总计最多5倍，固定基准公式仍属草案。",
+      "rule": "BIO-05"
+    },
+    {
+      "id": "CHG-04",
+      "topic": "卵生分裂候选",
+      "historical": "v023未确认建议",
+      "authority": "v024",
+      "current": "当前不采用，不自动列DLC。",
+      "rule": "REP-01"
+    },
+    {
+      "id": "CHG-05",
+      "topic": "角色切换待定",
+      "historical": "v030父母角色未选",
+      "authority": "v031/v033",
+      "current": "出生固定角色；换体后随新身体。",
+      "rule": "REP-03"
+    },
+    {
+      "id": "CHG-06",
+      "topic": "筛查歧义",
+      "historical": "v002人类访客可能解释",
+      "authority": "v003",
+      "current": "仅公园油库里未经筛查。",
+      "rule": "WRL-02"
+    },
+    {
+      "id": "CHG-07",
+      "topic": "升级重选待定",
+      "historical": "v037/v039/v040恢复后路线未定",
+      "authority": "v048",
+      "current": "退回后仍只能原路线。",
+      "rule": "EVO-04"
+    },
+    {
+      "id": "CHG-08",
+      "topic": "紧急暂停待定",
+      "historical": "v016等待通知规则未定",
+      "authority": "v047",
+      "current": "自动减速，期限继续；特写另有冻结规则。",
+      "rule": "OPS-06"
+    },
+    {
+      "id": "CHG-09",
+      "topic": "建造范围待定",
+      "historical": "v016墙体/地形待定",
+      "authority": "v047",
+      "current": "首版包含墙房门与地形高低。",
+      "rule": "OPS-07"
+    },
+    {
+      "id": "CHG-10",
+      "topic": "传播未定",
+      "historical": "早期疾病未细化",
+      "authority": "v047",
+      "current": "仅特殊事件传染。",
+      "rule": "MED-01"
+    },
+    {
+      "id": "CHG-11",
+      "topic": "物种与路线未定",
+      "historical": "v019/v037—v041候选未定",
+      "authority": "v042—v044",
+      "current": "首版六种，巨型仅魔理沙，水生DLC；见物种章。",
+      "rule": "SPC-01"
+    },
+    {
+      "id": "CHG-12",
+      "topic": "评级惩戒对象",
+      "historical": "v048用户回答中的评级歧义",
+      "authority": "v048澄清",
+      "current": "悬挂惩戒降低园区环境/管理评级，不降个体牌照。",
+      "rule": "DEF-06"
+    },
+    {
+      "id": "CHG-13",
+      "topic": "开局与章节待定",
+      "historical": "v011收入重点、v006通关等未定",
+      "authority": "v046/v047",
+      "current": "开局补助救助，业务条件解锁，通关两选。",
+      "rule": "OPS-02"
+    },
+    {
+      "id": "CHG-14",
+      "topic": "旧未实现状态",
+      "historical": "v001—v021当时未开发",
+      "authority": "v022及框架记录",
+      "current": "已有基础框架；本手册不作完整功能现状审计。",
+      "rule": "PRD-07"
+    },
+    {
+      "id": "CHG-15",
+      "topic": "阶段时长",
+      "historical": "上一轮框架Goal最多6小时且已结束",
+      "authority": "v049",
+      "current": "新阶段至少6小时，用户指定开始，独立玩法逐阶段验收。",
+      "rule": "GOV-05"
+    },
+    {
+      "id": "CHG-16",
+      "topic": "保护开关",
+      "historical": "仅明确关闭衰老/自然死亡与无限资源",
+      "authority": "v049",
+      "current": "自由模式补充独立风险和操作保护开关；表现与规则分开。",
+      "rule": "MOD-11"
+    }
+  ],
+  "open_items": [
+    {
+      "id": "OPEN-01",
+      "topic": "寿命公式",
+      "description": "标准寿命、遗传系数、后天修正与固定5倍基准；出生基准方案尚未明确确认。",
+      "related_rule": "BIO-04",
+      "existing_draft": "planning/balance-draft-v001.txt",
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-02",
+      "topic": "评级参数",
+      "description": "SABC阈值、综合权重与门槛、收费、通过率、重试/退费/等待、复查处理。",
+      "related_rule": "CRT-03",
+      "existing_draft": "planning/balance-draft-v001.txt",
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-03",
+      "topic": "防卫与园区评分",
+      "description": "入侵频率、预警、规模覆盖、居民调度与撤离、风险降低和园区评分量表及关联范围。",
+      "related_rule": "DEF-02",
+      "existing_draft": "planning/balance-draft-v001.txt",
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-04",
+      "topic": "繁殖与遗传参数",
+      "description": "周期/数量/素质差/母体负担、兼容矩阵及母体方向、罕见概率、先天角色比例、正常与强制入口边界、孕期阶段和照护。",
+      "related_rule": "REP-04",
+      "existing_draft": null,
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-05",
+      "topic": "成长路线细化",
+      "description": "物种×能力矩阵、潜力阈值、图鉴发现条件、有限特殊能力清单、装备目录/适配、天然特征兼容、退回代价、跨物种转移时路线映射。",
+      "related_rule": "EVO-03",
+      "existing_draft": "planning/balance-draft-v001.txt",
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-06",
+      "topic": "伤病与救治细化",
+      "description": "病种、特殊传染事件、临界点、时窗/起点、手术风险及兼容、身体来源流程、冒用暴露后果、水伤阈值。",
+      "related_rule": "MED-02",
+      "existing_draft": null,
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-07",
+      "topic": "白金细则",
+      "description": "例外申请、独立身份具体权利与同意规则、代管津贴、自主开放、迁居收益和期限、召回协商；不得背离培养价值约束。",
+      "related_rule": "PLT-02",
+      "existing_draft": null,
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-08",
+      "topic": "内容与经营",
+      "description": "主角背景、固定角色名单、地图/章节目标/关键失败点、通关继承、业务条件/价格、旅途时长/费用、委托与物品台词。",
+      "related_rule": "MOD-02",
+      "existing_draft": null,
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-09",
+      "topic": "交互及建造细节",
+      "description": "镜头遮挡/转动、网格和地形限制、操作辅助、导航、施工、家具及各形态最终模型动画和声音。",
+      "related_rule": "UX-02",
+      "existing_draft": null,
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-10",
+      "topic": "实现与发行验证",
+      "description": "各系统完整实现、原型数值平衡、用户试玩、完整规模性能、三语覆盖布局、资产音源许可、发行主体及Steam真实流程。",
+      "related_rule": "GOV-03",
+      "existing_draft": "planning/framework-goal-2026-10-26.txt",
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    },
+    {
+      "id": "OPEN-11",
+      "topic": "DLC商业与排期",
+      "description": "已定六种和水生路线的包数、收费、顺序与日期；普通种飞行及其他巨型扩展尚无具体交付承诺。",
+      "related_rule": "SPC-08",
+      "existing_draft": null,
+      "status": "open_design_or_validation",
+      "requires_new_question_now": false
+    }
+  ],
+  "proposals": {
+    "path": "planning/balance-draft-v001.txt",
+    "status": "proposed_unverified",
+    "note": "本次用户要求整理资料不自动批准该文件全部公式或数值。"
+  },
+  "research": {
+    "root": "research/2026-10-25",
+    "status": "reference_only",
+    "entries": [
+      "research/2026-10-25/作品总览.txt",
+      "research/2026-10-25/works-index.json",
+      "research/2026-10-25/sources.json",
+      "research/2026-10-25/conflicts.json",
+      "planning/reproduction-source-review-2026-10-26.txt",
+      "planning/reproduction-pairing-review-2026-10-26.txt"
+    ]
+  },
+  "evidence": [
+    "README.txt",
+    "planning/framework-goal-2026-10-26.txt",
+    "planning/windows-setup-2026-10-26.txt",
+    "toolchain.lock.json"
+  ],
+  "retrieval": {
+    "rules": "先检索rule ID/关键词，读取所在章及sources；实现前同时检查open_items与supersessions。",
+    "updates": "新确认先新增requirements版本，再生成新汇编版本，保留旧汇编；更新settings/README、planning/CURRENT及必要的根README入口。"
+  }
+}

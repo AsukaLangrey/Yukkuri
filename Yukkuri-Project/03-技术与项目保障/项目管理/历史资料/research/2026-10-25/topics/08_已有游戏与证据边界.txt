@@ -1,0 +1,94 @@
+已有游戏与证据边界｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C064  《八景》作者BOOTH页把它称为养成模拟；Wiki展示捕获、育成、教育、疾病、交易与徽章考试连接在一起。
+适用：开发者介绍＋社区攻略
+证据：A；类别：general
+限制：仅文献研究，未购入或运行。
+出处：
+S29 ゆっくり八景
+https://booth.pm/ja/items/1727554
+读取状态：body_read
+S07 ステータス
+https://wikiwiki.jp/yukkuri8kei/ステータス
+读取状态：body_read
+S08 外出
+https://wikiwiki.jp/yukkuri8kei/外出
+读取状态：body_read
+
+C065  《にっき》攻略记录亲属关系、不同繁殖方式、环境耐性与人口上限，并存在旧新版本文字和丢失个体等问题记载。
+适用：ゆっくりにっき社区攻略
+证据：B；类别：general
+限制：本轮仅采资料，不能声称复现缺陷。
+出处：
+S10 ゆっくりの生態
+https://w.atwiki.jp/ykansatu/pages/49.html
+读取状态：body_read
+
+C066  Simyukkuri2021 README称其派生自Mimisuke项目；历史日志把压力记忆、家庭清理、食物搬运和森林物品做成机制。
+适用：README与2015分支日志
+证据：A；类别：general
+限制：历史功能记录≠2026版本实际验收。
+出处：
+S32 しむゆっくり 2021
+https://github.com/sin-orb/Simyukkuri2021
+读取状态：body_read
+S33 Simyukkuri2021 CHANGELOG.txt
+https://github.com/sin-orb/Simyukkuri2021/blob/main/CHANGELOG.txt
+读取状态：body_read_selected_sections
+
+C067  SimYukkuri日志在2015-01-31项记徽章当时仅外观；可对照《八景》的功能性考试，但不能断言当前仍只有外观。
+适用：历史分支与另一作品对照
+证据：A；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K11（详见 conflicts.json）
+出处：
+S33 Simyukkuri2021 CHANGELOG.txt
+https://github.com/sin-orb/Simyukkuri2021/blob/main/CHANGELOG.txt
+读取状态：body_read_selected_sections
+S07 ステータス
+https://wikiwiki.jp/yukkuri8kei/ステータス
+读取状态：body_read
+
+C068  Touhou Garden of the Yukkuri商店描述3座3D庭园、昼夜行为、季节活动、物品、性格技能、战斗赛及多人交易访园。
+适用：Steam开发者商店描述
+证据：A；类别：general
+限制：不把宣传当实际游玩结果；商店标注2026-10-09发行。
+出处：
+S30 Touhou Garden of the Yukkuri
+https://store.steampowered.com/app/5159730/
+读取状态：body_read
+
+C069  Yukkuri My Friends描述喂馒头成长变强、探索地区和与野生敌人战斗，说明同一形象也被用于养成RPG。
+适用：App Store开发者描述
+证据：A；类别：general
+限制：未实测，不应当作自然生态仿真的证据。
+出处：
+S31 Yukkuri My Friends
+https://apps.apple.com/nz/app/yukkuri-my-friends/id1044349334?platform=ipad
+读取状态：body_read
+
+C070  Yukkurigame/Yukkuri仓库与YUKKURI JUNGLE作者页均找到；本轮内容不足以给出详细玩法结论，留作候选。
+适用：项目存在性证据
+证据：A；类别：general
+限制：未深入代码、未下载执行。
+出处：
+S35 Yukkurigame/Yukkuri
+https://github.com/Yukkurigame/Yukkuri
+读取状态：body_read
+S36 YUKKURI JUNGLE
+https://booth.pm/ja/items/2091189
+读取状态：body_partially_read
+
+C074  英文Diary攻略说蕾米/芙兰捕食行为可用设置调整，且等级影响攻击；饰品也可更换。显示同一生物设定可被游戏规则改写。
+适用：Yukkuri Diary社区攻略
+证据：C；类别：predation
+限制：版本未锁定，不能直接等同S10页面所有现行行为。
+出处：
+S42 Yukkuri Diary
+https://yukkuri.fandom.com/wiki/Yukkuri_Diary
+读取状态：search_text_only
+
+

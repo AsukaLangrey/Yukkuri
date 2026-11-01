@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Yukkuri.Game/ActorNaturalPose.cs" Link="Geometry/ActorNaturalPose.cs" />
+    <Compile Include="../Yukkuri.Game/ActorNaturalSupport.cs" Link="Geometry/ActorNaturalSupport.cs" />
+    <Compile Include="../Yukkuri.Game/ActorBodyBounds.cs" Link="Geometry/ActorBodyBounds.cs" />
+    <Compile Include="../Yukkuri.Game/ActorFaceSurface.cs" Link="Geometry/ActorFaceSurface.cs" />
+    <Compile Include="../Yukkuri.Game/ActorCradleSurface.cs" Link="Geometry/ActorCradleSurface.cs" />
+    <Compile Include="../Yukkuri.Game/ActorCushionSurface.cs" Link="Geometry/ActorCushionSurface.cs" />
+    <Compile Include="../Yukkuri.Game/ActorAccessorySupport.cs" Link="Geometry/ActorAccessorySupport.cs" />
+    <Compile Include="../Yukkuri.Game/ActorAccessorySurface.cs" Link="Geometry/ActorAccessorySurface.cs" />
+    <Compile Include="../Yukkuri.Game/ActorAccessoryPlacement.cs" Link="Geometry/ActorAccessoryPlacement.cs" />
+    <Compile Include="../Yukkuri.Game/ActorHairSurface.cs" Link="Geometry/ActorHairSurface.cs" />
+    <Compile Include="../Yukkuri.Game/ActorSurfaceMarks.cs" Link="Geometry/ActorSurfaceMarks.cs" />
+    <Compile Include="../Yukkuri.Game/ActorDressingSurface.cs" Link="Geometry/ActorDressingSurface.cs" />
+    <Compile Include="../Yukkuri.Game/ActorIntakePresentation.cs" Link="Geometry/ActorIntakePresentation.cs" />
+    <Compile Include="../Yukkuri.Game/ActorReactionMotion.cs" Link="Geometry/ActorReactionMotion.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,127 @@
+{
+  "stage_id": "M01",
+  "build_id": "M01-CLANG-20261027-074048",
+  "build_artifact": "builds/releases/M01-CLANG-20261027-074048/Yukkuri-M01-Windows-x64.zip",
+  "runtime_evidence": "artifacts/m01/exported-20261027-134410-257-bf9705aa/verification-metadata.json",
+  "feedback_log": "planning/stages/M01/feedback.txt",
+  "known_issues": [
+    {
+      "id": "M01-LONG-RUN-PENDING",
+      "blocking": false,
+      "description": "原长测/打包待完成项现已完成：当前默认21602.669秒与兼容21601.708秒均exit0，完整游戏/源码ZIP及实际中文空格目录解压GUI通过。具体证据见current-six-hour-summary与package-validation-134409。"
+    },
+    {
+      "id": "M01-HOST-EXECUTION",
+      "blocking": false,
+      "description": "本机执行异常仍未修复，历史原生崩溃不宣称根治。对本机交付使用仅游戏进程排除逻辑4/5的主机绑定入口；当前兼容6h及解压GUI均通过，332+21图全有效。默认6h亦exit0但PNG仍坏；19:31PowerShell异常保留。此为本机可玩交付的临时规避，不是跨机稳定性保证。"
+    },
+    {
+      "id": "M01-CAPTURE",
+      "blocking": false,
+      "description": "默认长测138/330、默认解压GUI11/21 PNG压缩损坏，不能用于画面验收；兼容长测332/332及解压21/21有效，已查看亲近与惩戒画面。前一065955原生手玩全流程后采集变黑，当前原生键鼠重演未完成；当前完整自动化图形输入已通过，用户手感/画风验收pending。"
+    },
+    {
+      "id": "M01-SCOPE",
+      "blocking": false,
+      "description": "M01为代表性独立闭环；v1.0后续完整范围保留，用户试玩pending。"
+    },
+    {
+      "id": "M01-GAMEPLAY-DEPTH",
+      "blocking": true,
+      "description": "2026-10-27用户反馈感觉没什么玩法。冻结交付源码复现动作计数训练、三次抚摸首领委托、求助后单次保护退敌；持续目标、培养用途及决策深度不足，未解决。见gameplay-review-20261027.txt。原运行证据保留，不等同玩法验收。"
+    }
+  ],
+  "checks": [
+    {
+      "id": "M01-C01",
+      "requirement": "培养与基本照护、资源补给闭环可独立游玩",
+      "status": "verified",
+      "result": "当前完整GUI及解压GUI通过照护、三次训练、真实资源购买与养护收入；两组实际六小时持续资源循环/存活，默认园内7只、兼容组6只存活。独立冻结游戏源码从空缓存重建完整GUI通过。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/current-six-hour-summary.json",
+        "artifacts/m01/package-validation-20261027-134409-146/result.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/verification-metadata.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/capture-integrity.json"
+      ]
+    },
+    {
+      "id": "M01-C02",
+      "requirement": "抚摸抱抱蹭蹭和一种惩戒有不同反馈与基本物理",
+      "status": "verified",
+      "result": "当前解压GUI实际按住输入覆盖抚摸/抱抱/蹭蹭、按位置力度持续时间作用的惩戒、护理及物理跌落。兼容21图有效，已查看抱抱与有理由惩戒状态。持续入侵表情真实失败修复后63规则通过；当前原生窗口采集受限与用户手感验收pending另列。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/ongoing-expression-before.log",
+        "artifacts/m01/ongoing-expression-after.log",
+        "artifacts/m01/exported-states-20261027-074158-585-74c1e226/m01-ongoing-intruder-expression.png",
+        "artifacts/m01/current-six-hour-summary.json",
+        "artifacts/m01/package-validation-20261027-134409-146/result.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/verification-metadata.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/capture-integrity.json"
+      ]
+    },
+    {
+      "id": "M01-C03",
+      "requirement": "野外观察保护接纳和园内油库里护园呼救可完整经历",
+      "status": "verified",
+      "result": "当前完整GUI及两组六小时实际正常速度运行完成野外观察保护邀请接纳、油库里自主护园呼救与主角介入。两组结束后均成功保存并读回；不是用快进或旧版结果替代本版。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/current-six-hour-summary.json",
+        "artifacts/m01/package-validation-20261027-134409-146/result.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/verification-metadata.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/capture-integrity.json"
+      ]
+    },
+    {
+      "id": "M01-C04",
+      "requirement": "有理由惩戒/无理由伤害/未获知者反应对照有效",
+      "status": "verified",
+      "result": "当前解压GUI受控对照用相同惩戒输入区分已知入侵与无理由伤害，并核对近处知情和远处未知旁观者；63项规则包含亲油/年长者自治条件。此受控对照与六小时自然事件证据分开。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/ongoing-expression-after.log",
+        "artifacts/m01/current-six-hour-summary.json",
+        "artifacts/m01/package-validation-20261027-134409-146/result.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/verification-metadata.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/capture-integrity.json"
+      ]
+    },
+    {
+      "id": "M01-C05",
+      "requirement": "跨区/特写时钟/存读档保持个体和行为记录",
+      "status": "verified",
+      "result": "当前完整GUI、状态、真实自动存档/坏档备份恢复及两组六小时结束存读档均通过，涵盖跨区选择、特写/弹窗时间与个体记录。3份真实历史存档逐字段保留，副本继续120模拟秒；最终ZIP游戏/源码一致性与实际解压启动已核对。",
+      "evidence": [
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/run.log",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/verification-metadata.json",
+        "artifacts/m01/exported-1280x720-20261027-074949-870-0304c329/capture-integrity.json",
+        "artifacts/m01/exported-autosave-20261027-074603-229-b54d77b8/verification-metadata.json",
+        "artifacts/m01/historical-save-compatibility-precise-20261027/result.json",
+        "artifacts/m01/current-six-hour-summary.json",
+        "artifacts/m01/package-validation-20261027-134409-146/result.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/verification-metadata.json",
+        "artifacts/m01/exported-20261027-134608-554-538ebab4/capture-integrity.json"
+      ]
+    }
+  ],
+  "user_acceptance": {
+    "message_id": null,
+    "build_id": null,
+    "status": "pending",
+    "evidence": null,
+    "quote": null
+  },
+  "record_status": "M01 runtime and delivery verified; user playtest pending; not fullv1.0",
+  "updated_at": "2026-10-27T21:49:38.0877416+08:00",
+  "latest_gameplay_review": "planning/stages/M01/gameplay-review-20261027.txt"
+}

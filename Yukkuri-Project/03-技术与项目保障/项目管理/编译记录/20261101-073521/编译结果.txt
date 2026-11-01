@@ -1,0 +1,28 @@
+新区域编译结果
+时间：2026-11-01 07:35（北京时间）
+机器：SHIKI-GAME-4080
+结果：Debug 编译通过，0个错误，2条CS8604可能空引用警告。
+目标：工程基线/src/Yukkuri.Game/Yukkuri.Game.csproj，连同Yukkuri.Simulation依赖。
+SDK：.NET SDK 10.0.402；Godot.NET.Sdk 4.7.2。
+
+本次准备
+将4个已有Godot依赖包复制到新工程的.tools目录，保持原NuGet.Config不变。
+编译器从原区域现有.tools/dotnet只读调用；依赖缓存、临时文件、构建产物和日志都放在新区域。
+关闭编译服务器与节点复用；编译进程亲和性读回4294967247（0xFFFFFFCF），排除CPU 4、5。
+
+警告
+SupplyStationValidation.cs:12：可能为空的集合被传入Select。
+InteractionValidation.cs:15：可能为空的集合被传入Select。
+此次为编译尝试，未改写源码以消除警告。
+
+文件与版本
+来源基线提交：bf274206fcd451d989dd7895f5c28addd499e857。
+实际编译对象是新区域工作区，不等同于单独检出的该提交；完整源码文件哈希见source-files.json。
+源码清单SHA256：AC76EED67D370C435CB953F62A2ADC4175F29213EE414271FF9DC8A762A60BAB
+核对原区域1559个文件，变化数：0。
+编译期间新区域已记录源码变化数：0。
+生成程序集路径、大小和SHA256见completion.json。
+
+范围
+只完成C#主工程及依赖编译。未启动游戏、Godot、测试、渲染或预览；未验证运行效果或导出可独立启动的游戏包。
+完整输出见build.stdout.log和build.stderr.log。

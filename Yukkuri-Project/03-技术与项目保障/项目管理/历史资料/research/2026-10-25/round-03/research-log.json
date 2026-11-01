@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "round": 3,
+  "request": "多搜点，搜个一个小时，这会儿没空看这个",
+  "status": "one_hour_research_saved_pending_user_review",
+  "timezone": "Asia/Shanghai",
+  "started_at_utc": "2026-10-25T15:12:53Z",
+  "target_end_utc": "2026-10-25T16:12:53Z",
+  "recorded_through_utc": "2026-10-25T16:13:09Z",
+  "finished_at_utc": "2026-10-25T16:13:09Z",
+  "elapsed_wall_seconds": 3616,
+  "time_measurement_note": "起止用真实时钟；包含网页检索、阅读、资料整理、保存与核验，不代表连续逐字精读。未用等待补时，未把前两轮计入。部分批次时刻为近似，不用于计算总时长。",
+  "query_batches": [
+    {
+      "time": "2026-10-25 15:13:25 UTC",
+      "queries": [
+        "\"ゆっくり\" \"聖者の途\"",
+        "\"ゆっくりの産卵\" \"話の長い人\"",
+        "\"油库里\" \"漫画\" \"作者\"",
+        "\"Yukkuri\" \"Ammo\" \"Bacchaaaki\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:14:04 UTC",
+      "queries": [
+        "\"ゆっくりの産卵\"",
+        "\"ゆっくりいじめ系94\" \"おうち\"",
+        "\"Ammo\" \"ばっちゃ\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:14:21 UTC",
+      "queries": [
+        "\"ゆっくりまりさとおうち\" \"抹茶アイス\"",
+        "\"ゆっくりの産卵\" \"atwiki\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:24:43 UTC",
+      "queries": [
+        "ゆっくり たにたけ 東方4コマ pixiv",
+        "ゆっくり もるたろう わさ 漫画",
+        "年刊 ゆっくり 漫画 MKK",
+        "Yukkuri comics artist original stories"
+      ]
+    },
+    {
+      "time": "2026-10-25 15:24:53 UTC",
+      "queries": [
+        "\"ゆっくり\" \"もるたろう\"",
+        "\"年刊\" \"饅饅来\"",
+        "\"たにたけし\" \"おさゆく\" pixiv",
+        "\"MKK\" \"ゆっくり\" 漫画"
+      ]
+    },
+    {
+      "time": "2026-10-25 15:26:20 UTC",
+      "queries": [
+        "\"まか子\" \"年刊\" \"ゆっくり\"",
+        "\"年刊ゆっくり\"",
+        "\"ゆっくり\" \"warekawa\" 漫画",
+        "\"もるたろう\" \"わさ\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:26:41 UTC",
+      "queries": [
+        "\"Yukkuri\" \"For Great Justice\"",
+        "\"Yukkuri\" \"Story List\" fiction",
+        "\"Yukkuri\" \"Platinum\" \"Family from\"",
+        "\"年刊ゆっくり\" \"夢防衛少女隊\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:26:53 UTC",
+      "queries": [
+        "\"yukkuri\" \"For Great Justice\" story -site:reddit.com",
+        "\"yukkuri\" \"Raising Badged Yukkuri\"",
+        "\"yukkuri\" \"World of Sand\"",
+        "\"Yukkuri\" \"Story List\" sites.google.com"
+      ]
+    },
+    {
+      "time": "2026-10-25 15:27:03 UTC",
+      "queries": [
+        "site:groups.google.com/g/yufanfics \"For Great Justice\"",
+        "site:groups.google.com/g/yufanfics \"World of Sand\"",
+        "site:groups.google.com/g/yufanfics \"Raising Badged\" \"Chapter 1\"",
+        "site:groups.google.com/g/yufanfics \"Wolf\" \"Seven\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:28:30 UTC",
+      "queries": [
+        "ゆっくり 飼育 ゲーム site:booth.pm",
+        "yukkuri simulator site:itch.io",
+        "Touhou Yukkuri Mountain site:store.steampowered.com",
+        "ゆっくり 育てていってね 作者 ゲーム"
+      ]
+    },
+    {
+      "time": "2026-10-25T15:33:00Z",
+      "queries": [
+        "\"Touhou Yukkuri Mountain\" Steam",
+        "\"ゆっくり\" \"飼育\" \"ゲーム\" \"作者\"",
+        "\"Yukkuri\" \"simulator\" site:itch.io",
+        "\"ゆっくり\" \"デスクトップ\" \"カラス屋\""
+      ],
+      "time_note": "按研究批次粗记，不用于计算精确时长"
+    },
+    {
+      "time": "2026-10-25T15:36:00Z",
+      "queries": [
+        "油库里 汉化 \"金徽章\" 漫画",
+        "油库里 \"亲子\" \"汉化\" 作者",
+        "ゆっくり \"漫画\" \"バッジ\" 作者",
+        "ゆっくり \"れみりゃ\" 漫画 絵本あき"
+      ],
+      "time_note": "按研究批次粗记，不用于计算精确时长"
+    },
+    {
+      "time": "2026-10-25T15:36:30Z",
+      "queries": [
+        "\"油库里\" \"漫画\" \"汉化\"",
+        "\"ゆっくり\" \"赤まりさ・観察日記\"",
+        "\"ゆっくり\" \"街ゆギルド\""
+      ],
+      "time_note": "按研究批次粗记，不用于计算精确时长"
+    },
+    {
+      "time": "2026-10-25T15:37:00Z",
+      "queries": [
+        "\"ゆっくりの恩返し\" pentagon",
+        "\"油库里漫画集\" \"ゆっぱい\"",
+        "\"Q.O.Y\" \"10740\"",
+        "\"油库里岛\" 作者"
+      ],
+      "time_note": "按研究批次粗记，不用于计算精确时长"
+    },
+    {
+      "time": "2026-10-25T15:37:30Z",
+      "queries": [
+        "\"Q.O.Y　〜ゆっくりのクオリティ〜\"",
+        "\"油库里的报恩\" pentagon"
+      ],
+      "time_note": "按研究批次粗记，不用于计算精确时长"
+    },
+    {
+      "time": "2026-10-25T15:39:00Z",
+      "queries": [
+        "\"Q.O.Y\" ゆっくり クオリティ",
+        "\"anko10740\"",
+        "\"ゆっくりの恩返し\"",
+        "\"ゆっぱい\" pixiv"
+      ],
+      "time_note": "按研究批次粗记，不用于计算精确时长"
+    },
+    {
+      "time": "2026-10-25T15:40:00Z",
+      "queries": [
+        "anko10740 ゆっくり",
+        "ゆっくりのクオリティ 餡庫"
+      ],
+      "time_note": "按研究批次粗记，不用于计算精确时长"
+    },
+    {
+      "time": "2026-10-25 15:45:06 UTC",
+      "queries": [
+        "\"少し怖い話でも\" \"ゆかり\"",
+        "ゆっくり AA ストーリー おすすめ 作品 でいぶ"
+      ]
+    },
+    {
+      "time": "2026-10-25 15:46:15 UTC",
+      "queries": [
+        "\"ゆっくり\" \"飼育\" \"作品\" \"小説家になろう\"",
+        "\"ゆっくり\" \"絵本\" \"作品\"",
+        "\"ゆっくりいじめないでね\" ゲーム",
+        "\"油库里\" \"原创\" \"小说\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:47:02 UTC",
+      "queries": [
+        "ゆっくりいじめないでね ゲーム むにむに",
+        "site.ncode.syosetu.com ゆっくり まりさ 飼い",
+        "site.w.atwiki.jp ゆっくり 絵本あき"
+      ]
+    },
+    {
+      "time": "2026-10-25 15:49:07 UTC",
+      "queries": [
+        "ゆっくり 育成 ゲーム site.play.google.com/store/apps/details",
+        "yukkuri site.itch.io \"pet\"",
+        "ゆっくり 漫画 site.twicomi.com -実況"
+      ]
+    },
+    {
+      "time": "2026-10-25T15:56:00Z",
+      "time_note": "批次近似时间",
+      "queries": [
+        "\"ゆっくりたまご\" \"岩崎\"",
+        "\"ゆっくりパークの春夏秋冬\" \"part3\"",
+        "\"宠物油库里灵梦\" 漫画"
+      ]
+    },
+    {
+      "time": "2026-10-25 15:57:29 UTC",
+      "queries": [
+        "\"ゆっくりたまご\" ゲーム 開発",
+        "\"肉包狩猎\" 油库里",
+        "\"Atami-lab\" \"ゆっくり\" 公式",
+        "\"ゆっくり日記\" \"Atami\""
+      ],
+      "followup": "打开YT作者目录、第3篇、尾声；打开分级机构、TapTap和2016年同期报道。Google Play两原页均工具不可访问。"
+    },
+    {
+      "time": "2026-10-25 16:00:10 UTC",
+      "queries": [
+        "\"ゆっくり\" \"白金\" \"ばっちゃ\"",
+        "\"Yukkuri\" \"Ammo\" \"platinum\"",
+        "\"ゆっくりの産卵\" 作者"
+      ],
+      "result": "白金起源搜索噪声大，未找到可读原作；回读S47全文及后记确认作者即興の人，S46确认引用聖者の途。"
+    },
+    {
+      "time": "2026-10-25 16:08:37 UTC",
+      "queries": [
+        "\"予防接種\" \"ゆっくり\" 作者",
+        "\"ゆっくりのお医者さん\" \"作者\"",
+        "\"Raising Badged Yukkuri\" \"Chapter 1\""
+      ],
+      "result": "疫苗与英文首章未找到可靠新署名/原文；医生系列经作者评论页导向作者目录，确认本篇与相遇篇归属，补读本篇全文。"
+    }
+  ],
+  "events": [
+    {
+      "time": "2026-10-25 15:14:00 UTC",
+      "type": "browser_issue",
+      "detail": "External Chrome author blog returned ERR_CERT_AUTHORITY_INVALID; no bypass, no switch to in-app browser."
+    },
+    {
+      "time": "2026-10-25 15:28:21 UTC",
+      "type": "reading_milestone",
+      "detail": "核完原作94与聖者续作关系、加工场两篇补读、村纱生态及解体新书选段；年刊三册与おさゆく出版书目核验；英文Hourai原帖进入深读。"
+    },
+    {
+      "time": "2026-10-25T15:43:12Z",
+      "activity": "补读工具学习短篇，核对开发商2.0更新与新博客自然观察故事；保存S98—S101/W042—W044。"
+    },
+    {
+      "time": "2026-10-25 15:59:21 UTC",
+      "type": "reading_milestone",
+      "detail": "完成公园第3篇与尾声、YT睡眠短篇；补读英译单页两张、中文肉包狩猎第10/11楼；同名手游及分级日期分开记录。"
+    },
+    {
+      "time": "2026-10-25 16:08:37 UTC",
+      "type": "final_attribution_check",
+      "detail": "追加S125/S126与W001补读；新增作品仍31，来源60，旧作品补读/署名核对7。"
+    },
+    {
+      "time": "2026-10-25T16:05:45Z",
+      "type": "local_finish_guard_check",
+      "detail": "在3172秒时调用本地汇总入口--finish，按预期拒绝提前完成，未写完成状态；这是本地脚本测试，不是宿主自然触发或不可绕过保证。"
+    },
+    {
+      "time": "2026-10-25T16:12:16Z",
+      "type": "unavailable_original_crosscheck",
+      "url": "https://w.atwiki.jp/slowlove/pages/1678.html",
+      "detail": "由作者目录再次核对产卵原作，仍指向同一pages/69的410页；没有恢复正文，也未增加已读作品数。"
+    }
+  ],
+  "counts": {
+    "new_sources": 60,
+    "new_work_records": 31,
+    "previous_work_supplements": 7,
+    "existing_game_supplement": 1,
+    "catalogue_metadata_candidates": 236,
+    "relations_and_differences": 15
+  },
+  "access_notes": [
+    {
+      "type": "unavailable_source",
+      "detail": "《ゆっくりの産卵》原目录链接pages/69返回410 Gone；仅有书目及别作后记指向，未读原文。",
+      "url": "https://w.atwiki.jp/slowlove/pages/69.html"
+    },
+    {
+      "type": "access_limit",
+      "detail": "直接HTTP获取atwiki遭Cloudflare限制，未绕过；继续用可读的检索工具文本。"
+    },
+    {
+      "type": "access_update",
+      "detail": "S97从搜索工具403转为Chrome可读；先前关于贴吧部分受限的概括仅适用于工具，不能一概称原站无法阅读。"
+    },
+    {
+      "kind": "access_limit",
+      "title": "ゆっくり捕り",
+      "author": "ゆっぱい",
+      "translator": "精神有問題的人士（sampos）",
+      "translation_url": "https://home.gamer.com.tw/artwork.php?sn=5819110",
+      "original_url": "https://www.pixiv.net/artworks/111603958",
+      "translation_date": "2023-10-28",
+      "status": "bibliography_only",
+      "note": "Chrome已核译帖署名与原作链接；原作Pixiv被浏览器站点安全策略拒绝。未尝试替代浏览器或相簿绕过；不记录故事内容，非全文已读。"
+    },
+    {
+      "kind": "access_limit",
+      "title": "赤まりさ観察日記",
+      "author": "メカあき（検索索引署名）",
+      "url": "https://blog.livedoor.jp/yukkuri_anko/archives/33404823.html",
+      "status": "lead_only",
+      "note": "搜索结果确认题名，网页抓取失败，Chrome证书不受信任，未绕过；漫画正文未读。"
+    }
+  ],
+  "files": "仅research/2026-10-25内写入；没有实现或修改游戏。",
+  "unresolved": [
+    "全系列未逐篇读完；漫画原图及部分署名待核。",
+    "徽章起源未定；同名游戏按作者区分。",
+    "用户审定未进行；全部pending/not_adopted。"
+  ],
+  "query_count": 85
+}

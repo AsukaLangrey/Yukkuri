@@ -1,0 +1,39 @@
+2026-10-28 01:33 +08 续接检查点
+
+Goal active，原 P01-P20 全变体、八景下限、8小时实际主动实施验证、独立Windows包与真实手感验收均不变，尚未完成。
+用户本轮优先美术，并已允许 computer-use。显示器可以关，但不能默认桌面一定可捕获；本轮捕获与点击正常。
+
+本轮进展
+- CreatureActor.Sculpt.cs：收尖发束、曲面蝴蝶结、弯顶宽檐帽；外法线与顺时针面方向匹配，极点法线退化修复；连续管状描边减少碎片节点。
+- 身体统一到 ActorFaceSurface 同一椭球，移除重叠脸壳。眼口眉、腮红、水滴、底部污渍/伤痕贴合曲面。
+- 修复正115度导致脸朝下的翻身，改-105度；箱子和悬挂使用不同近看取景；近看隐藏脚下选中圈。
+- 脱落饰品按几何包围盒对齐地面；包裹曲面与边缘改连续网格。各动作/三种体型全姿态仍待更严格验收。
+- 真实失败证据：旧 native-04 翻身时底部污渍缺口圆环；独立包再次真实翻身后为完整曲面斑块，聊天原生截图可见。
+- 图集 artifacts/interaction-20261028/art-gallery-01、02、03 是引擎脚本姿态，不是实际键鼠动作证据；03最终极点修复前仍有中心小黑点，最终冻结包真实截图已无。
+- 本轮 DEBUG 实际鼠标：近看、摸摸、包裹、解开、翻倒；独立包：近看、摸摸、弹额、翻倒、Tab退出。其余动作和长期反馈不可以据此通过。
+
+新预览
+builds/playtest/HI01-art-20261028/Play This PC.cmd
+根目录 Play Interaction Preview.cmd 指向它。Play Game.cmd 仍旧版，保留。
+构建 M01-CLANG-20261027-172547；精确源码 builds/source/HI01-art-20261028。
+本包是开发中美术预览，包含现有人油操作，不是完整任务交付。说明与已知限制已放包内。
+目前独立包进程 PID 32840 仍运行；由兼容启动脚本启动，进程亲和4294967247，不要无预告关闭。
+computer-use 当前窗口 id 12779688，app process:D:\Project\Yukkuri\builds\playtest\HI01-art-20261028\Yukkuri.exe。续接先重列窗口。
+DEBUG 会话5141已通过Alt+F4正常退出0；不是崩溃。退出时收集日志native-04有Jolt job queue最大任务警告。原因未确定。
+包的3分钟进程健康观测19/19运行且Responding，内存约324到322MB；这不是FPS、游戏逻辑或长时稳定性证明。证据package-health-01.json。
+渲染会话4258、99946、56085、导出26741、48587和健康观测45081均已完成，不要重复等待/重启。
+
+源码在冻结后又改过（未进上述包）
+InteractionWorld.ExecuteInteraction：Flick只Head，Poke/Slap只Cheek，TakeAccessory/TakeAccessoryCare只Accessory，错部位无结算。
+InteractionGesture：护理头部不再标记脚部已处理；护理换部位重置持续接触时间，已有局部进度不凭空跨伤处。
+失败复现 anatomy-before.json 37/39，修复 anatomy-after.json 39/39；更细的跨部位预充护理失败 care-location-before 38/39 → after39/39。
+旧取饰品测试输入改成真实Accessory部位，断言未降低。
+tools/build.ps1已把Interaction.Smoke与ActorGeometry.Smoke加入实际构建检查。
+当前源码游戏构建0警告0错误；ActorGeometry5项，Interaction39项。旧33+63在导出时通过，不是总体验收。
+
+后续优先
+持续修美术和反馈细节；所有P01-P20逐变体真实操作、全部T01-T12与A-E后果链、存读档与长时运行/性能。
+护理和热工具实际可达部位、道具遮挡、瞬时动作/连续动作的空间判定仍需逐项检验，不要凭测试数完成。
+新模拟规则源码尚未更新到预览，下一候选应重新导出冻结，不改旧包。
+崩溃报告尚未复现根因；Jolt警告是已观察到的独立证据，不应臆断已解决。
+累计8小时主动工时未核账、未达到；本轮17:15:30Z起连续实施验证，健康观测与工作重叠不能重复加算时间。回答显示器的上一轮属于无开发进展。

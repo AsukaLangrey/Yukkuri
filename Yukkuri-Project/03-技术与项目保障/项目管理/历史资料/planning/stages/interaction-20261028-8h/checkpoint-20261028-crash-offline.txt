@@ -1,0 +1,14 @@
+2026-10-28 独立崩溃离线调查续接
+完整结论与证据：artifacts/interaction-20261028/crash-offline-audit/调查报告.txt。
+未启动游戏/Godot/测试场景/桌面；未覆盖试玩包；原开发 Goal 不变。
+确认 art03 194 负载文件、冻结源码哈希与清单一致；PCK 76 项 MD5 通过，直接解出 InteractionRoom/Jolt/OpenGL 配置。
+旧完整 dump 重新解析确认属于官方 m01-care-polish 引擎，而非 art03。异常指针写坏来源仍未知。
+Jolt 退出断言新增源码依据：完成 job 延迟回收，析构前无显式收尾；worker Release 可晚于 barrier 完成，可能错过最后 post_step。时序未验证、不当作 art03 闪退根因，也未修改引擎。
+现有 AuthoredMeshes 修复保留，未新导出/运行验证。
+新增 tools/trace-interaction-exit.ps1，默认只验包；-Run 仍需用户明确允许游戏运行。仅 CheckOnly 已测。
+tools/launch-m01.ps1 新增全 manifest 校验，离线 fixture 验证正常/改 PCK/越界路径；真实包只核验，包内旧脚本未改。
+频繁崩溃未解决；不能归因设备。后续需要 art03 自身自然失败堆栈或转储；无需为此授权桌面操作。
+
+2026-10-28 23:41 更新：用户授权一次 art03 隔离启动，已消耗。唯一游戏 PID28256 在捕获器 SW_HIDE 下运行，用户从未看到窗口。这是工具错误，不是有效可见启动复现；23:40:40 主动清理，exit0xffffffff，不计自然崩溃。无dump。此前动态捕获器自身缺DLL未到启动游戏阶段，不计第二次游戏。
+v4捕获器已修 SW_SHOWNORMAL 并静态编译，只无参数自检，未再启动。一次性锁保留。再次可见启动必须取得新的明确授权，不得拿本轮授权重复启动。
+用户明确崩溃通常发生刚打开/画面前；今后优先调查此阶段。详细结果 artifacts/interaction-20261028/art03-single-capture-20261028/本次结果.txt。未操作桌面/改系统，未归因设备。

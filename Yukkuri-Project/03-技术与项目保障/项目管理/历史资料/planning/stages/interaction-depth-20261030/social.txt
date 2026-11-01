@@ -1,0 +1,58 @@
+同伴、伴侣和家庭冲突交接
+日期：2026-10-30 / Asia/Shanghai
+状态：源码和远端用例已写，仅静态阅读；原开发机没有运行编译、测试、检查程序或游戏。未声称远端通过。
+
+本任务文件
+src/Yukkuri.Simulation/FamilySocial.cs
+checks/Family.Social/Family.Social.csproj
+checks/Family.Social/Program.cs
+本交接文件
+没有暂存、提交、推送、切分支或运行项目。其他文件只读，主协调统一接线与提交。
+
+已写机制
+1. 双方关系分别保存。对人的Trust、Attachment不复制成油油爱慕。旧Relationships只提供最多20熟悉起点，保留原记录。
+2. 邀请只约定相处，不立刻增加关系。双方都在本帧实际近距离陪伴才逐时增长，拒绝/忙碌/疼痛/休息/需求/抱起/限制/冷藏/冲突暂停。
+3. 同伴在可见范围选人，沿既有RoomMove/GroundMove真实移动；失去视线、超时或一方不愿时收尾。普通相处能自主结伴，宝宝由主协调孕育代码生成。
+4. 双方成熟且关系达到门槛才能结伴。通常尊重已有承诺，贪心、低耐心或高攻击性的少数个体可能违背；旧伴侣是否接受单独记录。
+5. 讨论开放关系按双方性格/分享倾向接受或拒绝。双方同意不代表其他伴侣同意；单方撤回只约束未来，过去已获准的关系不倒算出轨。
+6. 分手双向删除伴侣身份，保留血缘、照护者、关系历史和余情。再配有60秒间隔，不支持点击反复刷关系。
+7. 配对事件保存当时未同意的旧伴侣快照、知情来源及已反应集合。近处实际可见亲近才能目击；转述明确是听说，不直接触发暴力。结束的旧关系不会因见到今天的亲近重新冒充历史目击。
+8. 亲眼确认背叛可以仅难过/怨恨；高攻击性个体才可能进入冲突。一次选择目标和是否动手，存档后不重抽；目标可能是伴侣、其子油或第三者。
+9. 冲突先预警8秒，再实际靠近。近处有余力的伴侣/照护者可隔开；人类可口头制止。抱起目标、隔开、失能、冷藏、强需求或动作占用均中断，不隔空伤害。
+10. 伤害统一走Hurt，沿用Settings.LethalInjuries；不直接写剧情死亡。每击有3秒间隔，最长60秒/16次，之后至少90秒冷却，同一知情事件不会重复抽冲突。
+11. 受害者有独立害怕/怨恨/受伤记忆，能移动时实际退开。使用本文件FlightRemaining等字段，不复用相处小院未消费的Milestone RetreatRemaining。
+    受伤后至少120秒、且能在近处亲见对方安稳无冲突的活动时，警戒和怨恨才很慢下降；远处等待不抹掉记忆，旁观安全也不凭空增加爱慕。
+12. 新关系事件最多256条；淘汰跳过正在被Conflict引用的依据；编号防溢出和现有ID碰撞。新增字段有初始化默认；显式null、非法计时、未知身份/冲突引用、非对称伴侣等拒绝。
+
+主协调接线
+- 普通世界末尾TickFamilySocial(dt)，只在普通时间调用；不要在AdvanceInteractionPresentation调用。
+- 需要/休息/身体/当前接触之后的闲暇段调用TryFamilyActivity(c,dt)。TryFamilyCare优先时须跳过Conflict.TargetId非空和FlightRemaining>0。
+- 保存校验调用FamilyRules.ValidateSocial(state)，放在基础个体/Family结构校验之后。
+- 孕育准备开始调用BeginCompanionship(mother,father)，避免单向CompanionTarget被社会逻辑清理。
+- 孕育开始/取消/失败用ClearCompanionship(mother)同时收尾父体。准备期若续邀，只在双方空闲愿意且无其他目标时进行，不能锁死90秒。
+- 累计孕育准备时间须检查FamilyActionReady双方，避免休息、照护或跟随期间偷偷累计；FormPartnership现对既有伴侣也先检查身体和真实接触。
+- FormPartnership(Creature a,Creature b)是同步结伴入口，不生成宝宝；自主繁育只由主协调实现。
+
+公共界面入口（已与family_ui协作对齐）
+string InviteCompanion(string aId,string bId)
+string EndPartnership(string aId,string bId)
+string DiscussOpenPartnership(string aId,string bId)
+string RevokeOpenPartnership(string aId,string bId)
+string InterruptFamilyConflict(string id)
+string TellFamilyRelationship(string speakerId,string listenerId,string eventId)
+bool FormPartnership(Creature a,Creature b)
+所有公开关系变更拒绝Pause。相处小院的制止为同区可见选定对象口头制止，不要求隐藏玩家坐标移动；其他模式仍要求玩家3单位内。
+PeerBond.ConsentsToOtherPartners方向：a.Peers[b].值表示a允许b另结伴侣，不能反向解读。
+Family.LastEvent/Activity/React给出可读反馈，不展示精确仇恨数值。
+
+远端待测
+只由独立Alice/dot按GitHub完整提交及testing/request.json执行Family.Social，不直接消息联系Alice。
+用例覆盖：不刷关系、独立双向意愿、疼痛/缺水拒绝、真实靠近、结伴非即生子、守约/出轨、非全图知情、转述与目击分开、三种受害目标与非暴力分支、开放讨论/撤回、分手亲缘保留/再配、跨类别门槛、暂停近看、冷藏/抱起/失能中断、预警/人类干预、近处护伴、致死开关、同档继续、旧档缺字段/损坏拒绝、历史淘汰保留冲突依据/编号碰撞、既有伴侣仍受身体动作约束。
+补充用例：禁止繁育仍可结伴、休息不冒充主动相处、近处安全经历逐步修复而远处等待不抹伤害。
+尚无本批实际执行报告，编译状态和画面/声音/手感均未确认。
+
+仍不冒充完成的范围
+关系增长、性格门槛、冲突概率/次数/距离均为可调初稿，不宣称八景原公式。
+本批转述API保留事实来源，未编写复杂谣言/误会生成系统。
+未覆盖所有工具组合、嫉妒争抢/支配、特殊个性独占对白和完整特殊家庭事件。
+关系事件历史有256条上限，超久远的非当前冲突事件会淘汰；当前伴侣、双向关系值、血缘与个体文字记忆独立保留。

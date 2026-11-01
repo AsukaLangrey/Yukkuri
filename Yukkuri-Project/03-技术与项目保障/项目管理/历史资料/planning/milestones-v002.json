@@ -1,0 +1,1475 @@
+{
+  "schema_version": 1,
+  "version": "v002",
+  "dated": "2026-10-27",
+  "authority": "planning/requirements-v050.txt",
+  "rules_catalog": "planning/settings/setting-catalog-v003.json",
+  "plan": "planning/milestones-v002.txt",
+  "note": "实施分期非新增设定；所有阶段尚未开始，开工时间由用户指定。覆盖映射不代表实现或验收。",
+  "stages": [
+    {
+      "id": "M01",
+      "title": "一只油与一座小乐园",
+      "status": "planned",
+      "dependencies": [],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M01-C01",
+          "requirement": "培养与基本照护、资源补给闭环可独立游玩"
+        },
+        {
+          "id": "M01-C02",
+          "requirement": "抚摸抱抱蹭蹭和一种惩戒有不同反馈与基本物理"
+        },
+        {
+          "id": "M01-C03",
+          "requirement": "野外观察保护接纳和园内油库里护园呼救可完整经历"
+        },
+        {
+          "id": "M01-C04",
+          "requirement": "有理由惩戒/无理由伤害/未获知者反应对照有效"
+        },
+        {
+          "id": "M01-C05",
+          "requirement": "跨区/特写时钟/存读档保持个体和行为记录"
+        }
+      ],
+      "user_acceptance": "pending"
+    },
+    {
+      "id": "M02",
+      "title": "可持续经营的乐园与地区",
+      "status": "planned",
+      "dependencies": [
+        "M01"
+      ],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M02-C01",
+          "requirement": "收入任务与资源设施员工形成可持续经营闭环"
+        },
+        {
+          "id": "M02-C02",
+          "requirement": "墙门房间地形及导航排队实际可用"
+        },
+        {
+          "id": "M02-C03",
+          "requirement": "各类地区用途和首次旅行/快速交通可用"
+        },
+        {
+          "id": "M02-C04",
+          "requirement": "天气事故入侵与共同防卫产生可见后果"
+        },
+        {
+          "id": "M02-C05",
+          "requirement": "跨区后台及离线停止、权限与园区评分符合规则"
+        }
+      ],
+      "user_acceptance": "pending"
+    },
+    {
+      "id": "M03",
+      "title": "一家油的世代与救治",
+      "status": "planned",
+      "dependencies": [
+        "M02"
+      ],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M03-C01",
+          "requirement": "茎生胎生遗传和亲缘收养完整世代可玩"
+        },
+        {
+          "id": "M03-C02",
+          "requirement": "生命周期和健康寿命累计有真实后果"
+        },
+        {
+          "id": "M03-C03",
+          "requirement": "伤病抢救时窗及昂贵转移可完整操作"
+        },
+        {
+          "id": "M03-C04",
+          "requirement": "身份继承/重考或冒用风险及难度死亡可验证"
+        },
+        {
+          "id": "M03-C05",
+          "requirement": "家庭照护与风险开关有效且保存后不重置"
+        }
+      ],
+      "user_acceptance": "pending"
+    },
+    {
+      "id": "M04",
+      "title": "六种油库里的培养与独立生活",
+      "status": "planned",
+      "dependencies": [
+        "M03"
+      ],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M04-C01",
+          "requirement": "首版六种及已定形态和能力差异全部可体验"
+        },
+        {
+          "id": "M04-C02",
+          "requirement": "研究培养路线互斥历史和装备适配有效"
+        },
+        {
+          "id": "M04-C03",
+          "requirement": "金银铜综合评级单项SABC费用概率和越级有效"
+        },
+        {
+          "id": "M04-C04",
+          "requirement": "白金管理工作迁居收益及召回协商可体验"
+        },
+        {
+          "id": "M04-C05",
+          "requirement": "培养投入有实际用途且不惩罚白金培养玩家"
+        }
+      ],
+      "user_acceptance": "pending"
+    },
+    {
+      "id": "M05",
+      "title": "有反应有记忆的群体与研究",
+      "status": "planned",
+      "dependencies": [
+        "M04"
+      ],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M05-C01",
+          "requirement": "心理维度和个性自主反应能在行为中辨认"
+        },
+        {
+          "id": "M05-C02",
+          "requirement": "亲油年长者自治惩戒及群体认知按信息传播"
+        },
+        {
+          "id": "M05-C03",
+          "requirement": "多种工具位置力度时间状态交互有基础物理"
+        },
+        {
+          "id": "M05-C04",
+          "requirement": "研究观察修正及后续处置构成完整循环"
+        },
+        {
+          "id": "M05-C05",
+          "requirement": "理由/身份/已知事实影响反应且无全知与未授权监管"
+        }
+      ],
+      "user_acceptance": "pending"
+    },
+    {
+      "id": "M06",
+      "title": "按自己方式通关的故事",
+      "status": "planned",
+      "dependencies": [
+        "M05"
+      ],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M06-C01",
+          "requirement": "固定角色随机油库里和完整章节可从开局走到结局"
+        },
+        {
+          "id": "M06-C02",
+          "requirement": "培养取向和惩戒研究取向均有实玩通关证据"
+        },
+        {
+          "id": "M06-C03",
+          "requirement": "关键损失分支和失败符合规则"
+        },
+        {
+          "id": "M06-C04",
+          "requirement": "继续经营与继承新周目均可操作"
+        },
+        {
+          "id": "M06-C05",
+          "requirement": "任务地区经济生态与油库里变化真正联动"
+        }
+      ],
+      "user_acceptance": "pending"
+    },
+    {
+      "id": "M07",
+      "title": "完整表现自由模式与三语",
+      "status": "planned",
+      "dependencies": [
+        "M06"
+      ],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M07-C01",
+          "requirement": "六种形态及互动场景动画声音完整且样板经用户确认"
+        },
+        {
+          "id": "M07-C02",
+          "requirement": "简中英日实际界面教程剧情事件完整覆盖"
+        },
+        {
+          "id": "M07-C03",
+          "requirement": "预设与独立风险开关及操作保护可体验"
+        },
+        {
+          "id": "M07-C04",
+          "requirement": "新玩家教学设置音量及辅助可用"
+        },
+        {
+          "id": "M07-C05",
+          "requirement": "来源许可记录与作品参考用途可追溯"
+        }
+      ],
+      "user_acceptance": "pending"
+    },
+    {
+      "id": "M08",
+      "title": "v1.0全流程整合验收",
+      "status": "planned",
+      "dependencies": [
+        "M07"
+      ],
+      "minimum_work_hours": 6,
+      "scheduled_start": null,
+      "goal_id": null,
+      "acceptance": [
+        {
+          "id": "M08-C01",
+          "requirement": "全部首版规则对照实际入口验收无无主遗留项"
+        },
+        {
+          "id": "M08-C02",
+          "requirement": "两类玩法主线结局新周目自由长期游玩完整"
+        },
+        {
+          "id": "M08-C03",
+          "requirement": "50/100只完整场景跨区和长期存档性能验证"
+        },
+        {
+          "id": "M08-C04",
+          "requirement": "用户真实试玩问题修复并回归原失败案例"
+        },
+        {
+          "id": "M08-C05",
+          "requirement": "完整本地Windows交付源代码说明证据三语素材齐全"
+        }
+      ],
+      "user_acceptance": "pending"
+    }
+  ],
+  "rule_coverage": [
+    {
+      "rule_id": "PRD-01",
+      "title": "原始目标",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-02",
+      "title": "氛围",
+      "primary_stage": "M08",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-03",
+      "title": "平台与操作",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-04",
+      "title": "发行语言",
+      "primary_stage": "M08",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-05",
+      "title": "商业阶段",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-06",
+      "title": "资源与时间",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-07",
+      "title": "技术方向",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-08",
+      "title": "机器安排",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-09",
+      "title": "两类体验回报",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-01",
+      "title": "模式层级",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-02",
+      "title": "剧情开局",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-03",
+      "title": "初始油库里",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-04",
+      "title": "章节结构",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-05",
+      "title": "剧情损失",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-06",
+      "title": "通关选择",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-07",
+      "title": "自由模式",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-08",
+      "title": "难度",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-09",
+      "title": "存档",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-10",
+      "title": "同一世界与空间侧重",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-11",
+      "title": "自由模式保护配置",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MOD-12",
+      "title": "主线多种方式",
+      "primary_stage": "M06",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-01",
+      "title": "地区与授权",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-02",
+      "title": "筛查对象",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-03",
+      "title": "地图连接",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-04",
+      "title": "跨区模拟",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-05",
+      "title": "关闭游戏",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-06",
+      "title": "特写时间",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-07",
+      "title": "接纳决定",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "WRL-08",
+      "title": "规模",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-01",
+      "title": "个体性格",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-02",
+      "title": "记忆多数",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-03",
+      "title": "记忆少数",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-04",
+      "title": "观察与日记",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-05",
+      "title": "共享及误判",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-06",
+      "title": "饰品识别",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-07",
+      "title": "后天教育",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-08",
+      "title": "收养",
+      "primary_stage": "M05",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-09",
+      "title": "自主回应",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-10",
+      "title": "心理维度",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-11",
+      "title": "信息传播",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OBS-12",
+      "title": "归属感与惩戒认知",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-01",
+      "title": "生命周期",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-02",
+      "title": "捕食营养与冲动",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-03",
+      "title": "浸水",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-04",
+      "title": "寿命来源",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-05",
+      "title": "寿命上限",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-06",
+      "title": "基准边界",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-07",
+      "title": "能力成长",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "BIO-08",
+      "title": "跨优势学习",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-01",
+      "title": "方式与排除",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-02",
+      "title": "繁殖管理",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-03",
+      "title": "父母角色",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-04",
+      "title": "方式条件",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-05",
+      "title": "正常安排",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-06",
+      "title": "强制干预边界",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-07",
+      "title": "胎茎比较",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-08",
+      "title": "子代知识",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-09",
+      "title": "错误认知",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-10",
+      "title": "性格遗传",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-11",
+      "title": "孕期风险",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-12",
+      "title": "吸收机制",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-13",
+      "title": "母体死亡",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-14",
+      "title": "茎生杀子",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-15",
+      "title": "常见跨种",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-16",
+      "title": "捕食种配对",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-17",
+      "title": "母体方向",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "REP-18",
+      "title": "遗传维度分开",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-01",
+      "title": "升级边界",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-02",
+      "title": "触发与变异",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-03",
+      "title": "物种路线",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-04",
+      "title": "路线历史",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-05",
+      "title": "潜力继承",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-06",
+      "title": "发现与图鉴",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-07",
+      "title": "价值与成本",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-08",
+      "title": "巨型能力",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-09",
+      "title": "巨型变化",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-10",
+      "title": "巨型恢复",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-11",
+      "title": "有身体外形",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-12",
+      "title": "工具装备",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-13",
+      "title": "有身体恢复",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-14",
+      "title": "飞行",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "EVO-15",
+      "title": "水生",
+      "primary_stage": "M04",
+      "disposition": "deferred_scope_boundary",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-01",
+      "title": "首版六种",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-02",
+      "title": "灵梦",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-03",
+      "title": "魔理沙",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-04",
+      "title": "爱丽丝",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-05",
+      "title": "帕秋莉",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-06",
+      "title": "蕾米莉亚",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-07",
+      "title": "芙兰",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-08",
+      "title": "DLC名单",
+      "primary_stage": "M04",
+      "disposition": "deferred_scope_boundary",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "SPC-09",
+      "title": "延期边界",
+      "primary_stage": "M04",
+      "disposition": "deferred_scope_boundary",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "CRT-01",
+      "title": "三个评价维度",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "CRT-02",
+      "title": "综合金银铜",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "CRT-03",
+      "title": "单项能力",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "CRT-04",
+      "title": "评级流程",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "CRT-05",
+      "title": "越级",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "CRT-06",
+      "title": "有效期",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "CRT-07",
+      "title": "暂停与撤销",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-01",
+      "title": "独立身份",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-02",
+      "title": "个人财产",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-03",
+      "title": "能力价值",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-04",
+      "title": "不惩罚升级",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-05",
+      "title": "园内收入",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-06",
+      "title": "迁居条件",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-07",
+      "title": "迁居路径",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-08",
+      "title": "独立工作收益",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PLT-09",
+      "title": "召回",
+      "primary_stage": "M04",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-01",
+      "title": "传染范围",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-02",
+      "title": "可救治性",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-03",
+      "title": "窗口和等待",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-04",
+      "title": "暂时稳定",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-05",
+      "title": "昂贵转移",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-06",
+      "title": "身体来源",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-07",
+      "title": "持续身份",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-08",
+      "title": "繁殖角色变更",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "MED-09",
+      "title": "牌照与冒用",
+      "primary_stage": "M03",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-01",
+      "title": "天气季节",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-02",
+      "title": "危机范围",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-03",
+      "title": "共同防卫",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-04",
+      "title": "规模协作",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-05",
+      "title": "危险入侵者处置",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-06",
+      "title": "评分对象",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-07",
+      "title": "园内后果边界",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-08",
+      "title": "主动护园与呼救",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "DEF-09",
+      "title": "评价与认可分离",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OPS-01",
+      "title": "三类经营",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OPS-02",
+      "title": "开局重点",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OPS-03",
+      "title": "业务解锁",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OPS-04",
+      "title": "员工日常",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OPS-05",
+      "title": "重大权限",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OPS-06",
+      "title": "重大提醒",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "OPS-07",
+      "title": "建造范围",
+      "primary_stage": "M02",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-01",
+      "title": "视觉基础",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-02",
+      "title": "镜头",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-03",
+      "title": "物理操作",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-04",
+      "title": "互动范围",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-05",
+      "title": "表现配置",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-06",
+      "title": "交流",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-07",
+      "title": "互动共同因素",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-08",
+      "title": "作品参考与可爱表现",
+      "primary_stage": "M07",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "UX-09",
+      "title": "差异反应",
+      "primary_stage": "M01",
+      "disposition": "first_release",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "GOV-01",
+      "title": "研究与设定",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "GOV-02",
+      "title": "访谈方式",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "GOV-03",
+      "title": "验收边界",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "GOV-04",
+      "title": "保存历史",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "GOV-05",
+      "title": "完整内容与阶段验收",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "GOV-06",
+      "title": "独立完整里程碑",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "GOV-07",
+      "title": "开工时间",
+      "primary_stage": "M08",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    },
+    {
+      "rule_id": "PRD-10",
+      "title": "核心参与者",
+      "primary_stage": "M01",
+      "disposition": "project_constraint",
+      "status": "unverified",
+      "final_verification_stage": "M08"
+    }
+  ]
+}

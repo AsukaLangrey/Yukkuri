@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-28T13:10:06.3216368+00:00",
+  "scope": "Handoff references, saved test counts, source hashes and current frozen identities; no runtime or pre-window binary hash proof",
+  "source_files": 97,
+  "reports": 3,
+  "diagnostic_images": 11,
+  "success": true,
+  "problems": [],
+  "main_program_started": false,
+  "full_original_goal_complete": false
+}

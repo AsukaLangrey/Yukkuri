@@ -1,0 +1,138 @@
+{
+  "start": "2026-10-25T15:12:53Z",
+  "end": "2026-10-25T16:12:53Z",
+  "queries": [
+    {
+      "time": "2026-10-25 15:13:25 UTC",
+      "queries": [
+        "\"ゆっくり\" \"聖者の途\"",
+        "\"ゆっくりの産卵\" \"話の長い人\"",
+        "\"油库里\" \"漫画\" \"作者\"",
+        "\"Yukkuri\" \"Ammo\" \"Bacchaaaki\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:14:04 UTC",
+      "queries": [
+        "\"ゆっくりの産卵\"",
+        "\"ゆっくりいじめ系94\" \"おうち\"",
+        "\"Ammo\" \"ばっちゃ\""
+      ]
+    },
+    {
+      "time": "2026-10-25 15:14:21 UTC",
+      "queries": [
+        "\"ゆっくりまりさとおうち\" \"抹茶アイス\"",
+        "\"ゆっくりの産卵\" \"atwiki\""
+      ]
+    }
+  ],
+  "events": [
+    {
+      "time": "2026-10-25 15:14:00 UTC",
+      "type": "browser_issue",
+      "detail": "External Chrome author blog returned ERR_CERT_AUTHORITY_INVALID; no bypass, no switch to in-app browser."
+    }
+  ],
+  "sources": [
+    {
+      "id": "S67",
+      "title": "聖者の途",
+      "url": "https://w.atwiki.jp/slowlove/pages/152.html",
+      "author_or_site": "むの人／創作発表Wiki",
+      "original_language": "ja",
+      "source_type": "fiction_archive",
+      "access_status": "selected_body_and_preface_read",
+      "reliability_note": "作者明确声明续写另一作者作品。"
+    },
+    {
+      "id": "S68",
+      "title": "聖者の途2",
+      "url": "https://w.atwiki.jp/slowlove/pages/153.html",
+      "author_or_site": "むの人／創作発表Wiki",
+      "original_language": "ja",
+      "source_type": "fiction_archive",
+      "access_status": "selected_body_ending_afterword_read",
+      "reliability_note": "后记确认原作抹茶アイス《ゆっくりまりさとおうち》；正文后另有生还补叙，不能只读墓地段就判定死亡。"
+    },
+    {
+      "id": "S69",
+      "title": "続、愛でスレ的ゆっくり加工場",
+      "url": "https://w.atwiki.jp/slowlove/pages/171.html",
+      "author_or_site": "ゆっくり怪談の人（系列归属待与本篇末署名核对）",
+      "original_language": "ja",
+      "source_type": "fiction_archive",
+      "access_status": "body_read_in_progress",
+      "reliability_note": "W006同系列续篇，不计独立新作品。"
+    },
+    {
+      "id": "S70",
+      "title": "番外：幸せのかたち",
+      "url": "https://w.atwiki.jp/slowlove/pages/283.html",
+      "author_or_site": "ゆっくり怪談の人",
+      "original_language": "ja",
+      "source_type": "fiction_archive",
+      "access_status": "main_body_and_afterword_read",
+      "reliability_note": "后记称已获《ゆっくりのいる生活》作者许可；本篇现代社会设定，系列本篇世界位置模糊。"
+    },
+    {
+      "id": "S71",
+      "title": "れみりゃのおともだち（下）",
+      "url": "https://w.atwiki.jp/slowlove/pages/36.html",
+      "author_or_site": "YT",
+      "original_language": "ja",
+      "source_type": "fiction_archive",
+      "access_status": "main_body_and_afterword_read",
+      "reliability_note": "W012下篇补读；结局二者获救住进神社。不得误写死亡结局。"
+    },
+    {
+      "id": "S72",
+      "title": "年刊饅饅来第一期／第二期／第三期／番外＋歡樂四格",
+      "url": "https://bbs.nyasama.com/forum.php?mod=viewthread&tid=59285",
+      "author_or_site": "喵玉殿转载帖；原作作者待核",
+      "original_language": "zh-Hant",
+      "source_type": "translation_repost_collection",
+      "access_status": "post_metadata_read_images_not_displayed",
+      "published_date": "2016-04-10",
+      "updated_date": "2016-04-11",
+      "reliability_note": "外置Chrome可读帖文，但漫画图片未显示，不能视为已读；第3楼标汉化来源超糸色一门。"
+    },
+    {
+      "id": "S73",
+      "title": "ゆっくりいじめ系1340 ゆっくり昆虫型出産",
+      "url": "https://w.atwiki.jp/yukkuri_gyakutai/pages/2305.html",
+      "author_or_site": "まりさつむりの人",
+      "original_language": "ja",
+      "source_type": "fiction_archive",
+      "access_status": "body_read_in_progress",
+      "reliability_note": "作者后记称参考《東方アクロバティカ》，未读另一卵生SS，不能因题材相似推定承袭。"
+    },
+    {
+      "id": "S74",
+      "title": "ふたば系ゆっくりいじめ908 むらさの舟歌",
+      "url": "https://w.atwiki.jp/futabayukkuriss/pages/1898.html",
+      "author_or_site": "神奈子さまの一信徒",
+      "original_language": "ja",
+      "source_type": "fiction_archive",
+      "access_status": "body_read_in_progress",
+      "reliability_note": "前言明确称几乎全部独自设定，且是南の島系列外传。"
+    }
+  ],
+  "works": [],
+  "notes": [
+    {
+      "type": "attribution",
+      "detail": "Ammo与ばっちゃあき的关系出现韩文二手解释：外语标签来自署名uzi_ammo_666的拼图，但该拼图是否作者本人所作未确认。不能据此确认为作者正式别名。",
+      "url": "https://seore.org/w/%EB%AC%B8%EC%84%9C%3A%ED%8C%9F%EC%B1%A0%20%EC%95%84%ED%82%A4"
+    },
+    {
+      "type": "unavailable_source",
+      "detail": "《ゆっくりの産卵》原目录链接pages/69返回410 Gone；仅有书目及别作后记指向，未读原文。",
+      "url": "https://w.atwiki.jp/slowlove/pages/69.html"
+    },
+    {
+      "type": "access_limit",
+      "detail": "直接HTTP获取atwiki遭Cloudflare限制，未绕过；继续用可读的检索工具文本。"
+    }
+  ]
+}

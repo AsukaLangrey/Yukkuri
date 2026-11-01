@@ -1,0 +1,596 @@
+[
+  {
+    "id": "W001",
+    "title": "ゆっくりのお医者さん ～出会い編～",
+    "title_zh": "油库里的医生：相遇篇",
+    "medium": "小说",
+    "author": "未确认",
+    "source_ids": [
+      "S43"
+    ],
+    "reading_status": "正文选段：开端、医疗生态、结局",
+    "summary_zh": "医生救助雪中受困的灵梦，调查宠物异常并帮助其重返野外。原主人消失的原因在结尾得到解释。",
+    "work_specific_notes": "环境突变可导致不适；文中还写野生个体表皮成长。注意区分天狗夸饰报道与后续叙事纠正。",
+    "tags": [
+      "医疗",
+      "救助",
+      "野外回归",
+      "身体耐性"
+    ],
+    "remaining_work": "补读全文、核作者与更早版本；不据此推定所有个体同样耐伤。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/284.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W002",
+    "title": "ゆっくり駆除のお姉さん",
+    "title_zh": "驱除油库里的姐姐",
+    "medium": "小说",
+    "author": "ねこすず",
+    "source_ids": [
+      "S44",
+      "S66"
+    ],
+    "reading_status": "已读作者简介与第1篇开端；平台全1集",
+    "summary_zh": "时雨与有身体的油库里们共同生活。作者声明混合爱护和虐待，并有原创类型。",
+    "work_specific_notes": "题名含驱除，但当前读到的是日常开场；平台仍标连载，不能声称故事已完成。",
+    "tags": [
+      "日常",
+      "胴付き",
+      "原创类型",
+      "混合题材"
+    ],
+    "remaining_work": "跟踪是否新增篇章；尚不足以归纳驱除职业制度。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://ncode.syosetu.com/n3645fh/1/",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W003",
+    "title": "ゆっくりを飼うときに気をつけること",
+    "title_zh": "饲养油库里时要注意的事",
+    "medium": "设定型短文",
+    "author": "未确认",
+    "source_ids": [
+      "S45"
+    ],
+    "reading_status": "正文选段：选择、体型、食物与居住",
+    "summary_zh": "用饲养手册的形式讨论品种大小、共养相性、器具和日常饮食。",
+    "work_specific_notes": "标准型在本文可吃与人相近的食物；大型个体需要不同空间。均为该篇虚构规则。",
+    "tags": [
+      "饲养",
+      "体型",
+      "相性",
+      "饮食"
+    ],
+    "remaining_work": "核作者，逐项与S11饲育书及游戏规则比较。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/230.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W004",
+    "title": "予防接種",
+    "title_zh": "预防接种",
+    "medium": "小说",
+    "author": "未确认",
+    "source_ids": [
+      "S46"
+    ],
+    "reading_status": "正文选段：就诊前后及后记",
+    "summary_zh": "主人担心灵梦承受不了注射，但实际过程平静结束；旁边魔理沙的激烈反应未在正文给出确定原因。",
+    "work_specific_notes": "个体反应不能从同种推定；后记提到《聖者の途》的虚构病毒，提供设定借用线索。",
+    "tags": [
+      "医疗",
+      "家庭",
+      "个体差异"
+    ],
+    "remaining_work": "追查《聖者の途》与作者署名；疾病仅属于虚构设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/234.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W005",
+    "title": "～ゆっくりの出産～",
+    "title_zh": "油库里的出生",
+    "medium": "设定型短文",
+    "author": "未确认",
+    "source_ids": [
+      "S47"
+    ],
+    "reading_status": "读前言与茎型出生段；其他段未系统精读",
+    "summary_zh": "以虚构研究者Y教授的记录讲述出生；已读段落描写茎上幼体落地与保护性薄膜。",
+    "work_specific_notes": "作者明确称独自解释，卵生部分参考话の長い人氏《ゆっくりの産卵》；借用不等于统一生物学。",
+    "tags": [
+      "繁殖",
+      "茎型",
+      "作者自设"
+    ],
+    "remaining_work": "追溯失效的《ゆっくりの産卵》入口，并读其他出生分型。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/261.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W006",
+    "title": "愛でスレ的ゆっくり加工場",
+    "title_zh": "爱护流的油库里加工场",
+    "medium": "小说",
+    "author": "未确认",
+    "source_ids": [
+      "S48"
+    ],
+    "reading_status": "正文选段：缘起、设施及死后加工",
+    "summary_zh": "主人从临终油库里的请求出发建立安置设施，照料生前生活，并在死后制作食物；同伴仍会悲伤与反对。",
+    "work_specific_notes": "文中主人把死后被食用理解为葬礼。不能仅凭“加工场”一词把本篇与酷刑工业题材混为一谈。",
+    "tags": [
+      "临终",
+      "食物循环",
+      "爱护",
+      "加工场"
+    ],
+    "remaining_work": "补读番外《幸せのかたち》及作者出处。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/162.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W007",
+    "title": "anko2412 パーフェクトバッジシステム",
+    "title_zh": "完美徽章系统",
+    "medium": "小说",
+    "author": "触発あき",
+    "source_ids": [
+      "S49"
+    ],
+    "reading_status": "正文选段：研究、实验、制度扩散与结局",
+    "summary_zh": "研究者制造能自动反映评价的徽章，制度被推广后，却面对亲情与评级之间无法化解的矛盾。",
+    "work_specific_notes": "徽章可变色，区别于固定考试证书；结局质疑以颜色穷尽个体价值，不能只摘开篇的等级优劣论。",
+    "tags": [
+      "徽章",
+      "实验",
+      "工业",
+      "社会评价",
+      "残酷"
+    ],
+    "remaining_work": "通读中间实验并核对历史首发；与S12、S13、S64分开比较。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/hutaba_ranking/pages/172.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W008",
+    "title": "ゆっくりいじめ系1327 都会派が都会に行くこと",
+    "title_zh": "都会派进城",
+    "medium": "小说",
+    "author": "未确认",
+    "source_ids": [
+      "S50"
+    ],
+    "reading_status": "正文选段：前言、进城、法律冲突",
+    "summary_zh": "爱丽丝与魔理沙一家进城，原本受到店主善待，却因轻微触碰物品卷入严苛执法。",
+    "work_specific_notes": "作者前言引用Oblivion翻译资料，明确含游戏式戏仿；该城法律不能推广至全部作品。",
+    "tags": [
+      "城市",
+      "家庭",
+      "法律戏仿",
+      "跨作品"
+    ],
+    "remaining_work": "核作者及完整结尾；不与《都会のゆっくり一家》按近似题名合并。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/yukkuri_gyakutai/pages/2281.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W009",
+    "title": "ふたば系ゆっくりいじめ44 裏切りのおにいさん",
+    "title_zh": "背叛的哥哥",
+    "medium": "小说",
+    "author": "触発あき",
+    "source_ids": [
+      "S51"
+    ],
+    "reading_status": "正文选段：前言、家庭开端及结局",
+    "summary_zh": "主人因人的背叛转向宠物依赖，家庭关系变化最终又加剧其敌意。叙述者的控制欲和判断是人物视角。",
+    "work_specific_notes": "作者明确受ばっちゃあき《都会のゆっくり一家》启发，同时强调独自解释；可记录具体创作传播关系。",
+    "tags": [
+      "家庭",
+      "信任",
+      "控制",
+      "虐待",
+      "衍生关系"
+    ],
+    "remaining_work": "通读中段徽章事件；追原画，避免将不可靠叙述者当作者立场。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/futabayukkuriss/pages/65.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W010",
+    "title": "ゆっくりパークの春夏秋冬",
+    "title_zh": "油库里公园的春夏秋冬",
+    "medium": "小说系列",
+    "author": "YT",
+    "source_ids": [
+      "S52",
+      "S53"
+    ],
+    "reading_status": "仅第1篇选段；全系列目录已确认",
+    "summary_zh": "中奖后的主人公在博丽神社附近建园，让油库里进入不同生境生活，并观察采食、家庭与捕食。",
+    "work_specific_notes": "人为布置栖息地、观察时不总干预；不能把建园背景自动理解为全程无伤害。",
+    "tags": [
+      "公园",
+      "生态观察",
+      "季节",
+      "捕食"
+    ],
+    "remaining_work": "系列目录有part1—part8分篇及尾声；后续尚未通读。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/288.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W011",
+    "title": "ゆっくりの帰るところ",
+    "title_zh": "油库里的归处",
+    "medium": "小说",
+    "author": "YT",
+    "source_ids": [
+      "S52",
+      "S54"
+    ],
+    "reading_status": "正文选段：受伤、救援、能力与结局",
+    "summary_zh": "遭误伤的魔理沙被巨大魔理沙与随行同伴救助，康复后愿意加入援救他者的行动。",
+    "work_specific_notes": "巨大魔理沙能营造让他者失去敌意的气场；这是该篇能力，不能自动套到其他Dos形象。",
+    "tags": [
+      "救助",
+      "Dos魔理沙",
+      "群体",
+      "能力差异"
+    ],
+    "remaining_work": "追前言所列三张插画及作者时间线。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/81.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W012",
+    "title": "ゆっくりれみりゃのおかしな友達",
+    "title_zh": "蕾米莉亚油库里的奇妙朋友",
+    "medium": "小说上下篇",
+    "author": "YT",
+    "source_ids": [
+      "S52",
+      "S55"
+    ],
+    "reading_status": "上篇选段；下篇未读",
+    "summary_zh": "蕾米与灵梦从捕食关系发展出奇妙友谊，却仍与周围群体的恐惧和敌意冲突。",
+    "work_specific_notes": "亲近个体与其他猎物的关系并不自动同步改变；只概括已读上篇，未判断全系列结局。",
+    "tags": [
+      "捕食者",
+      "友谊",
+      "群体冲突",
+      "胴付き"
+    ],
+    "remaining_work": "读下篇，核对关系演变和结局。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/35.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W013",
+    "title": "ある金バッジゆっくりの一生",
+    "title_zh": "一只金徽章油库里的一生",
+    "medium": "漫画",
+    "author": "AVあき（转载署名）",
+    "source_ids": [
+      "S56"
+    ],
+    "reading_status": "仅标题、署名、转载日期和标签；未看图",
+    "summary_zh": "确认存在该漫画转载记录；本轮不提供剧情摘要。",
+    "work_specific_notes": "转载页标签为长篇漫画、饲养、虐待；这些是站点标签，不是阅读结论。",
+    "tags": [
+      "徽章",
+      "漫画目录",
+      "虐待标签"
+    ],
+    "remaining_work": "找原作者发布页与完整图序；转载时间2013-07-15不等于原作首发。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://blog.livedoor.jp/yukkuri_anko/archives/29557905.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W014",
+    "title": "都会のゆっくり一家",
+    "title_zh": "城市里的油库里一家",
+    "medium": "漫画系列",
+    "author": "ばっちゃあき（S51前言及S57目录）",
+    "source_ids": [
+      "S51",
+      "S57",
+      "S05"
+    ],
+    "reading_status": "目录及衍生作者引述；未看漫画",
+    "summary_zh": "确认作品名与日文作者归属线索；剧情仍待原图核对。",
+    "work_specific_notes": "S05英文百科的Ammo及白金来源说尚未建立可靠对应链，不合并为已证实别名或起源。",
+    "tags": [
+      "城市",
+      "漫画目录",
+      "作者别名待核"
+    ],
+    "remaining_work": "回溯漫画原图、Ammo对应关系与白金徽章实际出现页。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://blog.livedoor.jp/yukkuriplace_anko/archives/cat_305083.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W015",
+    "title": "八畳一間のれいむ一家",
+    "title_zh": "八叠一间的灵梦一家",
+    "medium": "漫画",
+    "author": "ばっちゃあき（转载署名）",
+    "source_ids": [
+      "S57",
+      "S65"
+    ],
+    "reading_status": "目录与存档页；未看图",
+    "summary_zh": "作品标题、转载归属有记录；尚未据原图写剧情。",
+    "work_specific_notes": "评论中的SS改编说只作为后续线索；评论价值判断与图中事实分开。",
+    "tags": [
+      "漫画目录",
+      "家庭",
+      "残酷题材线索"
+    ],
+    "remaining_work": "找漫画原页及所称前身SS，核对改编关系。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://megalodon.jp/ref/2022-1106-1501-45/blog.livedoor.jp/yukkuri_anko/archives/29883989.html",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W016",
+    "title": "まりさとおおきなれいむ",
+    "title_zh": "魔理沙与大灵梦",
+    "medium": "漫画／视频漫画",
+    "author": "ウミサチリガヤ",
+    "source_ids": [
+      "S58"
+    ],
+    "reading_status": "作者博客索引；未看视频或图",
+    "summary_zh": "作者目录列出该作，博客日期为2024-12-22。",
+    "work_specific_notes": "仅确认标题和发布记录，不由标题推断体型设定或剧情。",
+    "tags": [
+      "作者目录",
+      "视频漫画"
+    ],
+    "remaining_work": "取得单篇链接并观看后补摘要。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://blog.livedoor.jp/umisachirigaya/",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W017",
+    "title": "ゆっくりまりさとでかぼうし",
+    "title_zh": "油库里魔理沙与大帽子",
+    "medium": "漫画／视频漫画",
+    "author": "ウミサチリガヤ",
+    "source_ids": [
+      "S58"
+    ],
+    "reading_status": "作者博客索引；未看视频或图",
+    "summary_zh": "作者目录列出该作，博客日期为2024-11-17。",
+    "work_specific_notes": "仅确认发布记录，尚无足够正文证据归纳饰品规则。",
+    "tags": [
+      "作者目录",
+      "视频漫画"
+    ],
+    "remaining_work": "取得单篇链接与原视频，核对饰品剧情。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://blog.livedoor.jp/umisachirigaya/",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W018",
+    "title": "心の中はわからない？",
+    "title_zh": "内心无法知晓？",
+    "medium": "漫画／视频漫画",
+    "author": "ウミサチリガヤ",
+    "source_ids": [
+      "S58"
+    ],
+    "reading_status": "作者博客索引；未看视频或图",
+    "summary_zh": "作者目录列出该作，博客日期为2024-10-28。",
+    "work_specific_notes": "作者博客有简短评语，但本轮不据此补写人物行为或结局。",
+    "tags": [
+      "作者目录",
+      "视频漫画"
+    ],
+    "remaining_work": "读完整作品后再判断性格、道德与叙述层次。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://blog.livedoor.jp/umisachirigaya/",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W019",
+    "title": "宠物油库里灵梦",
+    "title_zh": "宠物油库里灵梦",
+    "medium": "中文漫画转载",
+    "author": "原作者未确认；镜像栏填写ゆっくり",
+    "source_ids": [
+      "S59"
+    ],
+    "reading_status": "中文目录；未读图片章节",
+    "summary_zh": "目录标为完结短篇，日期为2020-10-17；日文原题尚未确认。",
+    "work_specific_notes": "此条是中文传播入口，不能与未知日文作品当作独立原创重复计数。",
+    "tags": [
+      "中文入口",
+      "宠物",
+      "作者待核"
+    ],
+    "remaining_work": "追原题、作者、译者及与其他漫画的对应关系。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://manhuaren.com/manhua-chongwuyoukulilingmeng/",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W020",
+    "title": "Weimu",
+    "title_zh": "Weimu",
+    "medium": "游戏",
+    "author": "Jaykingamez",
+    "source_ids": [
+      "S60"
+    ],
+    "reading_status": "开发者说明页；未运行",
+    "summary_zh": "制作油库里的小型jam项目，作者提到眼睛、头发和饰品组合；页面标视觉小说、开发中。",
+    "work_specific_notes": "可作为外观构成与互动原型参考，商店类型不能证明拥有完整模拟生态。",
+    "tags": [
+      "制作",
+      "饰品",
+      "Game Jam",
+      "Unity"
+    ],
+    "remaining_work": "如需玩法评估，另做实际运行或代码阅读。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://jaykingamez.itch.io/weimu",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W021",
+    "title": "cirno's yukkuri-wranglin' hoedown",
+    "title_zh": "琪露诺的油库里套索活动",
+    "medium": "游戏",
+    "author": "magicalfeyfenny",
+    "source_ids": [
+      "S61"
+    ],
+    "reading_status": "开发者说明页；未运行",
+    "summary_zh": "州集市背景的游戏，控制说明包含移动、放置套索与收紧套索；属于Touhou Station Game Jam 2022项目。",
+    "work_specific_notes": "作者标为Simulation，但现有资料只支持具体交互入口，未证明养育或繁殖系统。",
+    "tags": [
+      "套索",
+      "小游戏",
+      "Game Jam"
+    ],
+    "remaining_work": "可从作者页继续读公开代码；当前未下载或执行。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://magicalfeyfenny.itch.io/cirnos-yukkuri-wranglin-hoedown",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W022",
+    "title": "MariAli - Loveforce",
+    "title_zh": "MariAli - Loveforce",
+    "medium": "游戏",
+    "author": "create2019、ChairGTables、Node/Nodegama、Panchamon；正文另列mojo",
+    "source_ids": [
+      "S62"
+    ],
+    "reading_status": "开发者说明页；未运行",
+    "summary_zh": "单关卡STG，以Salamander风格、魔理沙与爱丽丝主题及武器连锁计分为特色；作者主页标YUKKURI AND FLESH。",
+    "work_specific_notes": "归为油库里相关外围玩法样本；其射击设计不能用来证明饲养生态设定。",
+    "tags": [
+      "射击",
+      "外围作品",
+      "Godot"
+    ],
+    "remaining_work": "如用于玩法比较，再核截图与运行内容。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "primary_url": "https://create2019.itch.io/mariali-loveforce",
+    "access_date": "2026-10-25",
+    "novelty": "new_catalogue_record"
+  },
+  {
+    "id": "W023",
+    "title": "ゆっくりはゆっくりと歩く",
+    "title_zh": "油库里缓步前行",
+    "medium": "小说系列",
+    "author": "enforcer",
+    "source_ids": [
+      "S15",
+      "S64"
+    ],
+    "reading_status": "本轮补读第16章《格の違い》选段",
+    "summary_zh": "本章通过金徽章爱丽丝、持特级鉴札的魔理沙与餐馆场景呈现身份待遇和行为差异。",
+    "work_specific_notes": "评级、对人的服从与对同族的善意不是同一指标；这是既有小说的补读，不另算新作品。",
+    "tags": [
+      "徽章",
+      "特级鉴札",
+      "城市",
+      "既有作品补读"
+    ],
+    "remaining_work": "通读全18篇，按章节记录身份制度，避免把不同证书合并。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 2,
+    "novelty": "existing_work_additional_chapter",
+    "primary_url": "https://ncode.syosetu.com/n0569hh/16/",
+    "access_date": "2026-10-25"
+  }
+]

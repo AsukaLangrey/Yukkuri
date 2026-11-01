@@ -1,0 +1,14 @@
+{
+  "categories": 13,
+  "copyCount": 1729,
+  "sourceCount": 1559,
+  "sourceContentChanged": [],
+  "copyContentChanged": [],
+  "missingCategoryGuides": [],
+  "indexedCodeFiles": 227,
+  "missingIndexedCode": [],
+  "sourceHeadAtCompletion": "bf274206fcd451d989dd7895f5c28addd499e857",
+  "newAreaHasOwnGit": false,
+  "checkedUtc": "2026-10-31T16:46:02.9727599Z",
+  "method": "只做静态文件清点、路径存在性及SHA256核对；未启动项目程序、构建、测试、渲染或预览"
+}

@@ -1,0 +1,22 @@
+新区域试运行记录
+时间：2026-11-01 07:48起（北京时间）
+机器：SHIKI-GAME-4080
+版本：v0.1.55
+进程：12960
+记录时仍在运行：True
+观察启动后秒数：38.6
+入口：新工程src/Yukkuri.Game/project.godot → InteractionRoom.tscn。
+资源导入成功，日志出现INTERACTION_ROOM_READY，小院初始化完成。
+日志中发现的运行错误数：0。
+实际进程亲和性：4294967247，排除CPU 4、5。
+
+独立存档目录：
+D:\Project\Yukkuri\Yukkuri-Project\.local\trial\appdata\Godot\app_userdata\油库里乐园 · 基础框架\interaction-test-saves\new-region-20261101-074758
+
+只通过启动日志和自身进程状态观察，未截图、读取窗口内容或操作桌面，未执行自动化玩法测试。
+初始化和短时存活不代表画面、操作手感或长期稳定性已验收。
+原区域内容核对：1559个文件，变化数0。
+来源基线提交：
+bf274206fcd451d989dd7895f5c28addd499e857
+实际运行的是新区域编译产物，源文件身份见对应编译记录和identity.json。
+游戏保留运行，供用户直接试玩。

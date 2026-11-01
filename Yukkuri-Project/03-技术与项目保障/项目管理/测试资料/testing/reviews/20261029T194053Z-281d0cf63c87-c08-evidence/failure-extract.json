@@ -1,0 +1,617 @@
+{
+  "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+  "failures": [
+    {
+      "check_id": "Interaction.Continuity",
+      "name": "an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",
+      "passed": false,
+      "error": "empty mouse hold froze movement or continued pressure: X=-1.0800000000000005, health=99.99749999999996/99.96, pose=idle",
+      "source_locations": [
+        "checks/Interaction.Continuity/Program.cs:1422"
+      ]
+    },
+    {
+      "check_id": "Family.Protection",
+      "name": "保护者远离时不消除危险，实际走近后才能保护",
+      "output_header": "FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护",
+      "passed": false,
+      "error": "FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护\n   at Program.<<Main>$>g__Require|0_0(Boolean condition, String reason) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 6\n   at Program.<>c.<<Main>$>b__0_8() in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 96\n   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 8",
+      "format": "full stdout failure block",
+      "source_locations": [
+        "checks/Family.Protection/Program.cs:6",
+        "checks/Family.Protection/Program.cs:8",
+        "checks/Family.Protection/Program.cs:88",
+        "checks/Family.Protection/Program.cs:96"
+      ]
+    }
+  ],
+  "compilation_failures": [
+    {
+      "check_id": "Family.PregnancyBoundaries",
+      "exit_code": 1,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]"
+      ],
+      "source_planned_named_cases_not_executed": 12
+    },
+    {
+      "check_id": "Family.AssistedCare",
+      "exit_code": 1,
+      "compiler_errors": [
+        "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Program.cs(152,17): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Family.AssistedCare.csproj]"
+      ],
+      "source_planned_named_cases_not_executed": 16
+    }
+  ],
+  "diagnostics": null,
+  "no_failure_retry": true,
+  "root_cause_confirmed": false,
+  "interpretation_limit": "Only current JSON/stdout and pinned source are used. A failed compound assertion does not establish which component failed unless diagnostics explicitly record it. Following statements in a failed Check body are not executed; independent Check bodies may continue.",
+  "separate_readonly_analysis": {
+    "source_commit": "281d0cf63c87adcbe14d5503d67713e430acba3c",
+    "request_revision": "dot-v15-interaction-depth-I-20261030",
+    "reviewed_at": "2026-10-29T19:55:47.498888+00:00",
+    "review_kind": "Read-only current logs/source analysis. No project execution, mutation, test retry, UI or publication by this reviewer.",
+    "terminal_run_finished_at": "2026-10-29T19:53:24.598848+00:00",
+    "runner_status": "failed",
+    "pure_passed": 918,
+    "pure_failed": 2,
+    "attempted_suite_count": 33,
+    "suite_processes_finished": 33,
+    "suites_with_test_bodies_executed": 31,
+    "fully_passed_suite_count": 29,
+    "assertion_failing_suite_count": 2,
+    "compile_failing_suite_count": 2,
+    "unexecuted_declared_cases_due_to_compile": 28,
+    "counting_note": "918 passed and 2 failed are actual top-level rule results only. Two compile-failed projects add no rule results. Complete runner termination does not mean every requested test body ran. Game build has a separate three-error failure.",
+    "count_verification": "Independently recounted anchored PASS/FAIL stdout; Soak uses 24 scenario passed fields. All 33 per-project counts match run.json. No source literal or nested branch count used as actual result.",
+    "suites": [
+      {
+        "id": "Simulation.Smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 125,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:50:34.740518+00:00",
+        "finished_at": "2026-10-29T19:50:42.746337+00:00"
+      },
+      {
+        "id": "Milestone.Smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 63,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:50:43.769053+00:00",
+        "finished_at": "2026-10-29T19:50:47.246282+00:00"
+      },
+      {
+        "id": "Interaction.Smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 48,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:50:48.164575+00:00",
+        "finished_at": "2026-10-29T19:50:51.794354+00:00"
+      },
+      {
+        "id": "Input.Intent",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 43,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:50:52.813019+00:00",
+        "finished_at": "2026-10-29T19:50:56.698239+00:00"
+      },
+      {
+        "id": "NaturalLife.Smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 95,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:50:57.767132+00:00",
+        "finished_at": "2026-10-29T19:51:04.662665+00:00"
+      },
+      {
+        "id": "Interaction.Continuity",
+        "status": "failed",
+        "exit_code": 1,
+        "passed_count": 123,
+        "failed_count": 1,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:05.632347+00:00",
+        "finished_at": "2026-10-29T19:51:10.613839+00:00"
+      },
+      {
+        "id": "Interaction.AutonomyPriority",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 12,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:11.532614+00:00",
+        "finished_at": "2026-10-29T19:51:15.107979+00:00"
+      },
+      {
+        "id": "Interaction.CompletedNeeds",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 1,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:16.178644+00:00",
+        "finished_at": "2026-10-29T19:51:19.357087+00:00"
+      },
+      {
+        "id": "ActorGeometry.Smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 93,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:20.377113+00:00",
+        "finished_at": "2026-10-29T19:51:29.427664+00:00"
+      },
+      {
+        "id": "NaturalLife.Soak",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 24,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:30.449546+00:00",
+        "finished_at": "2026-10-29T19:51:40.435039+00:00"
+      },
+      {
+        "id": "Interaction.Mouth",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 16,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:41.420164+00:00",
+        "finished_at": "2026-10-29T19:51:45.208114+00:00"
+      },
+      {
+        "id": "Family.MouthCommunication",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 9,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:46.429360+00:00",
+        "finished_at": "2026-10-29T19:51:50.263082+00:00"
+      },
+      {
+        "id": "Interaction.MouthPresentation",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 10,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:51.287116+00:00",
+        "finished_at": "2026-10-29T19:51:54.865137+00:00"
+      },
+      {
+        "id": "Family.PregnancyBoundaries",
+        "status": "failed",
+        "exit_code": 1,
+        "passed_count": 0,
+        "failed_count": 0,
+        "test_body_executed": false,
+        "compiler_errors": [
+          "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]"
+        ],
+        "started_at": "2026-10-29T19:51:55.833637+00:00",
+        "finished_at": "2026-10-29T19:51:58.410723+00:00"
+      },
+      {
+        "id": "Interaction.EmergencyIntervention",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 6,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:51:59.432290+00:00",
+        "finished_at": "2026-10-29T19:52:02.918380+00:00"
+      },
+      {
+        "id": "Interaction.Depth",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 4,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:03.988570+00:00",
+        "finished_at": "2026-10-29T19:52:07.224272+00:00"
+      },
+      {
+        "id": "Interaction.Injury",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 15,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:08.248013+00:00",
+        "finished_at": "2026-10-29T19:52:11.824251+00:00"
+      },
+      {
+        "id": "Family.Social",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 22,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:12.793063+00:00",
+        "finished_at": "2026-10-29T19:52:16.369652+00:00"
+      },
+      {
+        "id": "Family.Reproduction",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 8,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:17.389301+00:00",
+        "finished_at": "2026-10-29T19:52:21.017808+00:00"
+      },
+      {
+        "id": "Family.ColdCare",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 9,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:21.991903+00:00",
+        "finished_at": "2026-10-29T19:52:25.719709+00:00"
+      },
+      {
+        "id": "Family.Aftermath",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 17,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:26.739260+00:00",
+        "finished_at": "2026-10-29T19:52:30.015306+00:00"
+      },
+      {
+        "id": "Family.Risk",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 14,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:30.987370+00:00",
+        "finished_at": "2026-10-29T19:52:34.415738+00:00"
+      },
+      {
+        "id": "Interaction.InjuryPresentation",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 6,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:35.435402+00:00",
+        "finished_at": "2026-10-29T19:52:38.409981+00:00"
+      },
+      {
+        "id": "Family.Compatibility",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 77,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:39.379122+00:00",
+        "finished_at": "2026-10-29T19:52:44.874211+00:00"
+      },
+      {
+        "id": "Family.CareLearning",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 14,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:45.945138+00:00",
+        "finished_at": "2026-10-29T19:52:49.772096+00:00"
+      },
+      {
+        "id": "Family.Teaching",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 10,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:50.994732+00:00",
+        "finished_at": "2026-10-29T19:52:54.674699+00:00"
+      },
+      {
+        "id": "Family.AdoptionJourney",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 6,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:52:55.643941+00:00",
+        "finished_at": "2026-10-29T19:52:59.521146+00:00"
+      },
+      {
+        "id": "Family.AssistedCare",
+        "status": "failed",
+        "exit_code": 1,
+        "passed_count": 0,
+        "failed_count": 0,
+        "test_body_executed": false,
+        "compiler_errors": [
+          "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Program.cs(152,17): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Family.AssistedCare.csproj]"
+        ],
+        "started_at": "2026-10-29T19:53:00.592311+00:00",
+        "finished_at": "2026-10-29T19:53:03.322747+00:00"
+      },
+      {
+        "id": "Family.Growth",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 5,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:53:04.295346+00:00",
+        "finished_at": "2026-10-29T19:53:07.619460+00:00"
+      },
+      {
+        "id": "Interaction.StateBoundaries",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 10,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:53:08.641315+00:00",
+        "finished_at": "2026-10-29T19:53:11.971737+00:00"
+      },
+      {
+        "id": "Interaction.HumanCompany",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 17,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:53:12.991325+00:00",
+        "finished_at": "2026-10-29T19:53:16.470081+00:00"
+      },
+      {
+        "id": "Family.Protection",
+        "status": "failed",
+        "exit_code": 1,
+        "passed_count": 13,
+        "failed_count": 1,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:53:17.440249+00:00",
+        "finished_at": "2026-10-29T19:53:20.718718+00:00"
+      },
+      {
+        "id": "Family.Presentation",
+        "status": "passed",
+        "exit_code": 0,
+        "passed_count": 3,
+        "failed_count": 0,
+        "test_body_executed": true,
+        "compiler_errors": [],
+        "started_at": "2026-10-29T19:53:21.690776+00:00",
+        "finished_at": "2026-10-29T19:53:24.564965+00:00"
+      }
+    ],
+    "full_rule_failure_output": [
+      {
+        "check_id": "Interaction.Continuity",
+        "full_stdout_failure_blocks": [
+          "FAIL an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it: empty mouse hold froze movement or continued pressure: X=-1.0800000000000005, health=99.99749999999996/99.96, pose=idle"
+        ]
+      },
+      {
+        "check_id": "Family.Protection",
+        "full_stdout_failure_blocks": [
+          "FAIL 保护者远离时不消除危险，实际走近后才能保护: System.Exception: 实际在近处仍不保护\n   at Program.<<Main>$>g__Require|0_0(Boolean condition, String reason) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 6\n   at Program.<>c.<<Main>$>b__0_8() in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 96\n   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in /workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.Protection/Program.cs:line 8"
+        ]
+      }
+    ],
+    "compile_failures": [
+      {
+        "check_id": "Family.PregnancyBoundaries",
+        "phase": "compile before program entry",
+        "exit_code": 1,
+        "assertions_executed": 0,
+        "source_declared_cases_not_executed": 12,
+        "source_location": "checks/Family.PregnancyBoundaries/Program.cs:172",
+        "compiler_diagnostic": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Program.cs(172,29): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj]",
+        "static_cause": "InteractionLowering.cs:7 defines public bool Lowering { get; internal set; }. The independently compiled check assembly attempts direct assignment to its inaccessible internal setter. This is not a product runtime assertion failure.",
+        "product_declaration": "src/Yukkuri.Simulation/InteractionLowering.cs:7",
+        "no_retry": true
+      },
+      {
+        "check_id": "Family.AssistedCare",
+        "phase": "compile before program entry",
+        "exit_code": 1,
+        "assertions_executed": 0,
+        "source_declared_cases_not_executed": 16,
+        "source_location": "checks/Family.AssistedCare/Program.cs:152",
+        "compiler_diagnostic": "/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Program.cs(152,17): error CS0200: Property or indexer 'InteractionLife.Lowering' cannot be assigned to -- it is read only [/workspace/shared/yukkuri-cloud-20261029T194053-281d0cf/source/checks/Family.AssistedCare/Family.AssistedCare.csproj]",
+        "static_cause": "InteractionLowering.cs:7 defines public bool Lowering { get; internal set; }. The independently compiled check assembly attempts direct assignment to its inaccessible internal setter. This is not a product runtime assertion failure.",
+        "product_declaration": "src/Yukkuri.Simulation/InteractionLowering.cs:7",
+        "no_retry": true
+      }
+    ],
+    "game_build": {
+      "status": "failed",
+      "exit_code": 1,
+      "warning_count": 0,
+      "error_count": 3,
+      "evidence": "game-build.txt",
+      "locations": [
+        "src/Yukkuri.Game/Main.MilestoneStates.cs:103:56",
+        "src/Yukkuri.Game/Main.MilestoneStates.cs:112:40",
+        "src/Yukkuri.Game/Main.MilestoneStates.cs:115:89"
+      ],
+      "diagnostic": "CS1061 Dictionary<string,int> has no accessible GetValueOrDefault extension method",
+      "static_explanation": "The file imports Godot, System, IO, Linq, Text.Json and Simulation, but not System.Collections.Generic. Game csproj does not enable ImplicitUsings and no Game global generic-collections using was found. Installed net10.0 reference XML declares the intended method as System.Collections.Generic.CollectionExtensions.GetValueOrDefault. These observations strongly support a missing namespace import at the new calls; no source edit or confirming rebuild performed.",
+      "reference_xml": "/workspace/shared/yukkuri-cloud-20261029/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.13/ref/net10.0/System.Collections.xml:231,242",
+      "scope": "Build blocks whole Game assembly regardless of whether default courtyard enters the old Main verification route. Simulation compilation and pure suites are independent; current game/engine/native skipped, not substituted with older binaries."
+    },
+    "rule_failure_analysis": [
+      {
+        "check_id": "Interaction.Continuity",
+        "name": "an off-contact pressed mouse does not freeze the oil's own movement or keep deforming it",
+        "check_start": "checks/Interaction.Continuity/Program.cs:1422",
+        "failed_assertion": "checks/Interaction.Continuity/Program.cs:1430",
+        "predicate": "c.X > .1 && c.Health >= health && InteractionPresentation.Pose(c) != \"pressure\"",
+        "confirmed_components": {
+          "final_X": -1.0800000000000005,
+          "initial_X": 0,
+          "health": 99.99749999999996,
+          "health_after_initial_contact": 99.96,
+          "pose": "idle",
+          "positive_X_clause": false,
+          "no_additional_health_loss_clause": true,
+          "not_pressure_clause": true
+        },
+        "reproduction": "Fresh default seed20261028, retain selected 小铃 only, clear room objects, X/Z=0 but TargetX/Z not reset (default TargetX=-2.7). Fullness/hydration90. Set live hand(3,0), FollowPlayer=true. Press Side Force.3 Duration.1; Begin; Continue contact=true; capture health; Continue contact=false; 15 times refresh hand(3,0) then .1 presentation+.1 ordinary world.",
+        "interpretation": "Only directional X>.1 is false. Negative X displacement occurred; logged health increased and pose is idle. Generic failure text does not establish a frozen body or continuing pressure.",
+        "not_executed": [
+          "same Check EndInteractionGesture at1431"
+        ],
+        "comparison_c07": "Same error values and same fixture/compound predicate as c07; surrounding file has H changes elsewhere, so whole-file identity is not asserted.",
+        "static_hypothesis": "Press may apply initial0.04damage through InteractionGesture480-482 -> InteractionWorld123 Hurt(player). MilestoneInteraction154-160 clears FollowPlayer for attributed damage. Ordinary motion406-413 may then follow retained negative TargetX. This causal explanation has not been verified by runtime state/trace; current logs do not show FollowPlayer/TargetX per-frame.",
+        "static_source_refs": [
+          "src/Yukkuri.Simulation/InteractionGesture.cs:480-482",
+          "src/Yukkuri.Simulation/InteractionWorld.cs:116-123",
+          "src/Yukkuri.Simulation/MilestoneInteraction.cs:154-160",
+          "src/Yukkuri.Simulation/InteractionBehavior.cs:406-413"
+        ],
+        "root_cause_confirmed": false
+      },
+      {
+        "check_id": "Family.Protection",
+        "name": "保护者远离时不消除危险，实际走近后才能保护",
+        "check_start": "checks/Family.Protection/Program.cs:88",
+        "failed_assertion": "checks/Family.Protection/Program.cs:96",
+        "predicate": "!HasThreat(sim.State.Creatures[0], maternal)",
+        "reproduction": "Fixture seed20261101, full needs/health, trust90, threat warning8; foreach maternal=false,true. Protector position+Target set(-5,-5), Tick.25; HasThreat94 succeeds. Protector position+Target directly reset to(.825,1.43) for ordinary branch or(.75,1.4) maternal branch; Tick.25; !HasThreat96 throws. NextSocial/NextCare/NextAutonomy10000; DecisionIn remains default.",
+        "confirmed": "Threat persisted at second assertion; first distant-protector assertion had passed in the failing loop iteration. Error names/stack match c07. Program.cs is byte-identical to c07; current SHA256873ea2d8e7408a641f590bfde9c5c4e8ee53cbb075bfb35b12c2dcff4c44507a.",
+        "coverage_boundary": "The maternal flag is not in output. Cannot know whether false failed before true was entered, or true failed after false completed. No claim both branches failed. The test name says actual approach, but code directly assigns near coordinates, not native walking.",
+        "not_executed": [
+          "Remaining iteration work and any subsequent maternal branch after the throw; later independent top-level Check bodies still ran."
+        ],
+        "positive_control": "Separate near-protector check68-76 passed both maternal=false,true; do not generalize all protection is broken.",
+        "static_hypothesis": "Ordinary idle movement remains enabled by default DecisionIn. During .25s phases actor/target may move, while only protector is reset95; old near coordinates need not be actual current contact. Runtime positions/contact/visibility/eligibility/branch not logged, so no gate or root cause is confirmed.",
+        "static_source_refs": [
+          "checks/Family.Protection/Program.cs:13-44,68-98",
+          "src/Yukkuri.Simulation/InteractionBehavior.cs:406-413",
+          "src/Yukkuri.Simulation/FamilySocial.cs:150-151,519-532",
+          "src/Yukkuri.Simulation/FamilyRisk.cs:272-273"
+        ],
+        "root_cause_confirmed": false
+      }
+    ],
+    "prior_failure_current_comparison": {
+      "baseline": "c07 f91146391e2a1629b86530eff5b82fbf0085ec23",
+      "prior_continuity_failed": 5,
+      "current_continuity_failed": 1,
+      "four_named_results_now_passed": [
+        {
+          "name": "a completed held meal sweet or drink releases needs after its actual swallowing response",
+          "passed": true
+        },
+        {
+          "name": "an autonomous invitation supplies the same body pose used by the renderer",
+          "passed": true
+        },
+        {
+          "name": "voice intent follows the oil's actual response instead of the last selected tool group",
+          "passed": true
+        },
+        {
+          "name": "stored treasure keeps ownership through save and cannot be displayed as present",
+          "passed": true
+        }
+      ],
+      "held_fixture_change": "Current Continuity305 onward holds nine combinations for240frames but newly delays DecisionIn and, after real destination intake, resets only idle Target to current body coordinates with invariance assertions. Original final X>.5 predicate remains. All nine subcombinations now complete because top-level body passed. Do not interpret this as a newly fixed product swallowing defect.",
+      "unisolated_completed_needs": {
+        "status": "passed",
+        "top_level_results": 1,
+        "diagnostics": {
+          "accepted": true,
+          "sawHandSwallow": true,
+          "sawDestinationPending": true,
+          "sawDestinationAccepted": true,
+          "finishedSatisfiedMouth": true,
+          "movedAfterNeed": true,
+          "travelAfterNeed": 1.98,
+          "endX": -0.30000062845401326,
+          "endZ": -0.7917167814584771,
+          "peakX": 1.2079999999999997,
+          "TargetX": -0.3862521514355943,
+          "TargetZ": -0.9512650943138317,
+          "DecisionIn": 4.315891631903218,
+          "Activity": "慢慢来",
+          "Hydration": 71.70000000000014,
+          "EatingRemaining": 0,
+          "NaturalIntakePending": false,
+          "destinationPortions": 4,
+          "heldPortions": 1,
+          "Exposures": 2,
+          "lastPose": "idle",
+          "HasInteractionGesture": true,
+          "InteractionIntakeAccepted": true,
+          "InteractionGestureOwnsPose": false
+        },
+        "interpretation": "Unisolated actual flow reaches destination, consumes held+ground water once each, finishes swallowing and resumes motion after satisfaction; terminal X remains negative. Complementary pure evidence, not native drinking observation."
+      },
+      "autonomy_regression": "AutonomyPriority12/0 and retained original three-resident0.5s invitation/voice/treasure checks pass under current product/source. Current status improvement established, causal root of prior failures not runtime-instrumented.",
+      "coldcare_fixture_change": "Family.ColdCare9/0 passes with age0 juvenile setup, because old2000s fixture could now grow under I correction. Old assertions retained.",
+      "new_suite_actual": "Eight new suites executed65top-level cases and passed; two new projects failed compilation before their28declared cases."
+    },
+    "scope_notes": [
+      "Game build failed once; current native startup/UI/contact/render not run and no old binary or c07 imagery substituted. Planned UI route in static-review is not execution evidence.",
+      "Current source fixed at281d0cf; futuremain changes outside scope.",
+      "Pure adoption6/0 and growth5/0 use explicitly documented fixtures and simulated time; no native complete adoption/adult assistance/long childhood proof.",
+      "PregnancyBoundaries reflection isolation notes describe source only: none of this suite ran because it did not compile.",
+      "Mouth voice-cue checks do not establish audible output. Historic saves and3LFS originals remain separate prior limitations."
+    ],
+    "no_failure_retry": true,
+    "product_edits": []
+  },
+  "current_static_scope_notes": "evidence/readonly-static-review.json"
+}

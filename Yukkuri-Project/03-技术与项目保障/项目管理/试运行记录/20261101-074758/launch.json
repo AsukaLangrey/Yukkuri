@@ -1,0 +1,20 @@
+{
+  "pid": 12960,
+  "startedUtc": "2026-10-31T23:48:47.1970344Z",
+  "engine": "D:\\Project\\Yukkuri\\.tools\\godot\\Godot_v4.7.2-stable_mono_win64\\Godot_v4.7.2-stable_mono_win64.exe",
+  "project": "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\src\\Yukkuri.Game",
+  "arguments": [
+    "--path",
+    "\"D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\src\\Yukkuri.Game\"",
+    "--log-file",
+    "\"D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\项目管理\\试运行记录\\20261101-074758\\game.godot.log\"",
+    "--",
+    "--interaction-test-profile",
+    "new-region-20261101-074758"
+  ],
+  "profile": "new-region-20261101-074758",
+  "affinity": 4294967247,
+  "logDirectory": "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\项目管理\\试运行记录\\20261101-074758",
+  "dataRoot": "D:\\Project\\Yukkuri\\Yukkuri-Project\\.local\\trial",
+  "mode": "可见游戏试运行，仅通过日志与自身进程状态观察，无截图或桌面自动操作"
+}

@@ -1,0 +1,84 @@
+起源与范围｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C001  Dプ竹崎承认创作了灵梦与魔理沙的基础AA，但表示组合及标志台词并非自己独创；形象由多人的改动累积形成。
+适用：创作者回忆
+证据：A；类别：general
+限制：日英为同一访谈，不能算两份独立证据。
+差异组：K01（详见 conflicts.json）
+出处：
+S01 「ゆっくり」が生まれた時のことを、アスキーアート製作者のDプ竹崎さんに聞いてみたよ
+https://touhougarakuta.com/article/yukkuri_dptakezaki/
+读取状态：body_read
+S02 We asked ASCII artist D-p Takezaki about the origin of yukkuris!
+https://en.touhougarakuta.com/article/yukkuri_dptakezaki-en/
+读取状态：body_read
+
+C002  访谈展示2003年的灵梦绘画、约2005年的点心台词AA、约2007年夏的魔理沙AA，说明前身早于2008年传播阶段。
+适用：访谈内时间线
+证据：A；类别：general
+限制：2005、2007有约数；2003配图不应误写为完整经典双头AA的诞生日。
+差异组：K01（详见 conflicts.json）
+出处：
+S01 「ゆっくり」が生まれた時のことを、アスキーアート製作者のDプ竹崎さんに聞いてみたよ
+https://touhougarakuta.com/article/yukkuri_dptakezaki/
+读取状态：body_read
+S02 We asked ASCII artist D-p Takezaki about the origin of yukkuris!
+https://en.touhougarakuta.com/article/yukkuri_dptakezaki-en/
+读取状态：body_read
+
+C003  中文百科全书保留“匿名者制作ASCII失败，另一人绘图”的起源说；缺少可核查原帖，与参与者访谈的复杂演变叙述有张力。
+适用：中文二手旧说与访谈对照
+证据：A；类别：general
+限制：保留为存在的传说，不作已证实历史。
+差异组：K01（详见 conflicts.json）
+出处：
+S03 油庫里
+https://www.newton.com.tw/wiki/油庫里
+读取状态：body_read
+S01 「ゆっくり」が生まれた時のことを、アスキーアート製作者のDプ竹崎さんに聞いてみたよ
+https://touhougarakuta.com/article/yukkuri_dptakezaki/
+读取状态：body_read
+
+C004  百度百科区分非生物/超现实表演形象与具有繁殖、排泄等特性的生物设定；分类本身是汇编方式。
+适用：中文百科分类
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K02（详见 conflicts.json）
+出处：
+S04 油库里
+https://bkso.baidu.com/item/油库里/4471775?fromModule=lemma_inlink
+读取状态：body_read
+
+C005  《八景》Wiki明确区别其虐待题材生物与实况解说的油库里，并说明不同作者对设定可以有不同解释。
+适用：《ゆっくり八景》及其题材说明
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K02（详见 conflicts.json）
+出处：
+S06 ゆっくりとは
+https://wikiwiki.jp/yukkuri8kei/ゆっくりとは
+读取状态：body_read
+
+C006  油库里角色外观可源自东方人物，但后续同人生态、徽章和社会制度不能由外观对应直接归为东方原作设定。
+适用：研究归纳
+证据：A；类别：general
+限制：这是对来源层级的归纳，不是找到了统一官方生物设定。
+差异组：K02（详见 conflicts.json）
+出处：
+S01 「ゆっくり」が生まれた時のことを、アスキーアート製作者のDプ竹崎さんに聞いてみたよ
+https://touhougarakuta.com/article/yukkuri_dptakezaki/
+读取状态：body_read
+S04 油库里
+https://bkso.baidu.com/item/油库里/4471775?fromModule=lemma_inlink
+读取状态：body_read
+S05 Badges
+https://yukkuri.fandom.com/wiki/Badges
+读取状态：body_read
+S06 ゆっくりとは
+https://wikiwiki.jp/yukkuri8kei/ゆっくりとは
+读取状态：body_read
+
+

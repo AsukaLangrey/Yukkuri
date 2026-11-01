@@ -1,0 +1,140 @@
+[
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Ui.cs",
+    "change": "modified",
+    "before": "30CC96B536D42BF5BA9C7E5FBBD83E52D45529AD5DF668D7C7C46338C2221636",
+    "after": "91F9586DC19591CAB069B94C515A09FE671FF62EF389E32174DD6D57206E238B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Input.cs",
+    "change": "modified",
+    "before": "8F50B1E18274AF2590902D39F6A08E17FEFAE071094AE35E89C1A140E2FF0193",
+    "after": "AC11C6D949BEDFD579B21FDB714248CA3DC712823E808432234E2D389920495B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Family.cs",
+    "change": "modified",
+    "before": "834FCAC0C6736009ED20A86C09DA1428A3EBC977440020DDCE7B609433C48896",
+    "after": "381199269D4A2F3565A4AB8A7202C16A63E0E286E639EFF8E4479706AB088D9C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+    "change": "modified",
+    "before": "08C11C7D641F1CB3D63A59BD601CDD5C255D7676FDF5385420CDAE9B6423A7F6",
+    "after": "38755F10A09AED3B6BFE95B5A2A2341BFB5743A6AB66F5D81C1088D472F6228A"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+    "change": "modified",
+    "before": "09F163D93C9D8870AE79863F48BFC1C3DCC059E4CC08B7CD32FE2F48306B87F6",
+    "after": "60819CD4B4DE6FAEFF8E07628112299307E5D45DE7B7119717C8C063C5EADD4B"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+    "change": "modified",
+    "before": "B214D5F20B8C56E9995AFA9CFCFEFACD70F1A1A2FCB2E749F3D3AFBA2E0AE8B5",
+    "after": "E259C1B603193D4A1716F650402FAF3B11C6B8CE4FF9B865DDB09627FD97B590"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SheltersUi.cs",
+    "change": "modified",
+    "before": "822D663ABBF5258F28EA71C0EEE523CD6ECF6086C9178A43D81433AB2A9FA6DE",
+    "after": "5C7A3B36427F6486CD3952AD541510BCBEC2D7900C9886981CDE9824B40DF190"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs",
+    "change": "modified",
+    "before": "A912E8DA7E690C2B55074403CF81446A8248AA11BFC312AB84606555C283267A",
+    "after": "1AD34E0646B808E80FC33356CC569A5CC285D52A49C90C05CBD365D566932172"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Debug.cs",
+    "change": "modified",
+    "before": "3523C3CD63231ADF68C5826AECE78E685663EAFAA2326DDDABD880FED7A3C157",
+    "after": "E39D01090546CBDDFEEEBAD08AB86EC275BF5F3E6A0ACD61B9F846C5BE33DDD3"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.cs",
+    "change": "modified",
+    "before": "9E70BAED0804170CCAF5176A0362D5B18FCB5AADE5E337AFD6C99FD4DDC4DF35",
+    "after": "717373A5F27FE40F933C8EFD8C5901804F216BE9FCC65C492CBA1B5D57AEE153"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Verification.cs",
+    "change": "modified",
+    "before": "2CBFB3A8188EDFA6BF3442A55C6CB8234B8083DFED4577FDDFF56A124BBA877A",
+    "after": "FB93303F1F055093D1BD7558159B7D80728571B43076A76DC96AE50131A80F84"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Ui.cs",
+    "change": "modified",
+    "before": "2FCFF4368AF6391778D7F4D1620E350224AFCCCFC29ED6EAA63EF947E0F75CD9",
+    "after": "5BA7CB74E6758C5C31198138ED1A261A901708B2B4E60764E88485F254BF615F"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneUi.cs",
+    "change": "modified",
+    "before": "873A992BCCECB02B710F082058657632AA3362F24C59FF99524D01B11A9AA82D",
+    "after": "D95E797145CA09012A7BF66468C1B2FBE32B97364881F28453D397329B1F531C"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneInput.cs",
+    "change": "modified",
+    "before": "A95E49FEA0A4BE31F62F96D94F5C1E87515AEACCC884E9B1D2E12E73490AEF46",
+    "after": "7E19F55A4BD8032AA8F4D5156E53D7F92E89D0641CA459BBC524D2C7D6390336"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneHelp.cs",
+    "change": "modified",
+    "before": "348109F6B01F8AA43F61F886540AF3BF8D4B97A4B4E94EEA362879127E9761A5",
+    "after": "0AB56EB27EA838DD4E3589E9C6F67234BBFE59E075032B480B8C7837B73A9D35"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneVerification.cs",
+    "change": "modified",
+    "before": "4B55E673D48E2F43F0845FD9EDC6C5323A7E3AED179F2FD47C27BAAF2DF77B13",
+    "after": "BFABCBBC778B366BAF4B60455186D5C1FBB9F11ADA918C71DD0A69B0FB69C0D6"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneStates.cs",
+    "change": "modified",
+    "before": "B754DF8A9204C6B67790E3B5F2802798EA281484AB032188BF6FEF85156E4901",
+    "after": "35A58B0946115F68FCF074DD211E3A0162AD9F4D273618CD65A5E4BFF878B866"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Intervention.cs",
+    "change": "modified",
+    "before": "AE4FECF79CFD416590D21EE0266265B6234B038B3E4F3724CC3A579D448792EA",
+    "after": "C925FA39541D3D343651CC1F14272BC03594E22D7B275FAE674D868B44F15E44"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs",
+    "change": "modified",
+    "before": "DD693AE16AD6DA8609F1B971D3BB3D435BBACD433964D390BED4CF05058190F8",
+    "after": "A6C52A6593C12D2020195C8DC80ACC9C0A8362837275B68DEDEAFBBE8117FD44"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+    "change": "modified",
+    "before": "3036EAABF2E71FF45E1EAFD9AB2D000A6C74DC855A5760EEAEB8D1CE0F51E934",
+    "after": "CDA6E6270D6CC5819F62FDE817DCF9B3F1E2FF96F3487B8D70AF7E30C027DB19"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InlineChoice.cs",
+    "change": "added",
+    "before": null,
+    "after": "55B1076BAC875BC73022BDD5CD1F95730AB540CA3496ABA8A465AED8F9F8A157"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Panels.cs",
+    "change": "added",
+    "before": null,
+    "after": "1A1E6B8FD3D312FB2E2BD6C939E905D39C531292456D1D1263FBB0655B198DDF"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Panels.cs",
+    "change": "added",
+    "before": null,
+    "after": "DA441DC010F58F942CCA55AF0C22506C05510D3996F08368F8C372804FC62E88"
+  }
+]

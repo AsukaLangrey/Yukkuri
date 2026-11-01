@@ -1,0 +1,9 @@
+游戏设计｜源码导航
+以下路径均相对于Yukkuri-Project根目录。原文件未按类别拆分或改写。
+
+主归属入口（0项）
+本类当前没有单独归属的工程源码；使用本目录资料及其他类别提供的能力。
+
+相关共享文件（2项）
+[技术框架] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Data/simulation.json
+[油个体设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Data/species-routes.json

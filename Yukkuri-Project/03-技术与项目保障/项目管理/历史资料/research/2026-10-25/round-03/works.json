@@ -1,0 +1,707 @@
+[
+  {
+    "id": "W024",
+    "title": "聖者の途",
+    "title_zh": "圣者之途",
+    "medium": "小说",
+    "author": "むの人",
+    "source_ids": [
+      "S67",
+      "S68"
+    ],
+    "reading_status": "正文选段及后记已读",
+    "summary_zh": "以受创魔理沙与美铃的互助、医生救援为中心，续接《魔理沙与家》。后置补叙明确魔理沙获救，后来照料其他个体。",
+    "work_specific_notes": "作者明言为另一作者原作续写；不是抹茶アイス本人续作。当前版本2009年4月修订，不能把墓地段当作最终死亡结局。",
+    "tags": [
+      "改写关系",
+      "医疗",
+      "创伤",
+      "互助"
+    ],
+    "remaining_work": "保留作品内限定；首发时间和更早原帖仍待核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/152.html",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W025",
+    "title": "ゆっくりまりさとおうち",
+    "title_zh": "魔理沙与家",
+    "medium": "小说",
+    "author": "抹茶アイス（S68署名）",
+    "source_ids": [
+      "S76",
+      "S68"
+    ],
+    "reading_status": "正文选段及后记已读",
+    "summary_zh": "女性收留一群受伤、残缺的个体，去世后它们继续互助。疫病处置毁掉共同家园，幸存魔理沙在孤独与回忆中生活。",
+    "work_specific_notes": "收留并不等于永远安全；家作为地点与同伴关系被区分。虚构疫病不能当成真实传染知识。",
+    "tags": [
+      "家园",
+      "互助",
+      "失去",
+      "人类关系"
+    ],
+    "remaining_work": "保留作品内限定；首发时间和更早原帖仍待核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/yukkuri_gyakutai/pages/313.html",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W026",
+    "title": "ゆっくり昆虫型出産",
+    "title_zh": "昆虫型产卵",
+    "medium": "小说",
+    "author": "まりさつむりの人",
+    "source_ids": [
+      "S73"
+    ],
+    "reading_status": "正文选段及后记已读",
+    "summary_zh": "以守护巢穴和人类冲突串起大量卵的繁殖设定，属于残酷短篇。",
+    "work_specific_notes": "作者称灵感来自《東方アクロバティカ》蛙卵四格，明确否认参考另一产卵SS；成熟后产卵与另一路繁殖并存只是本文规则。",
+    "tags": [
+      "繁殖变体",
+      "残酷",
+      "跨媒介借用"
+    ],
+    "remaining_work": "保留作品内限定；首发时间和更早原帖仍待核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/yukkuri_gyakutai/pages/2305.html",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W027",
+    "title": "むらさの舟歌",
+    "title_zh": "村纱之船歌",
+    "medium": "小说",
+    "author": "神奈子さまの一信徒",
+    "source_ids": [
+      "S74"
+    ],
+    "reading_status": "正文选段及后记已读",
+    "summary_zh": "以海洋观察报告和漂流姐妹故事展现水生村纱。春秋繁殖方式、扩散与亲代照料不同；幸存妹妹登陆结识伙伴。",
+    "work_specific_notes": "前言明确几乎全部独自设定；是《南の島》系列外传。插图署名絵本あき，未把正文作者与画者混为一人。",
+    "tags": [
+      "海洋",
+      "稀有种",
+      "自然生态",
+      "季节",
+      "外传"
+    ],
+    "remaining_work": "保留作品内限定；首发时间和更早原帖仍待核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/futabayukkuriss/pages/1898.html",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W028",
+    "title": "ゆっくり解体新書",
+    "title_zh": "油库里解体新书",
+    "medium": "设定型文章",
+    "author": "未署明",
+    "source_ids": [
+      "S75"
+    ],
+    "reading_status": "前言及结构、繁殖、季节、后记选段已读",
+    "summary_zh": "虚构报告讨论身体、繁殖、季节和越冬，兼列植物型、胎生型与两类卵生；解释躯体活动的形态形成场在故事内也只是推论。",
+    "work_specific_notes": "作者开篇声明独创、数值随意且不得强加；不能把整齐的数值表误当跨作品标准。",
+    "tags": [
+      "设定文",
+      "身体",
+      "繁殖",
+      "越冬"
+    ],
+    "remaining_work": "保留作品内限定；首发时间和更早原帖仍待核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/yukkuri_gyakutai/pages/3102.html",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W029",
+    "title": "ゆっくりのいる生活",
+    "title_zh": "有油库里的生活",
+    "medium": "小说",
+    "author": "未署明",
+    "source_ids": [
+      "S77"
+    ],
+    "reading_status": "主文已读",
+    "summary_zh": "青年与擅自搬来的灵梦磨合，日常喂食、争执、照料使独居生活改变；它一次外出后失踪，生死未明。",
+    "work_specific_notes": "雨水可使其溶解，饮水却无碍，文内又出现洗澡后安然无恙；条件有差别但未量化，不能总结为绝对不能接触水。",
+    "tags": [
+      "日常",
+      "共居",
+      "失踪",
+      "水"
+    ],
+    "remaining_work": "原始发布及未读部分待补核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/23.html",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W030",
+    "title": "おさゆく",
+    "title_zh": "Osayuku系列",
+    "medium": "漫画",
+    "author": "たにたけし",
+    "source_ids": [
+      "S78",
+      "S79",
+      "S92"
+    ],
+    "reading_status": "出版物元数据和封面已核；另读公开四格第2978话四格图片；整本未读",
+    "summary_zh": "正式出版页呈现带身体的诙谐东方衍生形象；《谜肉之宴篇》商品简介以夏日日常为题。",
+    "work_specific_notes": "本轮核第1卷与别册目录；电子版第1卷约130页、2018-04-28配信。试读器失败，仅封面和缩略图可见，不据此概括具体剧情。 公开第2978话另已读四格：身体被拉长的形象与通缉海报构成笑料，不能用这一话代表全书。",
+    "tags": [
+      "身体变体",
+      "四格",
+      "日常",
+      "东方人物"
+    ],
+    "remaining_work": "原始发布及未读部分待补核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://bookwalker.jp/deab485152-17af-407f-a7ac-2de089289851/",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W031",
+    "title": "年刊ゆっくり",
+    "title_zh": "年刊馒馒来系列",
+    "medium": "漫画",
+    "author": "まか子／夢防衛少女隊",
+    "source_ids": [
+      "S72",
+      "S80",
+      "S81",
+      "S82",
+      "S83"
+    ],
+    "reading_status": "书目核验；漫画正文未读",
+    "summary_zh": "核到第1、2、3号的作者、社团、发售日与页数；中文论坛有前三期及番外合集入口。",
+    "work_specific_notes": "分别为2008-10-05/24页、2009-08-15/36页、2010-12-30/32页；论坛汉化图片未显示。不要据其标题算成三篇已读作品。",
+    "tags": [
+      "同人志",
+      "中文汉化入口",
+      "东方系"
+    ],
+    "remaining_work": "原始发布及未读部分待补核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://bbs.nyasama.com/forum.php?mod=viewthread&tid=59285",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W032",
+    "title": "Raising Badged Yukkuri",
+    "title_zh": "饲养有徽章的油库里",
+    "medium": "英文原创小说",
+    "author": "Hourai",
+    "source_ids": [
+      "S84"
+    ],
+    "reading_status": "第12章选段、结局背景和作者回复已读",
+    "summary_zh": "结局章写白金个体协力应对城市灾难。作者背景说明把独立自我与精神成长作为返回人形的条件。",
+    "work_specific_notes": "只补读第12章选段和作者后记；白金训练、独特身份及东方前身均属本系列。未核更早章节，不声称徽章制度由此首创。",
+    "tags": [
+      "徽章",
+      "白金",
+      "自我意识",
+      "变身",
+      "英文原创"
+    ],
+    "remaining_work": "原始发布及未读部分待补核。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://groups.google.com/g/yufanfics/c/eL_8U5JUaIE",
+    "access_date": "2026-10-25",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W033",
+    "title": "ゆっくりライフ_デモ版",
+    "medium": "游戏／桌面程序",
+    "author": "あーもんど",
+    "source_ids": [
+      "S85"
+    ],
+    "summary_zh": "在仓鼠笼中照料小型どちゅまりちゃ。",
+    "reading_status": "作者商店说明已读；未游玩",
+    "work_specific_notes": "仅记录作者公布的玩法；不推定跨作品共同设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://booth.pm/ja/items/8935366",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W034",
+    "title": "ゆっくり観察",
+    "medium": "游戏／桌面程序",
+    "author": "D.Wilderness／カラス屋",
+    "source_ids": [
+      "S86"
+    ],
+    "summary_zh": "在街道中观察油库里，近距离等待可出现符合情境的对白记录。",
+    "reading_status": "作者商店说明已读；未游玩",
+    "work_specific_notes": "仅记录作者公布的玩法；不推定跨作品共同设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://booth.pm/ja/items/6954620",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W035",
+    "title": "ゆっくりデスクトップ",
+    "medium": "游戏／桌面程序",
+    "author": "D.Wilderness／カラス屋",
+    "source_ids": [
+      "S87"
+    ],
+    "summary_zh": "桌面宠物程序包含互动、生理状态与同伴死亡反应；免费与支援版本功能不同。",
+    "reading_status": "作者商品说明和更新日志已读；当前发布状态有页面差异；未运行",
+    "work_specific_notes": "仅记录作者公布的玩法；不推定跨作品共同设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://booth.pm/ja/items/6783699",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W036",
+    "title": "Touhou Yukkuri Mountain／東方ゆっくりマウンテン",
+    "medium": "游戏／桌面程序",
+    "author": "BeXide Inc.",
+    "source_ids": [
+      "S88",
+      "S100"
+    ],
+    "summary_zh": "以同种油库里合并变大为核心的3D堆叠游戏，支持改变角色成长顺序和多人对战。",
+    "reading_status": "Steam说明与开发商2.0公告已读；未游玩",
+    "work_specific_notes": "仅记录作者公布的玩法；不推定跨作品共同设定。 版本修正：开发商2026-07-22公告2.0共54种（较旧商店30种新增24）；读取公告，未运行游戏。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://store.steampowered.com/app/4459820/Touhou_Yukkuri_Mountain/",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W037",
+    "title": "A Yukkuri's Life",
+    "author": "Yukkuri Lover",
+    "source_ids": [
+      "S90"
+    ],
+    "medium": "英文互动小说",
+    "summary_zh": "主角醒来变成油库里，寻求恢复人身，遭魔理沙阻拦及芙兰捕食威胁。存档只见早期开篇。",
+    "reading_status": "现存开篇已读；未完",
+    "work_specific_notes": "不与同名／近名英文系列自动合并；投票回复不是作者已采用剧情。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://www.touhou-project.com/others/res/7970.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W038",
+    "title": "Yukkuri dream",
+    "author": "Scorn",
+    "source_ids": [
+      "S91"
+    ],
+    "medium": "英文互动小说",
+    "summary_zh": "从莉格露型油库里陪伴展开的梦境番外，后转向游戏梗与超现实行动。",
+    "reading_status": "开篇、后段及作者停止说明已读",
+    "work_specific_notes": "站点目录称Short；作者承认梦境并表示停止，不能视为完整主线。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://www.touhou-project.com/forest/res/8236.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W039",
+    "title": "ゆっくりちるのの飼育日誌",
+    "author": "ゆっくりと動物の人",
+    "source_ids": [
+      "S93",
+      "S94"
+    ],
+    "medium": "小说系列",
+    "summary_zh": "以琪露诺型幼体为普通宠物写生活日记：适应家庭、独处焦虑、饮食转换、家居事故、训练及遇见弃养个体。",
+    "reading_status": "第1、2篇正文与后记已读",
+    "work_specific_notes": "记录主人反省和个体学习；冷气、恢复力和身体规则属于本系列。后记定位幻想乡外；不把故事内日记日期当发表日。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/310.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W040",
+    "title": "捕食種とよばれていたものたち",
+    "author": "ゆっくりと動物の人",
+    "source_ids": [
+      "S95"
+    ],
+    "medium": "小说／虚构观察笔记",
+    "summary_zh": "研究者请咲夜照料蕾米与芙兰孤儿，观察饮食学习、同类排斥及姐妹冲突；作者尝试解释捕食习性如何后天形成。",
+    "reading_status": "现存单篇及后记已读；续篇未核",
+    "work_specific_notes": "作品内观点，不是共同设定或现实科学证据。记录止于布设相机，未虚构实验结论。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/354.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W041",
+    "title": "Q.O.Y ～ゆっくりのクオリティ～",
+    "title_zh": "油库里的品质",
+    "medium": "小说／中文译文",
+    "author": "としあき（译帖署名）",
+    "translator": "mkjihu9564",
+    "source_ids": [
+      "S97"
+    ],
+    "reading_status": "中文译文开篇、后段、结尾及译者后评已读；中段未通读；日文未核",
+    "summary_zh": "原宠物后代灵梦在街道、公园与宠物生活之间比较幸福。亲代的徽章经历没有让后代继承相同待遇；结尾仍在衰弱中，不能简单写作已经死亡。",
+    "work_specific_notes": "阶层与期待主题是本作叙述；译者后评与普通读者的归责观点分开，不将评论作为作者结论。作品评级的金章不等于角色佩戴金徽章。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://tieba.baidu.com/p/6508449991?fr=good",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W042",
+    "title": "ミリィのゆっくり冒険記",
+    "author": "浅井隊員26号",
+    "source_ids": [
+      "S98"
+    ],
+    "medium": "小说系列",
+    "summary_zh": "红魔馆有身体的幼年蕾米型ミリィ，在读图鉴后寻找属于自己的咲夜型，带着饼干离家迷路。角色把人类咲夜与咲夜型油库里区分。",
+    "reading_status": "第一话及后记已读；其余11话未读",
+    "work_specific_notes": "红魔馆宠物关系、身体形态、识字能力与图鉴可信性均限本系列；作者预告后续含严酷情节。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/2148.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W043",
+    "title": "大人なれみりゃとちょっと子供なお兄さん／ちびりゃのスプーン教室（合并记录）",
+    "grouping_note": "两篇有明确承接关系的同作者短篇在本地合并记录；不是声称存在这个官方系列总标题。",
+    "author": "浅井隊員26号",
+    "source_ids": [
+      "S99",
+      "S102"
+    ],
+    "medium": "小说系列",
+    "summary_zh": "照料者让蕾米母亲教幼崽用勺，亲子却转为扮演游戏，之后在规训和指导中学会工具使用。",
+    "reading_status": "两篇正文及后记已读：大人なれみりゃとちょっと子供なお兄さん、ちびりゃのスプーン教室；其余系列待核",
+    "work_specific_notes": "有身体与手指；学习需要示范、语言解释和介入。作者承认写作缘由是补足另一篇吃芭菲所需技能，不是通用能力清单。 前作描绘人类自身情绪需求、可学习的家务，以及餐厅拒绝油库里进入；帽子可在说服后脱下洗澡，并非取下即身份丧失。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/2169.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W044",
+    "title": "まりさ探検隊!",
+    "author": "ゆっくり愛で愛で旅団（个人笔名待核）",
+    "source_ids": [
+      "S101"
+    ],
+    "medium": "博客短篇",
+    "summary_zh": "三只魔理沙因草莓气味闯入捕食种巢穴，后者由偶然事件学会诱饵狩猎。",
+    "reading_status": "第一话全文已读；后续未核",
+    "work_specific_notes": "本站自然观察作品的生态与道德叙述；图片素材声明另记，不能据此认定全部原创或把本篇物种描述当共同设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://yukkurimanga.blog.jp/archives/11775887.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W045",
+    "title": "きめぇ丸の子供たち",
+    "author": "TGI",
+    "medium": "AA长篇／相关表达传统",
+    "source_ids": [
+      "S103",
+      "S104"
+    ],
+    "summary_zh": "被排斥的射命丸收养鬼族孤儿萃香与勇仪，建立家人关系；结尾救助孩子后离世，后记有作者署名与原帖时间。",
+    "reading_status": "开端、终章与后记抽读；中间四章未读",
+    "work_specific_notes": "属于油库里AA文化的相关作品，角色是以脸谱呈现的东方妖怪；骨骼、生理与寿命不能挪用为饼馅油库里设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/yukkuri/pages/491.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W046",
+    "title": "探偵ナズミ―マウス",
+    "author": "待核",
+    "medium": "AA推理长篇／相关表达传统",
+    "source_ids": [
+      "S105",
+      "S106"
+    ],
+    "summary_zh": "以纳兹玲脸谱角色展开异国小镇推理；第一案开场以巡回演出与侦探追寻真相并置。",
+    "reading_status": "十案目录核对；第一案第一页开端抽读，未读完整案件",
+    "work_specific_notes": "目录插图作者与AA剧本作者分开；不能据读者评价宣称已核解谜过程、结局或设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/yukkuri/pages/1408.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W047",
+    "title": "ゆっくりを飼う",
+    "author": "ハヌア",
+    "source_ids": [
+      "S107",
+      "S108",
+      "S109"
+    ],
+    "medium": "小说／短系列",
+    "summary_zh": "主人受朋友影响，去宠物店买回有身体的山女型；稀有类型、赠品话术与汉字语言表现构成喜剧。",
+    "reading_status": "现存两话全文及作品信息已读",
+    "work_specific_notes": "平台标完结，不代表简介预告的麻烦全部展开；虚构价格不能当市场资料。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://ncode.syosetu.com/n6238bw/2/",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W048",
+    "title": "ゆっくりが、きた",
+    "author": "虐待鬼意山 インバ",
+    "source_ids": [
+      "S110",
+      "S111",
+      "S112",
+      "S113"
+    ],
+    "medium": "小说／多视角短篇系列",
+    "summary_zh": "以虐待、爱护和加工等分组表现同一虚构社会。已读爱护段涉及饲料、基本教育、工作时托养及公园保育组织。",
+    "reading_status": "第8、11、13篇全文与目录、作品信息已读；其余未通读",
+    "work_specific_notes": "平台仍为连载；后记的复更许诺不能当已经复更。组织服务带筛选条件；治疗材料和稀有种能力均为作者设定。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://ncode.syosetu.com/n0458df/8/",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W049",
+    "title": "抽物语·moy油库里",
+    "author": "6R故事接龙参与者／Ahnenerbe博主整理（逐段署名待核）",
+    "source_ids": [
+      "S115"
+    ],
+    "medium": "中文接龙小说",
+    "summary_zh": "以玩偶付丧神的善意暗示解释一场怪异失眠，再由对暗示的理解解除。油库里在此作为幻想投射和怪谈媒介出现。",
+    "reading_status": "博客整理的序与三节全文已读；原论坛帖未核",
+    "work_specific_notes": "故事中的附身与失眠因果是幻想情节；不是现实心理学或医学说明，也不是统一油库里起源。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://tora-kak.weebly.com/252773911825991articles/moy",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W050",
+    "title": "Keeping a Rumia（英译标题）",
+    "author": "原作者及译者待核",
+    "source_ids": [
+      "S116"
+    ],
+    "medium": "单页饲养指南漫画／英译",
+    "summary_zh": "以暗色纸箱、熟悉气味的垫布、旧毛巾拉扯和食物表现露米娅型的生活与互动。",
+    "reading_status": "转载的整张英译图已读；日文原图和署名未核",
+    "work_specific_notes": "轻咬作为寻求关注的表达；仅是此漫画的虚构饲养习惯，不适用于全部捕食种。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://www.reddit.com/r/touhou/comments/1g2tfrw/how_to_take_care_of_a_yukkuri_rumia/",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W051",
+    "title": "ゆっくり日記〜ゆっくりを育成する物語＋放置ゲーム・完全無料〜",
+    "author": "Atami-lab（发行/制作）",
+    "source_ids": [
+      "S120",
+      "S121"
+    ],
+    "medium": "手游／放置叙事养成",
+    "summary_zh": "收养缺少饰品的流浪个体，捕虫喂食使其成长，选择影响三种结局；日记记录成长。",
+    "reading_status": "分级元数据和产品简介已读；未运行、未看完结局",
+    "work_specific_notes": "这是Atami-lab作品，不能和《ゆっくりにっき》3D模拟器或其他同名作品合并。2016-08-24为分级日期。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://www.classification.gov.au/titles/yutsukuririji-yutsukuriwoyuchengsuruwuyufangzhikemuwanquanwuliao",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W052",
+    "title": "ゆっくりたまご〜ゆっくり無料カジュアル育成ゲーム〜",
+    "author": "Narufumi Iwasaki（同期iOS报道署名）／Android目录署Atami-lab，身份关系待核",
+    "source_ids": [
+      "S122"
+    ],
+    "medium": "手游／养成",
+    "summary_zh": "同期报道描述从蛋孵化、喂食与清洁，五种角色分别八个成长阶段。",
+    "reading_status": "2016年同期介绍相关段已读；原商店无法打开、未运行",
+    "work_specific_notes": "不以二手目录断言当前仍可下载，也不把Narufumi Iwasaki与Atami-lab直接认定为同一法律主体。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://ascii.jp/elem/000/001/159/1159253/",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W053",
+    "title": "ゆっくり寝ようね",
+    "author": "YT",
+    "source_ids": [
+      "S123"
+    ],
+    "medium": "小说／日常短篇",
+    "summary_zh": "魔理沙总爬进主人的被窝，影响睡眠。主人提高床脚后，它尝试搭报纸台阶失败；最后改在枕边放暖垫，让亲近与休息兼顾。",
+    "reading_status": "全文及署名已读",
+    "work_specific_notes": "柔软变形、表达孤独、尝试借物攀爬均是此篇描写；主人也有照护负担，不是单纯可爱标签。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://w.atwiki.jp/slowlove/pages/468.html",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  },
+  {
+    "id": "W054",
+    "title": "肉包狩猎",
+    "author": "yearrunheng",
+    "source_ids": [
+      "S124"
+    ],
+    "medium": "中文原创小说／重发",
+    "summary_zh": "熊利用捕食种家庭的饰品识别漏洞寻找更多食物，背景掺入架空空战与主线联动。作者将其视为对既有自然系脑洞的扩写。",
+    "reading_status": "作者说明及第10、11楼正文选读；后部未读",
+    "work_specific_notes": "蕾米型在此是肉馅，饰品误认甚至跨越物种；与常见奶油馅或更灵活的身份识别规则不能混为一谈。完结信息来自作者回复，非本轮读完。",
+    "review_status": "pending",
+    "adoption_status": "not_adopted",
+    "research_round": 3,
+    "novelty": "new_catalogue_record",
+    "primary_url": "https://tieba.baidu.com/p/6149012979?fr=good",
+    "access_date": "2026-10-25",
+    "remaining_work": "未读篇章、首发与署名不确定项见阅读范围和备注；用户审定尚未进行。",
+    "evidence_scope": "摘要仅归属于本作品；非全圈通则。"
+  }
+]

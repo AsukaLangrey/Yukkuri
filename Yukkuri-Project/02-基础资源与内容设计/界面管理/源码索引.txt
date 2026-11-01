@@ -1,0 +1,39 @@
+界面管理｜源码导航
+以下路径均相对于Yukkuri-Project根目录。工程内部保留统一源码位置，后续修改以变更记录为准。
+
+主归属入口（18项）
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InlineChoice.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Panels.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Panels.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/DebugStateSnapshot.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Debug.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DebugComparison.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SheltersUi.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Toolbar.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Ui.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Vitals.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneHelp.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneUi.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Ui.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionPresentation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSurfaceObservation.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/RoomResourceText.cs
+
+相关共享文件（15项）
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Family.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Shelters.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Supplies.cs
+[乐园经营] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.SupplyStations.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyAftermath.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyCare.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyDesire.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyRisk.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilySocial.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyState.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/FamilyValidation.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/OilDialogue.cs
+[油族群设计] 03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/PeerAttackContinuity.cs

@@ -1,0 +1,13 @@
+2026-10-29 01:11 +08 首次长时模拟异常记录
+命令：dotnet run --project checks/NaturalLife.Soak/NaturalLife.Soak.csproj -- artifacts/night-repair-20261029/natural-soak-01.json
+这是纯.NET模拟，无游戏/Godot/窗口操作。
+原程序计划一次进程跑6种场景×4种子，每例模拟3600秒，在全部完成后保存JSON。
+实际先输出woodland四个种子结果：
+72341：三只末体力均0，最长连续找垫子约1975—1993秒。
+592813：三只末体力均0，最长连续找垫子约1780—1806秒。
+1597331：三只末体力约14.6—14.7，最长连续找垫子370—376秒；小铃休息重新开始94次。
+20261029：三只末体力均0，最长连续找垫子约1428—1434秒。
+随后标准输出出现：Process terminated. / UnhandledException / System.Environment.FailFast / Runtime.EH.DispatchEx / Yukkuri.Simulation.Creature.get_IsElder()。
+尚未落盘完整JSON，不能把上述输出当24例全部完成。没有捕获到完整异常类型/原因，当前未定因，不凭一个getter栈帧推断游戏逻辑或硬件责任。
+执行会话34188在两次读取后仍存在，但没有新输出；进程dotnet PID35116、NaturalLife.Soak PID44136仍存活。核对进程名及01:11启动时间后，停止本次失败检查留下的这两个进程，未操作其他进程或系统设置。
+后续：工具改为每例完成即保存，允许指定场景/种子，以独立短进程运行。修正休息阈值抖动及拥挤/不可达垫子无退出条件；第一组分段运行已成功返回并有单独JSON，不抹去此异常记录。

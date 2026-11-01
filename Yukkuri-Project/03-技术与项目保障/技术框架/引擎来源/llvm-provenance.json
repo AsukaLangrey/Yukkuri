@@ -1,0 +1,5 @@
+{
+  "url": "https://github.com/mstorsjo/llvm-mingw/releases/download/20261020/llvm-mingw-20261020-ucrt-x86_64.zip",
+  "sha256": "FD5462B7F5D93B2FF981FCD3F9C7E427E47F3203C64EA91C27BCC444EEBD74CD",
+  "purpose": "Isolated native renderer diagnostics; not game release toolchain"
+}

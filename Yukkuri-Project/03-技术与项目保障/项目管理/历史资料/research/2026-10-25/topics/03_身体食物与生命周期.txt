@@ -1,0 +1,117 @@
+身体食物与生命周期｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C016  《八景》采用可说话、能移动的饅頭皮与种别内馅，并设中枢馅、可作手势的鬓发及橙汁恢复。
+适用：《ゆっくり八景》
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K04（详见 conflicts.json）
+出处：
+S06 ゆっくりとは
+https://wikiwiki.jp/yukkuri8kei/ゆっくりとは
+读取状态：body_read
+
+C017  中文汇编说野生个体吃草和昆虫、偏爱甜食、忌辣，并将排泄解释为排出旧馅；这些没有逐项原作引证。
+适用：中文生物系汇编
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S03 油庫里
+https://www.newton.com.tw/wiki/油庫里
+读取状态：body_read
+
+C018  《八景》有怕水、潮湿污秽引发霉菌、压力伤害等机制，同时保留洗身体会高兴及つむり耐水的例外。
+适用：《ゆっくり八景》
+证据：B；类别：survival
+限制：不可简单归纳为“任何水接触必死”。
+差异组：K04（详见 conflicts.json）
+出处：
+S06 ゆっくりとは
+https://wikiwiki.jp/yukkuri8kei/ゆっくりとは
+读取状态：body_read
+
+C019  《八景》Wiki给出良好营养下约8期长成、寿命约1.5—1.75年；这只是该游戏时间系统。
+适用：《ゆっくり八景》
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K05（详见 conflicts.json）
+出处：
+S06 ゆっくりとは
+https://wikiwiki.jp/yukkuri8kei/ゆっくりとは
+读取状态：body_read
+
+C020  《八景》采用雌雄同体及临时父母角色，额头茎上结出3只幼体；不是全题材唯一繁殖法。
+适用：《ゆっくり八景》
+证据：B；类别：reproduction
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K06（详见 conflicts.json）
+出处：
+S06 ゆっくりとは
+https://wikiwiki.jp/yukkuri8kei/ゆっくりとは
+读取状态：body_read
+
+C021  中文百科另列分裂、胎生、卵生和有性别的作者版本，并包含身体种跨类生育说；原作未回溯。
+适用：中文跨作品汇编
+证据：B；类别：reproduction / adult_theme
+限制：原文卵生与植物类比混乱，不据此推导现实生物学。
+差异组：K06（详见 conflicts.json）
+出处：
+S04 油库里
+https://bkso.baidu.com/item/油库里/4471775?fromModule=lemma_inlink
+读取状态：body_read
+
+C022  Rub Rub条目把摩擦同时写作亲昵、取暖和某些版本的繁殖方式；称后者可导致茎生。
+适用：英文行为汇编
+证据：B；类别：reproduction / affection
+限制：所称“最初繁殖方式”没有在本轮得到年代考证。
+差异组：K06（详见 conflicts.json）
+出处：
+S23 Rub Rub
+https://yukkuri.fandom.com/wiki/Rub_Rub
+读取状态：body_read
+
+C023  《ゆっくりにっき》资料页同时谈茎生和胎生，指出本页所指版本没有兼有两种的个体及卵生形式。
+适用：《ゆっくりにっき》社区攻略
+证据：B；类别：reproduction
+限制：网页多版本混杂，非运行实测。
+差异组：K06（详见 conflicts.json）
+出处：
+S10 ゆっくりの生態
+https://w.atwiki.jp/ykansatu/pages/49.html
+读取状态：body_read
+
+C024  《にっき》寿命是可因睡眠恢复、生产等消耗的数值；条目现行说明称空腹不扣HP。《八景》满腹度耗尽则可饿死。
+适用：两个游戏的攻略描述
+证据：B；类别：survival
+限制：版本差异是关键，不能合并成统一生命规律。
+差异组：K05、K07（详见 conflicts.json）
+出处：
+S10 ゆっくりの生態
+https://w.atwiki.jp/ykansatu/pages/49.html
+读取状态：body_read
+S07 ステータス
+https://wikiwiki.jp/yukkuri8kei/ステータス
+读取状态：body_read
+
+C025  SimYukkuri历史日志允许配置寿命，记录水中溶解和遗体转化等机制；这些是历史分支实现记录。
+适用：SimYukkuri 2015分支日志
+证据：A；类别：death / survival
+限制：未验证当前版本是否保留。
+差异组：K05（详见 conflicts.json）
+出处：
+S33 Simyukkuri2021 CHANGELOG.txt
+https://github.com/sin-orb/Simyukkuri2021/blob/main/CHANGELOG.txt
+读取状态：body_read_selected_sections
+
+C075  英文主条目还收录“信念力量/拉马克式继承”解释形态变化的同人理论，并明确说许多人不采用或反驳；不能把它当统一进化史。
+适用：跨作者形态差异解释理论
+证据：C；类别：general
+限制：这是虚构解释，不是现实进化论，也未回溯所引Between Studies原作。
+出处：
+S24 Yukkuri
+https://yukkuri.fandom.com/wiki/Yukkuri
+读取状态：search_text_only
+
+

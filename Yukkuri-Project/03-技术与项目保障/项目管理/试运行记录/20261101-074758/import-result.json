@@ -1,0 +1,15 @@
+{
+  "pid": 17112,
+  "exitCode": 0,
+  "timedOut": false,
+  "affinity": 4294967247,
+  "arguments": [
+    "--headless",
+    "--path",
+    "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\src\\Yukkuri.Game",
+    "--import",
+    "--log-file",
+    "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\项目管理\\试运行记录\\20261101-074758\\import.godot.log"
+  ],
+  "finishedUtc": "2026-10-31T23:48:23.7483009Z"
+}

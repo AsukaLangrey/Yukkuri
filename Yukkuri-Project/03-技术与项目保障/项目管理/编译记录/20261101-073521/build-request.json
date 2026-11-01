@@ -1,0 +1,25 @@
+{
+  "host": "SHIKI-GAME-4080",
+  "command": "D:\\Project\\Yukkuri\\.tools\\dotnet\\dotnet.exe",
+  "arguments": [
+    "build",
+    "src/Yukkuri.Game/Yukkuri.Game.csproj",
+    "--configuration",
+    "Debug",
+    "--disable-build-servers",
+    "--verbosity",
+    "minimal",
+    "-m:1",
+    "-p:UseSharedCompilation=false",
+    "-nodeReuse:false"
+  ],
+  "workingDirectory": "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线",
+  "runDirectory": "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\项目管理\\编译记录\\20261101-073521",
+  "startedUtc": "2026-10-31T23:35:21.9726474Z",
+  "pid": 25144,
+  "buildProcessAffinity": 4294967247,
+  "sourceFileCount": 229,
+  "authorization": "用户明确要求：新版本尝试编译；只编译，不运行游戏或测试",
+  "sourceBaselineHead": "bf274206fcd451d989dd7895f5c28addd499e857",
+  "sourceIdentity": "新区域当前文件，逐文件SHA256见source-files.json；不是未修改提交的宣称"
+}

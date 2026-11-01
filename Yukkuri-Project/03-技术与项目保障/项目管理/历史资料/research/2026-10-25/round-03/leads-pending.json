@@ -1,0 +1,86 @@
+[
+  {
+    "type": "attribution",
+    "detail": "Ammo与ばっちゃあき的关系出现韩文二手解释：外语标签来自署名uzi_ammo_666的拼图，但该拼图是否作者本人所作未确认。不能据此确认为作者正式别名。",
+    "url": "https://seore.org/w/%EB%AC%B8%EC%84%9C%3A%ED%8C%9F%EC%B1%A0%20%EC%95%84%ED%82%A4"
+  },
+  {
+    "type": "unavailable_source",
+    "detail": "《ゆっくりの産卵》原目录链接pages/69返回410 Gone；仅有书目及别作后记指向，未读原文。",
+    "url": "https://w.atwiki.jp/slowlove/pages/69.html",
+    "catalogue_crosscheck": "最后经話の長い人作者目录再次核对，仍指向同一410失效页；正文未恢复。",
+    "catalogue_url": "https://w.atwiki.jp/slowlove/pages/1678.html"
+  },
+  {
+    "type": "access_limit",
+    "detail": "直接HTTP获取atwiki遭Cloudflare限制，未绕过；继续用可读的检索工具文本。"
+  },
+  {
+    "type": "unread_or_low_priority",
+    "items": [
+      {
+        "title": "The Wolf and the Seven Yukkuri",
+        "author": "Harouki（作者发帖自述）",
+        "url": "https://groups.google.com/g/yufanfics/c/1W35TZ9R6Bg",
+        "scope": "只核实作者提及创作下一章；正文未找到"
+      },
+      {
+        "title": "My Yukkuri",
+        "author": "YAF!nmVOHsTRd.",
+        "url": "https://www.touhou-project.com/th/res/65334.html",
+        "scope": "2008-10-30原帖可读；成人暴力短篇，仅保留书目，不摘录细节"
+      },
+      {
+        "title": "Insert yukkuri title here",
+        "author": "Well Below Average Student",
+        "url": "https://www.touhou-project.com/th/res/67835.html",
+        "scope": "2008-11-16互动开头，内容有限；不列成熟设定案例"
+      },
+      {
+        "title": "(untitled yukkuri story)",
+        "author": "Hungry Youkai",
+        "url": "https://www.touhou-project.com/border/res/9936.html",
+        "scope": "2008-09-03，开头有冬储与稀有型，后含成人暴力；仅书目线索"
+      }
+    ]
+  },
+  {
+    "kind": "access_limit",
+    "title": "ゆっくり捕り",
+    "author": "ゆっぱい",
+    "translator": "精神有問題的人士（sampos）",
+    "translation_url": "https://home.gamer.com.tw/artwork.php?sn=5819110",
+    "original_url": "https://www.pixiv.net/artworks/111603958",
+    "translation_date": "2023-10-28",
+    "status": "bibliography_only",
+    "note": "Chrome已核译帖署名与原作链接；原作Pixiv被浏览器站点安全策略拒绝。未尝试替代浏览器或相簿绕过；不记录故事内容，非全文已读。"
+  },
+  {
+    "kind": "access_limit",
+    "title": "赤まりさ観察日記",
+    "author": "メカあき（検索索引署名）",
+    "url": "https://blog.livedoor.jp/yukkuri_anko/archives/33404823.html",
+    "status": "lead_only",
+    "note": "搜索结果确认题名，网页抓取失败，Chrome证书不受信任，未绕过；漫画正文未读。"
+  },
+  {
+    "kind": "possible_duplicate",
+    "source_ids": [
+      "S117"
+    ],
+    "candidate_work_id": "W019",
+    "note": "英译单页与中文《宠物油库里灵梦》关系待核，先不增加独立作品计数。"
+  },
+  {
+    "kind": "lead",
+    "title": "ゆっくりたまご",
+    "url": "https://dotapps.jp/products/com-atamilab-yuEgg",
+    "note": "二手评测称Narufumi Iwasaki、2016-04-28发行；苹果商店原页未能打开，开发者未核，不计已读原作。"
+  },
+  {
+    "kind": "unresolved_origin",
+    "title": "白金徽章最早原作与Ammo署名链",
+    "status": "unresolved",
+    "note": "本轮已读Hourai结局与enforcer首话，仍不能证实白金最初来源。韩文二手别名解释未当定论。"
+  }
+]

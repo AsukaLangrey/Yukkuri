@@ -1,0 +1,139 @@
+{
+  "report_type": "design_structure_and_arithmetic_only",
+  "date": "2026-10-28",
+  "passed": true,
+  "checks": [
+    {
+      "name": "node_count",
+      "passed": true,
+      "detail": "Expected 15 area levels and 21 house levels."
+    },
+    {
+      "name": "unique_ids",
+      "passed": true,
+      "detail": "IDs must be unique."
+    },
+    {
+      "name": "kind_counts",
+      "passed": true,
+      "detail": "Area and building levels checked independently."
+    },
+    {
+      "name": "family_levels",
+      "passed": true,
+      "detail": "Every family has levels 1,2,3."
+    },
+    {
+      "name": "dependencies_exist",
+      "passed": true,
+      "detail": "All prerequisites resolve to a node in this design."
+    },
+    {
+      "name": "required_design_fields",
+      "passed": true,
+      "detail": "Each level has conditions, gameplay, autonomy, recovery, visible effects and player decisions."
+    },
+    {
+      "name": "cost_fields",
+      "passed": true,
+      "detail": "Draft costs and construction shifts positive; maintenance nonnegative."
+    },
+    {
+      "name": "previous_level_required",
+      "passed": true,
+      "detail": "Levels 2 and 3 include the preceding tier."
+    },
+    {
+      "name": "acyclic_and_reachable",
+      "passed": true,
+      "detail": "Topological reference check only; actor learning and economic feasibility require future gameplay tests."
+    },
+    {
+      "name": "planned_cases_cover_nodes",
+      "passed": true,
+      "detail": "One future acceptance entry per node."
+    },
+    {
+      "name": "no_false_test_status",
+      "passed": true,
+      "detail": "Game behaviors remain untested."
+    },
+    {
+      "name": "handoff_files_exist",
+      "passed": true,
+      "detail": "Reader-facing design and handoff files exist."
+    },
+    {
+      "name": "text_catalog_alignment",
+      "passed": true,
+      "detail": "Node names, new gameplay, autonomy and costs agree with readable route documents."
+    },
+    {
+      "name": "initial_example_arithmetic",
+      "passed": true,
+      "detail": "Arithmetic only, not economy simulation."
+    },
+    {
+      "name": "initial_beds_and_draft_load",
+      "passed": true,
+      "detail": "Template has 8 ordinary beds for 6 residents and draft fixed work 10 within 12; real time/physical feasibility untested."
+    }
+  ],
+  "topological_order": [
+    "ZL-1",
+    "ZS-1",
+    "ZF-1",
+    "HL-1",
+    "HS-1",
+    "HF-1",
+    "HM-1",
+    "ZL-2",
+    "ZS-2",
+    "ZY-1",
+    "HL-2",
+    "HC-1",
+    "HT-1",
+    "HS-2",
+    "HM-2",
+    "ZY-2",
+    "HC-2",
+    "HT-2",
+    "ZL-3",
+    "ZS-3",
+    "ZY-3",
+    "ZF-2",
+    "HL-3",
+    "HC-3",
+    "HT-3",
+    "HS-3",
+    "HF-2",
+    "HM-3",
+    "ZF-3",
+    "ZV-1",
+    "HF-3",
+    "HV-1",
+    "ZV-2",
+    "HV-2",
+    "ZV-3",
+    "HV-3"
+  ],
+  "example": {
+    "maintenance": 9,
+    "fixed_expense": 97,
+    "base_net": 3,
+    "service_net": 103,
+    "reserve": 291,
+    "reserve_with_service": 531,
+    "ordinary_beds": 8,
+    "fixed_work_load": 10
+  },
+  "not_tested": [
+    "game implementation",
+    "economic balance",
+    "actual actor autonomy",
+    "construction navigation",
+    "GUI",
+    "player enjoyment",
+    "50-100 resident performance"
+  ]
+}

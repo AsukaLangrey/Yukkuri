@@ -1,0 +1,12 @@
+{
+  "engine": "D:\\Project\\Yukkuri\\.tools\\godot\\Godot_v4.7.2-stable_mono_win64\\Godot_v4.7.2-stable_mono_win64.exe",
+  "sha256": "45336315EB6F1A52A8923BC4F2CE8079A03DC4939DCB7D531047890F1F7CDFAB",
+  "project": "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\src\\Yukkuri.Game",
+  "sourceFilesUnchanged": true,
+  "runDirectory": "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\项目管理\\试运行记录\\20261101-074758",
+  "host": "SHIKI-GAME-4080",
+  "sourceBaselineHead": "bf274206fcd451d989dd7895f5c28addd499e857",
+  "sourceManifestSha256": "AC76EED67D370C435CB953F62A2ADC4175F29213EE414271FF9DC8A762A60BAB",
+  "buildRecord": "D:\\Project\\Yukkuri\\Yukkuri-Project\\03-技术与项目保障\\项目管理\\编译记录\\20261101-073521",
+  "dataRoot": "D:\\Project\\Yukkuri\\Yukkuri-Project\\.local\\trial"
+}

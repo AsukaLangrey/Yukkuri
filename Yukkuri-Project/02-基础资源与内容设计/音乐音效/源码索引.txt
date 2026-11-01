@@ -1,0 +1,8 @@
+音乐音效｜源码导航
+以下路径均相对于Yukkuri-Project根目录。原文件未按类别拆分或改写。
+
+主归属入口（2项）
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Audio.cs
+03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.MilestoneAudio.cs
+
+相关共享文件（0项）

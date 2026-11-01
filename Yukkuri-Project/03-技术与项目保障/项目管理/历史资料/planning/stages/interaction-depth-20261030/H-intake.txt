@@ -1,0 +1,24 @@
+H 批：完成手喂后需求检查的闲逛隔离
+日期：2026-10-30
+
+原证据保留
+主协调转交的远端 c06 报告，source_commit=cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d。
+结果分支路径：testing/results/dot/20261029T174248Z-cc3aecca7663-c06/evidence/failed-check-source.json。
+Drink/water 的 accepted、sawSwallow、moved、sawDestinationIntake、returnedAfterDestination 均为 true；endX=-.300000628，peakX=1.208，totalTravel=3.188，destinationPortions=4。
+上述诊断由主协调提供，本子任务没有把本地不存在的结果路径当成已直接读取。未改动 c04/c06 原失败证据。
+
+判断依据
+水初值20，手喂增加28，实际地面水再增加24，少量被动消耗后仍超过 WantsWater 的70阈值。TickNaturalNeeds 随后返回，普通闲逛继续，符合需求→取用→恢复→下一活动的原目标。
+CompletionFixture 只延后 NextAutonomyAt；普通闲逛使用另一个 DecisionIn，且资源接近会保留出发点的旧闲逛目标。仅加 DecisionIn 延迟不能排除回旧目标。
+因此原报告证明已经完成释放、走动和自主饮水；终点落在左侧本身不能证明旧手势锁住身体。此判断不替代其余失败的独立分析。
+
+本次限定修改
+仅在 Continuity 的 held 完成9组合检查中，初始延后 DecisionIn；第一次真实观察到目标来源 GroundIntake 且 EatingRemaining>0 后，将无关闲逛目标设为当时实际坐标。身体坐标、需求、份量和接受标记均不修改，并在隔离前后逐项断言相等。
+记录 idleTargetIsolated、隔离帧、实际坐标、旧闲逛目标和 DecisionIn。仍推进全部240帧，保留原首次位移、吞咽、来源消费、容器、取消、放下和最终 c.X>.5 等全部旧断言。休息分支没有地面摄入，不伪造隔离标记。
+没有修改公共 CompletionFixture 或其他 Continuity 段，也没有修改产品移动逻辑。
+
+新增互补检查
+checks/Interaction.CompletedNeeds 共1组。相同实际 Drink/water 流程，不改 DecisionIn，不清闲逛目标；从真实目标预留、入口和吞咽观察到喝够后仍发生普通移动。持续240帧保持原手势，验证其不再夺姿态、手持水与地面水各结算一次。最终位置不作为“被锁住”的替代判断，也不强制产品必须返回起点。
+
+验证状态
+仅源码写入和静态审查，未运行项目、测试、编译器、脚本、截图或 Git。远端通过与实机效果尚未确认。

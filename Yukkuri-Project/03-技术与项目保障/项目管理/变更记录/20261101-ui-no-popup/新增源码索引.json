@@ -1,0 +1,23 @@
+[
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InlineChoice.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "introducedBy": "UI-001",
+    "sha256AtCreation": "55B1076BAC875BC73022BDD5CD1F95730AB540CA3496ABA8A465AED8F9F8A157"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Panels.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "introducedBy": "UI-001",
+    "sha256AtCreation": "1A1E6B8FD3D312FB2E2BD6C939E905D39C531292456D1D1263FBB0655B198DDF"
+  },
+  {
+    "file": "03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/Main.Panels.cs",
+    "primaryCategory": "10",
+    "primaryName": "界面管理",
+    "introducedBy": "UI-001",
+    "sha256AtCreation": "DA441DC010F58F942CCA55AF0C22506C05510D3996F08368F8C372804FC62E88"
+  }
+]

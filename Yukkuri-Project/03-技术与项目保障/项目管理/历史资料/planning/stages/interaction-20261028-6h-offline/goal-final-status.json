@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a17df8-ae40-76b2-ae7e-5611bd3a759d",
+    "objective": "在2026-10-28T07:14:21Z至2026-10-28T13:14:21Z的六小时工作窗口，持续完善Yukkuri既定P01—P20人油互动、美术、油话和持续反馈的代码，并执行有价值的纯.NET模拟/数学检查和编译，记录真实活动及中断、失败案例、修复和未验证项；到截止时刻汇总本窗口成果与风险。不得打开Yukkuri/Godot游戏或编辑器，不得启动游戏主入口的headless测试，不得打开Codex/ChatGPT桌面主应用或使用computer-use；不改系统/账号、不发布部署，保留现有源码与冻结试玩包；崩溃根因由独立线程负责。本次原生Goal接口没有原生时长预算参数，六小时为执行约束而非宿主强制计时；不能用文本或计时文件声称原生计时成功。旧八小时目标与完整可试玩验收欠项保持未完成，不以本窗口结束或离线检查通过代替体验、稳定性、全部P01—P20验收。",
+    "status": "paused",
+    "tokensUsed": 970428,
+    "timeUsedSeconds": 21604,
+    "createdAt": 1793171688,
+    "updatedAt": 1793193293
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": null
+}

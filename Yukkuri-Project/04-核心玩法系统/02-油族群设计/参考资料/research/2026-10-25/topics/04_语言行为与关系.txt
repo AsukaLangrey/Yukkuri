@@ -1,0 +1,109 @@
+语言行为与关系｜首轮待审资料
+日期：2026-10-25（Asia/Shanghai）
+所有条目 user_review_status=pending；不自动纳入游戏。
+证据 A=直接作品/访谈/开发者材料；B=社区正文；C=索引文本或片段。等级仅表示可追溯程度。
+
+C026  おちびちゃん指幼体；あんよ、ぽんぽん为脚和腹部的幼儿化叫法；うんうん、しーしー用于排泄。
+适用：英日翻译指南
+证据：C；类别：general
+限制：中文译法可不同，术语不等于已决定游戏台词。
+出处：
+S26 Translator’s Guide
+https://yukkuri.fandom.com/wiki/Translator%27s_Guide
+读取状态：search_text_only
+
+C027  都会派（とかいは）在爱丽丝语境中可表示合宜或喜爱的事，不能每次机械理解成都市居民。
+适用：翻译指南与冬篭り作品
+证据：C；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S26 Translator’s Guide
+https://yukkuri.fandom.com/wiki/Translator%27s_Guide
+读取状态：search_text_only
+S16 待つぜ待つのぜ冬篭り
+https://w.atwiki.jp/slowlove/pages/666.html
+读取状态：body_read
+
+C028  中文汇编记录幼体含混发音、名词后加さん等习惯；英文主条目也保留Maricha等幼体自称。
+适用：中英文语言汇编
+证据：C；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S03 油庫里
+https://www.newton.com.tw/wiki/油庫里
+读取状态：body_read
+S24 Yukkuri
+https://yukkuri.fandom.com/wiki/Yukkuri
+读取状态：search_text_only
+
+C029  亲昵摩擦可发生在亲子、伴侣、同伴或人与宠物之间；Rub Rub条目将其类比拥抱。
+适用：英文行为汇编
+证据：B；类别：affection
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S23 Rub Rub
+https://yukkuri.fandom.com/wiki/Rub_Rub
+读取状态：body_read
+
+C030  饰品丢失可引发不安与排斥；Accessory条目同时保留立刻攻击、逐步排斥、家人仍能认出等相互不同版本。
+适用：英文饰品汇编
+证据：B；类别：cruelty / social
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K08（详见 conflicts.json）
+出处：
+S22 Accessory
+https://yukkuri.fandom.com/wiki/Accessory
+读取状态：body_read
+
+C031  饰品替换及死者饰品能否使用，条目明确有疑问与矛盾；不能把失饰一律写成不可恢复或必然遗忘亲人。
+适用：英文饰品汇编
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K08（详见 conflicts.json）
+出处：
+S22 Accessory
+https://yukkuri.fandom.com/wiki/Accessory
+读取状态：body_read
+
+C032  《八景》自动事件包含相互清洁、安慰、送食、亲子游戏、求婚、收养及低好感离婚。
+适用：《ゆっくり八景》
+证据：B；类别：affection / social
+限制：有些触发条件在攻略内标有问号。
+差异组：K09（详见 conflicts.json）
+出处：
+S38 水槽内自動発生イベ
+https://wikiwiki.jp/yukkuri8kei/水槽内自動発生イベ
+读取状态：body_read
+
+C033  《にっき》攻略称关系持续保留，无法正常离婚；这与《八景》的离婚事件不同。
+适用：两个游戏的关系机制
+证据：B；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+差异组：K09（详见 conflicts.json）
+出处：
+S10 ゆっくりの生態
+https://w.atwiki.jp/ykansatu/pages/49.html
+读取状态：body_read
+S38 水槽内自動発生イベ
+https://wikiwiki.jp/yukkuri8kei/水槽内自動発生イベ
+读取状态：body_read
+
+C034  幼体可把石子、花或城市亮物当宝物，宠物则有玩具；Koyukkuri条目也有排他占有的描写。
+适用：英文幼体汇编
+证据：C；类别：general
+限制：适用范围仅限所列资料；尚未证明全圈共识
+出处：
+S37 Koyukkuri
+https://yukkuri.fandom.com/wiki/Koyukkuri
+读取状态：search_text_only
+
+C035  英文主条目还收录计数受限和新生问候影响生存的设定；本轮没有追到其最初作者或证明普遍性。
+适用：英文生物系汇编
+证据：C；类别：general
+限制：不能当作所有作品必用规则。
+出处：
+S24 Yukkuri
+https://yukkuri.fandom.com/wiki/Yukkuri
+读取状态：search_text_only
+
+

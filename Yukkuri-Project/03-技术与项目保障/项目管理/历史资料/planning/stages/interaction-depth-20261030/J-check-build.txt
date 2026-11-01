@@ -1,0 +1,16 @@
+J 批 c08 检查源码编译阻断修复
+日期：2026-10-30
+
+依据：主协调转交的 c08 固定 281d0cf 报告，Family.PregnancyBoundaries 原172行、Family.AssistedCare 原152行向 InteractionLife.Lowering 赋值，报告 CS0200。两套 12+16 组未执行，不能算失败断言已经通过或产品已经验证。
+
+根因：InteractionLowering.cs 中 Lowering 为 public get / internal set，并标记 JsonIgnore。独立检查程序集只能读取，状态应由 ExecuteInteraction(Lower) 建立。产品实际 Lower 会解除 Hanging，建立 Carried+Lowering，保持高度并由后续身体更新逐步下降。
+
+修复范围仅两个 Program.cs：
+1. PregnancyBoundaries 放下分支通过实际 Hang、Lower 两个公开入口建立状态，并检查每个入口成功，以及 Lowering、Carried、非 Falling、解除限制、高度仍大于零。仅这个分支的初始亲代距离为4，以给悬挂装置留真实占地；其他夹具仍为原1.65。入口后不移动角色。原分娩未发生、阶段保留、CompletedBirths为空的断言全部保留。
+2. AssistedCare 将原 Lowering 直接赋值从属性编辑表移到同一检查组内的真实 Hang→Lower 流程，增加同样前置状态断言。原拒绝原因必须包含“放下”、查询无副作用、拒绝后无任务的断言全部保留。仍是16组，未增加或删除测试组。
+
+静态核查：读取两个完整检查源码，交叉核对 Lowering 真实声明、Hang/Lower 入口与支撑下降处理，检索 Simulation 中 internal/private setter 及两个检查的对应赋值。未发现两文件还写入其他同类不可公开赋值属性；没有修改产品属性可写性。此结论只是静态文本核查，不代替编译。
+
+同步发现：真实 Lowering 同时为 Carried，原 FamilyCareReasonCore 先判断 Carried 会返回“托着”，让具体“正在放下”原因不可达。已报告主协调；主协调同意在其拥有的 FamilyCare.cs 中让 Lowering 原因优先于 Carried，资格仍拒绝，不放开限制。本子任务不修改产品。
+
+完成后组数保持 PregnancyBoundaries 12、AssistedCare 16。只做源码和文档读写，未编译、运行、执行验证程序或项目脚本，未电脑操作、未 Git。c08 原报告和全部失败证据保留；修复是否编译成功、28组是否通过仍待独立远端完整提交验证。
