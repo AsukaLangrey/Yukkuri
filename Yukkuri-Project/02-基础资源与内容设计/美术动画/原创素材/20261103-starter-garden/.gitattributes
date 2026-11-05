@@ -1,0 +1,2 @@
+# Preserve this planning reference as a regular Git binary.
+*.png -filter -diff -merge -text

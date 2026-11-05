@@ -1,0 +1,19 @@
+Use case: precise-object-edit / stylized-concept.
+Edit the provided "悠悠桃源" bird's-eye illustrated village masterplan into a beautiful PHASED EXPANSION design. Preserve its overall composition, hand-painted Japanese countryside aesthetic, stream and bridge placement, paths, topography, and neighborhood positions. The user now wants a small STARTING AREA, with all other land gradually opened over time. This is a design concept, not a game screenshot.
+The output must still be a rich, inviting panoramic illustration, NOT a technical infographic board or square grid. Keep the warm painterly image quality and village dream visible.
+CRITICAL staged-land visual treatment:
+Starting zone: an organic contiguous area consisting of the central shared courtyard grass and the existing path leading to ONLY ONE small cottage in the upper-left residential cluster. Approximately one quarter to one third of the usable site. This starting zone alone is rendered in full warm saturated color, crisp sunlight and clear detail. Outline its boundary with a very delicate warm golden dashed line laid on the ground, not a fence or wall. Keep a generous open meadow, the large shade tree and seating, one soft sleeping cushion near the cottage, a small simple food bowl and clean-water bowl at the meadow edge. The ONE active house is the small rightmost timber cottage of the original upper-left housing cluster. The big main hall and left cottage remain future planned structures, not available at start. Keep the existing well as decorative existing ground feature in starting courtyard if it fits the coherent boundary. No extra free productive buildings. ONLY three tiny head-only Yukkuri active in the initial zone, two red-ribbon black-haired heads and one blonde witch-hat head, no bodies or limbs.
+All other land remains visible as gently desaturated cool sage/blue-gray landscape at reduced contrast. Existing illustrated FUTURE buildings, gardens, bridge and structures should appear as pale watercolor planned silhouettes, with terrain and connections still clear, not completed functioning facilities. No busy characters or active work outside initial zone. Do not use black fog or large opaque overlays. This future land must still be beautiful and desirable.
+Expansion sequence, with compact ivory labels within corresponding areas:
+"初始 · 一屋一庭" on central active area.
+"一期 · 菜园与照护" on left lower side encompassing the future vegetable plots and quiet nursery garden, both dimmed.
+"二期 · 住区与果林" near top center: remaining larger residential buildings at upper left and fruit orchard/pergola at upper right are this later phase. Both dimmed. The text label can sit on the top-center meadow so it doesn't obscure art.
+"三期 · 溪岸与远野" on east-bank meadow, encompassing bridge access, streamside garden and open far eastern future space. All dimmed.
+"后续 · 仓储与工坊" subtly on the southern service-yard silhouettes, as a separately purchasable future service plot, NOT available at start.
+Existing old six region labels should be removed or replaced by these five new short labels. No duplicated old labels.
+Add a very compact elegant legend at the lower left margin integrated with scenery:
+warm gold small swatch "初始开放"
+cool pale sage small swatch "待扩建"
+Below, small readable footer text "先安家，再拓地；扩建范围逐步开放".
+Keep the title top left "悠悠桃源" and change subtitle to "从一屋一庭开始".
+Expandability should be legible at a glance: a small warm inhabited center and one cottage, with generous ghosted surrounding potential. Terrain and paths remain continuous, do not draw disconnected floating cards, partition all land into exact boxes or crisscross the painting with arrows. No currency amounts, locks on every building, UI panels, coordinates, numbered dots, technical graphs, pixel art or humans. Preserve aesthetic quality and spatial structure from reference; change availability hierarchy and staged treatment.

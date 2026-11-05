@@ -1,0 +1,71 @@
+{
+	"batches": 124,
+	"capture_frames": 175,
+	"elapsed_ms": 5726,
+	"engine": "4.7.2-stable (official)",
+	"files": [
+		"C:\\Project\\Yukkuri\\repo\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\.local\\testing\\starter-garden-art-20261103\\pass-06-final/01-garden.png",
+		"C:\\Project\\Yukkuri\\repo\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\.local\\testing\\starter-garden-art-20261103\\pass-06-final/02-cottage.png",
+		"C:\\Project\\Yukkuri\\repo\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\.local\\testing\\starter-garden-art-20261103\\pass-06-final/03-food-water.png",
+		"C:\\Project\\Yukkuri\\repo\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\.local\\testing\\starter-garden-art-20261103\\pass-06-final/04-roof-open.png",
+		"C:\\Project\\Yukkuri\\repo\\Yukkuri-Project\\03-技术与项目保障\\技术框架\\工程基线\\.local\\testing\\starter-garden-art-20261103\\pass-06-final/05-overhead.png"
+	],
+	"geometry_checks": [
+		{
+			"actual_y": 0.191666662693024,
+			"expected_y": 0.191666666666667,
+			"name": "ramp_height_0",
+			"passed": true
+		},
+		{
+			"actual_y": 0.145833373069763,
+			"expected_y": 0.145833333333333,
+			"name": "ramp_height_1",
+			"passed": true
+		},
+		{
+			"actual_y": 0.0999999642372131,
+			"expected_y": 0.1,
+			"name": "ramp_height_2",
+			"passed": true
+		},
+		{
+			"actual_y": 0.0541666746139526,
+			"expected_y": 0.0541666666666667,
+			"name": "ramp_height_3",
+			"passed": true
+		},
+		{
+			"actual_y": 0.00833332538604736,
+			"expected_y": 0.00833333333333332,
+			"name": "ramp_height_4",
+			"passed": true
+		},
+		{
+			"name": "doorway_center_clear",
+			"passed": true
+		},
+		{
+			"name": "side_wall_solid",
+			"passed": true
+		},
+		{
+			"name": "tree_trunk_solid",
+			"passed": true
+		}
+	],
+	"gpu": "NVIDIA GeForce RTX 5060 Ti",
+	"pieces": 13458,
+	"renderer": "gl_compatibility",
+	"scope": "Independent real 3D art sample. Procedural geometry/materials plus imagegen foliage texture. Scale stand-ins, no production character substitution, simulation, saves, economic unlocks or navigation acceptance. Short capture only, not a performance or gameplay test.",
+	"seed": 2026110304,
+	"status": "rendered",
+	"viewport": [
+		1920,
+		1200
+	],
+	"window": [
+		1440,
+		900
+	]
+}

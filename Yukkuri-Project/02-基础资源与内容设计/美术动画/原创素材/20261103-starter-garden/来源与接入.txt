@@ -1,0 +1,13 @@
+素材：foliage-cluster-v01.png
+版本：2026-11-03 / v01
+用途：悠悠桃源独立实机美术样板中的树冠与灌木叶簇贴图。
+生成方式：本聊天内置imagegen；透明背景；无参考图片；未使用CLI/API回退。
+完整最终提示词：同目录imagegen-prompt.txt。
+来源文件：C:/Users/nkuwz/.codex/generated_images/01a19d92-f6af-72d0-a37f-26ac659be5bf/exec-9dbf4e91-a37c-4bcf-b2c2-674f999d6e92.png。
+实际尺寸：1254×1254，32位ARGB；角落像素Alpha=0。
+源图与工程副本逐文件SHA256核对一致。
+工程位置：03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/ArtPreview/Textures/foliage-cluster-v01.png。
+接入方式：Godot运行时加载PNG、生成mipmap，作为StandardMaterial3D透明裁剪纹理，批量放置于三维树冠中的叶簇平面。
+变更：原始PNG无裁剪、重绘或压缩修改；mipmap仅在运行内存生成。
+授权标记：AI生成素材，适用生成服务条款；不是第三方CC0下载，不虚构作者许可。
+适用边界：只用于独立美术样板；未替换主游戏树木资源，未宣称通过所有视角或性能验收。

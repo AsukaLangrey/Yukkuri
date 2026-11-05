@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "design_version": "v04",
+  "status": "proposal_not_implemented",
+  "date": "2026-11-03",
+  "units": {
+    "name": "D",
+    "definition": "成年悠悠静息身体直径，不含帽饰、动作与形变",
+    "existing_engine_mapping": null
+  },
+  "axes": {
+    "x": "图右为正",
+    "z": "图下为正",
+    "y": "向上"
+  },
+  "image_geometry": "鸟瞰艺术示意，不可用图片像素反推坐标",
+  "starter": {
+    "boundary_xz": [
+      [
+        -11,
+        -10
+      ],
+      [
+        -3,
+        -10
+      ],
+      [
+        0,
+        -8
+      ],
+      [
+        9,
+        -8
+      ],
+      [
+        12,
+        -3
+      ],
+      [
+        12,
+        5
+      ],
+      [
+        9,
+        9
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        -7,
+        8
+      ],
+      [
+        -11,
+        3
+      ],
+      [
+        -12,
+        -3
+      ]
+    ],
+    "primary_path_clear_width": 2.5,
+    "minor_path_clear_width": 1.8
+  },
+  "objects": [
+    {
+      "id": "starter_cottage",
+      "center_xz": [
+        -7,
+        -6
+      ],
+      "outer_size_xz": [
+        6.4,
+        5.6
+      ],
+      "interior_size_xz": [
+        5.6,
+        4.8
+      ],
+      "door_facing": "+Z",
+      "door_clear_width": 2.8,
+      "door_clear_height": 2.4,
+      "proposed_sleep_slots": 3
+    },
+    {
+      "id": "door_ramp",
+      "center_xz": [
+        -7,
+        -2
+      ],
+      "size_xz": [
+        3,
+        2.4
+      ],
+      "rise": 0.2,
+      "entrance_edge_z": -3.2,
+      "exit_edge_z": -0.8
+    },
+    {
+      "id": "outdoor_cushion",
+      "center_xz": [
+        -10,
+        -2.1
+      ],
+      "size_xz": [
+        1.6,
+        1.4
+      ]
+    },
+    {
+      "id": "food_bowl",
+      "center_xz": [
+        -5.5,
+        0.6
+      ],
+      "diameter": 0.8,
+      "rim_height": 0.08,
+      "approach_center_xz": [
+        -5.5,
+        1.5
+      ],
+      "approach_clear_radius": 0.7
+    },
+    {
+      "id": "water_bowl",
+      "center_xz": [
+        -3,
+        0.6
+      ],
+      "diameter": 0.9,
+      "rim_height": 0.08,
+      "approach_center_xz": [
+        -3,
+        1.5
+      ],
+      "approach_clear_radius": 0.7
+    },
+    {
+      "id": "shade_tree",
+      "center_xz": [
+        4,
+        -3
+      ],
+      "trunk_radius": 0.65,
+      "canopy_radius": 4.8,
+      "canopy_collision": false,
+      "canopy_occlusion_fade": "待实现验证"
+    },
+    {
+      "id": "activity_meadow",
+      "center_xz": [
+        2,
+        4.5
+      ],
+      "clear_size_xz": [
+        9,
+        5
+      ],
+      "purpose": "开放活动与自由移动，不设置固定硬障碍"
+    },
+    {
+      "id": "expansion_gateway",
+      "center_xz": [
+        -9,
+        5.5
+      ],
+      "clear_width": 3,
+      "direction": "西南"
+    },
+    {
+      "id": "arrival_path",
+      "boundary_anchor_xz": [
+        2,
+        9.75
+      ],
+      "clear_width": 2.5
+    }
+  ],
+  "cottage_sleep_slots_local_xz": [
+    [
+      -1.8,
+      -1.1
+    ],
+    [
+      0,
+      -1.1
+    ],
+    [
+      1.8,
+      -1.1
+    ]
+  ],
+  "first_expansion": {
+    "id": "garden_plot_01",
+    "status": "locked_natural_land",
+    "center_xz": [
+      -15,
+      9
+    ],
+    "size_xz": [
+      8,
+      7
+    ],
+    "connector_centerline_xz": [
+      [
+        -9,
+        5.5
+      ],
+      [
+        -10,
+        6.5
+      ],
+      [
+        -11,
+        7.5
+      ]
+    ],
+    "connector_clear_width": 3,
+    "progression": [
+      "土地开放",
+      "地面整理",
+      "设施建造"
+    ],
+    "currency_cost": null,
+    "material_cost": null
+  },
+  "visual_materials": {
+    "ground": [
+      "草地",
+      "夯土",
+      "少量石边"
+    ],
+    "structure": [
+      "暖木",
+      "灰褐瓦或木瓦",
+      "编织软垫"
+    ],
+    "future_land": "低饱和自然地貌；规划建筑仅在规划预览中显示"
+  },
+  "validation": "未经碰撞、寻路、镜头和收支验证；所有尺寸可在简模阶段调整"
+}

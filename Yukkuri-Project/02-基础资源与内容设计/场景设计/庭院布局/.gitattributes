@@ -1,0 +1,2 @@
+# Planning images are published directly through the GitHub connection.
+*.png -filter -diff -merge -text

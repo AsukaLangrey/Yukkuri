@@ -1,0 +1,34 @@
+Use case: stylized-concept.
+Create ONE polished landscape Chinese game environment planning board, titled "悠悠庭院 · 俯视布局 V01". This is a true straight-down orthographic TOP VIEW layout, not an isometric view and not a scenic perspective. Use the attached courtyard artwork ONLY as reference for warm painterly textures, natural colors and head-only Yukkuri character identities. Replace its spatial arrangement entirely with the exact current-game layout below.
+Composition: warm ivory sheet, large SQUARE plan at left occupying about 72% of width, slim clean annotation column at right. Elegant fine technical lines and restrained Chinese sans-serif typography paired with beautiful hand-painted garden textures. No inset scene or duplicate maps. Large legible text. Grass, pale soil, weathered wood, watercolor canopy textures, blue-green river. Simplified translucent tree canopies with trunk center dots. Main focus is clear production planning.
+Plan coordinates: x increases right; z increases downward; top = -Z and bottom = +Z. Square playable bounds x,z from -11.314 to +11.314, dimension "22.63 世界单位" along top and left. Origin center cross labeled "(0,0)". Small edge ticks -10,-5,0,5,10, and a simple 0–5 unit scale. Do not use meters or imply real physical scale. Boundary thin muted wood fence.
+EXISTING elements must use solid teal numbered markers and teal leader lines:
+01 Small shared wooden hut centered (x=-0.30,z=-5.00), footprint 4.13 wide by 4.29 deep: place in upper middle, spanning x=-2.36 to1.76 and z=-7.15 to-2.85. Show roof ghosted/cutaway, entrance at its bottom edge opening toward +Z, five modest sleeping slots inside. NO large human house. Doorway clear width 3.47. Clear entrance forecourt extending down to z=-1.60: no rocks, plants, furniture or stepping stones blocking this space. Label "01 合住小屋" and small "最多 5 只".
+02 Two existing ground cushions centered (-4.30,-2.00) and (4.30,-2.00). Label together "02 休息软垫".
+03 Eastern river strip: blue water ONLY on far RIGHT of plan, east of gently curving bank x = approx 8.98 plus/minus .23, running full height. Rest of square is dry land. A drinking-source marker at (9.20,3.25), accessed from dry west bank. Label "03 河岸饮水点". Do not turn river into a decorative bowl, pond or safe drinking fountain. Thin blue hazard hatch on water.
+04 Four existing trees at (-9.48,-6.79), (-8.06,-9.48), (3.82,-9.76), (-9.76,6.51). Respect all four tree trunk positions, no extra trees inside navigable space. Canopies understated so ground visible. Label "04 保留树木".
+05 Open central activity ground from approximately x=-6 to6 and z=-1 to5, nearly empty, with only three very small head-only Yukkuri scale markers at (-2.7,0), (0,.5), (2.7,.4). Two black-haired red ribbon heads, one blonde black witch-hat head, no torsos or limbs. Label "05 中央活动区".
+PROPOSED additions use distinctly AMBER DASHED outlines and amber numbered markers, visibly different from existing solid teal:
+06 At southwest-central area place small food dispenser at (-5,3) and clean water dispenser at (-2,3), outlets toward +Z, low objects well separated. These are supported game props but their placement is a proposal, not initial objects. Label "06 食水设施 · 建议摆位".
+07 In lower-left dry area x=-7 to-4,z=6 to9 draw a modest dashed amber rectangular garden bed, muted and semi-transparent, label "07 菜圃 · 美术预留". No claim that farming exists.
+Light dotted amber circulation arrows from central open area toward hut forecourt, proposed feeding area and dry river approach; do NOT cross hut walls, tree trunks or water. These represent recommended clearance, not implemented routes. No hard paving fences that split open space. On river side keep open dry stopping space.
+Right annotation column use exactly these concise texts organized with spacing:
+"工程基准"
+"01 合住小屋"
+"中心 (-0.30, -5.00)"
+"占地 4.13 × 4.29"
+"门朝 +Z，门前留空"
+"02 两处软垫"
+"03 东侧河流与饮水点"
+"04 四处树木"
+"05 中央活动留白"
+then
+"设计建议"
+"06 食水设施建议摆位"
+"07 菜圃仅作美术预留"
+"虚线：建议通行留白"
+then small legend teal solid dot "现有布局" and amber dashed square "新增提案".
+Footer short two lines:
+"依据当前工程源码绘制 · 新开局基准"
+"俯视规划图，非游戏截图；新增提案未接入"
+Style must be crisp professional art-direction plan with pretty hand-painted garden surfaces, accurate layout, thoughtful whitespace and highly readable hierarchy, not dense tiny text. Keep the square plan itself undistorted. Do not add a compass claiming geographic north. Do not add UI panels from game, large veranda house, extra buildings, bridges, decorative paths blocking doors, or invented implemented systems.

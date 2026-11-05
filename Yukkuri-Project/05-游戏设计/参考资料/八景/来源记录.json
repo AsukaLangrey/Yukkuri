@@ -1,0 +1,39 @@
+{
+  "title": "ゆっくり八景体験版LAST",
+  "downloadedAt": "2026-11-01T16:41:33.7013786Z",
+  "recordedAt": "2026-11-02T00:45:18.1833311+08:00",
+  "machine": "SHIKI-5060TI-PC",
+  "repositoryHead": "988751c4c349b46c64348571b6f83f4541f55849",
+  "workingTree": "已有其他任务未提交改动；HEAD不是完整工作区快照",
+  "author": "YOU / えんじ色工房",
+  "officialStore": "https://booth.pm/ja/items/1727554",
+  "authorHomepage": "http://ennjiiro.seesaa.net/",
+  "demoEntry": "https://ux.getuploader.com/ennji/",
+  "resolvedUploader": "https://uu.getuploader.com/ennji/",
+  "downloadPage": "https://uu.getuploader.com/ennji/download/369",
+  "publisherUploadTimeAsDisplayed": "2019/11/02 21:40:02（页面未注明时区）",
+  "archiveRelativePath": "本机文件/ゆっくり八景体験版LAST.zip",
+  "archiveBytes": 79138247,
+  "sha256": "3719684d6694bbd9830eac7a576aa465635802aed25fb44ebee7609db11c7747",
+  "md5": "c13dbc909d914356341a120dfa90850b",
+  "publisherMd5": "c13dbc909d914356341a120dfa90850b",
+  "publisherMd5Matches": true,
+  "zipEntries": 1228,
+  "extractedFiles": 1221,
+  "uncompressedBytes": 421191719.0,
+  "filenameAndTextEncoding": "CP932",
+  "manualHtmlFiles": 23,
+  "gameExecuted": false,
+  "studyMethod": "随包手册、菜单、提示、更新记录、版权文件静态阅读；查看随包手册图片",
+  "versionCaveat": "2019体验版LAST；不能等同商店2021正式版1.12b，也不能与八景U测试版混用证据",
+  "otherOfficialRelease": {
+    "url": "https://booth.pm/ja/items/4001022",
+    "observedFiles": [
+      "テスト版ゆっくり八景U.v9.9.zip",
+      "テスト版ゆっくり八景U.v10.0.zip"
+    ],
+    "downloaded": false,
+    "reason": "下载入口要求登录，本轮已取得原版官方体验版"
+  },
+  "rights": "原始程序、台词、美术和第三方资源仅保留本机参考；未接入本作或提交公开仓库，完整保留随包版权说明"
+}

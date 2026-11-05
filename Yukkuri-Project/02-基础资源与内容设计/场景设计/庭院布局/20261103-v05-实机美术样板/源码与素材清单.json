@@ -1,0 +1,42 @@
+[
+  {
+    "path": "src\\Yukkuri.Game\\ArtPreview\\GardenGround.gdshader",
+    "bytes": 1161,
+    "sha256": "fe487322db8c52fab637e5b7a5299181d9b9b994a3499d0c5ae33a34b75e9c4e"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ArtPreview\\GardenWood.gdshader",
+    "bytes": 430,
+    "sha256": "af1268614c01af9674166a844cc116031e7ed50c92398ae9cb6d0dc709419f73"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ArtPreview\\StarterGarden.gd",
+    "bytes": 28969,
+    "sha256": "1d4bf2f35785f25815b4977c3e9ada58e46a5bf07f3b689c6382090f72b153d0"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ArtPreview\\StarterGarden.tscn",
+    "bytes": 189,
+    "sha256": "3ca26be2caea2630cbdec5a9cf6b97ef8be7d37f53496151cc51718d53f0f7ca"
+  },
+  {
+    "path": "src\\Yukkuri.Game\\ArtPreview\\Textures\\foliage-cluster-v01.png",
+    "bytes": 1907076,
+    "sha256": "ae74fc985b9dc7bcc8f243cc83ec2e97ca57af508405651d4b3285deaff0d1f3"
+  },
+  {
+    "path": "tools\\render-starter-garden.ps1",
+    "bytes": 3052,
+    "sha256": "8cd8febf0f1ac9807ec8fafb7d8a8603bc82d7310463dee18493017edcdbc713"
+  },
+  {
+    "path": "tools\\preview-starter-garden.ps1",
+    "bytes": 875,
+    "sha256": "e1ca6302adcf5dc94221170b355fe22451c834fc43a04c9a26dd608333f8a9e7"
+  },
+  {
+    "path": "Preview Starter Garden.cmd",
+    "bytes": 106,
+    "sha256": "0fa2f97f9aaf6d9406a07eca31ea6e1ec69c42ba81c711e6195f37bdd7b88a53"
+  }
+]

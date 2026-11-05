@@ -1,0 +1,617 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-06",
+  "timezone": "Asia/Shanghai",
+  "base_commit": "988751c4c349b46c64348571b6f83f4541f55849",
+  "scope": "本次策划同步文件；不含清单自身，START-HERE仅含本次新增导航；配图直接作为Git二进制",
+  "files": [
+    {
+      "path": "01-世界观设定/分类说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1038,
+      "sha256": "d4abfc899900996326ed050edc6ef7473ecd6707e1e99eb40c2ec9d26832973f",
+      "git_blob_oid": "448a001e03e8d860429ef8142562daab347da8c4"
+    },
+    {
+      "path": "01-世界观设定/核心世界观-v001.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 15282,
+      "sha256": "3d836556ddf8430a926ca6f02d8e7a36a884125285a1febae4983a7b8ceda4d0",
+      "git_blob_oid": "5153495641c9965024fa3e762b50397634d5dd7d"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/分类说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1140,
+      "sha256": "3f6832d2caa5d7e03199f9d8fc90c4363fe82f19bbb547aad1685483eb999585",
+      "git_blob_oid": "7e721f05a1a8918c8ddfa3d8f4da8b864bba59ca"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/.gitattributes",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 105,
+      "sha256": "f317aea1ad6a8784e2bc540983029145e9425ca54d2208cc12d4462abea1c1d0",
+      "git_blob_oid": "8a63e8baa048454ad71c8633c23272ec0119019b"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v00-氛围参考/悠悠庭院-午后日常-v00.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 3271138,
+      "sha256": "e68810cf2015ccab03125779f2a6aae5bfa28f3b5ec354e55e739e3bc4dc27a4",
+      "git_blob_oid": "9730a13c33dda5f96362d7144c6795fb77b15fee"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v00-氛围参考/imagegen-prompt.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2333,
+      "sha256": "dd6bd638ac2170f8dd90eab1790dc1f4f9357fb3d2b6be6c2dbf953b30c082bb",
+      "git_blob_oid": "fbaf7729cfeb1c6fd5a7e272c2a2a8e6bbd8cd6a"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v01/旧工程庭院布局-v01-未采用.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 2832930,
+      "sha256": "5b471fe66a13ab9859d3f26d0178f02e0e21191df8b2dde060525b9e0509c142",
+      "git_blob_oid": "f0b4781c2db372f2b2843b38969efe6971c9e0db"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v01/imagegen-prompt.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 4849,
+      "sha256": "66cb5b71d8cb4379195604aaada39397f0f04b4ecef94dce635e4539cc82375f",
+      "git_blob_oid": "0678071b987e1e744bcb7f7b74d16f1c197738e0"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v02-悠悠桃源/设计说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1910,
+      "sha256": "5b1d559cf4c15d7565841c074509b3c2a47363d54e84c1dd01e960898621c9f2",
+      "git_blob_oid": "75654db4837ffade1cf8fdaf054d32a92b20ddea"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v02-悠悠桃源/悠悠桃源-鸟瞰布局-v02.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 4240432,
+      "sha256": "7d5cf05f9f793ba14236188a57c4249d0eab54ac21f1b816a7efe9c00fdc2463",
+      "git_blob_oid": "7d64bb0afa3be264be3d7e340136edecca25eef3"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v02-悠悠桃源/imagegen-prompt.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 6357,
+      "sha256": "803a60cb03bef5baa164437a4450c9bc8edff8a7df7977f7f4c79b5f37895763",
+      "git_blob_oid": "114b3f66570939c4414da60addf69bb348ecdcc5"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v03-分期扩建/初始区域与扩建方案.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 3558,
+      "sha256": "e12ee188cfd92ba5b334bc6a2531e4111850efcdae73446cbdfca1cd161faa5d",
+      "git_blob_oid": "f8ffffd4e540600a4eb3733c28a2fea376905f74"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v03-分期扩建/悠悠桃源-分期扩建-v03.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 3710143,
+      "sha256": "fd1e73da81672d01221a1eea2fea184c04cf73116990d4e314d4b63c5937a114",
+      "git_blob_oid": "7f9c6da9feabcebb3fcc1f9558c08546dcdf1111"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v03-分期扩建/imagegen-prompt.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 4045,
+      "sha256": "5e3c18c762d6990d69746af2c30dfab3b3eaadafb8bc507e9896da2bab5d3e9a",
+      "git_blob_oid": "17d893429fbe79a1798cf3e5c95aa997d6a9f4f7"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v04-初始区域深化/布局参数.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 3989,
+      "sha256": "744c3fc97603f45aa2ead5042bdf10ded606b5df63af06e10b10ab749fcb2705",
+      "git_blob_oid": "e54ceb1702969d556ed252c0245017b9f8558b9a"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v04-初始区域深化/简模验证清单.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1880,
+      "sha256": "cd0c08f80f1830bcc2d88241b73695c53fa21028b8c5958e0c73d802b892309d",
+      "git_blob_oid": "12bbab018dcde20f328becac7eda515975be908e"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v04-初始区域深化/开局生活与首次扩建.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2604,
+      "sha256": "3a67c67884b18a1881b25928c03c14398b16e76809d8217327ed9d46c12d36ed",
+      "git_blob_oid": "f4c953743762ae3aa571c6e737d3e09384a5aabf"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v04-初始区域深化/设计定稿说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 3390,
+      "sha256": "8c0f0e3193b7723e32af37d602c81e8baf2b29764749e0b28fdd2d57ec3a000a",
+      "git_blob_oid": "e893f42f1223f9f82104066ab3fc4674edbfe878"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v04-初始区域深化/素材清单.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2374,
+      "sha256": "2e4a5c3d67a1ec2d5e47a41db9d47bcb62916778b0654270c5dc7ef5f6770c66",
+      "git_blob_oid": "3709cb89d532cbea9c42c5f32f992e47ff34b151"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v04-初始区域深化/悠悠桃源-初始庭院设计-v04.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 3608239,
+      "sha256": "4f976b4b1ab1bad8268f40610e8cf224b722cd2fabae6db6b1d94d4ca270b637",
+      "git_blob_oid": "fe63a7a286938ba3dea45a9f47643f8ff2c6cb55"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v04-初始区域深化/imagegen-prompt.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 5620,
+      "sha256": "a1431e6a31bb32fc000aab5506d950461bb8b09c0e1af8ff4d1cc5bd8276c9e4",
+      "git_blob_oid": "2a25ca5f490439f9edf0537cd3ef57f0ed4e31b7"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/01-garden.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 3011329,
+      "sha256": "7ce778c3837943d661410ca56cb450022de3654aff0c773f9fba19c5faa6e413",
+      "git_blob_oid": "a2cb4a1e8c64f95a427cd7a5f40e9b62499e0ae9"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/02-cottage.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 2996766,
+      "sha256": "e6ad8548eb0f832bab19178b3576acf13ac27e16e560c4040fcc955fa3667ee4",
+      "git_blob_oid": "a76236e0cb3b1b1832b005d046f6b1419bda63ac"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/03-food-water.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 2517740,
+      "sha256": "324f257595ba36e0c99c1a1290ee2e62c3006338cc248f0fe9fc77efe522c3f0",
+      "git_blob_oid": "6eddb8ffa2740a7d058dba3bf61dafd4b425bc4c"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/04-roof-open.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 3268637,
+      "sha256": "b5cfe1b360f4bddbd2bfc5c77dd85f430c8df7e151e51856e23e4e812db12e1a",
+      "git_blob_oid": "9df6e1023186e2e35e0758e8b2a46df28efa38c4"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/05-overhead.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 2936188,
+      "sha256": "def4041d52f3ea1196df819b97adb148cbd8472fc5322da2766606793b59696f",
+      "git_blob_oid": "99135feac2234a068eb12f5cc25d911a0854e8e9"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/实机样板说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 4262,
+      "sha256": "73db9dedea699f9015ad00d74291b50521083bedcc49777237bfce4894be772f",
+      "git_blob_oid": "3c07cda865639f910be6e54e9e79ef4d23da855f"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/源码与素材清单.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1356,
+      "sha256": "493173b949953b42ae14c8a4e8ddc94a1f58e3248e54009d8a0b1ba039a4f868",
+      "git_blob_oid": "6c410b2c597a5f283d9749d08199abe1fb57094c"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/render-report.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2314,
+      "sha256": "93bcb106fda422ab6f2cc306d36936531cf7fb2e1d38ac02557c889536da7346",
+      "git_blob_oid": "1b016f5f532bb49297f7e9005b8c5a991641f042"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/20261103-v05-实机美术样板/request.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1249,
+      "sha256": "c328660be7b14daebc1169106d752e5131c5f7e5353e8517fd82864d6562c658",
+      "git_blob_oid": "685bee4ef6ce57f0546b7790db2d153f47a1dbc7"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/归档清单.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 5418,
+      "sha256": "a788a637d5865315fc3183382490b793c8c400dd0d2a759fc40dc04ffc6b5b11",
+      "git_blob_oid": "da91b9d4522f28af5ee886f55d87dca4cd6b92ec"
+    },
+    {
+      "path": "02-基础资源与内容设计/场景设计/庭院布局/设计档案索引.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 3901,
+      "sha256": "1a226bdb4e9ac8eee5e26b19a4d4b175b583b1cdc5a6e9a61fddb320fe235257",
+      "git_blob_oid": "48687a89bc82114918b384281d6b6da2d702957d"
+    },
+    {
+      "path": "02-基础资源与内容设计/界面管理/布局与组件规范.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 11001,
+      "sha256": "4d72b1f17ea7c45104d6332f1dcebcf95471c8e97273a03b9f56430895c1b0f6",
+      "git_blob_oid": "3c60bf639af0df9a0bed09a99352888576ca7af4"
+    },
+    {
+      "path": "02-基础资源与内容设计/美术动画/分类说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1055,
+      "sha256": "d79e9113331b50696c54345225c3a99074f8d408d45a44cf06047f1dad6963c2",
+      "git_blob_oid": "5150bc1e6f3485490bfc65098038a4afb0747d98"
+    },
+    {
+      "path": "02-基础资源与内容设计/美术动画/原创素材/20261103-starter-garden/.gitattributes",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 93,
+      "sha256": "e2fcc3bb752b764a29540dbdcf136fe617d6feaf13c7eaa62857eea81616cbb0",
+      "git_blob_oid": "06b96e1a4cd71cd08c815513b2780f0f19681e1f"
+    },
+    {
+      "path": "02-基础资源与内容设计/美术动画/原创素材/20261103-starter-garden/来源与接入.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1155,
+      "sha256": "d1edc299b52aae3743c3c7b951b60ea1fd2425efef481df80301f7492706a123",
+      "git_blob_oid": "a02b65b226f3b076761801c7645870a27686ba81"
+    },
+    {
+      "path": "02-基础资源与内容设计/美术动画/原创素材/20261103-starter-garden/foliage-cluster-v01.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 1907076,
+      "sha256": "ae74fc985b9dc7bcc8f243cc83ec2e97ca57af508405651d4b3285deaff0d1f3",
+      "git_blob_oid": "3dd77308a08757f53f5d2867172f73cf1542780f"
+    },
+    {
+      "path": "02-基础资源与内容设计/美术动画/原创素材/20261103-starter-garden/imagegen-prompt.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1273,
+      "sha256": "b5ac2f075ba57cc07577618fd273cb3ee7a77064d5e8286756c3c9d75705b1ba",
+      "git_blob_oid": "835ee1e0881b3b71a3d963ae6ef985e91823642f"
+    },
+    {
+      "path": "03-技术与项目保障/项目管理/问题记录/20261102-界面与建模反馈/.gitattributes",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 105,
+      "sha256": "9b09b6a44ee49ac90315bfe484cd6e4fe618ccc0dca4488d5e96be7b6091d59f",
+      "git_blob_oid": "84b9e2c5c8202327ab0f4f2c2fe99b1a125d542b"
+    },
+    {
+      "path": "03-技术与项目保障/项目管理/问题记录/20261102-界面与建模反馈/待处理问题.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 5593,
+      "sha256": "302b8a71f5833f6c366a6d979bc18f044dc0bd5e2416822fc8903b134d9f857b",
+      "git_blob_oid": "6f2c0975ba31637bc40905bc3eb0b2021c7305ac"
+    },
+    {
+      "path": "03-技术与项目保障/项目管理/问题记录/20261102-界面与建模反馈/建模问题-用户标注.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 45097,
+      "sha256": "2f86a2c3a314979a1feae2b4b5e331e754c46ad3da67a73ced8655a64bf4d816",
+      "git_blob_oid": "47000668ab073c1cef8039e2b368a3d18d59a7e2"
+    },
+    {
+      "path": "03-技术与项目保障/项目管理/问题记录/20261102-界面与建模反馈/属性栏拥挤-用户截图.png",
+      "storage": "git",
+      "normalization": "raw",
+      "bytes": 14714,
+      "sha256": "d060d9cb19643f4fd217e780c831df0155cbba01ffd50b39bab1ab1786702512",
+      "git_blob_oid": "0f2dde9dba2a53e87381e88258e820353e2b16b0"
+    },
+    {
+      "path": "03-技术与项目保障/项目管理/问题记录/20261102-界面与建模反馈/完整待办-线程交接.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 4011,
+      "sha256": "e6afd406234468b2092abe7ab6e92f6c2b53dce122270231c77472b0096cf9a0",
+      "git_blob_oid": "fcafefb7a0c6bc5ff8bbd456e0371ca86e4688b2"
+    },
+    {
+      "path": "03-技术与项目保障/项目管理/整理记录/20261106-策划案同步/整理说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 3004,
+      "sha256": "966993616f4337c2c99c8c75d427424cc0255051e137b467a937fe81df972da1",
+      "git_blob_oid": "492b5cbcf24532cf2cc9141007c88f0154be1ecb"
+    },
+    {
+      "path": "04-核心玩法系统/01-油个体设计/分类说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1538,
+      "sha256": "d3367d36bb762e85acbf5bd0ec63faeb93fd56934bcaff3d50c69225c6c817eb",
+      "git_blob_oid": "1f163db6b635114d97fc811319e0b9d8ae9326b7"
+    },
+    {
+      "path": "04-核心玩法系统/01-油个体设计/设计草案/玩法与数值联审记录-v001.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 6395,
+      "sha256": "529d54fff74077a5663ade756e872b43048fe001a7c60b1979872728e5243776",
+      "git_blob_oid": "a829ecd6a545f66ebac04951c5f9b65348b5cfc5"
+    },
+    {
+      "path": "04-核心玩法系统/01-油个体设计/设计草案/油个体状态与成长阶段-数值联审-v001.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 38795,
+      "sha256": "c950155c2f551baf9c67b066e3c04c1b948b2308117a0e4b136a6bd4a80b3588",
+      "git_blob_oid": "8c0fedd8a604f62fb93fb74adfee8029ac65336f"
+    },
+    {
+      "path": "04-核心玩法系统/01-油个体设计/设计草案/油个体状态与成长阶段-v001.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 28539,
+      "sha256": "b548b2ebeb7958038df442bc28313a5bc43bf17ebca52ae9fc5f0582bcf93992",
+      "git_blob_oid": "8a0ae03b863d7757f1f67afd13f5d5a521d745a6"
+    },
+    {
+      "path": "04-核心玩法系统/01-油个体设计/现状审计/20261103-个体状态设计与实现审计.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 18291,
+      "sha256": "fb666f03b50fa0ff4e52d7b30199650b8e0ec69b37df3fefc95dcc5c5d223136",
+      "git_blob_oid": "ccea479f1b50b07656369b5ed2c34a4c89737903"
+    },
+    {
+      "path": "05-游戏设计/参考资料/八景/本机文件/.gitignore",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 14,
+      "sha256": "240a3e0d37d2e86b614063f5347eb02d4f99ca6c254de6b82871ff8d95532a7d",
+      "git_blob_oid": "d6b7ef32c8478a48c3994dcadc86837f4371184d"
+    },
+    {
+      "path": "05-游戏设计/参考资料/八景/对标补充.tsv",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 3718,
+      "sha256": "1fb5656e4bcc4d265eaaa6e5e4fd56be1d81571bd66ed91dbab1040e56e214bf",
+      "git_blob_oid": "3825fb1fdd0ee5417f2d8ddfad18e84c951473a3"
+    },
+    {
+      "path": "05-游戏设计/参考资料/八景/来源记录.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1949,
+      "sha256": "75656604b7ca0c2ef825ea6a81324ce9fc6df5f83a17f630c5cc243e4bf73d07",
+      "git_blob_oid": "0fad07236d500146f6fa620899e9a9924c89e795"
+    },
+    {
+      "path": "05-游戏设计/参考资料/八景/学习笔记.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 7825,
+      "sha256": "ebdc5fcd8744d411c35c671130a3596a0b53f46d0e3a3f5394cf1785f7d90a66",
+      "git_blob_oid": "f087238d4b26a15d1be4c738517fb47a03a245c3"
+    },
+    {
+      "path": "05-游戏设计/参考资料/八景/阅读入口.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2540,
+      "sha256": "79673f4f5c081ba4ddc9e08c1829de901610aa1606b24a0e3acaef083724e456",
+      "git_blob_oid": "522de4c83cf0dc429fa556809510e55d12a3e4a5"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/.gitignore",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 17,
+      "sha256": "e477ebc473eb803a828384de1d0990f2966fc29f4fb140f49ef3f839392be7e3",
+      "git_blob_oid": "93f5b94f18ac5ac765c0de48da62130a9ca50e97"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/收集清单.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1331,
+      "sha256": "d140d091503aa88cf66c80d39fd085e4397b511f0afc49769603acd4b82f180b",
+      "git_blob_oid": "a535767ddc2f4fbde26ef906bc85eb2f52bfaf5c"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/油库里观察-DWilderness/参考说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1240,
+      "sha256": "e5925020047af39ea207815fb54f54b5f2c61eca85546bb9a2312978120a2e42",
+      "git_blob_oid": "91688d3787477f6b6947ab62a16da82766e08bf1"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/油库里观察-DWilderness/来源记录.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 562,
+      "sha256": "f315887e74174d00b3e4fd9668c6931c8690fdc9fa6e3e9ac285d0aebbcfac4a",
+      "git_blob_oid": "e30f2d1b28ad4dcc91420cf47f4238c7f2e872b8"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/油库里日记/参考说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1511,
+      "sha256": "0402e74d3315170c214a7eb6be5ac2fbf777aaed7f41350b973b5b99a70fe88a",
+      "git_blob_oid": "8a06ce0a06610547978ac3c788e0c7a081710c01"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/油库里日记/来源记录.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1280,
+      "sha256": "d506cb4e7a8ad316ae6f5acfc363c28820421c3a6cc4d82ecc1149c2fb9034c3",
+      "git_blob_oid": "71ec4ff2bdc581f4c5bd4d7a27c2be009e08b46c"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/阅读入口.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2138,
+      "sha256": "79a15523cdd0057bb312a71404ba06b4505e9c9d93401d2e33e57587819b6be7",
+      "git_blob_oid": "a887166c5c3a9b1c432df5da9345676af46fa72f"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/SimYukkuri2021/参考说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1476,
+      "sha256": "5089d44f920414a6b4472facb98018019d6c2388cd62ed0dffab27cf93eb713e",
+      "git_blob_oid": "0c50bc7f89bd05d6719ad1c191ec8dcfd13b3330"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/SimYukkuri2021/来源记录.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1298,
+      "sha256": "94de36ee41b6f1120906951c77dbe567b01e459fe0ad7f543b795895cdc74f15",
+      "git_blob_oid": "595d1c636138f77526fc07167ad6b17cc2ba1a7d"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/Touhou-Garden-of-the-Yukkuri/来源记录.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 283,
+      "sha256": "19be96df0a8340fdd7c2448383d833e0d5ae5a2dbbe541d04fd11612fcd47163",
+      "git_blob_oid": "05b8e453d06c10399a8a4940e480e1d3623bd650"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/YUKKURI-JUNGLE/参考说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1051,
+      "sha256": "7ae63948815e699a2e7fed4c2692f1592f6b08aa303f2607660b213c56d2f366",
+      "git_blob_oid": "fc814c3917964b936e9b99619445087e670321a0"
+    },
+    {
+      "path": "05-游戏设计/参考资料/其他油作品/YUKKURI-JUNGLE/来源记录.json",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 528,
+      "sha256": "182d3e6cf61270dbb7b2144b369f0a5f499c96abb69c806032adf3f77e951257",
+      "git_blob_oid": "34b81d492188410215bb40371e64ccf19b32ff76"
+    },
+    {
+      "path": "05-游戏设计/策划案阅读索引.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 6287,
+      "sha256": "bb617b2cf460f0a11b1cebfb0b0857db42e73ec696f5ad907d418edffce93f94",
+      "git_blob_oid": "a5389af5d77e4d5afe7b1af7e6fbf3859ebee6a2"
+    },
+    {
+      "path": "05-游戏设计/分类说明.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 1116,
+      "sha256": "61273cfa2e8f64a7cc430778d44e71d201a5d4c1dc2b37fb86ca82f4c376fe76",
+      "git_blob_oid": "29b1dd42f144ba2a65be3bd9919d7400cc28751e"
+    },
+    {
+      "path": "05-游戏设计/游戏设计总纲.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2974,
+      "sha256": "e10fde336cac199238950211d315b49569d31b8be7d81e6647eaf2c01dad3822",
+      "git_blob_oid": "d36ab71bf128a7994e03943486db8eb523db6a1a"
+    },
+    {
+      "path": "05-游戏设计/整合策划-v0.1-从小院到乐园.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 19328,
+      "sha256": "aec69fc1d1c15a7ec5a60399d494d0b8e8af9f023be40e18ff34edaa3100d19d",
+      "git_blob_oid": "0714c21cfcb5f680a3965d8b3741f5b9a1832ac5"
+    },
+    {
+      "path": "05-游戏设计/自由模式-环境卫生与排泄.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2851,
+      "sha256": "b13796dabeceb8496b90486fa80bdd1261ae8426dc64c16ea5081cdf77208f5b",
+      "git_blob_oid": "89ac1b645ee80e6e735f90d2de3b974b62ad3a8f"
+    },
+    {
+      "path": "05-游戏设计/自由模式-时间与四季.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2078,
+      "sha256": "7bb275be09f5450e312d5cb475f64d7491021d470f26ec29e0b1bf7eb17c7325",
+      "git_blob_oid": "ae44a6b3c8c1a620fc3dc2475479a3df0e9c105d"
+    },
+    {
+      "path": "05-游戏设计/自由模式-小屋与夜间住宿.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2949,
+      "sha256": "95d76ac56b67eb6f7e4760ccf5ffd2d210a1268f44af67f734b8022646a79fe4",
+      "git_blob_oid": "9ec901944d124aee5daf07d9b41e96145208e4da"
+    },
+    {
+      "path": "05-游戏设计/自由模式-行为培养与分工.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 4648,
+      "sha256": "73d8fa351c5ef397b63128be7339c311afde81637fbfcd490f132100bbb44392",
+      "git_blob_oid": "f715b316e45fcba35f4cd50feaf627d756e0377e"
+    },
+    {
+      "path": "05-游戏设计/自由模式-昼夜作息与小屋通行.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 2497,
+      "sha256": "c4b8e0a7075052007c87a385aea445c7b9f9b24dd0d9ff2c6dfae735d604b503",
+      "git_blob_oid": "dc674c1f0e22b5d291e3fae0ce1524562bbdaf2e"
+    },
+    {
+      "path": "START-HERE.txt",
+      "storage": "git",
+      "normalization": "utf8-no-bom-lf",
+      "bytes": 7456,
+      "sha256": "12f04b88e7d2f49a79a43a86e82dbe166610f444d07cae7e88d1a5b5502cdb04",
+      "git_blob_oid": "033a6dbb79bfa0bb145193a9ff9036f9d222d150"
+    }
+  ]
+}

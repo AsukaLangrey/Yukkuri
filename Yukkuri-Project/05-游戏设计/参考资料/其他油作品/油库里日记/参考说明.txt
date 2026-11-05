@@ -1,0 +1,26 @@
+油库里日记｜参考说明
+原名：ゆっくりにっき / Yukkuri Diary
+页面所列开发者：BlueSnow
+状态：Android历史安装包已下载，未安装、未运行。
+
+本机文件
+本机文件/YukkuriDiary-2023.v2.apk：103684826字节，约98.9 MiB。
+本机文件/download-receipt.json：原始下载响应的本机回执，含最终文件来源地址。
+来源记录.json：包名、版本、字节数、SHA256、证书指纹及检查范围。
+
+来源
+官方当前下载渠道未确认。本轮保存的是APKPure第三方历史镜像，不称作官方直下。
+下载页面：https://apkpure.net/jp/yukkuri-diary/jp.gr.java_conf.sakatasnow.YukkuriDiary/download
+页面所列发布日期：2023-06-07。
+社区生态资料：https://w.atwiki.jp/ykansatu/pages/49.html
+社区资料可能混合多个版本，不能直接视为本安装包的实测结果。
+
+文件标识
+AndroidManifest包名：jp.gr.java_conf.sakatasnow.YukkuriDiary。
+versionName：2023.v2；versionCode：45757。
+包内证书SHA1：9b9428d298d523e399bafdbb50f517060064b62b，与镜像下载页所列指纹一致。
+检查读取了全部565个ZIP条目。以上不等于官方原包比对、完整Android签名验证或安全审计。
+
+后续参考方向
+3D空间里的近距离观察、家庭关系、环境影响与自主行为。原作特定规则要与本作已确认的身份、血缘和生活规则分别对照。
+这是Android包，不能当Windows游戏直接启动；本轮未安装模拟器或其他运行环境。

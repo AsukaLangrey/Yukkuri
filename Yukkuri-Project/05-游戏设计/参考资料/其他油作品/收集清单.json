@@ -1,0 +1,41 @@
+{
+  "collectedAt": "2026-11-02T00:56:28.4639265+08:00",
+  "projectHead": "988751c4c349b46c64348571b6f83f4541f55849",
+  "workingTreeCaveat": "其他任务已有未提交改动，本轮只新增参考收集目录",
+  "items": [
+    {
+      "directory": "SimYukkuri2021",
+      "title": "SimYukkuri2021",
+      "status": "downloaded",
+      "source": "https://github.com/sin-orb/Simyukkuri2021"
+    },
+    {
+      "directory": "油库里日记",
+      "title": "ゆっくりにっき / Yukkuri Diary",
+      "status": "downloaded",
+      "source": "https://apkpure.net/jp/yukkuri-diary/jp.gr.java_conf.sakatasnow.YukkuriDiary/download"
+    },
+    {
+      "directory": "YUKKURI-JUNGLE",
+      "title": "YUKKURI JUNGLE",
+      "status": "pending_login",
+      "source": "https://booth.pm/ja/items/2091189"
+    },
+    {
+      "directory": "油库里观察-DWilderness",
+      "title": "ゆっくり観察（D.Wilderness）",
+      "status": "pending_login",
+      "source": "https://booth.pm/ja/items/6954620"
+    },
+    {
+      "directory": "Touhou-Garden-of-the-Yukkuri",
+      "title": "Touhou Garden of the Yukkuri",
+      "status": "cancelled_by_user",
+      "source": "https://store.steampowered.com/app/5159730/"
+    }
+  ],
+  "downloadedGames": 2,
+  "pendingLogin": 2,
+  "cancelledByUser": 1,
+  "gameInstalledOrExecuted": false
+}

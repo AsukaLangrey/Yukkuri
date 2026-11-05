@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-03T03:32:51.8491403+08:00",
+  "machine": "SHIKI-5060TI-PC",
+  "commit": "988751c4c349b46c64348571b6f83f4541f55849",
+  "scene": "res://ArtPreview/StarterGarden.tscn",
+  "renderer": "gl_compatibility",
+  "window": "1440x900",
+  "render_viewport": "1920x1200",
+  "scope": "Standalone art sample; existing uncommitted repository changes present; no save or gameplay integration",
+  "sources": [
+    {
+      "path": "src\\Yukkuri.Game\\ArtPreview\\GardenGround.gdshader",
+      "sha256": "FE487322DB8C52FAB637E5B7A5299181D9B9B994A3499D0C5AE33A34B75E9C4E"
+    },
+    {
+      "path": "src\\Yukkuri.Game\\ArtPreview\\GardenWood.gdshader",
+      "sha256": "AF1268614C01AF9674166A844CC116031E7ED50C92398AE9CB6D0DC709419F73"
+    },
+    {
+      "path": "src\\Yukkuri.Game\\ArtPreview\\StarterGarden.gd",
+      "sha256": "1D4BF2F35785F25815B4977C3E9ADA58E46A5BF07F3B689C6382090F72B153D0"
+    },
+    {
+      "path": "src\\Yukkuri.Game\\ArtPreview\\StarterGarden.tscn",
+      "sha256": "3CA26BE2CAEA2630CBDEC5A9CF6B97EF8BE7D37F53496151CC51718D53F0F7CA"
+    },
+    {
+      "path": "src\\Yukkuri.Game\\ArtPreview\\Textures\\foliage-cluster-v01.png",
+      "sha256": "AE74FC985B9DC7BCC8F243CC83EC2E97CA57AF508405651D4B3285DEAFF0D1F3"
+    }
+  ]
+}

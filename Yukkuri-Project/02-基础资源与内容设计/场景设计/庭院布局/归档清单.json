@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-03",
+  "timezone": "Asia/Shanghai",
+  "scope": "概念设计及V05实机样板证据；不包含清单自身，未提交推送",
+  "files": [
+    {
+      "path": "20261103-v00-氛围参考\\悠悠庭院-午后日常-v00.png",
+      "bytes": 3271138,
+      "sha256": "e68810cf2015ccab03125779f2a6aae5bfa28f3b5ec354e55e739e3bc4dc27a4"
+    },
+    {
+      "path": "20261103-v00-氛围参考\\imagegen-prompt.txt",
+      "bytes": 2333,
+      "sha256": "dd6bd638ac2170f8dd90eab1790dc1f4f9357fb3d2b6be6c2dbf953b30c082bb"
+    },
+    {
+      "path": "20261103-v01\\旧工程庭院布局-v01-未采用.png",
+      "bytes": 2832930,
+      "sha256": "5b471fe66a13ab9859d3f26d0178f02e0e21191df8b2dde060525b9e0509c142"
+    },
+    {
+      "path": "20261103-v01\\imagegen-prompt.txt",
+      "bytes": 4849,
+      "sha256": "66cb5b71d8cb4379195604aaada39397f0f04b4ecef94dce635e4539cc82375f"
+    },
+    {
+      "path": "20261103-v02-悠悠桃源\\设计说明.txt",
+      "bytes": 1910,
+      "sha256": "5b1d559cf4c15d7565841c074509b3c2a47363d54e84c1dd01e960898621c9f2"
+    },
+    {
+      "path": "20261103-v02-悠悠桃源\\悠悠桃源-鸟瞰布局-v02.png",
+      "bytes": 4240432,
+      "sha256": "7d5cf05f9f793ba14236188a57c4249d0eab54ac21f1b816a7efe9c00fdc2463"
+    },
+    {
+      "path": "20261103-v02-悠悠桃源\\imagegen-prompt.txt",
+      "bytes": 6357,
+      "sha256": "803a60cb03bef5baa164437a4450c9bc8edff8a7df7977f7f4c79b5f37895763"
+    },
+    {
+      "path": "20261103-v03-分期扩建\\初始区域与扩建方案.txt",
+      "bytes": 3558,
+      "sha256": "e12ee188cfd92ba5b334bc6a2531e4111850efcdae73446cbdfca1cd161faa5d"
+    },
+    {
+      "path": "20261103-v03-分期扩建\\悠悠桃源-分期扩建-v03.png",
+      "bytes": 3710143,
+      "sha256": "fd1e73da81672d01221a1eea2fea184c04cf73116990d4e314d4b63c5937a114"
+    },
+    {
+      "path": "20261103-v03-分期扩建\\imagegen-prompt.txt",
+      "bytes": 4045,
+      "sha256": "5e3c18c762d6990d69746af2c30dfab3b3eaadafb8bc507e9896da2bab5d3e9a"
+    },
+    {
+      "path": "20261103-v04-初始区域深化\\布局参数.json",
+      "bytes": 3989,
+      "sha256": "744c3fc97603f45aa2ead5042bdf10ded606b5df63af06e10b10ab749fcb2705"
+    },
+    {
+      "path": "20261103-v04-初始区域深化\\简模验证清单.txt",
+      "bytes": 1880,
+      "sha256": "cd0c08f80f1830bcc2d88241b73695c53fa21028b8c5958e0c73d802b892309d"
+    },
+    {
+      "path": "20261103-v04-初始区域深化\\开局生活与首次扩建.txt",
+      "bytes": 2604,
+      "sha256": "3a67c67884b18a1881b25928c03c14398b16e76809d8217327ed9d46c12d36ed"
+    },
+    {
+      "path": "20261103-v04-初始区域深化\\设计定稿说明.txt",
+      "bytes": 3390,
+      "sha256": "8c0f0e3193b7723e32af37d602c81e8baf2b29764749e0b28fdd2d57ec3a000a"
+    },
+    {
+      "path": "20261103-v04-初始区域深化\\素材清单.txt",
+      "bytes": 2374,
+      "sha256": "2e4a5c3d67a1ec2d5e47a41db9d47bcb62916778b0654270c5dc7ef5f6770c66"
+    },
+    {
+      "path": "20261103-v04-初始区域深化\\悠悠桃源-初始庭院设计-v04.png",
+      "bytes": 3608239,
+      "sha256": "4f976b4b1ab1bad8268f40610e8cf224b722cd2fabae6db6b1d94d4ca270b637"
+    },
+    {
+      "path": "20261103-v04-初始区域深化\\imagegen-prompt.txt",
+      "bytes": 5620,
+      "sha256": "a1431e6a31bb32fc000aab5506d950461bb8b09c0e1af8ff4d1cc5bd8276c9e4"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\01-garden.png",
+      "bytes": 3011329,
+      "sha256": "7ce778c3837943d661410ca56cb450022de3654aff0c773f9fba19c5faa6e413"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\02-cottage.png",
+      "bytes": 2996766,
+      "sha256": "e6ad8548eb0f832bab19178b3576acf13ac27e16e560c4040fcc955fa3667ee4"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\03-food-water.png",
+      "bytes": 2517740,
+      "sha256": "324f257595ba36e0c99c1a1290ee2e62c3006338cc248f0fe9fc77efe522c3f0"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\04-roof-open.png",
+      "bytes": 3268637,
+      "sha256": "b5cfe1b360f4bddbd2bfc5c77dd85f430c8df7e151e51856e23e4e812db12e1a"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\05-overhead.png",
+      "bytes": 2936188,
+      "sha256": "def4041d52f3ea1196df819b97adb148cbd8472fc5322da2766606793b59696f"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\实机样板说明.txt",
+      "bytes": 4262,
+      "sha256": "73db9dedea699f9015ad00d74291b50521083bedcc49777237bfce4894be772f"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\源码与素材清单.json",
+      "bytes": 1398,
+      "sha256": "cd0d09dbf14e9fc520c5192ce27a1a32e30abda4dc1fd768414668f8f7b5cabc"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\engine.log",
+      "bytes": 1250,
+      "sha256": "d156dd07a4850178cd7090170ac0f32d8fd3ee132a092fa35dc0e988d904362e"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\render-report.json",
+      "bytes": 2314,
+      "sha256": "93bcb106fda422ab6f2cc306d36936531cf7fb2e1d38ac02557c889536da7346"
+    },
+    {
+      "path": "20261103-v05-实机美术样板\\request.json",
+      "bytes": 1281,
+      "sha256": "cda7a297cab2b3af0edec808fadca9ae760538b6c0e25eac09d91381c6cd632a"
+    },
+    {
+      "path": "设计档案索引.txt",
+      "bytes": 3317,
+      "sha256": "52b8c3ea25c726d6ce32b36645dfff38ab2c4e56325e6248873b01dd1edc6ce6"
+    }
+  ]
+}
