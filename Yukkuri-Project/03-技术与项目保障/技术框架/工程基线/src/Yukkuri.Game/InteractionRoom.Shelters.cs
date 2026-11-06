@@ -14,7 +14,7 @@ public partial class InteractionRoom
     {_placingShelter=false;if(_shelterPlacement!=null)_shelterPlacement.Visible=false;}
     private void ArmShelterPlacement()
     {
-        CancelGesture();ClearShelterSelection();ClearSupplyStationSelection();_selectedDetachedStemEventId=null;
+        _companyFirst=null;CancelGesture();ClearShelterSelection();ClearSupplyStationSelection();_selectedDetachedStemEventId=null;
         Sim.State.Mode=PlayMode.Management;_action=InteractionAction.PlaceShelter;
         _group=InteractionCatalog.Group(_action);_directToolMode=false;
         _title.Text=_group.Name+" · "+InteractionCatalog.Choice(_action).Label;_hint.Text=ToolHint(_action);

@@ -1,0 +1,177 @@
+{
+  "diagnostic_protected_headless": [
+    {
+      "name": "company-selection",
+      "exit_code": 0,
+      "checks": 31,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "4B1E268231D19EB59B349BFEF9D16588EE6B3CE7E7CA2CF00C4EE06C8D69473C"
+    },
+    {
+      "name": "selection",
+      "exit_code": 0,
+      "checks": 24,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "4B1E268231D19EB59B349BFEF9D16588EE6B3CE7E7CA2CF00C4EE06C8D69473C"
+    },
+    {
+      "name": "restart",
+      "exit_code": 0,
+      "checks": 19,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "4B1E268231D19EB59B349BFEF9D16588EE6B3CE7E7CA2CF00C4EE06C8D69473C"
+    },
+    {
+      "name": "autosave-placement",
+      "exit_code": 0,
+      "checks": 48,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "4B1E268231D19EB59B349BFEF9D16588EE6B3CE7E7CA2CF00C4EE06C8D69473C"
+    }
+  ],
+  "combination": "Verified iterations 1-33 plus iteration34 main-independent pending-company reset",
+  "parent_evidence_drift": 0,
+  "test_source_manifest_sha256": "2F29F797091143F8F95736B2396D8A65C9E4ADB457466AE309DE3FD55A954302",
+  "baseline_pristine_files": 239,
+  "source_drift": 0,
+  "raw_evidence_storage": "Private ignored local folder; raw logs not published.",
+  "expected_runtime_warning": "Restart negative fixture deliberately produces one world-data-out-of-range warning; previous save preservation assertions pass.",
+  "parsed_inline_json": 51,
+  "diagnostic_test_source_drift": 0,
+  "parsed_world_snapshots": 190,
+  "source_file_manifest_sha256": "F204123D28089B4180ACD68411723CC47E31FD8156798F25753909F9D84185A0",
+  "status": "partial",
+  "worker_evidence_drift": 0,
+  "unexpected_nonzero_commands": [],
+  "limitations": [
+    "No visible UI, native mouse input, layout, sound or gameplay-feel acceptance.",
+    "Historical player Save.Compatibility not run; inherited synthetic baseline recovery fixtures were used by the focused pure check.",
+    "Legacy Selection/Restart protections are test-only and not claimed as a published product fix.",
+    "Any ObjectDB shutdown warnings are retained; no leak-free claim.",
+    "No Git writes, commits, uploads, publication or main changes."
+  ],
+  "parent_source_files": 433,
+  "merge_review": "Main baseline blobs verified. Unique exact anchors for every insertion/replacement; reversing product changes recovers all prior fixes, including unavailable selection, economy restart and autosave placement.",
+  "failure_text_markers": 0,
+  "final_source_files": 434,
+  "final_product_game_debug_build": 0,
+  "worker_source_drift": 0,
+  "evidence_files": 874,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "timeouts": 0,
+  "game_debug_build": 0,
+  "pure_projects": 83,
+  "parent_evidence_files": 879,
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "after_sha256": "ACAC6469A348757AF0C4D8184D36D6B7F9CD40EC416DBA6AA0632C50AB6BA68A",
+      "worker_sha256": "13444E7DDC5B168AA3C1111C84916D4326860948D149DDE9BAF385D85D4C1E10"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+      "after_sha256": "C0733DD44AE2B07653DC96247C9E59400201F9B0928106764DA2A13A393FF7C2",
+      "worker_sha256": "E240858C31FEF98B32DF9576531788B7D6E8D8821DA5D3619868124ED95105B7"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Panels.cs",
+      "after_sha256": "67F7FE991B6D9F36D89F1D0DF922752E71FDBD8F79B2F8F19E3D2CDE950AB715",
+      "worker_sha256": "8676AD02C10313F160FE7416C464D3AE097BF8A2780E1B7A48764A32F4A3A25F"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.RescueTool.cs",
+      "after_sha256": "4A822B039E53C4B14816B1508DC5AF7F81F350C9A63BFC826CCEE12DFBC39B37",
+      "worker_sha256": "4A822B039E53C4B14816B1508DC5AF7F81F350C9A63BFC826CCEE12DFBC39B37"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+      "after_sha256": "7A66742367DB0C27BBAB59D51A8FA48B111548CD1849BCA59C14013331EED9FD",
+      "worker_sha256": "7A66742367DB0C27BBAB59D51A8FA48B111548CD1849BCA59C14013331EED9FD"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Shelters.cs",
+      "after_sha256": "AF34054E1ADE9E55EF965F01612E094ED7001EF861985704B3BDAEFBEABC2DEF",
+      "worker_sha256": "AF34054E1ADE9E55EF965F01612E094ED7001EF861985704B3BDAEFBEABC2DEF"
+    }
+  ],
+  "environment": "Authorized isolated Windows test copy; no original development working tree execution",
+  "deep_chain_records": 258,
+  "runtime_warnings": [],
+  "diagnostic_scope": "Two old Selection/Restart entrances protected before legacy routing and SaveStore only in the test build. Temporary modifications to InteractionRoom.cs and AutosavePlacementVerification.cs were restored byte-for-byte before final product Rebuild and Company/Autosave reruns.",
+  "worker_initial_failures_preserved": 5,
+  "deep_chain_drift": 0,
+  "parsed_runtime_json": 282,
+  "final_product_headless": [
+    {
+      "name": "company-selection",
+      "exit_code": 0,
+      "checks": 31,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "538184A3551BD22B58CAD984C5424B1DD7665125136BFFDC02573B3386EA3181"
+    },
+    {
+      "name": "autosave-placement",
+      "exit_code": 0,
+      "checks": 48,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "538184A3551BD22B58CAD984C5424B1DD7665125136BFFDC02573B3386EA3181"
+    }
+  ],
+  "long_simulation_policy": "No unrelated 6000-second physics repetition. All 83 pure suites rerun, including bounded life/soak checks. Company, Selection, Restart and affected Autosave scene checks exercised.",
+  "walltime_policy": {
+    "actual_seconds": 654.3763936,
+    "aggregate_seconds": 1800,
+    "execution": "serial explicit Rebuild then fresh DLL, headless only",
+    "per_build_or_run_seconds": 300,
+    "termination": "only owned process identity verified before termination"
+  },
+  "passed_pure": 83,
+  "baseline_drift": 0,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "new_iteration_dependency": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "parent_source_drift": 0,
+  "remaining_worktree_runtime_processes": 0,
+  "semantic_issues": [],
+  "verified_at": "2026-11-06T16:09:06.8501613Z",
+  "diagnostic_source_hashes": [
+    {
+      "diagnostic_sha256": "9361103140D43C3155940121DC1C285E2170FFB857FABAD8D9A9B9808605AED8",
+      "product_sha256": "ACAC6469A348757AF0C4D8184D36D6B7F9CD40EC416DBA6AA0632C50AB6BA68A",
+      "path": "src/Yukkuri.Game/InteractionRoom.cs"
+    },
+    {
+      "diagnostic_sha256": "FA30DA7B07BEC148C47DE8C6CD50C134BE3DF1B381DDB989537CCC8A40FD7C35",
+      "product_sha256": "EA952C3392F4BCDD3264FB63162383F788584C8B25B348031341598D180C63F3",
+      "path": "src/Yukkuri.Game/InteractionRoom.AutosavePlacementVerification.cs"
+    }
+  ],
+  "failed": [],
+  "all_local_evidence_json_parsed": 314,
+  "new_source_files": [
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.CompanySelectionVerification.cs",
+      "sha256": "5A163F4F2097372E0D3B5250411568E11C142C7A437D10F5F376237C99A97E74"
+    }
+  ],
+  "worker_shutdown_warning": "Independent main-based worker final run retained two ObjectDB exit-leak warnings; no leak-free claim.",
+  "changed_previous_files": [
+    "src\\Yukkuri.Game\\InteractionRoom.CreatureArrival.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.Panels.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.RescueTool.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.Shelters.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.Toolbar.cs"
+  ]
+}

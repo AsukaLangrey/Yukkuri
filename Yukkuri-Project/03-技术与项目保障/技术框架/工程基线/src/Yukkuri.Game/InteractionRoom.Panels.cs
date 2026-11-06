@@ -127,6 +127,8 @@ public partial class InteractionRoom
     }
     private void ResetRoomUiSession()
     {
+        // IDs can be reused by a loaded or restarted world; no pending invitation crosses sessions.
+        _companyFirst=null;
         _dutyRecipientDrafts.Clear();_developmentCreatureId=null;_actionResultUntil=0;
         _pageInputs.Clear();_pageScroll.Clear();_shopQuantities.Clear();++_pageGeneration;_eventFeed.ResetSession();_sceneHoverHint="";_inlineHintControl=null;
     }

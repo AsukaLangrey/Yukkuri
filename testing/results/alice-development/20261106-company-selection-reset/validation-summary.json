@@ -1,0 +1,216 @@
+{
+  "baseline": "Coordinator-created clean main e8d96a78; no worker Git operations",
+  "scope": "Headless projected body contact and actual button signals; not native mouse or visible UI acceptance",
+  "baselineAssertions": 12,
+  "baselinePass": 7,
+  "baselineFail": 5,
+  "baselineFailures": [
+    "Escape",
+    "scene right click",
+    "actual tool switch",
+    "load same IDs",
+    "restart same IDs"
+  ],
+  "regressionChecks": 31,
+  "regressionFailures": 0,
+  "regressionExit": 0,
+  "familySocialPass": 22,
+  "familySocialFail": 0,
+  "familySocialExit": 0,
+  "finalGameBuild": {
+    "target": "explicit -t:Rebuild",
+    "errors": 0,
+    "warnings": 2,
+    "warningCodes": [
+      "CS8604 SupplyStationValidation.cs:12",
+      "CS8604 InteractionValidation.cs:15"
+    ],
+    "exit": 0
+  },
+  "guardNegativeTests": [
+    {
+      "name": "missing-profile",
+      "exit": 2,
+      "outputCreated": false,
+      "guardPassed": false,
+      "roomReady": false,
+      "earlyRejected": false
+    },
+    {
+      "name": "conflicting-flag",
+      "exit": 2,
+      "outputCreated": false,
+      "guardPassed": false,
+      "roomReady": false,
+      "earlyRejected": true
+    },
+    {
+      "name": "legacy",
+      "exit": 2,
+      "outputCreated": false,
+      "guardPassed": false,
+      "roomReady": false,
+      "earlyRejected": true
+    },
+    {
+      "name": "integration",
+      "exit": 2,
+      "outputCreated": false,
+      "guardPassed": false,
+      "roomReady": false,
+      "earlyRejected": true
+    },
+    {
+      "name": "m01-soak",
+      "exit": 2,
+      "outputCreated": false,
+      "guardPassed": false,
+      "roomReady": false,
+      "earlyRejected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "normal: first projected click only chooses A",
+      "passed": true
+    },
+    {
+      "name": "normal: second projected click creates companionship",
+      "passed": true
+    },
+    {
+      "name": "escape: exits company mode without world mutation",
+      "passed": true
+    },
+    {
+      "name": "escape: first new click only chooses B",
+      "passed": true
+    },
+    {
+      "name": "right click: exits company mode without world mutation",
+      "passed": true
+    },
+    {
+      "name": "right click: first new click only chooses B",
+      "passed": true
+    },
+    {
+      "name": "actual tool switch: exits company mode without world mutation",
+      "passed": true
+    },
+    {
+      "name": "actual tool switch: first new click only chooses B",
+      "passed": true
+    },
+    {
+      "name": "page: keeps selected company tool and world unchanged",
+      "passed": true
+    },
+    {
+      "name": "page: preserved unfinished pair completes normally",
+      "passed": true
+    },
+    {
+      "name": "repeat cancel: pending is cleared without social mutation",
+      "passed": true
+    },
+    {
+      "name": "repeat cancel: next choice starts a fresh pair",
+      "passed": true
+    },
+    {
+      "name": "repeat cancel: next pair still completes normally",
+      "passed": true
+    },
+    {
+      "name": "same tool: reselection preserves pending invitation",
+      "passed": true
+    },
+    {
+      "name": "same tool: second click still completes",
+      "passed": true
+    },
+    {
+      "name": "action owner: shortcut switching clears pending only",
+      "passed": true
+    },
+    {
+      "name": "action owner: next click starts fresh pair",
+      "passed": true
+    },
+    {
+      "name": "missing target: stale absent identity cannot create social action",
+      "passed": true
+    },
+    {
+      "name": "missing target: explicit cancel permits a fresh valid first target",
+      "passed": true
+    },
+    {
+      "name": "arrival: browsing preserves current tool and pending",
+      "passed": true
+    },
+    {
+      "name": "arrival: arming placement clears pending only",
+      "passed": true
+    },
+    {
+      "name": "arrival: returning to company begins fresh pair",
+      "passed": true
+    },
+    {
+      "name": "shelter: browsing preserves current tool and pending",
+      "passed": true
+    },
+    {
+      "name": "shelter: direct placement callback clears pending only",
+      "passed": true
+    },
+    {
+      "name": "shelter: returning to company begins fresh pair",
+      "passed": true
+    },
+    {
+      "name": "rescue: immediate-tool callback clears pending only",
+      "passed": true
+    },
+    {
+      "name": "rescue: returning to company begins fresh pair",
+      "passed": true
+    },
+    {
+      "name": "save: saving without replacement preserves pending pair",
+      "passed": true
+    },
+    {
+      "name": "save: second click still completes pair",
+      "passed": true
+    },
+    {
+      "name": "load: first click in loaded world only chooses B",
+      "passed": true
+    },
+    {
+      "name": "restart: first click in new world only chooses B",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Restart covers only pending selection, not the known legacy factory economy initialization.",
+    "Complete selection/restart UI suites are delegated to combined34.",
+    "Rescue is callback-level coverage, not visual availability acceptance.",
+    "Absent first target retains existing refusal behavior; no new normalization UX.",
+    "Original audit failure evidence is preserved, no source changes there."
+  ],
+  "rawEvidence": "E/.local/testing/company-reset-evidence and E/.local/testing/company-reset-run2/result.json",
+  "baselineEvidence": "Audit copy E/.local/testing/company-selection-run1/result.json",
+  "runtimeWarnings": [
+    "Final run2 exited 0 with all 31 checks passed, but Godot reported 2 ObjectDB instances leaked at exit; not a visible UI acceptance or resolved resource-lifetime result."
+  ],
+  "buildHistory": [
+    "Initial full build: 0 errors, 4 warnings (2 obsolete relative feed paths and 2 existing CS8604).",
+    "Intermediate incremental build: 0 errors, 0 warnings; does not erase full-build warnings.",
+    "Both explicit Rebuilds: 0 errors, 2 existing CS8604 warnings."
+  ],
+  "isolationFix": "Review identified early legacy/integration/m01 scene routing before the original SaveStore guard. Final source rejects conflicting flags immediately after reading args, before any routing. Known vulnerable combinations were never run on the old version."
+}

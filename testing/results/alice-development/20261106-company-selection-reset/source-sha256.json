@@ -1,0 +1,30 @@
+[
+  {
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.cs",
+    "sha256": "13444E7DDC5B168AA3C1111C84916D4326860948D149DDE9BAF385D85D4C1E10"
+  },
+  {
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.CompanySelectionVerification.cs",
+    "sha256": "5A163F4F2097372E0D3B5250411568E11C142C7A437D10F5F376237C99A97E74"
+  },
+  {
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+    "sha256": "E240858C31FEF98B32DF9576531788B7D6E8D8821DA5D3619868124ED95105B7"
+  },
+  {
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Panels.cs",
+    "sha256": "8676AD02C10313F160FE7416C464D3AE097BF8A2780E1B7A48764A32F4A3A25F"
+  },
+  {
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.RescueTool.cs",
+    "sha256": "4A822B039E53C4B14816B1508DC5AF7F81F350C9A63BFC826CCEE12DFBC39B37"
+  },
+  {
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+    "sha256": "7A66742367DB0C27BBAB59D51A8FA48B111548CD1849BCA59C14013331EED9FD"
+  },
+  {
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Shelters.cs",
+    "sha256": "AF34054E1ADE9E55EF965F01612E094ED7001EF861985704B3BDAEFBEABC2DEF"
+  }
+]

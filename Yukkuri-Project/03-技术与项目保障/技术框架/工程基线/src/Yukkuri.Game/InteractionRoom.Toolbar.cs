@@ -39,6 +39,8 @@ public partial class InteractionRoom
             InteractionAction.TeachFollow or InteractionAction.TeachStop or InteractionAction.TeachWait=>RoomMode.Commands,
             _=>Toolbar.SelectMany(t=>t.Entries).FirstOrDefault(e=>e.Action==action)?.Mode??_roomMode
         };
+        // A newly chosen tool ends the unfinished two-target invitation, not completed world actions.
+        if(_roomMode!=mode)_companyFirst=null;
         _roomMode=mode;for(int i=0;i<Toolbar.Length;i++)if(Toolbar[i].Entries.Any(e=>e.Mode==mode)){_toolbarCategory=i;break;}
     }
     private int _toolbarCategory;
@@ -97,6 +99,7 @@ public partial class InteractionRoom
     }
     private void SelectRoomMode(ToolbarEntry entry)
     {
+        if(_roomMode!=entry.Mode)_companyFirst=null;
         CancelGesture();_roomMode=entry.Mode;_directToolMode=false;
         _group=InteractionCatalog.Group(entry.Action);_action=entry.Action;_toolArmed=entry.Mode!=RoomMode.Observe;
         RebuildToolbarChoices();_force=.25f;_forceSlider.SetValueNoSignal(_force);

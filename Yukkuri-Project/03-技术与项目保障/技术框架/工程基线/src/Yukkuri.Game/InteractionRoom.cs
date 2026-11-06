@@ -32,6 +32,7 @@ public partial class InteractionRoom : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            ValidateCompanySelectionEntryArguments(args);
             if(args.Any(a=>a.StartsWith("--m01-")||a=="--integration"||a=="--legacy"))
             {GetTree().ChangeSceneToFile("res://Main.tscn");return;}
             GetWindow().Title=$"油库里乐园 · 慢慢来，相处小院 · {GameVersion.Display}";
@@ -49,6 +50,7 @@ public partial class InteractionRoom : Node3D
                 saveDirectory="user://interaction-test-saves/"+args[testProfileFlag+1];
                 GD.Print("INTERACTION_TEST_PROFILE: "+args[testProfileFlag+1]);
             }
+            ValidateCompanySelectionVerification(args,saveDirectory);
             _saves=new SaveStore(ProjectSettings.GlobalizePath(saveDirectory));
             _camera=new Camera3D{Projection=Camera3D.ProjectionType.Orthogonal,Size=_zoom,Current=true,Far=100};AddChild(_camera);
             AddChild(new WorldEnvironment{Environment=new Godot.Environment{BackgroundMode=Godot.Environment.BGMode.Color,
@@ -71,6 +73,7 @@ public partial class InteractionRoom : Node3D
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
+            StartCompanySelectionVerificationIfRequested(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }

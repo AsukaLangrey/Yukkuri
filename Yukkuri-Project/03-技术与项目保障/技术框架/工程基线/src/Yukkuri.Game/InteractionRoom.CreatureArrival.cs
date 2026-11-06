@@ -27,7 +27,7 @@ public partial class InteractionRoom
         {
             var profile=new CreatureArrival(species.Selected==0?"reimu":"marisa",age.Selected==1,
                 role.Selected==0?ReproductionRole.Maternal:ReproductionRole.Paternal,name.Text);
-            CloseActivityPanel();CancelGesture();ClearShelterSelection();ClearSupplyStationSelection();
+            _companyFirst=null;CloseActivityPanel();CancelGesture();ClearShelterSelection();ClearSupplyStationSelection();
             _selectedDetachedStemEventId=_selectedRoomObjectId=_observedStemMotherId=null;
             Sim.State.Mode=PlayMode.Management;_roomMode=RoomMode.Observe;_toolbarCategory=0;
             _action=InteractionAction.Inspect;_group=InteractionCatalog.Group(_action);_directToolMode=false;
