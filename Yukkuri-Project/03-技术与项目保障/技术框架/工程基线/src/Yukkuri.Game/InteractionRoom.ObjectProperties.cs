@@ -42,9 +42,7 @@ public partial class InteractionRoom
         }
         else if(!independent&&c!=null)
         {
-            string Name(string? id)=>Sim.State.Creatures.Find(o=>o.Id==id)?.Name??"未记录";
-            _objectDetails.Text=$"家庭：母亲 {Name(c.Family.MotherId)} · 父亲 {Name(c.Family.FatherId)}\n"+
-                "伴侣："+(c.Family.PartnerIds.Count==0?"暂无":string.Join("、",c.Family.PartnerIds.Select(id=>Name(id))));
+            _objectDetails.Text=ObjectFamilyDetails(c);
             if(c.Interaction.LastExaminationAt>=0)_objectDetails.Text+=$"\n检查时间 {c.Interaction.LastExaminationAt:0}秒\n"+c.Interaction.Examination;
         }
         else _objectDetails.Text="";

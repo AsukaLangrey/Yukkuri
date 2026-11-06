@@ -1,0 +1,168 @@
+{
+  "deep_chain_drift": 0,
+  "baseline_behavior": {
+    "scope": "Exact original production formatter methods extracted from prior source. Uses combined simulation to isolate display behavior. No missing helper failure is accepted.",
+    "exit_code": 1,
+    "build_exit_code": 0,
+    "passed": 2,
+    "failed": 3,
+    "failure_cases": [
+      "FAIL real birth, sold mother, reload and inactive archive: property parent names lost",
+      "FAIL real birth, sold father, reload and inactive archive: property parent names lost",
+      "FAIL real birth, sold both, reload and inactive archive: property parent names lost"
+    ]
+  },
+  "timeouts": 0,
+  "independent_fixture": "Untouched natural courtyard start with seed 42, normal timed birth and recovery. Public legal sales; real disk SaveStore save/load; each mother/father/both case repeats 20 text/selection/care-boundary checks. No health, need, scene-object or birth-state edits in the sale journeys.",
+  "baseline_pristine_files": 239,
+  "all_local_evidence_json_parsed": 400,
+  "parent_source_files": 428,
+  "failed": [],
+  "preserved_preflight": "Unrun merge preflight expected a broader lookup replacement and stopped before writes. Corrected to verify the narrower frozen parent-expression-only helper. This is verifier setup evidence, not a product regression.",
+  "behavioral_scope": "Only parent label expressions call ParentName using KnownCreatures. Active partner/care lookup and enumeration unchanged.",
+  "prior_family_closeup_fix_preserved": true,
+  "worker_evidence_drift": 0,
+  "parsed_world_snapshots": 261,
+  "independent_run_exit": 0,
+  "source_drift": 0,
+  "deep_chain_records": 240,
+  "unexpected_nonzero_commands": [],
+  "limitations": [
+    "No visible UI, Godot startup, layout, sound or gameplay-feel acceptance.",
+    "Repeated formatter, active selection and care boundaries tested through production-linked code and APIs; panel close/reopen guards verified statically, not interacted with.",
+    "Historical player Save.Compatibility not run; only fresh synthetic saves used.",
+    "No Git writes, uploads or publication. Iteration27 blocked publication untouched."
+  ],
+  "remaining_worktree_runtime_processes": 0,
+  "focused_gates": [
+    {
+      "name": "Family.HistoricalIdentity",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Courtyard.Economy",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Family.Presentation",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Family.Reproduction",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Family.ColdCare",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Save.SoldPartnerRecovery",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Save.ArchivedCarrierRecovery",
+      "build_exit_code": 0,
+      "exit_code": 0
+    }
+  ],
+  "new_source_files": [
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.FamilyText.cs",
+      "sha256": "6CE5B15DFA5BE9BD4AE48B1D9FA72A56BA7BBEB3961B02A94EA176B7401B71DD"
+    },
+    {
+      "path": "checks/Family.HistoricalIdentity/Program.cs",
+      "sha256": "2CE9B7020548B7A9F4C56C38C1A6CFC40FBFE0F69530BBD5B8078440B5AC4603"
+    },
+    {
+      "path": "checks/Family.HistoricalIdentity/Family.HistoricalIdentity.csproj",
+      "sha256": "227143A4A270704985769945950BF2A1AB9C3006AC0712C1AE07D18B9021ED6D"
+    }
+  ],
+  "source_file_manifest_sha256": "835C782B50D32486478149A6A105FCC4EFB27A409D863A027CDC039B98212875",
+  "failure_text_markers": 0,
+  "game_startup_unchanged": true,
+  "status": "partial",
+  "focused_new_failures": 0,
+  "long_simulation_policy": "Extended prior 6000-second physics scenarios not repeated: no simulation, physics, economy, save or startup production code changed. All 82 pure projects including their bounded life/soak tests rerun. Prior long-run evidence is preserved by the hash chain, not claimed as a fresh run.",
+  "changed_previous_files": [
+    "src\\Yukkuri.Game\\InteractionRoom.Family.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.ObjectProperties.cs"
+  ],
+  "parsed_inline_json": 64,
+  "focused_new_checks": 5,
+  "parent_evidence_drift": 0,
+  "parent_source_drift": 0,
+  "independent_boundary_review": {
+    "blockingFindings": [],
+    "activeBoundary": "Partner and caregiver names, care summaries, family candidate lists, actions and Selected remain active-creature based.",
+    "idInvariant": "Existing SaveStore and CourtyardEconomy validation reject duplicate IDs across active and sold records.",
+    "limits": "Static source review only. No UI or runtime evidence.",
+    "fallbacks": "Null parent IDs remain unrecorded; unknown IDs preserve original panel-specific fallback. Cold and memorialized identities remain readable without new actions.",
+    "callSites": "ObjectProperties calls ObjectFamilyDetails for Sim.Selected; Family calls FamilySummary for candidates derived from State.Creatures. Only mother/father labels resolve KnownCreatures through ParentName.",
+    "reviewType": "static-source-only",
+    "worker_sha256": {
+      "src/Yukkuri.Game/InteractionRoom.Family.cs": "4b9a4704a161efba609b04eb7c125764151049f90150e87aeb02e0e255cf7b14",
+      "src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs": "948789556f1126b9e565ae28f88a862c84c854c8cdb3b62c29f4f895abb683f2",
+      "src/Yukkuri.Game/InteractionRoom.FamilyText.cs": "6ce5b15dfa5be9bd4ae48b1d9fa72a56ba7bbeb3961b02a94ea176b7401b71dd"
+    },
+    "combined_final_review": "Passed: Family equals prior combined source with only two formatter blocks removed. Missing/transferred closeup selection cleanup and pause preservation remain intact. Parent-expression reversal recovers exact original methods. ObjectProperties changes only the text call. Active candidate/callsite boundaries unchanged.",
+    "combined_sha256": {
+      "src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs": "948789556f1126b9e565ae28f88a862c84c854c8cdb3b62c29f4f895abb683f2",
+      "src/Yukkuri.Game/InteractionRoom.Family.cs": "72a915c48a5f02de9286299cb4564a345fe947ac02a762d2db874cd09a7a1803",
+      "src/Yukkuri.Game/InteractionRoom.FamilyText.cs": "6ce5b15dfa5be9bd4ae48b1d9fa72a56ba7bbeb3961b02a94ea176b7401b71dd"
+    }
+  },
+  "prior_simulation_save_fixes_preserved": "All inherited simulation and save source hashes unchanged, including recovery-sale, sold-partner and archived-carrier fixes.",
+  "baseline_drift": 0,
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Family.cs",
+      "after_sha256": "72A915C48A5F02DE9286299CB4564A345FE947AC02A762D2DB874CD09A7A1803",
+      "worker_sha256": "4B9A4704A161EFBA609B04EB7C125764151049F90150E87AEB02E0E255CF7B14"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+      "after_sha256": "948789556F1126B9E565AE28F88A862C84C854C8CDB3B62C29F4F895ABB683F2",
+      "worker_sha256": "948789556F1126B9E565AE28F88A862C84C854C8CDB3B62C29F4F895ABB683F2"
+    }
+  ],
+  "verified_at": "2026-11-06T14:27:25.6340381Z",
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "evidence_files": 1065,
+  "worker_source_drift": 0,
+  "new_warning_locations": [],
+  "pure_projects": 82,
+  "game_debug_build": 0,
+  "independent_failures": 0,
+  "raw_evidence_storage": "Private ignored local folder; raw logs not published.",
+  "control_fixture": "Exact original full text comparison for active, dead, cold, null and missing-reference states. Dead/cold controls use public actions with disclosed purchased-tool prerequisite; malformed-reference controls are presentation-only and not claimed as valid saves.",
+  "parsed_runtime_json": 376,
+  "passed_pure": 82,
+  "extraction_exact": true,
+  "independent_build_exit": 0,
+  "semantic_issues": [],
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "independent_checks": 8,
+  "walltime_policy": {
+    "per_build_or_run_seconds": 300,
+    "termination": "only owned process identity verified before termination",
+    "actual_seconds": 483.4635092,
+    "execution": "serial Rebuild then DLL",
+    "aggregate_seconds": 1800
+  },
+  "final_source_files": 431,
+  "parent_evidence_files": 988
+}

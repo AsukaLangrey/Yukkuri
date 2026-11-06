@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "source_base": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "alice/20261106-sold-parent-identity",
+  "status": "partial",
+  "environment": "authorized independent Windows test environment",
+  "sdk": "10.0.402",
+  "timeout_seconds_per_process": 180,
+  "scope": "Parent identity text only; standalone current main, no prior fix9 dependency",
+  "extraction": {
+    "family_methods": "Original FamilyCareSummary and FamilySummary equal baseline after line-ending normalization",
+    "object_expression": "Original Name local function and property expression equal baseline after indentation and assignment-to-return substitution",
+    "production_callsite": "RefreshRedesignProperties calls ObjectFamilyDetails; existing FamilySummary callers unchanged",
+    "baseline_source_sha256": "c43ac9f24aa5b12f1dc5042f97981e87197c5096063367ce73b7f49c13ae5c2c"
+  },
+  "checks": [
+    {
+      "expected_failure": true,
+      "build_exit_code": 0,
+      "name": "old-lookup production baseline",
+      "failed": 3,
+      "run_exit_code": 1,
+      "passed": 2
+    },
+    {
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 5,
+      "failed": 0,
+      "name": "Family.HistoricalIdentity final"
+    },
+    {
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 8,
+      "failed": 0,
+      "name": "Courtyard.Economy"
+    },
+    {
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 3,
+      "failed": 0,
+      "name": "Family.Presentation"
+    },
+    {
+      "build_exit_code": 0,
+      "warnings": 2,
+      "name": "Yukkuri.Game full Rebuild",
+      "errors": 0
+    },
+    {
+      "status": "not_run",
+      "name": "visible UI and Godot runtime"
+    }
+  ],
+  "commands": [
+    "dotnet build checks/Family.HistoricalIdentity/Family.HistoricalIdentity.csproj -t:Rebuild --artifacts-path <fresh-output> --nologo",
+    "dotnet <fresh-output>/bin/Family.HistoricalIdentity/debug/Family.HistoricalIdentity.dll",
+    "Repeat serial Rebuild then fresh DLL for Courtyard.Economy and Family.Presentation",
+    "dotnet build src/Yukkuri.Game/Yukkuri.Game.csproj -t:Rebuild --artifacts-path <fresh-output> --nologo"
+  ],
+  "warnings": [
+    "Existing CS8604 at SupplyStationValidation.cs:12",
+    "Existing CS8604 at InteractionValidation.cs:15"
+  ],
+  "limitations": [
+    "No visible UI, layout, manual play or Godot runtime acceptance",
+    "New tests serialize and validate generated worlds in memory; no player saves or historical private fixtures",
+    "Not the full repository test matrix"
+  ],
+  "files": [
+    {
+      "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.Family.cs",
+      "sha256": "4b9a4704a161efba609b04eb7c125764151049f90150e87aeb02e0e255cf7b14"
+    },
+    {
+      "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+      "sha256": "948789556f1126b9e565ae28f88a862c84c854c8cdb3b62c29f4f895abb683f2"
+    },
+    {
+      "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Game/InteractionRoom.FamilyText.cs",
+      "sha256": "6ce5b15dfa5be9bd4ae48b1d9fa72a56ba7bbeb3961b02a94ea176b7401b71dd"
+    },
+    {
+      "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/checks/Family.HistoricalIdentity/Program.cs",
+      "sha256": "2ce9b7020548b7a9f4c56c38c1a6cfc40fbfe0f69530bbd5b8078440b5ac4603"
+    },
+    {
+      "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/checks/Family.HistoricalIdentity/Family.HistoricalIdentity.csproj",
+      "sha256": "227143a4a270704985769945950bf2a1ab9c3006ac0712c1ae07d18b9021ed6d"
+    }
+  ],
+  "evidence": {
+    "path": "text-evidence.json",
+    "sha256": "b4fc56254f8a3bf6d49c1e99fc5b872a1bbca5a12665cfae85c0b565ca12fc9f"
+  }
+}
