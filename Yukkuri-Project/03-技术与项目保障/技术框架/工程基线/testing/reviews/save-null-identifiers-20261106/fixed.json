@@ -1,0 +1,168 @@
+{
+  "stage": "fixed",
+  "checks": 32,
+  "passed": 32,
+  "failures": 0,
+  "results": [
+    {
+      "name": "caregiver-original-valid-main-round-trip",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-original-null-rejected-without-mutation",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-original-good-backup-recovered",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-original-bad-existing-main-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-original-bad-candidate-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-original-both-bad-controlled-aggregate",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-original-unknown-id-still-recovers",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-original-valid-continuation-unchanged",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-valid-main-round-trip",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-null-rejected-without-mutation",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-good-backup-recovered",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-bad-existing-main-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-bad-candidate-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-both-bad-controlled-aggregate",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-unknown-id-still-recovers",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "caregiver-reversed-valid-continuation-unchanged",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-valid-main-round-trip",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-null-rejected-without-mutation",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-good-backup-recovered",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-bad-existing-main-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-bad-candidate-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-both-bad-controlled-aggregate",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-unknown-id-still-recovers",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-original-valid-continuation-unchanged",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-valid-main-round-trip",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-null-rejected-without-mutation",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-good-backup-recovered",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-bad-existing-main-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-bad-candidate-protected",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-both-bad-controlled-aggregate",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-unknown-id-still-recovers",
+      "passed": true,
+      "error_type": null
+    },
+    {
+      "name": "reacted-by-reversed-valid-continuation-unchanged",
+      "passed": true,
+      "error_type": null
+    }
+  ]
+}

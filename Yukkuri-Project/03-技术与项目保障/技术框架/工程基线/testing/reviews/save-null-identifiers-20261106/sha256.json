@@ -1,0 +1,58 @@
+[
+  {
+    "path": "src\\Yukkuri.Simulation\\FamilyValidation.cs",
+    "sha256": "5513AFA42E662166AC774078702817A72F0EEB11947E0BCAB1BE30E9B9565081"
+  },
+  {
+    "path": "src\\Yukkuri.Simulation\\FamilySocial.cs",
+    "sha256": "D2CBB89725EB1A89E4648A7F7ED610CD4E38C6161115DE95298E523B451C0C30"
+  },
+  {
+    "path": "checks\\Save.NullIdentifierRecovery\\Program.cs",
+    "sha256": "350D0F2769DFC50AA1811E5992BA9210174CAD04F043C1B144689C2E5C9F77A2"
+  },
+  {
+    "path": "checks\\Save.NullIdentifierRecovery\\Save.NullIdentifierRecovery.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "testing\\reviews\\save-null-identifiers-20261106\\baseline-file-hashes.json",
+    "sha256": "8CAB426E5D5D1A5D72046FFC268FBED452D33A7424A92FB8FC4B1C06D6761A32"
+  },
+  {
+    "path": "testing\\reviews\\save-null-identifiers-20261106\\baseline.json",
+    "sha256": "5BC191BBCBB8F5A7A547755DB0C5BC232CE11993FAF2B8FDB1F4AB3B3F878CFE"
+  },
+  {
+    "path": "testing\\reviews\\save-null-identifiers-20261106\\fixed-file-hashes.json",
+    "sha256": "A4855F61BED5DBD15A99260DCF99ED1B1D5B49A2523E9842DED9FD9A3F88532E"
+  },
+  {
+    "path": "testing\\reviews\\save-null-identifiers-20261106\\fixed.json",
+    "sha256": "EC894D1B50AC1F48CEE3C2B7CA50CF7B7BA663E8B4D8F25CFD5C775BC699822B"
+  },
+  {
+    "path": "testing\\reviews\\save-null-identifiers-20261106\\regressions.json",
+    "sha256": "D6DC9445A5C2EF26CF1238DC522AB2312922E7131789287E92C262F46EF738FB"
+  },
+  {
+    "path": "testing\\reviews\\save-null-identifiers-20261106\\SUMMARY.md",
+    "sha256": "C5078A3F8806D9FA997987E8B27634DE6ED6A6A4AEAAD1EABA2DF693EDA58BB9"
+  },
+  {
+    "path": "testing/reviews/save-null-identifiers-20261106/final-file-check.json",
+    "sha256": "FCFD0E718A0CCC747702BC67D518B163A39DD51E800E9F8429C3B3A7D66165CD"
+  },
+  {
+    "sha256": "5EE9C149A25854E38EB3415525FFEFDCC1BE614072A3CF2433B268EB04E3C847",
+    "path": "testing/reviews/save-null-identifiers-20261106/combined-project-results.json"
+  },
+  {
+    "sha256": "90B2EDBB75BDDAD452AC7AAAFDCA7DF57BCB9438C09DF904E4A966D5A759A2BD",
+    "path": "testing/reviews/save-null-identifiers-20261106/matrix-fixed-summary.json"
+  },
+  {
+    "sha256": "61F30B96FC0D1FC24C8F93C88A889076DED2DCB020FA8B9E3F8113F9186594FF",
+    "path": "testing/reviews/save-null-identifiers-20261106/matrix-fixed-report.md"
+  }
+]

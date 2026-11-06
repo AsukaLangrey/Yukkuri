@@ -1,0 +1,15 @@
+{
+  "total": 368,
+  "recovered_exact": 368,
+  "invalid_data_exception": 352,
+  "json_exception": 16,
+  "unhandled_load": 0,
+  "preserved_files": 368,
+  "prior_escapes_fixed": 16,
+  "fixture_hash_differences": 368,
+  "copied_source_count": 112,
+  "copied_source_changes": 0,
+  "harness_identical": true,
+  "result_sha256": "3D38428665C898D4E5CB0AB0599613CDBC61F9276290914AAEFC9D4B7674343F",
+  "fixture_differences_after_guid_normalization": 0
+}

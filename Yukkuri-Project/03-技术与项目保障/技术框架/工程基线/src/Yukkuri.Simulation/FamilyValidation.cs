@@ -31,7 +31,7 @@ public static partial class FamilyRules
                 Number(pair.Value.Familiarity,100)&&Number(pair.Value.Affection,100)&&Number(pair.Value.Fear,100)&&
                 Number(pair.Value.Resentment,100)&&Number(pair.Value.CareSeconds,1000000)&&Text(pair.Value.LastEvent)),"同伴关系数值或引用无效");
             Require(f.CaregiverIds.Count<=creatures.Count&&f.CaregiverIds.Distinct().Count()==f.CaregiverIds.Count&&
-                f.CaregiverIds.All(id=>id!=c.Id&&creatures.ContainsKey(id)),"照护者引用无效");
+                f.CaregiverIds.All(id=>id!=null&&id!=c.Id&&creatures.ContainsKey(id)),"照护者引用无效");
             Require(Number(f.Warmth,100)&&Number(f.NextCareAt)&&Number(f.NextSocialAt)&&Number(f.NextBreedingDecisionAt)&&
                 Number(f.CareApproachSeconds)&&Number(f.CareBestDistance)&&Text(f.LastEvent)&&Text(f.CareLastEvent)&&Enum.IsDefined(f.BirthMethod),"育幼状态无效");
             Require(f.LifeKnowledge.Count<=32&&f.LifeKnowledge.All(k=>!string.IsNullOrWhiteSpace(k.Key)&&k.Key.Length<=128),"生活常识记录无效");

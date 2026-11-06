@@ -78,7 +78,7 @@ public static partial class FamilyRules
                 e.BetrayedPartners.All(p => ids.Contains(p.Key) && p.Key != e.FirstId && p.Key != e.SecondId &&
                     (p.Value == e.FirstId || p.Value == e.SecondId)) &&
                 e.KnownBy.All(p => ids.Contains(p.Key) && Enum.IsDefined(p.Value)) &&
-                e.ReactedBy.All(id => e.KnownBy.TryGetValue(id, out var source) && source == KnowledgeSource.Witness &&
+                e.ReactedBy.All(id => id != null && e.KnownBy.TryGetValue(id, out var source) && source == KnowledgeSource.Witness &&
                     e.BetrayedPartners.ContainsKey(id)), "家庭事件知情或当时承诺无效");
         }
         foreach (var c in state.Creatures)

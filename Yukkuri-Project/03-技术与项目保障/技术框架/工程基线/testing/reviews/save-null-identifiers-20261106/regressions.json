@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Family.Social",
+    "exit_code": 0,
+    "passed": 22,
+    "failures": 0,
+    "log_sha256": "A12CAF788151BCD8D2E2934464D84E617CE24FBA389FB07E6950EC3DBC37479C"
+  },
+  {
+    "name": "Family.CareContinuity",
+    "exit_code": 0,
+    "passed": 6,
+    "failures": 0,
+    "log_sha256": "4AC6D2727EC41530DB27E12F5631FC8C9DDFFB9895292DC9818C31D4B7DC7084"
+  },
+  {
+    "name": "Family.Compatibility",
+    "exit_code": 0,
+    "passed": 77,
+    "failures": 0,
+    "log_sha256": "D2330721DB4E0021DD801A8CAAED48366EF2C88BAF4EFD80AD39B4F8041BB93E"
+  }
+]
