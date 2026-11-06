@@ -210,7 +210,9 @@ public partial class InteractionRoom
         RefreshYardHelpButton();
         _choiceList.Visible=_toolbarCategory!=0;
         var c=Sim.Selected;
-        _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
+        var date=CourtyardCalendar.FromWorldSeconds(Sim.State.WorldSeconds);
+        string timeStatus=Sim.State.Settings.Pause?" · 小院暂停中":Sim.State.Mode==PlayMode.CloseUp?" · 近看 · 自然时间暂停":"";
+        _clockLabel.Text=date.DisplayDate+"\n"+date.PhaseName+timeStatus;
         _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";
         _resetViewButton.Text=Sim.State.Mode==PlayMode.CloseUp?"正面":"居中";
         _forceLabel.Text=$"力度设定 · {_force*100:0}%";

@@ -1,0 +1,10 @@
+PASS approved start and midnight/season/year offsets
+PASS adjacent binary values never round into next minute/day/season/year
+PASS all dates in four years and exact midnight neighbors
+PASS approved seasonal sunrise and sunset exact boundaries
+PASS invalid inputs rejected without changing save policy
+PASS entire save-valid range including maximum double has exact year
+PASS projection and formatting leave complete world and RNG unchanged
+PASS pause and closeup preserve clock; normal advance remains simulation seconds
+PASS existing save roundtrip preserves clock and date without offline growth
+CALENDAR_CHECKS_PASSED: 9

@@ -1,0 +1,23 @@
+{
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "alice/20261106-courtyard-calendar",
+  "production_and_checks": [
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardCalendar.cs",
+      "sha256": "6763334adb8288f6cf5c84a7555a20eb0f4fd72dcf6f6632ef61490fdb0965f1"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+      "sha256": "aa9e16d5bd5401893afb87bdb41d0b49b748d47404cb74773f8e6830c6baeca7"
+    },
+    {
+      "path": "checks/Courtyard.Calendar/Courtyard.Calendar.csproj",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a"
+    },
+    {
+      "path": "checks/Courtyard.Calendar/Program.cs",
+      "sha256": "7e494c124429a44abeaf977005608814ad29213ed60e1fcf9d3b5c437d10b7b1"
+    }
+  ],
+  "harness_in_production": false
+}

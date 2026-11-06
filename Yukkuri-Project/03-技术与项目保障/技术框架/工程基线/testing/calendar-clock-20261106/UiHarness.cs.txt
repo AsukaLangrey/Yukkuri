@@ -1,0 +1,52 @@
+using Godot;
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Yukkuri.Simulation;
+
+public partial class InteractionRoom
+{
+    private async Task VerifyCalendarTemporary(string[] args)
+    {
+        int flag=Array.IndexOf(args,"--calendar-test-output");if(flag<0)return;
+        string output=args[flag+1];var rows=new List<object>();
+        try
+        {
+            if(!args.Contains("--interaction-test-profile"))throw new Exception("isolated profile required");
+            _ready=false;_muted=true;
+            var header=(Control)_clockLabel.GetParent();
+            foreach(var size in new[]{new Vector2I(1440,900),new Vector2I(1600,1000)})
+            {
+                GetWindow().Size=size;
+                foreach(double seconds in new[]{0.0,399.999,400,4000,16600,167982999.5,167983199.5,double.MaxValue})
+                foreach(string mode in new[]{"running","paused","closeup"})
+                {
+                    Sim.State.WorldSeconds=seconds;Sim.State.Settings.Pause=mode=="paused";
+                    Sim.State.Mode=mode=="closeup"?PlayMode.CloseUp:PlayMode.Management;
+                    string before=JsonSerializer.Serialize(Sim.State,SaveStore.JsonOptions);
+                    RefreshRoomUi();await RenderFrames(4);
+                    var d=CourtyardCalendar.FromWorldSeconds(seconds);
+                    string expected=d.DisplayDate+"\n"+d.PhaseName+(mode=="paused"?" · 小院暂停中":mode=="closeup"?" · 近看 · 自然时间暂停":"");
+                    if(_clockLabel.Text!=expected)throw new Exception("wrong actual label");
+                    if(JsonSerializer.Serialize(Sim.State,SaveStore.JsonOptions)!=before)throw new Exception("UI refresh changed world/RNG");
+                    var rect=_clockLabel.GetGlobalRect();var top=(Control)header.GetParent();
+                    if(!top.GetGlobalRect().Encloses(rect)||rect.End.Y>GameUiLayout.Top)throw new Exception("clock extends outside existing top bar");
+                    foreach(var sibling in header.GetChildren().OfType<Control>().Where(c=>c!=_clockLabel))
+                        if(rect.Intersects(sibling.GetGlobalRect()))throw new Exception("clock overlaps header control");
+                    if(_clockLabel.GetLineCount()>2||_clockLabel.Size.Y<_clockLabel.GetLineHeight()*_clockLabel.GetLineCount())throw new Exception("clock wraps beyond two lines or clips");
+                    if(_clockLabel.MouseFilter!=Control.MouseFilterEnum.Ignore)throw new Exception("clock intercepts input");
+                    rows.Add(new{size=new[]{size.X,size.Y},seconds,mode,text=_clockLabel.Text,lines=_clockLabel.GetLineCount(),bounds=new[]{rect.Position.X,rect.Position.Y,rect.Size.X,rect.Size.Y}});
+                }
+            }
+            Sim.State.WorldSeconds=16600.25;Sim.State.Mode=PlayMode.Management;Sim.State.Settings.Pause=true;
+            _saves.Save(Sim.State,3);Sim.State.WorldSeconds=0;Sim=new WorldSimulation(_saves.Load(3).State);RefreshRoomUi();
+            if(Sim.State.WorldSeconds!=16600.25||!_clockLabel.Text.StartsWith("2年春1日 00:00"))throw new Exception("actual save reload clock mismatch");
+            File.WriteAllText(output,JsonSerializer.Serialize(new{success=true,renderer=DisplayServer.GetName(),cases=rows.Count,saveReload=true,rows},new JsonSerializerOptions{WriteIndented=true}));
+            GetTree().Quit();
+        }
+        catch(Exception ex){File.WriteAllText(output,JsonSerializer.Serialize(new{success=false,error=ex.ToString(),rows}));GD.PushError(ex.ToString());GetTree().Quit(1);}
+    }
+}

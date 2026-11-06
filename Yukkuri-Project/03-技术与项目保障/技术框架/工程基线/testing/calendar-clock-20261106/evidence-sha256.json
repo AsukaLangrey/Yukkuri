@@ -1,0 +1,46 @@
+[
+  {
+    "file": "build.txt",
+    "sha256": "7697d9be476e9e2da751c8b2544aa7e9474993a9bef8c2957b724fef70a41c85"
+  },
+  {
+    "file": "calendar-checks.txt",
+    "sha256": "8e3352ff2d02165b0231bf05d2ccc7895a3058d20a507203eae9cf3aa67d7a39"
+  },
+  {
+    "file": "combined-thirteen-audit.json",
+    "sha256": "ca4e5d6580b787d1232598c59e617968de241e8d7dc99eb1d2653f78803f8b96"
+  },
+  {
+    "file": "headless-runtime.txt",
+    "sha256": "75a269b0401461fded8e5eb4ed036ef9cd657e2eeaefef4c36e970d53af2c71e"
+  },
+  {
+    "file": "headless-ui.json",
+    "sha256": "4a4b21c05521ffa06b4dc3b6ca10d53079357488ff28b3dcde57779ea86998d6"
+  },
+  {
+    "file": "performance-diagnostic.txt",
+    "sha256": "faabfdd319d63a3d8e73af037bf70224326ee18934b8936cc80a0814a7832d05"
+  },
+  {
+    "file": "README.md",
+    "sha256": "7e8104302c63deb5ec8e4ae808883c5ed303d2c598bb60ec0c66749aa431ac7b"
+  },
+  {
+    "file": "simulation-smoke.txt",
+    "sha256": "e10fb280ca20f9da4954f5cff59ac5dfd86dd9af3eb2db0d7590bbaca18f6f40"
+  },
+  {
+    "file": "source-manifest.json",
+    "sha256": "caace0ab3da2b16d13e1ad3f2f0828ea68025ea53dba13579681bac533382c5e"
+  },
+  {
+    "file": "state-boundaries.txt",
+    "sha256": "22ff93b746f0feb272bd1adb38ea7ffd609a4679ec6f440c513134befbf8c7b4"
+  },
+  {
+    "file": "UiHarness.cs.txt",
+    "sha256": "7b1c1da390247b822a0472d027eb5bc6393f2dbaf747c6ee9e13af538b14305a"
+  }
+]

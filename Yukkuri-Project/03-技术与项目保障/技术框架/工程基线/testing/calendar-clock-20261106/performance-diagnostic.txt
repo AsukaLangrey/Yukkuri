@@ -1,0 +1,3 @@
+normal: iterations=100000; elapsed_ms=234.119; allocated_bytes=44800040; bytes_per_projection_and_format=448.000; checksum_length=14
+maximum: iterations=100000; elapsed_ms=557.643; allocated_bytes=231111496; bytes_per_projection_and_format=2311.115; checksum_length=22
+Diagnostic only: warm process, Debug build, wall-clock CPU-work loop; not frame time, acceptance threshold or long-term performance evidence.

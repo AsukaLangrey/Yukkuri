@@ -1,0 +1,100 @@
+{
+  "failure_text_markers": 0,
+  "verified_at": "2026-11-06T05:04:17.5420998Z",
+  "calendar_pass_lines": 9,
+  "passed_pure": 66,
+  "origin_hash_drift": 0,
+  "game_build": 0,
+  "previous_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "frozen_calendar_hash_mismatches": [],
+  "changed_base_files": [
+    "src\\Yukkuri.Game\\InteractionRoom.Ui.cs"
+  ],
+  "source_files": 394,
+  "ui_local_delta_exact": true,
+  "json_issues": [],
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ],
+  "pure_projects": 66,
+  "origin_records": 394,
+  "pass_text_lines": 1378,
+  "json_reports": [
+    {
+      "scenarios": 0,
+      "success": true,
+      "issues": [],
+      "name": "ActorGeometry.Smoke",
+      "results": 0,
+      "failures": null,
+      "checks": 128
+    },
+    {
+      "scenarios": 0,
+      "success": true,
+      "issues": [],
+      "name": "Input.Intent",
+      "results": 43,
+      "failures": 0,
+      "checks": 0
+    },
+    {
+      "scenarios": 0,
+      "success": true,
+      "issues": [],
+      "name": "Interaction.Continuity",
+      "results": 129,
+      "failures": 0,
+      "checks": 0
+    },
+    {
+      "scenarios": 0,
+      "success": true,
+      "issues": [],
+      "name": "Interaction.Smoke",
+      "results": 48,
+      "failures": 0,
+      "checks": 0
+    },
+    {
+      "scenarios": 0,
+      "success": true,
+      "issues": [],
+      "name": "NaturalLife.Smoke",
+      "results": 95,
+      "failures": 0,
+      "checks": 0
+    },
+    {
+      "scenarios": 24,
+      "success": true,
+      "issues": [],
+      "name": "NaturalLife.Soak",
+      "results": 0,
+      "failures": 0,
+      "checks": 0
+    }
+  ],
+  "failed": [],
+  "new_warning_locations": [],
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "source_hash_differences": 0
+}

@@ -1,0 +1,776 @@
+{
+  "success": true,
+  "renderer": "headless",
+  "cases": 48,
+  "saveReload": true,
+  "rows": [
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 0,
+      "mode": "running",
+      "text": "1\u5E74\u66251\u65E5 08:00\n\u65E5\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 0,
+      "mode": "paused",
+      "text": "1\u5E74\u66251\u65E5 08:00\n\u65E5\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 0,
+      "mode": "closeup",
+      "text": "1\u5E74\u66251\u65E5 08:00\n\u65E5\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 399.999,
+      "mode": "running",
+      "text": "1\u5E74\u66251\u65E5 23:59\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 399.999,
+      "mode": "paused",
+      "text": "1\u5E74\u66251\u65E5 23:59\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 399.999,
+      "mode": "closeup",
+      "text": "1\u5E74\u66251\u65E5 23:59\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 400,
+      "mode": "running",
+      "text": "1\u5E74\u66252\u65E5 00:00\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 400,
+      "mode": "paused",
+      "text": "1\u5E74\u66252\u65E5 00:00\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 400,
+      "mode": "closeup",
+      "text": "1\u5E74\u66252\u65E5 00:00\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 4000,
+      "mode": "running",
+      "text": "1\u5E74\u590F1\u65E5 00:00\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 4000,
+      "mode": "paused",
+      "text": "1\u5E74\u590F1\u65E5 00:00\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 4000,
+      "mode": "closeup",
+      "text": "1\u5E74\u590F1\u65E5 00:00\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 16600,
+      "mode": "running",
+      "text": "2\u5E74\u66251\u65E5 00:00\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 16600,
+      "mode": "paused",
+      "text": "2\u5E74\u66251\u65E5 00:00\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 16600,
+      "mode": "closeup",
+      "text": "2\u5E74\u66251\u65E5 00:00\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 167982999.5,
+      "mode": "running",
+      "text": "9999\u5E74\u51AC7\u65E5 23:58\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 167982999.5,
+      "mode": "paused",
+      "text": "9999\u5E74\u51AC7\u65E5 23:58\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 167982999.5,
+      "mode": "closeup",
+      "text": "9999\u5E74\u51AC7\u65E5 23:58\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 167983199.5,
+      "mode": "running",
+      "text": "\u7EA61.00e4\u5E74\u66251\u65E5 07:58\n\u65E5\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 167983199.5,
+      "mode": "paused",
+      "text": "\u7EA61.00e4\u5E74\u66251\u65E5 07:58\n\u65E5\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 167983199.5,
+      "mode": "closeup",
+      "text": "\u7EA61.00e4\u5E74\u66251\u65E5 07:58\n\u65E5\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 1.7976931348623157E+308,
+      "mode": "running",
+      "text": "\u7EA61.07e304\u5E74\u590F4\u65E5 22:43\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 1.7976931348623157E+308,
+      "mode": "paused",
+      "text": "\u7EA61.07e304\u5E74\u590F4\u65E5 22:43\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "seconds": 1.7976931348623157E+308,
+      "mode": "closeup",
+      "text": "\u7EA61.07e304\u5E74\u590F4\u65E5 22:43\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 0,
+      "mode": "running",
+      "text": "1\u5E74\u66251\u65E5 08:00\n\u65E5\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 0,
+      "mode": "paused",
+      "text": "1\u5E74\u66251\u65E5 08:00\n\u65E5\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 0,
+      "mode": "closeup",
+      "text": "1\u5E74\u66251\u65E5 08:00\n\u65E5\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 399.999,
+      "mode": "running",
+      "text": "1\u5E74\u66251\u65E5 23:59\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 399.999,
+      "mode": "paused",
+      "text": "1\u5E74\u66251\u65E5 23:59\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 399.999,
+      "mode": "closeup",
+      "text": "1\u5E74\u66251\u65E5 23:59\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 400,
+      "mode": "running",
+      "text": "1\u5E74\u66252\u65E5 00:00\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 400,
+      "mode": "paused",
+      "text": "1\u5E74\u66252\u65E5 00:00\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 400,
+      "mode": "closeup",
+      "text": "1\u5E74\u66252\u65E5 00:00\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 4000,
+      "mode": "running",
+      "text": "1\u5E74\u590F1\u65E5 00:00\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 4000,
+      "mode": "paused",
+      "text": "1\u5E74\u590F1\u65E5 00:00\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 4000,
+      "mode": "closeup",
+      "text": "1\u5E74\u590F1\u65E5 00:00\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 16600,
+      "mode": "running",
+      "text": "2\u5E74\u66251\u65E5 00:00\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 16600,
+      "mode": "paused",
+      "text": "2\u5E74\u66251\u65E5 00:00\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 16600,
+      "mode": "closeup",
+      "text": "2\u5E74\u66251\u65E5 00:00\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 167982999.5,
+      "mode": "running",
+      "text": "9999\u5E74\u51AC7\u65E5 23:58\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 167982999.5,
+      "mode": "paused",
+      "text": "9999\u5E74\u51AC7\u65E5 23:58\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 167982999.5,
+      "mode": "closeup",
+      "text": "9999\u5E74\u51AC7\u65E5 23:58\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 167983199.5,
+      "mode": "running",
+      "text": "\u7EA61.00e4\u5E74\u66251\u65E5 07:58\n\u65E5\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 167983199.5,
+      "mode": "paused",
+      "text": "\u7EA61.00e4\u5E74\u66251\u65E5 07:58\n\u65E5\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 167983199.5,
+      "mode": "closeup",
+      "text": "\u7EA61.00e4\u5E74\u66251\u65E5 07:58\n\u65E5\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 1.7976931348623157E+308,
+      "mode": "running",
+      "text": "\u7EA61.07e304\u5E74\u590F4\u65E5 22:43\n\u591C\u95F4",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 1.7976931348623157E+308,
+      "mode": "paused",
+      "text": "\u7EA61.07e304\u5E74\u590F4\u65E5 22:43\n\u591C\u95F4 \u00B7 \u5C0F\u9662\u6682\u505C\u4E2D",
+      "lines": 2,
+      "bounds": [
+        899,
+        26,
+        190,
+        43
+      ]
+    },
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "seconds": 1.7976931348623157E+308,
+      "mode": "closeup",
+      "text": "\u7EA61.07e304\u5E74\u590F4\u65E5 22:43\n\u591C\u95F4 \u00B7 \u8FD1\u770B \u00B7 \u81EA\u7136\u65F6\u95F4\u6682\u505C",
+      "lines": 2,
+      "bounds": [
+        884,
+        26,
+        190,
+        43
+      ]
+    }
+  ]
+}
