@@ -1,0 +1,29 @@
+{"diagnostic":"Food","invalid":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","saveFailed":true,"saveError":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","pausedInvalid":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","closeInvalid":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","staleId":"station-1-out-1","actualX":2,"actualZ":0.85}
+{"diagnostic":"Food next normal tick","valid":true,"total":8}
+{"name":"Food full move immediately validates, saves and conserves paid supply","result":"FAIL","error":"displaced outlet invalid before next tick"}
+{"name":"Food immediate paused save/load continues deterministically","result":"FAIL","error":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548"}
+{"name":"Food partial obstacle movement releases only after actual displacement","result":"FAIL","error":"partial displacement retained outlet"}
+{"name":"Food first-step obstruction retains outlet despite true return","result":"PASS"}
+{"name":"Food threshold noop","result":"PASS"}
+{"name":"Food threshold inside","result":"PASS"}
+{"name":"Food threshold outside","result":"FAIL","error":"ownership disagrees with actual outlet distance"}
+{"name":"Food threshold diagonal-inside","result":"PASS"}
+{"name":"Food threshold diagonal-outside","result":"FAIL","error":"ownership disagrees with actual outlet distance"}
+{"name":"Food threshold exact-axis-threshold","result":"FAIL","error":"ownership disagrees with actual outlet distance"}
+{"name":"Food rejected moves preserve complete snapshot","result":"PASS"}
+{"name":"Food ordinary non-outlet and held-then-released supply keep existing semantics","result":"PASS"}
+{"diagnostic":"Water","invalid":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","saveFailed":true,"saveError":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","pausedInvalid":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","closeInvalid":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548","staleId":"station-1-out-1","actualX":2,"actualZ":0.85}
+{"diagnostic":"Water next normal tick","valid":true,"total":12}
+{"name":"Water full move immediately validates, saves and conserves paid supply","result":"FAIL","error":"displaced outlet invalid before next tick"}
+{"name":"Water immediate paused save/load continues deterministically","result":"FAIL","error":"\u4F9B\u7ED9\u5668\u51FA\u53E3\u5B9E\u9645\u4EFD\u989D\u5F52\u5C5E\u65E0\u6548"}
+{"name":"Water partial obstacle movement releases only after actual displacement","result":"FAIL","error":"partial displacement retained outlet"}
+{"name":"Water first-step obstruction retains outlet despite true return","result":"PASS"}
+{"name":"Water threshold noop","result":"PASS"}
+{"name":"Water threshold inside","result":"PASS"}
+{"name":"Water threshold outside","result":"FAIL","error":"ownership disagrees with actual outlet distance"}
+{"name":"Water threshold diagonal-inside","result":"PASS"}
+{"name":"Water threshold diagonal-outside","result":"FAIL","error":"ownership disagrees with actual outlet distance"}
+{"name":"Water threshold exact-axis-threshold","result":"FAIL","error":"ownership disagrees with actual outlet distance"}
+{"name":"Water rejected moves preserve complete snapshot","result":"PASS"}
+{"name":"Water ordinary non-outlet and held-then-released supply keep existing semantics","result":"PASS"}
+{"summary":true,"passed":12,"failures":12}

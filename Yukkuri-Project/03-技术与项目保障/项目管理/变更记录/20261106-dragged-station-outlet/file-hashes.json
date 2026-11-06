@@ -1,0 +1,30 @@
+[
+  {
+    "sha256": "1024B4C47BD57B947364AE7BB6EFDCAF82DC013309E925CA838A71F6BEF73563",
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/CourtyardObjects.cs"
+  },
+  {
+    "sha256": "60A918A257C765467430AB76D2CE04D58F46B377FB7BD9F43DC0C696FEFDE7FF",
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/checks/Interaction.DraggedOutlet/Program.cs"
+  },
+  {
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+    "path": "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/checks/Interaction.DraggedOutlet/Interaction.DraggedOutlet.csproj"
+  },
+  {
+    "sha256": "CD0A58A03418C862F45A620F35B436AD2C6A7A327D3BDC7700F548E7E40A2528",
+    "path": "Yukkuri-Project/03-技术与项目保障/项目管理/变更记录/20261106-dragged-station-outlet/实现与验证.txt"
+  },
+  {
+    "sha256": "1F35F0DE8AD9A19D5A14587A79B80B32EAB0FDF173BB6149137B0CB32F85E37D",
+    "path": "Yukkuri-Project/03-技术与项目保障/项目管理/变更记录/20261106-dragged-station-outlet/baseline-results.txt"
+  },
+  {
+    "sha256": "8577DC3AEA0538085BFDDA5021D40BA124D9B76C9F4E17F87178856E1DF9B007",
+    "path": "Yukkuri-Project/03-技术与项目保障/项目管理/变更记录/20261106-dragged-station-outlet/fixed-results.txt"
+  },
+  {
+    "sha256": "6D5163F15AF5F3A8E16553A2A99906667F40D05A49FCAEE6BD371EDED133097B",
+    "path": "Yukkuri-Project/03-技术与项目保障/项目管理/变更记录/20261106-dragged-station-outlet/combined-eighteen.json"
+  }
+]

@@ -1,0 +1,71 @@
+供给器出口食水拖动后的即时存档修复
+日期：2026-11-06 UTC
+基线提交：e8d96a78f49182eb17e269e2b62a738c7a9bb7ea
+分支：alice/20261106-dragged-station-outlet
+被测版本：上述基线加本记录列出的工作区增量，尚不代表已提交版本。
+环境：获本次授权的本地 Windows 测试机，.NET SDK 10.0.402，Release；不是远程机器或原开发机。机器身份及绝对路径仅保留在本地原始记录。
+
+结论
+修复前，玩家沿现有 Pet 模式拖动供给器出口的食物或清水后，立即存档会因出口归属无效被拒绝。暂停和特写会持续保留该无效状态，只有恢复普通世界推进才自愈。
+修复仅在实际移动结束后同步出口引用，不改变物品身份、实际份额、仓储、价格、运动结果或存档校验规则。
+
+策划与实现依据
+以下设计路径相对 Yukkuri-Project：
+05-游戏设计/自由模式-繁育经营闭环.txt:6、8、42：既有食水库存、购买经营流程及供给器解锁。
+05-游戏设计/自由模式-行为培养与分工.txt:18、23–24：实际送达不等于入口消费，缺物资不凭空补资源，取消照护时已取食水留在实际位置。
+05-游戏设计/整合策划-v0.1-从小院到乐园.txt:45–46：摆放影响实际通行和进食。这是整合提案的方向参考，不据此新增未确认机制或数值。
+本次修复的是现有操作与存档不变量冲突，不把参考资料中的建议当成新授权需求。
+
+以下代码路径相对工程基线，行号为基线版本：
+src/Yukkuri.Game/InteractionRoom.Gestures.cs:80–90、191：Pet 对象拖动进入 prop，再调用 MoveLooseObject；Grab 食水另走 HoldSupply。
+src/Yukkuri.Simulation/CourtyardObjects.cs:5–24：可能完整、部分或首步受阻；true 不代表到达请求目标。
+src/Yukkuri.Simulation/SupplyStations.cs:11–13、98–99：StationOutlet 使用真实对象条件及欧氏距离小于 .001；普通 tick 后才清失效引用。
+src/Yukkuri.Simulation/SupplyStationValidation.cs:35–38：校验现存物理出口归属。原校验逐轴容差与运行时欧氏距离略有不同，本次不改校验，直接复用运行时判定。
+src/Yukkuri.Simulation/SaveStore.cs:13–15：保存先校验。
+src/Yukkuri.Simulation/WorldSimulation.cs:72：暂停/特写不推进普通 tick。
+src/Yukkuri.Simulation/InteractionSupply.cs:41–42：已有手持流程会解除站点引用。
+
+变更
+生产文件只有 CourtyardObjects.cs：实际步进循环结束后，遍历指向该物体的供给器，只有 StationOutlet 判定不再是实际出口时清空 OutletObjectId。
+新增 checks/Interaction.DraggedOutlet/Program.cs 和对应 csproj。未修改校验器、物品成本、数量、原测试或 UI。
+
+真实复现
+固定种子20261108。仅初始个体位置、需求与自主冷却作为隔离夹具；器具购买、摆放、定时补充、出料和拖动均调用真实 API。
+Food、Water 各自产生一份出口实物，再 MoveLooseObject 到 (2,.85)。
+基线立即 Validate 与 Save 均失败：“供给器出口实际份额归属无效”。
+暂停推进1秒、特写推进1秒后仍无效；恢复普通推进 .25秒后恢复有效。出料加原份额总数仍为8/12。
+修复版同一步骤立即有效、立即保存成功，暂停及特写也有效；下次出料只消耗一份仓储，旧食水实物仍在原身份和拖动位置。
+
+测试结果
+同一测试文件强制 Release -t:Rebuild：
+- 基线：24组，12通过、12失败，退出1。
+- 修复：24组全部通过，退出0。
+覆盖两种站点：完整移动、暂停存读及确定续算、部分碰撞、首步阻塞但返回true、no-op、轴内/外及精确.001、对角距离内/外、非法坐标/未知ID/暂停/跨区/已收容拒绝无变动、普通物体、手持后放下的独立食水。
+首步阻塞使用明确标记的合成球碰撞夹具，不宣称该夹具由合法摆放生成。没有声称 MoveLooseObject 拒绝 held/carried；该API未设置这种新前置条件。
+既有回归全部强制重建并执行：
+Interaction.SupplyStations 8通过；
+Interaction.Inventory 12通过；
+Interaction.Shelters 13通过；
+Family.CareContinuity 6通过；
+Family.CareInterruption 17通过；
+Family.AssistedCare 16通过。
+合计固定版本96组通过。各组内部含多个断言，不将96称为单一断言数量。
+编译0错误，保留基线既有两条CS8604警告，位于 SupplyStationValidation 与 InteractionValidation。
+
+命令模板
+dotnet build checks/Interaction.DraggedOutlet/Interaction.DraggedOutlet.csproj -c Release -t:Rebuild
+dotnet checks/Interaction.DraggedOutlet/bin/Release/net10.0/Interaction.DraggedOutlet.dll <独立合成存档证据目录>
+既有回归使用相同 build 配置，再执行各自 Release/net10.0 的 DLL。
+基线和修复使用不同合成存档目录，失败证据未删除。
+
+未测与阻碍
+未运行 Godot/native UI、截图、长期压力或人工玩法验收；UI可达性来自源码链，实际行为来自规则API运行。
+Save.Compatibility 仅编译成功；无参数启动在入口拒绝，缺少明确授权的历史样本，历史兼容为 blocked，不计入96。没有访问个人存档或拿合成档冒充历史样本。
+最初创建隔离工作区被审核拒绝。用户随后明确同意协调者统一创建分支及提交推送，协调者成功创建后才恢复本次编辑。工作者未创建分支、暂存、提交或推送。
+本记录仅是专项修复报告，不代表整个项目验收或 main 合并许可。
+
+证据
+baseline-results.txt 和 fixed-results.txt 是无机器路径的逐组结构化结果。
+file-hashes.json 记录冻结生产源、测试文件和证据的 SHA256；基线生产源另有原始快照留在本地。
+原始构建日志、既有回归日志、合成存档和失败证据只保留本地，不随报告发布。
+十八项临时组合：独立复现同样12项失败后，仅应用四行修复；71/71纯检查及Game强制重建通过。407源文件前后稳定，保留前17项改动；275份JSON与30条行内JSON独立核验，递归父证据无漂移。组合未运行Godot，详见combined-eighteen.json。file-hashes记录被测工作区原始字节，Git换行规范化后的blob另以提交tree为准。

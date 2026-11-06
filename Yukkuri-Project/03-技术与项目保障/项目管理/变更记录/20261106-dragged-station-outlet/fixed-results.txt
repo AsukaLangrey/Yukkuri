@@ -1,0 +1,29 @@
+{"diagnostic":"Food","invalid":null,"saveFailed":false,"saveError":null,"pausedInvalid":null,"closeInvalid":null,"staleId":null,"actualX":2,"actualZ":0.85}
+{"diagnostic":"Food next normal tick","valid":true,"total":8}
+{"name":"Food full move immediately validates, saves and conserves paid supply","result":"PASS"}
+{"name":"Food immediate paused save/load continues deterministically","result":"PASS"}
+{"name":"Food partial obstacle movement releases only after actual displacement","result":"PASS"}
+{"name":"Food first-step obstruction retains outlet despite true return","result":"PASS"}
+{"name":"Food threshold noop","result":"PASS"}
+{"name":"Food threshold inside","result":"PASS"}
+{"name":"Food threshold outside","result":"PASS"}
+{"name":"Food threshold diagonal-inside","result":"PASS"}
+{"name":"Food threshold diagonal-outside","result":"PASS"}
+{"name":"Food threshold exact-axis-threshold","result":"PASS"}
+{"name":"Food rejected moves preserve complete snapshot","result":"PASS"}
+{"name":"Food ordinary non-outlet and held-then-released supply keep existing semantics","result":"PASS"}
+{"diagnostic":"Water","invalid":null,"saveFailed":false,"saveError":null,"pausedInvalid":null,"closeInvalid":null,"staleId":null,"actualX":2,"actualZ":0.85}
+{"diagnostic":"Water next normal tick","valid":true,"total":12}
+{"name":"Water full move immediately validates, saves and conserves paid supply","result":"PASS"}
+{"name":"Water immediate paused save/load continues deterministically","result":"PASS"}
+{"name":"Water partial obstacle movement releases only after actual displacement","result":"PASS"}
+{"name":"Water first-step obstruction retains outlet despite true return","result":"PASS"}
+{"name":"Water threshold noop","result":"PASS"}
+{"name":"Water threshold inside","result":"PASS"}
+{"name":"Water threshold outside","result":"PASS"}
+{"name":"Water threshold diagonal-inside","result":"PASS"}
+{"name":"Water threshold diagonal-outside","result":"PASS"}
+{"name":"Water threshold exact-axis-threshold","result":"PASS"}
+{"name":"Water rejected moves preserve complete snapshot","result":"PASS"}
+{"name":"Water ordinary non-outlet and held-then-released supply keep existing semantics","result":"PASS"}
+{"summary":true,"passed":24,"failures":0}

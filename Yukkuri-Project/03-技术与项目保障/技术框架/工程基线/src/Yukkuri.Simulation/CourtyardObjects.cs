@@ -21,6 +21,10 @@ public sealed partial class WorldSimulation
                 State.RoomObjects.Any(other=>other!=o&&!other.Stored&&other.RegionId==o.RegionId&&other.Kind is RoomObjectKind.Ball or RoomObjectKind.Cushion&&Distance(other.X,other.Z,nx,nz)<.5))break;
             o.X=nx;o.Z=nz;
         }
+        // A drag can stop before its requested target. Release ownership only
+        // when the actual portion has left the station's physical outlet.
+        foreach(var station in State.SupplyStations)
+            if(station.OutletObjectId==o.Id&&StationOutlet(station)==null)station.OutletObjectId=null;
         o.VelocityX=o.VelocityZ=0;return true;
     }
     public bool MoveSupportedBodyOrFixture(string id,double x,double z)

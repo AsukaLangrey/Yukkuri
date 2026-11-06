@@ -1,0 +1,49 @@
+{
+  "origin_records": 405,
+  "dragged_delta_exact": true,
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ],
+  "new_warning_locations": [],
+  "changed_previous_files": [
+    "src\\Yukkuri.Simulation\\CourtyardObjects.cs"
+  ],
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "parsed_json_files": 275,
+  "pure_projects": 71,
+  "parent_artifact_drift": 0,
+  "game_build": 0,
+  "source_files": 407,
+  "pass_text_lines": 1506,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "deep_chain_records": 78,
+  "godot_run": false,
+  "json_issues": [],
+  "origin_hash_drift": 0,
+  "source_hash_differences": 0,
+  "baseline_passed": 12,
+  "failed": [],
+  "dragged_checks": 24,
+  "deep_chain_drift": 0,
+  "visual_acceptance": false,
+  "parsed_inline_json": 30,
+  "failure_text_markers": 0,
+  "new_check_files": 2,
+  "new_check_drift": 0,
+  "verified_at": "2026-11-06T07:22:07.6559153Z",
+  "dragged_failures": 0,
+  "passed_pure": 71,
+  "baseline_expected_failures": 12,
+  "parent_artifacts": 12
+}
