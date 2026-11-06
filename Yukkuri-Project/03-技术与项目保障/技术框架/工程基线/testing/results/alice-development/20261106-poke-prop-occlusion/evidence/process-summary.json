@@ -1,0 +1,182 @@
+[
+  {
+    "name": "baseline-restore",
+    "startUtc": "2026-11-06T22:53:24.9856419Z",
+    "endUtc": "2026-11-06T22:53:25.2131297Z",
+    "exitCode": 1,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe restore <project>\\src\\Yukkuri.Game\\Yukkuri.Game.csproj --configfile <project>\\.local\\offline.NuGet.Config --source <toolchain>\\godot\\Godot_v4.7.2-stable_mono_win64\\GodotSharp\\Tools\\nupkgs --disable-parallel -p:RestoreSources= <toolchain>\\godot\\Godot_v4.7.2-stable_mono_win64\\GodotSharp\\Tools\\nupkgs -p:UseSharedCompilation=false -nodeReuse:false -p:NuGetAudit=false"
+  },
+  {
+    "name": "baseline-restore-02",
+    "startUtc": "2026-11-06T22:53:37.3056671Z",
+    "endUtc": "2026-11-06T22:53:41.6381878Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe restore <project>\\src\\Yukkuri.Game\\Yukkuri.Game.csproj --configfile <project>\\.local\\offline.NuGet.Config --source <toolchain>\\godot\\Godot_v4.7.2-stable_mono_win64\\GodotSharp\\Tools\\nupkgs --disable-parallel -p:RestoreSources=<toolchain>\\godot\\Godot_v4.7.2-stable_mono_win64\\GodotSharp\\Tools\\nupkgs -p:UseSharedCompilation=false -nodeReuse:false -p:NuGetAudit=false"
+  },
+  {
+    "name": "baseline-build",
+    "startUtc": "2026-11-06T22:53:41.6546736Z",
+    "endUtc": "2026-11-06T22:53:48.1961886Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe build <project>\\src\\Yukkuri.Game\\Yukkuri.Game.csproj --no-restore -p:UseSharedCompilation=false -nodeReuse:false -p:GenerateAspNetCertificate=false"
+  },
+  {
+    "name": "baseline-import",
+    "startUtc": "2026-11-06T22:53:48.2181745Z",
+    "endUtc": "2026-11-06T22:53:53.4250085Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --editor --path <project>\\src\\Yukkuri.Game --import --quit"
+  },
+  {
+    "name": "baseline-audit",
+    "startUtc": "2026-11-06T22:53:53.4315623Z",
+    "endUtc": "2026-11-06T22:54:32.9461593Z",
+    "exitCode": 1,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --path <project>\\src\\Yukkuri.Game --audio-driver Dummy -- --interaction-test-profile poke-audit-prop-baseline --poke-contact-audit-output <project>\\.local\\testing\\prop-baseline\\result.json"
+  },
+  {
+    "name": "final-build",
+    "startUtc": "2026-11-06T22:55:05.4098935Z",
+    "endUtc": "2026-11-06T22:55:09.0814095Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe build <project>\\src\\Yukkuri.Game\\Yukkuri.Game.csproj --no-restore -p:UseSharedCompilation=false -nodeReuse:false -p:GenerateAspNetCertificate=false"
+  },
+  {
+    "name": "final-import",
+    "startUtc": "2026-11-06T22:55:09.1025312Z",
+    "endUtc": "2026-11-06T22:55:11.7765441Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --editor --path <project>\\src\\Yukkuri.Game --import --quit"
+  },
+  {
+    "name": "final-audit",
+    "startUtc": "2026-11-06T22:55:11.7877873Z",
+    "endUtc": "2026-11-06T22:55:50.0647981Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --path <project>\\src\\Yukkuri.Game --audio-driver Dummy -- --interaction-test-profile poke-audit-prop-final --poke-contact-audit-output <project>\\.local\\testing\\prop-final\\result.json"
+  },
+  {
+    "name": "guard-reuse",
+    "startUtc": "2026-11-06T22:55:50.0746162Z",
+    "endUtc": "2026-11-06T22:55:50.4700108Z",
+    "exitCode": 2,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --path <project>\\src\\Yukkuri.Game -- --interaction-test-profile poke-audit-prop-final --poke-contact-audit-output <project>\\.local\\testing\\prop-final\\result.json"
+  },
+  {
+    "name": "guard-unknown",
+    "startUtc": "2026-11-06T22:55:50.4761745Z",
+    "endUtc": "2026-11-06T22:55:50.8721303Z",
+    "exitCode": 2,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --path <project>\\src\\Yukkuri.Game -- --interaction-test-profile poke-audit-unknown --poke-contact-audit-output <project>\\.local\\testing\\prop-guard-unknown\\result.json --unknown"
+  },
+  {
+    "name": "guard-mixed",
+    "startUtc": "2026-11-06T22:55:50.8774687Z",
+    "endUtc": "2026-11-06T22:55:51.2681415Z",
+    "exitCode": 2,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --path <project>\\src\\Yukkuri.Game -- --interaction-test-profile poke-audit-mixed --poke-contact-audit-output <project>\\.local\\testing\\prop-guard-mixed\\result.json --legacy"
+  },
+  {
+    "name": "guard-main",
+    "startUtc": "2026-11-06T22:55:51.2726255Z",
+    "endUtc": "2026-11-06T22:55:51.6637448Z",
+    "exitCode": 2,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "Godot_v4.7.2-stable_mono_win64_console.exe --headless --path <project>\\src\\Yukkuri.Game res://Main.tscn -- --interaction-test-profile poke-audit-main --poke-contact-audit-output <project>\\.local\\testing\\prop-guard-main\\result.json"
+  },
+  {
+    "name": "Input.Intent-restore",
+    "startUtc": "2026-11-06T22:55:51.6699796Z",
+    "endUtc": "2026-11-06T22:55:52.3730041Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe restore <project>\\checks\\Input.Intent\\Input.Intent.csproj --configfile <project>\\.local\\offline.NuGet.Config --disable-parallel -p:UseSharedCompilation=false -nodeReuse:false -p:NuGetAudit=false"
+  },
+  {
+    "name": "Input.Intent-build",
+    "startUtc": "2026-11-06T22:55:52.3775591Z",
+    "endUtc": "2026-11-06T22:55:54.471396Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe build <project>\\checks\\Input.Intent\\Input.Intent.csproj --no-restore -p:UseSharedCompilation=false -nodeReuse:false -p:GenerateAspNetCertificate=false"
+  },
+  {
+    "name": "Input.Intent-run",
+    "startUtc": "2026-11-06T22:55:54.4773422Z",
+    "endUtc": "2026-11-06T22:55:57.9804375Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe <project>\\checks\\Input.Intent\\bin\\Debug\\net10.0\\Input.Intent.dll <project>\\.local\\testing\\prop-run-logs\\input-intent-result.json"
+  },
+  {
+    "name": "Interaction.StateBoundaries-restore",
+    "startUtc": "2026-11-06T22:55:57.9868597Z",
+    "endUtc": "2026-11-06T22:55:58.6815235Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe restore <project>\\checks\\Interaction.StateBoundaries\\Interaction.StateBoundaries.csproj --configfile <project>\\.local\\offline.NuGet.Config --disable-parallel -p:UseSharedCompilation=false -nodeReuse:false -p:NuGetAudit=false"
+  },
+  {
+    "name": "Interaction.StateBoundaries-build",
+    "startUtc": "2026-11-06T22:55:58.6863623Z",
+    "endUtc": "2026-11-06T22:56:00.552085Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe build <project>\\checks\\Interaction.StateBoundaries\\Interaction.StateBoundaries.csproj --no-restore -p:UseSharedCompilation=false -nodeReuse:false -p:GenerateAspNetCertificate=false"
+  },
+  {
+    "name": "Interaction.StateBoundaries-run",
+    "startUtc": "2026-11-06T22:56:00.5590919Z",
+    "endUtc": "2026-11-06T22:56:01.5347689Z",
+    "exitCode": 0,
+    "limitSeconds": 300,
+    "completed": true,
+    "terminatedOnTimeout": false,
+    "command": "dotnet.exe <project>\\checks\\Interaction.StateBoundaries\\bin\\Debug\\net10.0\\Interaction.StateBoundaries.dll"
+  }
+]

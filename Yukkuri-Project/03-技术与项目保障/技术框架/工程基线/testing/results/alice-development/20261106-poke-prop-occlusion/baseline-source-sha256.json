@@ -1,0 +1,26 @@
+[
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+    "sha256": "192F0075B620240A0EA13DF8740FF5B97BE4FA97174562CBE7B44FFC8D5F2840"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.PokeAudit.cs",
+    "sha256": "09F0968D0636C81035CDE3C504C9382014DD4DF656EE4AAF54B7841DA6F04ECF"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.PokePropAudit.cs",
+    "sha256": "12F336A9BF7867C4B605CF9AAC6941F5C667BFDC0D2741C5795E84A5142D4B98"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.cs",
+    "sha256": "297BFFFE4003C194392EACFBE3C320F0A1214391C953D5B71460F662BC4094D5"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.cs",
+    "sha256": "CDDC8DD3F8A2FE964937D62FCB9078E133C91797E5BECDEC1DF189FF93682CE9"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Input.cs",
+    "sha256": "9D7A1A689E2296C28C385EA01188898A63D35887DC815C6F1C24196710E69559"
+  }
+]

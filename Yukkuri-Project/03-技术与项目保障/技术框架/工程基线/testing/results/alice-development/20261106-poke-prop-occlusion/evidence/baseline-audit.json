@@ -1,0 +1,563 @@
+{
+  "scope": "Real Godot scene input callbacks and actual current ray-contact geometry; normal-yard fixtures and explicit actor-move fixture; synthetic engine input state for pull/sweep; not native input, viewport propagation or visual acceptance.",
+  "success": false,
+  "failures": 1,
+  "results": [
+    {
+      "name": "valid-head-click",
+      "passed": true,
+      "detail": {
+        "from": [
+          518.125,
+          465.2549
+        ],
+        "to": [
+          518.125,
+          465.2549
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Head",
+        "releaseTarget": "interaction-oil-0",
+        "releasePart": "Head",
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "after": {
+          "Health": 99.44,
+          "Pain": 0.8400000000000001,
+          "ReactionSerial": 1,
+          "pose": "flick",
+          "otherHealth": 100,
+          "otherSerial": 1
+        },
+        "currentSurface": true,
+        "cachedCleared": true
+      }
+    },
+    {
+      "name": "quick-drag-off",
+      "passed": true,
+      "detail": {
+        "from": [
+          518.125,
+          465.2549
+        ],
+        "to": [
+          336,
+          118
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Head",
+        "releaseTarget": null,
+        "releasePart": null,
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "after": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "pose": "idle",
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "currentSurface": true,
+        "cachedCleared": true
+      }
+    },
+    {
+      "name": "release-other-oil",
+      "passed": true,
+      "detail": {
+        "from": [
+          518.125,
+          465.2549
+        ],
+        "to": [
+          670,
+          427.01422
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Head",
+        "releaseTarget": "interaction-oil-1",
+        "releasePart": "Head",
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "after": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "pose": "idle",
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "currentSurface": true,
+        "cachedCleared": true
+      }
+    },
+    {
+      "name": "release-outside-canvas",
+      "passed": true,
+      "detail": {
+        "from": [
+          518.125,
+          465.2549
+        ],
+        "to": [
+          -10,
+          -10
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Head",
+        "releaseTarget": null,
+        "releasePart": null,
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "after": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "pose": "idle",
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "currentSurface": true,
+        "cachedCleared": true
+      }
+    },
+    {
+      "name": "same-actor-new-surface",
+      "passed": true,
+      "detail": {
+        "from": [
+          518.125,
+          465.2549
+        ],
+        "to": [
+          512.125,
+          471.2549
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Head",
+        "releaseTarget": "interaction-oil-0",
+        "releasePart": "Side",
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "after": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 1,
+          "pose": "poke",
+          "otherHealth": 100,
+          "otherSerial": 1
+        },
+        "currentSurface": true,
+        "cachedCleared": true
+      }
+    },
+    {
+      "name": "stationary-pointer-actor-moved",
+      "passed": true,
+      "detail": {
+        "from": [
+          518.125,
+          465.2549
+        ],
+        "to": [
+          518.125,
+          465.2549
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Head",
+        "releaseTarget": null,
+        "releasePart": null,
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "after": {
+          "Health": 100,
+          "Pain": 0,
+          "ReactionSerial": 0,
+          "pose": "idle",
+          "otherHealth": 100,
+          "otherSerial": 0
+        },
+        "currentSurface": true,
+        "cachedCleared": true
+      }
+    },
+    {
+      "name": "sustained-pull-no-release-poke",
+      "passed": true,
+      "detail": {
+        "exercised": true,
+        "Health": 99.87999999821186,
+        "Pain": 0.180000002682209,
+        "ReactionSerial": 1,
+        "PullRemaining": 0.3,
+        "PullAmount": 1,
+        "tapTarget": null,
+        "from": [
+          518.125,
+          465.2549
+        ],
+        "to": [
+          336,
+          118
+        ]
+      }
+    },
+    {
+      "name": "empty-start-sweep-no-release-poke",
+      "passed": true,
+      "detail": {
+        "exercised": true,
+        "Health": 88.45,
+        "Pain": 17.325,
+        "ReactionSerial": 1,
+        "PullRemaining": 0,
+        "PullAmount": 0,
+        "tapTarget": "interaction-oil-0",
+        "from": [
+          482.125,
+          465.2549
+        ],
+        "to": [
+          518.125,
+          465.2549
+        ]
+      }
+    },
+    {
+      "name": "prop-clear-release-control",
+      "passed": true,
+      "detail": {
+        "changed": true,
+        "expectedChange": true,
+        "armed": true,
+        "currentSurface": true,
+        "cachedCleared": true,
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "Fear": 0,
+          "Trust": 38,
+          "Resentment": 0,
+          "ReactionSerial": 1,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "GiveBall",
+          "pose": "greet"
+        },
+        "after": {
+          "Health": 99.44,
+          "Pain": 0.8400000000000001,
+          "Fear": 1.677,
+          "Trust": 37.298,
+          "Resentment": 0.8580000000000001,
+          "ReactionSerial": 2,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "Flick",
+          "pose": "flick"
+        },
+        "pressRay": {
+          "point": [
+            518.125,
+            465.44492
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Head",
+          "bodyDistance": 18.593729,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": false,
+          "ballDistance": null,
+          "foregroundObjectId": null
+        },
+        "releaseRay": {
+          "point": [
+            518.125,
+            465.44492
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Head",
+          "bodyDistance": 18.593729,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": false,
+          "ballDistance": null,
+          "foregroundObjectId": null
+        },
+        "ball": {
+          "Id": "21b6140d9e4a49c783f3b47ad919dc5b",
+          "X": -2.6999993324279785,
+          "Z": 0.8200006484985352,
+          "Height": 0
+        },
+        "actorMoveZ": 0,
+        "delta": {
+          "health": -0.5600000000000023,
+          "pain": 0.8400000000000001,
+          "fear": 1.677,
+          "trust": -0.7019999999999982,
+          "resentment": 0.8580000000000001,
+          "reactionSerial": 1
+        }
+      }
+    },
+    {
+      "name": "prop-direct-press-control",
+      "passed": true,
+      "detail": {
+        "changed": false,
+        "expectedChange": false,
+        "armed": false,
+        "currentSurface": true,
+        "cachedCleared": true,
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "Fear": 0,
+          "Trust": 38,
+          "Resentment": 0,
+          "ReactionSerial": 1,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "GiveBall",
+          "pose": "greet"
+        },
+        "after": {
+          "Health": 100,
+          "Pain": 0,
+          "Fear": 0,
+          "Trust": 38,
+          "Resentment": 0,
+          "ReactionSerial": 1,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "GiveBall",
+          "pose": "greet"
+        },
+        "pressRay": {
+          "point": [
+            515.12506,
+            489.00653
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Mouth",
+          "bodyDistance": 18.75929,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": true,
+          "ballDistance": 18.517397,
+          "foregroundObjectId": "a84f9b144628470d830ee90d1e90a20e"
+        },
+        "releaseRay": {
+          "point": [
+            515.12506,
+            489.00653
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Mouth",
+          "bodyDistance": 18.75929,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": true,
+          "ballDistance": 18.517397,
+          "foregroundObjectId": "a84f9b144628470d830ee90d1e90a20e"
+        },
+        "ball": {
+          "Id": "a84f9b144628470d830ee90d1e90a20e",
+          "X": -2.6999993324279785,
+          "Z": 0.8200006484985352,
+          "Height": 0
+        },
+        "actorMoveZ": 0,
+        "delta": {
+          "health": 0,
+          "pain": 0,
+          "fear": 0,
+          "trust": 0,
+          "resentment": 0,
+          "reactionSerial": 0
+        }
+      }
+    },
+    {
+      "name": "prop-covered-release",
+      "passed": false,
+      "detail": {
+        "changed": true,
+        "expectedChange": false,
+        "armed": true,
+        "currentSurface": true,
+        "cachedCleared": true,
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "Fear": 0,
+          "Trust": 38,
+          "Resentment": 0,
+          "ReactionSerial": 1,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "GiveBall",
+          "pose": "greet"
+        },
+        "after": {
+          "Health": 100,
+          "Pain": 0,
+          "Fear": 1.075,
+          "Trust": 37.55,
+          "Resentment": 0.55,
+          "ReactionSerial": 2,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "Poke",
+          "pose": "poke"
+        },
+        "pressRay": {
+          "point": [
+            518.125,
+            465.44492
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Head",
+          "bodyDistance": 18.593729,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": false,
+          "ballDistance": null,
+          "foregroundObjectId": null
+        },
+        "releaseRay": {
+          "point": [
+            515.12506,
+            489.00653
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Mouth",
+          "bodyDistance": 18.75929,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": true,
+          "ballDistance": 18.517397,
+          "foregroundObjectId": "696173479f0e40f38924f1e253f6c619"
+        },
+        "ball": {
+          "Id": "696173479f0e40f38924f1e253f6c619",
+          "X": -2.6999993324279785,
+          "Z": 0.8200006484985352,
+          "Height": 0
+        },
+        "actorMoveZ": 0,
+        "delta": {
+          "health": 0,
+          "pain": 0,
+          "fear": 1.075,
+          "trust": -0.45000000000000284,
+          "resentment": 0.55,
+          "reactionSerial": 1
+        }
+      }
+    },
+    {
+      "name": "prop-behind-body-control",
+      "passed": true,
+      "detail": {
+        "changed": true,
+        "expectedChange": true,
+        "armed": true,
+        "currentSurface": true,
+        "cachedCleared": true,
+        "before": {
+          "Health": 100,
+          "Pain": 0,
+          "Fear": 0,
+          "Trust": 38,
+          "Resentment": 0,
+          "ReactionSerial": 1,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "GiveBall",
+          "pose": "greet"
+        },
+        "after": {
+          "Health": 99.44,
+          "Pain": 0.8400000000000001,
+          "Fear": 1.677,
+          "Trust": 37.298,
+          "Resentment": 0.8580000000000001,
+          "ReactionSerial": 2,
+          "LastPlayerTouchAt": 0,
+          "LastContact": "Flick",
+          "pose": "flick"
+        },
+        "pressRay": {
+          "point": [
+            518.125,
+            484.56525
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Head",
+          "bodyDistance": 18.013405,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": false,
+          "ballDistance": null,
+          "foregroundObjectId": null
+        },
+        "releaseRay": {
+          "point": [
+            515.12506,
+            489.00653
+          ],
+          "bodyId": "interaction-oil-0",
+          "bodyPart": "Head",
+          "bodyDistance": 18.0932,
+          "bodyBlocked": false,
+          "bodyKind": "Body",
+          "ballIntersected": true,
+          "ballDistance": 18.517397,
+          "foregroundObjectId": null
+        },
+        "ball": {
+          "Id": "2ec9e1b68d5d41f29e8bf08d484f4f2d",
+          "X": -2.6999993324279785,
+          "Z": 0.8200006484985352,
+          "Height": 0
+        },
+        "actorMoveZ": 0.6,
+        "delta": {
+          "health": -0.5600000000000023,
+          "pain": 0.8400000000000001,
+          "fear": 1.677,
+          "trust": -0.7019999999999982,
+          "resentment": 0.8580000000000001,
+          "reactionSerial": 1
+        }
+      }
+    }
+  ]
+}

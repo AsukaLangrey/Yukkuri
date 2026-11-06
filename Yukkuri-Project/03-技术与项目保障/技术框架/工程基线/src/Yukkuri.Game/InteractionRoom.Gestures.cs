@@ -40,9 +40,9 @@ public partial class InteractionRoom
         }
         if(_pokeContact is { } poke)
         {
-            // A click finishes only on the original body, at its current surface.
+            // A click finishes only on the unobstructed original body, at its current surface.
             // The press contact remains the anchor for deliberate sustained pulling.
-            if(!_pulled&&IsScenePoint(mouse.Position)&&
+            if(!_pulled&&IsScenePoint(mouse.Position)&&ObjectAt(mouse.Position)==null&&
                 ContactAt(mouse.Position) is {Blocked:false,TargetKind:InteractionTargetKind.Body} current&&current.Id==poke.Id)
                 ApplyPoke(current,false,0);
             _pokeContact=null;_swingArmed=false;return true;

@@ -1,0 +1,32 @@
+{
+  "cases": [
+    {
+      "name": "guard-reuse",
+      "exitCode": 2,
+      "worldStartupMarkersPresent": false,
+      "guardRejected": true
+    },
+    {
+      "name": "guard-unknown",
+      "exitCode": 2,
+      "worldStartupMarkersPresent": false,
+      "guardRejected": true
+    },
+    {
+      "name": "guard-mixed",
+      "exitCode": 2,
+      "worldStartupMarkersPresent": false,
+      "guardRejected": true
+    },
+    {
+      "name": "guard-main",
+      "exitCode": 2,
+      "worldStartupMarkersPresent": false,
+      "guardRejected": true
+    }
+  ],
+  "unknownOutputAbsent": true,
+  "mixedOutputAbsent": true,
+  "directMainOutputAbsent": true,
+  "reuseGuardBeforeWorld": true
+}

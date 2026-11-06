@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "status": "partial",
+  "branch": "alice/20261106-poke-prop-occlusion",
+  "sourceState": "Test-stage uncommitted changes on explicit prerequisite; publication status is recorded separately; exact tested bytes in source-sha256.json",
+  "localParentCommit": "ef84a2cfc17f4a7a56160d91fd2d4546d7ac8e3c",
+  "publishedPrerequisiteCommit": "2d0a6be4f68247e287c181b928a10686ac985d8e",
+  "prerequisite": "poke-release-contact; not an independent patch from main",
+  "environment": {
+    "execution": "local, not remote",
+    "machine": "当前本机 Windows",
+    "godot": "4.7.2 stable mono",
+    "os": "Windows",
+    "dotnetSdk": "10.0.402"
+  },
+  "baseline": {
+    "painDelta": 0,
+    "total": 12,
+    "passed": 11,
+    "exitCode": 1,
+    "fearDelta": 1.075,
+    "resentmentDelta": 0.55,
+    "trustDelta": -0.45,
+    "healthDelta": 0,
+    "failedCase": "prop-covered-release"
+  },
+  "final": {
+    "sourceHashesUnchangedAfterTests": true,
+    "stateBoundariesPassed": 10,
+    "stateBoundariesTotal": 10,
+    "testOwnedProcessesStillAlive": 0,
+    "buildErrors": 0,
+    "originalEightScenariosAndGuardUnchanged": true,
+    "buildWarnings": 0,
+    "sceneCasesTotal": 12,
+    "gameBuildExitCode": 0,
+    "sceneCasesPassed": 12,
+    "guardCasesPassed": 4,
+    "inputIntentPassed": 43,
+    "inputIntentTotal": 43,
+    "guardCasesTotal": 4
+  },
+  "budget": {
+    "startUtc": "2026-11-06T22:53:24.9247966Z",
+    "deadlineUtc": "2026-11-06T23:23:24.9247966Z",
+    "finishedUtc": "2026-11-06T22:56:01.5347689Z",
+    "elapsedSeconds": 156.6099723,
+    "limitReset": false,
+    "timeouts": 0,
+    "perProcessLimitSeconds": 300
+  },
+  "limits": [
+    "Scene callbacks and actual ray geometry only; not native input propagation or visual/feel acceptance.",
+    "World time frozen; actor movement fixtures are explicit position refreshes, not autonomous movement.",
+    "Final Godot audit emitted an exit warning for 2 ObjectDB instances; no lifecycle fix or leak-free claim.",
+    "Only the two focused rule checks ran; no full project suite, long soak, real historical save compatibility, audio or rendering acceptance."
+  ],
+  "intermediate": [
+    "Initial restore failed with MSB1008 because local runner concatenation split a property argument; corrected and rerun with original logs and deadline preserved.",
+    "Initial build had two existing CS8604 nullable warnings; final incremental build had zero warnings and errors."
+  ],
+  "evidence": [
+    {
+      "path": "baseline-source-sha256.json",
+      "sha256": "B2F9D665E08AE63634D0E9A3FFB3B2D7E8AAE7FE80073215C0EE45682EEDAA97"
+    },
+    {
+      "path": "source-sha256.json",
+      "sha256": "53AF0104EDA31551A16556B61A037198BCF849E7BB8B00CC7C5425205F6C5BDB"
+    },
+    {
+      "path": "evidence/baseline-audit.json",
+      "sha256": "518C5D38C4048AF9A951F45ABE871EE8A77F82A7F4FF6474A796ED96EBF9225E"
+    },
+    {
+      "path": "evidence/final-audit.json",
+      "sha256": "7C9FBBB7D4216C8E8FF549BFF19BCA64414F97A449E2E171FF3DF1C8BCB20E80"
+    },
+    {
+      "path": "evidence/guards.json",
+      "sha256": "6A6B5149A397390ED0A213A47B64FF73798959A2210E515A7ACCEE42F2F387CE"
+    },
+    {
+      "path": "evidence/input-intent.json",
+      "sha256": "1FA7794F92C434A157673CBAA4DF0EC7561D868073F48101F47B73B8F033262A"
+    },
+    {
+      "path": "evidence/process-summary.json",
+      "sha256": "21FD99FC4518BC011762CC84BB5370FBB412C90D6B04830C99DC4883AB82DF7D"
+    },
+    {
+      "path": "evidence/state-boundaries.json",
+      "sha256": "B64A40AEDFF8C4C6D185D7CB3C6EAFF95CDF67B29BE55ED6F20BE412700CAC77"
+    }
+  ]
+}

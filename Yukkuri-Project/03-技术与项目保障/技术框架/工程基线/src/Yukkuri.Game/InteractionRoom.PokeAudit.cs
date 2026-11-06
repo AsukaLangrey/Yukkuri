@@ -108,6 +108,7 @@ public partial class InteractionRoom
                     exercised&&beforeRelease==(c.Health,c.Pain,c.ReactionSerial)&&_pokeContact==null&&!_swingArmed,
                     new{exercised,c.Health,c.Pain,c.ReactionSerial,c.Interaction.PullRemaining,c.Interaction.PullAmount,tapTarget=_tapContact?.Id,from=new[]{from.X,from.Y},to=new[]{to.X,to.Y}});
             }
+            await RunPokePropAudit(Check);
             File.WriteAllText(output,JsonSerializer.Serialize(new{scope="Real Godot scene input callbacks and actual current ray-contact geometry; normal-yard fixtures and explicit actor-move fixture; synthetic engine input state for pull/sweep; not native input, viewport propagation or visual acceptance.",success=failures==0,failures,results},new JsonSerializerOptions{WriteIndented=true}));
             GetTree().Quit(failures==0?0:1);
         }
