@@ -1,0 +1,351 @@
+{
+  "game_debug_build": 0,
+  "parent_source_drift": 0,
+  "verified_at": "2026-11-06T13:57:58.6928724Z",
+  "parent_evidence_drift": 0,
+  "baseline_drift": 0,
+  "failure_text_markers": 0,
+  "shelter_scope": "Autonomous RoomMove slide=true only, normal grounded self-movement. Existing exterior left/right side-wall overlap must improve strictly in the outward normal. Every other shelter wall is swept strictly. Shelter recovery alone does not activate peer, station, tree or river recovery.",
+  "parsed_world_snapshots": 230,
+  "source_drift": 0,
+  "worker_eof_normalization": [
+    {
+      "file": "InteractionSpatial.cs",
+      "prior_sha256": "06096945EFBAA30E41F360D89194A50A70FA3FD826C49C28EEB9433D4C33EAC0",
+      "final_sha256": "2A38B8CAEF547913E194B51F5AE3274EB76969AB46ED9D7FB01A21DA4334035D",
+      "removed_eof_characters": 4,
+      "trimmed_body_equal": true,
+      "original_identity": "Exact original bytes reconstructed and original hash verified"
+    },
+    {
+      "file": "ShelterSpatial.cs",
+      "prior_sha256": "78C669947BEDCB21EA3649B920B1AA60A9607026DF0D9412825B2F3C9370A803",
+      "final_sha256": "5D27802CFC50690F759E192BB068DD7CC61EFA2ACA132B6C5D18A5AAEF09D343",
+      "removed_eof_characters": 8,
+      "trimmed_body_equal": true,
+      "original_identity": "Exact original bytes reconstructed and original hash verified"
+    },
+    {
+      "file": "ShelterGeometry.cs",
+      "prior_sha256": "936E3C88ED5EF0EA0848AE094C7A275903CFF44A4D28BB55734723338866B1AF",
+      "final_sha256": "6552CED6666E0EC60E7268CF9397B9FF4A926E3B0CA56886CC401EC727EFC9FF",
+      "removed_eof_characters": 2,
+      "trimmed_body_equal": true,
+      "original_identity": "Actual pre-normalization backup"
+    },
+    {
+      "file": "InteractionBehavior.cs",
+      "prior_sha256": "0578E5BFA976C8F3476DD156D3DFC8E9D9F03969236E977DC80E0ABA967DCCF6",
+      "final_sha256": "98FB1BEF1D520BA0A7C11FDBE48E13D0C614A45F96D85DFDB6B92CFF042ACADB",
+      "removed_eof_characters": 4,
+      "trimmed_body_equal": true,
+      "original_identity": "Actual pre-normalization backup"
+    },
+    {
+      "file": "Program.cs",
+      "prior_sha256": "155E435B0997A072B9949E4CF39E3B17049EAA3EBA4ECF5671CF9D9068899A3A",
+      "final_sha256": "8B57B0AC6A40AA0FC5F74C557F2F195425F7B32886415AB63276030F8CFAB7C7",
+      "removed_eof_characters": 5,
+      "trimmed_body_equal": true,
+      "original_identity": "Actual pre-normalization backup"
+    },
+    {
+      "file": "Interaction.ShelterGrowthClearance.csproj",
+      "prior_sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "final_sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "removed_eof_characters": 0,
+      "trimmed_body_equal": true,
+      "original_identity": "Actual pre-normalization backup"
+    }
+  ],
+  "failed": [],
+  "continuity_checks": "129/129",
+  "baseline_behavior": {
+    "build_exit_code": 0,
+    "failure_cases": [
+      "FAIL public growth autonomous food side=1 reload=False: growth left autonomous body stuck",
+      "FAIL public growth autonomous food side=1 reload=True: growth left autonomous body stuck",
+      "FAIL public growth autonomous water side=1 reload=False: growth left autonomous body stuck",
+      "FAIL public growth autonomous water side=1 reload=True: growth left autonomous body stuck",
+      "FAIL public growth autonomous food side=-1 reload=False: growth left autonomous body stuck",
+      "FAIL public growth autonomous food side=-1 reload=True: growth left autonomous body stuck",
+      "FAIL public growth autonomous water side=-1 reload=False: growth left autonomous body stuck",
+      "FAIL public growth autonomous water side=-1 reload=True: growth left autonomous body stuck"
+    ],
+    "scope": "Exact ten API-compatible public autonomous growth/consumption and unobstructed controls from frozen harness, against 239 pristine main files. New geometry/helper-only checks excluded as structural, not behavioral evidence.",
+    "checks": 10,
+    "exit_code": 1,
+    "failed": 8,
+    "passed": 2
+  },
+  "reverse_previous_exact": true,
+  "pure_projects": 81,
+  "inherited_joint_checks": [
+    {
+      "name": "combined-intersection-v4",
+      "failures": 0,
+      "checks": 15
+    },
+    {
+      "name": "river-intersections-v3",
+      "failures": 0,
+      "checks": 9
+    }
+  ],
+  "status": "partial",
+  "focused_gates": [
+    {
+      "name": "Interaction.ShelterGrowthClearance",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.Shelters",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.ShelterClearanceEscape",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.GrowthOverlap",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.StationGrowthClearance",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Family.Growth",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.RiverbankGrowth",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.WaterPassage",
+      "build_exit_code": 0,
+      "exit_code": 0
+    }
+  ],
+  "long_runs": [
+    {
+      "name": "fresh-three-6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original1200-growth",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day2-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day9-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "synthetic-disk-roundtrip",
+      "exit_code": 0
+    }
+  ],
+  "deep_chain_drift": 0,
+  "worker_helpers_exact": true,
+  "final_source_files": 428,
+  "parsed_inline_json": 47,
+  "parent_evidence_files": 944,
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+      "after_sha256": "1FD6C9366113EDCE47CC93EF46CE0C36B2197832B224534EAC6F732D956988D2",
+      "worker_sha256": "06096945EFBAA30E41F360D89194A50A70FA3FD826C49C28EEB9433D4C33EAC0"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterSpatial.cs",
+      "after_sha256": "5972F21D17EDBD6ECE407E5E4DFD2606A899496C1BCE6F34A2A1435E18E897C2",
+      "worker_sha256": "78C669947BEDCB21EA3649B920B1AA60A9607026DF0D9412825B2F3C9370A803"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterGeometry.cs",
+      "after_sha256": "59539285B08ABF6E68B78DCC93DC23D48F454445595991E69C70BC6651D50432",
+      "worker_sha256": "936E3C88ED5EF0EA0848AE094C7A275903CFF44A4D28BB55734723338866B1AF"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+      "after_sha256": "67468ADF1361DCDCAEC3E7C3A23C43FC8C673E55D11EDD2F3BDB7753A5FE442C",
+      "worker_sha256": "0578E5BFA976C8F3476DD156D3DFC8E9D9F03969236E977DC80E0ABA967DCCF6"
+    }
+  ],
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "preserved_failed_attempts": [
+    {
+      "correction": "v4 adds only false for the new trailing shelter recovery parameter; every original assertion and fixture retained",
+      "failures": 4,
+      "kind": "structural harness reflection arity",
+      "attempt": "combined-intersection-v3"
+    },
+    {
+      "correction": "v3 adds only false for the new trailing shelter recovery parameter; every original assertion and fixture retained",
+      "failures": 4,
+      "kind": "structural harness reflection arity",
+      "attempt": "river-intersections-v2"
+    },
+    {
+      "correction": "v2 retains every assertion and obstacle; existing peer is publicly held during ordinary growth and released before checking strict overlap, preventing autonomous departure",
+      "failures": 1,
+      "kind": "public peer-growth fixture precondition",
+      "attempt": "shelter-intersections-v1"
+    }
+  ],
+  "limitations": [
+    "Synthetic simulation only; no native UI, rendering, sound or gameplay-feel acceptance.",
+    "Historical player Save.Compatibility not run.",
+    "Fresh long scenarios retain inherited synthetic initial setup, not untouched default state.",
+    "Original 1200/5400-second resume snapshots and disk roundtrip are unmodified; no health or need edits during runs.",
+    "No Git writes, upload or publication. Iteration 27 blocked publication untouched."
+  ],
+  "baseline_pristine_files": 239,
+  "changed_previous_files": [
+    "src\\Yukkuri.Simulation\\InteractionBehavior.cs",
+    "src\\Yukkuri.Simulation\\InteractionSpatial.cs",
+    "src\\Yukkuri.Simulation\\ShelterGeometry.cs",
+    "src\\Yukkuri.Simulation\\ShelterSpatial.cs"
+  ],
+  "independent_joint_checks": 9,
+  "focused_new_failures": 0,
+  "independent_geometry_review": {
+    "review": "iteration31 shelter exterior recovery",
+    "mode": "read-only static source audit; no build or runtime executed by reviewer",
+    "status": "passed",
+    "result": "pass",
+    "blockers": [],
+    "source_sha256": {
+      "InteractionSpatial.cs": "1FD6C9366113EDCE47CC93EF46CE0C36B2197832B224534EAC6F732D956988D2",
+      "ShelterSpatial.cs": "5972F21D17EDBD6ECE407E5E4DFD2606A899496C1BCE6F34A2A1435E18E897C2",
+      "ShelterGeometry.cs": "59539285B08ABF6E68B78DCC93DC23D48F454445595991E69C70BC6651D50432",
+      "InteractionBehavior.cs": "67468ADF1361DCDCAEC3E7C3A23C43FC8C673E55D11EDD2F3BDB7753A5FE442C"
+    },
+    "confirmed": [
+      "Four patch reversals independently match combined30 after newline normalization",
+      "Six-argument strict occupancy contract retained",
+      "Shelter recovery does not enable peer/station/tree/river recovery flags",
+      "Only normal grounded autonomous RoomMove slide=true invokes recovery",
+      "Side-wall exterior true overlap must strictly recede along outward normal; every other wall and shelter remains swept",
+      "Ceiling, reservation and non-shelter blockers remain active",
+      "Recovery uses <=0.06 segments and consumes at most existing frame movement budget, with no second target movement",
+      "Prior GroundMove and front-ball code preserved"
+    ],
+    "limits": [
+      "Static audit only; runtime results belong to verification workers",
+      "Public growth journeys use disclosed synthetic economy prerequisite, accelerated age and lowered needs; not full default progression",
+      "Joint runtime regressions pending at audit time"
+    ]
+  },
+  "timeouts": 0,
+  "prelaunch_harness_correction": "An unrun diagonal station test originally expected joint recovery. It was retained separately and corrected before first execution to require the frozen shelter-only recovery contract to keep station overlap strict.",
+  "semantic_issues": [],
+  "unexpected_nonzero_commands": [],
+  "long_harness_input_drift": 0,
+  "focused_new_checks": 37,
+  "peer_station_tree_river_logic_preserved": true,
+  "source_file_manifest_sha256": "C1F19B13970910FCE4080BB4F4F9EA2DEC4290D97E437F0912604D5A07C2DADE",
+  "evidence_files": 988,
+  "disk_save": {
+    "passed": true,
+    "checks": 3,
+    "savedAt": 1800,
+    "resumedAt": 2000
+  },
+  "parent_source_files": 426,
+  "strict_six_parameter_contract": true,
+  "new_warning_locations": [],
+  "new_source_files": [
+    {
+      "path": "checks/Interaction.ShelterGrowthClearance/Interaction.ShelterGrowthClearance.csproj",
+      "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+    },
+    {
+      "path": "checks/Interaction.ShelterGrowthClearance/Program.cs",
+      "sha256": "155E435B0997A072B9949E4CF39E3B17049EAA3EBA4ECF5671CF9D9068899A3A"
+    }
+  ],
+  "independent_joint_failures": 0,
+  "passed_pure": 81,
+  "original_resumes": [
+    {
+      "success": true,
+      "start": 1200,
+      "simulated_seconds": 4800,
+      "deaths": 0,
+      "end": 6000
+    },
+    {
+      "success": true,
+      "start": 5400,
+      "simulated_seconds": 600,
+      "deaths": 0,
+      "end": 6000
+    }
+  ],
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "raw_evidence_storage": "Private .local directory excluded by both root and nested .gitignore; no Git writes or uploads performed.",
+  "fresh_fixture_note": "Inherited synthetic setup initializes needs and health before simulation. No health or need editing during runs; unchanged setup preserves cross-iteration comparison.",
+  "parsed_runtime_json": 322,
+  "independent_fixture": "All three original actors and natural resources retained. Synthetic matching prior-sale ledger/revenue 500 and threshold age; public placement, hand targeting and peer Hold/Release. No runtime health/need edits; API boundary checks, not simultaneous-user-UI evidence.",
+  "remaining_worktree_runtime_processes": 0,
+  "deep_chain_records": 231,
+  "fresh_lifecycles": [
+    {
+      "name": "care-stem-42",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 3,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "care-live-72381",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 1,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "shelter-20261031",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 0,
+      "born": 0,
+      "grown": 0,
+      "reloads": 10
+    }
+  ],
+  "all_local_evidence_json_parsed": 355,
+  "walltime_policy": {
+    "execution": "serial",
+    "termination": "only owned process identity verified before termination",
+    "aggregate_seconds": 1800,
+    "per_build_or_run_seconds": 300,
+    "actual_seconds": 783.3723516
+  }
+}

@@ -16,12 +16,15 @@ public sealed partial class WorldSimulation
         return true;
     }
     private bool ShelterBodyFits(Creature c,double x,double z,double minimumRadius=0)
+        =>ShelterBodyFitsCore(c,x,z,minimumRadius,false);
+    private bool ShelterBodyFitsCore(Creature c,double x,double z,double minimumRadius,bool recoverExterior)
     {
         if(State.Shelters.Count==0)return true;
         double radius=Math.Max(minimumRadius,ShelterPassageRadius(c));
         foreach(var s in State.Shelters.Where(s=>s.RegionId==c.RegionId))
         {
-            if(!ShelterGeometry.FitsLocalCircle(x-s.X,z-s.Z,radius,s.DoorOpen))return false;
+            if(!ShelterGeometry.FitsLocalCircle(x-s.X,z-s.Z,radius,s.DoorOpen)&&
+                !(recoverExterior&&ShelterGeometry.ExteriorSideRecoveryClear(c.X-s.X,c.Z-s.Z,x-s.X,z-s.Z,radius,s.DoorOpen)))return false;
             bool entering=Math.Abs(x-s.X)<ShelterGeometry.InteriorWidth*.5&&z-s.Z<ShelterGeometry.OuterDepth*.5+radius&&z-s.Z>-ShelterGeometry.OuterDepth*.5-radius;
             if(entering)
             {
@@ -48,6 +51,42 @@ public sealed partial class WorldSimulation
                 ShelterBodyEnvelope.Height(c)+(height??c.Interaction.Height)>ShelterGeometry.CeilingY-.015)return false;
         }
         return true;
+    }
+    // Only autonomous walking may take bounded outward steps from an existing
+    // exterior side-wall overlap. Manual carrying, rolling and throws stay strict.
+    private bool TryRecoverShelterExteriorStep(Creature c,double distance)
+    {
+        if(!CanSelfMove(c)||c.Interaction.Height>1e-5||c.Interaction.Rolling||
+            Math.Abs(c.Interaction.VelocityX)>1e-5||Math.Abs(c.Interaction.VelocityZ)>1e-5||
+            Math.Abs(c.Interaction.VerticalVelocity)>1e-5||!double.IsFinite(distance)||distance<=0)return false;
+        foreach(var shelter in State.Shelters.Where(s=>s.RegionId==c.RegionId))
+        {
+            double radius=ShelterPassageRadius(c),localX=c.X-shelter.X,localZ=c.Z-shelter.Z;
+            double direction=Math.Sign(localX);
+            if(direction==0||!ShelterGeometry.ExteriorSideRecoveryClear(localX,localZ,
+                localX+direction*Math.Min(distance,.06),localZ,radius,shelter.DoorOpen))continue;
+            bool moved=false;
+            int slices=Math.Max(1,(int)Math.Ceiling(distance/.06));
+            for(int n=0;n<slices;n++)
+            {
+                double x=c.X+direction*distance/slices,z=c.Z;
+                bool clear=true;
+                foreach(var s in State.Shelters.Where(s=>s.RegionId==c.RegionId))
+                {
+                    if(!ShelterGeometry.SweptCircleClear(c.X-s.X,c.Z-s.Z,x-s.X,z-s.Z,radius,s.DoorOpen)&&
+                        !ShelterGeometry.ExteriorSideRecoveryClear(c.X-s.X,c.Z-s.Z,x-s.X,z-s.Z,radius,s.DoorOpen))
+                    {clear=false;break;}
+                    if((ShelterGeometry.OverlapsInterior(c.X-s.X,c.Z-s.Z,radius)||
+                        ShelterGeometry.OverlapsInterior(x-s.X,z-s.Z,radius))&&
+                        ShelterBodyEnvelope.Height(c)+c.Interaction.Height>ShelterGeometry.CeilingY-.015)
+                    {clear=false;break;}
+                }
+                if(!clear||!CanOccupyRoomCore(c,x,z,null,null,false,true))break;
+                c.X=x;moved=true;
+            }
+            if(moved)return true;
+        }
+        return false;
     }
     private bool ShelterSightClear(string region,double ax,double az,double bx,double bz)=>State.Shelters
         .Where(s=>s.RegionId==region).All(s=>ShelterGeometry.SweptCircleClear(ax-s.X,az-s.Z,bx-s.X,bz-s.Z,0,s.DoorOpen));

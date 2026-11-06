@@ -530,7 +530,8 @@ public sealed partial class WorldSimulation
         double dx = (x - c.X) / distance, dz = (z - c.Z) / distance;
         double previousX=c.X,previousZ=c.Z;
         double edge=8-InteractionFootprint(c);
-        GroundMove(c,Math.Clamp(c.X+dx*step,-edge,edge),Math.Clamp(c.Z+dz*step,-edge,edge),slide);
+        if(!slide||!TryRecoverShelterExteriorStep(c,step))
+            GroundMove(c,Math.Clamp(c.X+dx*step,-edge,edge),Math.Clamp(c.Z+dz*step,-edge,edge),slide);
         var life=c.Interaction;
         // A finished mouthful may acknowledge swallowing while planted. Once
         // actual autonomous travel begins, hand its pose back to the walking gait.

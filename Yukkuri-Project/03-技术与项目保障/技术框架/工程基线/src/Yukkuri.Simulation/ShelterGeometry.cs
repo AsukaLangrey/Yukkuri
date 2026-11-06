@@ -42,6 +42,25 @@ public static class ShelterGeometry
                 wall.Center.Z-wall.Size.Z*.5-radius,wall.Center.Z+wall.Size.Z*.5+radius))return false;
         return true;
     }
+    // A growth-induced overlap is not permission to enter a wall. Recover only
+    // straight away from the exterior of a side face, never around its corners.
+    public static bool ExteriorSideRecoveryClear(double fromX,double fromZ,double toX,double toZ,double radius,bool doorOpen)
+    {
+        if(!new[]{fromX,fromZ,toX,toZ,radius}.All(double.IsFinite)||radius<=0||Math.Abs(toZ-fromZ)>1e-9)return false;
+        bool recovering=false;
+        var walls=WallBoxes(doorOpen);
+        for(int index=0;index<walls.Count;index++)
+        {
+            var wall=walls[index];
+            double minX=wall.Center.X-wall.Size.X*.5,maxX=wall.Center.X+wall.Size.X*.5,
+                minZ=wall.Center.Z-wall.Size.Z*.5,maxZ=wall.Center.Z+wall.Size.Z*.5;
+            if(!SegmentBox(fromX,fromZ,toX,toZ,minX-radius,maxX+radius,minZ-radius,maxZ+radius))continue;
+            bool outward=index==0?fromX<minX&&toX<fromX-1e-9:index==1&&fromX>maxX&&toX>fromX+1e-9;
+            if(!outward||fromZ<=minZ+1e-8||fromZ>=maxZ-1e-8||!CircleTouchesBox(fromX,fromZ,radius,wall))return false;
+            recovering=true;
+        }
+        return recovering;
+    }
     private static bool SegmentBox(double ax,double az,double bx,double bz,double minX,double maxX,double minZ,double maxZ)
     {
         double start=0,end=1;

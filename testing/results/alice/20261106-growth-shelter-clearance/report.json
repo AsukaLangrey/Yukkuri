@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "run_id": "20261106-growth-shelter-clearance",
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "alice/20261106-growth-shelter-clearance",
+  "source_identity": "Coordinator-pinned main plus the uncommitted source hashes below.",
+  "status": "failed",
+  "focused_status": "passed",
+  "environment": "Authorized isolated Windows test runtime",
+  "sdk": "10.0.402",
+  "started_at": "2026-11-06T13:26:02Z",
+  "finished_at": "2026-11-06T13:55:54.1834186Z",
+  "source_sha256": {
+    "src/Yukkuri.Simulation/InteractionSpatial.cs": "2a38b8caef547913e194b51f5ae3274eb76969ab46ed9d7fb01a21da4334035d",
+    "src/Yukkuri.Simulation/ShelterSpatial.cs": "5d27802cfc50690f759e192bb068dd7cc61efa2aca132b6c5d18a5aaef09d343",
+    "src/Yukkuri.Simulation/ShelterGeometry.cs": "6552ced6666e0ec60e7268cf9397b9ff4a926e3b0ca56886cc401ec727efc9ff",
+    "src/Yukkuri.Simulation/InteractionBehavior.cs": "98fb1bef1d520ba0a7c11fdbe48e13d0c614a45f96d85dfdb6b92cff042acadb",
+    "checks/Interaction.ShelterGrowthClearance/Program.cs": "8b57b0ac6a40aa0fc5f74c557f2f195425f7b32886415ab63276030f8cfab7c7",
+    "checks/Interaction.ShelterGrowthClearance/Interaction.ShelterGrowthClearance.csproj": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a"
+  },
+  "protocol_sha256": "e92447a684204704ce789f93c593517d7a1877a49638b6229f6eacc0ffb31f71",
+  "request_sha256": "cb60d086334457c68036f4dfb65d1f8dc7b2cc1b051f6b0b169147ef66771902",
+  "execution": {
+    "fresh_ignored_outputs_and_profiles": true,
+    "residual_worktree_dotnet_processes": 0,
+    "serial_rebuild_then_dll": true,
+    "shared_compilation": false,
+    "process_timeout_seconds": 180,
+    "build_servers_disabled": true
+  },
+  "tests": [
+    {
+      "failed": 0,
+      "passed": 37,
+      "exit_code": 0,
+      "final_bytes": true,
+      "project": "Interaction.ShelterGrowthClearance"
+    },
+    {
+      "failed": 0,
+      "passed": 13,
+      "exit_code": 0,
+      "project": "Interaction.Shelters"
+    },
+    {
+      "failed": 0,
+      "passed": 8,
+      "exit_code": 0,
+      "project": "Interaction.SupplyStations"
+    },
+    {
+      "failed": 0,
+      "passed": 5,
+      "exit_code": 0,
+      "project": "Family.Growth"
+    },
+    {
+      "passed": 128,
+      "failed": 1,
+      "failure": "suspended lowering and sliding bodies retain unmet excretion until grounded and still: settling did not resume and finish exactly one excretion after suspended",
+      "project": "Interaction.Continuity",
+      "exit_code": 1,
+      "baseline_note": "Coordinator reports this exact 128/129 failure in earlier independent main runs. This worker did not rerun a fresh main Continuity comparison."
+    }
+  ],
+  "baseline_probe": {
+    "adult_radius": 0.7799999713897705,
+    "observation_seconds": 60,
+    "baseline_food": 18.5,
+    "control_water": 89.881625,
+    "normal_growth_seconds": 0.25,
+    "fixed_food": 44.5,
+    "young_radius": 0.5693999791145324,
+    "fixed_water": 89.89375,
+    "unobstructed_control_unchanged": true,
+    "control_food": 72.5,
+    "stuck_position": [
+      1.834731223369775,
+      3.332208714517776
+    ],
+    "baseline_water": 18.5
+  },
+  "fixtures": {
+    "synthetic_prerequisites": [
+      "Cumulative sales 500 and matching historical ledger; not default new-game progress",
+      "Age set just below growth threshold before ordinary ticking",
+      "Food or hydration set to 20 after growth, other need 90"
+    ],
+    "public_actions": [
+      "CreateCourtyardEconomy",
+      "BuyShelter",
+      "PlaceShelter",
+      "SlideAlongGround",
+      "PlaceInteractionSupply",
+      "ordinary growth and autonomous consumption"
+    ],
+    "boundary_cases": "Exact blocker arrangements and private-method probes are synthetic safety checks, not public gameplay journeys."
+  },
+  "implementation": [
+    "Only normal autonomous RoomMove with slide enabled may spend the current frame budget stepping outward. No second full target move occurs on a recovery frame.",
+    "Origin must truly overlap an exterior side face; fixed z and strictly increasing exterior x clearance. Corners and every other wall remain swept obstacles.",
+    "Manual movement, throwing, rolling, door traversal, reservations, ceiling, other bodies, stations and ground checks remain strict. Original six-argument CanOccupyRoom remains available."
+  ],
+  "eof_cleanup": {
+    "all_original_frozen_bodies_trimend_equal": true,
+    "exact_prior_backups_and_verified_first_round_reconstruction": true,
+    "first_round_removed_characters": {
+      "InteractionSpatial": 4,
+      "ShelterSpatial": 8
+    },
+    "rounds": 2,
+    "final_focused_rebuild_rerun": true,
+    "second_round_removed_characters": {
+      "ShelterSpatial": 0,
+      "InteractionSpatial": 0,
+      "Program": 5,
+      "ShelterGeometry": 2,
+      "InteractionBehavior": 4,
+      "Project": 0
+    },
+    "git_diff_check_exit_code": 0,
+    "all_six_files_checked": true,
+    "final_focused_passed": 37
+  },
+  "earlier_harness_failures": [
+    "Initial diagnostic compile used two nonexistent output fields; corrected in ignored harness.",
+    "Initial growth observation used .05 seconds, below one simulation tick; changed to ordinary .25-second tick.",
+    "First focused run was 33/37 because synthetic sale revenue lacked its matching ledger. Added the declared synthetic ledger; no product validation relaxed."
+  ],
+  "limits": [
+    "No UI, render, audio, personal saves, full economy progression or full requested aggregate test suite.",
+    "Existing Continuity failure keeps aggregate status failed despite the focused fix passing.",
+    "Regression runs precede two newline-only cleanup rounds; the final 37-case suite was explicitly rebuilt and rerun after both."
+  ],
+  "publication": "No Git writes or uploads by this worker. Raw evidence remains ignored locally."
+}

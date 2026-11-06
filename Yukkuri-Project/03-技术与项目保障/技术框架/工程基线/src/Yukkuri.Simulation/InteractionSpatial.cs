@@ -18,9 +18,11 @@ public sealed partial class WorldSimulation
         return scale*Math.Max(body,equipment);
     }
     private bool CanOccupyRoom(Creature c,double x,double z,RestraintKind? restraint=null,bool? supine=null,bool allowWater=false)
+        =>CanOccupyRoomCore(c,x,z,restraint,supine,allowWater,false);
+    private bool CanOccupyRoomCore(Creature c,double x,double z,RestraintKind? restraint,bool? supine,bool allowWater,bool recoverShelter)
     {
         double own=InteractionFootprint(c,restraint,supine);
-        if(!ShelterBodyFits(c,x,z,own))return false;
+        if(!ShelterBodyFitsCore(c,x,z,own,recoverShelter))return false;
         if(Math.Abs(x)>8-own||Math.Abs(z)>8-own)return false;
         if(!WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,allowWater))return false;
         if(!ClearOfStations(c.RegionId,x,z,own))return false;
