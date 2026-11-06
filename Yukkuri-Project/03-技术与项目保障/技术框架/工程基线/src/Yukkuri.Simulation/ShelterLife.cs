@@ -2,7 +2,10 @@ namespace Yukkuri.Simulation;
 
 public sealed partial class WorldSimulation
 {
+    // The current single-resident shelter has no day/night clock. Request the
+    // daytime exit at 80; outdoor excretion still starts at its existing 85 threshold.
     private bool ShelterNeedsPriority(Creature c)=>NaturalResources.WantsFood(c)||NaturalResources.WantsWater(c)||c.Pain>=40||c.Energy<22||
+        c.Interaction.Physiology.Bladder>=80||c.Interaction.Physiology.Bowel>=80||
         HasPriorityWaterDuty(c)||c.Interaction.EatingRemaining>0||c.Interaction.ActiveCue!=null||c.Interaction.FollowPlayer||
         c.Family.CompanionTargetId!=null||FamilyRules.UnderIntervention(c)||
         c.Family.Pregnancy.Phase==PregnancyPhase.Preparing||c.Family.Conflict.TargetId!=null||c.Family.ChildThreat.TargetId!=null||
@@ -65,6 +68,18 @@ public sealed partial class WorldSimulation
         if(!CanOccupyRoom(c,c.X,nextZ))return "门口或通路被实际身体、物件挡住，它在等待让路。";
         return null;
     }
+    // Decide whether this tick has a real doorway journey before granting rest.
+    // A closed door, blocked path or immobile body can still rest where supported.
+    private bool ShelterTravelPreventsRest(Creature c)
+    {
+        var s=State.Shelters.Find(s=>s.GuestId==c.Id&&ValidShelterGuest(s)==c);
+        if(s==null||!CanSelfMove(c))return false;
+        bool exiting=s.ExitRequested||s.Phase==ShelterVisitPhase.Exiting||
+            ShelterBodyPresent(c,s)&&(ShelterNeedsPriority(c)||
+                EmotionalReadiness.Settled(c)&&c.Fear<25&&c.Interaction.Emotion.Alarm<8);
+        if(exiting)return ShelterExitBlockReason(s,c)==null;
+        return s.Phase is ShelterVisitPhase.Approaching or ShelterVisitPhase.Entering;
+    }
     private void ShelterWait(ShelterState s,Creature c,double dt,string reason)
     {
         s.BlockedSeconds=Math.Min(600,s.BlockedSeconds+dt);s.LastEvent=reason;c.Activity=reason;
@@ -102,11 +117,14 @@ public sealed partial class WorldSimulation
         {
             s.Phase=ShelterVisitPhase.Exiting;
             if(ShelterExitBlockReason(s,c) is { } reason&&(!CanSelfMove(c)||!s.DoorOpen||
-                ShelterPassageRadius(c)>ShelterGeometry.DoorWidth*.5-.04||ShelterBodyEnvelope.Height(c)>ShelterGeometry.DoorHeight-.03))
+                c.Interaction.Resting||ShelterPassageRadius(c)>ShelterGeometry.DoorWidth*.5-.04||ShelterBodyEnvelope.Height(c)>ShelterGeometry.DoorHeight-.03))
             {
                 if(c.Energy<22||c.Interaction.RestRemaining>0)c.Interaction.RestOnGroundUntil=State.WorldSeconds+2;
                 ShelterWait(s,c,dt,reason);return true;
             }
+            // Never walk on a tick that already settled supported rest. A changed
+            // obstruction or newly recovered foot can be reconsidered next tick.
+            if(c.Interaction.Resting){c.Activity="先在原地休息，随后再通过门口";return true;}
             double radius=ShelterPassageRadius(c),outside=s.Z+ShelterGeometry.OutsideZ(radius);
             if(c.Z-s.Z>=ShelterGeometry.OuterDepth*.5+radius+.04)
             {c.Interaction.ShelterSearchAfter=Math.Max(c.Interaction.ShelterSearchAfter,State.WorldSeconds+20);ReleaseShelterGuest(s,"它已完整走出门槛，住居空出了。");return false;}

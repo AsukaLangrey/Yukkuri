@@ -1,0 +1,63 @@
+小屋排泄与休息通行修复：实现与验证
+日期：2026-11-06
+
+结论
+本轮修复已通过14项新专项检查。完整纯.NET回归运行58个检查项目，56个通过，2个失败与未修改基线完全一致；不能称为全绿或完整玩法验收。游戏Debug编译成功，0错误、2条既有nullable警告。仅在独立迭代分支交付；不合并或修改main。
+
+版本与环境
+基线：e8d96a78f49182eb17e269e2b62a738c7a9bb7ea。
+本地分支：alice/20261106-shelter-physiology，独立工作区。
+验证机器：Shiki-5060Ti-PC，Windows，.NET SDK 10.0.402。
+工程：Yukkuri-Project/03-技术与项目保障/技术框架/工程基线。
+本轮从干净远端基线开展，没有导入用户原工作区未提交代码。测试输出使用工程内独立.local/testing目录，不使用个人存档。
+五个源码/检查文件在专项完成后冻结，广泛回归后逐一SHA256复核，全部未变。相对路径与验证时工作区字节摘要见check-results.json。
+
+依据与范围
+阅读05-游戏设计/自由模式-环境卫生与排泄.txt、自由模式-昼夜作息与小屋通行.txt及策划案阅读索引。
+当前远端只含旧式单住户小屋，没有新昼夜时钟和共享住宿实现。本轮落实屋内不产生粪尿、日间80负担请求出门、身体通行与休息互斥，不移植未提交的共享小屋、五住户、困意、昼夜作息或夜间95阈值，也不宣称实现这些设计。
+
+修改
+1. InteractionPhysiology.cs：在统一的生理动作中断判断中检查实际身体与同区域小屋内部的重叠。完整在屋内或部分身体仍跨门时不开始、不完成排泄；已经开始的动作立即中断，但膀胱/肠道负担不被清空。不在屋外凭空生成污物。
+2. ShelterLife.cs：膀胱或肠道达到80纳入小屋离开优先级，继续经过真实门洞。门关、障碍或走不开时保留需要及现有等待/求助流程，不瞬移，不自动打开旧单住户小屋门。
+3. InteractionRest.cs及ShelterLife.cs：决定真实小屋通行前阻止同tick结算休息。关门、障碍或身体无法行动时仍可原地休息；通路恢复后重新开始步行。出口额外守卫防止已经结算了休息的tick继续移动。
+4. 新增checks/Interaction.ShelterPhysiology，未放宽或删除旧检查断言。
+
+基线与专项证据
+产品修改前，6个复现检查全部失败：屋内尿/便启动、已开始尿/便移入屋不中断、80负担不请求出口、出屋移动同时享受休息。
+最后一项基线观测：0.25秒内身体移动，同时Energy从50升到50.095，RestRemaining从10降到9.75，Resting仍为true。
+修复后14/14通过；基线与专项原始PASS/FAIL摘要见本目录两份结果文本。
+覆盖尿/便、部分身体跨门、无预约实际占位、不同区域小屋、79/80门槛、关门休息、实际障碍清除、连续小步出门后才排泄、已有动作中断、存读档、行动困难者及移动帧不得同时获得休息收益。
+相关先行回归：Interaction.Shelters 13/13、Interaction.CompletedNeeds 1/1、Interaction.AutonomyPriority 12/12、NaturalLife.Smoke 95/95，共121项；加新专项共135项。它们随后也包含在58项目广泛回归内，不重复计成额外项目。
+
+广泛回归与编译
+58个纯.NET项目的退出码见check-results.json；56通过、2失败。生成JSON报告的项目还检查了success、failures及明细结果，和退出状态一致。Milestone.Exploration的result.json也确认success=true。没有只凭命令退出码宣称JSON通过。
+游戏Debug编译成功。两条CS8604分别来自SupplyStationValidation.cs:12与InteractionValidation.cs:15，均为Enumerable.Select可能收到null；本轮没有掩盖或修复这些既有警告。
+
+两个既有失败
+Interaction.Continuity为128/129：
+名称：suspended lowering and sliding bodies retain unmet excretion until grounded and still
+错误：settling did not resume and finish exactly one excretion after suspended
+原始e8d96a7在另一独立git archive导出目录重跑，同一名称、错误完全一致。诊断探针确认排泄已完成一次并产生尿物；随后正常自主清洁移除尿物，旧检查在8秒后要求尿物仍存在，因此失败。应后续修正观测时机并仍严格验证首次产物与无重复排泄，不能靠禁止清洁让测试通过。
+
+NaturalLife.Soak为23/24场景：
+场景woodland，种子20261029，错误“松果: exhausted despite reachable rest”。
+原始e8d96a7重跑的场景、种子、错误完全一致。基线快照显示1620秒体力33.47/生命100，1680秒在水中挣扎，1740秒体力0/生命23.02，1800秒死亡。这不能直接解释为休息寻路卡死；下水与逃生链仍需专项调查。本轮保留失败，没有跳过危险或削弱断言。
+
+复现命令
+以下命令在工程基线目录运行，dotnet指本机已安装的10.0.402工具链；实际执行使用该工具的绝对路径，不要求修改PATH。
+专项：dotnet run --project checks/Interaction.ShelterPhysiology -c Release
+广泛回归：对check-results.json列出的58个检查项目逐个运行：
+dotnet run --project <项目csproj绝对路径> -c Release -p:UseAppHost=false -- <独立输出目录>/<项目名>.json
+其中部分程序只输出文本，部分把输出参数视为目录；按各项目实际生成的证据读取，不假设统一JSON结构。
+游戏编译：dotnet build src/Yukkuri.Game/Yukkuri.Game.csproj -c Debug
+未使用额外RestoreSources或其他MSBuild覆盖参数。
+基线失败对照：在原始e8d96a7独立导出工程中分别运行：
+dotnet run --project checks/Interaction.Continuity -c Release -- <独立证据路径>/continuity-baseline.json
+dotnet run --project checks/NaturalLife.Soak -c Release -- <独立证据路径>/soak-baseline.json
+
+证据边界与未测项
+本轮是纯.NET规则/几何/状态回归和游戏编译，没有启动Godot游戏窗口，没有渲染、真实鼠标操作、手感、完整玩法或用户验收。Soak为每场景一小时模拟时间，不是连续24小时实机运行。
+历史外部存档兼容没有合法历史样本，未执行Save.Compatibility；新专项存读档是本轮构造状态往返，不替代历史样本。
+未运行Renderer.Probe、Renderer.Probe461、ActorArt.Preview、InteractionProp.Preview、Woodland.Preview，不把编译成功等同于画面验证。
+本轮不恢复暂停的周期测试、不接触QMT、不新增周期监控。主仓库合并由用户自行决定。
+

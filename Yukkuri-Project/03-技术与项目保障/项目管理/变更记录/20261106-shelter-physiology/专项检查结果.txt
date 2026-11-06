@@ -1,0 +1,15 @@
+PASS Urine cannot begin indoors or lose its need
+PASS Urine already active is cancelled indoors before completion
+PASS Feces cannot begin indoors or lose its need
+PASS Feces already active is cancelled indoors before completion
+PASS daytime burden 80 requests real exit before outdoor threshold
+PASS resting exit cannot receive sleep benefit while moving
+PASS partial body across doorway cannot excrete without a reservation
+PASS outdoor body at same coordinates as a different-region shelter is not blocked
+PASS closed door preserves stationary supported rest and unmet burden
+PASS opening blocked door resumes physical exit before completing excretion
+PASS physical doorway obstacle allows rest then removal resumes exit
+PASS save reload cannot complete a saved indoor action or erase its burden
+PASS immobile resident retains need without receiving a fake exit
+PASS below-threshold sheltered resident does not get an excretion exit request
+RESULT 14/14 passed; 0 failed

@@ -1,0 +1,7 @@
+FAIL Urine cannot begin indoors or lose its need: indoor excretion occurred
+FAIL Urine already active is cancelled indoors before completion: presentation did not interrupt indoor action
+FAIL Feces cannot begin indoors or lose its need: indoor excretion occurred
+FAIL Feces already active is cancelled indoors before completion: presentation did not interrupt indoor action
+FAIL daytime burden 80 requests real exit before outdoor threshold: burden did not request blocked-door exit
+FAIL resting exit cannot receive sleep benefit while moving: moving body rested: energy 50->50.095, remaining 10->9.75, resting=True
+RESULT 0/6 passed; 6 failed

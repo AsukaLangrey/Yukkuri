@@ -1,0 +1,313 @@
+{
+  "frozen_sources": [
+    {
+      "path": "src/Yukkuri.Simulation/InteractionPhysiology.cs",
+      "sha256": "6fcc82916ce653c25d78396b5bc33db787378b25dc472c3defef337400dc2c0e"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionRest.cs",
+      "sha256": "ac7db6cf1577245c49d779c205ea93711c295287881a7ebdaa27bb1fb1d251a6"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterLife.cs",
+      "sha256": "ca7f3ebbc84d9d9ac9ddcc85be9d3f8b2c1f32262a7f9e70e931e638e282fb3d"
+    },
+    {
+      "path": "checks/Interaction.ShelterPhysiology/Program.cs",
+      "sha256": "132f3a1db5f9dc19c0b14353d6e3fee3a07abd8d5c21542811623db605355866"
+    },
+    {
+      "path": "checks/Interaction.ShelterPhysiology/Interaction.ShelterPhysiology.csproj",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a"
+    }
+  ],
+  "failed_projects": 2,
+  "branch": "alice/20261106-shelter-physiology",
+  "json_reports_verified": [
+    {
+      "failed_items": 0,
+      "file": "ActorGeometry.Smoke.json",
+      "success": true,
+      "item_count": 128
+    },
+    {
+      "failed_items": 0,
+      "file": "Input.Intent.json",
+      "success": true,
+      "item_count": 43
+    },
+    {
+      "failed_items": 1,
+      "file": "Interaction.Continuity.json",
+      "success": false,
+      "item_count": 129
+    },
+    {
+      "failed_items": 0,
+      "file": "Interaction.Smoke.json",
+      "success": true,
+      "item_count": 48
+    },
+    {
+      "failed_items": 0,
+      "file": "NaturalLife.Smoke.json",
+      "success": true,
+      "item_count": 95
+    },
+    {
+      "failed_items": 1,
+      "file": "NaturalLife.Soak.json",
+      "success": false,
+      "item_count": 24
+    },
+    {
+      "failed_items": 0,
+      "file": "Milestone.Exploration.json/result.json",
+      "success": true,
+      "item_count": 0
+    }
+  ],
+  "results": [
+    {
+      "name": "ActorGeometry.Smoke",
+      "exit": 0
+    },
+    {
+      "name": "Courtyard.Economy",
+      "exit": 0
+    },
+    {
+      "name": "Family.AdoptionJourney",
+      "exit": 0
+    },
+    {
+      "name": "Family.Aftermath",
+      "exit": 0
+    },
+    {
+      "name": "Family.AssistedCare",
+      "exit": 0
+    },
+    {
+      "name": "Family.CareContinuity",
+      "exit": 0
+    },
+    {
+      "name": "Family.CareInterruption",
+      "exit": 0
+    },
+    {
+      "name": "Family.CareLearning",
+      "exit": 0
+    },
+    {
+      "name": "Family.ColdCare",
+      "exit": 0
+    },
+    {
+      "name": "Family.CompanyCare",
+      "exit": 0
+    },
+    {
+      "name": "Family.Compatibility",
+      "exit": 0
+    },
+    {
+      "name": "Family.Desire",
+      "exit": 0
+    },
+    {
+      "name": "Family.Growth",
+      "exit": 0
+    },
+    {
+      "name": "Family.MouthCommunication",
+      "exit": 0
+    },
+    {
+      "name": "Family.PregnancyBoundaries",
+      "exit": 0
+    },
+    {
+      "name": "Family.Presentation",
+      "exit": 0
+    },
+    {
+      "name": "Family.Protection",
+      "exit": 0
+    },
+    {
+      "name": "Family.Reproduction",
+      "exit": 0
+    },
+    {
+      "name": "Family.Risk",
+      "exit": 0
+    },
+    {
+      "name": "Family.Social",
+      "exit": 0
+    },
+    {
+      "name": "Family.Teaching",
+      "exit": 0
+    },
+    {
+      "name": "Input.Intent",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.AbuseJourney",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.AffectionJourney",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.AutonomyPriority",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.CompletedNeeds",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Completion",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Continuity",
+      "exit": 1
+    },
+    {
+      "name": "Interaction.CreatureArrival",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Depth",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.DetachedStem",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.EmergencyIntervention",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Help",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.HumanCompany",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.HungerFeeding",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Injury",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.InjuryPresentation",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Inventory",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.LifeDevelopment",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Mouth",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.MouthPresentation",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.PeerCompanyContinuity",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.PeerThreat",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.ShelterPhysiology",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Shelters",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.Smoke",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.StateBoundaries",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.StemCare",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.SupplyStations",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.WaterAttempts",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.WaterEmotion",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.WaterSupport",
+      "exit": 0
+    },
+    {
+      "name": "Interaction.WildSelfCare",
+      "exit": 0
+    },
+    {
+      "name": "Milestone.Exploration",
+      "exit": 0
+    },
+    {
+      "name": "Milestone.Smoke",
+      "exit": 0
+    },
+    {
+      "name": "NaturalLife.Smoke",
+      "exit": 0
+    },
+    {
+      "name": "NaturalLife.Soak",
+      "exit": 1
+    },
+    {
+      "name": "Simulation.Smoke",
+      "exit": 0
+    },
+    {
+      "name": "Game.Build",
+      "exit": 0
+    }
+  ],
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "game_build_exit": 0,
+  "pure_check_projects": 58,
+  "overall_status": "partial",
+  "passed_projects": 56
+}
