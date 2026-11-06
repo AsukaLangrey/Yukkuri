@@ -1,0 +1,415 @@
+{
+  "configuration": "Release",
+  "forcedRebuild": true,
+  "baselineCommit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "limits": [
+    "No user saves",
+    "Save.Compatibility not run",
+    "No Godot or visual gameplay"
+  ],
+  "regressions": {
+    "SimulationSmoke": 125,
+    "FamilySocial": 22,
+    "CourtyardEconomy": 8
+  },
+  "phases": [
+    {
+      "phase": "baseline",
+      "results": [
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "normal-current-pair-round-trip"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-real-sale-historical-round-trip"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "original-sold-rejected-unchanged"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "original-sold-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-null-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-null-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-empty-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-empty-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-unknown-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-unknown-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-self-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-self-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-asymmetric-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-asymmetric-backup-recovered"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "original-sold-no-backup-controlled"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "original-sold-both-bad-controlled"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "original-sold-existing-main-protected"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "original-sold-candidate-protected"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-real-sale-historical-round-trip"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "reversed-sold-rejected-unchanged"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "reversed-sold-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-null-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-null-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-empty-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-empty-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-unknown-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-unknown-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-self-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-self-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-asymmetric-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-asymmetric-backup-recovered"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "reversed-sold-no-backup-controlled"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "reversed-sold-both-bad-controlled"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "reversed-sold-existing-main-protected"
+        },
+        {
+          "errorType": "System.InvalidOperationException",
+          "passed": false,
+          "name": "reversed-sold-candidate-protected"
+        }
+      ],
+      "checks": 35,
+      "unchangedFileScenarios": 23,
+      "failures": 12
+    },
+    {
+      "phase": "fixed",
+      "results": [
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "normal-current-pair-round-trip"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-real-sale-historical-round-trip"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-sold-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-sold-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-null-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-null-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-empty-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-empty-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-unknown-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-unknown-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-self-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-self-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-asymmetric-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-asymmetric-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-sold-no-backup-controlled"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-sold-both-bad-controlled"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-sold-existing-main-protected"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "original-sold-candidate-protected"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-real-sale-historical-round-trip"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-sold-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-sold-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-null-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-null-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-empty-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-empty-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-unknown-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-unknown-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-self-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-self-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-asymmetric-rejected-unchanged"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-asymmetric-backup-recovered"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-sold-no-backup-controlled"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-sold-both-bad-controlled"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-sold-existing-main-protected"
+        },
+        {
+          "errorType": null,
+          "passed": true,
+          "name": "reversed-sold-candidate-protected"
+        }
+      ],
+      "checks": 35,
+      "unchangedFileScenarios": 23,
+      "failures": 0
+    }
+  ],
+  "combinedFifteen": {
+    "pure_projects": 68,
+    "passed_pure": 68,
+    "game_build": 0,
+    "source_files": 401,
+    "origin_records": 401,
+    "source_hash_differences": 0,
+    "origin_hash_drift": 0,
+    "local_delta_exact": true,
+    "sold_partner_checks": 35,
+    "sold_partner_failures": 0,
+    "sold_partner_file_hash_scenarios": 23,
+    "sold_partner_hash_mismatches": 0,
+    "new_warning_locations": [],
+    "distinct_warning_locations": [
+      "InteractionValidation.cs(17,19): CS8604",
+      "Program.cs(147,41): CS8602",
+      "Program.cs(227,83): CS8602",
+      "Program.cs(315,62): CS8604",
+      "SupplyStationValidation.cs(12,21): CS8604"
+    ],
+    "exclusions": [
+      "ActorArt.Preview",
+      "InteractionProp.Preview",
+      "Woodland.Preview",
+      "Renderer.Probe",
+      "Renderer.Probe461",
+      "Save.Compatibility"
+    ],
+    "godot_run": false,
+    "verified_at": "2026-11-06T05:57:09.8328751Z"
+  }
+}

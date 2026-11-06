@@ -95,8 +95,12 @@ public static partial class FamilyRules
                     double.IsFinite(p.Value.LastHarmAt) && p.Value.LastHarmAt >= -100 && p.Value.LastHarmAt <= state.WorldSeconds + .001 &&
                     Number(p.Value.NextInvitationAt), "同伴记忆或邀请计时无效");
             foreach (var partner in f.PartnerIds!)
-                Require(partner != c.Id && ids.Contains(partner) &&
-                    state.Creatures.Single(x => x.Id == partner).Family?.PartnerIds?.Contains(c.Id) == true, "伴侣关系不对称");
+            {
+                // Sold creatures remain known history, but cannot be active partners.
+                var currentPartner = state.Creatures.FirstOrDefault(x => x.Id == partner);
+                Require(partner != c.Id && currentPartner != null &&
+                    currentPartner.Family?.PartnerIds?.Contains(c.Id) == true, "伴侣关系不对称");
+            }
             var conflict = f.Conflict!;
             Require(Number(conflict.WarningRemaining, 8) && Number(conflict.Remaining, 60) &&
                 Number(conflict.StrikeRemaining, 3) && conflict.Strikes is >= 0 and <= 16, "家庭冲突计时无效");

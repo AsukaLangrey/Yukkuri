@@ -1,0 +1,55 @@
+已售个体被误写为现任伴侣时的存档恢复修复
+日期：2026-11-06（UTC）
+独立分支：alice/20261106-save-sold-partner
+基线：e8d96a78f49182eb17e269e2b62a738c7a9bb7ea
+状态：由本轮协调统一提交为独立审阅分支；未合并主分支。
+
+结论
+损坏主档把已售个体写进在场个体 PartnerIds 时，旧验证抛出 InvalidOperationException，跳过正常备份恢复。
+本次只修正现任伴侣必须在场的验证。合法历史关系、血缘、离场档案和账目仍可保存与读取。
+
+策划和实现依据
+05-游戏设计/自由模式-繁育经营闭环.txt“交易与离场”要求保留身份、血缘、原始记录和收入账目，结束离场个体的当前交互。
+CourtyardEconomy.SellCreatureToShop 已移除双方当前伴侣关系，结束并保留家庭事件，再移出在场列表、加入成交档案。
+KnownCreatures 包含在场和已售个体，适用于历史引用，不能用来证明现任伴侣仍在场。
+旧 FamilyRules.ValidateSocial 先检查 KnownCreatures，再对在场列表 Single 查找，因此存在确定的空匹配异常。
+
+最小改动
+FamilySocial.cs 的 PartnerIds 循环改为在场列表 FirstOrDefault 查找，然后 Require 非空及双向伴侣关系。
+保持历史 Peers、家庭事件和亲缘使用已有历史身份范围。
+未扩大 SaveStore 异常捕获，未静默删除坏引用，未变更存档版本、出售规则或合法关系的模拟逻辑。
+新增 checks/Save.SoldPartnerRecovery 独立控制台检查项目。
+
+真实基线复现
+先 CreateCourtyardEconomy，验证普通在场伴侣；为第三只个体设置合法亲缘，验证后按真实报价 SellCreatureToShop 出售起始伴侣。
+明确检查在场移除、双向 PartnerIds 清理、成交金额、双方 Peers、子代血缘和已结束家庭事件；合法出售状态验证和序列化往返通过。
+随后仅在序列化 JSON 的在场个体 PartnerIds 中注入已售 ID。
+未改生产源码的 Release 强制重建版本：35 项中 23 通过，12 失败。
+12 项均为已售 ID：直接拒绝、好备份恢复、无备份、双坏档、保护现有坏主档和保护坏候选存档，各覆盖原数组顺序与反转顺序。
+首个失败为 original-sold-rejected-unchanged：System.InvalidOperationException: Sequence contains no matching element。
+对应好备份恢复用例也泄漏相同异常。完整首轮失败证据保留在私有测试日志，未被后续结果覆盖。
+
+修复验证
+同一检查源码、同一断言，Release 强制重建后 35/35 通过。
+覆盖在场正常伴侣、真实合法出售及历史往返、两种在场数组顺序、坏状态验证不变、好备份恢复、有效主档优先、无备份、双坏档受控原因聚合。
+空字符串、null、不存在、自引用及单向伴侣 ID 均受控拒绝并恢复好备份。
+每个文件场景比较主档和备份 SHA256 与目录文件名集合；基线及修复各 23 个场景，均未改原文件、补写备份或生成修复文件。
+独立读取 results.json 与各 hashes.json 核对计数和结果，并非只看退出码。
+相关 Release 回归：Family.Social 22/22；Courtyard.Economy 8/8；Simulation.Smoke 125/125。
+经营回归完成既有 4226.5 秒模拟、4 次出生和累计售油收入 1324 的流程；不是实机时间或完整玩法验收。
+构建有既有 2 条 CS8604 警告，分别位于 SupplyStationValidation.cs 与 InteractionValidation.cs；无编译错误。
+
+复跑方式
+在工程基线目录运行受信任 .NET 10 SDK：
+dotnet build checks/Save.SoldPartnerRecovery/Save.SoldPartnerRecovery.csproj -c Release -t:Rebuild
+dotnet checks/Save.SoldPartnerRecovery/bin/Release/net10.0/Save.SoldPartnerRecovery.dll <新的私有输出目录>
+输出目录必须不存在，避免覆盖旧证据。结果写入 results.json；文件场景另存 hashes.json。
+相关检查同样先以 Release 和 -t:Rebuild 构建，再执行相应 DLL。
+
+边界
+未读取用户存档。未执行 Save.Compatibility，其指定历史输入不在本次授权可用输入内，不能宣称历史兼容全套通过。
+未启动 Godot、渲染或可见游戏；不代表手动试玩、GPU 性能或长时间压力验收。
+合并组合回归由独立检查处理，本报告只覆盖此独立分支。
+完整原始日志、临时存档和异常堆栈保留为私有测试证据，不提交机器路径或账户信息。
+
+十五项临时组合回归：68/68纯检查、Game Debug强制重建通过。401文件源码及来源哈希无变化；仅局部应用当前伴侣修复，保留先前ReactedBy空标识保护。五处既有可空警告，无新增。新35项检查和23个文件守恒场景在组合中再通过。组合未执行Godot，排除项见结果摘要。
