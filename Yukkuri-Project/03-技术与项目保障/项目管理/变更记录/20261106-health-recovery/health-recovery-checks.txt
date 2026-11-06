@@ -1,0 +1,30 @@
+PASS dehydration 0: ordinary recovery does not heal
+PASS dehydration 0: recovery expiry does not award health
+PASS dehydration 10: ordinary recovery does not heal
+PASS dehydration 10: recovery expiry does not award health
+PASS dehydration 20: ordinary recovery does not heal
+PASS dehydration 20: recovery expiry does not award health
+PASS supported recovery expiry restores action without an instant health award
+PASS supported ordinary healing remains gradual
+PASS rehydration resumes gradual healing without a missed recovery award
+PASS digestive symptoms prevent recovery-expiry health award
+PASS food shortage prevents recovery-expiry health award
+PASS close-up freezes recovery and health
+PASS save reload preserves dehydration and recovery boundary
+PASS healthy overview remains normal
+PASS symptomatic overview cannot say normal
+PASS injury illness and dehydration coexist in overview
+PASS recovering overview retains illness and dehydration
+PASS critical overview retains urgency alongside symptoms
+PASS dead overview does not imply treatable symptoms
+PASS incubation does not reveal latent illness
+PASS overview is derived and does not mutate or persist
+PASS resolved symptoms disappear without changing injury classification
+PASS dead bodies do not heal or complete recovery
+PASS critical bodies do not use ordinary recovery
+PASS hydration just above threshold allows gradual recovery
+PASS low energy does not allow ordinary healing
+PASS healing remains capped at maximum health
+PASS symptom after a real tick still appears despite near-full health
+PASS dehydration label uses the observable threshold
+RESULT 29/29 passed; 0 failed

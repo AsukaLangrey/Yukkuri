@@ -51,11 +51,7 @@ public partial class InteractionRoom
         _hydrationLabel.Text=$"水分  {Math.Round(hydration):0}/100";
         _fullnessFill.BgColor=new Color(full<25?"bd795d":"8aa576");
         _hydrationFill.BgColor=new Color(hydration<25?"bd795d":"7cabc0");
-        _healthLabel.Text="身体状态："+(c.HealthStatus switch
-        {
-            HealthStatus.Dead=>"死亡",HealthStatus.Critical=>"重伤 · 急需救治",
-            HealthStatus.Recovering=>"恢复中",HealthStatus.Injured=>"受伤",_=>"正常"
-        });
+        _healthLabel.Text="身体状态："+c.HealthSummary;
         if(c.Condition==PhysicalCondition.Critical)
             _healthLabel.Text+=$" · 救治余下约 {Math.Ceiling(Math.Max(0,c.CriticalRemaining)):0} 秒";
         var personality=c.Personality;

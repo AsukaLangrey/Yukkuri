@@ -268,9 +268,11 @@ public sealed partial class WorldSimulation
             {
                 c.RecoveryRemaining = Math.Max(0, c.RecoveryRemaining - dt * (c.Fullness > 25 ? 1 : .2));
                 c.Energy = Clamp100(c.Energy + dt * .4);
-                if (c.RecoveryRemaining <= 0) { c.Condition = PhysicalCondition.Active; c.Health = Math.Max(25, c.Health); }
+                // Finishing recovery restores action eligibility, not health.
+                // Health still needs ordinary nourishment and gradual recovery below.
+                if (c.RecoveryRemaining <= 0) c.Condition = PhysicalCondition.Active;
             }
-            if (c.Fullness > 40 && c.Energy > 40 && !i.Digestion.Symptomatic)
+            if (c.Fullness > 40 && c.Energy > 40 && i.Hydration > 20 && !i.Digestion.Symptomatic)
             { c.Health = Clamp100(c.Health + dt * .025); c.Pain = Math.Max(0, c.Pain - dt * .06); }
             if(c.Family.ColdStorage.Stored){c.Activity="冷藏保存中";continue;}
             if(FamilyRules.UnderIntervention(c)){c.Activity="强制干预进行中";continue;}

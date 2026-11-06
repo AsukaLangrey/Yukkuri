@@ -45,7 +45,26 @@ public sealed partial class InteractionLife
 
 public sealed partial class Creature
 {
-    // Exact health stays in saved simulation data; the UI exposes only this category.
+    // Keep overlapping observable conditions separate from the injury category.
+    // This is derived presentation data, not a new serialized condition or diagnosis.
+    [JsonIgnore] public string HealthSummary
+    {
+        get
+        {
+            if(HealthStatus==HealthStatus.Dead)return "死亡";
+            var labels=new List<string>();
+            string condition=HealthStatus switch
+            {
+                HealthStatus.Critical=>"重伤 · 急需救治",
+                HealthStatus.Recovering=>"恢复中",HealthStatus.Injured=>"受伤",_=>""
+            };
+            if(condition.Length>0)labels.Add(condition);
+            if(Interaction.Digestion.Symptomatic)labels.Add("消化不适");
+            if(Interaction.Hydration<20)labels.Add("缺水");
+            return labels.Count==0?"正常":string.Join(" · ",labels);
+        }
+    }
+    // Preserve the existing injury/lifecycle category for rule and save compatibility.
     [JsonIgnore] public HealthStatus HealthStatus=>Condition switch
     {
         PhysicalCondition.Dead=>HealthStatus.Dead,

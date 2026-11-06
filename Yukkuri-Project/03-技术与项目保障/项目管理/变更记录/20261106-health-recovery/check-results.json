@@ -1,0 +1,238 @@
+[
+  {
+    "name": "ActorGeometry.Smoke",
+    "exit": 0
+  },
+  {
+    "name": "Courtyard.Economy",
+    "exit": 0
+  },
+  {
+    "name": "Family.AdoptionJourney",
+    "exit": 0
+  },
+  {
+    "name": "Family.Aftermath",
+    "exit": 0
+  },
+  {
+    "name": "Family.AssistedCare",
+    "exit": 0
+  },
+  {
+    "name": "Family.CareContinuity",
+    "exit": 0
+  },
+  {
+    "name": "Family.CareInterruption",
+    "exit": 0
+  },
+  {
+    "name": "Family.CareLearning",
+    "exit": 0
+  },
+  {
+    "name": "Family.ColdCare",
+    "exit": 0
+  },
+  {
+    "name": "Family.CompanyCare",
+    "exit": 0
+  },
+  {
+    "name": "Family.Compatibility",
+    "exit": 0
+  },
+  {
+    "name": "Family.Desire",
+    "exit": 0
+  },
+  {
+    "name": "Family.Growth",
+    "exit": 0
+  },
+  {
+    "name": "Family.MouthCommunication",
+    "exit": 0
+  },
+  {
+    "name": "Family.PregnancyBoundaries",
+    "exit": 0
+  },
+  {
+    "name": "Family.Presentation",
+    "exit": 0
+  },
+  {
+    "name": "Family.Protection",
+    "exit": 0
+  },
+  {
+    "name": "Family.Reproduction",
+    "exit": 0
+  },
+  {
+    "name": "Family.Risk",
+    "exit": 0
+  },
+  {
+    "name": "Family.Social",
+    "exit": 0
+  },
+  {
+    "name": "Family.Teaching",
+    "exit": 0
+  },
+  {
+    "name": "Input.Intent",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.AbuseJourney",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.AffectionJourney",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.AutonomyPriority",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.CompletedNeeds",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Completion",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Continuity",
+    "exit": 1
+  },
+  {
+    "name": "Interaction.CreatureArrival",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Depth",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.DetachedStem",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.EmergencyIntervention",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.HealthRecovery",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Help",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.HumanCompany",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.HungerFeeding",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Injury",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.InjuryPresentation",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Inventory",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.LifeDevelopment",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Mouth",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.MouthPresentation",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.PeerCompanyContinuity",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.PeerThreat",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Shelters",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.Smoke",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.StateBoundaries",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.StemCare",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.SupplyStations",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.WaterAttempts",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.WaterEmotion",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.WaterSupport",
+    "exit": 0
+  },
+  {
+    "name": "Interaction.WildSelfCare",
+    "exit": 0
+  },
+  {
+    "name": "Milestone.Exploration",
+    "exit": 0
+  },
+  {
+    "name": "Milestone.Smoke",
+    "exit": 0
+  },
+  {
+    "name": "NaturalLife.Smoke",
+    "exit": 0
+  },
+  {
+    "name": "NaturalLife.Soak",
+    "exit": 1
+  },
+  {
+    "name": "Simulation.Smoke",
+    "exit": 0
+  },
+  {
+    "name": "Game.Build",
+    "exit": 0
+  }
+]
