@@ -134,7 +134,7 @@ Check("paid supplies sustain real growth and repeated profitable breeding",()=>
             if(s.State.Creatures.Any(m=>m.Family.Pregnancy.Phase==PregnancyPhase.Preparing))continue;
             if(c.Interaction.EatingRemaining<=0&&!c.Interaction.Physiology.Active)
             {
-                InteractionAction? action=Math.Min(c.Interaction.Hydration,c.Fullness)>=65?null:c.Interaction.Hydration<c.Fullness?InteractionAction.Drink:InteractionAction.FeedMeal;
+                InteractionAction? action=!(NaturalResources.WantsFood(c)||NaturalResources.WantsWater(c))?null:c.Interaction.Hydration<c.Fullness?InteractionAction.Drink:InteractionAction.FeedMeal;
                 if(action is { } act)
                 {
                     if(s.State.Food==0)Require(s.BuyShopProduct("food"),"food insolvency");

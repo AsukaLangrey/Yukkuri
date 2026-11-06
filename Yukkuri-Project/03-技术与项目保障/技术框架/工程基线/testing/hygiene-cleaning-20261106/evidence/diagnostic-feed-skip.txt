@@ -1,0 +1,16 @@
+PASS normal starting yard reaches its first autonomous birth
+PASS price priorities, safe needs plateau, cosmetic modifiers
+PASS read-only quotes, stale confirmation, duplicate sale, reload and legacy save
+PASS real birth, infant sale and parent departure retain ancestry
+PASS income unlocks tools permanently; no immediate arrival arbitrage
+PASS sale interrupts care without destroying parcels or fabricating inventory
+inheritance: high n=60 mean=89.66; low n=60 mean=10.32
+PASS high quality parents statistically produce better offspring without skill or rank inheritance
+DIAG round=0 time=2419 score=95
+DIAG round=1 time=3215 score=95
+DIAG round=2 time=3662.25 score=79
+journey: 3842.0 simulated seconds, births=4, revenue=1319, balance=1423, food=59, water=23
+PASS paid supplies sustain real growth and repeated profitable breeding
+PASS both parents remain unsellable through real birth recovery and reload
+PASS interrupting a new intervention preserves the existing parent recovery sale guard
+FAILURES 0

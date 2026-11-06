@@ -36,6 +36,8 @@ Check("性格友善、规则教育或铜银金牌分别触发自主清洁",()=>
     foreach(string basis in new[]{"kind","education","铜牌","银牌","金牌"})
     {
         var sim=Fresh();var c=sim.Selected!;var waste=Waste(sim);
+        // Licence eligibility alone is not discomfort: keep real out-of-reach regional pollution.
+        var pollution=Waste(sim,7,7);pollution.Portions=10;
         if(basis=="kind")c.Personality.Kindness=.8;
         else if(basis=="education")c.Interaction.RuleLearning=65;
         else c.Registration.Grade=basis;

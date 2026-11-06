@@ -1,0 +1,34 @@
+FAIL qualified comfortable cleaners do not start; boundary is strict: System.Exception: kind
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_8() in checks\Interaction.HygieneCleaning\Program.cs:line 44
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+PASS kind educated and licensed uncomfortable cleaners really approach and finish once
+PASS discomfort and skill do not replace eligibility
+FAIL external cleanup resolves discomfort but current portion finishes; next does not start: System.Exception: started comfortable next work
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_11() in checks\Interaction.HygieneCleaning\Program.cs:line 77
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+PASS explicit cleaning instruction can still clean comfortable waste
+PASS needs pain danger rest and care still interrupt without completing
+FAIL non-ground waste excluded from search and demonstration: System.Exception: lesson allowed empty
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_15() in checks\Interaction.HygieneCleaning\Program.cs:line 104
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+FAIL in-transit current target interrupts before timed completion without awarding evidence: System.Exception: cleaned transit motion-held
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_16() in checks\Interaction.HygieneCleaning\Program.cs:line 114
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+FAIL real throw lands then starts a fresh approach and timed completion: System.Exception: airborne search
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_17() in checks\Interaction.HygieneCleaning\Program.cs:line 121
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+PASS synthetic SaveStore reload retains active work and completion occurs once
+FAIL delegation cannot reserve held waste and in-flight order expires without credit: System.Exception: delegated hand-held object
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_19() in checks\Interaction.HygieneCleaning\Program.cs:line 141
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+FAIL active target thrown and reloaded interrupts until actual landing then reattempts once: System.Exception: stale loaded target completed
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_20() in checks\Interaction.HygieneCleaning\Program.cs:line 152
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+Hygiene cleaning checks: 7 failure(s)

@@ -1,0 +1,88 @@
+{
+  "previous_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "delta_parent": "e6528dd1119f9f69c9105524626f1e545c63c0cf",
+  "soak_cases": 24,
+  "pure_projects": 65,
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ],
+  "origin_hash_drift": 0,
+  "failure_text_markers": 0,
+  "failed": [],
+  "verified_at": "2026-11-06T04:44:05.9209034Z",
+  "game_build": 0,
+  "origin_records": 397,
+  "pass_text_lines": 1369,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "passed_pure": 65,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_files": 391,
+  "source_hash_differences": 0,
+  "new_warning_locations": [],
+  "continuity_cases": 129,
+  "hygiene_cleaning_pass_lines": 12,
+  "json_reports": [
+    {
+      "failures": null,
+      "false_results": 0,
+      "name": "ActorGeometry.Smoke",
+      "success": true,
+      "false_checks": 0,
+      "false_scenarios": 0
+    },
+    {
+      "failures": 0,
+      "false_results": 0,
+      "name": "Input.Intent",
+      "success": true,
+      "false_checks": 0,
+      "false_scenarios": 0
+    },
+    {
+      "failures": 0,
+      "false_results": 0,
+      "name": "Interaction.Continuity",
+      "success": true,
+      "false_checks": 0,
+      "false_scenarios": 0
+    },
+    {
+      "failures": 0,
+      "false_results": 0,
+      "name": "Interaction.Smoke",
+      "success": true,
+      "false_checks": 0,
+      "false_scenarios": 0
+    },
+    {
+      "failures": 0,
+      "false_results": 0,
+      "name": "NaturalLife.Smoke",
+      "success": true,
+      "false_checks": 0,
+      "false_scenarios": 0
+    },
+    {
+      "failures": 0,
+      "false_results": 0,
+      "name": "NaturalLife.Soak",
+      "success": true,
+      "false_checks": 0,
+      "false_scenarios": 0
+    }
+  ]
+}

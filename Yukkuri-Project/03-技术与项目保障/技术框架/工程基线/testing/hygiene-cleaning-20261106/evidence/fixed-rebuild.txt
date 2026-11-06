@@ -1,0 +1,15 @@
+  正在确定要还原的项目…
+  所有项目均是最新的，无法还原。
+src\Yukkuri.Simulation\SupplyStationValidation.cs(12,21): warning CS8604: “IEnumerable<string> Enumerable.Select<DetachedStemBrood, string>(IEnumerable<DetachedStemBrood> source, Func<DetachedStemBrood, string> selector)”中的形参“source”可能传入 null 引用实参。 [src\Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+src\Yukkuri.Simulation\InteractionValidation.cs(15,19): warning CS8604: “IEnumerable<string> Enumerable.Select<Creature, string>(IEnumerable<Creature> source, Func<Creature, string> selector)”中的形参“source”可能传入 null 引用实参。 [src\Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+  Yukkuri.Simulation -> src\Yukkuri.Simulation\bin\Debug\net10.0\Yukkuri.Simulation.dll
+  Interaction.HygieneCleaning -> checks\Interaction.HygieneCleaning\bin\Debug\net10.0\Interaction.HygieneCleaning.dll
+
+已成功生成。
+
+src\Yukkuri.Simulation\SupplyStationValidation.cs(12,21): warning CS8604: “IEnumerable<string> Enumerable.Select<DetachedStemBrood, string>(IEnumerable<DetachedStemBrood> source, Func<DetachedStemBrood, string> selector)”中的形参“source”可能传入 null 引用实参。 [src\Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+src\Yukkuri.Simulation\InteractionValidation.cs(15,19): warning CS8604: “IEnumerable<string> Enumerable.Select<Creature, string>(IEnumerable<Creature> source, Func<Creature, string> selector)”中的形参“source”可能传入 null 引用实参。 [src\Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+    2 个警告
+    0 个错误
+
+已用时间 00:00:02.11

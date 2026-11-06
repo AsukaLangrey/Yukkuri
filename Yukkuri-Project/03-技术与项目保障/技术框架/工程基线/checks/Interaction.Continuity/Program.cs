@@ -156,7 +156,12 @@ Check("physiology produces both kinds of persistent waste and cleaning never ref
 {
     var sim=CompletionFixture();var c=sim.Selected!;var p=c.Interaction.Physiology;
     p.Bladder=90;p.Bowel=90;
-    Tick(sim,100);
+    // Observe both real completions before the newly uncomfortable cleaner can finish its next task.
+    // Keep the original ten-second bound; do not disable autonomy or change personality.
+    for(int n=0;n<100&&(p.Urinations<1||p.Defecations<1);n++)Tick(sim,1);
+    Require(!p.Active&&sim.State.WorldSeconds>0&&c.Interaction.CleaningSeconds<2&&
+        (c.Interaction.Development.Skills.GetValueOrDefault(LifeSkill.Cleaning)?.Completed??0)==0,
+        "excretion was incomplete or cleaning completed without its actual duration");
     Require(p.Urinations==1&&p.Defecations==1,"full bladder/bowel did not complete exactly once");
     Require(sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Urine)==1&&sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Feces)==1,"waste was not left in the scene");
     string json=JsonSerializer.Serialize(sim.State,SaveStore.JsonOptions);

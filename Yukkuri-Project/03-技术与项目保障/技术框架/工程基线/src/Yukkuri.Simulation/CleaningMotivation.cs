@@ -12,7 +12,7 @@ public sealed partial class WorldSimulation
         var d=c.Interaction.Development;
         return d.CleaningOrderedById!=null&&d.CleaningOrderUntil>State.WorldSeconds&&
             State.Creatures.Any(other=>other.Id==d.CleaningOrderedById&&other.RegionId==c.RegionId&&other.Condition!=PhysicalCondition.Dead)&&
-            State.RoomObjects.Any(o=>o.Id==d.OrderedWasteId&&!o.Stored&&IsWaste(o.Kind)&&o.RegionId==c.RegionId);
+            State.RoomObjects.Any(o=>o.Id==d.OrderedWasteId&&EnvironmentHygiene.IsGroundWaste(State,o)&&o.RegionId==c.RegionId);
     }
     private bool HasCleaningInstruction(Creature c)=>c.Interaction.Development.Duty==LifeDuty.Cleaning||HasPeerCleaningOrder(c);
     public string CleaningDisposition(Creature c)

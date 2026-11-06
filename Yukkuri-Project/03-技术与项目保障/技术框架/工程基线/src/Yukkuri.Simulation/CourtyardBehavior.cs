@@ -30,7 +30,7 @@ public sealed partial class WorldSimulation
     {
         var error=CleaningLessonReason(id);if(error!=null)return error;
         var c=InteractionTarget(id)!;
-        var waste=State.RoomObjects.FirstOrDefault(o=>o.RegionId==c.RegionId&&!o.Stored&&IsWaste(o.Kind)&&Distance(c.X,c.Z,o.X,o.Z)<2&&HasGroundSightLine(c,o.X,o.Z));
+        var waste=State.RoomObjects.FirstOrDefault(o=>o.RegionId==c.RegionId&&EnvironmentHygiene.IsGroundWaste(State,o)&&Distance(c.X,c.Z,o.X,o.Z)<2&&HasGroundSightLine(c,o.X,o.Z));
         if(waste==null)return "先带它到需要清理的脏处，再示范实际打扫。";
         if(!CleanRoomWaste(waste.Id))return "这处已经清理过了。";
         c.Interaction.LastCleaningLessonAt=State.WorldSeconds;
@@ -45,11 +45,13 @@ public sealed partial class WorldSimulation
         {
             var i=c.Interaction;
             if(CleaningWorkReason(c) is { } reason){if(i.CleaningTargetId!=null)StopCleaningTask(c,reason);continue;}
-            var waste=State.RoomObjects.Find(o=>o.Id==i.CleaningTargetId&&!o.Stored&&IsWaste(o.Kind)&&o.RegionId==c.RegionId);
+            var waste=State.RoomObjects.Find(o=>o.Id==i.CleaningTargetId&&EnvironmentHygiene.IsGroundWaste(State,o)&&o.RegionId==c.RegionId);
             if(waste==null)
             {
                 if(i.CleaningTargetId!=null){StopCleaningTask(c,"脏处已被他人清理或移走，本次未计为完成。");continue;}
                 i.CleaningSeconds=0;
+                // Only new autonomous work needs discomfort; finish an existing portion normally.
+                if(!HasCleaningInstruction(c)&&EnvironmentHygiene.Discomfort(State,c)<=0)continue;
                 if(State.WorldSeconds<i.NextCleaningAt)continue;
                 i.NextCleaningAt=State.WorldSeconds+CleaningRetryDelay(c);
                 waste=FindCleaningWaste(c);

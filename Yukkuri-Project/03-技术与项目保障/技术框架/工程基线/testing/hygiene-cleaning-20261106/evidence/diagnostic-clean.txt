@@ -1,0 +1,16 @@
+PASS normal starting yard reaches its first autonomous birth
+PASS price priorities, safe needs plateau, cosmetic modifiers
+PASS read-only quotes, stale confirmation, duplicate sale, reload and legacy save
+PASS real birth, infant sale and parent departure retain ancestry
+PASS income unlocks tools permanently; no immediate arrival arbitrage
+PASS sale interrupts care without destroying parcels or fabricating inventory
+inheritance: high n=60 mean=89.66; low n=60 mean=10.32
+PASS high quality parents statistically produce better offspring without skill or rank inheritance
+DIAG round=0 time=2946.5 score=100 request=这次孕育或恢复尚未结束，普通安排需要先等身体准备好。
+FAIL paid supplies sustain real growth and repeated profitable breeding: System.Exception: next round birth failed: 愿意与松果相处
+   at Program.<<Main>$>g__Require|0_0(Boolean ok, String why) in checks\Courtyard.Economy\Program.cs:line 6
+   at Program.<>c.<<Main>$>b__0_15() in checks\Courtyard.Economy\Program.cs:line 177
+   at Program.<<Main>$>g__Check|0_1(String name, Action test, <>c__DisplayClass0_0&) in checks\Courtyard.Economy\Program.cs:line 7
+PASS both parents remain unsellable through real birth recovery and reload
+PASS interrupting a new intervention preserves the existing parent recovery sale guard
+FAILURES 1

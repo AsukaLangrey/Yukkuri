@@ -1,0 +1,14 @@
+PASS qualified comfortable cleaners do not start; boundary is strict
+PASS kind educated and licensed uncomfortable cleaners really approach and finish once
+PASS discomfort and skill do not replace eligibility
+PASS external cleanup resolves discomfort but current portion finishes; next does not start
+PASS explicit cleaning instruction can still clean comfortable waste
+FAIL needs pain danger rest and care still interrupt without completing: System.Exception: care
+   at Program.<<Main>$>g__Require|0_0(Boolean condition, String message) in checks\Interaction.HygieneCleaning\Program.cs:line 8
+   at Program.<>c.<<Main>$>b__0_13() in checks\Interaction.HygieneCleaning\Program.cs:line 92
+   at Program.<<Main>$>g__Check|0_1(String name, Action action, <>c__DisplayClass0_0&) in checks\Interaction.HygieneCleaning\Program.cs:line 10
+PASS non-ground waste excluded from search and demonstration
+PASS in-transit current target interrupts before timed completion without awarding evidence
+PASS real throw lands then starts a fresh approach and timed completion
+PASS synthetic SaveStore reload retains active work and completion occurs once
+Hygiene cleaning checks: 1 failure(s)

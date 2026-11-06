@@ -7,7 +7,7 @@ public sealed partial class WorldSimulation
         var c=InteractionTarget(id);var error=FamilyCommandError(c);if(error!=null)return error;
         if(!FamilyActionReady(c!)||c!.Fear>50||c.Fullness<30)return "现在无法专心，先照顾身体并让它安稳下来。";
         if(State.WorldSeconds-c.Interaction.LastCleaningLessonAt<12)return "先消化刚才的示范，稍后再练习。";
-        if(!State.RoomObjects.Any(o=>o.RegionId==c.RegionId&&!o.Stored&&IsWaste(o.Kind)&&Distance(c.X,c.Z,o.X,o.Z)<2&&HasGroundSightLine(c,o.X,o.Z)))
+        if(!State.RoomObjects.Any(o=>o.RegionId==c.RegionId&&EnvironmentHygiene.IsGroundWaste(State,o)&&Distance(c.X,c.Z,o.X,o.Z)<2&&HasGroundSightLine(c,o.X,o.Z)))
             return "需要身旁看得见的脏处，不能隔着障碍示范清洁。";
         return null;
     }
@@ -35,7 +35,7 @@ public sealed partial class WorldSimulation
         i.NextCleaningAt=Math.Max(i.NextCleaningAt,State.WorldSeconds+5);
     }
     private RoomObject? FindCleaningWaste(Creature c)=>State.RoomObjects
-        .Where(o=>!o.Stored&&IsWaste(o.Kind)&&o.RegionId==c.RegionId&&Distance(c.X,c.Z,o.X,o.Z)<4&&HasGroundSightLine(c,o.X,o.Z)&&
+        .Where(o=>EnvironmentHygiene.IsGroundWaste(State,o)&&o.RegionId==c.RegionId&&Distance(c.X,c.Z,o.X,o.Z)<4&&HasGroundSightLine(c,o.X,o.Z)&&
             !State.Creatures.Any(other=>other!=c&&other.Interaction.CleaningTargetId==o.Id))
         .OrderBy(o=>HasPeerCleaningOrder(c)&&o.Id==c.Interaction.Development.OrderedWasteId?0:1)
         .ThenBy(o=>Distance(c.X,c.Z,o.X,o.Z)).ThenBy(o=>o.Id,StringComparer.Ordinal).FirstOrDefault();
