@@ -37,6 +37,8 @@ public partial class Main : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            if(args.Any(x=>x.StartsWith("--poke-contact-audit",StringComparison.Ordinal)))
+            {GD.PushError("Poke audit must use InteractionRoom entry before world or SaveStore.");GetTree().Quit(2);return;}
             for(int i=0;i<args.Length;i++)
             {
                 if(args[i]=="--smoke-output"&&i+1<args.Length)_smokeOutput=args[++i];

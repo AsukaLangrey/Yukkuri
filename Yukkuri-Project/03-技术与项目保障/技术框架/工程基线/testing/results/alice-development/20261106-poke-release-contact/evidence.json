@@ -1,0 +1,85 @@
+{
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "status": "partial",
+  "baseline": [
+    {
+      "case": "valid-head-click",
+      "passed": true,
+      "healthBefore": 100,
+      "healthAfter": 99.44,
+      "painAfter": 0.8400000000000001
+    },
+    {
+      "case": "quick-drag-off",
+      "passed": false,
+      "healthBefore": 100,
+      "healthAfter": 99.44,
+      "painAfter": 0.8400000000000001
+    },
+    {
+      "case": "release-other-oil",
+      "passed": false,
+      "healthBefore": 100,
+      "healthAfter": 99.44,
+      "painAfter": 0.8400000000000001
+    },
+    {
+      "case": "release-outside-canvas",
+      "passed": true,
+      "healthBefore": 100,
+      "healthAfter": 100,
+      "painAfter": 0
+    }
+  ],
+  "final": [
+    {
+      "case": "valid-head-click",
+      "passed": true
+    },
+    {
+      "case": "quick-drag-off",
+      "passed": true
+    },
+    {
+      "case": "release-other-oil",
+      "passed": true
+    },
+    {
+      "case": "release-outside-canvas",
+      "passed": true
+    },
+    {
+      "case": "same-actor-new-surface",
+      "passed": true
+    },
+    {
+      "case": "stationary-pointer-actor-moved",
+      "passed": true
+    },
+    {
+      "case": "sustained-pull-no-release-poke",
+      "passed": true
+    },
+    {
+      "case": "empty-start-sweep-no-release-poke",
+      "passed": true
+    }
+  ],
+  "pure_checks": {
+    "InteractionStateBoundaries": 10,
+    "InputIntent": 43
+  },
+  "guard_checks": {
+    "directMain": 2,
+    "reusedProfile": 2,
+    "mixedFlags": 2
+  },
+  "build_exit": 0,
+  "final_runtime_exit": 0,
+  "limitations": [
+    "Headless synthetic input, not native mouse or visual acceptance",
+    "Simulation clocks frozen except explicit gesture processor samples",
+    "Actor movement fixture changes simulation position then refreshes real geometry; not autonomous locomotion",
+    "Two ObjectDB exit leaks observed in baseline and repeated diagnostic"
+  ]
+}

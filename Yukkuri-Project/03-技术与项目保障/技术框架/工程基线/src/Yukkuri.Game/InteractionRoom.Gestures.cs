@@ -40,7 +40,11 @@ public partial class InteractionRoom
         }
         if(_pokeContact is { } poke)
         {
-            if(!_pulled&&IsScenePoint(mouse.Position))ApplyPoke(poke,false,0);
+            // A click finishes only on the original body, at its current surface.
+            // The press contact remains the anchor for deliberate sustained pulling.
+            if(!_pulled&&IsScenePoint(mouse.Position)&&
+                ContactAt(mouse.Position) is {Blocked:false,TargetKind:InteractionTargetKind.Body} current&&current.Id==poke.Id)
+                ApplyPoke(current,false,0);
             _pokeContact=null;_swingArmed=false;return true;
         }
         if(_swingArmed){_swingArmed=false;return true;}
