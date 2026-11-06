@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "kind": "focused_candidate_review",
+  "candidate": "alice-tree-growth-clearance-20261106",
+  "source_base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_state": "uncommitted_three_file_patch_identified_by_sha256",
+  "environment": {
+    "computer": "authorized Windows test computer",
+    "platform": "Windows",
+    "authorized_runtime": "C: isolated worktree",
+    "sdk": "pinned project .tools/dotnet/dotnet.exe"
+  },
+  "status": "partial",
+  "result": "Tree-overlap autonomous walking recovered; manual movement and river growth overlap remain unchanged.",
+  "files": [
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+      "sha256": "6ED17EEC25B67DE9E2EA1C5269D26EA89741C064D30E1E7667907047E3A90AB5"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+      "sha256": "09727594D331E1B8C291D079F558F1C79B3D59B787B34D4FF2A77D208436E95F"
+    },
+    {
+      "path": "checks/Family.Growth/Program.cs",
+      "sha256": "018E9E60470DA39B892536C3EE50104F35F06DCB0D8011FDF6F5CC231B451461"
+    }
+  ],
+  "checks": {
+    "family_growth": {
+      "status": "passed",
+      "passed": 14,
+      "failed": 0,
+      "existing": 5,
+      "added": 9,
+      "exit_code": 0
+    },
+    "diff_check": "passed",
+    "baseline_autonomy": {
+      "scenarios": 2,
+      "observed": "food and water scenarios both stayed blocked for 40 simulated seconds",
+      "original_dll_sha256": "E6F477758392AAB1B606D77BCBE215FD082E760A28CD9E947F9227493D76CBEC"
+    }
+  },
+  "fixture": {
+    "factory": "CreateCourtyardEconomy",
+    "actor": "default young creature",
+    "public_waypoints": [
+      [
+        2.7,
+        -3
+      ],
+      [
+        -5.9,
+        -3
+      ],
+      [
+        -5.9,
+        -4.8
+      ]
+    ],
+    "accelerated_start_age_seconds": 1799.75,
+    "natural_growth_delta_seconds": 0.25,
+    "direct_position_or_isyoung_edits": false,
+    "autonomy_needs": "Explicit low fullness or hydration only for focused consumption scenarios",
+    "complete_1800_second_upbringing": false
+  },
+  "execution": {
+    "per_process_timeout_seconds": 180,
+    "all_started_runs_completed": true,
+    "timeouts": 0,
+    "remaining_worktree_dotnet_processes": 0,
+    "residual_check_scope": "dotnet command lines identifying this isolated worktree",
+    "raw_logs_and_commands": "Retained only in ignored local directories, not included"
+  },
+  "known_limitations": [
+    "Manual SlideAlongGround remains strict",
+    "Non-slide physics and ordinary placement remain strict",
+    "River-bank growth overlap reproduced but not fixed",
+    "No UI, full suite, long simulation or personal-save testing",
+    "No candidate27 upload; combined27/28 verification separate"
+  ],
+  "failure_history": [
+    "Read-only sandbox directory creation denied before write; standard escalation then allowed",
+    "Source edit denied for missing scope evidence; new user authorization evidence supplied before allowed retry",
+    "First allowed edit stopped at a missing text anchor before writing",
+    "Original tree and river growth overlap failures preserved"
+  ],
+  "reported_at_utc": "2026-11-06T12:39:12.8687550Z"
+}

@@ -1,0 +1,241 @@
+{
+  "semantic_audit_scope": "All runtime JSON parsed; world snapshots are state, not test outcomes. Parent failed-attempt evidence remains hash-linked.",
+  "baseline_source_drift": 0,
+  "timeouts": 0,
+  "focused_tree_checks": 14,
+  "reverse_previous_exact": true,
+  "changed_previous_files": [
+    "checks\\Family.Growth\\Program.cs",
+    "src\\Yukkuri.Simulation\\InteractionSpatial.cs",
+    "src\\Yukkuri.Simulation\\WoodlandLayout.cs"
+  ],
+  "visual_acceptance": false,
+  "parsed_json_files": 322,
+  "game_build": 0,
+  "parsed_world_snapshots": 230,
+  "baseline_expected_failures": 2,
+  "publication": "not_attempted",
+  "baseline_behavior": {
+    "checks": 3,
+    "failures": 2,
+    "results": [
+      {
+        "name": "default current-home young grows naturally into tree overlap",
+        "passed": true
+      },
+      {
+        "name": "autonomous outward walking must recover tree growth overlap",
+        "passed": false,
+        "error": "outward recovery blocked"
+      },
+      {
+        "name": "bounded inward target walking must recover tree growth overlap",
+        "passed": false,
+        "error": "inward goal recovery blocked"
+      }
+    ]
+  },
+  "failure_text_markers": 0,
+  "known_limitations": [
+    "River-bank growth-overlap problem is deferred, not fixed.",
+    "No tree-only fallback was added; finite inward-target recovery is covered.",
+    "Historical player saves, UI, rendering, sound and gameplay feel are not verified."
+  ],
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "tree_recovery_scope": "GroundMove with slide=true only; static placement, manual SlideAlongGround and non-slide motion remain strict. River overlap recovery explicitly deferred.",
+  "worker_other_sha256": [
+    {
+      "path": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+      "worker_sha256": "09727594D331E1B8C291D079F558F1C79B3D59B787B34D4FF2A77D208436E95F"
+    },
+    {
+      "path": "checks/Family.Growth/Program.cs",
+      "worker_sha256": "018E9E60470DA39B892536C3EE50104F35F06DCB0D8011FDF6F5CC231B451461"
+    }
+  ],
+  "limits": [
+    "Pure simulation and synthetic snapshots only; no native UI, visual/audio or player-save acceptance.",
+    "Historical Save.Compatibility was not run.",
+    "Original baseline failures and inherited failed-attempt evidence retained.",
+    "No upload, commit, push or publication was performed."
+  ],
+  "json_issues": [],
+  "all_three_files_reverse_exact": true,
+  "failed": [],
+  "verified_at": "2026-11-06T12:53:16.4409759Z",
+  "combined_spatial_sha256": "CB0D13B5C252215B3A0D61FCEC74F93BD453B6D8DB45E93B4C252AAB972AA231",
+  "parent_evidence_files": 917,
+  "baseline_failed_cases": [
+    "FAIL autonomous outward walking must recover tree growth overlap",
+    "FAIL bounded inward target walking must recover tree growth overlap"
+  ],
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "remaining_worktree_build_runtime_processes": 0,
+  "all_local_evidence_json_parsed": 356,
+  "focused_tree_failures": 0,
+  "peer_logic_preserved": true,
+  "focused_gates": [
+    {
+      "name": "Family.Growth",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.GrowthOverlap",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.StationGrowthClearance",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.WaterPassage",
+      "build_exit_code": 0,
+      "exit_code": 0
+    }
+  ],
+  "independent_joint_growth_failures": 0,
+  "six_argument_wrapper_unchanged": true,
+  "unexpected_nonzero_commands": [],
+  "tree_station_peer_intersections": "Seven inherited peer/station cases, four current-home tree/peer cases and four legacy-start tree/station cases with public purchase/placement; new fixtures retain default needs and only accelerate initial body age.",
+  "worker_helper_exact": true,
+  "baseline_checks": 3,
+  "station_logic_preserved": true,
+  "worker_spatial_sha256": "6ED17EEC25B67DE9E2EA1C5269D26EA89741C064D30E1E7667907047E3A90AB5",
+  "original_resumes": [
+    {
+      "start": 1200,
+      "success": true,
+      "simulated_seconds": 4800,
+      "end": 6000,
+      "deaths": 0
+    },
+    {
+      "start": 5400,
+      "success": true,
+      "simulated_seconds": 600,
+      "end": 6000,
+      "deaths": 0
+    }
+  ],
+  "preserved_failed_attempts": [
+    {
+      "correction": "Station-only branch uses established legacy unlocked start, still public legal placement",
+      "fixture_failures": 4,
+      "reason": "Current-home station purchase was correctly locked by sales progression",
+      "attempt": "intersection-v1"
+    },
+    {
+      "correction": "Station Z changed to -5.25, preserving all obstacles and assertions",
+      "fixture_failures": 4,
+      "reason": "Public station placement correctly rejected outlet overlap with default cushion",
+      "attempt": "intersection-v2"
+    },
+    {
+      "correction": "Separate three-case behavioral probe uses only pre-existing APIs",
+      "runtime": "not_run",
+      "reason": "New test directly references GroundStepFits, absent in pristine main",
+      "attempt": "baseline-tree-build"
+    },
+    {
+      "process_launched": false,
+      "reason": "UTC DateTime conversion error",
+      "attempt": "continuation-prelaunch",
+      "correction": "Direct UTC cast, original deadline retained"
+    }
+  ],
+  "harness_drift": 0,
+  "walltime_policy": {
+    "execution": "serial",
+    "per_build_or_run_seconds": 300,
+    "actual_seconds": 760.6980954,
+    "process_termination": "only verified owned process tree if limit exceeded",
+    "aggregate_seconds": 1800
+  },
+  "passed_pure": 79,
+  "long_harness_input_drift": 0,
+  "parsed_inline_json": 40,
+  "baseline_pristine_files": 239,
+  "status": "partial",
+  "final_source_files": 424,
+  "headless": "not_run",
+  "independent_joint_growth_checks": 15,
+  "warning_scope": "Final combined source builds only; pristine baseline has separate existing InteractionValidation.cs(15,19): CS8604 warning.",
+  "parent_evidence_drift": 0,
+  "new_warning_locations": [],
+  "disk_save": {
+    "passed": true,
+    "checks": 3,
+    "savedAt": 1800,
+    "resumedAt": 2000
+  },
+  "deep_chain_records": 212,
+  "baseline_scope": "Three API-compatible current-home behavioral cases against pristine main. Full new Family.Growth14 baseline did not run because GroundStepFits does not exist there; build failure retained.",
+  "long_runs": [
+    {
+      "name": "fresh-three-6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original1200-growth",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day2-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day9-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "synthetic-disk-roundtrip",
+      "exit_code": 0
+    }
+  ],
+  "fresh_lifecycles": [
+    {
+      "name": "care-stem-42",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 3,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "care-live-72381",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 1,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "shelter-20261031",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 0,
+      "born": 0,
+      "grown": 0,
+      "reloads": 10
+    }
+  ],
+  "focused_station_failures": 0,
+  "source_hash_differences": 0,
+  "deep_chain_drift": 0,
+  "focused_station_checks": 17,
+  "pure_projects": 79
+}

@@ -18,11 +18,14 @@ public sealed partial class WorldSimulation
         return scale*Math.Max(body,equipment);
     }
     private bool CanOccupyRoom(Creature c,double x,double z,RestraintKind? restraint=null,bool? supine=null,bool allowWater=false)
+        =>CanOccupyRoomCore(c,x,z,restraint,supine,allowWater,false);
+    private bool CanOccupyRoomCore(Creature c,double x,double z,RestraintKind? restraint,bool? supine,bool allowWater,bool recoverTreeOverlap)
     {
         double own=InteractionFootprint(c,restraint,supine);
         if(!ShelterBodyFits(c,x,z,own))return false;
         if(Math.Abs(x)>8-own||Math.Abs(z)>8-own)return false;
-        if(!WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,allowWater))return false;
+        if(!(recoverTreeOverlap ? WoodlandLayout.GroundStepFits(State,c.RegionId,c.X,c.Z,x,z,own,allowWater) :
+            WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,allowWater)))return false;
         if(!ClearOfStations(c.RegionId,x,z,own))return false;
         if(State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
             Distance(x,z,s.X,s.Z)<own+StemVesselRadius))return false;
@@ -52,7 +55,7 @@ public sealed partial class WorldSimulation
         bool complete=true;
         for(int n=0;n<slices;n++)
         {
-            if(ShelterMovePathClear(c,c.X+dx,c.Z+dz)&&CanOccupyRoom(c,c.X+dx,c.Z+dz,allowWater:allowWater)){c.X+=dx;c.Z+=dz;continue;}
+            if(ShelterMovePathClear(c,c.X+dx,c.Z+dz)&&CanOccupyRoomCore(c,c.X+dx,c.Z+dz,null,null,allowWater,slide)){c.X+=dx;c.Z+=dz;continue;}
             complete=false;
             if(!slide)break;
             // Try a small turn around the obstacle. Never displace a restrained or injured neighbor.
@@ -60,7 +63,7 @@ public sealed partial class WorldSimulation
             foreach(double angle in new[]{Math.PI/4,-Math.PI/4,Math.PI/2,-Math.PI/2})
             {
                 double sx=dx*Math.Cos(angle)-dz*Math.Sin(angle),sz=dx*Math.Sin(angle)+dz*Math.Cos(angle);
-                if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanOccupyRoom(c,c.X+sx,c.Z+sz,allowWater:allowWater))continue;
+                if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanOccupyRoomCore(c,c.X+sx,c.Z+sz,null,null,allowWater,true))continue;
                 c.X+=sx;c.Z+=sz;moved=true;break;
             }
             if(!moved)break;

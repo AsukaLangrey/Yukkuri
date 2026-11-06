@@ -28,4 +28,30 @@ public static class WoodlandLayout
         if(!allowWater&&x+radius*Math.Sqrt(1+.104*.104)>RiverEdge(z))return false;
         return Trees.All(tree=>Math.Pow(x-tree.X,2)+Math.Pow(z-tree.Z,2)>=Math.Pow(radius+tree.TrunkRadius,2));
     }
+    // Only walking may recover a pre-existing tree overlap (for example after growth).
+    // Placement remains strict. Every tree is checked separately along the whole step.
+    public static bool GroundStepFits(WorldState state,string region,double fromX,double fromZ,
+        double x,double z,double radius,bool allowWater=false)
+    {
+        if(!HasRiver(state,region))return true;
+        if(!allowWater&&x+radius*Math.Sqrt(1+.104*.104)>RiverEdge(z))return false;
+        double dx=x-fromX,dz=z-fromZ,lengthSquared=dx*dx+dz*dz;
+        foreach(var tree in Trees)
+        {
+            double ox=fromX-tree.X,oz=fromZ-tree.Z,required=radius+tree.TrunkRadius;
+            double startSquared=ox*ox+oz*oz,dot=ox*dx+oz*dz;
+            if(startSquared<required*required)
+            {
+                // A positive final distance alone could hide an initial move inward.
+                if(dot<0||(ox+dx)*(ox+dx)+(oz+dz)*(oz+dz)<=startSquared)return false;
+            }
+            else
+            {
+                double t=lengthSquared>0?Math.Clamp(-dot/lengthSquared,0,1):0;
+                double nearX=ox+dx*t,nearZ=oz+dz*t;
+                if(nearX*nearX+nearZ*nearZ<required*required)return false;
+            }
+        }
+        return true;
+    }
 }
