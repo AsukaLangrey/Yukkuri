@@ -49,6 +49,7 @@ public partial class InteractionRoom : Node3D
                 saveDirectory="user://interaction-test-saves/"+args[testProfileFlag+1];
                 GD.Print("INTERACTION_TEST_PROFILE: "+args[testProfileFlag+1]);
             }
+            ValidateAutosavePlacementVerification(args,saveDirectory);
             _saves=new SaveStore(ProjectSettings.GlobalizePath(saveDirectory));
             _camera=new Camera3D{Projection=Camera3D.ProjectionType.Orthogonal,Size=_zoom,Current=true,Far=100};AddChild(_camera);
             AddChild(new WorldEnvironment{Environment=new Godot.Environment{BackgroundMode=Godot.Environment.BGMode.Color,
@@ -71,6 +72,7 @@ public partial class InteractionRoom : Node3D
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
+            StartAutosavePlacementVerificationIfRequested(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }
@@ -227,8 +229,8 @@ public partial class InteractionRoom : Node3D
         _uiClock+=dt;_autoClock+=dt;
         if(_uiClock>.1){_uiClock=0;RefreshRoomUi();}
         // Background saving must wait for the whole pointer operation, including
-        // carrying a supply away from a mouth or orbiting without a body gesture.
-        if(_autoClock>60&&!Sim.HasInteractionGesture&&!_mouseHeld&&_heldSupplyId==null&&_sceneDragId==null&&_pokeContact==null&&!_swingArmed&&!_orbiting&&!_panning&&_tapContact==null&&!_modalOpen&&!_recovered)
+        // carrying a supply, choosing a placement point, or orbiting without a body gesture.
+        if(_autoClock>60&&_arrivingCreature==null&&!_placingShelter&&_placingSupplyStationKind==null&&!Sim.HasInteractionGesture&&!_mouseHeld&&_heldSupplyId==null&&_sceneDragId==null&&_pokeContact==null&&!_swingArmed&&!_orbiting&&!_panning&&_tapContact==null&&!_modalOpen&&!_recovered)
         {_autoClock=0;SaveRoom(0,false);}
         UpdatePointer();
         UpdateLandingPreview();

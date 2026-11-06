@@ -1,0 +1,592 @@
+{
+  "schema_version": 1,
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_branch": "alice/20261106-autosave-placement",
+  "source_state": "Baseline main plus the documented test entry and narrow autosave guard; not a committed fix at test time.",
+  "environment": "Authorized local Windows desktop; Godot 4.7.2 mono headless; .NET 10; Debug.",
+  "scope": "Three pending placement flags; arrival, shelter, food station and water station. No save-format or manual-save behavior change.",
+  "status": "passed",
+  "original_interaction_room_sha256": "8CC1882B9678F172DE0CBCBC6BEC5E0974125C9A65D9F66E0328116A88EDEEF4",
+  "final_interaction_room_sha256": "9D67D091F3FDE37B060AC4761598401B7FF4A6F4E0E5792ADCC1596F6DF522F6",
+  "frozen_harness_sha256": "EA952C3392F4BCDD3264FB63162383F788584C8B25B348031341598D180C63F3",
+  "baseline_manifest_sha256": "BB0ED6D4967254A994B0CE48E352DFB7C550A0B589FE96C88AD6657C22A57860",
+  "build": {
+    "baseline_exit": 0,
+    "existing_warnings": 2,
+    "errors": 0,
+    "warnings": [
+      "CS8604 InteractionValidation.cs",
+      "CS8604 SupplyStationValidation.cs"
+    ],
+    "fixed_exit": 0
+  },
+  "commands": [
+    "dotnet build src/Yukkuri.Game/Yukkuri.Game.csproj -t:Rebuild -c Debug",
+    "godot --headless --path <game-project> --editor --import",
+    "godot --headless --path <game-project> -- --interaction-test-profile <fresh-unique-profile> --autosave-placement-check-output <absolute-new-output>",
+    "dotnet build checks/<suite>/<suite>.csproj -t:Rebuild -c Debug",
+    "dotnet checks/<suite>/bin/Debug/net10.0/<suite>.dll"
+  ],
+  "baseline_exit": 1,
+  "baseline": {
+    "success": false,
+    "failures": 28,
+    "checks": 48,
+    "renderer": "headless",
+    "scope": "Actual scene button signals, input callbacks, process frames and synthetic isolated saves; no native input or visual acceptance.",
+    "results": [
+      {
+        "name": "arrival: overdue autosave preserves placement",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "arrival: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: overdue autosave leaves slot byte-identical",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "arrival: deferred timer remains overdue",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "arrival: cancel releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "arrival: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: valid click completes placement once",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "arrival: second click cannot double-charge",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "arrival: completion releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "arrival: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: overdue autosave preserves placement",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "shelter: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: overdue autosave leaves slot byte-identical",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "shelter: deferred timer remains overdue",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "shelter: cancel releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "shelter: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: valid click completes placement once",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "shelter: second click cannot double-charge",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "shelter: completion releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "shelter: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: overdue autosave preserves placement",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "food-station: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: overdue autosave leaves slot byte-identical",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "food-station: deferred timer remains overdue",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "food-station: cancel releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "food-station: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: valid click completes placement once",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "food-station: second click cannot double-charge",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "food-station: completion releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "food-station: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: overdue autosave preserves placement",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "water-station: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: overdue autosave leaves slot byte-identical",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "water-station: deferred timer remains overdue",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "water-station: cancel releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "water-station: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: valid click completes placement once",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "water-station: second click cannot double-charge",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "water-station: completion releases overdue autosave",
+        "passed": false,
+        "error": "Assertion failed."
+      },
+      {
+        "name": "water-station: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "fixed_exit": 0,
+  "fixed": {
+    "success": true,
+    "failures": 0,
+    "checks": 48,
+    "renderer": "headless",
+    "scope": "Actual scene button signals, input callbacks, process frames and synthetic isolated saves; no native input or visual acceptance.",
+    "results": [
+      {
+        "name": "arrival: overdue autosave preserves placement",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: overdue autosave leaves slot byte-identical",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: deferred timer remains overdue",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: cancel releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: valid click completes placement once",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: second click cannot double-charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: completion releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "arrival: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: overdue autosave preserves placement",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: overdue autosave leaves slot byte-identical",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: deferred timer remains overdue",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: cancel releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: valid click completes placement once",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: second click cannot double-charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: completion releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "shelter: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: overdue autosave preserves placement",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: overdue autosave leaves slot byte-identical",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: deferred timer remains overdue",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: cancel releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: valid click completes placement once",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: second click cannot double-charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: completion releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "food-station: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: overdue autosave preserves placement",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: overdue autosave preserves prompt",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: overdue autosave preserves money and inventory",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: overdue autosave leaves slot byte-identical",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: deferred timer remains overdue",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: cancel releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: cancel does not charge or consume stock",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: valid click completes placement once",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: second click cannot double-charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: completion releases overdue autosave",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: manual save still cancels placement without charge",
+        "passed": true,
+        "error": null
+      },
+      {
+        "name": "water-station: normal idle autosave remains enabled",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "negative_guards": [
+    {
+      "name": "missing profile",
+      "exit_code": 2,
+      "output_absent": true
+    },
+    {
+      "name": "existing profile",
+      "exit_code": 2,
+      "output_absent": true,
+      "existing_files_unchanged": true
+    },
+    {
+      "name": "relative output",
+      "exit_code": 2
+    }
+  ],
+  "rule_suites": [
+    {
+      "name": "Interaction.CreatureArrival",
+      "build_exit": 0,
+      "test_exit": 0,
+      "assertions": 6
+    },
+    {
+      "name": "Interaction.Inventory",
+      "build_exit": 0,
+      "test_exit": 0,
+      "assertions": 12
+    },
+    {
+      "name": "Interaction.Shelters",
+      "build_exit": 0,
+      "test_exit": 0,
+      "assertions": 13
+    },
+    {
+      "name": "Interaction.SupplyStations",
+      "build_exit": 0,
+      "test_exit": 0,
+      "assertions": 8
+    },
+    {
+      "name": "Courtyard.Economy",
+      "build_exit": 0,
+      "test_exit": 0,
+      "assertions": 8
+    },
+    {
+      "name": "Input.Intent",
+      "build_exit": 0,
+      "test_exit": 0,
+      "assertions": 43
+    }
+  ],
+  "limitations": [
+    "No native desktop input, screenshot, visible rendering or human feel acceptance.",
+    "No historical personal save was used; genuine historical save compatibility was not run.",
+    "Targeted six-suite run, not the full required suite; combined-branch regression is separate.",
+    "Baseline dependent placement/completion assertions fail when placement was cancelled; 28 failures are not 28 independent bugs.",
+    "Synthetic resources and accelerated timer boundary; not a 60-second wall-clock soak."
+  ]
+}
