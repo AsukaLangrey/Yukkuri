@@ -1,0 +1,18 @@
+PASS kind helper leaves a full-body bank landing through bounded real movement
+PASS dependent-care duty does not keep a kind bystander in the landing
+PASS resting helpers are not moved or granted extra rescue
+PASS critical helpers cannot be moved aside
+PASS hostile witnesses are not silently turned into rescuers
+PASS save reload keeps the helper able to clear the landing
+PASS player contact retains control of the helper
+PASS paused world does not move helpers
+PASS two kind helpers clear a shared landing without body overlap
+PASS immobile blockade is not teleported or ignored
+SNAPSHOT_ESCAPED {"WorldSeconds":1681,"Health":99.8684375,"Energy":26.724249999993148,"AttemptOutcome":2}
+PASS fixed real-world blocked snapshot now reaches shore without changing accident or damage rules
+PASS self-preservation needs do not yield to rescue positioning
+PASS two water incidents do not move a helper into the other landing
+PASS young responder navigates from afar and makes actual peer rescue
+PASS adult responder navigates from afar and makes actual peer rescue
+PASS moving casualty invalidates a previously reached support point
+RESULT 16/16; failures=0

@@ -83,6 +83,7 @@ public sealed partial class WorldSimulation
         if(p.Kindness>=.5)
         {
             EndHumanCompany(c);
+            if(TryYieldWaterPassage(c,target,dt))return true;
             if(!CanActivelySupportWater(c))
             {
                 // Calling does not reserve the body. Hunger, wounds, escape and
@@ -95,15 +96,16 @@ public sealed partial class WorldSimulation
                 }
                 return false;
             }
-            double helperZ=Math.Clamp(target.Z+(c.Z>=target.Z?1:-1),-6.7,6.7);
-            double bankX=WoodlandLayout.RiverEdge(helperZ)-InteractionFootprint(c)-.12;
-            RoomMove(c,bankX,helperZ,dt);
+            if(TryWaterSupportPoint(c,target,out var standing))RoomMove(c,standing.X,standing.Z,dt);
             c.Activity=$"着急地看着{target.Name}，寻找救援办法";
             State.HelpTargetId=target.Id;
             if(State.WorldSeconds<p.NextWaterResponseAt)return true;
             p.NextWaterResponseAt=State.WorldSeconds+8;
             c.Fear=Clamp100(c.Fear+2);RememberThreat(c,2);
-            bool close=Distance(c.X,c.Z,target.X,target.Z)<1.5;
+            // Reaching the same collision-safe support point is what makes a
+            // real attempt possible; a fixed centre distance can be smaller than
+            // the two bodies themselves, especially for an adult responder.
+            bool close=TryWaterSupportPoint(c,target,out var contact)&&Distance(c.X,c.Z,contact.X,contact.Z)<=.25;
             if(close&&target.Interaction.Restraint==RestraintKind.None&&WaterEnvironment.CanStruggle(target)&&
                 target.Energy>12&&target.X-WoodlandLayout.RiverEdge(target.Z)<.28&&
                 TryWaterBankSpot(target,out double x,out double z,.7)&&Next()<.35)
@@ -260,3 +262,4 @@ public sealed partial class WorldSimulation
         return true;
     }
 }
+

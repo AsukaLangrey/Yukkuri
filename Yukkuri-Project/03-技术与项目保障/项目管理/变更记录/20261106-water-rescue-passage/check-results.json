@@ -1,0 +1,44 @@
+{
+  "candidate": "water-passage-v2",
+  "branch": "alice/20261106-water-rescue-passage",
+  "source_frozen": true,
+  "focused": {
+    "passed": 16,
+    "snapshot_exit_seconds": 1681,
+    "total": 16,
+    "baseline_passed": 9,
+    "baseline_failed": 7
+  },
+  "soak": {
+    "total": 24,
+    "passed": 24
+  },
+  "standalone": {
+    "failed": 1,
+    "game_debug_warnings": 2,
+    "game_debug_errors": 0,
+    "projects": 58,
+    "evidence": ".local/testing/water-passage-20261106/broad-v2/results.json",
+    "unchanged_source_files": 374,
+    "passed": 57,
+    "known_baseline_failure": "Interaction.Continuity"
+  },
+  "combined": {
+    "manual_visual_input_acceptance": false,
+    "failed": 0,
+    "headless_import_exit": 0,
+    "scene_evidence": ".local/testing/combined-20261106-v2/economy-scene.txt",
+    "engine_log_errors_warnings_exceptions": 0,
+    "game_build_passed": true,
+    "scene_report": "PASS: real scene, locked shop controls, confirmation refresh, sale payment, actor removal, pause preservation, food purchase, save validation.",
+    "interaction_room_exit": 0,
+    "projects": 60,
+    "evidence": ".local/testing/combined-20261106-v2/results.json",
+    "godot_version": "4.7.2",
+    "unchanged_source_files": 378,
+    "kind": "detached validation copy; no git merge",
+    "passed": 60
+  },
+  "diff_check": "CreaturePersonality.cs extra blank line at EOF remains; not clean",
+  "delivery": "Independent branch; main unchanged; user decides merge"
+}
