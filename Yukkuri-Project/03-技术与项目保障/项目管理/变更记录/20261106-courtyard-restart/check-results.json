@@ -1,0 +1,605 @@
+{
+  "scope": "Independent branch and disposable five-patch compatibility copy; no git merge",
+  "independent": {
+    "sourceIntegrity": {
+      "changed": 0,
+      "verifiedBy": "release coordinator",
+      "files": 371
+    },
+    "failed": 2,
+    "buildExit": 0,
+    "passed": 55,
+    "ruleProjects": 57,
+    "results": [
+      {
+        "name": "ActorGeometry.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "Courtyard.Economy",
+        "exit": 0
+      },
+      {
+        "name": "Family.AdoptionJourney",
+        "exit": 0
+      },
+      {
+        "name": "Family.Aftermath",
+        "exit": 0
+      },
+      {
+        "name": "Family.AssistedCare",
+        "exit": 0
+      },
+      {
+        "name": "Family.CareContinuity",
+        "exit": 0
+      },
+      {
+        "name": "Family.CareInterruption",
+        "exit": 0
+      },
+      {
+        "name": "Family.CareLearning",
+        "exit": 0
+      },
+      {
+        "name": "Family.ColdCare",
+        "exit": 0
+      },
+      {
+        "name": "Family.CompanyCare",
+        "exit": 0
+      },
+      {
+        "name": "Family.Compatibility",
+        "exit": 0
+      },
+      {
+        "name": "Family.Desire",
+        "exit": 0
+      },
+      {
+        "name": "Family.Growth",
+        "exit": 0
+      },
+      {
+        "name": "Family.MouthCommunication",
+        "exit": 0
+      },
+      {
+        "name": "Family.PregnancyBoundaries",
+        "exit": 0
+      },
+      {
+        "name": "Family.Presentation",
+        "exit": 0
+      },
+      {
+        "name": "Family.Protection",
+        "exit": 0
+      },
+      {
+        "name": "Family.Reproduction",
+        "exit": 0
+      },
+      {
+        "name": "Family.Risk",
+        "exit": 0
+      },
+      {
+        "name": "Family.Social",
+        "exit": 0
+      },
+      {
+        "name": "Family.Teaching",
+        "exit": 0
+      },
+      {
+        "name": "Input.Intent",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.AbuseJourney",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.AffectionJourney",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.AutonomyPriority",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.CompletedNeeds",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Completion",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Continuity",
+        "exit": 1
+      },
+      {
+        "name": "Interaction.CreatureArrival",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Depth",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.DetachedStem",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.EmergencyIntervention",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Help",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.HumanCompany",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.HungerFeeding",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Injury",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.InjuryPresentation",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Inventory",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.LifeDevelopment",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Mouth",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.MouthPresentation",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.PeerCompanyContinuity",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.PeerThreat",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Shelters",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.StateBoundaries",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.StemCare",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.SupplyStations",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WaterAttempts",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WaterEmotion",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WaterSupport",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WildSelfCare",
+        "exit": 0
+      },
+      {
+        "name": "Milestone.Exploration",
+        "exit": 0
+      },
+      {
+        "name": "Milestone.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "NaturalLife.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "NaturalLife.Soak",
+        "exit": 1
+      },
+      {
+        "name": "Simulation.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "Game.Build",
+        "exit": 0
+      }
+    ],
+    "baselineFailureComparison": {
+      "continuityEqual": true,
+      "continuity": {
+        "name": "suspended lowering and sliding bodies retain unmet excretion until grounded and still",
+        "error": "settling did not resume and finish exactly one excretion after suspended"
+      },
+      "soakEqual": true,
+      "soak": {
+        "scenario": "woodland",
+        "seed": 20261029,
+        "errors": [
+          "松果: exhausted despite reachable rest"
+        ]
+      }
+    }
+  },
+  "combined": {
+    "restartScene": {
+      "success": true,
+      "failures": 0,
+      "checks": 19,
+      "renderer": "headless",
+      "scope": "Real scene button signals and isolated synthetic saves; not native input or visual acceptance",
+      "results": [
+        {
+          "name": "first launch enables economy progression",
+          "passed": true
+        },
+        {
+          "name": "first launch retains starting partners",
+          "passed": true
+        },
+        {
+          "name": "first launch locks progression tools",
+          "passed": true
+        },
+        {
+          "name": "cancel preserves original world and pause=False",
+          "passed": true
+        },
+        {
+          "name": "cancel preserves original world and pause=True",
+          "passed": true
+        },
+        {
+          "name": "cancel creates no automatic save",
+          "passed": true
+        },
+        {
+          "name": "cancel preserves manual slot",
+          "passed": true
+        },
+        {
+          "name": "restart saves previous world before replacement",
+          "passed": true
+        },
+        {
+          "name": "restart replaces the world and clears old sale progress",
+          "passed": true
+        },
+        {
+          "name": "restart enables economy progression",
+          "passed": true
+        },
+        {
+          "name": "restart restores initial partners",
+          "passed": true
+        },
+        {
+          "name": "restart locks progression tools",
+          "passed": true
+        },
+        {
+          "name": "restart restores starting supplies",
+          "passed": true
+        },
+        {
+          "name": "restart leaves manual slots unchanged",
+          "passed": true
+        },
+        {
+          "name": "restarted world is save-valid",
+          "passed": true
+        },
+        {
+          "name": "save failure prevents restart",
+          "passed": true
+        },
+        {
+          "name": "save failure preserves prior automatic and manual files",
+          "passed": true
+        },
+        {
+          "name": "repeated restart remains a canonical economy start",
+          "passed": true
+        },
+        {
+          "name": "repeated restart preserves manual fixture",
+          "passed": true
+        }
+      ]
+    },
+    "sourceIntegrity": {
+      "changed": 0,
+      "verifiedBy": "release coordinator",
+      "files": 379
+    },
+    "failed": 0,
+    "buildExit": 0,
+    "passed": 60,
+    "ruleProjects": 60,
+    "results": [
+      {
+        "name": "ActorGeometry.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "Courtyard.Economy",
+        "exit": 0
+      },
+      {
+        "name": "Family.AdoptionJourney",
+        "exit": 0
+      },
+      {
+        "name": "Family.Aftermath",
+        "exit": 0
+      },
+      {
+        "name": "Family.AssistedCare",
+        "exit": 0
+      },
+      {
+        "name": "Family.CareContinuity",
+        "exit": 0
+      },
+      {
+        "name": "Family.CareInterruption",
+        "exit": 0
+      },
+      {
+        "name": "Family.CareLearning",
+        "exit": 0
+      },
+      {
+        "name": "Family.ColdCare",
+        "exit": 0
+      },
+      {
+        "name": "Family.CompanyCare",
+        "exit": 0
+      },
+      {
+        "name": "Family.Compatibility",
+        "exit": 0
+      },
+      {
+        "name": "Family.Desire",
+        "exit": 0
+      },
+      {
+        "name": "Family.Growth",
+        "exit": 0
+      },
+      {
+        "name": "Family.MouthCommunication",
+        "exit": 0
+      },
+      {
+        "name": "Family.PregnancyBoundaries",
+        "exit": 0
+      },
+      {
+        "name": "Family.Presentation",
+        "exit": 0
+      },
+      {
+        "name": "Family.Protection",
+        "exit": 0
+      },
+      {
+        "name": "Family.Reproduction",
+        "exit": 0
+      },
+      {
+        "name": "Family.Risk",
+        "exit": 0
+      },
+      {
+        "name": "Family.Social",
+        "exit": 0
+      },
+      {
+        "name": "Family.Teaching",
+        "exit": 0
+      },
+      {
+        "name": "Input.Intent",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.AbuseJourney",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.AffectionJourney",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.AutonomyPriority",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.CompletedNeeds",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Completion",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Continuity",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.CreatureArrival",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Depth",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.DetachedStem",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.EmergencyIntervention",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.HealthRecovery",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Help",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.HumanCompany",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.HungerFeeding",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Injury",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.InjuryPresentation",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Inventory",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.LifeDevelopment",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Mouth",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.MouthPresentation",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.PeerCompanyContinuity",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.PeerThreat",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.ShelterPhysiology",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Shelters",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.StateBoundaries",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.StemCare",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.SupplyStations",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WaterAttempts",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WaterEmotion",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WaterPassage",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WaterSupport",
+        "exit": 0
+      },
+      {
+        "name": "Interaction.WildSelfCare",
+        "exit": 0
+      },
+      {
+        "name": "Milestone.Exploration",
+        "exit": 0
+      },
+      {
+        "name": "Milestone.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "NaturalLife.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "NaturalLife.Soak",
+        "exit": 0
+      },
+      {
+        "name": "Simulation.Smoke",
+        "exit": 0
+      },
+      {
+        "name": "Game.Build",
+        "exit": 0
+      }
+    ]
+  }
+}

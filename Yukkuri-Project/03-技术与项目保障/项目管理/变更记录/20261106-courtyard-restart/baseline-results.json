@@ -1,0 +1,89 @@
+{
+  "success": false,
+  "failures": 4,
+  "checks": 19,
+  "renderer": "headless",
+  "scope": "Real scene button signals and isolated synthetic saves; not native input or visual acceptance",
+  "results": [
+    {
+      "name": "first launch enables economy progression",
+      "passed": true
+    },
+    {
+      "name": "first launch retains starting partners",
+      "passed": true
+    },
+    {
+      "name": "first launch locks progression tools",
+      "passed": true
+    },
+    {
+      "name": "cancel preserves original world and pause=False",
+      "passed": true
+    },
+    {
+      "name": "cancel preserves original world and pause=True",
+      "passed": true
+    },
+    {
+      "name": "cancel creates no automatic save",
+      "passed": true
+    },
+    {
+      "name": "cancel preserves manual slot",
+      "passed": true
+    },
+    {
+      "name": "restart saves previous world before replacement",
+      "passed": true
+    },
+    {
+      "name": "restart replaces the world and clears old sale progress",
+      "passed": true
+    },
+    {
+      "name": "restart enables economy progression",
+      "passed": false,
+      "error": "restart disabled economy"
+    },
+    {
+      "name": "restart restores initial partners",
+      "passed": false,
+      "error": "restart lost starting pair"
+    },
+    {
+      "name": "restart locks progression tools",
+      "passed": false,
+      "error": "restart bypassed unlock gates"
+    },
+    {
+      "name": "restart restores starting supplies",
+      "passed": true
+    },
+    {
+      "name": "restart leaves manual slots unchanged",
+      "passed": true
+    },
+    {
+      "name": "restarted world is save-valid",
+      "passed": true
+    },
+    {
+      "name": "save failure prevents restart",
+      "passed": true
+    },
+    {
+      "name": "save failure preserves prior automatic and manual files",
+      "passed": true
+    },
+    {
+      "name": "repeated restart remains a canonical economy start",
+      "passed": false,
+      "error": "second restart used legacy factory"
+    },
+    {
+      "name": "repeated restart preserves manual fixture",
+      "passed": true
+    }
+  ]
+}

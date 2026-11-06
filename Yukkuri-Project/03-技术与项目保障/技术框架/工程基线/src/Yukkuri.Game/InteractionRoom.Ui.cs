@@ -349,7 +349,7 @@ public partial class InteractionRoom
             _modalContents.AddChild(Button("保存并重新开始",()=>
             {
                 if(!SaveRoom(0,false)){ShowSystemMessage(SystemDialogKind.Save,_message);return;}
-                Sim=WorldSimulation.CreateInteractionPlaytest();ResetRoomUiSession();_recovered=false;_pauseBeforeModal=false;BuildActors();CloseModal();
+                Sim=WorldSimulation.CreateCourtyardEconomy();ResetRoomUiSession();_recovered=false;_pauseBeforeModal=false;BuildActors();CloseModal();
             }));
             _modalContents.AddChild(Button("继续原来的相处",CloseModal));
         }));
