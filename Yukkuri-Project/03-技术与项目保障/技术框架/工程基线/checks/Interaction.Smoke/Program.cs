@@ -315,7 +315,8 @@ Check("a stop can interrupt an unfinished follow without awarding completion", (
     var sim=Fresh();var c=sim.Selected!;
     sim.ExecuteInteraction(c.Id,new(InteractionAction.TeachFollow));
     var response=sim.ExecuteInteraction(c.Id,new(InteractionAction.Stop));
-    Require(response.Success&&c.Interaction.ActiveCue==LearnedCue.Stop&&!c.Interaction.FollowPlayer,"stop could not cancel follow");
+    Require(response.Success&&c.Interaction.ActiveCue==null&&!c.Interaction.FollowPlayer&&c.Interaction.WaitRemaining==3,"stop could not cancel follow without inventing a stationary lesson");
+    Require(c.Interaction.Development.Skills[LifeSkill.Follow].Interrupted==1&&!c.Interaction.Learning.ContainsKey(LearnedCue.Stop),"idle interruption created Stop learning or lost Follow interruption evidence");
     Require(c.Interaction.Learning[LearnedCue.Follow].Successes==0,"interrupted follow received success");
 });
 Check("closed box does not let an oil eat through its back wall", () =>

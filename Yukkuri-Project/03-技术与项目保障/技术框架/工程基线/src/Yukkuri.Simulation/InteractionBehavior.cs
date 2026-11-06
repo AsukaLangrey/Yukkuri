@@ -18,6 +18,18 @@ public sealed partial class WorldSimulation
             // An interruption ends the attempt; it is not a successful lesson.
             i.ActiveCue=null;i.FollowPlayer=false;i.WaitRemaining=0;SynchronizeAbilityAttempts(c);
         }
+        if (action == InteractionAction.Stop && State.WorldSeconds - i.LastWalkAt > 1.5)
+        {
+            // Stopping also cancels follow/another cue when already stationary.
+            // Keep that control, but use the same real-walk witness as TeachStop
+            // before creating a learning attempt or rolling its understanding.
+            if (c.TrainingFatigue > 70) return Feedback(c, "too-tired", Expression.Exhausted, "连续练习太多，先休息。", "withdraw", false, true);
+            i.FollowPlayer = false; i.WaitRemaining = 3;
+            i.RestRemaining = 0; i.Resting = false;
+            c.TargetX = c.X; c.TargetZ = c.Z;
+            return Feedback(c, "stop", Expression.Curious,
+                "它留在原处。没有刚才实际走动的经历，这次不计为学会停步。", "idle");
+        }
         var cue = action switch
         {
             InteractionAction.TeachFollow or InteractionAction.Follow => LearnedCue.Follow,

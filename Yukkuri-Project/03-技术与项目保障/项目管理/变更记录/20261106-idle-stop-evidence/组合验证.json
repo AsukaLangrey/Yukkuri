@@ -1,0 +1,53 @@
+{
+  "failure_text_markers": 0,
+  "source_hash_differences": 0,
+  "visual_acceptance": false,
+  "new_check_files": 2,
+  "passed_pure": 73,
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ],
+  "idle_checks": 8,
+  "deep_chain_records": 114,
+  "godot_run": false,
+  "parsed_inline_json": 30,
+  "worker_evidence_drift": 0,
+  "origin_hash_drift": 0,
+  "parsed_json_files": 280,
+  "new_check_drift": 0,
+  "changed_previous_files": [
+    "checks\\Family.CareContactProgress\\Program.cs",
+    "checks\\Interaction.Smoke\\Program.cs",
+    "src\\Yukkuri.Simulation\\InteractionBehavior.cs"
+  ],
+  "published_eof_exception_verified": true,
+  "failed": [],
+  "same_harness": true,
+  "verified_at": "2026-11-06T08:22:48.2318134Z",
+  "origin_records": 409,
+  "game_build": 0,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "deep_chain_drift": 0,
+  "merge_drift": 0,
+  "json_issues": [],
+  "idle_failures": 0,
+  "pure_projects": 73,
+  "source_files": 411,
+  "baseline_expected_failure_count": 6,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "pass_text_lines": 1526,
+  "new_warning_locations": [],
+  "baseline_source_drift": 0,
+  "baseline_checks": 8
+}

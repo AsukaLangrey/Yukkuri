@@ -1,0 +1,33 @@
+{
+  "baselineCommit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "configuration": "Release net10.0",
+  "baselineBehaviorSha256": "8233615933C2FE7205C2E4B865BD9717BA714123A5942512B3187487E7A6A5EC",
+  "files": [
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+      "sha256": "0547ED5CB41E49AFCFD427287A904E48E5C3032922E543A1645E1C44362DFF26"
+    },
+    {
+      "path": "checks/Interaction.Smoke/Program.cs",
+      "sha256": "A9D9BD57E5A531EF52C9287AAB35830BD24058EDFFC2C8E5C3200A058ED849CC"
+    },
+    {
+      "path": "checks/Interaction.IdleStopEvidence/Program.cs",
+      "sha256": "738DB5839A7F441DD458760ADA519B19E953F7497ED71637700B7C4CB082C05A"
+    },
+    {
+      "path": "checks/Interaction.IdleStopEvidence/Interaction.IdleStopEvidence.csproj",
+      "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "baseline.json",
+      "sha256": "41A2DFD310DCC99908D1DB8D95C83B82118954FF55E2A918ACE46E5F49412DD5"
+    },
+    {
+      "path": "fixed.json",
+      "sha256": "4B58FB8DA2A14C36409E0A129FD3ACA74BED9043EB5DCB6DDC8EC46A1ACF02C5"
+    }
+  ]
+}
