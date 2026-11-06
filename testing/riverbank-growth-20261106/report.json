@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "status": "partial",
+  "candidate": "uncommitted independent branch",
+  "checks": {
+    "existing_nullable_warnings": 2,
+    "build_errors": 0,
+    "passed": 27,
+    "failed": 0,
+    "exploratory_baseline_steps": 72000,
+    "dt_seconds": 0.05,
+    "process_timeout_seconds": 180,
+    "autonomy_harness_steps": 24000
+  },
+  "sha256": {
+    "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/src/Yukkuri.Simulation/InteractionSpatial.cs": "45adbbc8934ecae75839b9d72834cc849678a1f33d1369f18c3ebd32bd393a05",
+    "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/checks/Interaction.RiverbankGrowth/Interaction.RiverbankGrowth.csproj": "f0770c0bb6c683315cd79bbaa620dcb18f7f852f37537944cb524109972f6623",
+    "Yukkuri-Project/03-技术与项目保障/技术框架/工程基线/checks/Interaction.RiverbankGrowth/Program.cs": "50d7d054d038d111feec641db17d0649a1e1232f948c491ea4842ff4922cbfac"
+  },
+  "not_run": [
+    "GUI",
+    "visual review",
+    "historical saves",
+    "disk save",
+    "combined branches"
+  ],
+  "baseline": {
+    "at_3500_seconds": {
+      "fullness": 0,
+      "hydration": 0,
+      "health": 20.74
+    },
+    "position": [
+      5.76,
+      0
+    ]
+  },
+  "limitations": "Natural growth was age-accelerated; baseline starvation measured on unchanged main before candidate. Synthetic JSON reload only."
+}

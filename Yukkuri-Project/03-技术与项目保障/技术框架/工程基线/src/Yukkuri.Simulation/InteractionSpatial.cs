@@ -52,7 +52,7 @@ public sealed partial class WorldSimulation
         bool complete=true;
         for(int n=0;n<slices;n++)
         {
-            if(ShelterMovePathClear(c,c.X+dx,c.Z+dz)&&CanOccupyRoom(c,c.X+dx,c.Z+dz,allowWater:allowWater)){c.X+=dx;c.Z+=dz;continue;}
+            if(ShelterMovePathClear(c,c.X+dx,c.Z+dz)&&CanTakeGroundStep(c,c.X+dx,c.Z+dz,slide,allowWater)){c.X+=dx;c.Z+=dz;continue;}
             complete=false;
             if(!slide)break;
             // Try a small turn around the obstacle. Never displace a restrained or injured neighbor.
@@ -60,12 +60,41 @@ public sealed partial class WorldSimulation
             foreach(double angle in new[]{Math.PI/4,-Math.PI/4,Math.PI/2,-Math.PI/2})
             {
                 double sx=dx*Math.Cos(angle)-dz*Math.Sin(angle),sz=dx*Math.Sin(angle)+dz*Math.Cos(angle);
-                if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanOccupyRoom(c,c.X+sx,c.Z+sz,allowWater:allowWater))continue;
+                if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanTakeGroundStep(c,c.X+sx,c.Z+sz,slide,allowWater))continue;
                 c.X+=sx;c.Z+=sz;moved=true;break;
             }
             if(!moved)break;
         }
         return complete;
+    }
+    private bool CanTakeGroundStep(Creature c,double x,double z,bool slide,bool allowWater)
+    {
+        // Growth may enlarge an already dry body's footprint across the bank.
+        // Every recovery step, including its final exit, must improve along the curve.
+        if(slide&&!allowWater&&WoodlandLayout.HasRiver(State,c.RegionId)&&
+            c.X+InteractionFootprint(c)*Math.Sqrt(1+.104*.104)>WoodlandLayout.RiverEdge(c.Z))
+            return CanRecoverRiverbankStep(c,x,z)&&CanOccupyRoom(c,x,z,allowWater:true);
+        return CanOccupyRoom(c,x,z,allowWater:allowWater);
+    }
+    private bool CanRecoverRiverbankStep(Creature c,double x,double z)
+    {
+        if(!WoodlandLayout.HasRiver(State,c.RegionId)||!double.IsFinite(x)||!double.IsFinite(z))return false;
+        double edge=WoodlandLayout.RiverEdge(c.Z);
+        double radius=InteractionFootprint(c)*Math.Sqrt(1+.104*.104);
+        if(c.X>edge||c.X+radius<=edge)return false;
+        double dx=x-c.X,dz=z-c.Z;
+        if(x+radius-WoodlandLayout.RiverEdge(z)>=c.X+radius-edge)return false;
+        // Deficit derivative along the entire segment is dx-.104*dz*cos(.65*z).
+        // Its maximum is at an endpoint or a cosine extremum; endpoint improvement
+        // alone is insufficient near a turn in the curved riverbank.
+        double maximum=Math.Max(dx-.104*dz*Math.Cos(.65*c.Z),dx-.104*dz*Math.Cos(.65*z));
+        double low=.65*Math.Min(c.Z,z),high=.65*Math.Max(c.Z,z);
+        // For positive dz the maximum uses cos=-1; for negative dz, cos=+1.
+        // An interval contains that phase iff it contains a corresponding full turn.
+        double phase=dz>0?Math.PI:0;
+        if(Math.Ceiling((low-phase)/Math.Tau)<=Math.Floor((high-phase)/Math.Tau))
+            maximum=Math.Max(maximum,dx+.104*Math.Abs(dz));
+        return maximum<=0;
     }
     private void ClearLandingOverlap(Creature c)
     {

@@ -1,0 +1,225 @@
+{
+  "independent_geometry_review": {
+    "source_sha256": "5ADC3A14D1652FF34F8A2F9EF4168628AA3171C14A8C5F2C5A1F60FF9216EAD1",
+    "status": "passed",
+    "blockers": []
+  },
+  "baseline_scope": "API-compatible three-case probe compiled and executed against 239 pristine main files; no unsupported-helper compilation is presented as behavioral evidence.",
+  "walltime_policy": {
+    "execution": "serial",
+    "per_build_or_run_seconds": 300,
+    "termination": "only owned process identity verified before termination",
+    "aggregate_seconds": 1800,
+    "actual_seconds": 481.1775606
+  },
+  "source_drift": 0,
+  "disk_save": {
+    "passed": true,
+    "checks": 3,
+    "savedAt": 1800,
+    "resumedAt": 2000
+  },
+  "baseline_drift": 0,
+  "focused_river_checks": 27,
+  "fresh_fixture_note": "Inherited synthetic setup initializes needs and health before simulation. No health or need editing during runs; unchanged setup preserves cross-iteration comparison.",
+  "preserved_failed_attempts": [
+    {
+      "correction": "Public route goes around the adult via z=2.5; all entities, needs and assertions retained",
+      "reason": "Public peer drag crossed another adult and correctly stopped before checks",
+      "attempt": "river-intersection-v1",
+      "fixture_failures": 4
+    },
+    {
+      "correction": "Corrected exact full anchor and verified reversible merge",
+      "source_writes": 0,
+      "attempt": "merge-prelaunch",
+      "reason": "Full anchor omitted negation and did not match"
+    }
+  ],
+  "parsed_world_snapshots": 230,
+  "baseline_expected_failures": 2,
+  "parent_evidence_drift": 0,
+  "baseline_pristine_files": 239,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "baseline_behavior": {
+    "checks": 3,
+    "failures": 2,
+    "results": [
+      {
+        "name": "default young naturally grows into dry river clearance deficit",
+        "passed": true
+      },
+      {
+        "name": "landward walking must recover river growth deficit",
+        "passed": false,
+        "error": "landward recovery blocked"
+      },
+      {
+        "name": "bank-following walking must improve river growth deficit",
+        "passed": false,
+        "error": "bank-following recovery blocked"
+      }
+    ]
+  },
+  "baseline_build": 0,
+  "verified_at": "2026-11-06T13:18:26.2946681Z",
+  "deep_chain_drift": 0,
+  "pure_projects": 80,
+  "failed": [],
+  "fresh_lifecycles": [
+    {
+      "name": "care-stem-42",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 3,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "care-live-72381",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 1,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "shelter-20261031",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 0,
+      "born": 0,
+      "grown": 0,
+      "reloads": 10
+    }
+  ],
+  "status": "partial",
+  "final_source_files": 426,
+  "focused_river_failures": 0,
+  "source_file_manifest_sha256": "CD879DDE71349259C6767BCFBC9FE2AB7C8A0EF1A10C2D9F97610754BA419279",
+  "original_resumes": [
+    {
+      "deaths": 0,
+      "end": 6000,
+      "success": true,
+      "start": 1200,
+      "simulated_seconds": 4800
+    },
+    {
+      "deaths": 0,
+      "end": 6000,
+      "success": true,
+      "start": 5400,
+      "simulated_seconds": 600
+    }
+  ],
+  "unexpected_nonzero_commands": [],
+  "long_runs": [
+    {
+      "name": "fresh-three-6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original1200-growth",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day2-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day9-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "synthetic-disk-roundtrip",
+      "exit_code": 0
+    }
+  ],
+  "peer_station_tree_logic_preserved": true,
+  "deep_chain_records": 221,
+  "worker_spatial_sha256": "45ADBBC8934ECAE75839B9D72834CC849678A1F33D1369F18C3EBD32BD393A05",
+  "parsed_runtime_json": 322,
+  "reverse_previous_exact": true,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "new_warning_locations": [],
+  "river_scope": "GroundMove slide=true only. Existing dry-centered deficit must strictly improve with nonpositive analytic derivative across the entire segment, including final exit. The proved river exemption applies only to the river gate; tree, station, body, wall and shelter gates remain.",
+  "all_local_evidence_json_parsed": 350,
+  "parsed_inline_json": 40,
+  "inherited_joint_failures": 0,
+  "strict_six_parameter_contract": true,
+  "remaining_worktree_runtime_processes": 0,
+  "parent_evidence_files": 946,
+  "failure_text_markers": 0,
+  "inherited_joint_checks": 15,
+  "passed_pure": 80,
+  "timeouts": 0,
+  "semantic_issues": [],
+  "long_harness_input_drift": 0,
+  "evidence_files": 944,
+  "focused_gates": [
+    {
+      "name": "Interaction.RiverbankGrowth",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Family.Growth",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.GrowthOverlap",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.StationGrowthClearance",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.WaterPassage",
+      "build_exit_code": 0,
+      "exit_code": 0
+    }
+  ],
+  "combined_spatial_sha256": "5ADC3A14D1652FF34F8A2F9EF4168628AA3171C14A8C5F2C5A1F60FF9216EAD1",
+  "independent_joint_checks": 9,
+  "limitations": [
+    "Synthetic simulation only; no native UI, rendering, sound or gameplay-feel acceptance.",
+    "Historical player Save.Compatibility not run.",
+    "Fresh long scenarios retain inherited synthetic initial setup, not untouched default state.",
+    "Original 1200/5400-second resume snapshots and disk roundtrip are unmodified; no health or need edits during runs.",
+    "No Git writes, upload or publication. Iteration 27 blocked publication untouched."
+  ],
+  "game_debug_build": 0,
+  "independent_joint_failures": 0,
+  "worker_helper_exact": true,
+  "family_growth_adaptation": "Only the explicitly deferred river landward-motion expectation changed to successful dry recovery. Ordinary no-entry and explicit allowWater assertions remain unchanged. Pristine behavioral failures and inherited evidence are preserved.",
+  "new_source_files": [
+    {
+      "path": "checks/Interaction.RiverbankGrowth/Program.cs",
+      "sha256": "50d7d054d038d111feec641db17d0649a1e1232f948c491ea4842ff4922cbfac"
+    },
+    {
+      "path": "checks/Interaction.RiverbankGrowth/Interaction.RiverbankGrowth.csproj",
+      "sha256": "f0770c0bb6c683315cd79bbaa620dcb18f7f852f37537944cb524109972f6623"
+    }
+  ],
+  "changed_previous_files": [
+    "checks\\Family.Growth\\Program.cs",
+    "src\\Yukkuri.Simulation\\InteractionSpatial.cs"
+  ]
+}
