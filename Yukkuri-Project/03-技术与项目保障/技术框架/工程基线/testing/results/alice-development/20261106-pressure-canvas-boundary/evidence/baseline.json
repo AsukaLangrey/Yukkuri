@@ -1,0 +1,434 @@
+{
+  "scope": "Frozen ordinary courtyard economy fixture; real Godot scene callbacks and actual ray geometry with synthetic engine pointer/button state. ProcessRedesignGestures then ProcessRoomGesture sampled in product order without autonomous simulation ticks. Not native input, event propagation or visual acceptance. Sidebar assertions require no flip; baseline defects are reported as failures.",
+  "success": false,
+  "failures": 2,
+  "results": [
+    {
+      "name": "in-scene-upward-control",
+      "passed": true,
+      "detail": {
+        "observedFlip": true,
+        "samples": [
+          {
+            "stage": "pressed",
+            "point": [
+              527.125,
+              482.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 0,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "below-threshold",
+            "point": [
+              527.125,
+              462.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "squeeze",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "above-threshold",
+            "point": [
+              527.125,
+              432.61438
+            ],
+            "scene": true,
+            "Supine": true,
+            "SupineRemaining": 4,
+            "ReactionPose": "flip",
+            "ReactionSerial": 2,
+            "_mouseHeld": false,
+            "gesture": false,
+            "origin": null
+          }
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Side",
+        "localY": -0.018159956
+      }
+    },
+    {
+      "name": "left-sidebar-no-flip",
+      "passed": false,
+      "detail": {
+        "observedFlip": true,
+        "samples": [
+          {
+            "stage": "pressed",
+            "point": [
+              527.125,
+              482.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 0,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "below-threshold",
+            "point": [
+              527.125,
+              462.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "squeeze",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "horizontal-exit",
+            "point": [
+              30,
+              482.61438
+            ],
+            "scene": false,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "above-threshold",
+            "point": [
+              30,
+              432.61438
+            ],
+            "scene": false,
+            "Supine": true,
+            "SupineRemaining": 4,
+            "ReactionPose": "flip",
+            "ReactionSerial": 2,
+            "_mouseHeld": false,
+            "gesture": false,
+            "origin": null
+          }
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Side",
+        "localY": -0.018159956
+      }
+    },
+    {
+      "name": "right-sidebar-no-flip",
+      "passed": false,
+      "detail": {
+        "observedFlip": true,
+        "samples": [
+          {
+            "stage": "pressed",
+            "point": [
+              527.125,
+              482.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 0,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "below-threshold",
+            "point": [
+              527.125,
+              462.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "squeeze",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "horizontal-exit",
+            "point": [
+              1410,
+              482.61438
+            ],
+            "scene": false,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "above-threshold",
+            "point": [
+              1410,
+              432.61438
+            ],
+            "scene": false,
+            "Supine": true,
+            "SupineRemaining": 4,
+            "ReactionPose": "flip",
+            "ReactionSerial": 2,
+            "_mouseHeld": false,
+            "gesture": false,
+            "origin": null
+          }
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Side",
+        "localY": -0.018159956
+      }
+    },
+    {
+      "name": "outside-release-control",
+      "passed": true,
+      "detail": {
+        "samples": [
+          {
+            "stage": "pressed",
+            "point": [
+              527.125,
+              482.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 0,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "below-threshold",
+            "point": [
+              527.125,
+              462.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "squeeze",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "horizontal-exit",
+            "point": [
+              30,
+              482.61438
+            ],
+            "scene": false,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "released-outside",
+            "point": [
+              30,
+              482.61438
+            ],
+            "scene": false,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": false,
+            "gesture": false,
+            "origin": null
+          }
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Side",
+        "localY": -0.018159956
+      }
+    },
+    {
+      "name": "reentry-observation",
+      "passed": true,
+      "detail": {
+        "observedFlip": true,
+        "samples": [
+          {
+            "stage": "pressed",
+            "point": [
+              527.125,
+              482.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 0,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "below-threshold",
+            "point": [
+              527.125,
+              462.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "squeeze",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "horizontal-exit",
+            "point": [
+              30,
+              482.61438
+            ],
+            "scene": false,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "reentered-below-threshold",
+            "point": [
+              527.125,
+              482.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "above-threshold",
+            "point": [
+              527.125,
+              432.61438
+            ],
+            "scene": true,
+            "Supine": true,
+            "SupineRemaining": 4,
+            "ReactionPose": "flip",
+            "ReactionSerial": 2,
+            "_mouseHeld": false,
+            "gesture": false,
+            "origin": null
+          }
+        ],
+        "pressTarget": "interaction-oil-0",
+        "pressPart": "Side",
+        "localY": -0.018159956
+      }
+    },
+    {
+      "name": "focus-loss-control",
+      "passed": true,
+      "detail": {
+        "samples": [
+          {
+            "stage": "pressed",
+            "point": [
+              527.125,
+              482.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 0,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "below-threshold",
+            "point": [
+              527.125,
+              462.61438
+            ],
+            "scene": true,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "squeeze",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "horizontal-exit",
+            "point": [
+              30,
+              482.61438
+            ],
+            "scene": false,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": true,
+            "gesture": true,
+            "origin": "interaction-oil-0"
+          },
+          {
+            "stage": "focus-lost",
+            "point": [
+              30,
+              482.61438
+            ],
+            "scene": false,
+            "Supine": false,
+            "SupineRemaining": 0,
+            "ReactionPose": "idle",
+            "ReactionSerial": 1,
+            "_mouseHeld": false,
+            "gesture": false,
+            "origin": null
+          }
+        ]
+      }
+    }
+  ]
+}

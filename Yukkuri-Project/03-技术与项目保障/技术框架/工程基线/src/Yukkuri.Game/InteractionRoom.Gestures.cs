@@ -226,7 +226,7 @@ public partial class InteractionRoom
             }
             return;
         }
-        if(_roomMode==RoomMode.Pressure&&_mouseHeld&&_pressureOrigin is { } origin&&point.Y<_redesignStart.Y-35&&origin.Part is BodyPart.Bottom or BodyPart.Side)
+        if(_roomMode==RoomMode.Pressure&&_mouseHeld&&_pressureOrigin is { } origin&&IsScenePoint(point)&&point.Y<_redesignStart.Y-35&&origin.Part is BodyPart.Bottom or BodyPart.Side)
         {
             string target=origin.Id;bool flipped=Sim.State.Creatures.Find(c=>c.Id==target)?.Interaction.Supine==true;
             CancelGesture();_pressureOrigin=null;if(!flipped)AcceptFeedback(Sim.ExecuteInteraction(target,new(InteractionAction.Flip)),target);RefreshRoomUi();return;

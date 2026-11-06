@@ -37,6 +37,7 @@ public partial class Main : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            if(args.Any(x=>x.StartsWith("--pressure-boundary-audit",StringComparison.Ordinal))) {GD.PushError("Pressure audit must use InteractionRoom before world or SaveStore.");GetTree().Quit(2);return;}
             for(int i=0;i<args.Length;i++)
             {
                 if(args[i]=="--smoke-output"&&i+1<args.Length)_smokeOutput=args[++i];

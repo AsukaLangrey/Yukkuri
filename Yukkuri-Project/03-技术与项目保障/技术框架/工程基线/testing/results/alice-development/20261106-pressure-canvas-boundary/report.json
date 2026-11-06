@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "status": "partial",
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_state": "Tests ran before coordinator commit; hashes identify the tested working-tree files.",
+  "started_at": "2026-11-06T22:20:33Z",
+  "finished_at": "2026-11-06T22:24:26Z",
+  "product_change": "Require IsScenePoint(point) only at Pressure upward flip dispatch; retain original origin and exit/reentry behavior.",
+  "baseline_gestures_sha256": "71d189b8e8b3f5f12b25461f6f566d4c961be4b908efe84252218a37930412b6",
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "sha256": "4d6a8e730cade6ac5c21617208008e97b5183334763c4147bba4aadd45d932b6"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+      "sha256": "2a6ac00d671b2d9fc47f4bfc18652ed1b06a9d539a4cc49e220723ef9dbddde4"
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.cs",
+      "sha256": "5314e2ef89fb1492af2225d2b19c9c92dd88718073fa9b4dcd7162fcc9c414b4"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.PressureAudit.cs",
+      "sha256": "a176d99729a4c4815f0c9ebc623f4a27e2b76bb6bebc10776cf87905b5496ed9"
+    },
+    {
+      "path": "testing/PROTOCOL.md",
+      "sha256": "e92447a684204704ce789f93c593517d7a1877a49638b6229f6eacc0ffb31f71"
+    },
+    {
+      "path": "testing/request.json",
+      "sha256": "cb60d086334457c68036f4dfb65d1f8dc7b2cc1b051f6b0b169147ef66771902"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "evidence/baseline.json",
+      "sha256": "13ed6a84bb25060bb85cb30daeb40fbe563f61b7089a331788a097a6bae53968"
+    },
+    {
+      "path": "evidence/fixed.json",
+      "sha256": "08c03d180ddd0db0ee6a1ab1c477990675eee825c76c4ceb42be05ac3b11f9bb"
+    }
+  ],
+  "checks": [
+    {
+      "exit_code": 1,
+      "total": 6,
+      "name": "baseline scene",
+      "passed": 4,
+      "status": "failed",
+      "expected_failure": [
+        "left-sidebar-no-flip",
+        "right-sidebar-no-flip"
+      ]
+    },
+    {
+      "passed": 6,
+      "exit_code": 0,
+      "status": "passed",
+      "total": 6,
+      "name": "final scene"
+    },
+    {
+      "passed": 43,
+      "exit_code": 0,
+      "status": "passed",
+      "total": 43,
+      "name": "Input.Intent"
+    },
+    {
+      "passed": 10,
+      "exit_code": 0,
+      "status": "passed",
+      "total": 10,
+      "name": "Interaction.StateBoundaries"
+    },
+    {
+      "expected_exit": 2,
+      "exit_code": 2,
+      "status": "passed",
+      "name": "guard mixed flags"
+    },
+    {
+      "expected_exit": 2,
+      "exit_code": 2,
+      "status": "passed",
+      "name": "guard direct Main"
+    },
+    {
+      "expected_exit": 2,
+      "exit_code": 2,
+      "status": "passed",
+      "name": "guard reused profile"
+    },
+    {
+      "errors": 0,
+      "exit_code": 0,
+      "warnings": 0,
+      "status": "passed",
+      "name": "final game build"
+    }
+  ],
+  "limits": [
+    "Frozen ordinary courtyard fixture; actual ray/contact geometry and production callback execution with synthetic Godot pointer/button state. No fabricated Contact objects.",
+    "No native input propagation, visual/manual acceptance, complete regression suite or historical save compatibility validation.",
+    "Focus-loss case emits the real window signal; not OS focus switching.",
+    "20px below-threshold checks are embedded in all six cases; 50px upward exceeds the 35px trigger.",
+    "No cancellation on canvas exit or target retargeting introduced. Pull/sweep branches unchanged.",
+    "Two ObjectDB instances leaked at exit in baseline and final run; not repaired.",
+    "Initial build had two missing local package-source warnings and two existing nullable warnings; final incremental build had zero warnings.",
+    "Baseline has two product assertions failing, no known fixture failure.",
+    "Fixed aggregate budget 1800 seconds from first build; each launched process at most 300 seconds, owned PID/start-time checked before process-tree timeout termination.",
+    "Baseline evidence omits a redundant left-only defect indicator; actual samples and per-case assertions are preserved."
+  ],
+  "commands": [
+    "dotnet build src/Yukkuri.Game/Yukkuri.Game.csproj --configfile <private-offline-config> -p:UseSharedCompilation=false -nodeReuse:false -p:NuGetAudit=false",
+    "godot --headless --path src/Yukkuri.Game --audio-driver Dummy --editor --import --quit",
+    "godot --headless --path src/Yukkuri.Game --audio-driver Dummy -- --pressure-boundary-audit-output <fresh-absolute-output-under-engine-.local/testing> --interaction-test-profile <fresh-pressure-audit-name>",
+    "dotnet build checks/<check>/<check>.csproj --configfile <private-offline-config> -p:UseSharedCompilation=false -nodeReuse:false -p:NuGetAudit=false",
+    "dotnet checks/<check>/bin/Debug/net10.0/<check>.dll [Input.Intent-output]"
+  ]
+}
