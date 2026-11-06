@@ -1,0 +1,42 @@
+[
+  {
+    "sha256": "db50358df1ca8d458750dc251dd0fa8427b94e4eda8c5269b056ac5d4dafdec2",
+    "path": "src/Yukkuri.Simulation/CourtyardFramePlan.cs"
+  },
+  {
+    "sha256": "760bd540cf56dabf329d7223958eb410514462efee80b49223aa884f89d95c0e",
+    "path": "src/Yukkuri.Simulation/MilestoneValidation.cs"
+  },
+  {
+    "sha256": "3f1e4d7f939b690e95baaf485a8216be6a423af2b5b31cd6df735c1a2e790e5c",
+    "path": "src/Yukkuri.Game/InteractionRoom.cs"
+  },
+  {
+    "sha256": "88a86be143798d246b480cad3d344fccbe59423cedddcfb4c626b37164524b85",
+    "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs"
+  },
+  {
+    "sha256": "5eac660cb6eef6033091e6c38ef77f4a9b7c3093b665a9e64daeaa2716f40022",
+    "path": "src/Yukkuri.Game/InteractionRoom.Speed.cs"
+  },
+  {
+    "sha256": "362509a30082541397188971575df0637fb4d93f12f6f84cbfc549ad6c14f48b",
+    "path": "src/Yukkuri.Game/InteractionRoom.SpeedVerification.cs"
+  },
+  {
+    "sha256": "47eb77e76585aa4c7d323eb5b9cd7f375b3fbab0d2788d636b3d09b52356a982",
+    "path": "src/Yukkuri.Game/InteractionTestArguments.cs"
+  },
+  {
+    "sha256": "8dfaef655f0faf78195b54b744f8af5c7e303cf7cb7ca1d304d2647371ed5876",
+    "path": "src/Yukkuri.Game/Main.cs"
+  },
+  {
+    "sha256": "82242ad5f0241139b8321eb40cc7da7567f2496c60aa40c43d546d2eee2db7e3",
+    "path": "checks/Courtyard.Speed/Program.cs"
+  },
+  {
+    "sha256": "20cdf41c8374c66f309287ac5d67ca00c201d2689332fbf4f2831c28d0e52c44",
+    "path": "checks/Courtyard.Speed/Courtyard.Speed.csproj"
+  }
+]

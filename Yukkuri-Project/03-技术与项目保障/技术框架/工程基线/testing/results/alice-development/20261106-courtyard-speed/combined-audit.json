@@ -1,0 +1,451 @@
+{
+  "failure_text_markers": 0,
+  "changed_previous_files": [
+    "src\\Yukkuri.Game\\InteractionRoom.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.Ui.cs",
+    "src\\Yukkuri.Game\\Main.cs",
+    "src\\Yukkuri.Simulation\\MilestoneValidation.cs"
+  ],
+  "combination": "Verified iterations 1-34 plus iteration35 unified courtyard speed",
+  "baseline_drift": 0,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "new_source_files": [
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardFramePlan.cs",
+      "sha256": "db50358df1ca8d458750dc251dd0fa8427b94e4eda8c5269b056ac5d4dafdec2"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Speed.cs",
+      "sha256": "5eac660cb6eef6033091e6c38ef77f4a9b7c3093b665a9e64daeaa2716f40022"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.SpeedVerification.cs",
+      "sha256": "362509a30082541397188971575df0637fb4d93f12f6f84cbfc549ad6c14f48b"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionTestArguments.cs",
+      "sha256": "47EB77E76585AA4C7D323EB5B9CD7F375B3FBAB0D2788D636B3D09B52356A982"
+    },
+    {
+      "path": "checks/Courtyard.Speed/Program.cs",
+      "sha256": "82242ad5f0241139b8321eb40cc7da7567f2496c60aa40c43d546d2eee2db7e3"
+    },
+    {
+      "path": "checks/Courtyard.Speed/Courtyard.Speed.csproj",
+      "sha256": "20cdf41c8374c66f309287ac5d67ca00c201d2689332fbf4f2831c28d0e52c44"
+    }
+  ],
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(15,19): CS8604",
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "limitations": [
+    "No visible UI, native mouse input, rendered FPS, layout, sound or gameplay-feel acceptance.",
+    "Pristine-main runtime equivalence covers four bounded pure simulation scenarios only; actor/ball equivalence uses real headless repeated-reference-path assertions, not a pristine-main Game binary.",
+    "Historical player Save.Compatibility not run; only authorized synthetic fixtures and speed save/load matrix.",
+    "Closeup retains existing all-presentations1x and only-selected-actor-visible behavior; not only-selected-state advancement.",
+    "Existing float and presentation clamp semantics retained; not a bit-exact common clock or step-size-invariant physics claim.",
+    "Legacy Selection/Restart safety guards are diagnostic-only; any ObjectDB exit warnings are preserved, no leak-free claim.",
+    "No Git writes, commits, uploads, publication or main changes."
+  ],
+  "performance_samples": [
+    {
+      "frames": 24,
+      "population": 3,
+      "build": "diagnostic-protected",
+      "max_ms": 10.1141,
+      "median_ms": 6.3651,
+      "p95_ms": 7.4485,
+      "speed": 1
+    },
+    {
+      "frames": 24,
+      "population": 3,
+      "build": "diagnostic-protected",
+      "max_ms": 58.4241,
+      "median_ms": 8.6274,
+      "p95_ms": 33.1249,
+      "speed": 5
+    },
+    {
+      "frames": 24,
+      "population": 3,
+      "build": "diagnostic-protected",
+      "max_ms": 100.6168,
+      "median_ms": 13.7581,
+      "p95_ms": 91.4842,
+      "speed": 10
+    },
+    {
+      "frames": 24,
+      "population": 6,
+      "build": "diagnostic-protected",
+      "max_ms": 14.2755,
+      "median_ms": 8.5436,
+      "p95_ms": 13.7906,
+      "speed": 1
+    },
+    {
+      "frames": 24,
+      "population": 6,
+      "build": "diagnostic-protected",
+      "max_ms": 86.0895,
+      "median_ms": 29.8271,
+      "p95_ms": 81.6765,
+      "speed": 5
+    },
+    {
+      "frames": 24,
+      "population": 6,
+      "build": "diagnostic-protected",
+      "max_ms": 200.7891,
+      "median_ms": 31.9605,
+      "p95_ms": 168.3385,
+      "speed": 10
+    },
+    {
+      "frames": 24,
+      "population": 3,
+      "build": "formal-final",
+      "max_ms": 11.5982,
+      "median_ms": 6.6634,
+      "p95_ms": 10.9795,
+      "speed": 1
+    },
+    {
+      "frames": 24,
+      "population": 3,
+      "build": "formal-final",
+      "max_ms": 46.5633,
+      "median_ms": 8.093,
+      "p95_ms": 45.0613,
+      "speed": 5
+    },
+    {
+      "frames": 24,
+      "population": 3,
+      "build": "formal-final",
+      "max_ms": 126.199,
+      "median_ms": 15.0067,
+      "p95_ms": 93.534,
+      "speed": 10
+    },
+    {
+      "frames": 24,
+      "population": 6,
+      "build": "formal-final",
+      "max_ms": 12.8839,
+      "median_ms": 7.4951,
+      "p95_ms": 12.6583,
+      "speed": 1
+    },
+    {
+      "frames": 24,
+      "population": 6,
+      "build": "formal-final",
+      "max_ms": 95.1061,
+      "median_ms": 30.3721,
+      "p95_ms": 67.7126,
+      "speed": 5
+    },
+    {
+      "frames": 24,
+      "population": 6,
+      "build": "formal-final",
+      "max_ms": 142.4907,
+      "median_ms": 29.3341,
+      "p95_ms": 112.3,
+      "speed": 10
+    }
+  ],
+  "status": "partial",
+  "pure_projects": 84,
+  "parent_evidence_drift": 0,
+  "runtime_warnings": [
+    {
+      "run": "headless-company-selection.stderr.txt",
+      "kind": "ObjectDB instances leaked at exit"
+    }
+  ],
+  "worker_evidence_records": 196,
+  "raw_evidence_storage": "Private ignored local folder; no raw logs published.",
+  "deep_chain_records": 267,
+  "parent_evidence_files": 874,
+  "environment": "Authorized isolated Windows test copy; no original development working tree execution",
+  "all_local_evidence_json_parsed": 368,
+  "diagnostic_scope": "Temporary pre-route and pre-SaveStore guards for old Selection/Restart only. Two files restored byte-for-byte before final formal Game Rebuild and Speed/Company/Autosave reruns.",
+  "worker_negative_guards": 15,
+  "combined_negative_guards": [
+    {
+      "output_created": false,
+      "rejected_before_ready": true,
+      "name": "legacy",
+      "exit_code": 2
+    },
+    {
+      "output_created": false,
+      "rejected_before_ready": true,
+      "name": "selection-check-output",
+      "exit_code": 2
+    },
+    {
+      "output_created": false,
+      "rejected_before_ready": true,
+      "name": "autosave-placement-check-output",
+      "exit_code": 2
+    }
+  ],
+  "final_speed_pure": {
+    "passed": 52,
+    "exit_code": 0,
+    "failures": 0,
+    "build_exit_code": 0
+  },
+  "expected_runtime_warning": "Restart negative fixture deliberately triggers world-data-out-of-range warning; save-preservation assertions passed.",
+  "baseline_1x_equivalence": {
+    "maximum_frames_per_scenario": 60,
+    "scenarios": 4,
+    "variants": [
+      {
+        "mode": "old",
+        "sha256": "ECC76CEA1500A386F440F2AE850AF2E06328FAB6D6FA23E958EFF194D32F1D7B",
+        "build_exit_code": 0,
+        "exit_code": 0,
+        "variant": "b0"
+      },
+      {
+        "mode": "planned",
+        "sha256": "ECC76CEA1500A386F440F2AE850AF2E06328FAB6D6FA23E958EFF194D32F1D7B",
+        "build_exit_code": 0,
+        "exit_code": 0,
+        "variant": "b1"
+      }
+    ],
+    "float_input": "identical float cast of min(.1,delta)",
+    "scope": "pristine main simulation vs same main with frozen speed-only simulation delta; no baseline Game actor binary claim",
+    "equal": true
+  },
+  "performance_scope": "Trace null and no substep assertions during 3 warmup plus24 timed frames; CPU _Process only, not rendered FPS. 3-creature default yard with breeding off; 6-creature authored synthetic load. Prior worker 6-creature10x p95 reached187.05ms; retained. Frames exceeding old100ms acceptance cap reduce achieved wall-clock speed; full10x or smoothness not promised.",
+  "source_drift": 0,
+  "long_simulation_policy": "No unrelated 6000-second physics repetition. Entire bounded84-project pure suite rerun plus affected actual scene checks.",
+  "walltime_policy": {
+    "termination": "Only owned identity-verified process tree on timeout",
+    "execution": "Serial explicit Rebuild then exact fresh DLL; headless only",
+    "first_command": "2026-11-06T16:43:53.8860918Z",
+    "actual_seconds": 1090.6378822,
+    "aggregate_seconds": 1800,
+    "per_build_or_run_seconds": 300
+  },
+  "evidence_files": 969,
+  "main_safety_wiring": "Main only rejects the new speed diagnostic before legacy initialization; no normal Main timing changes.",
+  "diagnostic_test_source_drift": 0,
+  "owned_persistent_compiler_cleanup": "One server created by the first owned Rebuild was identity-checked by exact PID, parent build PID and creation time, then stopped after all tests. A full process inventory found zero runtime/compiler processes.",
+  "baseline_pristine_files": 239,
+  "unexpected_nonzero_commands": [],
+  "diagnostic_source_hashes": [
+    {
+      "product_sha256": "B2FB6ADFD4A63F6B0A0EFDE182AF9232D152569004CB5EFE1F1907BCB782E073",
+      "diagnostic_sha256": "008B5E9252462C1C07485E3B9667082626BF8E99C43B259C06A28681780F1C67",
+      "path": "src/Yukkuri.Game/InteractionRoom.cs"
+    },
+    {
+      "product_sha256": "EA952C3392F4BCDD3264FB63162383F788584C8B25B348031341598D180C63F3",
+      "diagnostic_sha256": "80EC70001E13B6089022A4C1126823A8BA96AF1D08398906546512942B1B7046",
+      "path": "src/Yukkuri.Game/InteractionRoom.AutosavePlacementVerification.cs"
+    }
+  ],
+  "parent_source_drift": 0,
+  "worker_source_drift": 0,
+  "initial_failures_preserved": [
+    "Baseline comparison first used independently generated object GUIDs; retained mismatch. Fixed synthetic IDs before any actions, separately proved four initial full states identical and four final full states identical. No output normalization.",
+    "Launcher stale LASTEXITCODE falsely reported failure after corrected comparison passed; suite had not run and was resumed from structured result without resetting budget.",
+    "Worker pure fixture failures, first headless GUID mismatch, and negative-runner argument error remain in private evidence."
+  ],
+  "timeouts": 0,
+  "worker_evidence_drift": 0,
+  "parsed_world_snapshots": 222,
+  "semantic_issues": [],
+  "final_product_game_debug_build": 0,
+  "failed": [],
+  "diagnostic_game_debug_build": 0,
+  "parsed_runtime_json": 318,
+  "final_source_files": 440,
+  "deep_chain_drift": 0,
+  "diagnostic_manifest_sha256": "DE456AACF248D647864C43A329F4321700AC177C32F0396AA609D99CB7DE20C2",
+  "final_product_headless": [
+    {
+      "name": "company-selection",
+      "exit_code": 0,
+      "checks": 31,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "270D3E47041E21C7E7668218893CDA281BF1BECC0DB3048F32B2D557F89C1E15"
+    },
+    {
+      "name": "autosave-placement",
+      "exit_code": 0,
+      "checks": 48,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "270D3E47041E21C7E7668218893CDA281BF1BECC0DB3048F32B2D557F89C1E15"
+    },
+    {
+      "name": "courtyard-speed",
+      "exit_code": 0,
+      "checks": null,
+      "assertions": 439,
+      "status": "passed",
+      "failures": null,
+      "success": true,
+      "game_dll_sha256": "270D3E47041E21C7E7668218893CDA281BF1BECC0DB3048F32B2D557F89C1E15"
+    }
+  ],
+  "verified_at": "2026-11-06T17:02:12.7170089Z",
+  "merge_review": "Exact complete unique anchors reconstruct main-based worker delta. Independent integration preserves prior unavailable selection and autosave gates, and moves existing lighting refresh after new simulation substeps.",
+  "baseline_state_identity": {
+    "states": [
+      {
+        "scenario": "yard-eight",
+        "phase": "initial",
+        "sha256": "C4807798E6B2903D742D3AC1C182D84F552DEB1073239B95B3E7B3733E6CD65D",
+        "equal": true
+      },
+      {
+        "scenario": "yard-eight",
+        "phase": "final",
+        "sha256": "580E76EA915F21DD3888314516481711F5E51154ACB813D5FB0E32D5400B199E",
+        "equal": true
+      },
+      {
+        "scenario": "capped-varying",
+        "phase": "initial",
+        "sha256": "C4807798E6B2903D742D3AC1C182D84F552DEB1073239B95B3E7B3733E6CD65D",
+        "equal": true
+      },
+      {
+        "scenario": "capped-varying",
+        "phase": "final",
+        "sha256": "561ECF3776746C002091BD4FB70CCCF060DC639719017C38472B5A3A6F0F74A3",
+        "equal": true
+      },
+      {
+        "scenario": "pause-resume",
+        "phase": "initial",
+        "sha256": "C4807798E6B2903D742D3AC1C182D84F552DEB1073239B95B3E7B3733E6CD65D",
+        "equal": true
+      },
+      {
+        "scenario": "pause-resume",
+        "phase": "final",
+        "sha256": "56632D6DCBBB6E9B82E82F56E13DCAA0EAB9DE1E431D32B2897DDD10C7E259A3",
+        "equal": true
+      },
+      {
+        "scenario": "closeup",
+        "phase": "initial",
+        "sha256": "6CFFB7497BC01E1864A7558AFFDED5CC464E9A54B808205B40C778CF8334C4B1",
+        "equal": true
+      },
+      {
+        "scenario": "closeup",
+        "phase": "final",
+        "sha256": "6CFFB7497BC01E1864A7558AFFDED5CC464E9A54B808205B40C778CF8334C4B1",
+        "equal": true
+      }
+    ],
+    "fixture": "Fixed synthetic RoomObject IDs assigned before all actions in both variants; no output normalization or behavioral fields removed",
+    "all_final_states_identical": true,
+    "all_initial_states_identical": true
+  },
+  "formal_suite_manifest_sha256": "1E2E28227BEA5343CE79CD16C5614EBCA6951FEB92AC1F8116BC6740B6F03742",
+  "source_file_manifest_sha256": "615D11B7169C8473EEDDD8279BE02466B7B4E1CF339C7418A666D3171DD5BF89",
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneValidation.cs",
+      "after_sha256": "760BD540CF56DABF329D7223958EB410514462EFEE80B49223AA884F89D95C0E",
+      "worker_sha256": "760bd540cf56dabf329d7223958eb410514462efee80b49223aa884f89d95c0e"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "after_sha256": "B2FB6ADFD4A63F6B0A0EFDE182AF9232D152569004CB5EFE1F1907BCB782E073",
+      "worker_sha256": "3f1e4d7f939b690e95baaf485a8216be6a423af2b5b31cd6df735c1a2e790e5c"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+      "after_sha256": "E3174E5BE629AE8E058012F383B475CCC647317097E25C0CFFD02C73AF51371E",
+      "worker_sha256": "88a86be143798d246b480cad3d344fccbe59423cedddcfb4c626b37164524b85"
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.cs",
+      "after_sha256": "8DFAEF655F0FAF78195B54B744F8AF5C7E303CF7CB7CA1D304D2647371ED5876",
+      "worker_sha256": "8dfaef655f0faf78195b54b744f8af5c7e303cf7cb7ca1d304d2647371ed5876"
+    }
+  ],
+  "parsed_inline_json": 51,
+  "parent_source_files": 434,
+  "global_runtime_compiler_processes": 0,
+  "baseline_main_blob_match_count": 239,
+  "game_debug_build": 0,
+  "diagnostic_protected_headless": [
+    {
+      "name": "company-selection",
+      "exit_code": 0,
+      "checks": 31,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "C7034E6794AF6C6E33AFB75D75084DB838C3C7A41ABB90B88E13AFF3BCBBD64A"
+    },
+    {
+      "name": "selection",
+      "exit_code": 0,
+      "checks": 24,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "C7034E6794AF6C6E33AFB75D75084DB838C3C7A41ABB90B88E13AFF3BCBBD64A"
+    },
+    {
+      "name": "restart",
+      "exit_code": 0,
+      "checks": 19,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "C7034E6794AF6C6E33AFB75D75084DB838C3C7A41ABB90B88E13AFF3BCBBD64A"
+    },
+    {
+      "name": "autosave-placement",
+      "exit_code": 0,
+      "checks": 48,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "C7034E6794AF6C6E33AFB75D75084DB838C3C7A41ABB90B88E13AFF3BCBBD64A"
+    },
+    {
+      "name": "courtyard-speed",
+      "exit_code": 0,
+      "checks": null,
+      "assertions": 439,
+      "status": "passed",
+      "failures": null,
+      "success": true,
+      "game_dll_sha256": "C7034E6794AF6C6E33AFB75D75084DB838C3C7A41ABB90B88E13AFF3BCBBD64A"
+    }
+  ],
+  "remaining_worktree_runtime_processes": 0,
+  "passed_pure": 84
+}

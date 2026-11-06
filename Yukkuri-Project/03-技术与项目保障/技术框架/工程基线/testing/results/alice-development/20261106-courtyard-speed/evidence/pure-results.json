@@ -1,0 +1,267 @@
+{
+  "passed": 52,
+  "failures": 0,
+  "milliseconds": 960.6695,
+  "results": [
+    {
+      "name": "plan bounds, integer exact counts and old real-frame cap",
+      "status": "passed",
+      "milliseconds": 12.1684
+    },
+    {
+      "name": "continuous historic speed range keeps proportional bounded work",
+      "status": "passed",
+      "milliseconds": 6.3391
+    },
+    {
+      "name": "invalid inputs rejected and zero, explicit pause and modal produce no debt",
+      "status": "passed",
+      "milliseconds": 1.8653
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 1x dt=0.05",
+      "status": "passed",
+      "milliseconds": 480.3372
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 1x dt=0.1",
+      "status": "passed",
+      "milliseconds": 6.4467
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 2x dt=0.05",
+      "status": "passed",
+      "milliseconds": 6.9263
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 2x dt=0.1",
+      "status": "passed",
+      "milliseconds": 8.3543
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 3x dt=0.05",
+      "status": "passed",
+      "milliseconds": 12.5867
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 3x dt=0.1",
+      "status": "passed",
+      "milliseconds": 9.6591
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 5x dt=0.05",
+      "status": "passed",
+      "milliseconds": 9.6919
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 5x dt=0.1",
+      "status": "passed",
+      "milliseconds": 17.8216
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 10x dt=0.05",
+      "status": "passed",
+      "milliseconds": 15.1297
+    },
+    {
+      "name": "actual world, mouth, resources, ball and portable equal repeated old 1x frames: 10x dt=0.1",
+      "status": "passed",
+      "milliseconds": 21.9877
+    },
+    {
+      "name": "historical fractional simulation equals its defined substep reference: 0.25x",
+      "status": "passed",
+      "milliseconds": 3.7707
+    },
+    {
+      "name": "historical fractional simulation equals its defined substep reference: 0.5x",
+      "status": "passed",
+      "milliseconds": 3.6709
+    },
+    {
+      "name": "historical fractional simulation equals its defined substep reference: 1.5x",
+      "status": "passed",
+      "milliseconds": 3.9697
+    },
+    {
+      "name": "historical fractional simulation equals its defined substep reference: 2.75x",
+      "status": "passed",
+      "milliseconds": 4.4484
+    },
+    {
+      "name": "pause and modal freeze both clocks, mouth and portable; resume does not catch up",
+      "status": "passed",
+      "milliseconds": 4.348
+    },
+    {
+      "name": "closeup presentation remains 1x, world frozen, mode and speed changes have no debt",
+      "status": "passed",
+      "milliseconds": 4.776
+    },
+    {
+      "name": "stalled real frame admits .1 only, no deferred catchup",
+      "status": "passed",
+      "milliseconds": 3.0558
+    },
+    {
+      "name": "linked ActorPoseClock and ActorHopMotion consume every step without .1 truncation: 1x",
+      "status": "passed",
+      "milliseconds": 1.3817
+    },
+    {
+      "name": "linked ActorPoseClock and ActorHopMotion consume every step without .1 truncation: 2x",
+      "status": "passed",
+      "milliseconds": 0.0057
+    },
+    {
+      "name": "linked ActorPoseClock and ActorHopMotion consume every step without .1 truncation: 3x",
+      "status": "passed",
+      "milliseconds": 0.0075
+    },
+    {
+      "name": "linked ActorPoseClock and ActorHopMotion consume every step without .1 truncation: 5x",
+      "status": "passed",
+      "milliseconds": 0.0054
+    },
+    {
+      "name": "linked ActorPoseClock and ActorHopMotion consume every step without .1 truncation: 10x",
+      "status": "passed",
+      "milliseconds": 0.0072
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=0.25",
+      "status": "passed",
+      "milliseconds": 35.8532
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=0.5",
+      "status": "passed",
+      "milliseconds": 8.5739
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=1",
+      "status": "passed",
+      "milliseconds": 7.978
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=1.5",
+      "status": "passed",
+      "milliseconds": 8.4004
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=2",
+      "status": "passed",
+      "milliseconds": 9.8568
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=3",
+      "status": "passed",
+      "milliseconds": 8.2372
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=5",
+      "status": "passed",
+      "milliseconds": 7.9274
+    },
+    {
+      "name": "SaveStore disk contract courtyard speed=10",
+      "status": "passed",
+      "milliseconds": 8.0709
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=0.25",
+      "status": "passed",
+      "milliseconds": 14.5779
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=0.5",
+      "status": "passed",
+      "milliseconds": 11.2984
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=1",
+      "status": "passed",
+      "milliseconds": 11.9077
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=1.5",
+      "status": "passed",
+      "milliseconds": 11.8408
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=2",
+      "status": "passed",
+      "milliseconds": 11.2172
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=3",
+      "status": "passed",
+      "milliseconds": 11.8614
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=5",
+      "status": "passed",
+      "milliseconds": 0.4593
+    },
+    {
+      "name": "SaveStore disk contract legacy-m01 speed=10",
+      "status": "passed",
+      "milliseconds": 0.2685
+    },
+    {
+      "name": "SaveStore invalid speeds rejected without modifying existing slot: courtyard",
+      "status": "passed",
+      "milliseconds": 7.6269
+    },
+    {
+      "name": "SaveStore invalid speeds rejected without modifying existing slot: legacy-m01",
+      "status": "passed",
+      "milliseconds": 10.5014
+    },
+    {
+      "name": "new factories default to 1x without schema change",
+      "status": "passed",
+      "milliseconds": 0.721
+    },
+    {
+      "name": "closeup keeps existing non-selected creature presentation semantics",
+      "status": "passed",
+      "milliseconds": 0.3101
+    },
+    {
+      "name": "linked InteractionBallMotion preserves L-shaped substep path rather than endpoint shortcut",
+      "status": "passed",
+      "milliseconds": 0.4187
+    },
+    {
+      "name": "live autonomy consumes RNG and moves identically to repeated old frames: 1x",
+      "status": "passed",
+      "milliseconds": 24.742
+    },
+    {
+      "name": "live autonomy consumes RNG and moves identically to repeated old frames: 2x",
+      "status": "passed",
+      "milliseconds": 19.3626
+    },
+    {
+      "name": "live autonomy consumes RNG and moves identically to repeated old frames: 3x",
+      "status": "passed",
+      "milliseconds": 23.0533
+    },
+    {
+      "name": "live autonomy consumes RNG and moves identically to repeated old frames: 5x",
+      "status": "passed",
+      "milliseconds": 18.9444
+    },
+    {
+      "name": "live autonomy consumes RNG and moves identically to repeated old frames: 10x",
+      "status": "passed",
+      "milliseconds": 18.7986
+    },
+    {
+      "name": "near-term synthetic save gives real birth inside tenth-speed substeps",
+      "status": "passed",
+      "milliseconds": 14.0757
+    }
+  ]
+}

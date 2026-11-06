@@ -32,6 +32,7 @@ public partial class InteractionRoom : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            string? testProfile=InteractionTestArguments.Validate(args);
             if(args.Any(a=>a.StartsWith("--m01-")||a=="--integration"||a=="--legacy"))
             {GetTree().ChangeSceneToFile("res://Main.tscn");return;}
             GetWindow().Title=$"油库里乐园 · 慢慢来，相处小院 · {GameVersion.Display}";
@@ -47,6 +48,8 @@ public partial class InteractionRoom : Node3D
                 if(testProfileFlag+1>=args.Length||!System.Text.RegularExpressions.Regex.IsMatch(args[testProfileFlag+1],@"\A[a-zA-Z0-9_-]{1,64}\z"))
                     throw new ArgumentException("Interaction test profile must be a short alphanumeric name.");
                 saveDirectory="user://interaction-test-saves/"+args[testProfileFlag+1];
+                if(testProfile!=null&&Directory.Exists(ProjectSettings.GlobalizePath(saveDirectory)))
+                    throw new ArgumentException("Speed check test profile must be fresh.");
                 GD.Print("INTERACTION_TEST_PROFILE: "+args[testProfileFlag+1]);
             }
             _saves=new SaveStore(ProjectSettings.GlobalizePath(saveDirectory));
@@ -69,6 +72,7 @@ public partial class InteractionRoom : Node3D
             GetTree().AutoAcceptQuit=false;GetWindow().CloseRequested+=QuitRoom;
             UpdateRoomCamera(1);_ready=true;RefreshRoomUi();
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
+            if(StartSpeedVerificationIfRequested(args))return;
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
         }
@@ -172,37 +176,25 @@ public partial class InteractionRoom : Node3D
         if(LeaveUnavailableCloseup())_message="当前对象已冷藏或安置，回到小院视角；家庭记录仍可查看，原暂停设置保持不变。";
         if(!_modalOpen)
         {
-            if(_windowFocused){ProcessRedesignGestures(dt);ProcessRoomGesture(dt,delta);}
+            if(_windowFocused){_speedTrace?.Add("input-redesign");ProcessRedesignGestures(dt);_speedTrace?.Add("input-room");ProcessRoomGesture(dt,delta);}
             UpdateInteractionHand();
-            Sim.AdvanceInteractionPresentation(dt);Sim.Advance(dt);
+
         }
         bool close=Sim.State.Mode==PlayMode.CloseUp;
         bool paused=Sim.State.Settings.Pause||_modalOpen;
-        SynchronizeFamilyActors();
-        SynchronizeDetachedStemActors();
-        SynchronizeSupplyStationActors();
-        SynchronizeShelterActors();
-        UpdateRoomCamera(dt);
-        foreach(var c in Sim.State.Creatures)
+        var plan=CourtyardFramePlan.Create(delta,Sim.State.Settings.Speed,paused,close);
+        // Pointer/contact sampling above occurs once per real frame, never once per substep.
+        // Actors observe every presentation/world step, so their own .1 clamps cannot
+        // silently discard accelerated animation time. Float preserves the old 1x path.
+        for(int step=0;step<plan.StepCount;step++)
         {
-            var actor=_actors[c.Id];actor.Visible=HasVisibleFamilyBody(c)&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
-            string pose=InteractionPresentation.Pose(c);
-            if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
-            var waterSupport=Sim.WaterSupportStatus(c);
-            var supportTarget=waterSupport!=null?Sim.State.Creatures.Find(target=>target.Id==waterSupport.TargetId):null;
-            actor.PrepareWaterConcern(c,Sim.WaterConcernTarget(c),waterSupport,supportTarget,
-                new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),pose,paused,close);
-            actor.PrepareHumanCompany(c,Sim.HasLiveHumanCompany(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),(float)Sim.PreferredHumanDistance(c),pose,paused,close);
-            var hungerFeeding=Sim.HungerFeedingStatus(c);
-            var hungerTarget=hungerFeeding!=null?Sim.State.Creatures.Find(target=>target.Id==hungerFeeding.TargetId):null;
-            actor.PrepareHungerFeeding(c,hungerFeeding,hungerTarget,pose,paused,close);
-            actor.ObserveWaterState(c,WaterEnvironment.IsInWater(Sim.State,c),paused);
-            actor.PrepareWaterAttempt(c,Sim.WaterAttemptStatus(c),Sim.State.WorldSeconds,paused,close);
-            actor.PrepareStemPresentation(Sim.StemCareStatus(c.Id));
-            actor.PrepareShelterPassage(c,Sim.CreatureShelterStatus(c));
-            actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
-            RefreshFamilyPresentation(c,actor);
+            float stepDt=(float)plan.StepSeconds;
+            Sim.AdvanceInteractionPresentation(stepDt);_speedTrace?.Add("presentation");
+            Sim.Advance(stepDt);_speedTrace?.Add("world");
+            RefreshCourtyardActors(stepDt,close,false,step==plan.StepCount-1,dt);
+            RefreshCourtyardBalls(false);
         }
+        if(plan.StepCount==0){RefreshCourtyardActors(0,close,paused,true,dt);RefreshCourtyardBalls(paused);}
         if(!paused)PlayRoomReactionVoice();
         if(!paused)UpdateTapTool(dt);
         UpdateOfferReturn(dt,paused);
@@ -216,7 +208,7 @@ public partial class InteractionRoom : Node3D
                 SetCupFill(water,(float)NaturalResources.VisibleWaterFill(Sim.State,obj));
             bool nearby=Sim.Selected==null||Math.Pow(obj.X-Sim.Selected.X,2)+Math.Pow(obj.Z-Sim.Selected.Z,2)<4;
             visual.Visible=!obj.Stored&&!obj.HeldByHand&&obj.RegionId==Sim.State.ActiveRegionId&&(!close||nearby)&&ObjectHasVisibleGeometry(obj);visual.Position=new((float)obj.X,(float)obj.Height,(float)obj.Z);
-            if(visual is RoomBallActor ball)ball.Present(obj,paused,RoomBallEnvironment.CenterHeight(Sim.State,obj));
+
         }
         foreach(var id in _objects.Keys.Where(id=>!Sim.State.RoomObjects.Any(o=>o.Id==id)).ToArray())
         {_objects[id].QueueFree();_objects.Remove(id);_shownFoodPortions.Remove(id);_groundCupWater.Remove(id);}
@@ -237,6 +229,47 @@ public partial class InteractionRoom : Node3D
         UpdateCreatureArrivalPreview();
         PresentPortableObjects();
         PresentGravestones();
+    }
+
+    private void RefreshCourtyardBalls(bool paused)
+    {
+        // Rolling integrates the observed path, not merely this frame's endpoints.
+        // A newly spawned ball must be available before the next substep observation.
+        foreach(var obj in Sim.State.RoomObjects)
+        {
+            if(obj.Kind!=RoomObjectKind.Ball)continue;
+            if(!_objects.TryGetValue(obj.Id,out var visual))_objects[obj.Id]=visual=MakeObject(obj);
+            if(visual is RoomBallActor ball)ball.Present(obj,paused,RoomBallEnvironment.CenterHeight(Sim.State,obj));
+        }
+    }
+    private void RefreshCourtyardActors(float dt,bool close,bool paused,bool updateCamera,float realDt)
+    {
+        SynchronizeFamilyActors();
+        SynchronizeDetachedStemActors();
+        SynchronizeSupplyStationActors();
+        SynchronizeShelterActors();
+        if(updateCamera)UpdateRoomCamera(realDt);
+        foreach(var c in Sim.State.Creatures)
+        {
+            var actor=_actors[c.Id];actor.Visible=HasVisibleFamilyBody(c)&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
+            string pose=InteractionPresentation.Pose(c);
+            if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
+            var waterSupport=Sim.WaterSupportStatus(c);
+            var supportTarget=waterSupport!=null?Sim.State.Creatures.Find(target=>target.Id==waterSupport.TargetId):null;
+            actor.PrepareWaterConcern(c,Sim.WaterConcernTarget(c),waterSupport,supportTarget,
+                new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),pose,paused,close);
+            actor.PrepareHumanCompany(c,Sim.HasLiveHumanCompany(c),new Vector2((float)Sim.State.PlayerX,(float)Sim.State.PlayerZ),(float)Sim.PreferredHumanDistance(c),pose,paused,close);
+            var hungerFeeding=Sim.HungerFeedingStatus(c);
+            var hungerTarget=hungerFeeding!=null?Sim.State.Creatures.Find(target=>target.Id==hungerFeeding.TargetId):null;
+            actor.PrepareHungerFeeding(c,hungerFeeding,hungerTarget,pose,paused,close);
+            actor.ObserveWaterState(c,WaterEnvironment.IsInWater(Sim.State,c),paused);
+            actor.PrepareWaterAttempt(c,Sim.WaterAttemptStatus(c),Sim.State.WorldSeconds,paused,close);
+            actor.PrepareStemPresentation(Sim.StemCareStatus(c.Id));
+            actor.PrepareShelterPassage(c,Sim.CreatureShelterStatus(c));
+            actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
+            _speedTrace?.Add("actor:"+c.Id);
+            RefreshFamilyPresentation(c,actor);
+        }
     }
 
     private void UpdateRoomCamera(float dt)

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "title": "庭院统一倍速",
+  "source_branch": "alice/20261106-courtyard-speed",
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_state": "基线上的未提交隔离分支修改；精确字节见source-files.json",
+  "environment": "Alice独立Windows测试区",
+  "status": "partial",
+  "targeted_checks": "passed",
+  "started_at": "2026-11-06T16:21:54Z",
+  "finished_at": "2026-11-06T16:48:07.9892882Z",
+  "checks": [
+    {
+      "status": "passed",
+      "elapsed_seconds": 4.53,
+      "name": "pure checks explicit Rebuild",
+      "warnings": "2条既有CS8604",
+      "exit_code": 0
+    },
+    {
+      "exit_code": 0,
+      "status": "passed",
+      "name": "pure exact DLL",
+      "command": "dotnet \"$E/.local/testing/courtyard-speed-pure-20261106-1625/artifacts/bin/Courtyard.Speed/debug/Courtyard.Speed.dll\" \"$NEW_ABSOLUTE_OUTPUT\"",
+      "passed": 52,
+      "elapsed_ms": 960.6695
+    },
+    {
+      "warnings": "2条既有CS8604",
+      "exit_code": 0,
+      "status": "passed",
+      "name": "Game explicit Rebuild",
+      "command": "dotnet build src/Yukkuri.Game/Yukkuri.Game.csproj -t:Rebuild -c Debug --configfile <isolated offline config> --disable-build-servers",
+      "elapsed_seconds": 6.82
+    },
+    {
+      "exit_code": 0,
+      "status": "passed",
+      "name": "headless actual scene",
+      "command": "Godot --headless --path <isolated Game> -- --interaction-test-profile <unique fresh profile> --courtyard-speed-check-output <new absolute output.json> --mute",
+      "assertions": 439,
+      "warning": "退出时2个ObjectDB实例泄漏警告；尚未归因"
+    },
+    {
+      "status": "passed",
+      "actual": "全部15项退出2；未进入场景Ready；输出未创建；既有报告SHA不变",
+      "cases": 15,
+      "name": "new speed flag entry guards",
+      "expected_exit_code": 2
+    }
+  ],
+  "limits": [
+    "完整现有套件、组合回归及pristine main运行对比由协调者另行报告，本报告未宣称通过。",
+    "非人工试玩、非截图、非渲染FPS、非长期压力或长期存档兼容验收。",
+    "保留每真实帧最多100ms的旧丢帧保护；高倍CPU长尾会使墙钟速度低于目标，不能保证满10倍或流畅。",
+    "保留旧float入参边界及presentation内部0.1上限；计划double总量与world/remainder有既有浮点差异，不宣称位级同钟。",
+    "近看保留所有已有个体、可搬物与球表现1倍及非选中演员隐藏语义，世界不推进。",
+    "输入检查证明两个真实采样方法各调用一次；未覆盖所有力度、急停、抛掷释放的实际鼠标行为。",
+    "临产状态与6角色性能样本为明确合成夹具，不冒充默认自然出生流程或已验证可保存的拥挤世界。",
+    "测试日志与合成存档留本地；未访问玩家存档、修改原repo源码或执行Git操作。"
+  ],
+  "preserved_failures": [
+    "纯检查run-01：33过11失败；吃空食物正常销毁的错误Single断言、单边克隆丢短态；修正夹具后52过。",
+    "headless run-01：独立工厂创建的GUID不同导致1x完整状态比较失败；改为同源初始State双边克隆后439过。",
+    "首轮负例runner的PowerShell路径数组拼接错误：未进入有效项目；中止并核实本次进程退出；修正runner后8个拒绝负例通过。"
+  ],
+  "evidence": [
+    {
+      "sha256": "aefc384a34026f9b54e8d947cafae470d349d5104ab36b49ef067ee690d8e9e5",
+      "path": "evidence/pure-results.json"
+    },
+    {
+      "sha256": "79b05ea7d00dc0724b752ed1e7d8f9a85ecc6b49198c11d66fe54777782680a0",
+      "path": "evidence/headless-results.json"
+    },
+    {
+      "sha256": "f8b20f9ac6e44811013e493ca09e5257eccc8a2cd3d24d597099a50ee8ae4fcd",
+      "path": "evidence/headless-final-results.json"
+    },
+    {
+      "sha256": "78925eed488a52ab67cbd24e3fb151c49ca61021dab07abe4cd411ad00c973ea",
+      "path": "evidence/guard-results.json"
+    }
+  ],
+  "speed_flag_contract": "存在speed flag时只允许profile/output各一次及可选mute至多一次；拒其他全部--用户flag；无speed flag不改变旧入口契约",
+  "final_guard_sha256": "47eb77e76585aa4c7d323eb5b9cd7f375b3fbab0d2788d636b3d09b52356a982",
+  "final_headless_evidence": "evidence/headless-final-results.json"
+}

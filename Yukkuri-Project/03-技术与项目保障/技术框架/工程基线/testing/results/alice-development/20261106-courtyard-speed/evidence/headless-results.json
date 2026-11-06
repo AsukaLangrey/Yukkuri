@@ -1,0 +1,162 @@
+{
+  "status": "passed",
+  "assertions": 439,
+  "renderer": "headless",
+  "results": [
+    {
+      "name": "process-reference",
+      "speed": 1,
+      "frames": 8,
+      "referenceFrames": 8,
+      "actorUpdates": 24,
+      "passed": true
+    },
+    {
+      "name": "process-reference",
+      "speed": 2,
+      "frames": 8,
+      "referenceFrames": 16,
+      "actorUpdates": 48,
+      "passed": true
+    },
+    {
+      "name": "process-reference",
+      "speed": 3,
+      "frames": 8,
+      "referenceFrames": 24,
+      "actorUpdates": 72,
+      "passed": true
+    },
+    {
+      "name": "process-reference",
+      "speed": 5,
+      "frames": 8,
+      "referenceFrames": 40,
+      "actorUpdates": 120,
+      "passed": true
+    },
+    {
+      "name": "process-reference",
+      "speed": 10,
+      "frames": 8,
+      "referenceFrames": 80,
+      "actorUpdates": 240,
+      "passed": true
+    },
+    {
+      "name": "ball-actor-substep-L-path",
+      "passed": true
+    },
+    {
+      "name": "real-frame-input",
+      "speed": 1,
+      "redesignCalls": 1,
+      "roomCalls": 1,
+      "passed": true
+    },
+    {
+      "name": "real-frame-input",
+      "speed": 5,
+      "redesignCalls": 1,
+      "roomCalls": 1,
+      "passed": true
+    },
+    {
+      "name": "real-frame-input",
+      "speed": 10,
+      "redesignCalls": 1,
+      "roomCalls": 1,
+      "passed": true
+    },
+    {
+      "name": "real-birth-at-substep-five-actor-six-observations",
+      "passed": true
+    },
+    {
+      "name": "camera-real-frame-yard-and-closeup-follow",
+      "passed": true
+    },
+    {
+      "name": "closeup-and-explicit-pause",
+      "passed": true
+    },
+    {
+      "name": "settings-five-speeds-historical-values-pause",
+      "passed": true
+    },
+    {
+      "name": "actual-settings-save-load-restart",
+      "passed": true
+    },
+    {
+      "name": "long-frame-cap-speed-change-no-debt",
+      "passed": true
+    },
+    {
+      "name": "headless-process-timing",
+      "population": 3,
+      "speed": 1,
+      "frames": 24,
+      "stepsPerFrame": 1,
+      "medianMs": 6.6278,
+      "p95Ms": 12.9204,
+      "maxMs": 14.1449,
+      "note": "CPU _Process only; bounded authored 6-creature fixture is not a validated save; not rendered FPS"
+    },
+    {
+      "name": "headless-process-timing",
+      "population": 3,
+      "speed": 5,
+      "frames": 24,
+      "stepsPerFrame": 5,
+      "medianMs": 8.6341,
+      "p95Ms": 54.1625,
+      "maxMs": 63.7729,
+      "note": "CPU _Process only; bounded authored 6-creature fixture is not a validated save; not rendered FPS"
+    },
+    {
+      "name": "headless-process-timing",
+      "population": 3,
+      "speed": 10,
+      "frames": 24,
+      "stepsPerFrame": 10,
+      "medianMs": 7.7138,
+      "p95Ms": 71.7043,
+      "maxMs": 123.4978,
+      "note": "CPU _Process only; bounded authored 6-creature fixture is not a validated save; not rendered FPS"
+    },
+    {
+      "name": "headless-process-timing",
+      "population": 6,
+      "speed": 1,
+      "frames": 24,
+      "stepsPerFrame": 1,
+      "medianMs": 12.3946,
+      "p95Ms": 14.2827,
+      "maxMs": 14.3079,
+      "note": "CPU _Process only; bounded authored 6-creature fixture is not a validated save; not rendered FPS"
+    },
+    {
+      "name": "headless-process-timing",
+      "population": 6,
+      "speed": 5,
+      "frames": 24,
+      "stepsPerFrame": 5,
+      "medianMs": 31.7312,
+      "p95Ms": 70.9924,
+      "maxMs": 87.8313,
+      "note": "CPU _Process only; bounded authored 6-creature fixture is not a validated save; not rendered FPS"
+    },
+    {
+      "name": "headless-process-timing",
+      "population": 6,
+      "speed": 10,
+      "frames": 24,
+      "stepsPerFrame": 10,
+      "medianMs": 25.6026,
+      "p95Ms": 187.0541,
+      "maxMs": 191.6169,
+      "note": "CPU _Process only; bounded authored 6-creature fixture is not a validated save; not rendered FPS"
+    }
+  ]
+}

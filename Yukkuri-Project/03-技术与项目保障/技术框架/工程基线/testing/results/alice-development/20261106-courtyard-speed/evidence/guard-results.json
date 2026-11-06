@@ -1,0 +1,92 @@
+[
+  {
+    "name": "missing-profile",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 390
+  },
+  {
+    "name": "missing-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 363
+  },
+  {
+    "name": "relative-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 360
+  },
+  {
+    "name": "duplicate-profile",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 361
+  },
+  {
+    "name": "mixed-legacy",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 374
+  },
+  {
+    "name": "direct-main",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 459
+  },
+  {
+    "name": "reused-profile",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 459
+  },
+  {
+    "name": "existing-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 371
+  },
+  {
+    "name": "duplicate-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 364
+  },
+  {
+    "name": "duplicate-mute",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 365
+  },
+  {
+    "name": "company-selection-check-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 365
+  },
+  {
+    "name": "restart-check-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 362
+  },
+  {
+    "name": "autosave-check-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 359
+  },
+  {
+    "name": "day-night-check-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 375
+  },
+  {
+    "name": "future-unknown-check-output",
+    "exit_code": 2,
+    "passed": true,
+    "elapsed_ms": 368
+  }
+]
