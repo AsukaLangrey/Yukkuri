@@ -230,9 +230,37 @@ Check("suspended lowering and sliding bodies retain unmet excretion until ground
             situation+" started excretion or lost the unmet need while unsupported or moving");
         if(situation=="suspended")
             Require(sim.ExecuteInteraction(c.Id,new(InteractionAction.Lower)).Success,"suspended body could not be lowered for resumption");
-        Tick(sim,80);
-        Require(!c.Interaction.Carried&&!c.Interaction.Lowering&&c.Interaction.Height==0&&p.Urinations==1&&
-            sim.State.RoomObjects.Count(o=>o.Kind==RoomObjectKind.Urine)==1,"settling did not resume and finish exactly one excretion after "+situation);
+        // Observe the result when it happens: autonomous cleaning may legitimately
+        // remove the urine before the end of this continuation window.
+        string? completedWasteId=null;bool completed=false,wasteRemoved=false;
+        for(int n=0;n<80;n++)
+        {
+            Tick(sim,1);
+            bool groundedAndStill=!c.Interaction.Carried&&!c.Interaction.Lowering&&!c.Interaction.Falling&&
+                c.Interaction.Height==0&&Math.Abs(c.Interaction.VelocityX)+Math.Abs(c.Interaction.VelocityZ)<=.05;
+            var urine=sim.State.RoomObjects.Where(o=>o.Kind==RoomObjectKind.Urine).ToArray();
+            if(!completed&&p.Urinations==0&&!groundedAndStill)
+                Require(!p.Active&&p.Bladder==100&&urine.Length==0,
+                    situation+" began excretion or consumed its need before grounding and settling");
+            if(!completed&&p.Urinations>0)
+            {
+                Require(groundedAndStill&&p.Urinations==1&&!p.Active&&p.Bladder<85&&urine.Length==1,
+                    "first excretion completion was not grounded, still, and exactly once after "+situation);
+                completed=true;completedWasteId=urine[0].Id;
+                Console.WriteLine("EXCRETION_COMPLETED "+JsonSerializer.Serialize(new{situation,tick=n+1,c.Activity,p.Urinations,wasteId=completedWasteId}));
+            }
+            if(completed)
+            {
+                Require(p.Urinations==1&&!p.Active&&urine.Length<=1&&urine.All(o=>o.Id==completedWasteId),
+                    "settled continuation duplicated excretion or created replacement urine after "+situation);
+                if(!wasteRemoved&&urine.Length==0)
+                {
+                    wasteRemoved=true;
+                    Console.WriteLine("EXCRETION_WASTE_REMOVED "+JsonSerializer.Serialize(new{situation,tick=n+1,c.Activity,p.Urinations}));
+                }
+            }
+        }
+        Require(completed,"settling did not resume and finish excretion within the continuation window after "+situation);
     }
 });
 Check("close-up lifting cancels excretion without advancing or consuming its unmet need",()=>
