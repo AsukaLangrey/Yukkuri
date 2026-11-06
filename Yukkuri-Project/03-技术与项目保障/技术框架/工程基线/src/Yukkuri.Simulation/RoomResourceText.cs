@@ -23,6 +23,7 @@ public static class RoomResourceText
         RoomObjectKind.Water=>obj.Portions>0?"水杯 · 空手按住拿起":"水杯 · 已经喝空",
         RoomObjectKind.Ball=>state!=null&&RoomBallEnvironment.InWater(state,obj)?"软球 · 漂在水上":"软球 · 空手拖动，松开推球",
         RoomObjectKind.Treasure=>"小宝物",
+        RoomObjectKind.Feces=>"粪便",RoomObjectKind.Urine=>"尿液",
         _=>""
         };
     }
@@ -32,6 +33,7 @@ public static class RoomResourceText
         RoomObjectKind.Leaves=>obj.Portions>0?"这里还有可食的叶子。油饿了会自己来找，但野外叶子不如备好的饭饭稳妥，吃后可能不舒服。":"这簇叶子已经吃空，只剩残叶；需要再找别的食物。",
         RoomObjectKind.RiverWater=>"这里可以站在岸边喝水。河水未经处理，喝后可能不舒服；饮水不需要下河。",
         RoomObjectKind.Ball when state!=null&&RoomBallEnvironment.InWater(state,obj)=>"软球被水托住，慢慢漂着。油会留在岸边；空手按住球，朝岸边拖动后松开，可以把它推回来。",
+        RoomObjectKind.Feces or RoomObjectKind.Urine when state!=null=>EnvironmentHygiene.DescribeWaste(state,obj),
         _=>Label(obj,state)
     };
 }

@@ -5,6 +5,7 @@ using Yukkuri.Simulation;
 public partial class InteractionRoom
 {
     private VBoxContainer _creatureVitalMeters=null!;
+    private Label _environmentLabel=null!;
     private Label _fullnessLabel=null!,_hydrationLabel=null!,_healthLabel=null!;
     private ProgressBar _fullnessMeter=null!,_hydrationMeter=null!;
     private StyleBoxFlat _fullnessFill=null!,_hydrationFill=null!;
@@ -14,6 +15,7 @@ public partial class InteractionRoom
     private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
     {
+        _environmentLabel=Text("",12,"78816e");parent.AddChild(_environmentLabel);
         var meters=Column(parent,4);_creatureVitalMeters=meters;
         _healthLabel=Text("身体状态：正常",14);meters.AddChild(_healthLabel);
         BuildImmediateInterventions(meters);
@@ -123,7 +125,7 @@ public partial class InteractionRoom
         if(remains&&feeding.Phase==HungerFeedingPhase.Swallowing)
             _hungerFeedingLabel.Text=$"已经入口，正在吞咽 · 摄食量 {feeding.TakenNutrition:0.#}";
     }
-    private static string WasteLabel(RoomObject obj)=>obj.Kind==RoomObjectKind.Urine?"尿液 · Del 清理":"粪便 · Del 清理";
+    private string WasteLabel(RoomObject obj)=>EnvironmentHygiene.DescribeWaste(Sim.State,obj)+" · Del 清理";
     private static void BuildWaste(Node3D root,RoomObjectKind kind)
     {
         if(kind==RoomObjectKind.Urine)

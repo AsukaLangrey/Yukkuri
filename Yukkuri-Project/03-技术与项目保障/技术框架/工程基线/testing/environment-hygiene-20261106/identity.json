@@ -1,0 +1,36 @@
+{
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_state": "base plus uncommitted hygiene slice; no published commit",
+  "recorded_at_utc": "2026-11-06T03:53:32.0738428Z",
+  "configuration": "Debug; .NET SDK 10.0.402; Godot 4.7.2 mono; headless; isolated profile hygiene-20261106",
+  "files": [
+    {
+      "path": "src/Yukkuri.Simulation/EnvironmentHygiene.cs",
+      "sha256": "d53fccc2ecaaef6137c01840a35b3891d2837a8fa0617ff3b19ef1e19562f848"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/RoomResourceText.cs",
+      "sha256": "a2e789e543f1d5fd8e791293aa19181824499c8df60c79e6323b53619ef54770"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+      "sha256": "bbfe905eb96aa39898ec8a4e87279db32735cf71770d96667344daa4176ffb18"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Vitals.cs",
+      "sha256": "01961a3855d869a4794bbc12c84bb7dd095271edd6c9b1ca30b085430841823c"
+    },
+    {
+      "path": "checks/Interaction.EnvironmentHygiene/Program.cs",
+      "sha256": "0500c6aa426ed17b5690fd1c4a6d0a39471491111b693b2c7fa75385b40a16b0"
+    },
+    {
+      "path": "checks/Interaction.EnvironmentHygiene/Interaction.EnvironmentHygiene.csproj",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a"
+    },
+    {
+      "path": "testing/environment-hygiene-20261106.md",
+      "sha256": "565aeeb12ef754d5f313b35c93c1f784bf795eb24cefc223af5f6378bf96b597"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+YUKKURI_VERSION: v0.1.55
+INTERACTION_TEST_PROFILE: hygiene-20261106
+浣庨潰鏍戞牴璧勬簮宸插姞杞斤細res://Assets/ThirdParty/KenneyNature/grass.glb
+浣庨潰鏍戞牴璧勬簮宸插姞杞斤細res://Assets/ThirdParty/KenneyNature/flower_yellowA.glb
+INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development
+PASS (1440, 900) selection=True score visible 褰撳墠鍖哄煙鐜璇勫垎 100/100
+PASS (1440, 900) label fits sidebar (1056, 337), (360, 18)
+PASS (1440, 900) selection=False score visible 褰撳墠鍖哄煙鐜璇勫垎 100/100
+PASS (1440, 900) label fits sidebar (1056, 271), (360, 18)
+PASS (1920, 1080) selection=True score visible 褰撳墠鍖哄煙鐜璇勫垎 100/100
+PASS (1920, 1080) label fits sidebar (1056, 337), (360, 18)
+PASS (1920, 1080) selection=False score visible 褰撳墠鍖哄煙鐜璇勫垎 100/100
+PASS (1920, 1080) label fits sidebar (1056, 271), (360, 18)
+PASS paused live update 褰撳墠鍖哄煙鐜璇勫垎 76/100
+PASS observe waste detail 绮究 路 3 浠?路 姣忎唤鎵?8 鍒嗭紝鍖哄煙鏈€浣?0 鍒?
+瀹為檯浠芥暟 3
+PASS hover and click waste feedback 绮究 路 3 浠?路 姣忎唤鎵?8 鍒嗭紝鍖哄煙鏈€浣?0 鍒?路 Del 娓呯悊
+PASS maximum stack feedback fits left sidebar (24, 789), (260, 43)
+PASS feedback ignores pointer
+PASS actual clean UI recovery 褰撳墠鍖哄煙鐜璇勫垎 100/100
+PASS active region UI 褰撳墠鍖哄煙鐜璇勫垎 90/100
+HYGIENE_UI_FAILURES: 0

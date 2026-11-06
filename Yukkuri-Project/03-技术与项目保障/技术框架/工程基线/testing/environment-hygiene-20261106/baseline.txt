@@ -1,0 +1,6 @@
+Base e8d96a78f49182eb17e269e2b62a738c7a9bb7ea, authorized test PC.
+Static before-change evidence: no EnvironmentHygiene or environment score API exists.
+InteractionRoom.Vitals.cs WasteLabel only names urine/feces and Del cleaning.
+BuildVitalMeters/RefreshVitalMeters have no regional environment label.
+RoomObject carries Portions, RegionId, Stored, CarrierId, Height, HeldByHand.
+PortableMotions stores thrown/held height separately; HeldByHand is JsonIgnore.
