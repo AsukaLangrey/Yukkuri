@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "purpose": "baseline",
+  "machine": "Shiki-5060Ti-PC",
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "configuration": "Release",
+  "dotnet_sdk": "10.0.402",
+  "build_exit_code": 0,
+  "run_exit_code": 1,
+  "checks": 32,
+  "passed": 22,
+  "failed": 10,
+  "scope": "Synthetic water-reference validation, file recovery and deterministic continuation; no personal saves or UI coverage",
+  "summary_kind": "Per-case summary of actual run; complete synthetic save files are intentionally excluded.",
+  "source_result_sha256": "3EE3D43BC346AF49B085DEC8A848617B8168C74C76E3AAC92BF4EFBCFA061E1C",
+  "build_log_sha256": "AF65AE23C9AD6925AC2730526C7DA1A78E5D8D14AC4CAE5A1EC6F945F483CA35",
+  "run_log_sha256": "AF9E3F1BEB86738F48D80207AE2BA38BBAB9A72F11EEE605C895C0D1F0780248",
+  "test_source_normalized_sha256": "4451E16DA87026152D19674A2C49B5E4DCF1F0869D3696F850F058AAE38139FA",
+  "results": [
+    {
+      "name": "concern-observer-first-valid-read-only-round-trip",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-observer-first-null-target-controlled-rejection",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:179"
+    },
+    {
+      "name": "concern-observer-first-valid-backup-recovered-originals-preserved",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:179"
+    },
+    {
+      "name": "concern-observer-first-bad-existing-main-not-overwritten",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:179"
+    },
+    {
+      "name": "concern-observer-first-both-bad-controlled-aggregate",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:179"
+    },
+    {
+      "name": "concern-observer-first-bad-candidate-preserves-valid-history",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:179"
+    },
+    {
+      "name": "concern-observer-first-valid-continuation-unchanged",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-target-first-valid-read-only-round-trip",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-target-first-null-target-controlled-rejection",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-target-first-valid-backup-recovered-originals-preserved",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-target-first-bad-existing-main-not-overwritten",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-target-first-both-bad-controlled-aggregate",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-target-first-bad-candidate-preserves-valid-history",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-target-first-valid-continuation-unchanged",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-observer-first-valid-read-only-round-trip",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-observer-first-null-target-controlled-rejection",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:183"
+    },
+    {
+      "name": "aftercare-observer-first-valid-backup-recovered-originals-preserved",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:183"
+    },
+    {
+      "name": "aftercare-observer-first-bad-existing-main-not-overwritten",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:183"
+    },
+    {
+      "name": "aftercare-observer-first-both-bad-controlled-aggregate",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:183"
+    },
+    {
+      "name": "aftercare-observer-first-bad-candidate-preserves-valid-history",
+      "passed": false,
+      "failure": "System.NullReferenceException: Object reference not set to an instance of an object.",
+      "first_source_location": "WaterRescueContinuity.cs:183"
+    },
+    {
+      "name": "aftercare-observer-first-valid-continuation-unchanged",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-target-first-valid-read-only-round-trip",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-target-first-null-target-controlled-rejection",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-target-first-valid-backup-recovered-originals-preserved",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-target-first-bad-existing-main-not-overwritten",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-target-first-both-bad-controlled-aggregate",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-target-first-bad-candidate-preserves-valid-history",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-target-first-valid-continuation-unchanged",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "null-water-without-cross-reference-still-recovers",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "missing-legacy-water-keeps-default-and-does-not-recover",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "concern-null-observer-still-recovers",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    },
+    {
+      "name": "aftercare-null-observer-still-recovers",
+      "passed": true,
+      "failure": null,
+      "first_source_location": null
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "checks": 32,
+  "passed": 32,
+  "failures": 0,
+  "scope": "Synthetic water-reference validation, file recovery and deterministic continuation; no personal saves or UI coverage",
+  "results": [
+    {
+      "name": "concern-observer-first-valid-read-only-round-trip",
+      "passed": true
+    },
+    {
+      "name": "concern-observer-first-null-target-controlled-rejection",
+      "passed": true
+    },
+    {
+      "name": "concern-observer-first-valid-backup-recovered-originals-preserved",
+      "passed": true
+    },
+    {
+      "name": "concern-observer-first-bad-existing-main-not-overwritten",
+      "passed": true
+    },
+    {
+      "name": "concern-observer-first-both-bad-controlled-aggregate",
+      "passed": true
+    },
+    {
+      "name": "concern-observer-first-bad-candidate-preserves-valid-history",
+      "passed": true
+    },
+    {
+      "name": "concern-observer-first-valid-continuation-unchanged",
+      "passed": true
+    },
+    {
+      "name": "concern-target-first-valid-read-only-round-trip",
+      "passed": true
+    },
+    {
+      "name": "concern-target-first-null-target-controlled-rejection",
+      "passed": true
+    },
+    {
+      "name": "concern-target-first-valid-backup-recovered-originals-preserved",
+      "passed": true
+    },
+    {
+      "name": "concern-target-first-bad-existing-main-not-overwritten",
+      "passed": true
+    },
+    {
+      "name": "concern-target-first-both-bad-controlled-aggregate",
+      "passed": true
+    },
+    {
+      "name": "concern-target-first-bad-candidate-preserves-valid-history",
+      "passed": true
+    },
+    {
+      "name": "concern-target-first-valid-continuation-unchanged",
+      "passed": true
+    },
+    {
+      "name": "aftercare-observer-first-valid-read-only-round-trip",
+      "passed": true
+    },
+    {
+      "name": "aftercare-observer-first-null-target-controlled-rejection",
+      "passed": true
+    },
+    {
+      "name": "aftercare-observer-first-valid-backup-recovered-originals-preserved",
+      "passed": true
+    },
+    {
+      "name": "aftercare-observer-first-bad-existing-main-not-overwritten",
+      "passed": true
+    },
+    {
+      "name": "aftercare-observer-first-both-bad-controlled-aggregate",
+      "passed": true
+    },
+    {
+      "name": "aftercare-observer-first-bad-candidate-preserves-valid-history",
+      "passed": true
+    },
+    {
+      "name": "aftercare-observer-first-valid-continuation-unchanged",
+      "passed": true
+    },
+    {
+      "name": "aftercare-target-first-valid-read-only-round-trip",
+      "passed": true
+    },
+    {
+      "name": "aftercare-target-first-null-target-controlled-rejection",
+      "passed": true
+    },
+    {
+      "name": "aftercare-target-first-valid-backup-recovered-originals-preserved",
+      "passed": true
+    },
+    {
+      "name": "aftercare-target-first-bad-existing-main-not-overwritten",
+      "passed": true
+    },
+    {
+      "name": "aftercare-target-first-both-bad-controlled-aggregate",
+      "passed": true
+    },
+    {
+      "name": "aftercare-target-first-bad-candidate-preserves-valid-history",
+      "passed": true
+    },
+    {
+      "name": "aftercare-target-first-valid-continuation-unchanged",
+      "passed": true
+    },
+    {
+      "name": "null-water-without-cross-reference-still-recovers",
+      "passed": true
+    },
+    {
+      "name": "missing-legacy-water-keeps-default-and-does-not-recover",
+      "passed": true
+    },
+    {
+      "name": "concern-null-observer-still-recovers",
+      "passed": true
+    },
+    {
+      "name": "aftercare-null-observer-still-recovers",
+      "passed": true
+    }
+  ]
+}
