@@ -178,9 +178,20 @@ public partial class InteractionRoom
     }
     private void ToggleClose()
     {
-        if(_selectedDetachedStemEventId!=null||_selectedSupplyStationId!=null||_selectedShelterId!=null)return;
-        if(Sim.State.Mode!=PlayMode.CloseUp&&Sim.Selected is { } selected&&!HasVisibleFamilyBody(selected))
-        {_message=selected.Family.Memorialized?"遗体已经安置，可以在家庭面板查看留下的记录。":"它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
+        // An exit key may arrive before the next frame normalizes a lost target.
+        if(LeaveUnavailableCloseup())
+        {_message="当前对象无法近看，已回到小院视角；原暂停设置保持不变。";RefreshRoomUi();return;}
+        // Keyboard and button entry share the same selected-object boundary.
+        // Leaving an existing close-up must remain possible even after selection changes.
+        if(Sim.State.Mode!=PlayMode.CloseUp)
+        {
+            if(_selectedRoomObjectId!=null||_observedStemMotherId!=null||_selectedDetachedStemEventId!=null||
+                _selectedSupplyStationId!=null||_selectedShelterId!=null)return;
+            if(Sim.Selected is not { } selected||selected.RegionId!=Sim.State.ActiveRegionId)
+            {_message="先选择当前小院里的一只油，再靠近观察。";RefreshRoomUi();return;}
+            if(!HasVisibleFamilyBody(selected))
+            {_message=selected.Family.Memorialized?"遗体已经安置，可以在家庭面板查看留下的记录。":"它正在冷藏中。请先从家庭与照护面板取出，再靠近观察。";RefreshRoomUi();return;}
+        }
         CancelGesture();Sim.State.Mode=Sim.State.Mode==PlayMode.CloseUp?PlayMode.Management:PlayMode.CloseUp;
         _message=Sim.State.Mode==PlayMode.CloseUp?"近看时自然时间暂停。左键按住环境或中键拖动转视角，左键按住小油进行互动；滚轮拉近拉远。":"回到小院，继续观察它自己会做什么。";
         RefreshRoomUi();

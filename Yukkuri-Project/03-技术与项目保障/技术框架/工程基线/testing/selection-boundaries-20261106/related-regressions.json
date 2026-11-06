@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Input.Intent",
+    "exitCode": 0,
+    "passed": 43,
+    "failed": 0
+  },
+  {
+    "name": "Interaction.StateBoundaries",
+    "exitCode": 0,
+    "passed": 10,
+    "failed": 0
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "phase": "baseline",
+    "sourceBase": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+    "machine": "SHIKI-5060TI-PC",
+    "buildStartedUtc": "2026-11-06T02:49:01.6623367Z",
+    "buildFinishedUtc": "2026-11-06T02:49:05.1976451Z",
+    "runFinishedUtc": "2026-11-06T02:49:39.0204818Z",
+    "buildExit": 0,
+    "runExit": 1,
+    "profile": "selection-baseline-20261106-frozen",
+    "checks": 24,
+    "failures": 15,
+    "dllSha256": "A65138691B4A23DFAE8375329C5EBD9162A5AA5EE64FAD06EFE8E5E2ED0B70E8",
+    "sourceHashes": [
+      {
+        "name": "InteractionRoom.cs",
+        "sha256": "42069729BC5A0EF4800E6B7BEBAF5F2C3E52F8F49A006A22C694FDF3E475C281",
+        "mtimeUtc": "2026-11-06T02:49:01.5948430Z"
+      },
+      {
+        "name": "InteractionRoom.Ui.cs",
+        "sha256": "3DAE23E28B83D495C4B69FA3821FB2E1DD3F4C73294995CDE25B041F5FB1A8E7",
+        "mtimeUtc": "2026-11-06T02:49:01.6317299Z"
+      },
+      {
+        "name": "InteractionRoom.Family.cs",
+        "sha256": "7C5EE73DFD086190F8F70CB47878679D1E3571482E4607C3EF1C737AE34F3365",
+        "mtimeUtc": "2026-11-06T02:49:01.6536944Z"
+      },
+      {
+        "name": "InteractionRoom.SelectionVerification.cs",
+        "sha256": "2F4100648EB91E9268084EFDD657115230226151D8353C6C9A3F07C4D966F6DE",
+        "mtimeUtc": "2026-11-06T02:45:29.5544222Z"
+      }
+    ]
+  },
+  {
+    "phase": "fixed",
+    "sourceBase": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+    "machine": "SHIKI-5060TI-PC",
+    "buildStartedUtc": "2026-11-06T02:49:39.0505030Z",
+    "buildFinishedUtc": "2026-11-06T02:49:42.8224750Z",
+    "runFinishedUtc": "2026-11-06T02:50:17.4884262Z",
+    "buildExit": 0,
+    "runExit": 0,
+    "profile": "selection-fixed-20261106-frozen",
+    "checks": 24,
+    "failures": 0,
+    "dllSha256": "61867ED7745527BF6C16D60D3EFD49387F96029B80437C5EB3CE78A2BCAB4C52",
+    "sourceHashes": [
+      {
+        "name": "InteractionRoom.cs",
+        "sha256": "AEC3767AAFCA76DD1559BD08641DD68DCD630A4E23C1BE7BE9A852F1AACACDD8",
+        "mtimeUtc": "2026-11-06T02:42:28.0006559Z"
+      },
+      {
+        "name": "InteractionRoom.Ui.cs",
+        "sha256": "303B542B7661BF89F43A1FA73FD9824D3841EE6728D1CE48A267912B32855394",
+        "mtimeUtc": "2026-11-06T02:45:29.5701926Z"
+      },
+      {
+        "name": "InteractionRoom.Family.cs",
+        "sha256": "C15AFBB76821714DADD975982D9DB5EC996CA036ED468B97B4F48A534FEB156B",
+        "mtimeUtc": "2026-11-06T02:42:27.9846537Z"
+      },
+      {
+        "name": "InteractionRoom.SelectionVerification.cs",
+        "sha256": "2F4100648EB91E9268084EFDD657115230226151D8353C6C9A3F07C4D966F6DE",
+        "mtimeUtc": "2026-11-06T02:45:29.5544222Z"
+      }
+    ]
+  }
+]

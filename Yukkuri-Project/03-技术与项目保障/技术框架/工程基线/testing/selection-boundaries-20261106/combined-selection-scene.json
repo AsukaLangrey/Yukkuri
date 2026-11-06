@@ -1,0 +1,105 @@
+{
+  "success": true,
+  "failures": 0,
+  "checks": 24,
+  "renderer": "headless",
+  "scope": "Real Godot viewport keyboard dispatch, shop button signals, public recycle API and isolated synthetic saves; not native input or visual acceptance",
+  "results": [
+    {
+      "name": "normal Tab enters close-up and freezes natural time",
+      "passed": true
+    },
+    {
+      "name": "normal second Tab resumes natural time",
+      "passed": true
+    },
+    {
+      "name": "recycling selected oil leaves a valid unselected yard",
+      "passed": true
+    },
+    {
+      "name": "Tab rejects empty selection after recycling",
+      "passed": true
+    },
+    {
+      "name": "recycled selection keeps world advancing and saveable",
+      "passed": true
+    },
+    {
+      "name": "empty-selection save survives keyboard shortcut",
+      "passed": true
+    },
+    {
+      "name": "repeated Tab with empty selection remains management",
+      "passed": true
+    },
+    {
+      "name": "real shop buttons can sell all three fixture oils",
+      "passed": true
+    },
+    {
+      "name": "Tab rejects empty yard after all sales",
+      "passed": true
+    },
+    {
+      "name": "sold-out yard remains saveable",
+      "passed": true
+    },
+    {
+      "name": "selected room object disables close-up button",
+      "passed": true
+    },
+    {
+      "name": "Tab obeys room-object close-up restriction",
+      "passed": true
+    },
+    {
+      "name": "valid close-up preserves explicit pause=False",
+      "passed": true
+    },
+    {
+      "name": "missing close-up target recovers with pause=False",
+      "passed": true
+    },
+    {
+      "name": "valid close-up preserves explicit pause=True",
+      "passed": true
+    },
+    {
+      "name": "missing close-up target recovers with pause=True",
+      "passed": true
+    },
+    {
+      "name": "unavailable body exits close-up and preserves identity: cold",
+      "passed": true
+    },
+    {
+      "name": "unavailable body exits close-up and preserves identity: memorial",
+      "passed": true
+    },
+    {
+      "name": "contained oil cannot be viewed as a current-yard body",
+      "passed": true
+    },
+    {
+      "name": "close-up target outside active region recovers",
+      "passed": true
+    },
+    {
+      "name": "keyboard-before-frame recovery: Tab / missing",
+      "passed": true
+    },
+    {
+      "name": "keyboard-before-frame recovery: Tab / transferred",
+      "passed": true
+    },
+    {
+      "name": "keyboard-before-frame recovery: Escape / missing",
+      "passed": true
+    },
+    {
+      "name": "keyboard-before-frame recovery: Escape / transferred",
+      "passed": true
+    }
+  ]
+}

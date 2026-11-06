@@ -1,0 +1,68 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+YUKKURI_VERSION: v0.1.55
+INTERACTION_TEST_PROFILE: selection-baseline-20261106-frozen
+低面树根资源已加载：res://Assets/ThirdParty/KenneyNature/grass.glb
+低面树根资源已加载：res://Assets/ThirdParty/KenneyNature/flower_yellowA.glb
+INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development
+PASS normal Tab enters close-up and freezes natural time
+PASS normal second Tab resumes natural time
+PASS recycling selected oil leaves a valid unselected yard
+FAIL Tab rejects empty selection after recycling: Tab entered close-up without a selected oil
+FAIL recycled selection keeps world advancing and saveable: empty close-up stopped world time
+WARNING: 特写缺少对象
+   at: bool InteractionRoom.SaveRoom(int, bool) (res://InteractionRoom.cs:321)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushWarning(string) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/GD.cs:396)
+       [1] bool InteractionRoom.SaveRoom(int, bool) (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.cs:321)
+       [2] void InteractionRoom.<StartSelectionVerificationIfRequested>g__ExpectSaveable|365_7() (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.SelectionVerification.cs:57)
+       [3] void InteractionRoom+<>c__DisplayClass365_0.<StartSelectionVerificationIfRequested>g__Check|1(string, System.Action) (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.SelectionVerification.cs:29)
+       [4] void InteractionRoom+<StartSelectionVerificationIfRequested>d__365.MoveNext() (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.SelectionVerification.cs:93)
+       [5] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [6] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [7] void System.Threading.Tasks.AwaitTaskContinuation.RunCallback(System.Threading.ContextCallback, object, System.Threading.Tasks.Task&)
+       [8] void System.Threading.Tasks.Task.RunContinuations(object)
+       [9] bool System.Threading.Tasks.Task`1.TrySetResult(TResult)
+       [10] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(System.Threading.Tasks.Task`1[TResult], TResult)
+       [11] void InteractionRoom+<RenderFrames>d__535.MoveNext() (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.Verification.cs:21)
+       [12] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [13] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [14] void Godot.SignalAwaiter.SignalCallback(nint, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_bool*) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/SignalAwaiter.cs:65)
+FAIL empty-selection save survives keyboard shortcut: 保存未成功，原档保留：特写缺少对象; previous isolated slot preserved
+FAIL repeated Tab with empty selection remains management: repeated Tab entered empty close-up
+PASS real shop buttons can sell all three fixture oils
+FAIL Tab rejects empty yard after all sales: Tab entered empty sold-out yard
+WARNING: 特写缺少对象
+   at: bool InteractionRoom.SaveRoom(int, bool) (res://InteractionRoom.cs:321)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushWarning(string) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/GD.cs:396)
+       [1] bool InteractionRoom.SaveRoom(int, bool) (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.cs:321)
+       [2] void InteractionRoom.<StartSelectionVerificationIfRequested>g__ExpectSaveable|365_7() (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.SelectionVerification.cs:57)
+       [3] void InteractionRoom+<>c__DisplayClass365_0.<StartSelectionVerificationIfRequested>g__Check|1(string, System.Action) (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.SelectionVerification.cs:29)
+       [4] void InteractionRoom+<StartSelectionVerificationIfRequested>d__365.MoveNext() (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.SelectionVerification.cs:109)
+       [5] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [6] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [7] void System.Threading.Tasks.AwaitTaskContinuation.RunCallback(System.Threading.ContextCallback, object, System.Threading.Tasks.Task&)
+       [8] void System.Threading.Tasks.Task.RunContinuations(object)
+       [9] bool System.Threading.Tasks.Task`1.TrySetResult(TResult)
+       [10] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(System.Threading.Tasks.Task`1[TResult], TResult)
+       [11] void InteractionRoom+<RenderFrames>d__535.MoveNext() (C:\Project\Yukkuri\isolated\alice-selection-boundary-20261106\Yukkuri-Project\03-技术与项目保障\技术框架\工程基线\src\Yukkuri.Game\InteractionRoom.Verification.cs:21)
+       [12] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [13] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [14] void Godot.SignalAwaiter.SignalCallback(nint, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_bool*) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/SignalAwaiter.cs:65)
+FAIL sold-out yard remains saveable: 保存未成功，原档保留：特写缺少对象; previous isolated slot preserved
+PASS selected room object disables close-up button
+FAIL Tab obeys room-object close-up restriction: Tab entered prior oil while a room object was selected
+PASS valid close-up preserves explicit pause=False
+FAIL missing close-up target recovers with pause=False: missing close-up target was not recovered
+PASS valid close-up preserves explicit pause=True
+FAIL missing close-up target recovers with pause=True: missing close-up target was not recovered
+PASS unavailable body exits close-up and preserves identity: cold
+PASS unavailable body exits close-up and preserves identity: memorial
+FAIL contained oil cannot be viewed as a current-yard body: contained oil entered close-up
+FAIL close-up target outside active region recovers: outside-region body stayed in close-up
+FAIL keyboard-before-frame recovery: Tab / missing: keyboard exit retained stale selection or changed pause
+FAIL keyboard-before-frame recovery: Tab / transferred: keyboard exit retained stale selection or changed pause
+FAIL keyboard-before-frame recovery: Escape / missing: keyboard exit retained stale selection or changed pause
+FAIL keyboard-before-frame recovery: Escape / transferred: keyboard exit retained stale selection or changed pause
+SELECTION_CHECKS: 9/24; failures=15

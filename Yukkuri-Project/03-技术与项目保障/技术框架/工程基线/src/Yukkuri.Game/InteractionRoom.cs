@@ -71,6 +71,7 @@ public partial class InteractionRoom : Node3D
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
+            StartSelectionVerificationIfRequested(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }
@@ -169,7 +170,7 @@ public partial class InteractionRoom : Node3D
     {
         if(!_ready)return;
         float dt=(float)Math.Min(.1,delta);_elapsed+=dt;
-        if(LeaveUnavailableCloseup())_message="当前对象已冷藏或安置，回到小院视角；家庭记录仍可查看，原暂停设置保持不变。";
+        if(LeaveUnavailableCloseup())_message="当前对象无法近看，已回到小院视角；原暂停设置保持不变。";
         if(!_modalOpen)
         {
             if(_windowFocused){ProcessRedesignGestures(dt);ProcessRoomGesture(dt,delta);}

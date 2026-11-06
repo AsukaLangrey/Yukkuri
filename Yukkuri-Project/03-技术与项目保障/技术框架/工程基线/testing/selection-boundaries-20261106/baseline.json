@@ -1,0 +1,195 @@
+{
+  "success": false,
+  "failures": 15,
+  "checks": 24,
+  "renderer": "headless",
+  "scope": "Real Godot viewport keyboard dispatch, shop button signals, public recycle API and isolated synthetic saves; not native input or visual acceptance",
+  "results": [
+    {
+      "name": "normal Tab enters close-up and freezes natural time",
+      "passed": true
+    },
+    {
+      "name": "normal second Tab resumes natural time",
+      "passed": true
+    },
+    {
+      "name": "recycling selected oil leaves a valid unselected yard",
+      "passed": true
+    },
+    {
+      "name": "Tab rejects empty selection after recycling",
+      "passed": false,
+      "error": "Tab entered close-up without a selected oil",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "recycled selection keeps world advancing and saveable",
+      "passed": false,
+      "error": "empty close-up stopped world time",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "empty-selection save survives keyboard shortcut",
+      "passed": false,
+      "error": "\u4FDD\u5B58\u672A\u6210\u529F\uFF0C\u539F\u6863\u4FDD\u7559\uFF1A\u7279\u5199\u7F3A\u5C11\u5BF9\u8C61; previous isolated slot preserved",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": false,
+      "message": "\u4FDD\u5B58\u672A\u6210\u529F\uFF0C\u539F\u6863\u4FDD\u7559\uFF1A\u7279\u5199\u7F3A\u5C11\u5BF9\u8C61"
+    },
+    {
+      "name": "repeated Tab with empty selection remains management",
+      "passed": false,
+      "error": "repeated Tab entered empty close-up",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "real shop buttons can sell all three fixture oils",
+      "passed": true
+    },
+    {
+      "name": "Tab rejects empty yard after all sales",
+      "passed": false,
+      "error": "Tab entered empty sold-out yard",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "sold-out yard remains saveable",
+      "passed": false,
+      "error": "\u4FDD\u5B58\u672A\u6210\u529F\uFF0C\u539F\u6863\u4FDD\u7559\uFF1A\u7279\u5199\u7F3A\u5C11\u5BF9\u8C61; previous isolated slot preserved",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": false,
+      "message": "\u4FDD\u5B58\u672A\u6210\u529F\uFF0C\u539F\u6863\u4FDD\u7559\uFF1A\u7279\u5199\u7F3A\u5C11\u5BF9\u8C61"
+    },
+    {
+      "name": "selected room object disables close-up button",
+      "passed": true
+    },
+    {
+      "name": "Tab obeys room-object close-up restriction",
+      "passed": false,
+      "error": "Tab entered prior oil while a room object was selected",
+      "mode": "CloseUp",
+      "selectedId": "interaction-oil-0",
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "valid close-up preserves explicit pause=False",
+      "passed": true
+    },
+    {
+      "name": "missing close-up target recovers with pause=False",
+      "passed": false,
+      "error": "missing close-up target was not recovered",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "valid close-up preserves explicit pause=True",
+      "passed": true
+    },
+    {
+      "name": "missing close-up target recovers with pause=True",
+      "passed": false,
+      "error": "missing close-up target was not recovered",
+      "mode": "CloseUp",
+      "selectedId": null,
+      "time": 0,
+      "pause": true,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "unavailable body exits close-up and preserves identity: cold",
+      "passed": true
+    },
+    {
+      "name": "unavailable body exits close-up and preserves identity: memorial",
+      "passed": true
+    },
+    {
+      "name": "contained oil cannot be viewed as a current-yard body",
+      "passed": false,
+      "error": "contained oil entered close-up",
+      "mode": "CloseUp",
+      "selectedId": "interaction-oil-0",
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "close-up target outside active region recovers",
+      "passed": false,
+      "error": "outside-region body stayed in close-up",
+      "mode": "CloseUp",
+      "selectedId": "interaction-oil-0",
+      "time": 0,
+      "pause": false,
+      "message": "\u8FD1\u770B\u65F6\u81EA\u7136\u65F6\u95F4\u6682\u505C\u3002\u5DE6\u952E\u6309\u4F4F\u73AF\u5883\u6216\u4E2D\u952E\u62D6\u52A8\u8F6C\u89C6\u89D2\uFF0C\u5DE6\u952E\u6309\u4F4F\u5C0F\u6CB9\u8FDB\u884C\u4E92\u52A8\uFF1B\u6EDA\u8F6E\u62C9\u8FD1\u62C9\u8FDC\u3002"
+    },
+    {
+      "name": "keyboard-before-frame recovery: Tab / missing",
+      "passed": false,
+      "error": "keyboard exit retained stale selection or changed pause",
+      "mode": "Management",
+      "selectedId": "removed-fixture-oil",
+      "time": 0,
+      "pause": true,
+      "message": "\u56DE\u5230\u5C0F\u9662\uFF0C\u7EE7\u7EED\u89C2\u5BDF\u5B83\u81EA\u5DF1\u4F1A\u505A\u4EC0\u4E48\u3002"
+    },
+    {
+      "name": "keyboard-before-frame recovery: Tab / transferred",
+      "passed": false,
+      "error": "keyboard exit retained stale selection or changed pause",
+      "mode": "Management",
+      "selectedId": "interaction-oil-0",
+      "time": 0,
+      "pause": true,
+      "message": "\u56DE\u5230\u5C0F\u9662\uFF0C\u7EE7\u7EED\u89C2\u5BDF\u5B83\u81EA\u5DF1\u4F1A\u505A\u4EC0\u4E48\u3002"
+    },
+    {
+      "name": "keyboard-before-frame recovery: Escape / missing",
+      "passed": false,
+      "error": "keyboard exit retained stale selection or changed pause",
+      "mode": "Management",
+      "selectedId": "removed-fixture-oil",
+      "time": 0,
+      "pause": true,
+      "message": "\u56DE\u5230\u5C0F\u9662\uFF0C\u7EE7\u7EED\u89C2\u5BDF\u5B83\u81EA\u5DF1\u4F1A\u505A\u4EC0\u4E48\u3002"
+    },
+    {
+      "name": "keyboard-before-frame recovery: Escape / transferred",
+      "passed": false,
+      "error": "keyboard exit retained stale selection or changed pause",
+      "mode": "Management",
+      "selectedId": "interaction-oil-0",
+      "time": 0,
+      "pause": true,
+      "message": "\u56DE\u5230\u5C0F\u9662\uFF0C\u7EE7\u7EED\u89C2\u5BDF\u5B83\u81EA\u5DF1\u4F1A\u505A\u4EC0\u4E48\u3002"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "sha256": "A3EFD7C51451E93ED00D2B0E4319BEA0340EBAE77B5A3B33DFF0F0D20257B695",
+    "bytes": 2814,
+    "file": "baseline-build.txt"
+  },
+  {
+    "sha256": "7459BD40792C877CF033ACFDF113ABDCF83549BCA370439C5B42079A58180205",
+    "bytes": 8102,
+    "file": "baseline-run.txt"
+  },
+  {
+    "sha256": "9829E259169C9CAA7D9DC6C4F453FAF142A7E72C44C0790AB04B376F1FAEF10F",
+    "bytes": 8507,
+    "file": "baseline.json"
+  },
+  {
+    "sha256": "194667B02B2EA3CDE8144B954B8EE02C9B01A31EDB11426711F377753D300DAE",
+    "bytes": 9839,
+    "file": "combined-project-results.json"
+  },
+  {
+    "sha256": "BE629C6EAC186C730B6715E766341C4D750F5E3F3FA97AEF56DD85D5E9688EE8",
+    "bytes": 1938,
+    "file": "combined-restart-scene.json"
+  },
+  {
+    "sha256": "99302601ABE58CF9B0ADC4FC464F74D2D5D8E6E0EAB222F0318033B93E0DDBF0",
+    "bytes": 2652,
+    "file": "combined-selection-scene.json"
+  },
+  {
+    "sha256": "4CB0D69168128DDBFBA1C67BB8CB0C49885D39839760A9A0E6490775A0216063",
+    "bytes": 2814,
+    "file": "fixed-build.txt"
+  },
+  {
+    "sha256": "9A2791D40C959FBB92F8034C028B30A1485637448F33735EDC7CBD535F70EC32",
+    "bytes": 1726,
+    "file": "fixed-run.txt"
+  },
+  {
+    "sha256": "99302601ABE58CF9B0ADC4FC464F74D2D5D8E6E0EAB222F0318033B93E0DDBF0",
+    "bytes": 2652,
+    "file": "fixed.json"
+  },
+  {
+    "sha256": "774C96818304A7E5EA8BD98243019C353441D3BE71745C9E96B19213D4C8F757",
+    "bytes": 10540,
+    "file": "Input.Intent.json"
+  },
+  {
+    "sha256": "BAEDA54AA3555DC46E9540B99C951E255E8E49EF38E5CA489F8D5D2D4C3F47F7",
+    "bytes": 3155,
+    "file": "Input.Intent.txt"
+  },
+  {
+    "sha256": "22FF93B746F0FEB272BD1ADB38EA7FFD609A4679EC6F440C513134BEFBF8C7B4",
+    "bytes": 615,
+    "file": "Interaction.StateBoundaries.txt"
+  },
+  {
+    "sha256": "5F476F2D400413CCA08D57477E3EFE92B1C6069566A4A09A49754D357ECAD822",
+    "bytes": 7741,
+    "file": "README.md"
+  },
+  {
+    "sha256": "44489EAA158FF1DC2473F12E995AF5F50687E70B75898C1059035EDF7148F55F",
+    "bytes": 198,
+    "file": "related-regressions.json"
+  },
+  {
+    "sha256": "71C5F446E666B3328842752AF59F0BA4043049E77E72BB28705E6F591FEC77B0",
+    "bytes": 2668,
+    "file": "source-and-artifact-hashes.json"
+  },
+  {
+    "sha256": "E5CE414141CA881B367079909A1E57F6B31369224A057C89417A17140BD786C8",
+    "bytes": 503,
+    "file": "stale-artifact-build.txt"
+  },
+  {
+    "sha256": "9017FA077523B8FF27C2FC9C5607634641DF2C43E2A70F9690F222411457CC85",
+    "bytes": 8094,
+    "file": "stale-artifact-run.txt"
+  },
+  {
+    "sha256": "62E384C72D0076F96EE6416EE4D854B4B7378081A11425B5B36A1FBE940567C0",
+    "bytes": 325,
+    "file": "stale-artifact-sha256.json"
+  }
+]

@@ -30,10 +30,14 @@ public partial class InteractionRoom
 
     private bool LeaveUnavailableCloseup()
     {
-        if(Sim.State.Mode!=PlayMode.CloseUp||Sim.Selected is not { } selected||HasVisibleFamilyBody(selected))return false;
-        // Keep the selected identity and the explicit pause setting. Only the empty
-        // close-up is left; historical family information remains available.
+        if(Sim.State.Mode!=PlayMode.CloseUp)return false;
+        var selected=Sim.Selected;
+        if(selected!=null&&selected.RegionId==Sim.State.ActiveRegionId&&HasVisibleFamilyBody(selected))return false;
+        // Preserve an unavailable local body's identity for its family record, but
+        // a missing or transferred body cannot remain the current yard selection.
+        // In either case, preserve the player's explicit pause setting.
         CancelGesture();Sim.State.Mode=PlayMode.Management;
+        if(selected==null||selected.RegionId!=Sim.State.ActiveRegionId)Sim.State.SelectedId=null;
         return true;
     }
 
