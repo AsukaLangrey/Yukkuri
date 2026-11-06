@@ -40,7 +40,8 @@ public sealed partial class WorldSimulation
                 if(s.Phase is ShelterVisitPhase.Inside or ShelterVisitPhase.Exiting&&
                     !inOrNear&&c.Z-s.Z>ShelterGeometry.OuterDepth*.5)
                 {c.Interaction.ShelterSearchAfter=Math.Max(c.Interaction.ShelterSearchAfter,State.WorldSeconds+20);ReleaseShelterGuest(s,"它已经实际离开门口，住居空出了。");continue;}
-                if(s.Phase==ShelterVisitPhase.Approaching&&ShelterNeedsPriority(c))
+                // An entering reservation still outside the interior must not trap urgent needs.
+                if((s.Phase==ShelterVisitPhase.Approaching||s.Phase==ShelterVisitPhase.Entering&&!inOrNear)&&ShelterNeedsPriority(c))
                 {ReleaseShelterGuest(s,"它先去处理食水、伤痛或家庭事务，这次入住预约结束。");continue;}
             }
             // Human placement can put a body inside, but no location is changed
@@ -91,7 +92,8 @@ public sealed partial class WorldSimulation
     {
         var s=State.Shelters.Find(s=>s.GuestId==c.Id&&ValidShelterGuest(s)==c);if(s==null)return false;
         bool inside=ShelterBodyPresent(c,s);
-        if(s.Phase==ShelterVisitPhase.Approaching&&ShelterEntryReason(c,s.Id)!=null)
+        if(s.Phase==ShelterVisitPhase.Approaching&&ShelterEntryReason(c,s.Id)!=null||
+            s.Phase==ShelterVisitPhase.Entering&&!inside&&ShelterNeedsPriority(c))
         {ReleaseShelterGuest(s,"眼前事务优先，这次入住预约已结束。");return false;}
         if(inside&&(ShelterNeedsPriority(c)||!CanSelfMove(c)||
             EmotionalReadiness.Settled(c)&&c.Fear<25&&c.Interaction.Emotion.Alarm<8))s.ExitRequested=true;

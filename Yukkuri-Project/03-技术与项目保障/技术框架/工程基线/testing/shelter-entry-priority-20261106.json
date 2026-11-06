@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "run_id": "shelter-entry-priority-20261106",
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_branch": "alice/20261106-shelter-entry-priority",
+  "source_identity": "Coordinator-created clean main baseline; source snapshot captured before editing. Fixed version is this commit plus the listed patch.",
+  "environment": "Authorized local Windows .NET 10 rule-test process; no UI",
+  "configuration": "Release, explicit Rebuild followed by direct DLL execution",
+  "started_at": "2026-11-06T10:15:32Z",
+  "finished_at": "2026-11-06T10:23:04.8971744Z",
+  "status": "failed",
+  "targeted_status": "passed",
+  "reason": "Targeted regression passes; unchanged pre-existing Continuity failure remains.",
+  "source_snapshot_files": 235,
+  "source_snapshot_manifest_sha256": "241f7a8d93083ccfd8d8feb7a6c2f4be954ceff3510619d0fe01e588b46dba97",
+  "changed_source_files": [
+    "src/Yukkuri.Simulation/ShelterLife.cs"
+  ],
+  "source_hashes": {
+    "baseline_shelter_life": "5220be7cf08302f842806662aaebb9b8c3117675a72760629e4772ec415c73c9",
+    "project": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+    "fixed_shelter_life": "81e4b0137b4bcf1ac0648424941ad15d9eed92d74a45065fc2fbb2b85c6c7263",
+    "final_harness": "a7f791d805052b7f3e03b69ae8e07e9cbaf8d0c272a25d31f145edf8c658330f"
+  },
+  "protocol_sha256": "e92447a684204704ce789f93c593517d7a1877a49638b6229f6eacc0ffb31f71",
+  "request_sha256": "cb60d086334457c68036f4dfb65d1f8dc7b2cc1b051f6b0b169147ef66771902",
+  "commands": [
+    "dotnet build checks/Interaction.ShelterEntryPriority -t:Rebuild -c Release --nologo",
+    "dotnet checks/Interaction.ShelterEntryPriority/bin/Release/net10.0/Interaction.ShelterEntryPriority.dll",
+    "For each named existing suite: dotnet build checks/<suite> -t:Rebuild -c Release --nologo; dotnet checks/<suite>/bin/Release/net10.0/<suite>.dll"
+  ],
+  "environment_variables": {
+    "DOTNET_CLI_HOME": "isolated local cache",
+    "DOTNET_GENERATE_ASPNET_CERTIFICATE": "false",
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1"
+  },
+  "checks": [
+    {
+      "failed": 14,
+      "passed": 15,
+      "build_exit": 0,
+      "exit_code": 1,
+      "name": "Interaction.ShelterEntryPriority baseline",
+      "total": 29,
+      "status": "failed"
+    },
+    {
+      "failed": 0,
+      "passed": 29,
+      "build_exit": 0,
+      "exit_code": 0,
+      "name": "Interaction.ShelterEntryPriority fixed",
+      "total": 29,
+      "status": "passed"
+    },
+    {
+      "failed": 0,
+      "passed": 13,
+      "build_exit": 0,
+      "exit_code": 0,
+      "name": "Interaction.Shelters fixed",
+      "status": "passed"
+    },
+    {
+      "failed": 0,
+      "passed": 12,
+      "build_exit": 0,
+      "exit_code": 0,
+      "name": "Interaction.AutonomyPriority fixed",
+      "status": "passed"
+    },
+    {
+      "failed": 0,
+      "passed": 1,
+      "build_exit": 0,
+      "exit_code": 0,
+      "name": "Interaction.CompletedNeeds fixed",
+      "status": "passed"
+    },
+    {
+      "failed": 1,
+      "passed": 128,
+      "build_exit": 0,
+      "exit_code": 1,
+      "name": "Interaction.Continuity baseline",
+      "total": 129,
+      "status": "failed"
+    },
+    {
+      "failed": 1,
+      "passed": 128,
+      "build_exit": 0,
+      "exit_code": 1,
+      "name": "Interaction.Continuity fixed",
+      "total": 129,
+      "status": "failed"
+    }
+  ],
+  "continuity_failure": "suspended lowering and sliding bodies retain unmet excretion until grounded and still: settling did not resume and finish exactly one excretion after suspended",
+  "fixture": {
+    "presentation_step_seconds": 0.05,
+    "legacy_probe_limit": "Public ball placement at z=1 creates a small body/ball overlap under the shelter blocker radius; release restores search but does not fix that separate collision issue.",
+    "seed": 20261031,
+    "supply_observation_seconds": 120,
+    "world_tick_seconds": 0.25,
+    "legacy_probe_ball_z": 1,
+    "placements": "BuyShelter, PlaceShelter(0,0), BuyShopProduct(ball), GiveBall(0,0), MoveLooseObject; actual supplies use PlaceInteractionSupply(0,4)",
+    "synthetic": "Initial creature positions and calm/healthy needs, suppressed unrelated timers, low hunger/hydration, boundary coordinates, pain, energy, companion id, digestive symptoms",
+    "radius": 0.7799999713897705,
+    "nonoverlapping_ball_z": 0.9,
+    "entry_z": 2.0199999713897707,
+    "blocked_observation_seconds": 30,
+    "ball_radius": 0.32
+  },
+  "observations": {
+    "initial_need": 10,
+    "no_priority_blocked_control": "Both ball positions retain Entering; z=.9 has positive body clearance before the blocked inward step.",
+    "maximum_hydration": 33.931,
+    "maximum_fullness": 28.931
+  },
+  "limits": [
+    "No UI, native gameplay, audio, rendering or human experience acceptance.",
+    "No user saves or historical-save compatibility tests.",
+    "Synthetic priorities test dispatch, not natural long-term starvation or clinical illness progression.",
+    "No collision/door/capacity/threshold modifications. Existing ball-placement overlap issue remains separate.",
+    "Only named suites run; full required_checks matrix not run.",
+    "Initial exploratory harness runs retained, including incorrect sub-tick inside expectation and overly broad movement expectation for z=1. Final same-harness pair supersedes them, without deleting failures.",
+    "Existing nullable compiler warnings retained.",
+    "No Git index, commit, branch or push operations performed by this worker."
+  ],
+  "evidence": [
+    {
+      "sha256": "b2dd1c5c7ae2598f15502580e9c70e84b8352949dad1776f0d97477afc133e13",
+      "path": ".local/testing/shelter-entry-priority-20261106/baseline-build-final.txt"
+    },
+    {
+      "sha256": "88b8b17f2bfaa29bd8087ad0c6061af1539369757737342f67d99e8897c544a1",
+      "path": ".local/testing/shelter-entry-priority-20261106/baseline-run-final.txt"
+    },
+    {
+      "sha256": "d8b6d934458681f205cef7edd0d96b4602623136708202f8fb258c9dbcc49ae2",
+      "path": ".local/testing/shelter-entry-priority-20261106/fixed-build-final.txt"
+    },
+    {
+      "sha256": "dbc140ec70ab5189a183c0d6041284ec221ce819859bcbf6384f8ea055483607",
+      "path": ".local/testing/shelter-entry-priority-20261106/fixed-run-final.txt"
+    },
+    {
+      "sha256": "772c33e4c82be7774efc8dcbc2a0217ba376e1bcb2fe897c50ffbaeec3b8ff2d",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.Shelters-build.txt"
+    },
+    {
+      "sha256": "f70134c962c1e3303257f4d010062fa221e6e673a17978c1b51a1895f7d32a6e",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.Shelters-run.txt"
+    },
+    {
+      "sha256": "713f2debe1685ceb6b9a9e54a063890afcc25368fca5dcbe59eb1ae2295e7909",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.AutonomyPriority-build.txt"
+    },
+    {
+      "sha256": "1c0739694655ad177fbe4f5d56b565f32d0786d02207bb31eabc3d18129973cf",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.AutonomyPriority-run.txt"
+    },
+    {
+      "sha256": "af346465f08e035d917d2a9579163c7e2bbf9bb1137dcd6901ee6f5539c016bd",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.CompletedNeeds-build.txt"
+    },
+    {
+      "sha256": "70296d6be3406551792bdc6e787b43e6a634cc78265d78fa3ecb85693610a34b",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.CompletedNeeds-run.txt"
+    },
+    {
+      "sha256": "f43a4390b5a145658db73d671903332fc808a8c40746cf43f268d7893a3cf230",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.Continuity-build.txt"
+    },
+    {
+      "sha256": "2ae49b4464ccee5e43a291363cdd8970a895344aa186a092ba5b6ff4868f5874",
+      "path": ".local/testing/shelter-entry-priority-20261106/Interaction.Continuity-run.txt"
+    },
+    {
+      "sha256": "34fa5e52676298307160c7c32af12cddb8ccdc271128e285ccf423abb00257dd",
+      "path": ".local/testing/shelter-entry-priority-20261106/baseline-continuity-build.txt"
+    },
+    {
+      "sha256": "591403cf7f0a8ce3b0faa93adc12ef803fc86ca01bc47c4f30f572c3005eaf37",
+      "path": ".local/testing/shelter-entry-priority-20261106/baseline-continuity-run.txt"
+    }
+  ]
+}
