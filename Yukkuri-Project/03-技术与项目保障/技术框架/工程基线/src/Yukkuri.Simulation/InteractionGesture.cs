@@ -101,6 +101,7 @@ public sealed partial class WorldSimulation
 
     public InteractionFeedback BeginInteractionGesture(string id, InteractionInput input)
     {
+        if(InstalledActionReturnError(id,input) is { } returnError)return Unavailable(returnError);
         EndInteractionGesture(true);
         if(input.TargetKind==InteractionTargetKind.Shelter)return ExecuteShelterCore(id,input);
         if(ShopActionError(input.Action) is { } shopError)return Unavailable(shopError);

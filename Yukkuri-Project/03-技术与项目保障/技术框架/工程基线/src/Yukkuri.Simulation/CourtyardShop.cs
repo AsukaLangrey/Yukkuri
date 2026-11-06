@@ -92,6 +92,17 @@ public sealed partial class WorldSimulation
     };
     private string? ShopActionError(InteractionAction action)=>State.InteractionPlaytest&&ActionShopItem(action) is { } item&&ShopQuantity(item)<=0
         ?"仓库没有"+CourtyardShop.Products.First(p=>p.Id==item).Name+"，请先到商店购买。":null;
+    private string? InstalledItemReturnError(RestraintKind kind)=>State.InteractionPlaytest&&
+        InstalledItem(kind) is { } item&&ShopQuantity(item)==int.MaxValue
+        ?"仓库已满，装置仍保留，请先腾出仓库空间。":null;
+    private string? InstalledActionReturnError(string id,InteractionInput input)
+    {
+        if(input.TargetKind!=InteractionTargetKind.Body||InteractionTarget(id) is not { } c)return null;
+        bool returnsInstalled=(input.Action,c.Interaction.Restraint) is
+            (InteractionAction.Release,RestraintKind.Frame) or (InteractionAction.OpenBox,RestraintKind.Box) or
+            (InteractionAction.Lower,RestraintKind.Hanging) or (InteractionAction.Unwrap,RestraintKind.Wrap);
+        return returnsInstalled?InstalledItemReturnError(c.Interaction.Restraint):null;
+    }
     private void SettleShopAction(InteractionAction action,RestraintKind before,InteractionFeedback feedback)
     {
         if(!State.InteractionPlaytest||!feedback.Success||!feedback.Changed||feedback.Refused)return;

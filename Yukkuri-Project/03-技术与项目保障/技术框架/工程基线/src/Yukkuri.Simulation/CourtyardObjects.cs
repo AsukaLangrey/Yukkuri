@@ -79,6 +79,7 @@ public sealed partial class WorldSimulation
             return item==null?"已收拾废弃物。":"物品已回仓，未退钱。";
         }
         var c=InteractionTarget(id);if(c==null||c.Family.Memorialized||c.Family.ColdStorage.Stored)return "这个对象已经不在小院。";
+        if(InstalledItemReturnError(c.Interaction.Restraint) is { } returnError)return returnError;
         ReleasePortableCarry(id,default,cancel:true);
         var fixture=InstalledItem(c.Interaction.Restraint);
         if(fixture!=null)ChangeShopQuantity(fixture,1);

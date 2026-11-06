@@ -168,6 +168,7 @@ public sealed partial class WorldSimulation
 
     public InteractionFeedback ExecuteInteraction(string id, InteractionInput input)
     {
+        if(InstalledActionReturnError(id,input) is { } returnError)return Unavailable(returnError);
         if(ShopActionError(input.Action) is { } shopError)return Unavailable(shopError);
         var before=InteractionTarget(id)?.Interaction.Restraint??RestraintKind.None;
         var result=ExecuteInteractionCore(id,input);
