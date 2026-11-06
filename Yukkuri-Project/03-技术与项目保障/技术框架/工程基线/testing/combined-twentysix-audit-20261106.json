@@ -1,0 +1,80 @@
+{
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "game_build": 0,
+  "deep_chain_drift": 0,
+  "changed_previous_files": [
+    "src\\Yukkuri.Simulation\\ShelterSpatial.cs"
+  ],
+  "source_files": 420,
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ],
+  "new_warning_locations": [],
+  "pass_text_lines": 1648,
+  "merge_drift": false,
+  "deep_chain_records": 183,
+  "baseline_result": {
+    "expected_failure": true,
+    "build_exit": 0,
+    "result": "{\"passed\":9,\"failures\":11}",
+    "run_exit": 1
+  },
+  "parsed_inline_json": 37,
+  "failed": [],
+  "passed_pure": 77,
+  "harness_drift": 0,
+  "limits": [
+    "No native UI, visual, audio, long-run or player-save validation.",
+    "Prior headless evidence verified for provenance only; not rerun on combined26.",
+    "Synthetic JSON fixtures do not replace authorized historical Save.Compatibility inputs."
+  ],
+  "pure_projects": 77,
+  "parent_evidence_drift": 0,
+  "headless": "not_run",
+  "parent_evidence_files": 893,
+  "focused_result": "{\"passed\":20,\"failures\":0}",
+  "reverse_patch_exact": true,
+  "origin_hash_drift": 0,
+  "verified_at": "2026-11-06T10:59:52.4770575Z",
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "parsed_json_files": 278,
+  "failure_text_markers": 0,
+  "origin_records": 418,
+  "visual_acceptance": false,
+  "baseline_source_drift": 0,
+  "json_issues": [],
+  "source_hash_differences": 0,
+  "baseline_classification": {
+    "helper_absent_cases_are_not_behavior_defects": true,
+    "new_helper_absent_cases": 3,
+    "behavior_failures": 8,
+    "drop_eating_and_drinking_already_pass_on_main": true,
+    "passed_existing_cases": 9
+  },
+  "prior_invalid_integration_attempt": {
+    "builds_failed": 78,
+    "remedy": "Restored verified parent source, used full unique statement anchors, rechecked exact reverse proofs, then reran baseline and every check.",
+    "evidence": "first-attempt-integration-error",
+    "status": "retained",
+    "cause": "Verifier used a non-unique short merge anchor and inserted the call into an unrelated placement guard.",
+    "error_codes": [
+      "CS0103"
+    ],
+    "product_worker_source_changed": false
+  },
+  "build_exclusivity": {
+    "matching_build_processes_before_run": 0,
+    "execution": "serial"
+  }
+}

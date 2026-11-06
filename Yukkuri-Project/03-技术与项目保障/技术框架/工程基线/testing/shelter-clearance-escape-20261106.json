@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_commit_basis": "Coordinator-created isolated branch; no Git operations performed by worker",
+  "branch": "alice/20261106-shelter-clearance-escape",
+  "source_modified": true,
+  "status": "failed",
+  "scope": "Narrow front exterior conservative ball-clearance escape; known unrelated continuity failure remains",
+  "environment": "Authorized local Windows isolated checkout, .NET SDK 10.0.402, Release",
+  "started_at": "2026-11-06T10:41:00Z",
+  "finished_at": "2026-11-06T10:51:02.3166601Z",
+  "tool": "TOOL denotes the coordinator-authorized existing dotnet executable; no alternate toolchain, desktop, game, player save, Git write, or network publication used",
+  "environment_variables": {
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1",
+    "DOTNET_GENERATE_ASPNET_CERTIFICATE": "false",
+    "DOTNET_CLI_HOME": ".local/dotnet-home"
+  },
+  "hashes": {
+    "testing/request.json": "cb60d086334457c68036f4dfb65d1f8dc7b2cc1b051f6b0b169147ef66771902",
+    "testing/PROTOCOL.md": "e92447a684204704ce789f93c593517d7a1877a49638b6229f6eacc0ffb31f71",
+    "checks/Interaction.ShelterClearanceEscape/Interaction.ShelterClearanceEscape.csproj": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a",
+    "src/Yukkuri.Simulation/ShelterSpatial.cs": "01db4daaf35fddf87b0a15c9c66e01a562d5b8fcc12a71f0f1d748d503e352e7",
+    "checks/Interaction.ShelterClearanceEscape/Program.cs": "8337e28688cf0ffd54fb01eec22865096cf5bd2e673f3bbf622914ffd74668a9"
+  },
+  "baseline": {
+    "build_command": "TOOL build .local/b0/checks/Interaction.ShelterClearanceEscape/Interaction.ShelterClearanceEscape.csproj -t:Rebuild -c Release -p:UseAppHost=false",
+    "failed": 11,
+    "passed": 9,
+    "run_command": "TOOL .local/b0/checks/Interaction.ShelterClearanceEscape/bin/Release/net10.0/Interaction.ShelterClearanceEscape.dll",
+    "behavioral_failures": 8,
+    "missing_new_helper_failures": 3,
+    "harness_sha256": "8337e28688cf0ffd54fb01eec22865096cf5bd2e673f3bbf622914ffd74668a9",
+    "build_exit_code": 0,
+    "run_exit_code": 1,
+    "source_copy": ".local/b0",
+    "snapshot_sha256": "db2493d9b7d409eb6363cae7d98ac952eb3fe9f28c28feb4bf45c21d5139eb96",
+    "same_harness": true,
+    "drop_cases": "Already pass on main; compatibility only"
+  },
+  "public_probe": {
+    "step_seconds": 0.05,
+    "steps": 600,
+    "synthetic_setup": "Background positions, calm health and needs; body final approach, house purchase/placement, ball purchase/give/move, and supplies use public commands",
+    "commands": [
+      "TOOL build .local/testing/shelter-clearance-escape-20261106/Probe.csproj -t:Rebuild -c Release",
+      "TOOL .local/testing/shelter-clearance-escape-20261106/bin/Release/net10.0/Probe.dll"
+    ],
+    "main": {
+      "final_z": 2.02,
+      "fullness": 9.250000000000043,
+      "initial_z": 2.02,
+      "guest": null
+    },
+    "seed": 20261031,
+    "fixed": {
+      "guest": null,
+      "fullness_after_30s": 28.249999999999844
+    }
+  },
+  "checks": [
+    {
+      "build_command": "TOOL build checks/Interaction.ShelterClearanceEscape/Interaction.ShelterClearanceEscape.csproj -t:Rebuild -c Release -p:UseAppHost=false",
+      "passed": 20,
+      "run_command": "TOOL checks/Interaction.ShelterClearanceEscape/bin/Release/net10.0/Interaction.ShelterClearanceEscape.dll",
+      "status": "passed",
+      "name": "Interaction.ShelterClearanceEscape",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "total": 20
+    },
+    {
+      "build_command": "TOOL build checks/Interaction.Shelters/Interaction.Shelters.csproj -t:Rebuild -c Release",
+      "passed": 13,
+      "run_command": "TOOL checks/Interaction.Shelters/bin/Release/net10.0/Interaction.Shelters.dll",
+      "status": "passed",
+      "name": "Interaction.Shelters",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "total": 13
+    },
+    {
+      "build_command": "TOOL build checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj -t:Rebuild -c Release",
+      "passed": 128,
+      "run_command": "TOOL checks/ActorGeometry.Smoke/bin/Release/net10.0/ActorGeometry.Smoke.dll",
+      "status": "passed",
+      "name": "ActorGeometry.Smoke",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "total": 128
+    },
+    {
+      "build_command": "TOOL build checks/Interaction.Continuity/Interaction.Continuity.csproj -t:Rebuild -c Release",
+      "passed": 128,
+      "run_command": "TOOL checks/Interaction.Continuity/bin/Release/net10.0/Interaction.Continuity.dll",
+      "status": "failed",
+      "name": "Interaction.Continuity",
+      "build_exit_code": 0,
+      "run_exit_code": 1,
+      "total": 129
+    },
+    {
+      "build_command": "TOOL build checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj -t:Rebuild -c Release",
+      "passed": 12,
+      "run_command": "TOOL checks/Interaction.AutonomyPriority/bin/Release/net10.0/Interaction.AutonomyPriority.dll",
+      "status": "passed",
+      "name": "Interaction.AutonomyPriority",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "total": 12
+    },
+    {
+      "build_command": "TOOL build checks/Interaction.SupplyStations/Interaction.SupplyStations.csproj -t:Rebuild -c Release",
+      "passed": 8,
+      "run_command": "TOOL checks/Interaction.SupplyStations/bin/Release/net10.0/Interaction.SupplyStations.dll",
+      "status": "passed",
+      "name": "Interaction.SupplyStations",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "total": 8
+    },
+    {
+      "build_command": "TOOL build checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj -t:Rebuild -c Release",
+      "passed": 95,
+      "run_command": "TOOL checks/NaturalLife.Smoke/bin/Release/net10.0/NaturalLife.Smoke.dll",
+      "status": "passed",
+      "name": "NaturalLife.Smoke",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "total": 95
+    }
+  ],
+  "known_failure": "Interaction.Continuity suspended lowering and sliding bodies retain unmet excretion until grounded and still: settling did not resume and finish exactly one excretion after suspended",
+  "preparation_failures": [
+    "Initial focused harness had four fixture/expectation failures; preserved and corrected without product change or edits to existing suites. Endpoint placement is not a ball swept-path API; public slide remains the cross-through assertion. A non-ball fixture was moved into its true clearance. Temporary invalid guest/layout setup was restored before validation; final second-house setup uses public placement.",
+    "An overlapping rebuild removed a reference assembly during NaturalLife build (CS0006). Preserved failure, then serialized all builds; rebuild and execution passed 95/95.",
+    "Deep baseline path produced MSB3030 for apphost then DLL; disabling apphost alone did not resolve it. Preserved both logs and shortened baseline path to .local/b0; identical-source rebuild and DLL execution succeeded."
+  ],
+  "limits": [
+    "Not full acceptance: known continuity failure retained.",
+    "No desktop, visual, audio, gameplay feel, historical player saves, or long soak.",
+    "No recovery expansion for interior, rear/side approaches, other object kinds, physical overlap, or restrained bodies.",
+    "Three helper unit groups use reflection and cannot execute on main because the new method is absent; those are not three historical product defects.",
+    "Some geometric boundary cases directly assign synthetic poses/objects/reservation; public behavior evidence is labeled separately.",
+    "Combined branch compatibility is independently owned by the coordinator."
+  ],
+  "evidence": [
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/ActorGeometry.Smoke-build.log",
+      "sha256": "fad2ad64d43d2175adb00ba0d9facddad2883de47f671a0c65a44bacf9be6d8e"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/ActorGeometry.Smoke.log",
+      "sha256": "134f484bbe73a31449169770f1b7c68e055287024361dba8f03297bb61a0804a"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/baseline-build.log",
+      "sha256": "93639bbab58fb1751d5f12fd9eb2b42877d6a5a7eada45174a06a3cbc61d3166"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/baseline.jsonl",
+      "sha256": "5141f1c11f34897f746d4c8ac8304727115f4a8dac5ea8ad5a14eb8f3d52cb44"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-build.log",
+      "sha256": "b2f05170b9d33f74fbdd3a6940e2638d040631f7167c3b5fa6456cd7f9cad330"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-clean-main-build.log",
+      "sha256": "47be6f0f6970767a7648d4e9da723ea7323c6c1e146ab61f582f02cc36341928"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-clean-main-initial-apphost-build.log",
+      "sha256": "1ce1c93a3f355a656d30b438776ff485a259fa2c7c4edbdb2521226d04f00923"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-clean-main-no-apphost-longpath-build.log",
+      "sha256": "4cdfe7a8f4a66b93dc793930e1756ca0858862b71ec5b4333b03a831ce3ce9f9"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-clean-main.log",
+      "sha256": "b75be26b3b2c2e165437e42a1ece93716f61f41f697bebc7875bcabedb9ca7f3"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-final-build.log",
+      "sha256": "279896093244412ed1ff6b44f10535442e398dda7634bf598bc2a5b45165abc6"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-final-no-apphost-build.log",
+      "sha256": "26ae833afcdd18650f436829ced8efa1c2e3ad0b37af0426d3c614ed2732de5c"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-final-no-apphost.log",
+      "sha256": "62c30783f7460bfdfbaa882a8c26409229557394efe66f85c04db814af29e8b8"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-final.log",
+      "sha256": "62c30783f7460bfdfbaa882a8c26409229557394efe66f85c04db814af29e8b8"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated-initial-fixture-errors.log",
+      "sha256": "e415dc8e404b44f0800b17b3d315077b5511aa437540f7717b0cfcbf6e042dc2"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/dedicated.log",
+      "sha256": "62c30783f7460bfdfbaa882a8c26409229557394efe66f85c04db814af29e8b8"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/fixed-build.log",
+      "sha256": "856dc0309ffe8b7777168ec23820c76481f3f31424b9cc52605d8a9c82bdb40c"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/fixed.jsonl",
+      "sha256": "69187996bba3b8e63af8c0504b227be650d5a0006af62869c308513ee9b9851c"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.AutonomyPriority-build.log",
+      "sha256": "18b46d8400a6bf7a6e1f82a95b0af1e50792a0eae45ee717f39a208857d70d70"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.AutonomyPriority.log",
+      "sha256": "1c0739694655ad177fbe4f5d56b565f32d0786d02207bb31eabc3d18129973cf"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.Continuity-build.log",
+      "sha256": "fd19ed1681d290f4173e2158943ce1133868d88be52d3563f24a0634243c30bd"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.Continuity.log",
+      "sha256": "0cdfe3a76082b231c1681e7b2ce04183402892825e2a660c597c631996da1272"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.Shelters-build.log",
+      "sha256": "fb4f174414bbc8af913aaf839a7ff8654495c1e722cc25dcb538a9aba4722113"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.Shelters.log",
+      "sha256": "f70134c962c1e3303257f4d010062fa221e6e673a17978c1b51a1895f7d32a6e"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.SupplyStations-build.log",
+      "sha256": "edc83351fdee13d942ef6c725e82b5de596ae9cbd238e364b7107dde4e4e7f32"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Interaction.SupplyStations.log",
+      "sha256": "609f25309656d1de111ce67862b0191d6c5530fee47b0e87f4a47b0f6c9e7ef4"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/NaturalLife.Smoke-build.log",
+      "sha256": "14b9b3a6c9d033522fd064bf18eb71a1a7fa66ff3fc2bbe33652d775de3f1993"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/NaturalLife.Smoke-initial-overlapping-build.log",
+      "sha256": "30cc95baa7d60335b58b2268c581e3a63b3acb3cc7897e357e989db52194557d"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/NaturalLife.Smoke.log",
+      "sha256": "4112fbcd3750a67522acb31a3d2833a1ed9f2a31592c788d172a833636f4ec0d"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Probe.csproj",
+      "sha256": "1614211a14d3cf0a19690abd92337e534f9e7c8dc1b171160e7342953deb3b44"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/Program.cs",
+      "sha256": "d2723b184fae2b13c0630d4c703b529fd6b031d3afdd8c952832a61e5a1fc80a"
+    },
+    {
+      "path": ".local/testing/shelter-clearance-escape-20261106/ShelterSpatial.baseline.cs.txt",
+      "sha256": "db2493d9b7d409eb6363cae7d98ac952eb3fe9f28c28feb4bf45c21d5139eb96"
+    }
+  ]
+}

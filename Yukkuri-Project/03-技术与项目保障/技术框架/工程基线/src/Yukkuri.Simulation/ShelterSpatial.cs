@@ -32,10 +32,25 @@ public sealed partial class WorldSimulation
                     Math.Abs(other.X-s.X)<ShelterGeometry.InteriorWidth*.5&&other.Z-s.Z<ShelterGeometry.OuterDepth*.5))return false;
                 if(State.RoomObjects.Any(o=>o.RegionId==c.RegionId&&!o.Stored&&!o.HeldByHand&&o.CarrierId==null&&
                     o.Kind is not (RoomObjectKind.RiverWater or RoomObjectKind.Urine or RoomObjectKind.Feces)&&
-                    Distance(x,z,o.X,o.Z)<radius+(o.Kind==RoomObjectKind.Cushion?1.3:StationObjectRadius(o.Kind))))return false;
+                    Distance(x,z,o.X,o.Z)<radius+(o.Kind==RoomObjectKind.Cushion?1.3:StationObjectRadius(o.Kind))&&
+                    !ShelterFrontBallClearanceEscape(c,s,o,x,z,radius)))return false;
             }
         }
         return true;
+    }
+    private static bool ShelterFrontBallClearanceEscape(Creature c,ShelterState s,RoomObject o,double x,double z,double radius)
+    {
+        // A loose ball can leave a conservative clearance deficit outside the door.
+        // Permit only outward recovery from that existing deficit, never entry or
+        // a segment that first approaches/crosses the ball before ending farther away.
+        if(o.Kind!=RoomObjectKind.Ball||c.Interaction.Restraint!=RestraintKind.None||
+            Math.Abs(c.X-s.X)>=ShelterGeometry.InteriorWidth*.5||
+            c.Z-s.Z<ShelterGeometry.InteriorDepth*.5+radius||
+            c.Z-s.Z>=ShelterGeometry.OuterDepth*.5+radius||z<=c.Z)return false;
+        double dx=c.X-o.X,dz=c.Z-o.Z,distance=Math.Sqrt(dx*dx+dz*dz);
+        return distance>=BallBodyRadius(c)+InteractionFixtureGeometry.BallRadius&&
+            distance<radius+StationObjectRadius(RoomObjectKind.Ball)&&
+            dx*(x-c.X)+dz*(z-c.Z)>0;
     }
     private bool ShelterMovePathClear(Creature c,double x,double z,double? height=null)
     {
