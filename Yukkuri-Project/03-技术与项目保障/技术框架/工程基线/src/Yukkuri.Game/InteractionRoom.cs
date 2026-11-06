@@ -51,10 +51,7 @@ public partial class InteractionRoom : Node3D
             }
             _saves=new SaveStore(ProjectSettings.GlobalizePath(saveDirectory));
             _camera=new Camera3D{Projection=Camera3D.ProjectionType.Orthogonal,Size=_zoom,Current=true,Far=100};AddChild(_camera);
-            AddChild(new WorldEnvironment{Environment=new Godot.Environment{BackgroundMode=Godot.Environment.BGMode.Color,
-                BackgroundColor=new Color("c3cfba"),AmbientLightSource=Godot.Environment.AmbientSource.Color,
-                AmbientLightColor=new Color("f3ead8"),AmbientLightEnergy=.30f,TonemapMode=Godot.Environment.ToneMapper.Linear}});
-            AddChild(new DirectionalLight3D{RotationDegrees=new(-48,-28,0),LightEnergy=.34f,ShadowEnabled=true});
+            BuildCourtyardLighting();
             BuildYard();BuildRoomUi();BuildActors();DisarmTool();
             InitializeRoomAudio();
             _windowFocused=GetWindow().HasFocus();
@@ -71,6 +68,7 @@ public partial class InteractionRoom : Node3D
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
+            StartDayNightVerificationIfRequested(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }
@@ -176,6 +174,7 @@ public partial class InteractionRoom : Node3D
             UpdateInteractionHand();
             Sim.AdvanceInteractionPresentation(dt);Sim.Advance(dt);
         }
+        UpdateCourtyardLighting();
         bool close=Sim.State.Mode==PlayMode.CloseUp;
         bool paused=Sim.State.Settings.Pause||_modalOpen;
         SynchronizeFamilyActors();

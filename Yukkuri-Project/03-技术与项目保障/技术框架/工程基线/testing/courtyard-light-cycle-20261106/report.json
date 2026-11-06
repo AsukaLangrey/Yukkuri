@@ -1,0 +1,113 @@
+{
+  "status": "partial",
+  "baseCommit": "32cda3a4df4126570a78b1f998000f55c725193c",
+  "sourceIdentity": "Base commit plus six SHA256 file hashes; source commit to be made by coordinating parent.",
+  "sourceFiles": [
+    {
+      "path": "src/Yukkuri.Game/CourtyardLightCycle.cs",
+      "sha256": "3d0d211e16788d1e59df73f92f2600bd33b2130c59ee7b4a1893640fe4e46612"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.DayNight.cs",
+      "sha256": "736633afb760a2a067b25f16c390f477b8f22bfddf1b19014dbe15362307d8f4"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.DayNightVerification.cs",
+      "sha256": "454524c863e57451f6fb2162034778df991e2fb76235aa724914edfc93311045"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "sha256": "f304654a19f9020cba60b5237f395c5fd0b47259363361db6a5cb592cbcb54b1"
+    },
+    {
+      "path": "checks/Courtyard.Lighting/Courtyard.Lighting.csproj",
+      "sha256": "c043d8a5082e3d669873a9ba0fc6e55a1664b55310d5c250d3bbb118bbf6a041"
+    },
+    {
+      "path": "checks/Courtyard.Lighting/Program.cs",
+      "sha256": "7cdda747639b7b4eae4ce02af61574ea2de28204575604b7c4f6916d04353e25"
+    }
+  ],
+  "build": {
+    "sdk": "net10.0",
+    "errors": 0,
+    "status": "passed",
+    "godot": "4.7.2-stable-mono",
+    "existingWarnings": 2,
+    "configuration": "Debug Rebuild"
+  },
+  "lighting": {
+    "status": "passed",
+    "checks": [
+      "all seasonal transition edges, midpoint, monotonicity and sub-minute motion",
+      "midnight day/season/year changes preserve all visible lighting values",
+      "extreme finite timestamps are bounded and deterministic",
+      "projection does not mutate simulation or save data"
+    ],
+    "performance": {
+      "samples": 100000,
+      "elapsedMs": 46.0926,
+      "allocatedBytes": 19199688
+    },
+    "visualAcceptance": false
+  },
+  "scene": {
+    "status": "passed",
+    "checks": [
+      "32 season/time samples applied to actual scene; separate CanvasLayer and sidebar modulation unchanged",
+      "pause freezes clock and lighting",
+      "closeup freezes clock and lighting",
+      "settings freeze clock and lighting",
+      "synthetic save reload restores exact lighting without offline advance",
+      "extreme save-valid timestamps remain finite in actual scene",
+      "resume advances clock and updates lighting"
+    ],
+    "renderer": "headless",
+    "visualAcceptance": false,
+    "final": {
+      "seconds": 550.5,
+      "sun": 0.18019456,
+      "moon": 0.07520256,
+      "ambient": 0.2529984,
+      "background": "768284ff",
+      "pitch": -15.454125,
+      "yaw": -84.329414
+    }
+  },
+  "regression": {
+    "calendar": 9,
+    "simulationSmoke": 125,
+    "stateBoundaries": 10
+  },
+  "firstAttempt": {
+    "cause": "Resume assertion observed only 20 headless frames, insufficient for existing 0.25-second simulation tick.",
+    "status": "failed",
+    "correction": "Harness now waits 0.6 seconds before freeze/resume assertions. Product unchanged. Original private logs retained."
+  },
+  "warnings": [
+    "Two ObjectDB leaks were observed in scene02; scene03 did not emit that warning. No leak fix was made; intermittent prior warning remains unresolved."
+  ],
+  "limits": [
+    "Headless node, property and control assertions only; no screenshot, native input or pixel/visual acceptance.",
+    "Color, energy and sun trajectory are engineering tuning awaiting user visual review.",
+    "Resource text/icon night contrast remains unimplemented in this slice.",
+    "No seasonal art, sleep/housing gameplay, UI redesign or new save fields.",
+    "Focused checks are not the entire repository required-check suite; no historical personal-save testing."
+  ],
+  "performance": "100000 ordinary samples measured once; bounded nonzero allocation. Not a frame-rate or stress benchmark.",
+  "profileGuards": {
+    "status": "passed",
+    "reusedProfileExit": 2,
+    "missingProfileExit": 2,
+    "existingProfileFilesUnchanged": true,
+    "before": {
+      "path": "\\slot-3.json",
+      "sha256": "2F5D272F1DC17E752D5B6E9FCFDB999F1860E099D444CED2FB72F57370C18126"
+    },
+    "after": {
+      "path": "\\slot-3.json",
+      "sha256": "2F5D272F1DC17E752D5B6E9FCFDB999F1860E099D444CED2FB72F57370C18126"
+    }
+  },
+  "saveIsolation": "Fresh empty interaction-test-saves profile under Godot user data; --user-data-dir was not observed to relocate saves. No player interaction-saves files read or written."
+}

@@ -1,0 +1,960 @@
+{
+  "source_files": 399,
+  "origin_records": 399,
+  "failed": [],
+  "new_warning_locations": [],
+  "visual_acceptance": false,
+  "changed_base_files": [
+    "src\\Yukkuri.Game\\InteractionRoom.cs"
+  ],
+  "lighting_pass_lines": 4,
+  "origin_hash_drift": 0,
+  "game_build": 0,
+  "resource_night_contrast": "deferred",
+  "room_local_delta_exact": true,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "failure_text_markers": 0,
+  "passed_pure": 67,
+  "source_hash_differences": 0,
+  "parsed_json_files": [
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "ActorGeometry.Smoke.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "harness-finalization.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "initial-results.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "initial-source-after.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "initial-source-before.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "initial-source-provenance.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "Input.Intent.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "interaction-room-local-delta.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "Interaction.Continuity.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "Interaction.Smoke.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "lighting-six-file-source-initial.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "NaturalLife.Smoke.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "NaturalLife.Soak.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "results.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "source-after.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "source-before.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "source-provenance-thirteen.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "source-provenance.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "Milestone.Exploration.json\\result.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-001\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-002\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-003\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-004\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-005\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-006\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-007\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-008\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-009\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-010\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-011\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-012\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-013\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-014\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-015\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-016\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-017\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-018\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-019\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-020\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-021\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-022\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-023\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-024\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-025\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-026\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-027\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-028\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-029\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-030\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-031\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-032\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-033\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-034\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-035\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-036\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-037\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-038\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-039\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-040\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-041\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-042\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-043\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-044\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-045\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-046\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-047\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-048\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-049\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-050\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-051\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-052\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-053\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-054\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-055\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-056\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-057\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-058\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-059\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-060\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-061\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-062\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-063\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Milestone.Exploration.json\\seed-064\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "Save.NullIdentifierRecovery.json\\result.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\01-caregiver-original-valid-main-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\01-caregiver-original-valid-main-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\03-caregiver-original-good-backup-recovered\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\03-caregiver-original-good-backup-recovered\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\04-caregiver-original-bad-existing-main-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\04-caregiver-original-bad-existing-main-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\05-caregiver-original-bad-candidate-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\05-caregiver-original-bad-candidate-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\06-caregiver-original-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\06-caregiver-original-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\07-caregiver-original-unknown-id-still-recovers\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\07-caregiver-original-unknown-id-still-recovers\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\09-caregiver-reversed-valid-main-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\09-caregiver-reversed-valid-main-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\11-caregiver-reversed-good-backup-recovered\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\11-caregiver-reversed-good-backup-recovered\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\12-caregiver-reversed-bad-existing-main-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\12-caregiver-reversed-bad-existing-main-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\13-caregiver-reversed-bad-candidate-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\13-caregiver-reversed-bad-candidate-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\14-caregiver-reversed-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\14-caregiver-reversed-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\15-caregiver-reversed-unknown-id-still-recovers\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\15-caregiver-reversed-unknown-id-still-recovers\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\17-reacted-by-original-valid-main-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\17-reacted-by-original-valid-main-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\19-reacted-by-original-good-backup-recovered\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\19-reacted-by-original-good-backup-recovered\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\20-reacted-by-original-bad-existing-main-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\20-reacted-by-original-bad-existing-main-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\21-reacted-by-original-bad-candidate-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\21-reacted-by-original-bad-candidate-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\22-reacted-by-original-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\22-reacted-by-original-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\23-reacted-by-original-unknown-id-still-recovers\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\23-reacted-by-original-unknown-id-still-recovers\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\25-reacted-by-reversed-valid-main-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\25-reacted-by-reversed-valid-main-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\27-reacted-by-reversed-good-backup-recovered\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\27-reacted-by-reversed-good-backup-recovered\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\28-reacted-by-reversed-bad-existing-main-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\28-reacted-by-reversed-bad-existing-main-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\29-reacted-by-reversed-bad-candidate-protected\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\29-reacted-by-reversed-bad-candidate-protected\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\30-reacted-by-reversed-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\30-reacted-by-reversed-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\31-reacted-by-reversed-unknown-id-still-recovers\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.NullIdentifierRecovery.json\\31-reacted-by-reversed-unknown-id-still-recovers\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": true,
+      "path": "Save.WaterReferenceRecovery.json\\result.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\01-concern-observer-first-valid-read-only-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\01-concern-observer-first-valid-read-only-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\03-concern-observer-first-valid-backup-recovered-originals-preserved\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\03-concern-observer-first-valid-backup-recovered-originals-preserved\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\04-concern-observer-first-bad-existing-main-not-overwritten\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\04-concern-observer-first-bad-existing-main-not-overwritten\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\05-concern-observer-first-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\05-concern-observer-first-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\06-concern-observer-first-bad-candidate-preserves-valid-history\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\06-concern-observer-first-bad-candidate-preserves-valid-history\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\08-concern-target-first-valid-read-only-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\08-concern-target-first-valid-read-only-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\10-concern-target-first-valid-backup-recovered-originals-preserved\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\10-concern-target-first-valid-backup-recovered-originals-preserved\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\11-concern-target-first-bad-existing-main-not-overwritten\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\11-concern-target-first-bad-existing-main-not-overwritten\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\12-concern-target-first-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\12-concern-target-first-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\13-concern-target-first-bad-candidate-preserves-valid-history\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\13-concern-target-first-bad-candidate-preserves-valid-history\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\15-aftercare-observer-first-valid-read-only-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\15-aftercare-observer-first-valid-read-only-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\17-aftercare-observer-first-valid-backup-recovered-originals-preserved\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\17-aftercare-observer-first-valid-backup-recovered-originals-preserved\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\18-aftercare-observer-first-bad-existing-main-not-overwritten\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\18-aftercare-observer-first-bad-existing-main-not-overwritten\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\19-aftercare-observer-first-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\19-aftercare-observer-first-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\20-aftercare-observer-first-bad-candidate-preserves-valid-history\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\20-aftercare-observer-first-bad-candidate-preserves-valid-history\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\22-aftercare-target-first-valid-read-only-round-trip\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\22-aftercare-target-first-valid-read-only-round-trip\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\24-aftercare-target-first-valid-backup-recovered-originals-preserved\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\24-aftercare-target-first-valid-backup-recovered-originals-preserved\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\25-aftercare-target-first-bad-existing-main-not-overwritten\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\25-aftercare-target-first-bad-existing-main-not-overwritten\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\26-aftercare-target-first-both-bad-controlled-aggregate\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\26-aftercare-target-first-both-bad-controlled-aggregate\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\27-aftercare-target-first-bad-candidate-preserves-valid-history\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\27-aftercare-target-first-bad-candidate-preserves-valid-history\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\29-null-water-without-cross-reference-still-recovers\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\29-null-water-without-cross-reference-still-recovers\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\30-missing-legacy-water-keeps-default-and-does-not-recover\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\30-missing-legacy-water-keeps-default-and-does-not-recover\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\31-concern-null-observer-still-recovers\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\31-concern-null-observer-still-recovers\\slot-1.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\32-aftercare-null-observer-still-recovers\\hashes.json"
+    },
+    {
+      "issues": null,
+      "test_report": false,
+      "path": "Save.WaterReferenceRecovery.json\\32-aftercare-null-observer-still-recovers\\slot-1.json"
+    }
+  ],
+  "parsed_inline_json": [
+    {
+      "status": "passed",
+      "file": "Courtyard.Lighting.txt",
+      "issues": []
+    }
+  ],
+  "json_issues": [],
+  "pass_text_lines": 1382,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "verified_at": "2026-11-06T05:38:47.7836578Z",
+  "frozen_lighting_hash_mismatches": [],
+  "pure_projects": 67,
+  "previous_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ]
+}
