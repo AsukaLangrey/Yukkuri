@@ -142,10 +142,10 @@ public sealed partial class WorldSimulation
     private void CancelFamilyCare(Creature adult,double cooldown=12,string reason="这次照护已停止，先处理身体状态或眼前的需要。")
     {
         if(adult.Family.CareTargetId==null&&adult.Family.CareParcelId==null)
-        {adult.Family.CareApproachSeconds=0;adult.Family.CareBestDistance=100;return;}
+        {adult.Family.CareApproachSeconds=0;adult.Family.CareContactSeconds=0;adult.Family.CareBestDistance=100;return;}
         var recipient=State.Creatures.Find(c=>c.Id==adult.Family.CareTargetId);
         RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Interrupted,reason);
-        DropCareParcel(adult);adult.Family.CareTargetId=null;adult.Family.CareApproachSeconds=0;
+        DropCareParcel(adult);adult.Family.CareTargetId=null;adult.Family.CareApproachSeconds=0;adult.Family.CareContactSeconds=0;
         adult.Family.CareBestDistance=100;adult.Family.NextCareAt=Math.Max(adult.Family.NextCareAt,State.WorldSeconds+cooldown);
         RecordFamilyCareStatus(adult,reason);
         if(recipient!=null)RecordFamilyCareStatus(recipient,$"{adult.Name}的照护已中断：{reason}");
@@ -176,7 +176,7 @@ public sealed partial class WorldSimulation
         if(adult.Interaction.Development.Duty==LifeDuty.Care)
         {adult.Interaction.Development.Duty=LifeDuty.None;adult.Interaction.Development.RecipientId=null;}
         CancelFamilyCare(adult,reason:"照护已改派给另一位对象；旧递送已中断，如有已取份额，已经留在身旁。");
-        adult.Family.CareTargetId=child!.Id;adult.Family.CareApproachSeconds=0;adult.Family.CareBestDistance=100;
+        adult.Family.CareTargetId=child!.Id;adult.Family.CareApproachSeconds=0;adult.Family.CareContactSeconds=0;adult.Family.CareBestDistance=100;
         if(adult.Interaction.CleaningTargetId!=null)StopCleaningTask(adult,"开始手动安排的照护，暂停清洁。");
         RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Attempt,$"接受本次安排，尝试照看{child.Name}。");
         RecordFamilyCareStatus(adult,!CanSelfMove(adult)?"留在已贴近的幼体旁照看；身体走不开，无法搬运食水。":
@@ -262,7 +262,7 @@ public sealed partial class WorldSimulation
                 .OrderBy(c=>Math.Min(c.Fullness,Math.Min(c.Interaction.Hydration,c.IsYoung?c.Family.Warmth:100)))
                 .ThenBy(c=>c.Id,StringComparer.Ordinal).FirstOrDefault();
             if(child==null)return false;
-            f.CareTargetId=child.Id;f.CareBestDistance=100;f.CareApproachSeconds=0;
+            f.CareTargetId=child.Id;f.CareBestDistance=100;f.CareApproachSeconds=0;f.CareContactSeconds=0;
             RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Attempt,$"自主发现{child.Name}需要照护，开始尝试。");
             RecordFamilyCareStatus(adult,$"正在留意{child.Name}的食水与照护需要。");
         }
@@ -289,7 +289,7 @@ public sealed partial class WorldSimulation
             {CancelFamilyCare(adult,reason:"这里不方便接食水，原来的一份已放下，需要换个安全落点。");return false;}
             parcel.CarrierId=null;parcel.Height=offered.Height;parcel.X=offered.X;parcel.Z=offered.Z;
             f.CareParcelId=null;f.NextCareAt=State.WorldSeconds+8;f.CareTargetId=null;
-            f.CareApproachSeconds=0;f.CareBestDistance=100;
+            f.CareApproachSeconds=0;f.CareContactSeconds=0;f.CareBestDistance=100;
             adult.Energy=Math.Max(0,adult.Energy-.5);RegisterFamilyCare(adult,child,5);
             RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Completed,$"实际送达一份食水给{child.Name}；送达不等于对方已经吃喝。");
             RecordFamilyCareStatus(adult,adult.Activity=$"已把一份食水放到{child.Name}嘴边，等待它实际取用。");
@@ -321,7 +321,7 @@ public sealed partial class WorldSimulation
                 string id=NewFamilyId("supply");source.Portions--;
                 var portion=new RoomObject{Id=id,Kind=source.Kind,RegionId=adult.RegionId,OwnerId=adult.Id,CarrierId=adult.Id,
                     X=adult.X,Z=adult.Z,Height=.45,Portions=1,Contamination=source.Contamination};
-                State.RoomObjects.Add(portion);f.CareParcelId=id;f.CareBestDistance=100;f.CareApproachSeconds=0;
+                State.RoomObjects.Add(portion);f.CareParcelId=id;f.CareBestDistance=100;f.CareApproachSeconds=0;f.CareContactSeconds=0;
                 RecordFamilyCareStatus(adult,adult.Activity=$"已取好一份，准备送给{child.Name}。");return true;
             }
             if(!child.IsYoung){CancelFamilyCare(adult,reason:"附近没有可取用的合适食水，这次递送先停下；准备物资后可再安排。");return false;}
@@ -337,14 +337,17 @@ public sealed partial class WorldSimulation
     private bool StayBesideChild(Creature adult,Creature child,double dt,bool stationary)
     {
         var f=adult.Family;
+        // A completed warm-care segment needs actual uninterrupted contact,
+        // never time spent blocked on the way to a child or a food source.
+        f.CareApproachSeconds=0;f.CareBestDistance=100;
         RegisterFamilyCare(adult,child,dt);
         child.Family.Warmth=Clamp100(child.Family.Warmth+dt*.16);
         adult.Energy=Math.Max(0,adult.Energy-dt*.01);
         RecordFamilyCareStatus(adult,adult.Activity=stationary?"留在已贴近的幼体旁保暖；身体走不开，无法搬运食水。":"留在幼体旁边照看。");
-        f.CareApproachSeconds+=dt;
-        if(f.CareApproachSeconds>12)
+        f.CareContactSeconds+=dt;
+        if(f.CareContactSeconds>12)
         {RecordAbility(adult,LifeSkill.Care,SkillEvidenceKind.Completed,$"完成一段与{child.Name}实际接触的保暖陪护。");
-            f.CareTargetId=null;f.NextCareAt=State.WorldSeconds+12;f.CareApproachSeconds=0;f.CareBestDistance=100;
+            f.CareTargetId=null;f.NextCareAt=State.WorldSeconds+12;f.CareApproachSeconds=0;f.CareContactSeconds=0;f.CareBestDistance=100;
             RecordFamilyCareStatus(adult,"这一段近旁陪护已完成，先歇一会儿再留意需要。");}
         return true;
     }
@@ -352,6 +355,7 @@ public sealed partial class WorldSimulation
     private bool CareProgress(Creature adult,double distance,double dt)
     {
         var f=adult.Family;
+        f.CareContactSeconds=0;
         if(distance<f.CareBestDistance-.03){f.CareBestDistance=distance;f.CareApproachSeconds=0;}
         else f.CareApproachSeconds+=dt;
         if(f.CareApproachSeconds<10)return true;

@@ -33,7 +33,7 @@ public static partial class FamilyRules
             Require(f.CaregiverIds.Count<=creatures.Count&&f.CaregiverIds.Distinct().Count()==f.CaregiverIds.Count&&
                 f.CaregiverIds.All(id=>id!=c.Id&&creatures.ContainsKey(id)),"照护者引用无效");
             Require(Number(f.Warmth,100)&&Number(f.NextCareAt)&&Number(f.NextSocialAt)&&Number(f.NextBreedingDecisionAt)&&
-                Number(f.CareApproachSeconds)&&Number(f.CareBestDistance)&&Text(f.LastEvent)&&Text(f.CareLastEvent)&&Enum.IsDefined(f.BirthMethod),"育幼状态无效");
+                Number(f.CareApproachSeconds)&&Number(f.CareContactSeconds)&&Number(f.CareBestDistance)&&Text(f.LastEvent)&&Text(f.CareLastEvent)&&Enum.IsDefined(f.BirthMethod),"育幼状态无效");
             Require(f.LifeKnowledge.Count<=32&&f.LifeKnowledge.All(k=>!string.IsNullOrWhiteSpace(k.Key)&&k.Key.Length<=128),"生活常识记录无效");
             bool Reference(string? id)=>id==null||id!=c.Id&&creatures.ContainsKey(id);
             Require(Reference(f.MotherId)&&Reference(f.FatherId)&&Reference(f.CareTargetId)&&

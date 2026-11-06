@@ -96,7 +96,7 @@ public sealed partial class WorldSimulation
             var child=State.Creatures.Find(other=>other.Id==d.RecipientId);
             if(child is not {IsYoung:true}||!ChildNeedsDutyCare(child)||FamilyCareReasonCore(c,child)!=null||!CanContinueFamilyCare(c,child))continue;
             if(i.CleaningTargetId!=null)StopCleaningTask(c,"先执行幼体照护，清洁留待以后。");
-            c.Family.CareTargetId=child.Id;c.Family.CareApproachSeconds=0;c.Family.CareBestDistance=100;
+            c.Family.CareTargetId=child.Id;c.Family.CareApproachSeconds=0;c.Family.CareContactSeconds=0;c.Family.CareBestDistance=100;
             RecordAbility(c,LifeSkill.Care,SkillEvidenceKind.Attempt,$"重新评估后，开始照看{child.Name}。");
             RecordFamilyCareStatus(c,$"按安排留意{child.Name}的需要，仍需实际取用和送达食水。");
         }

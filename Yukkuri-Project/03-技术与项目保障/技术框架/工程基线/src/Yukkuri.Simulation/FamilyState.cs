@@ -39,6 +39,8 @@ public sealed partial class FamilyLife
     public string? CareTargetId { get; set; }
     public string? CareParcelId { get; set; }
     public double CareApproachSeconds { get; set; }
+    // Current uninterrupted physical warmth; old saves start at zero.
+    public double CareContactSeconds { get; set; }
     public double CareBestDistance { get; set; } = 100;
     public Dictionary<string, bool> LifeKnowledge { get; set; } = new();
     public ColdStorageState ColdStorage { get; set; } = new();
