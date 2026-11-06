@@ -126,8 +126,10 @@ public sealed partial class WorldSimulation
         var waste=State.RoomObjects.Where(o=>o.RegionId==c.RegionId&&o.Kind==kind&&!o.Stored).ToArray();
         if(waste.Length>=64)
         {
-            var nearest=waste.MinBy(o=>Distance(c.X,c.Z,o.X,o.Z))!;
-            nearest.Portions=Math.Min(1000,nearest.Portions+1);return;
+            // A full nearest pile must not discard a portion while another can hold it.
+            var nearest=waste.Where(o=>o.Portions<1000).MinBy(o=>Distance(c.X,c.Z,o.X,o.Z));
+            if(nearest!=null)nearest.Portions++;
+            return;
         }
         // Automatic production must resume identically from the same save.
         // Widen before adding: completed counts saturate at int.MaxValue.

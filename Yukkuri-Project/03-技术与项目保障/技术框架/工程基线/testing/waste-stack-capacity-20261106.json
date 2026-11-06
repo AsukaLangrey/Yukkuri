@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "scope": "Focused waste-capacity fix; existing continuity failure remains",
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "alice/20261106-waste-stack-capacity",
+  "source_identity": "Base commit plus listed source/check SHA256; coordinator publishes separately",
+  "environment": "Authorized isolated Windows worktree, Debug, .NET SDK 10.0.402; no UI",
+  "finished_utc": "2026-11-06T09:33:05.837811Z",
+  "product_change": "At >=64 same-region same-kind non-stored piles, choose nearest with Portions<1000. Existing enumeration tie order, object limit and per-pile cap preserved.",
+  "design_reference": "Yukkuri-Project/05-游戏设计/自由模式-环境卫生与排泄.txt:13",
+  "builds": {
+    "errors": 0,
+    "status": "passed",
+    "warning_codes": [
+      "CS8604 InteractionValidation.cs:15",
+      "CS8604 SupplyStationValidation.cs:12"
+    ],
+    "warnings_each": 2
+  },
+  "commands": [
+    "dotnet build checks/Interaction.WasteCapacity/Interaction.WasteCapacity.csproj -t:Rebuild -c Debug -o <isolated-output>",
+    "dotnet <isolated-output>/Interaction.WasteCapacity.dll <isolated-synthetic-save-directory>",
+    "dotnet build checks/<regression>/<regression>.csproj -t:Rebuild -c Debug -o <isolated-output>",
+    "dotnet <isolated-output>/<regression>.dll"
+  ],
+  "environment_variables": {
+    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1",
+    "DOTNET_GENERATE_ASPNET_CERTIFICATE": "false",
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1"
+  },
+  "baseline_method": "Before editing product, saved exact InteractionPhysiology source and rebuilt final harness with unchanged product. For existing regression pairs, built unchanged check code against fixed product, copied each output into distinct baseline directory and replaced only Yukkuri.Simulation.dll with preserved unchanged-baseline rebuilt DLL. Product API unchanged.",
+  "results": [
+    {
+      "baseline_passed": 8,
+      "baseline_failed": 14,
+      "name": "Interaction.WasteCapacity",
+      "baseline_exit": 1,
+      "fixed_exit": 0,
+      "fixed_failed": 0,
+      "fixed_passed": 22
+    },
+    {
+      "baseline_passed": 128,
+      "baseline_failed": 1,
+      "name": "Interaction.Continuity",
+      "baseline_exit": 1,
+      "fixed_exit": 1,
+      "fixed_failed": 1,
+      "fixed_passed": 128
+    },
+    {
+      "baseline_passed": 13,
+      "baseline_failed": 0,
+      "name": "Interaction.LifeDevelopment",
+      "baseline_exit": 0,
+      "fixed_exit": 0,
+      "fixed_failed": 0,
+      "fixed_passed": 13
+    },
+    {
+      "baseline_passed": 12,
+      "baseline_failed": 0,
+      "name": "Interaction.Inventory",
+      "baseline_exit": 0,
+      "fixed_exit": 0,
+      "fixed_failed": 0,
+      "fixed_passed": 12
+    },
+    {
+      "baseline_passed": 15,
+      "baseline_failed": 0,
+      "name": "Interaction.Injury",
+      "baseline_exit": 0,
+      "fixed_exit": 0,
+      "fixed_failed": 0,
+      "fixed_passed": 15
+    }
+  ],
+  "known_failure": "Continuity: suspended lowering and sliding bodies retain unmet excretion until grounded and still / settling did not resume and finish exactly one excretion after suspended",
+  "limitations": [
+    "All same-kind piles full: existing lost-portion behavior remains; this is a compatibility limit, not an endorsed design rule.",
+    "At these pollution levels environment score is already clamped to zero; no immediate score improvement is claimed.",
+    "Synthetic SaveStore file roundtrips only; historical/user saves not read or tested.",
+    "No full game build, visual/manual acceptance, long-run soak, or full test-request suite.",
+    "65-pile synthetic state is accepted by existing SaveStore validation; fix does not create a 65th pile.",
+    "Combined-branch validation is separate."
+  ],
+  "retained_failures": [
+    "Initial tool path missing: no build started.",
+    "Initial patch CRLF guard failed before write; corrected for existing LF file.",
+    "Initial interruption fixture used Supine plus world Advance and could restart in that tick. Preserved initial check/log; final fixture uses public presentation update to observe cancellation before world restart. Final baseline and fixed use identical check."
+  ],
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Simulation/InteractionPhysiology.cs",
+      "sha256": "098a70e583b62ae6df1675583901f2d4cb3f2a9d8846cd7d8011c7dac1bf91a9"
+    },
+    {
+      "path": "checks/Interaction.WasteCapacity/Program.cs",
+      "sha256": "5a3347c3e21d0279bff92ad40c02d39da24d8e811562e4a6f852e825083bb418"
+    },
+    {
+      "path": "checks/Interaction.WasteCapacity/Interaction.WasteCapacity.csproj",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a"
+    },
+    {
+      "path": "testing/PROTOCOL.md",
+      "sha256": "e92447a684204704ce789f93c593517d7a1877a49638b6229f6eacc0ffb31f71"
+    },
+    {
+      "path": "testing/request.json",
+      "sha256": "cb60d086334457c68036f4dfb65d1f8dc7b2cc1b051f6b0b169147ef66771902"
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/baseline-build.log",
+      "sha256": "d76c8864167c736d27b77aad7e9c6073d6bd05d4ee50473767505763e42d44dc"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/baseline-final-build.log",
+      "sha256": "0507cb0eebef56734a4ee2b4adb94f99874623c56a03d7ccb9569ae5a6d424ba"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/baseline-final-run.log",
+      "sha256": "663d130e8392bebf28be4c7685609eb194b15db09c82442e2e4aa476db03b50f"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/baseline-run.log",
+      "sha256": "350fd20d5e2d7ed007f8516952f242e95d0bd421ab1f9ac13e4ad1872c095fa7"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/fixed-build.log",
+      "sha256": "80dde0e6a4821709d5f8e4a34db1557a48e4eb9ab2f11db88981cef008b7cfa1"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/fixed-run.log",
+      "sha256": "37d2034128221d1ad8c3f09cb1b5487eded7f502783f129bbc3b3e16429ee997"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/initial-patch-guard.txt",
+      "sha256": "fa4914e71c3f88dc57564def4b60636cd45b02aac25168eba435a9fe4d64cfa8"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/initial-tool-path-failure.txt",
+      "sha256": "4d4a9c84257ac29dbf79a464c60a18710a1b7f236a45a0c93ad74e0df14f82db"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Continuity-baseline-run.log",
+      "sha256": "d493eae5478994116f1597865ba51ac778122119ef8b87307a335e55cbe4d527"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Continuity-build.log",
+      "sha256": "6ea501bbe684df2201b6536fb2d0bfa2b8d22a7ecb63bdb3fae45d0badabc069"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Continuity-fixed-run.log",
+      "sha256": "90a0cce250b0886eb18c79bf99500acccca9743daee30af2c0929e9c345bb052"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Injury-baseline-run.log",
+      "sha256": "0f313e93dd5b66c5703986c7257b0bb4622d82649442c67459e09c361c9c0f7f"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Injury-build.log",
+      "sha256": "552148bade9615571267b75799c1d959cc002699772671773a016bd843ef57d5"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Injury-fixed-run.log",
+      "sha256": "0f313e93dd5b66c5703986c7257b0bb4622d82649442c67459e09c361c9c0f7f"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Inventory-baseline-run.log",
+      "sha256": "1058acb5b45dab122e66af33e3eb979a6637dfd0cbff627e8084d4a78b7a7710"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Inventory-build.log",
+      "sha256": "87301933da6b68d0ca56abf80eb05917a388aa81c838d36f1020687599433dc9"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.Inventory-fixed-run.log",
+      "sha256": "1058acb5b45dab122e66af33e3eb979a6637dfd0cbff627e8084d4a78b7a7710"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.LifeDevelopment-baseline-run.log",
+      "sha256": "51e8aec51ee2a1d6729fbf8f542c468e76ff2856e3a095989635ad413c8d65f1"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.LifeDevelopment-build.log",
+      "sha256": "65b405f8e8087afef9fc4562081aceccc5649faed67b26ac6ed98e7a069f935b"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Interaction.LifeDevelopment-fixed-run.log",
+      "sha256": "51e8aec51ee2a1d6729fbf8f542c468e76ff2856e3a095989635ad413c8d65f1"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/InteractionPhysiology.baseline.cs",
+      "sha256": "875e5511ab9fbec37a91c308537535a59b66cce6972bff6d67abb1d37327c333"
+    },
+    {
+      "path": ".local/testing/waste-stack-capacity-20261106/Program.initial-supine-fixture.cs",
+      "sha256": "1f25511b795fbcc9ac3b84005d0be71ee3264d1515d9f6912bb1cea59050621b"
+    }
+  ],
+  "baseline_product_dll_sha256": "d2e51c0273b068e22e93794aaa0c2e73f824db1d81a67c93c7569253cbf202fa",
+  "fixed_product_dll_sha256": "d0781a7b758cf48c79266430e3f10601c9b8e880e6f6e6974ef4c59e6d100fb5",
+  "coordinator_finalization": {
+    "final_failed": 0,
+    "change": "Removed one trailing blank line only; TrimEnd source equality verified against combined source",
+    "combined_limit": "Full75 suite ran previous trailing-blank-line check version; no product or executable code changes",
+    "initial_rerun": "Missing required synthetic directory argument: failed before tests; retained log",
+    "final_check_sha256": "ccfb980fb541e88cf5ddf20b9a5b7d2437b002b367bfa89d158fb6a6468837c6",
+    "final_passed": 22,
+    "logs": [
+      "coordinator-final-build.log",
+      "coordinator-final-run.log",
+      "coordinator-final-run-2.log"
+    ],
+    "rebuild_exit": 0
+  }
+}
