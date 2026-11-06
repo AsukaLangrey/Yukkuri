@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Family.CareInterruption",
+    "build": 0,
+    "run": 0,
+    "passes": 17,
+    "failures": 0
+  },
+  {
+    "name": "Family.CareContinuity",
+    "build": 0,
+    "run": 0,
+    "passes": 6,
+    "failures": 0
+  },
+  {
+    "name": "Family.AssistedCare",
+    "build": 0,
+    "run": 0,
+    "passes": 16,
+    "failures": 0
+  },
+  {
+    "name": "Courtyard.Economy",
+    "build": 0,
+    "run": 0,
+    "passes": 8,
+    "failures": 0
+  }
+]

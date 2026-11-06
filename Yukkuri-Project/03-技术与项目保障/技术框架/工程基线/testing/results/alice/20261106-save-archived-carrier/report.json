@@ -1,0 +1,80 @@
+{
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "alice/20261106-save-archived-carrier",
+  "status": "partial",
+  "environment": "authorized Windows test environment",
+  "configuration": "Release, explicit -t:Rebuild before DLL execution",
+  "baseline": {
+    "build_exit": 0,
+    "run_exit": 1,
+    "checks": 55,
+    "failures": 36,
+    "file_scenarios": 36,
+    "changed_file_scenarios": 12
+  },
+  "fixed": {
+    "build_exit": 0,
+    "run_exit": 0,
+    "checks": 55,
+    "failures": 0,
+    "file_scenarios": 36,
+    "changed_file_scenarios": 0
+  },
+  "related": [
+    {
+      "name": "Family.CareInterruption",
+      "build": 0,
+      "run": 0,
+      "passes": 17,
+      "failures": 0
+    },
+    {
+      "name": "Family.CareContinuity",
+      "build": 0,
+      "run": 0,
+      "passes": 6,
+      "failures": 0
+    },
+    {
+      "name": "Family.AssistedCare",
+      "build": 0,
+      "run": 0,
+      "passes": 16,
+      "failures": 0
+    },
+    {
+      "name": "Courtyard.Economy",
+      "build": 0,
+      "run": 0,
+      "passes": 8,
+      "failures": 0
+    }
+  ],
+  "limitations": [
+    "Not normal sale corruption; two serialized references intentionally changed.",
+    "Player can recover the portion with HoldSupply.",
+    "No game UI, Godot, screenshot, CUA, long soak, or private/historical-save compatibility run."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/baseline.json",
+      "sha256": "430B9C6713D228D88F681363EDEA6DD9B083A7B09F32F16F43EC178360927B65"
+    },
+    {
+      "path": "evidence/fixed.json",
+      "sha256": "D44DF2F5B0944B3D7B321306D0743152AF5DF88EC6D668CEC3F923CC09DD30B1"
+    },
+    {
+      "path": "evidence/independent-verification.json",
+      "sha256": "6725B83CFC93DB9FBFABF6E1C6A72858E9064DAF189FDAC0B2801627C27A59EB"
+    },
+    {
+      "path": "evidence/related.json",
+      "sha256": "B81030F008AD9DA0059346F160D4A279F321F122BE34DA58A97B895B2BC5C3CE"
+    },
+    {
+      "path": "evidence/source-manifest.json",
+      "sha256": "E15794843BC6A774A6E90356F96738423824E7374B339E50E0850390C3AB71A7"
+    }
+  ]
+}

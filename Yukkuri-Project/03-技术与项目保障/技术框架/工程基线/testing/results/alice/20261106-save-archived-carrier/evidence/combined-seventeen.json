@@ -1,0 +1,49 @@
+{
+  "file_hash_mismatches": 0,
+  "new_warning_locations": [],
+  "file_hash_scenarios": 36,
+  "parent_artifact_drift": 0,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "visual_acceptance": false,
+  "verified_at": "2026-11-06T06:33:09.0980947Z",
+  "source_files": 405,
+  "changed_previous_files": [
+    "checks\\Interaction.WaitBaitShelter\\Program.cs",
+    "src\\Yukkuri.Simulation\\FamilyValidation.cs"
+  ],
+  "prior_chain_artifacts": 20,
+  "failed": [],
+  "passed_pure": 70,
+  "game_build": 0,
+  "wait_bait_eof_only_published_origin": true,
+  "json_issues": [],
+  "origin_records": 403,
+  "carrier_delta_exact": true,
+  "pure_projects": 70,
+  "new_check_drift": 0,
+  "pass_text_lines": 1506,
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ],
+  "archived_carrier_checks": 55,
+  "new_check_files": 2,
+  "origin_hash_drift": 0,
+  "archived_carrier_failures": 0,
+  "prior_chain_drift": 0,
+  "source_hash_differences": 0,
+  "godot_run": false,
+  "parent_artifacts": 21,
+  "failure_text_markers": 0,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ]
+}

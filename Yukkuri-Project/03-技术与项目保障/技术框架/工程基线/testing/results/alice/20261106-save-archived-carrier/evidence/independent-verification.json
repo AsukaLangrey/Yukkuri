@@ -1,0 +1,20 @@
+[
+  {
+    "phase": "baseline-hashes",
+    "checks": 55,
+    "successes": 19,
+    "failures": 36,
+    "file_scenarios": 36,
+    "changed": 12,
+    "unchanged": 24
+  },
+  {
+    "phase": "fixed-hashes",
+    "checks": 55,
+    "successes": 55,
+    "failures": 0,
+    "file_scenarios": 36,
+    "changed": 0,
+    "unchanged": 36
+  }
+]

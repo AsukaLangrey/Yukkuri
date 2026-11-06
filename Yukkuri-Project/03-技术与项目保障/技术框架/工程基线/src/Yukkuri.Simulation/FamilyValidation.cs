@@ -87,12 +87,14 @@ public static partial class FamilyRules
         Require(visited==creatures.Count,"亲缘记录形成循环");
         if(s.InteractionPlaytest)
         {
+            // Sold identities remain valid history, but cannot carry a current portion.
+            var currentCreatures=s.Creatures.ToDictionary(c=>c.Id,StringComparer.Ordinal);
             var objects=s.RoomObjects.ToDictionary(o=>o.Id,StringComparer.Ordinal);
             foreach(var c in s.Creatures)
                 Require(c.Family.CareParcelId==null||objects.TryGetValue(c.Family.CareParcelId,out var parcel)&&
                     parcel.CarrierId==c.Id&&c.Family.CareTargetId!=null,"搬运任务缺少对应实物");
             foreach(var o in s.RoomObjects)
-                Require(o.CarrierId==null||creatures.TryGetValue(o.CarrierId,out var carrier)&&
+                Require(o.CarrierId==null||currentCreatures.TryGetValue(o.CarrierId,out var carrier)&&
                     carrier.Family.CareParcelId==o.Id&&carrier.RegionId==o.RegionId&&!o.Stored&&!o.HeldByHand&&o.Portions==1&&
                     o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet or RoomObjectKind.Water,"食水搬运归属无效");
         }

@@ -1,0 +1,720 @@
+{
+  "checks": 55,
+  "failures": 0,
+  "results": [
+    {
+      "name": "Meal-forward-normal-sale-history-roundtrip",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-reject-archived-carrier",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-backup",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-no-backup",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-both-bad",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-main-priority",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-candidate",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-existing-main",
+      "success": true
+    },
+    {
+      "name": "Meal-forward-archived-carrier-does-not-deliver-player-can-recover",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-normal-sale-history-roundtrip",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-reject-archived-carrier",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-backup",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-no-backup",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-both-bad",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-main-priority",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-candidate",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-existing-main",
+      "success": true
+    },
+    {
+      "name": "Meal-reverse-archived-carrier-does-not-deliver-player-can-recover",
+      "success": true
+    },
+    {
+      "name": "Water-forward-normal-sale-history-roundtrip",
+      "success": true
+    },
+    {
+      "name": "Water-forward-reject-archived-carrier",
+      "success": true
+    },
+    {
+      "name": "Water-forward-backup",
+      "success": true
+    },
+    {
+      "name": "Water-forward-no-backup",
+      "success": true
+    },
+    {
+      "name": "Water-forward-both-bad",
+      "success": true
+    },
+    {
+      "name": "Water-forward-main-priority",
+      "success": true
+    },
+    {
+      "name": "Water-forward-candidate",
+      "success": true
+    },
+    {
+      "name": "Water-forward-existing-main",
+      "success": true
+    },
+    {
+      "name": "Water-forward-archived-carrier-does-not-deliver-player-can-recover",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-normal-sale-history-roundtrip",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-reject-archived-carrier",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-backup",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-no-backup",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-both-bad",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-main-priority",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-candidate",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-existing-main",
+      "success": true
+    },
+    {
+      "name": "Water-reverse-archived-carrier-does-not-deliver-player-can-recover",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-normal-sale-history-roundtrip",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-reject-archived-carrier",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-backup",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-no-backup",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-both-bad",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-main-priority",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-candidate",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-existing-main",
+      "success": true
+    },
+    {
+      "name": "Sweet-forward-archived-carrier-does-not-deliver-player-can-recover",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-normal-sale-history-roundtrip",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-reject-archived-carrier",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-backup",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-no-backup",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-both-bad",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-main-priority",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-candidate",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-existing-main",
+      "success": true
+    },
+    {
+      "name": "Sweet-reverse-archived-carrier-does-not-deliver-player-can-recover",
+      "success": true
+    },
+    {
+      "name": "real-active-care-survives-roundtrip-and-sale-drops-parcel",
+      "success": true
+    }
+  ],
+  "fileEvidence": [
+    {
+      "scenario": "Meal-forward-backup",
+      "before": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.bak": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.bak": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-forward-no-backup",
+      "before": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-forward-both-bad",
+      "before": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.bak": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.bak": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-forward-main-priority",
+      "before": {
+        "slot-1.json": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.bak": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.bak": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-forward-candidate",
+      "before": {
+        "slot-1.json": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.bak": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.bak": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-forward-existing-main",
+      "before": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.bak": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "568D930ED5D7D587D829E9C6C101C727A7667E382D7D65FF20879F910E2AF978",
+        "slot-1.json.bak": "B943CDCC01B0DC25DFACC5205304BB3021FE9B5CF8FCBA24C7939243C9BDB6A4",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-reverse-backup",
+      "before": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.bak": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.bak": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-reverse-no-backup",
+      "before": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-reverse-both-bad",
+      "before": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.bak": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.bak": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-reverse-main-priority",
+      "before": {
+        "slot-1.json": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.bak": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.bak": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-reverse-candidate",
+      "before": {
+        "slot-1.json": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.bak": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.bak": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Meal-reverse-existing-main",
+      "before": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.bak": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "23F48C785689D795D24F372825C13BEBB01DC8E96ED62C84F63B753D7608CA33",
+        "slot-1.json.bak": "F0CA1010F24DFD380CE883AEEAED2D591873F39E7EB167E22CAEB7C32453418E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-forward-backup",
+      "before": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.bak": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.bak": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-forward-no-backup",
+      "before": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-forward-both-bad",
+      "before": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.bak": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.bak": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-forward-main-priority",
+      "before": {
+        "slot-1.json": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.bak": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.bak": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-forward-candidate",
+      "before": {
+        "slot-1.json": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.bak": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.bak": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-forward-existing-main",
+      "before": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.bak": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "16F27209BE4AC51B02F9F924CCF9E3100E3BF8517D7BFC4F5A15BBC2AE8E5C8D",
+        "slot-1.json.bak": "293E95174BD3CB0FDB8C899E408D791FD2A8CF0106D528FB1F8061D07A127B50",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-reverse-backup",
+      "before": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.bak": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.bak": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-reverse-no-backup",
+      "before": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-reverse-both-bad",
+      "before": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.bak": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.bak": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-reverse-main-priority",
+      "before": {
+        "slot-1.json": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.bak": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.bak": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-reverse-candidate",
+      "before": {
+        "slot-1.json": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.bak": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.bak": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Water-reverse-existing-main",
+      "before": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.bak": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "5355C9870AFF9320086CBBF93DA7D1F5BBB66FA69ABA6B9CA12065A2014BB9D6",
+        "slot-1.json.bak": "3C33B91BEE83527CCB13802CA468A08002179B8E2D7DD59FF71E234B08195EB6",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-forward-backup",
+      "before": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.bak": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.bak": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-forward-no-backup",
+      "before": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-forward-both-bad",
+      "before": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.bak": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.bak": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-forward-main-priority",
+      "before": {
+        "slot-1.json": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.bak": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.bak": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-forward-candidate",
+      "before": {
+        "slot-1.json": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.bak": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.bak": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-forward-existing-main",
+      "before": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.bak": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "C3E6BFCAA3C96CBC597D84A09870265BE21F6F53A980F0AE3518E1CBC5CA86F1",
+        "slot-1.json.bak": "77A118D01A1583F8D4DFAABB4213E0278D549A9DFAAEB1CA221A5CE551502E3E",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-reverse-backup",
+      "before": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.bak": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.bak": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-reverse-no-backup",
+      "before": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-reverse-both-bad",
+      "before": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.bak": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.bak": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-reverse-main-priority",
+      "before": {
+        "slot-1.json": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.bak": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.bak": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-reverse-candidate",
+      "before": {
+        "slot-1.json": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.bak": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.bak": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    },
+    {
+      "scenario": "Sweet-reverse-existing-main",
+      "before": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.bak": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "after": {
+        "slot-1.json": "AB8E32E6410378258A7E854030BA427F21EF64A606C903896151D5AA6203B087",
+        "slot-1.json.bak": "88E4407E1AA001CC32E1D4E59F3A80B72B64E82A7DFEE09785491F0F56C92243",
+        "slot-1.json.writing": "E4C23FF0F67C56C69B4A97F36A774BE1E862041658BF0D37B1D5377E0BBC4C75"
+      },
+      "unchanged": true
+    }
+  ]
+}
