@@ -37,6 +37,8 @@ public partial class Main : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            if(args.Contains("--shop-draft-audit-output"))
+            {GD.PushError("Shop draft checks require the InteractionRoom entry scene.");GetTree().Quit(2);return;}
             for(int i=0;i<args.Length;i++)
             {
                 if(args[i]=="--smoke-output"&&i+1<args.Length)_smokeOutput=args[++i];

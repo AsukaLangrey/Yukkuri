@@ -120,9 +120,11 @@ public partial class InteractionRoom
         }
         _pageInputs[_activityTitle]=values;
     }
+    private const string OwnsPageInputDraft="owns_page_input_draft";
     private static IEnumerable<Control> PageInputs(Node node)
     {
-        if(node is SpinBox or LineEdit){yield return (Control)node;yield break;}
+        // Transaction-owned drafts (shop quantities keyed by product ID) must not also use positional restoration.
+        if(node is SpinBox or LineEdit){if(!node.HasMeta(OwnsPageInputDraft))yield return (Control)node;yield break;}
         foreach(var child in node.GetChildren())foreach(var input in PageInputs(child))yield return input;
     }
     private void ResetRoomUiSession()

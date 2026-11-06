@@ -1,0 +1,220 @@
+{
+  "phases": [
+    {
+      "exit_code": 0,
+      "finished": "2026-11-07T03:31:24.5812187+08:00",
+      "started": "2026-11-07T03:31:17.064397+08:00",
+      "phase": "build-01",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false,
+      "preexisting_dll_sha256": null
+    },
+    {
+      "exit_code": 0,
+      "finished": "2026-11-07T03:31:39.4121658+08:00",
+      "started": "2026-11-07T03:31:34.9792309+08:00",
+      "phase": "import-01",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false,
+      "preexisting_dll_sha256": "6FA20A325AD24C0C0A9DF47F9DFA994EA3EB57FBA1AF50CC044AC66E3D6B72B9"
+    },
+    {
+      "exit_code": 0,
+      "finished": "2026-11-07T03:32:03.2148439+08:00",
+      "started": "2026-11-07T03:31:56.3484755+08:00",
+      "phase": "build-02",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false,
+      "preexisting_dll_sha256": "6FA20A325AD24C0C0A9DF47F9DFA994EA3EB57FBA1AF50CC044AC66E3D6B72B9"
+    },
+    {
+      "exit_code": 1,
+      "finished": "2026-11-07T03:32:19.2524458+08:00",
+      "started": "2026-11-07T03:32:12.4998067+08:00",
+      "phase": "run-01",
+      "tested_dll_sha256": "6FA20A325AD24C0C0A9DF47F9DFA994EA3EB57FBA1AF50CC044AC66E3D6B72B9",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false
+    },
+    {
+      "exit_code": 0,
+      "finished": "2026-11-07T03:32:53.3962386+08:00",
+      "started": "2026-11-07T03:32:46.5546457+08:00",
+      "phase": "build-03",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false,
+      "preexisting_dll_sha256": "6FA20A325AD24C0C0A9DF47F9DFA994EA3EB57FBA1AF50CC044AC66E3D6B72B9"
+    },
+    {
+      "exit_code": 0,
+      "finished": "2026-11-07T03:33:08.220801+08:00",
+      "started": "2026-11-07T03:33:01.4271807+08:00",
+      "phase": "run-02",
+      "tested_dll_sha256": "05E3DC9381C3777473594E81B8619A661F9130A74DF3B6E9C8D6F8044AB27073",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false
+    },
+    {
+      "exit_code": 2,
+      "finished": "2026-11-07T03:33:15.9079191+08:00",
+      "started": "2026-11-07T03:33:15.5106405+08:00",
+      "phase": "guard-01",
+      "tested_dll_sha256": "05E3DC9381C3777473594E81B8619A661F9130A74DF3B6E9C8D6F8044AB27073",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false
+    },
+    {
+      "exit_code": 2,
+      "finished": "2026-11-07T03:33:25.2297235+08:00",
+      "started": "2026-11-07T03:33:24.8357526+08:00",
+      "phase": "main-guard-01",
+      "tested_dll_sha256": "05E3DC9381C3777473594E81B8619A661F9130A74DF3B6E9C8D6F8044AB27073",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false
+    },
+    {
+      "exit_code": 2,
+      "finished": "2026-11-07T03:33:35.2066471+08:00",
+      "started": "2026-11-07T03:33:34.8122319+08:00",
+      "phase": "reuse-guard-01",
+      "tested_dll_sha256": "05E3DC9381C3777473594E81B8619A661F9130A74DF3B6E9C8D6F8044AB27073",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false
+    },
+    {
+      "exit_code": 0,
+      "finished": "2026-11-07T03:33:52.3260207+08:00",
+      "started": "2026-11-07T03:33:45.8787753+08:00",
+      "phase": "run-03",
+      "tested_dll_sha256": "05E3DC9381C3777473594E81B8619A661F9130A74DF3B6E9C8D6F8044AB27073",
+      "max_seconds": 300,
+      "remaining_own_pid": false,
+      "timeout": false
+    }
+  ],
+  "schema_version": 1,
+  "baseline": {
+    "actual_quantities": [
+      7,
+      8
+    ],
+    "passed": 16,
+    "failed_checks": [
+      "cross category return leaves never-edited facilities at 1",
+      "cross category return does not corrupt product cache"
+    ],
+    "result_sha256": "6E96506027D21D562B9D52A365DC2BFB88B43657613330A02451E3E7333756A0",
+    "expected_prices": [
+      35,
+      30
+    ],
+    "expected_quantities": [
+      1,
+      1
+    ],
+    "checks": 18,
+    "actual_prices": [
+      245,
+      240
+    ],
+    "failed": 2
+  },
+  "tested_game_dll_sha256": "05E3DC9381C3777473594E81B8619A661F9130A74DF3B6E9C8D6F8044AB27073",
+  "source_state": "测试发生于协调者提交前，具体源码字节由 source-manifest.json 标识。",
+  "base_source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "status": "partial",
+  "safety": {
+    "output": "Fresh absolute directory under isolated project .local/testing, created only after guard checks.",
+    "per_process_seconds": 300,
+    "timed_out": false,
+    "profile": "Fresh unique profile enforced before scene routing and SaveStore construction; no user save access.",
+    "aggregate_start": "2026-11-07T03:31:17.0221215+08:00",
+    "aggregate_seconds": 1800
+  },
+  "not_run": [
+    "Native visible UI, mouse/keyboard focus, human feel and full-game acceptance.",
+    "Full protocol suite and combined branch regression, delegated separately.",
+    "Purchases and unlock progression not exercised by this navigation-only diagnostic."
+  ],
+  "changed_files": [
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Panels.cs",
+      "sha256": "C09B7753C695B3DBCAF4D4EC06C3B9A9568E023D52DC835E4A31724452DCBEE5"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+      "sha256": "9985600DC9BA45B6BB060CA2B6BBB53191ECF6468441D464FDAE2417A1F201BF"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "sha256": "DF89BD441021DC0982971EC40DD1B4B890F58286AC06D59B31F3F2EFAC919CB7"
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.cs",
+      "sha256": "55B2D8B217260B3B3D20E95E17FB2D341CD4E41806E4237A6731AB936F1880F0"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.ShopDraftDiagnostic.cs",
+      "sha256": "8DAA507F8746C83D3CFB2F7ABA6A3CA0329C327CDA24E4E5DA412C202FA16F70"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.ShopDraftDiagnostic.cs.uid",
+      "sha256": "B5C9076AEE57FC154F9CB18326DC010688FF0E50DDC848F1083013D10EFB77AD"
+    }
+  ],
+  "targeted_regression": "passed",
+  "source_manifest_sha256": "3375E86049B4D549C3BF5F8D07FD57551C3A0D57A870F91BC6C0BF9618D5667B",
+  "intermediate": {
+    "correction": "Temporary test-only 1600-pixel content minimum forces genuine overflow. Nonzero-scroll assertion unchanged, no product changes, original size restored.",
+    "passed": 37,
+    "checks": 38,
+    "run": "run-01",
+    "failed": 1,
+    "cause": "Headless viewport fit all rows, so scroll was zero. Original evidence retained privately.",
+    "failure": "scroll fixture actually scrolls"
+  },
+  "tested_simulation_dll_sha256": "1A3ED57A2C449CFA5CD81C98406D2EE9B297E33B716CE01291B4B9061588FD0B",
+  "environment": "Authorized local Windows desktop, .NET SDK 10.0.402, Godot 4.7.2 mono, Debug, headless",
+  "branch": "alice/20261106-shop-quantity-drafts",
+  "final": {
+    "baseline_assertions_preserved": 18,
+    "money": 240,
+    "purchases": 0,
+    "failed": 0,
+    "independent_fresh_runs": 2,
+    "inventory_unchanged": true,
+    "checks_per_run": 38
+  },
+  "warnings": [
+    "Final rebuild: existing CS8604 nullable-source warnings at SupplyStationValidation.cs:12 and InteractionValidation.cs:15.",
+    "First build additionally warned twice about unavailable relative bundled NuGet source; explicit installed offline source and SDK resolution succeeded. Later builds report only the two CS8604 warnings.",
+    "Headless run-01 and run-02 each reported 2 ObjectDB instances leaked at shutdown; run-03 stderr empty. Not fixed in this scope."
+  ],
+  "guard_checks": {
+    "mixed_flags": {
+      "output_directory_created": false,
+      "ready": false,
+      "exit_code": 2
+    },
+    "reused_profile": {
+      "output_directory_created": false,
+      "ready": false,
+      "exit_code": 2
+    },
+    "direct_main": {
+      "output_directory_created": false,
+      "ready": false,
+      "exit_code": 2
+    }
+  },
+  "phase_dll_hash_semantics": "构建和资源导入阶段的 preexisting_dll_sha256 是启动该进程前已存在的DLL哈希，不代表该阶段产物。运行及守卫阶段的 tested_dll_sha256 标识实际启动前的DLL；最终两次回归使用05E3DC9381C3777473594E81B8619A661F9130A74DF3B6E9C8D6F8044AB27073。"
+}

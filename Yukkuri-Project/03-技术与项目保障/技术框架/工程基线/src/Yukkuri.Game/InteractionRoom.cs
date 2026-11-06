@@ -32,6 +32,7 @@ public partial class InteractionRoom : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            GuardShopDraftDiagnostic(args);
             if(args.Any(a=>a.StartsWith("--m01-")||a=="--integration"||a=="--legacy"))
             {GetTree().ChangeSceneToFile("res://Main.tscn");return;}
             GetWindow().Title=$"油库里乐园 · 慢慢来，相处小院 · {GameVersion.Display}";
@@ -71,6 +72,7 @@ public partial class InteractionRoom : Node3D
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
+            StartShopDraftDiagnostic(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }

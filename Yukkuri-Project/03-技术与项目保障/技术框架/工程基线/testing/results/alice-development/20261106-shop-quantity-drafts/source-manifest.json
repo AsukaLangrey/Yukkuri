@@ -1,0 +1,2062 @@
+[
+  {
+    "path": "checks/ActorArt.Preview/ActorArt.Preview.csproj",
+    "sha256": "772AE4B4D70971F9190B1069E5AEAC1C0743E6B6C38D6FB2F3CE5DEA05154AE4"
+  },
+  {
+    "path": "checks/ActorArt.Preview/Program.cs",
+    "sha256": "090CA8CD8EAFCB708CA617B0AAFF5EA9A9D285162E13AC7EB21E5CB8D62FBA60"
+  },
+  {
+    "path": "checks/ActorGeometry.Smoke/ActorGeometry.Smoke.csproj",
+    "sha256": "A3E30D392FEC0B936570F12AC27A4D44A44EB72D4C8612980C3F29DE7B7491F4"
+  },
+  {
+    "path": "checks/ActorGeometry.Smoke/HopIntakeAudit.cs",
+    "sha256": "99D89451399D90232D5C08D218A591EC042CF68E7B0ED856A8B2A0D45F473880"
+  },
+  {
+    "path": "checks/ActorGeometry.Smoke/IntakeCombinationAudit.cs",
+    "sha256": "FB13A863DE4F4D2A9285AAC95548438EE595AD233C5C8B4C10061844319B7242"
+  },
+  {
+    "path": "checks/ActorGeometry.Smoke/Program.cs",
+    "sha256": "945F6C45F365CAC8FFC3B993D9EA365F00DF3636706C3677006ECCC08E090BD4"
+  },
+  {
+    "path": "checks/ActorGeometry.Smoke/WoodlandOcclusionAudit.cs",
+    "sha256": "A90FE9C987BAA0FAF94E6400B02F6CF4F8483BD1DAF982FCAA0ED138680F238C"
+  },
+  {
+    "path": "checks/Courtyard.Economy/Courtyard.Economy.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Courtyard.Economy/Program.cs",
+    "sha256": "C31BA14E7A718F2A41B773BC515BD8DAA05C6AB2D0DCAADCC87C3060E0AB1496"
+  },
+  {
+    "path": "checks/Family.AdoptionJourney/Family.AdoptionJourney.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.AdoptionJourney/Program.cs",
+    "sha256": "DF12645BBA74882485D2504AED5F585D9CC858ED877A00B51428C143B672D395"
+  },
+  {
+    "path": "checks/Family.Aftermath/Family.Aftermath.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Aftermath/Program.cs",
+    "sha256": "F3E220B387BF6978A8CC63C22863FEACC1C5CB4AA8B6D8D943AEED93D821B9A5"
+  },
+  {
+    "path": "checks/Family.AssistedCare/Family.AssistedCare.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.AssistedCare/Program.cs",
+    "sha256": "1AA0EE48B59D0C7DC2C5A806EB1FE99E81469DC83BFA231FDD41189AD75FBFBA"
+  },
+  {
+    "path": "checks/Family.CareContinuity/Family.CareContinuity.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.CareContinuity/Program.cs",
+    "sha256": "E6A0CF88AC8FC91ED57AA653D72E349BAC8CD78C83D2B806B944E30CBA96BC3D"
+  },
+  {
+    "path": "checks/Family.CareInterruption/Family.CareInterruption.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.CareInterruption/Program.cs",
+    "sha256": "33A1F476939AF161790A1BCE992087D74E4EA940BD694D812449CF4BA864B315"
+  },
+  {
+    "path": "checks/Family.CareLearning/Family.CareLearning.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.CareLearning/Program.cs",
+    "sha256": "B13DEF3DBB56D051B89A6EB17E147913B473398AB2AB6DFF355FB10D159229BA"
+  },
+  {
+    "path": "checks/Family.ColdCare/Family.ColdCare.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.ColdCare/Program.cs",
+    "sha256": "891D332455AD4B3F2EE58D86529CE2B9D0EC6688CF658A6E3D98F7B9BC316B36"
+  },
+  {
+    "path": "checks/Family.CompanyCare/Family.CompanyCare.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.CompanyCare/Program.cs",
+    "sha256": "B66F987765E1D8A0AA670A39C871BAFC229F6CA3879EE950C6974805C5F5CFC6"
+  },
+  {
+    "path": "checks/Family.Compatibility/Family.Compatibility.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Compatibility/Program.cs",
+    "sha256": "A65B1C36B08FD77CBC4352B50067DC8525E755EC92A4322EFFF830292D056CBA"
+  },
+  {
+    "path": "checks/Family.Desire/Family.Desire.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Desire/Program.cs",
+    "sha256": "C147E65AED975EF8E2BC595C2FA9B697EA96C862AC48C9FC3E94884B79575B23"
+  },
+  {
+    "path": "checks/Family.Growth/Family.Growth.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Growth/Program.cs",
+    "sha256": "F258CFEC7BA158042B867A760748142375AF6CABFE2B58BCD04085C16A36BCFF"
+  },
+  {
+    "path": "checks/Family.MouthCommunication/Family.MouthCommunication.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.MouthCommunication/Program.cs",
+    "sha256": "C403BEF0218B7951B05EEFFD2F3F36854326DF080D4C47BFC8E32BC5EEA36413"
+  },
+  {
+    "path": "checks/Family.PregnancyBoundaries/Family.PregnancyBoundaries.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.PregnancyBoundaries/Program.cs",
+    "sha256": "79513DD7B569BC81D6C149CA5C39D48E901C4AE62896138FDDC387E3DDDD0D4B"
+  },
+  {
+    "path": "checks/Family.Presentation/Family.Presentation.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Presentation/Program.cs",
+    "sha256": "48208CFA985318CD6B05A2CD2420CA93852AA5D8A88E697BA881405639CAB034"
+  },
+  {
+    "path": "checks/Family.Protection/Family.Protection.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Protection/Program.cs",
+    "sha256": "C863A884C961B97DF724FBA9E921004D8368F5A351F793864CB63829BC91C860"
+  },
+  {
+    "path": "checks/Family.Reproduction/Family.Reproduction.csproj",
+    "sha256": "41EB41C7A291BCB23495D8063E7A328D14AAA885EAD613A82A07B7250C0A9149"
+  },
+  {
+    "path": "checks/Family.Reproduction/Program.cs",
+    "sha256": "BC2603257E71A7ACEA460E1DB0529C26B96679CEF8A3D313D5002CD17F6F1CDE"
+  },
+  {
+    "path": "checks/Family.Risk/Family.Risk.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Risk/Program.cs",
+    "sha256": "6B436DB010DA922D71733E9A1E6D6A3CD1EEAAB20DDCB55B1C91694B430960C0"
+  },
+  {
+    "path": "checks/Family.Social/Family.Social.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Social/Program.cs",
+    "sha256": "7AEBD0CB39571D867FDE968995DD946DC881F6A688B989EDBDF92FC389C16BD3"
+  },
+  {
+    "path": "checks/Family.Teaching/Family.Teaching.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Family.Teaching/Program.cs",
+    "sha256": "AC53FB72262946183337B9E50A3192F0A95A9706B0A92663D099058C445CFB96"
+  },
+  {
+    "path": "checks/FamilyNurseryJourney.cs",
+    "sha256": "491503FD45ADC09A03ABB46CBAB8B86B936CA1A423CBDF159E69819C49602D1D"
+  },
+  {
+    "path": "checks/Input.Intent/fixtures/contact-traces.json",
+    "sha256": "AD8FF07CCAA4E85A627F0511FCE96EA85E7940D6F3390B5052EA454A38F8AE93"
+  },
+  {
+    "path": "checks/Input.Intent/Input.Intent.csproj",
+    "sha256": "ECB37F1C1D9A8BD4CBD2B8B927FAE3ADE4BE7B54EF7FF4AFE83C546D70E2BB91"
+  },
+  {
+    "path": "checks/Input.Intent/Program.cs",
+    "sha256": "5BC97F123EC4302B59594E43E6A699C7B25137B58481DAF110D44EA141D80265"
+  },
+  {
+    "path": "checks/Interaction.AbuseJourney/Interaction.AbuseJourney.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.AbuseJourney/Program.cs",
+    "sha256": "26958E8743DB10F4B52B8B2AB7D9D28D3D4C354C0815B27D917EF2CF34D3ECF3"
+  },
+  {
+    "path": "checks/Interaction.AffectionJourney/Interaction.AffectionJourney.csproj",
+    "sha256": "41EB41C7A291BCB23495D8063E7A328D14AAA885EAD613A82A07B7250C0A9149"
+  },
+  {
+    "path": "checks/Interaction.AffectionJourney/Program.cs",
+    "sha256": "8DF5C17D896DB3AF1B62D341B4FEB4C7A3221D52D0E0E9B7667C1B6FA0D656BE"
+  },
+  {
+    "path": "checks/Interaction.AutonomyPriority/Interaction.AutonomyPriority.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.AutonomyPriority/Program.cs",
+    "sha256": "F933E2FEE3EAE9EA43D08B0F1A55592C7F2735D133BE6565D1DA990C6E598A63"
+  },
+  {
+    "path": "checks/Interaction.CompletedNeeds/Interaction.CompletedNeeds.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.CompletedNeeds/Program.cs",
+    "sha256": "59220730027BD78C5A29570AF6ABFA9C41B5DABB408C895413ACAE4279EB1E89"
+  },
+  {
+    "path": "checks/Interaction.Completion/Interaction.Completion.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Completion/Program.cs",
+    "sha256": "8A21D94B814A8DFFDB351D553EA34A3FAC1E86D613731041B0A8F2A53DDB7580"
+  },
+  {
+    "path": "checks/Interaction.Continuity/Interaction.Continuity.csproj",
+    "sha256": "9A22B346CAE7B1D1FCC1902128BEEB86981F089F8C4832CAFC92273D690AE188"
+  },
+  {
+    "path": "checks/Interaction.Continuity/Program.cs",
+    "sha256": "33771A3AE4E86A014BB12DD920583D135258F918C9F69B1318F3B30F8D5331D2"
+  },
+  {
+    "path": "checks/Interaction.CreatureArrival/Interaction.CreatureArrival.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.CreatureArrival/Program.cs",
+    "sha256": "A062008FD5D5FD2DE66960C064245CB1FCD2251358C31A666501BC9F1279C851"
+  },
+  {
+    "path": "checks/Interaction.Depth/Interaction.Depth.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Depth/Program.cs",
+    "sha256": "A4B838FBE88C12C3B03F0F0BD499F31CBCC08C77ACD3EDEC24D120D9A7E244BB"
+  },
+  {
+    "path": "checks/Interaction.DetachedStem/Interaction.DetachedStem.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.DetachedStem/Program.cs",
+    "sha256": "7DD9EF0256EA76ACD5638C064D735945F4F8E87DE467F41A0557941660609324"
+  },
+  {
+    "path": "checks/Interaction.EmergencyIntervention/Interaction.EmergencyIntervention.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.EmergencyIntervention/Program.cs",
+    "sha256": "8716B182F222A52B5E9D44BF7165AF7486DBD569C17D3AA73F5157ACA5CACF09"
+  },
+  {
+    "path": "checks/Interaction.Help/Interaction.Help.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Help/Program.cs",
+    "sha256": "BE27E985345B4CF74A96FA8130CF13C690932241F15166C06888E67BE190D232"
+  },
+  {
+    "path": "checks/Interaction.HumanCompany/Interaction.HumanCompany.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.HumanCompany/Program.cs",
+    "sha256": "5A3E3D94019E37A09CFE28F01F5AD4B086B7CE54B7FA188817A61F0408F590A3"
+  },
+  {
+    "path": "checks/Interaction.HungerFeeding/Interaction.HungerFeeding.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.HungerFeeding/Program.cs",
+    "sha256": "219B3C696BD814A9CBFF750B700D1BC3C7D81C9717059DC3AD694A55A58ACA67"
+  },
+  {
+    "path": "checks/Interaction.Injury/Interaction.Injury.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Injury/Program.cs",
+    "sha256": "4DF0BA1F21086CBCBD81C2A7D55F5B75439C836991362CA3CE60F960E646F7E8"
+  },
+  {
+    "path": "checks/Interaction.InjuryPresentation/Interaction.InjuryPresentation.csproj",
+    "sha256": "2FDC8D3CD9332769F01435E4C87CF3C587E6AF91C8D1F5CEC69268E9E0CA013D"
+  },
+  {
+    "path": "checks/Interaction.InjuryPresentation/Program.cs",
+    "sha256": "77E3BB3A3CF2ED4A78316598AFC7E6543C16AD8FAD54F5CF986D20F36D49AB2B"
+  },
+  {
+    "path": "checks/Interaction.Inventory/Interaction.Inventory.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Inventory/Program.cs",
+    "sha256": "B8E58FE247A3199B2762D31CA90AFA889575DA721189439E23CA79403AB2C9A6"
+  },
+  {
+    "path": "checks/Interaction.LifeDevelopment/Interaction.LifeDevelopment.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.LifeDevelopment/Program.cs",
+    "sha256": "4EC17D6040B9065E1F549F3A631AC0C27D1385CABE186DE14E1A0241105A3054"
+  },
+  {
+    "path": "checks/Interaction.Mouth/Interaction.Mouth.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Mouth/Program.cs",
+    "sha256": "7B02E64FD1C5F11F93CE266A377DE0C6B2651B2096A2976580822FA99527E4D9"
+  },
+  {
+    "path": "checks/Interaction.MouthPresentation/Interaction.MouthPresentation.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.MouthPresentation/Program.cs",
+    "sha256": "E1A6EB415B2D2031E5C042F40ADDD1637FA54D2A47B7CB18379B7B620AFF48BA"
+  },
+  {
+    "path": "checks/Interaction.PeerCompanyContinuity/Interaction.PeerCompanyContinuity.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.PeerCompanyContinuity/Program.cs",
+    "sha256": "EB0A5C73CFD3D33ED5CACF840C4575670FA11D463AC86FD2194A380279D212A0"
+  },
+  {
+    "path": "checks/Interaction.PeerThreat/Interaction.PeerThreat.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.PeerThreat/Program.cs",
+    "sha256": "691CC8B71073019153F1B02682DAD8EB2524E66885A989A30309B354012F2264"
+  },
+  {
+    "path": "checks/Interaction.Shelters/Interaction.Shelters.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Shelters/Program.cs",
+    "sha256": "8627322002DD930A6A3AB5A393B14E26D41A94E321BA6BE0C07F078CDE916F70"
+  },
+  {
+    "path": "checks/Interaction.Smoke/Interaction.Smoke.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.Smoke/Program.cs",
+    "sha256": "032433A392278CCED470D8495C5A0279FE073779FAA03FF2050512436CA77FC2"
+  },
+  {
+    "path": "checks/Interaction.StateBoundaries/Interaction.StateBoundaries.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.StateBoundaries/Program.cs",
+    "sha256": "5F2C6788F1C7346ADA5DAF47AE8F55F62293138D7CF92E1FFF96AF0B9C069E79"
+  },
+  {
+    "path": "checks/Interaction.StemCare/Interaction.StemCare.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.StemCare/Program.cs",
+    "sha256": "BCB5A6DEE24BBACB83271342F9D78739883294ECDF065B3A2779B360BE8FF3F4"
+  },
+  {
+    "path": "checks/Interaction.SupplyStations/Interaction.SupplyStations.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.SupplyStations/Program.cs",
+    "sha256": "13390C6D382B941DBBCBFE9C0A265CA9A86DDFCF9465CA6B4379B3ABE004006B"
+  },
+  {
+    "path": "checks/Interaction.WaterAttempts/Interaction.WaterAttempts.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.WaterAttempts/Program.cs",
+    "sha256": "40A5E73E902198081F95841BD3F90476699C33C5AAD0E1285C9D88AF10156153"
+  },
+  {
+    "path": "checks/Interaction.WaterEmotion/Interaction.WaterEmotion.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.WaterEmotion/Program.cs",
+    "sha256": "F7183D54CD7E1A8E6327D66E0C881459346340CB31F4A53DB16BBCC56605884D"
+  },
+  {
+    "path": "checks/Interaction.WaterSupport/Interaction.WaterSupport.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.WaterSupport/Program.cs",
+    "sha256": "7F80CB5318F3FD9395FAB41408EBB731D4DC315A8B16CD2213175FE70A3537A1"
+  },
+  {
+    "path": "checks/Interaction.WildSelfCare/Interaction.WildSelfCare.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Interaction.WildSelfCare/Program.cs",
+    "sha256": "892F83D19B3A6A8109CFD577EE4556EC45D18958A92D43DA84AA93B73CB05838"
+  },
+  {
+    "path": "checks/InteractionProp.Preview/InteractionProp.Preview.csproj",
+    "sha256": "C12CC89311C023433A5D5F1060311EB08F8488747D76C76BCBCF43355F14DC0F"
+  },
+  {
+    "path": "checks/InteractionProp.Preview/Program.cs",
+    "sha256": "580F38B2F3118BB5932A96E1EFE9BE860FAECD85716B9703D06D25595DF1522D"
+  },
+  {
+    "path": "checks/Milestone.Exploration/Milestone.Exploration.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Milestone.Exploration/Program.cs",
+    "sha256": "DC127C3E8741AC5C1C2F960D4937F2C905639A26D6D9E9FF1E4587E257A64B22"
+  },
+  {
+    "path": "checks/Milestone.Smoke/Milestone.Smoke.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Milestone.Smoke/Program.cs",
+    "sha256": "FCC392B43F2ACC24AED309EC1F6FAFF736A91976487AEEDCB940FFADEDA29B91"
+  },
+  {
+    "path": "checks/NaturalLife.Smoke/NaturalLife.Smoke.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/NaturalLife.Smoke/Program.cs",
+    "sha256": "F58C15BD11F4E6885101B75E612183AF04FC5C2AC1ED3A0F5DFC131FBC79EC6B"
+  },
+  {
+    "path": "checks/NaturalLife.Soak/NaturalLife.Soak.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/NaturalLife.Soak/Program.cs",
+    "sha256": "6845751A014563DB0E23057108D3F53AA4CD1A85E7569FA0134B647D9884B9A4"
+  },
+  {
+    "path": "checks/Renderer.Probe/Probe.cs",
+    "sha256": "ACA342398BD922D84E7083B608986C84A1089ADC48E0FD5EBA3F169FB6A664B9"
+  },
+  {
+    "path": "checks/Renderer.Probe/Probe.tscn",
+    "sha256": "1773F534271E1F49CB93ED8A35AE38E460CFF04DD1FF8B37223350B1D8EDDCF4"
+  },
+  {
+    "path": "checks/Renderer.Probe/project.godot",
+    "sha256": "C79AFFBE1EF29131D5EBD7D3EDE091F2BDB9029BBFED37C1F6E3636A04B39292"
+  },
+  {
+    "path": "checks/Renderer.Probe/Renderer.Probe.csproj",
+    "sha256": "251268F991885D3D6D82CE17F971329FC82B744B476BDA627C6094FDF5130091"
+  },
+  {
+    "path": "checks/Renderer.Probe461/Probe.cs",
+    "sha256": "C457C2C52EAFAB41100E9CD0E305715F98CF22BD44B313402B8A77A7F7B6ECE0"
+  },
+  {
+    "path": "checks/Renderer.Probe461/Probe.tscn",
+    "sha256": "1773F534271E1F49CB93ED8A35AE38E460CFF04DD1FF8B37223350B1D8EDDCF4"
+  },
+  {
+    "path": "checks/Renderer.Probe461/project.godot",
+    "sha256": "C79AFFBE1EF29131D5EBD7D3EDE091F2BDB9029BBFED37C1F6E3636A04B39292"
+  },
+  {
+    "path": "checks/Renderer.Probe461/Renderer.Probe.csproj",
+    "sha256": "C6FCD4D10E5231D77C46442E815B78840F72B2E17A03D1BA78ADD669D7C70A87"
+  },
+  {
+    "path": "checks/Save.Compatibility/Program.cs",
+    "sha256": "D7609FCA7B293EDC92D2BFC2439CE5A30060E7E1DF54BA25C04E95E6C741A8B6"
+  },
+  {
+    "path": "checks/Save.Compatibility/Save.Compatibility.csproj",
+    "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+  },
+  {
+    "path": "checks/Simulation.Smoke/Program.cs",
+    "sha256": "37976CD7324B8E001F2424785ADC21FED0B8E3D901207D7E35D5F11CF5717A56"
+  },
+  {
+    "path": "checks/Simulation.Smoke/Simulation.Smoke.csproj",
+    "sha256": "FA5A375FC8191331FFFE02C9A330CADD37F22F144B2B53AF98602CC37585B972"
+  },
+  {
+    "path": "checks/Woodland.Preview/Program.cs",
+    "sha256": "EEE4428A8F21D564BA8A6C40970F1F4B442F093395B70DC3AE775B4DB60301CF"
+  },
+  {
+    "path": "checks/Woodland.Preview/Woodland.Preview.csproj",
+    "sha256": "FD633A7A73DAE7FF818CB5546DDC5A11AA8666EC5B4696A76AB50D0E82B8BF62"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessoryPlacement.cs",
+    "sha256": "F04742365C623B0CC7389C5F22ACE840008FB3BC612AFE0887D1539670CCF285"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessoryPlacement.cs.uid",
+    "sha256": "900ADD1079CBA703E09F6E4594B17CAE8EF922D2336BAC0BC9F63ABD56822A71"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessorySupport.cs",
+    "sha256": "64B61623CA11A566B3DE99835C485CC4E04C74A003B18066A3489784C4EF0D7B"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessorySupport.cs.uid",
+    "sha256": "FB2B7CFF3E3904379FEF441B09D7D8AF4EA6C22027DCE59E9625B5493B3AA95E"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessorySurface.cs",
+    "sha256": "0A9D3FFD529BA9AF84DA012B4C453A7CC0029C6297D30DE2634F387B93C7306D"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessorySurface.cs.uid",
+    "sha256": "B65C30AD7305D9BE1B284975478AA020BCC604E53B705864123A887E4864B7BF"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessoryWear.cs",
+    "sha256": "B0A6FE613F6B964022BA0F8774A220ED58E16CDCBCE607083A7C265A486EFBD2"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorAccessoryWear.cs.uid",
+    "sha256": "BD7C9B99C8FE556FECF41759BCC56EA697164FF11DCCC65895F6F71F336483D4"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorBodyBounds.cs",
+    "sha256": "0186FC1D6A59D2A2470502150A31F215D205200956ED9A4FC6EFB8D6036918DE"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorBodyBounds.cs.uid",
+    "sha256": "77FE4531F9D28BC339D97F41453D845FCA31460A9CC24FB4EF688C1EE3FE3124"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorBrowSurface.cs",
+    "sha256": "F10F0C7C70A2D5F0D603560E49107439C32172ABA6A8C7BDCB8150091494D820"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorBrowSurface.cs.uid",
+    "sha256": "238712BBD6DFA0363F8211753A6AFB08453DCD19879D2671B99307161F22FD25"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorCradleSurface.cs",
+    "sha256": "08296B7A1C4822B9CAB35B49480B6B05596C2FB6B1A1B33CAAB0B0381F441502"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorCradleSurface.cs.uid",
+    "sha256": "3B472F5FAFBB71FFE0E703F51E8C2783D458E57F5D3126B019DF64B97A2FB013"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorCushionSurface.cs",
+    "sha256": "CB91DE21BEE30FA896FD3B5652B817F945291E86DD78B5BE445C0AC9EF81C95C"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorCushionSurface.cs.uid",
+    "sha256": "7020E6E28107CFBEFFFC05D5C4D23C7A8F4ADF2A935E5650E807E7A0D8A25735"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorDressingSurface.cs",
+    "sha256": "93FF20C785F3A3C7DEFB2907A0FEE668C1E72BD4F602DAAEA2B65DF7C74A44B7"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorDressingSurface.cs.uid",
+    "sha256": "8BF5DBD16536940B4834A348DA6586B7777B54B39AD545B4CCEEDB4A5CA87B9C"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorEyeSurface.cs",
+    "sha256": "0D84E5F3019764BD568EE72847583E0564F31C83D1287F0083254E0CA0BACB36"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorEyeSurface.cs.uid",
+    "sha256": "E51046D478BD02955F356788D405EB63D30A78416EA5928878A45EB1332BE8CF"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorFaceSurface.cs",
+    "sha256": "C53712632CD666F853B4713B7FF56B05EF58743B1E31D1EBD46167194FFC5957"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorFaceSurface.cs.uid",
+    "sha256": "730D41C228C29CA0D85427926C6721C4F154C62A1B04D8A290596D94C4322E2F"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHairSurface.cs",
+    "sha256": "96E17C43A2EBE667F866276BD7AC3FA287E8DD995E4B1BAFF6666CFAD066D071"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHairSurface.cs.uid",
+    "sha256": "C54AFD11142E5AD532B5250E24DEF4F4881B18B57968541666DEE14F3C928C47"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHarnessSurface.cs",
+    "sha256": "903F100140A88A0C56D7D334B51039D3106D835F076D31B5B3A2FD8165953DC1"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHarnessSurface.cs.uid",
+    "sha256": "F0007501FB0822C0A5A02F39E6934124248369898D2899679B6A76EDC2AB3FF3"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHeatPresentation.cs",
+    "sha256": "8A549406775DD1D24A67564CF1F962ACFBED649FD29AFB57C264ED9C92DEB16E"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHeatPresentation.cs.uid",
+    "sha256": "75F91CFECB8880562D5F826674FDC9E306C8D32FB7CA1622CD7C6D1936EEE7BE"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHopMotion.cs",
+    "sha256": "B5FCA37EAD2950BBA147F97B9A049AC01772704A2C29F420F7093A43680FC30C"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorHopMotion.cs.uid",
+    "sha256": "C49B4C2049B4F8F311974C587FFD6F588D37A2F6A4AA6EB7CA3355484814AA0A"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorInjuryPresentation.cs",
+    "sha256": "885C3C8AD34998FB3AEF8385236EF79C04F775FFFC9B41B87A2CD39DF6D20A09"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorInjuryPresentation.cs.uid",
+    "sha256": "8572CD7DAA916282D7EA9578050B12F777805D4BE60B0E6B66105DC94CFA460A"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorInjurySurface.cs",
+    "sha256": "69A5D3E420EAB9336489E552905F15DE86BFE9BA4039C4651F1B91BDBE5B0B21"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorInjurySurface.cs.uid",
+    "sha256": "09CFE2E9A4BBC2F1009990F83B5CCF6D936B04542C982DADE4E4E5720E778DC6"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorIntakeMouthSurface.cs",
+    "sha256": "1D5AF7B5F62C927244E63579382C706DC762F4AAFCC8FFC9A68F8AE4D3AA7D35"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorIntakeMouthSurface.cs.uid",
+    "sha256": "C8D8FE9F30468FCB2111F68566F1C950B50285DE9BDCD7D73B30F6E2B755C4C5"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorIntakePresentation.cs",
+    "sha256": "18D71727BEC4B8B7B4C67FF0B55CA27BA11F2327ED392EC1326B4E5463CFE8B0"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorIntakePresentation.cs.uid",
+    "sha256": "101A6CF0D48C348CBB419AE335E3A86AF577056E0AC2969B358D58B0DE07D0DE"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorMeshSupport.cs",
+    "sha256": "CB82451B3853F4923EFF9B90A4904B8DF69A9E5D0EFE5558F25900C1B678F9A3"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorMeshSupport.cs.uid",
+    "sha256": "1CBCEC24A908703AAFD817042E73659D9D95D333FC30DCA66C18F4E626391786"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorMouthSurface.cs",
+    "sha256": "AA82E4A05A8273C7F5DA12973B98A22A06395D748161E960700EB229DA7D2C0A"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorMouthSurface.cs.uid",
+    "sha256": "40BDD110A456A8D5369D7C35B6CF3B6E68AD7CDEDD763C888A07B231B370C79F"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorNaturalPose.cs",
+    "sha256": "764951AC57A304E317F2526EF9F12A4643F6A09CCB4ADC6F62421C15885E032D"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorNaturalPose.cs.uid",
+    "sha256": "39786438B70D7435217009988F6C6CC3A009E6AAC005FACBFE968F296B2A86E9"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorNaturalSupport.cs",
+    "sha256": "B6BF9CBFFFE17FB09D0036B2C5B495A4FE1F7525C99CE76F15A8ED71A2961B4D"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorNaturalSupport.cs.uid",
+    "sha256": "FA0BFA5ECBCC13270BA51A3C59F7FDA48C9863C858BDDE197B95711A8310586D"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorPoseClock.cs",
+    "sha256": "866D0614BABA54FCFD752B011E1B44AF1D95DC000547017E86578A4D1D4F2857"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorPoseClock.cs.uid",
+    "sha256": "35DEA024EA99C73FDE80FCFA3F15CBDD449A58097D6CA5155F7EEC7192EF44D8"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorPoseSmoothing.cs",
+    "sha256": "1E868B109589ED208251E7E4ABBCD3CD6CD381F28169776490B52632995E2003"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorPoseSmoothing.cs.uid",
+    "sha256": "114C31DB4231A74219DADEE7BFB007B8F6F60A52D6B89794EF4F1713260B3BAA"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorReactionMotion.cs",
+    "sha256": "FFDF0A062EADBB98045D7CD79FC30C4E7EBF57DEE5CB7809B22E28F521F37189"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorReactionMotion.cs.uid",
+    "sha256": "FEAAC6A6541F33DF6E55FD8B9981CA8CA41D83C8E8429BCBF5C33FB3E05F1BBA"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorStemBudPresentation.cs",
+    "sha256": "DC2336AF969B4F7C8B1222B1D6CDFB9967BBB23C62BA8EA1634382712A5F3476"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorStemBudPresentation.cs.uid",
+    "sha256": "A10F0EBB8365B9DE64C0B09710B16FDE8842882487B67791D492C77D37CC1282"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorSurfaceMarks.cs",
+    "sha256": "3C86CD8583F7B5F87C6148DC31E6D3F1FF6BBF3B8594AF70AB937954255489C8"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorSurfaceMarks.cs.uid",
+    "sha256": "28C57DA4FF0976EC8AA0BE2E57F80949470EA3AC3CBC32D626C3FEE8EE79439E"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorTearSurface.cs",
+    "sha256": "1E81C2B78D64A548F027F34DE779364CD586EF927AB9CF4278853F81DEA0FF45"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorTearSurface.cs.uid",
+    "sha256": "2B23326728ACBDFCB5878A36609E1009A8AA5EE79DBEF7347D3F2B26366A4CA1"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorTouchShape.cs",
+    "sha256": "17A373963A719B090197A62ECDF776E804FE12FFAC2DA5E3C41BEE6E7B384210"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorTouchShape.cs.uid",
+    "sha256": "E34A840D4B97810A6FE8271CDB9ECD29224A88D7A0DE11EFD4035532ED54E92A"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorWaterDropletSurface.cs",
+    "sha256": "EAABEED1E2ACBDA2E2F4A8B5EF62314F15A067B41F48CBF2001D4ABA0019E8C9"
+  },
+  {
+    "path": "src/Yukkuri.Game/ActorWaterDropletSurface.cs.uid",
+    "sha256": "524AAFB7F95322CB3E2A911F9B47484284A1139048BED21518948C054231703B"
+  },
+  {
+    "path": "src/Yukkuri.Game/Assets/Audio/audio-analysis.json",
+    "sha256": "92E6336301280DA3CB22049D82357AB58A26D9042C1D83B3EA88DB9A172A479A"
+  },
+  {
+    "path": "src/Yukkuri.Game/Assets/Audio/m01-audio-analysis.json",
+    "sha256": "55257E71D37458967F8A861308E98166113D3B263A09F5FD8FEADB4497BDF5CC"
+  },
+  {
+    "path": "src/Yukkuri.Game/CanvasEventFeed.cs",
+    "sha256": "07FE362A41894FCC21D3E0D35D37603565276F6DC3E282E579D07924AA979B41"
+  },
+  {
+    "path": "src/Yukkuri.Game/CanvasEventFeed.cs.uid",
+    "sha256": "B0A5A93AC53675819FC05FFF8C380212A779F54CDB0967CB78226BEC0CE0CF89"
+  },
+  {
+    "path": "src/Yukkuri.Game/CanvasNoticeSource.cs",
+    "sha256": "327E76632499EEE3E0CBAEE67BF6AD91C6871C44982AB1DE2C7445BB318AE936"
+  },
+  {
+    "path": "src/Yukkuri.Game/CanvasNoticeSource.cs.uid",
+    "sha256": "0B9E2895D0A2D4EFEA66A15762C053B3A3F8B574A8CAB53844A4840A01A81DD0"
+  },
+  {
+    "path": "src/Yukkuri.Game/ContactStrokeTracker.cs",
+    "sha256": "81A25C98DE934D25F85794468E99336CBEE2952D6B9EE847DDFA61459213FCD0"
+  },
+  {
+    "path": "src/Yukkuri.Game/ContactStrokeTracker.cs.uid",
+    "sha256": "9334516FD68D9B05FDB8B76C01CDA8B6B50B80BB8536DC24593DE8DD8F4413B2"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Accessory.cs",
+    "sha256": "B98C5E2AD7B2FFC3D1500C6FF51D9376A385AA1CBCB64B799B5C8E4BD0C09D8F"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Accessory.cs.uid",
+    "sha256": "318236E03CCC9AEBC790CE730CCEE89E825EAA372A0E3C30E0A97583AFE029C5"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Contact.cs",
+    "sha256": "7FF05CFBFA45C6BDAC68B36E596C6CBC95A8A62566EE157FB1C8350FA95C5E28"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Contact.cs.uid",
+    "sha256": "B2D6BD041FD51184F8BEC94236325B8AA406C8CBF4C9E7DCBCBC86058743EC35"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.cs",
+    "sha256": "D4608B6625BF686C9C67728AE3AB98D0445D75A89CF979AD43B078CEC3BCA6E0"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.cs.uid",
+    "sha256": "78A25AD9B2D2B50935782126D5AED9A2064AAF532456A958343F33718EBB1537"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Deformation.cs",
+    "sha256": "0C2D7A96ED182B775CCF6AF157C27137AF452BFB88C1889AD5E149FFC00B4BC8"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Deformation.cs.uid",
+    "sha256": "7E00479C0C5B0225AF3A0B28530F91ABA6E17C520260E8A6041216025BAEE738"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Dressing.cs",
+    "sha256": "4CA05E0D4D786D5D62E5220BEFF188FBC8A2EAF715B5581CC92A45B0E33AE9F0"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Dressing.cs.uid",
+    "sha256": "77C94AEB9FB9E108F099DF9CC665ED0948DA0DA3DD297FD28B3A2F88AB29FCA3"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Face.cs",
+    "sha256": "A33AFB7933D082D37EADCCC416DCFB2CC90AE348B23DB3CE8572D5575A879B70"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Face.cs.uid",
+    "sha256": "42B80AED1B82BA2965FD900E3C4209E6BFAC74170E6DD67AF550B8025E94C0CD"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.FaceMotion.cs",
+    "sha256": "D96DF47E01C668055918F541008FD6CEDFBF0C4B1E09823C26D52A7D5BEFACC5"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.FaceMotion.cs.uid",
+    "sha256": "42EB8A6241D3EF53D1708FFB2DAC52AB5FE68FEEC6DE37BC1A1B586F12E835DB"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Gestation.cs",
+    "sha256": "12293BAB0B0BC9644D311908F78E1A37013B559EDF5E233C7208726C0863E44E"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Gestation.cs.uid",
+    "sha256": "C75AA33A9EE08317FBC260E489B61983AD40A8B855746F9CEE0B315DA0EDCBBD"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Harness.cs",
+    "sha256": "736819C544522FA52B43A7C04DEEA99AE6CD52BB096330E73CAD6A9F3449BEE7"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Harness.cs.uid",
+    "sha256": "C547274A1968262F2768599B6A6FFA0C27AF1D8E5BD40F69FDD857FA8DD01948"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Heat.cs",
+    "sha256": "031D53662A5748F22843E892D64D349C555B5041C179B0DBE84C1CAC40BB5C10"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Heat.cs.uid",
+    "sha256": "F0C2556E954352B4C01AAB43F5D02967EF507DDA6B344D927E263F74CA093A4C"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.HumanCompany.cs",
+    "sha256": "CAD041E75BA9A2BCB30EBABFEEB248AAE860AE6C9E8AA64435C9B6A7C8DCAD10"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.HumanCompany.cs.uid",
+    "sha256": "746E202489ABF4F0C1B5AC2FA22C0992F74AA656D8E9B0F348C1929812823945"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.HungerFeeding.cs",
+    "sha256": "5762A021A2F508E3727E8062C1ACB0ED8AEF80F410562FE476F58035D422BEE4"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.HungerFeeding.cs.uid",
+    "sha256": "C030EF3D6E74B0674CFBC24BF583E02DD4B93A7720C983DC70202FC6ACB3FA9A"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.ImpactFeedback.cs",
+    "sha256": "94F313C47B0761F0AFFF68260E3BA28271CA6BB88D11C47E60B8F33D07166F3B"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.ImpactFeedback.cs.uid",
+    "sha256": "28D49048F3CFF28A8B69E8C361FF6EDB2AE86F578BFF38E348D7533CA14CD423"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Injury.cs",
+    "sha256": "A470A39E03CDE747A96C366B07A4F606F6109211EBB523C1429C63D724F7B148"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Injury.cs.uid",
+    "sha256": "C0A1CC639984B95D9C809642E6D16BCAF9EACFD94C33F9B2DCEF64337C2C2084"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Intake.cs",
+    "sha256": "14BD5E96BF25BF2833A49986242B87BB9A6619B70973CF1701798DC2C2699DCD"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Intake.cs.uid",
+    "sha256": "635AE5C9144B481630088A565B44C2BBCCCBF41748525FF17A1F49CBBC29FE35"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Interaction.cs",
+    "sha256": "6587E687430A852EE549EAB412BE460E874E3DA223A3F45B1379511163D5D0D8"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Interaction.cs.uid",
+    "sha256": "76D830572FEF4B7DA58536392B2D59924812F7A20231802D7B9D9F8F15695BC7"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Materials.cs",
+    "sha256": "978056C82185922FF46196A8DC4ACEF8A19A9CCE5AEA482D12D57D0A263EF18D"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Materials.cs.uid",
+    "sha256": "4507496DE645F565890ACE168F84AE63548DB4627E1B6D969AC2758677A330B2"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Sculpt.cs",
+    "sha256": "8350FF731DD22F54D9CB5D2E15DE689E0D6B821C6BE6CABEB8F1668BBF7A3D91"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Sculpt.cs.uid",
+    "sha256": "3C71F504BE80B452C8138BEA9D6E9D8DAA5F174C610958B42F4220EEDFE1D302"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Shelter.cs",
+    "sha256": "6D241696F95980DE827E6367F1F6231C753CF25A38C7A5BEA833C459ECF4882F"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Shelter.cs.uid",
+    "sha256": "A627206ABBF095AB85E436FA2E50CF306556C355343703E260523627BCCF4F02"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Support.cs",
+    "sha256": "AC97486C18588D9512A9D8700455838D09003C419AD0F5D4F9097D1C84F6CD5E"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Support.cs.uid",
+    "sha256": "7C4222DCAA080CA069F7B9B36C265B774537B3624AEAD03F8D7C398DAE4BB711"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.SurfaceMarks.cs",
+    "sha256": "4446702DA89CC427352F4DDE388291725C80A5F47176DBF15103AEEBA1ABC2F5"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.SurfaceMarks.cs.uid",
+    "sha256": "792A9A77E06AC6CC98B223487DC85601A1B9D37E81BF0068746A4B2CE5A56767"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Tears.cs",
+    "sha256": "DF24025E8FA441F6C19F8FE8228FE4B506DD30CFD5DA4151627A1FA175891A0F"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Tears.cs.uid",
+    "sha256": "AD1FB1C5205D35677F1ACEADA440449228E4F4002DB0291DEE0B92B4BE294C62"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Water.cs",
+    "sha256": "BDDB16615C42DFC47F6BBC2F116C6FDCC78CD9551B4B159F6D1E6CE481E62274"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.Water.cs.uid",
+    "sha256": "AD2B91E95063ED6C6234F4DCA51197234AA28E0E00D965735B29279EA52F081B"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.WaterAttempt.cs",
+    "sha256": "DF433DBB53BF0BF5AEE7749D09B9C85D80E4215A193B7FB634472A1B38DE053E"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.WaterAttempt.cs.uid",
+    "sha256": "E97C44B1861A6B4BEE7ABC2E8DE160D9F5B64BBEDAC030A55ADE3B32865FE26D"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.WaterConcern.cs",
+    "sha256": "C5543759E01B7735172BF699DC0D283A3BF42E20C3E38878E0D56E51F0DF1ADD"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.WaterConcern.cs.uid",
+    "sha256": "EF3E0EC88575E1E0D8289DB4CDAC50AD9DE53C3517534D52BBC91987BCF64C7E"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.WaterTransitions.cs",
+    "sha256": "C782663468943A31E9DC0E8715BFA4407473C1F66AD158FBC55E2E4997B9C4C3"
+  },
+  {
+    "path": "src/Yukkuri.Game/CreatureActor.WaterTransitions.cs.uid",
+    "sha256": "08D3DA3D71D8B8AC152B50AF4DAE5E149673846B91931579032C8791B3AEBEAF"
+  },
+  {
+    "path": "src/Yukkuri.Game/Data/simulation.json",
+    "sha256": "CDE295670C07287B734A711B8F1153A9D6607B5ACC1489110C2AD8BCF586D505"
+  },
+  {
+    "path": "src/Yukkuri.Game/Data/species-routes.json",
+    "sha256": "70CE92A81AC2489D61EC45A25C0226B8BC8A381B64C533F451FE1BB9826F3B40"
+  },
+  {
+    "path": "src/Yukkuri.Game/DebugStateSnapshot.cs",
+    "sha256": "85FD7F7882AF421F0096CB61B145D123C40F0C8F8B4D23AA696770C3BE04E608"
+  },
+  {
+    "path": "src/Yukkuri.Game/DebugStateSnapshot.cs.uid",
+    "sha256": "3A071E64C3FF545A7DFC7A0665D07E0D46A569AA3D113E85869A748FA15F5C14"
+  },
+  {
+    "path": "src/Yukkuri.Game/DetachedStemActor.cs",
+    "sha256": "3439B75D0A3E24FC1FD17735BD442185E5C2A25BA7A973E50230FBD23188EBB3"
+  },
+  {
+    "path": "src/Yukkuri.Game/DetachedStemActor.cs.uid",
+    "sha256": "6F43384CEF1BD2099530508B220BE5D7F2E08914E4AD09FBE42D1517BA54A6FF"
+  },
+  {
+    "path": "src/Yukkuri.Game/GameUiLayout.cs",
+    "sha256": "1492632732E604E8A0545A43F3C39626D2DED0760A00BCE1A25FB046A74A2EB1"
+  },
+  {
+    "path": "src/Yukkuri.Game/GameUiLayout.cs.uid",
+    "sha256": "B7E02D787B3BA7D4B2CF6F617178441BE5C55E8B17BAAB0244F50479ED2707F4"
+  },
+  {
+    "path": "src/Yukkuri.Game/GameVersion.cs",
+    "sha256": "00295F6DB0FBDF7D297E6F3AB98BC78F54A2CF12AE9C78C353582F2F4408F221"
+  },
+  {
+    "path": "src/Yukkuri.Game/GameVersion.cs.uid",
+    "sha256": "A5388F7E9A059C3A57AAD256F86CED59C642B247AADD471DD6D16603065692D6"
+  },
+  {
+    "path": "src/Yukkuri.Game/InlineChoice.cs",
+    "sha256": "55B1076BAC875BC73022BDD5CD1F95730AB540CA3496ABA8A465AED8F9F8A157"
+  },
+  {
+    "path": "src/Yukkuri.Game/InlineChoice.cs.uid",
+    "sha256": "CA1D09DEB24929A0C738AEC71F951A51D43C4F1D0A77EE5BF859AAFA040A6269"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionBallSurface.cs",
+    "sha256": "181634AE9F7EF0AA470039E0E27854C16F354AA75C96ED2A33C1CB4A53EC6DDD"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionBallSurface.cs.uid",
+    "sha256": "5EB821799387677978538C6CCC695E1237C02EC2A364E04A50D0EB624BFEE4A2"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionCameraOrbit.cs",
+    "sha256": "6261AA5BA5EC87508A27867BFC2D484301CF324733D6FD3D00B4AE9D0DBE581B"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionCameraOrbit.cs.uid",
+    "sha256": "5FE6C25D5E307B0E886762FFF0C974BE95505B1DC9ABE710C85ACE988539BEE6"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionCareSurface.cs",
+    "sha256": "B1E05D013F9419EFBF61A9C932850B43CE8E35ED0272DF09E097332A52D7874C"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionCareSurface.cs.uid",
+    "sha256": "5D07E6435D3F2FACDC9DAD91DF40B18C29B5B818C794C0A4B0441896E5DCEA7B"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFixtureArt.cs",
+    "sha256": "AA73F6A9DEDB627782D6A3F569DD4AFAD8ED97019F1B81BD311B02CEB43D0617"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFixtureArt.cs.uid",
+    "sha256": "4CB833CC02F762453A3B8E34BE8D20667E2C58FD78567552452387947957AB93"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFixtureSurface.cs",
+    "sha256": "A0EDAF47573300FD3A6BAACBF2ECF45BE9AEDF8995784CBBCF2ECEF915D8DD0F"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFixtureSurface.cs.uid",
+    "sha256": "ADEB5534B350F8293181188AD1B181DA23C82C65B48EDD70ED0B55BF27A1FD01"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFoodArt.cs",
+    "sha256": "A9BF4FFE9F10C647D784A91D0594063574A69E1FA6430B53826C30D1CEB8B890"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFoodArt.cs.uid",
+    "sha256": "B8D354E4CC1B5571DF947588393EED44EB424125C971CA5C7131607326EEC5AF"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFoodSurface.cs",
+    "sha256": "DE30D94C8A8EEAA7FCEDEBAD807CB625087AC7480E4BA98CD81A063B36E55897"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionFoodSurface.cs.uid",
+    "sha256": "4E2614FE5985D5247F74F53C116F76E45ABE0CA6E4DAC84AF78E3F1811705767"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionLighterSurface.cs",
+    "sha256": "33AA9FF04308D70D6E8463667140108F5F87D700B98F89FDCA2C265C792DC316"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionLighterSurface.cs.uid",
+    "sha256": "6EA214579A7BA276D0E4648B1E051AFE4C9C60BFC51D8664199615D4C9BEE465"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionPropContact.cs",
+    "sha256": "8378EDF6055E95C97F9A57DA5B4843FB17CE1954F13A141F79ED198994026DF2"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionPropContact.cs.uid",
+    "sha256": "30028EE172DB829F5319009B08A0243EA62B0C530DE246BAEDCE505B88E374EE"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ActionProgress.cs",
+    "sha256": "406FE2DB15703B01013150C5CEB0933AB69C819B688FF73AB03F5D3EFAD31119"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ActionProgress.cs.uid",
+    "sha256": "A2F46A6E279F9981BD4DF063EA1E21F6411B4569CFC05E414CBC80DEA32B2376"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Audio.cs",
+    "sha256": "ADEC7D506465FE9EC0B9F0590AACEDEF2876836F7FFE8F45F0A02939BF40A061"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Audio.cs.uid",
+    "sha256": "48DEA91993163E853862E3F7FF6C0EB684ED687C61A335E96EF9B3D26C4E5BAB"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ContactVerification.cs",
+    "sha256": "7B6E66E628E5CDF788F5E518B8AE396F017610E53A052AAF6D8ED451B61C1315"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ContactVerification.cs.uid",
+    "sha256": "102D5B9F564166449F5511F86AC144D6A75DD9F5D37D68C9EBA87DFF29FDA974"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+    "sha256": "9668E2F1A338F40102D46E8466F19BCAA5AB3872676C9B5A2825816943573BD1"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs.uid",
+    "sha256": "B5040BC4619FD63A0EDFD40CE3FEEBAF36A1FA3DDB17E697F855A5C6CAD2C238"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.cs",
+    "sha256": "DF89BD441021DC0982971EC40DD1B4B890F58286AC06D59B31F3F2EFAC919CB7"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.cs.uid",
+    "sha256": "335FE74BC9472E8E038660535A62FE1C2ECFFA0A9F91BC20EC65B5AC44BC6185"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Debug.cs",
+    "sha256": "98D80AFD20A43F4AC4FD8F3267D35CDE538E4D298659CA0033A90017D4B5D7D9"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Debug.cs.uid",
+    "sha256": "1273444732CB6103981CB4153D5B4B0ABA84BE154F1F7508736E2C63F93ED2AC"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.DebugComparison.cs",
+    "sha256": "6D8179693D44A9620FD9B5C1C7B79C1990DC0CFF8686EC451861D8D1321B6D75"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.DebugComparison.cs.uid",
+    "sha256": "383115F3F9A1C36F78BA5F082FB60BDCE238C8BE515B57DA4A68464DE40F4013"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.DetachedStemInput.cs",
+    "sha256": "F8D07CEB61C8772ACEE4DE9A0E4A57B3B8C7748149EA264BAEA1B1CF3DA04FC8"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.DetachedStemInput.cs.uid",
+    "sha256": "34562C610CA834C8ED6C1B4EF4236A0BA696C385DCE07F9ECA63B8DAE525A413"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs",
+    "sha256": "A6C52A6593C12D2020195C8DC80ACC9C0A8362837275B68DEDEAFBBE8117FD44"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs.uid",
+    "sha256": "B7D43DE334FFDA853B63A076DA52A59998BF410CC3BDC5E9841C445D6C9DFD17"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Development.cs",
+    "sha256": "4508FB65F12DD2A5E2F8722F85063E9E084CB1106D76F2E31CF73BBEFCBF1E1E"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Development.cs.uid",
+    "sha256": "336D475E48B772F1618403B24AF5E50E67CBB9DF36B986AC9CB85162B5A7E717"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Family.cs",
+    "sha256": "7C5EE73DFD086190F8F70CB47878679D1E3571482E4607C3EF1C737AE34F3365"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Family.cs.uid",
+    "sha256": "6FF0E14256BA485D770CF47545E219FEC9E977404D6D296FCB7ADA702406DDC8"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+    "sha256": "71D189B8E8B3F5F12B25461F6F566D4C961BE4B908EFE84252218A37930412B6"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Gestures.cs.uid",
+    "sha256": "D55901C928891EC8B144F585DE2656136EF7FC906ED6739CBD56DDEF6EF44662"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.HeldSupplyContact.cs",
+    "sha256": "F34B334C8A461A3E400D36FBFB678E3D333FD14C9DD360911CC76C7E9D9A553A"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.HeldSupplyContact.cs.uid",
+    "sha256": "57538E3C45920E58C355ED6EDB47ACB8308A48892F66017306582D87E6FB1320"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.HitFeedback.cs",
+    "sha256": "9BB767E2BE42B6A7DEC68AB0AE4F91F43008C8B403C2D335FD3AD750F2929FBC"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.HitFeedback.cs.uid",
+    "sha256": "0BCB514EC50DA2923ACDB1DB77A8B4F5BF64E79971D94F6FBC932559D7CE1070"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Input.cs",
+    "sha256": "9D7A1A689E2296C28C385EA01188898A63D35887DC815C6F1C24196710E69559"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Input.cs.uid",
+    "sha256": "E0A4C5A77EFCF4DED0CFD745D476F5B460969C528F889E5EC9FDD63CF29C14A6"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Intervention.cs",
+    "sha256": "C925FA39541D3D343651CC1F14272BC03594E22D7B275FAE674D868B44F15E44"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Intervention.cs.uid",
+    "sha256": "8476F239CC3603578AB8B3657324A7230EF7AC70F98E084FC158F08F3AB7A931"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Market.cs",
+    "sha256": "4C88E64985419AEA1D121B535C5EB0E5C9E305BD10F53227B984BB954DE9C840"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Market.cs.uid",
+    "sha256": "ACDCC0A2EBD78A9714B6A85F04F425494ABED6AEAD34F0F6B96F7EBDA609FDA9"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.MarketVerification.cs",
+    "sha256": "DE5850A2740C190EE86E3A8D4217A634EDBBB14C6AC8E58AB988B9E11261CCBC"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.MarketVerification.cs.uid",
+    "sha256": "7BBE5C7E4F6D06B55CF7029D65948D0C91C4A0A40F9C27DBB980FD72FBB12C59"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ObjectPresentation.cs",
+    "sha256": "DDE7C86D2BEACC7C269B3388622C5476B3BE5FB008CE993DC23C6715D640293C"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ObjectPresentation.cs.uid",
+    "sha256": "C21806B73DB9BEFADB8E7938AF6FC38B105BD45B16E5C6F8F80156B8D86C61D0"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+    "sha256": "7DBE839755A81A8EAFBF1E2E34712C09608F44460148C5635208F6AE4E256132"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs.uid",
+    "sha256": "25B9EB5FA3FA3ABAADA75810B74A7DB306D6518FA626D62AA2408A87468E2AE9"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Offering.cs",
+    "sha256": "37E3D6492B76C3C73155730381BC158580CD502EB5FA2F7C1FDBD32629C7652B"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Offering.cs.uid",
+    "sha256": "79E72D68059858A2C1CFAC53DE5B649D573B379CF010E2A7D43C673538EB649F"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Panels.cs",
+    "sha256": "C09B7753C695B3DBCAF4D4EC06C3B9A9568E023D52DC835E4A31724452DCBEE5"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Panels.cs.uid",
+    "sha256": "4A0E51C1EC2AC55E05494D460AC4BD47F67B165B62B2A1BC1BCC84B1C63F0030"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.RescueTool.cs",
+    "sha256": "717BB623CA5EC9CEB7EBC4CAD9571D603D8BEC277D7CC2B0736D6168D79D3743"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.RescueTool.cs.uid",
+    "sha256": "D3341254BA112B20861BAC334736822BA37EA0D36FC872B92A3CA005FC56C693"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Shelters.cs",
+    "sha256": "783CD8AA9E75149DF4D3C0733D4422526E5FE7EF612035A9ABE5624397C1D487"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Shelters.cs.uid",
+    "sha256": "026FE72DCB662695D1D28F71532E91D565417FCB959544509F6F75E99F8661DF"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.SheltersUi.cs",
+    "sha256": "5C7A3B36427F6486CD3952AD541510BCBEC2D7900C9886981CDE9824B40DF190"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.SheltersUi.cs.uid",
+    "sha256": "0736B2F7D85F39C4E1C2903B538FCA9818177363D2F8AF31E047DE0F648E04C5"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ShopDraftDiagnostic.cs",
+    "sha256": "8DAA507F8746C83D3CFB2F7ABA6A3CA0329C327CDA24E4E5DA412C202FA16F70"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.ShopDraftDiagnostic.cs.uid",
+    "sha256": "B5C9076AEE57FC154F9CB18326DC010688FF0E50DDC848F1083013D10EFB77AD"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Supplies.cs",
+    "sha256": "0DD64068764B96E78E610827E5A7A7709A0968A56BBF8500660C4E08F440E230"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Supplies.cs.uid",
+    "sha256": "06D545D67ACBC121BDABACCF165F5049EAA795B9773E6E62DBC406C0641F5CAD"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.SupplyStations.cs",
+    "sha256": "C7D8DAA7213F422F8B9E163DF39B71A7278C852A4AD5BF6EF707DA4E7D846228"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.SupplyStations.cs.uid",
+    "sha256": "9922C2E0CB936B14F5CE0B6F9A24CD7CDE4D0F53568DE1D5C6510A2A5ADDA66E"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs",
+    "sha256": "1AD34E0646B808E80FC33356CC569A5CC285D52A49C90C05CBD365D566932172"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs.uid",
+    "sha256": "673A196162D874C6B2CEF8823476D2A11C750ECE3E8739D23A594FC3780B9E06"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+    "sha256": "9985600DC9BA45B6BB060CA2B6BBB53191ECF6468441D464FDAE2417A1F201BF"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Toolbar.cs.uid",
+    "sha256": "975DB394CE9CD7AC7F38803F6C64A0055AFD87B5E03DB3FCD44B9A7FC80DBBEF"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Tools.cs",
+    "sha256": "5365DA038F1D4E6FBF48F1BEF25B93BCF4E96CED910446157D2808207D808C97"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Tools.cs.uid",
+    "sha256": "5887E5F3DE3C7F055A32B74B3DEE3E673246732B2B56ABADF89782CD02B7C870"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.tscn",
+    "sha256": "B94C5555BFCAAC9F62FCE37D5816C6FCB92AF33A3DB44EB9FAC954A580C91AA9"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+    "sha256": "3DAE23E28B83D495C4B69FA3821FB2E1DD3F4C73294995CDE25B041F5FB1A8E7"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs.uid",
+    "sha256": "97B15AE924652B197727B984266F1ACFE3DAE4418E6371F37E694C3B1380F7BE"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Verification.cs",
+    "sha256": "ACFFC3D4C7906BE25A24EE8B4C016D4B299F7561DDF8C58A1402158EBE34F025"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Verification.cs.uid",
+    "sha256": "1A01D3E77939BAE69AB05B1F16A18EA7446BFB182C4F97B370C13E8FBCB59852"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Vitals.cs",
+    "sha256": "378E11720CC764163E0D07885288A129213B9DB9A38A4332EB98BAFA1433A1A2"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionRoom.Vitals.cs.uid",
+    "sha256": "4B993565F914904CA0EC539ECFD415FC953FE146F96CE423597E5CD19798CB19"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionToolArt.cs",
+    "sha256": "28F16932B22FB3D3C433B8B9EA610ECF3F70E2037917584EF6055F086F67C36F"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionToolArt.cs.uid",
+    "sha256": "479BF3B2444F241C22E8A416F85C78A054DD3949C70E4537AE8E4A2AF2147551"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionToolSurface.cs",
+    "sha256": "87C28D0E88CF5799373D81E6AB9F228378F34EF5A4DDFA0241367BA2A48BD7A0"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionToolSurface.cs.uid",
+    "sha256": "ACAD4F50C9A44E28645F063EEAB492399A12EBF77DB8BC3928C2C1648A94A2C6"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionTreasureSurface.cs",
+    "sha256": "0F931F00FE19C9DE29D479F5DFB149C6B7FFCF1C2EE5342BFB61BB7B245D4645"
+  },
+  {
+    "path": "src/Yukkuri.Game/InteractionTreasureSurface.cs.uid",
+    "sha256": "A23753D5BD6B9D819576B84B124F2BC99122EB852DBEB284694BC265563BBA21"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.cs",
+    "sha256": "55B2D8B217260B3B3D20E95E17FB2D341CD4E41806E4237A6731AB936F1880F0"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.cs.uid",
+    "sha256": "B614536CDAA8BDCF8C97BD8F36E60EFDD8E9512FD83DE5544D2C8FAB8129E948"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Input.cs",
+    "sha256": "8CA11416ED8072B7330FDF25D73CD9D268245C6B74CB7E9F080F0E45E64510AF"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Input.cs.uid",
+    "sha256": "A0A376EB4B708A1FA6F868E43D5C1134AE51253E03B7EF9FC662372A9DE228D8"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Lifecycle.cs",
+    "sha256": "4FCC9A142E68DB227ADE2FCA159F187618894CD20445407CC76F2D5A9832F706"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Lifecycle.cs.uid",
+    "sha256": "3F9974D49E3DC055C17D7AA6D42C6B0BED2A36FF50ABB899EC8B56EF429F2241"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneArt.cs",
+    "sha256": "7BC068124050A0C51D48ABDD6CF20F981CC7D4C59BCB596EDE0C65E0ADB3B6F5"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneArt.cs.uid",
+    "sha256": "DD9E5036BE5233BBBB50E5D0D39DD318DF40BA672628E561B76F34D710922408"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneAudio.cs",
+    "sha256": "EFBD42A67487CA33C42C3BC2E2C832708D57590FBE8878602B0EFA8F45F1BF6C"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneAudio.cs.uid",
+    "sha256": "1A4C847E041D4B1F3C0B58E7EA4CEA94BB299EFE0DC4B59412605C29F8EE06DB"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneAutosave.cs",
+    "sha256": "849E060E10568BB854E235C232CD9552BCCB851C532760A0396EDE26B4F4F5F4"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneAutosave.cs.uid",
+    "sha256": "6C9DD0CD5E5BD966BBA8A9470A24D46CEB8917AC9E2723FF9115DDDAA3372786"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneHelp.cs",
+    "sha256": "393F71C753A8336DD21884CFE4A88693EEFCEC95A4825CC9EF246F0D90DEA9F0"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneHelp.cs.uid",
+    "sha256": "B184B8D44DF96463C539D400F6B2389F04187AE4F9B4F513D49472EF2EDEB2D5"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneInput.cs",
+    "sha256": "A52237A838CB8E8486AAB673E0AE350E7566A56303B8F9902BFC63DCEA3290BE"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneInput.cs.uid",
+    "sha256": "EEC6E7BE99B385298F8B2AF03C98BB612D78C91EC5A0D9CA6E23E317A6A8CE7D"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneSoak.cs",
+    "sha256": "1B008D2FB14709E3E11F9BBF82F9E9DAE47A2F05AB380B9DB1B6675A7B47BBF4"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneSoak.cs.uid",
+    "sha256": "3E228ADF2EFA534E2A11A820571B8D57897F8286C7A8B412A3322FCB5C5A73F7"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneStates.cs",
+    "sha256": "9B337F4BF06FA74ABF60A2F2148274EB5940CDB8E1B5533780C3EC19467DDB78"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneStates.cs.uid",
+    "sha256": "178B49E74642C1F58B42BE6BA711B8F1BF68AE1692DAA9E1EF6806D0B618164D"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneStress.cs",
+    "sha256": "6F7E61D1DEBE8F942C5683724022EEF3153601F4D287B64FD6BBEB920D5F1CFA"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneStress.cs.uid",
+    "sha256": "39968C2779D035256DE491BC04B0824EDA1391C237A74E1C4D88A80CAF01CDE8"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneUi.cs",
+    "sha256": "709C57D19937AA1CB3EA111EB6E6CB87EAC834029E49D9052EB2BA5CABD01802"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneUi.cs.uid",
+    "sha256": "945653DDD7DE2D261AC78466E89E26A2BBDDE74F68025E7F5911838D48B797AF"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneVerification.cs",
+    "sha256": "986DF0A2E56D4E7BA40E8045AC00ED069FBE62F9AF2BF7A14503E9D980C39FE6"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.MilestoneVerification.cs.uid",
+    "sha256": "14CF5FD99AAF052A3E4E40DB88A0A7A7A2DB8B1964F28A44C5D74D004BD7D8AA"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Panels.cs",
+    "sha256": "F87FAB134B8F64DCFD8EE73687A8BC117005939C2F4F6FFB385BBBD1026E5BE0"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Panels.cs.uid",
+    "sha256": "F0237EAEED75C540315B7315F6B51861FE9378D141203C37C6E366809B7EF151"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.RegionPresentation.cs",
+    "sha256": "E600C1E28A04958B293D5BC4FDFBA087C821EE3D4C13AC200ECDA084D0731D67"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.RegionPresentation.cs.uid",
+    "sha256": "3E97826AF85799A4CEDA2B19CD2C2A137C77CDD308C7FBBFBB50A5B33CAE7EFF"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.tscn",
+    "sha256": "AE5E71D60C21F2F9916BDC453A871AF982583AEA436ED9BEC4EC4BC5B53A7810"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Ui.cs",
+    "sha256": "3A0029443B56530C869CE8CDC744CF06A2E9CDC79B644E49657AE61CEEAE25EB"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Ui.cs.uid",
+    "sha256": "33B2D9047737BB6F80B30048BF70FD0C47A41B23E0ADBE05B108BA8B42C312F2"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Verification.cs",
+    "sha256": "42289D0EDF96BBD01D5556273695EA2EE91B7E9156112819A0569F92F0F090CD"
+  },
+  {
+    "path": "src/Yukkuri.Game/Main.Verification.cs.uid",
+    "sha256": "F66106FC2B56866AFA768037843EB64B9FCB1888D35002A12EB864D83068F4FC"
+  },
+  {
+    "path": "src/Yukkuri.Game/project.godot",
+    "sha256": "A7105852FA7BFB75EEF559F338DDE938F66403AAD764B381B568384B47B6EF47"
+  },
+  {
+    "path": "src/Yukkuri.Game/RoomBallActor.cs",
+    "sha256": "F7345A4959A4E7A7C32C55990D07BBCCC24A32309128929634B8EA7ED404A9E4"
+  },
+  {
+    "path": "src/Yukkuri.Game/RoomBallActor.cs.uid",
+    "sha256": "AEC204BC711696D14D695C45023FB37D18D1CA64F729AF12861D1DB8FBCC39D7"
+  },
+  {
+    "path": "src/Yukkuri.Game/RoomSupplyStationActor.cs",
+    "sha256": "68ECA4C848C40162E818B6A3BAAC2FDE8E44950D1D47BD1FBEE457FDB1B16FAF"
+  },
+  {
+    "path": "src/Yukkuri.Game/RoomSupplyStationActor.cs.uid",
+    "sha256": "7814C7943DEF659F52946618F6464746B3B431D91730FFCE32032F3F13132591"
+  },
+  {
+    "path": "src/Yukkuri.Game/SceneArt.cs",
+    "sha256": "67302733D3282407F6041059C84BBAD745DA34079383E5BD80448FA44EE38F76"
+  },
+  {
+    "path": "src/Yukkuri.Game/SceneArt.cs.uid",
+    "sha256": "F714028B3F3F4B69B5B26D8FCE72654D222058D5514E8CC36AF132C9A90DC110"
+  },
+  {
+    "path": "src/Yukkuri.Game/ShelterActor.cs",
+    "sha256": "A230CE6C769CF9695B8BF7710754698AF820F60782B4BE2A59893AF967E14FA0"
+  },
+  {
+    "path": "src/Yukkuri.Game/ShelterActor.cs.uid",
+    "sha256": "89DA0CE3D6AF9C56E1063BC079B71168B828A642F7FA9CCA3DC96E36A22C0377"
+  },
+  {
+    "path": "src/Yukkuri.Game/UiActionIcons.cs",
+    "sha256": "FC1956E6BB8139426A2C177EE0FB66ED3CFCBE63FE1803BFA7C2A8C338476910"
+  },
+  {
+    "path": "src/Yukkuri.Game/UiActionIcons.cs.uid",
+    "sha256": "3E59CC9CBB8D3A357570554AA08FD443B7D65F98DFFDA434990A11FC3D432A09"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandArt.cs",
+    "sha256": "C7D2502BAADFFD63448FB48B94DDF5AB516B965F09F5719B5DD6A5FF416A6FAE"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandArt.cs.uid",
+    "sha256": "EEE922B78B7399CB118B9C9DFCF507B7692BDCF1675F0E0EC20E23CA934271F9"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandDecorations.cs",
+    "sha256": "930B513E49C20C4B32B9C2C1302527AD110359E48CB4A0FA987615559E7908D8"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandDecorations.cs.uid",
+    "sha256": "00BA51B4A38CFCB6B621CA0AEB61A77D4044241CCEA958A6683C5E9D5D7B3542"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandOcclusion.cs",
+    "sha256": "39444DDA2C20E5CC3D2E043943BCF47FECC3E6811A7146B1572C8ACF2E23B1F8"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandOcclusion.cs.uid",
+    "sha256": "D8AC13460CED16342445FAE532B4E7B61C394B9315DCBA8F24C3E783237E8A9C"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandSurface.cs",
+    "sha256": "5524F4B3F8F5668CD9794A5F4B171EB23BDE162648045B49D2DC75B83BF010E1"
+  },
+  {
+    "path": "src/Yukkuri.Game/WoodlandSurface.cs.uid",
+    "sha256": "C4AC48A2A8A059F0E06ED7553BA4CBA6F204F9B75E156572DA6371E403B0A765"
+  },
+  {
+    "path": "src/Yukkuri.Game/Yukkuri.Game.csproj",
+    "sha256": "D77A3319B11AF00C3C22AA9BF712F528CBC6840490E421B1756D11EDBADE7C76"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/BodyContactGeometry.cs",
+    "sha256": "0531C6716F35E6AED6D1914D379F6C9EB4EFA7BDF0245EF174BE5F7D02E60D4D"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CarryReleaseMotion.cs",
+    "sha256": "589033F115682BCA2253F4FD22F77B630C5074262C764078A926706287E08679"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CleaningMotivation.cs",
+    "sha256": "78FAC6424472DB6B587C2A1C415F9BEB38A3917F814208F728FC40C716E57044"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ConsumableInventory.cs",
+    "sha256": "EAB876FD403D0224C6E9A4C301981CA457F692ABD5139149EAEA02EBF1B9C5BB"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ContactDeformation.cs",
+    "sha256": "5A8D55CAD9B55F2470526B5E89ABF38AB7B947081CA0C4AC343B4C657A6C4479"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ContactMotion.cs",
+    "sha256": "A77B5DCE6776AEFCC56E0717634452CC549954533A17E8BDE141923A4AA13B80"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CourtyardBehavior.cs",
+    "sha256": "0A92F5C4E571E2F712C3036E6D0254DC0004570DF37646EB0697E8F75C0BEF2D"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CourtyardEconomy.cs",
+    "sha256": "148D252C16B554D452231E6DC0107DD83BE3FFB1DB73F89F02D648F95526187A"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CourtyardObjects.cs",
+    "sha256": "BE16AA79789D2C18884FE9278A0CB774FC15184EB43EA73D4D058B0010B6E26A"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CourtyardShop.cs",
+    "sha256": "5EB24CD8F049869E77706B6D9E4C4B34D96E894AA687E63C8E266B864E6FCD6F"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CreatureAppearance.cs",
+    "sha256": "6D1EB277D20DEEC106127748092170584FDC303B5706F3A399933C4EB547DA4B"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CreatureArrival.cs",
+    "sha256": "4D2D2FEECFFD549D84295A3F3DA122A9552DDF2695EB0C057593D2CD030024CC"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CreaturePersonality.cs",
+    "sha256": "E788396B4F8340B1393CE0B234107AE8E5C8976F62318E44FEB3C2468A33447F"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/CushionGeometry.cs",
+    "sha256": "A8077965AA815D7FFACF400543ACA890C5E8A664C98F352F131CB920CFDE2DF0"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/DetachedStemGesture.cs",
+    "sha256": "4B9B33F3255056E22E6A296F0890D741E2E4D1D8CBA94DBE67770570ED262335"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/DetachedStemLife.cs",
+    "sha256": "F5048889BAE8817D2FCF34B62DACED4EED991C119A94483BE7D933ABBE1CFE2D"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/DetachedStemState.cs",
+    "sha256": "E431ED963C9D59A685A2034212BA2AEFB97B5F1E30557CA4FA4201174CFCFF7C"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/DetachedStemValidation.cs",
+    "sha256": "34DC53BA1A2D5D552040F9F7E4E66A322B909A12AE5F1901AB54E090AF84CD12"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/DetachedStemWitness.cs",
+    "sha256": "22C868C3F14D23C0368AF82D75BD96E2E66007DEED4EE54AFC63C4D8703C97BE"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/EmotionalContinuity.cs",
+    "sha256": "D9B21416EF7EDD3CEFFC77358977A97FF45580E0B57731DC90622D5795B65A17"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyAftermath.cs",
+    "sha256": "8EF01708B17E1AEBB756E6DB4F0328B931D37C91210152A1C0E59CE013F6CB4F"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyCare.cs",
+    "sha256": "392E4AD1E3CFA35CD984D168FFD6FFE866EC7CBACEEC8924BAEE88E899A6D670"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyColdStorage.cs",
+    "sha256": "31E250206B191838ED1102E9F0BF8B8862774A92089504052F778B8584119216"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyDesire.cs",
+    "sha256": "131019DF08011C02FAFDEE4E5F13EFBA726D38CA74A4CD19D2DF70B8F5EA1630"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyLearning.cs",
+    "sha256": "47BA74D3D8168B307DF1CBE26F03B3AAA4E34ED3A2E87925074973EDBDF0FA28"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyReproduction.cs",
+    "sha256": "D914EBE1DF38C7DB44E38058FD8AC91B6F0A98BF21C95910054101C9F7E24753"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyRisk.cs",
+    "sha256": "931F3108E17266729C09AC4634829E70BF70A26D39C5BBF3DBF8C71701D1AA6F"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilySocial.cs",
+    "sha256": "87A1DFE88B6CA7A53CD85A2E46F03B375FB9F78FEC30EC1990719541DE6B9C8D"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyState.cs",
+    "sha256": "62639AF7347CF3AAFF18356AA2C21AC1E17153C8D6CB14E145EA9DBB580B7256"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/FamilyValidation.cs",
+    "sha256": "6AC1E0B37926AD384C8E41B53019ACE70F4818DE9F27ABF8462C4F8A8772CE6C"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/HumanCompanionship.cs",
+    "sha256": "83F1975FE6E9437D85AE024D3B8703AB4EC1046FA2734CD3D072A89CFFB0C8E1"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/HungerFeeding.cs",
+    "sha256": "66F65B70C60F76301D4C729626800B15C5B5FBDE58947458E739A08E4D6A2ABA"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+    "sha256": "6EFD66716DEC5799275505BD37A45A2152436EC210203C3C9025D5ABCC8AAA1B"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+    "sha256": "8233615933C2FE7205C2E4B865BD9717BA714123A5942512B3187487E7A6A5EC"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionBond.cs",
+    "sha256": "5D04ABCC25B833C464866C6C183136F9D2A9E3022C23AE5465AB990157CA4B2C"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionCatalog.cs",
+    "sha256": "3E10C47117FBB8EDB2199405348EC22FF022179BAAA39CDBACF5DFABEC37B8B7"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionCompletion.cs",
+    "sha256": "1F73B99F0B01550FD57F7CABBED23188A6288EA4B6A9B1460F1F5A55A770BF1E"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionConversation.cs",
+    "sha256": "E5E800F526B7F391D043CB4301927CAF2277EDF78EA2E78D06D4ABCF63D568D5"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionDressings.cs",
+    "sha256": "45B8DF122B1A07CD950DEDE51B8F3951A54F882E6EC2BBEB5EB5D0B0C0888DC2"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionFixtureGeometry.cs",
+    "sha256": "9CAA19FA04F9167B711636D67ED493012AC7DAD97807D9699761E3480F695878"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionGesture.cs",
+    "sha256": "AD9C506F45295E69C149A2FE2D74A1671363A5B6B7C3392E9DDD61F4073807F9"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionHarshSpeech.cs",
+    "sha256": "5BECE1E4D52D73286D29E581AB5E94BC3DAB179BF5413D0E4F863E9685C630AA"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionHelp.cs",
+    "sha256": "1237FCF58380ED90D1360AEDF75D232299E70C7BFF9FE950B47C69A29E9464D4"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionInjury.cs",
+    "sha256": "6143C3C729F16843D38E828AEA7889E6346800537DE7969F77754ABECABDFF83"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionLowering.cs",
+    "sha256": "BA8FC964F762D594FAE03B079467C719C64D7FE06F7EB6B8A0F68D6DC1CC3142"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionMouth.cs",
+    "sha256": "25663199D950E9879EEB2654936851F396898B3C1EFA6713BEAB7B8F1D31FAD8"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionPhysiology.cs",
+    "sha256": "875E5511AB9FBEC37A91C308537535A59B66CCE6972BFF6D67ABB1D37327C333"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionPresentation.cs",
+    "sha256": "6AB72440FC15035A63B64DF620B4CADE2AF592536907D50313C987BAF85B4E4E"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionRest.cs",
+    "sha256": "B843F6636C39EA80F0291C14B704B2173498EBEEFCA2D4088A1B06FE9587E85A"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionRolling.cs",
+    "sha256": "D05146F27EA76B392D7F848A053FD041AE220D96212AB01BF185695A56EA07BE"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSensitivity.cs",
+    "sha256": "6FEC77A4C7C91E0FE89F659190C2949DF798467395F4990079C64C2CE4DFFB32"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+    "sha256": "9D6E74F5A6A2350DA72F8189E037803410D3A6E28937770EF9F329FDA6554920"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionState.cs",
+    "sha256": "97D3847DD1B5D58B2829E1D111E7C57BD9567A58D612EAAFCE09D1E97DAC1A62"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSupply.cs",
+    "sha256": "BA7EB93437F347F2F76E4838579654D73752521605D11D3FEB984D46D41375CC"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSurface.cs",
+    "sha256": "FD3F441D1E5F504554DA4F9151A8D06A4531185C96525D353D76663B9A46EBF5"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionSurfaceObservation.cs",
+    "sha256": "58C8675F5EADB7DC127FCF267D7DF56A549BBA9F109DEDD4C067BD45FEFE36F2"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionTreasure.cs",
+    "sha256": "106DAC74C91134664281C53D60A13E3F5EA0D75AC338A0FF5ED53EBA7BF83438"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionValidation.cs",
+    "sha256": "B3210D93EA69291E8F537E378024C6B968CA8CCA29174F5AA85761AB05D4B0A2"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionWater.cs",
+    "sha256": "5B82434F299897BD756585B252D12CF531104208EDD35DAC971883EA856A9F5B"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/InteractionWorld.cs",
+    "sha256": "C0526628D4BD5B603443DE8F5E6E051513BF239F0574FF13C543020F58D14CFA"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/LifeDevelopment.cs",
+    "sha256": "272AE08183858D64229563C47D5DF70B047C3FE0DE7B05A3D54C2B2D9740FF1A"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/LifeDuties.cs",
+    "sha256": "A5804F36E04B3FF18361CEFD62BBBD3CDA26AB36E8F06761763D391C4079ACB5"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/LifeObservation.cs",
+    "sha256": "EE80BCD2360F9D61322045383B7A404479C4C925BD80602F8A34F84F89A7613C"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneBehavior.cs",
+    "sha256": "CAB827E71AF8FB4A337DA895941FD548D80E873BFE429BA412B6D6524AF0C0B9"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneInteraction.cs",
+    "sha256": "2734B233C883697B15D92438D17723AD8BF7F146D3B7FE29341FC4B7CC951BE0"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneState.cs",
+    "sha256": "F96843024AEECC743CEF4DD6225ED4AF64EE7E4CCD4BFA63B853262A00B13DBC"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneValidation.cs",
+    "sha256": "C49188C68552FFE02BDAEA2EB79BA93713C4447950CCFC86B1D48C6026D00E78"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+    "sha256": "F6FF83BFD7540B0B9222B72B65E7CC6BAED70CE8884525D405035F6C987DE168"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/MouthIntake.cs",
+    "sha256": "5DFCAEE8FEA3C45399471FEBF9D44FF3A688FAFC45D5C8E7871A20C82B233087"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+    "sha256": "63B466FA21A3D2C313087EEF7E03283C63003A41A9B5D6D170B3D2D8C70E3719"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/NaturalLife.cs",
+    "sha256": "3281C9C554A9F8A8781C2A1EAD8F9907B88205B3BBE9FB7346F857BBEFF97695"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/OilDialogue.cs",
+    "sha256": "31E63162D55B82C1585A82482EA368B1925DE1BF409457D2E2F11C144874768C"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/PeerAttackContinuity.cs",
+    "sha256": "49F0D8D7E8DF5F8181D05F6C17D09D49C22E1CD9891FF757611AE3AC4563DFC2"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/PortableMotion.cs",
+    "sha256": "B5A9850DBA5D1AFD38674A8A4214CF33E70255F5087B827D6ABC982F11D262B9"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/RoomBallEnvironment.cs",
+    "sha256": "4B3AF34B5CC225A82DF3BE025E103D6DA435B0A87C716CBC75C994559DC070AE"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/RoomResourceText.cs",
+    "sha256": "431113245F55A7DD83F04C2D1F9F1832832820AB453262FAD3B5FBCA55DBE85B"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/SaveStore.cs",
+    "sha256": "9AD8ABD2FB4A0CE542728E07824DEB97717A27D6DCA030742792A85D1DAAE876"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ShelterBodyEnvelope.cs",
+    "sha256": "563685F5532903E63D04F248106C715EF16A13BBBB838E0095F65F9C3717E30D"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ShelterGeometry.cs",
+    "sha256": "816B33C43B5B0E549558697217E589A14F2FE8E1746F545086F999D0D9FFD896"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ShelterLife.cs",
+    "sha256": "5220BE7CF08302F842806662AAEBB9B8C3117675A72760629E4772EC415C73C9"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/Shelters.cs",
+    "sha256": "AB51708B75AEFC90674692354F9852D39F4D84C0368AA3040B1C3A664798DEC8"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ShelterSpatial.cs",
+    "sha256": "DB2493D9B7D409EB6363CAE7D98AC952EB3FE9F28C28FEB4BF45C21D5139EB96"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ShelterState.cs",
+    "sha256": "ED9B598450E637351A4720F42B4A683BFBAD7673772A7625F8519A731239E846"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ShelterValidation.cs",
+    "sha256": "EC70215A45878D5516DDA4998DAE630A05E3D772C7450E329B69EAD96D6C1993"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/StemCare.cs",
+    "sha256": "804193B3F2E06349792B87C18E4AE7A2D6A85B4DBE82AD37F98969AE1ADB5BB8"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/SupplyStationGesture.cs",
+    "sha256": "D1142A7CC7AFD3303CA35122E231087A384722D0BF4C6AC03898B866CFE565D8"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/SupplyStations.cs",
+    "sha256": "3329D5D4D00D40B0892B062F69729FB0D5A4CD569E7D7AECF89B24C186E5DE97"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/SupplyStationSpatial.cs",
+    "sha256": "7740374DE0476AEF78CA9D3A2A95418D501C79D9E3838D695075810D57365C91"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/SupplyStationState.cs",
+    "sha256": "08B2BD48776F105D520B5E4CAAF51708841EC408E563451346717F154F2DE515"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/SupplyStationValidation.cs",
+    "sha256": "FA34EBC2CD2355598E1F2542AE2DF6D6DF8343AB449B5FCF0739FFC7778986F8"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/ToolContactState.cs",
+    "sha256": "F7A9558FF78700F23E8C87A2620EE95B0C587A1CF7CA65DA9CB37EB815FDAA2C"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WaterAttempts.cs",
+    "sha256": "5250013D031F1FF2FF8576842F330FFA0EEDAF58F6B810358D5C91C8173EB96F"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WaterRescueContinuity.cs",
+    "sha256": "A2C8CCFD291ED8EEB7ABAF34CACA3114AF057522EFF58D00364FBBB34C42E411"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WildSelfCare.cs",
+    "sha256": "094B013E7E01AE8E3EF02DB65CAA3F1E800D3B9959DC248CB734C51026B71E82"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+    "sha256": "839A97F4AA0663ADCA122F8E0EF7EE4EDB8C78017EFA714E432FE555E6B2E97D"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WorldSimulation.cs",
+    "sha256": "30F0C9F1BB5B02A3C4D9EA3899732F65BB45A65392280BE6C5AEA8FDCE227373"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/WorldState.cs",
+    "sha256": "61A3F5205B3466D58E90C44E4B1F316144BAF681F20A546CC5A60E9910942549"
+  },
+  {
+    "path": "src/Yukkuri.Simulation/Yukkuri.Simulation.csproj",
+    "sha256": "1FC90D506731C455296EA51C8B13F75AA2F7EBE9E5A9F2BCB7B0BD88D4C7C359"
+  }
+]

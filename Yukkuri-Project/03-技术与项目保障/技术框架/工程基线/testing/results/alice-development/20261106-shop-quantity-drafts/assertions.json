@@ -1,0 +1,159 @@
+{
+  "scope": "Headless actual buttons/signals. Scroll uses temporary 1600-pixel content-height fixture; no visual acceptance.",
+  "results": [
+    {
+      "name": "new yard food defaults",
+      "passed": true
+    },
+    {
+      "name": "same category return retains product drafts",
+      "passed": true
+    },
+    {
+      "name": "same category prices",
+      "passed": true
+    },
+    {
+      "name": "direct category switch defaults untouched products",
+      "passed": true
+    },
+    {
+      "name": "direct return preserves food drafts",
+      "passed": true
+    },
+    {
+      "name": "public missing inventory route available",
+      "passed": true
+    },
+    {
+      "name": "cross category return leaves never-edited facilities at 1",
+      "passed": true
+    },
+    {
+      "name": "cross category return does not corrupt product cache",
+      "passed": true
+    },
+    {
+      "name": "cross category prices match quantities",
+      "passed": true
+    },
+    {
+      "name": "navigation and drafts never debit or change inventory",
+      "passed": true
+    },
+    {
+      "name": "editing facilities does not alter food quantities",
+      "passed": true
+    },
+    {
+      "name": "direct switch returns separately edited facilities",
+      "passed": true
+    },
+    {
+      "name": "same category facilities retain own drafts",
+      "passed": true
+    },
+    {
+      "name": "all drafts leave ledger unchanged",
+      "passed": true
+    },
+    {
+      "name": "cycle 1 backward food drafts and price",
+      "passed": true
+    },
+    {
+      "name": "cycle 1 cross category facilities retain own drafts",
+      "passed": true
+    },
+    {
+      "name": "cycle 1 shop input cache excludes owned quantities",
+      "passed": true
+    },
+    {
+      "name": "cycle 1 reopen preserves selected category",
+      "passed": true
+    },
+    {
+      "name": "cycle 2 backward food drafts and price",
+      "passed": true
+    },
+    {
+      "name": "cycle 2 cross category facilities retain own drafts",
+      "passed": true
+    },
+    {
+      "name": "cycle 2 shop input cache excludes owned quantities",
+      "passed": true
+    },
+    {
+      "name": "cycle 2 reopen preserves selected category",
+      "passed": true
+    },
+    {
+      "name": "cycle 3 backward food drafts and price",
+      "passed": true
+    },
+    {
+      "name": "cycle 3 cross category facilities retain own drafts",
+      "passed": true
+    },
+    {
+      "name": "cycle 3 shop input cache excludes owned quantities",
+      "passed": true
+    },
+    {
+      "name": "cycle 3 reopen preserves selected category",
+      "passed": true
+    },
+    {
+      "name": "forward and backward category edits remain independent",
+      "passed": true
+    },
+    {
+      "name": "scroll fixture actually scrolls",
+      "passed": true
+    },
+    {
+      "name": "nonshop name draft survives shop navigation",
+      "passed": true
+    },
+    {
+      "name": "nonshop selection drafts survive shop navigation",
+      "passed": true
+    },
+    {
+      "name": "shop scroll survives other panel navigation",
+      "passed": true
+    },
+    {
+      "name": "other panel navigation preserves quantities and prices",
+      "passed": true
+    },
+    {
+      "name": "extended navigation leaves ledger unchanged",
+      "passed": true
+    },
+    {
+      "name": "real new game replaced world",
+      "passed": true
+    },
+    {
+      "name": "real new game clears shop and page drafts",
+      "passed": true
+    },
+    {
+      "name": "real new game food defaults",
+      "passed": true
+    },
+    {
+      "name": "real new game facility defaults",
+      "passed": true
+    },
+    {
+      "name": "real new game clears nonshop name draft",
+      "passed": true
+    }
+  ],
+  "checks": 38,
+  "failures": 0
+}

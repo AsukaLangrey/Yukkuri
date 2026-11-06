@@ -157,6 +157,7 @@ public partial class InteractionRoom
             _panelContents.AddChild(Text($"{p.Name} · 每包{p.Pack}份 · {p.Price}元 · 持有{Sim.ShopOwnedQuantity(p.Id)} / 仓库{Sim.ShopQuantity(p.Id)}",14));
             if(Sim.ShopUnlockReason(p.Id) is { } locked)_panelContents.AddChild(Text(locked,13));
             var row=Row(_panelContents,6);var quantity=new SpinBox{MinValue=1,MaxValue=99,Step=1,Value=_shopQuantities.GetValueOrDefault(p.Id,1),CustomMinimumSize=new(100,36)};row.AddChild(quantity);
+            quantity.SetMeta(OwnsPageInputDraft,true);
             quantity.GetLineEdit().ContextMenuEnabled=false;
             var buy=PanelButton($"购买 · 总价 {p.Price} 元",()=>{bool ok=Sim.BuyShopProduct(p.Id,(int)quantity.Value);ShowShop(ok?"购买成功，已入库。":"余额不足或库存已满，未扣款。",p.Category);RefreshSupplyStock();});
             void RefreshPrice(){buy.Text=$"购买 · 总价 {p.Price*(int)quantity.Value} 元";buy.Disabled=Sim.ShopUnlockReason(p.Id)!=null||Sim.State.Money<(long)p.Price*(int)quantity.Value;}
