@@ -113,7 +113,10 @@ public sealed partial class WorldSimulation
             State.Creatures.Any(c=>c.Id==id||c.Family.Pregnancy.EventId==id||c.Interaction.Water.EventId==id||
                 c.Personality.WaterConcernEventId==id||c.Personality.WaterAftercare.EventId==id||
                 c.Personality.HungerFeeding.EventId==id||
-                kind=="birth"&&c.Id.StartsWith(id+"-",StringComparison.Ordinal))||State.RoomObjects.Any(o=>o.Id==id));
+                kind=="birth"&&c.Id.StartsWith(id+"-",StringComparison.Ordinal))||
+            // Departed identities stay reserved; archived activity is not active state.
+            State.CreatureSales.Any(s=>s.Creature.Id==id||kind=="birth"&&s.Creature.Id.StartsWith(id+"-",StringComparison.Ordinal))||
+            State.RoomObjects.Any(o=>o.Id==id));
         return id;
     }
 
@@ -245,7 +248,7 @@ public sealed partial class WorldSimulation
         // Reserve enough dry free space for the entire birth before settling any.
         for(int n=0;n<p.PlannedChildren;n++)
         {
-            if(State.Creatures.Any(c=>c.Id==$"{p.EventId}-{n}"))return false;
+            if(State.KnownCreatures.Any(c=>c.Id==$"{p.EventId}-{n}"))return false;
             var probe=new Creature{Id=$"{p.EventId}-{n}",RegionId=regionId,IsYoung=true};
             bool found=false;
             for(double radius=1.4;radius<=4&&!found;radius+=.45)
