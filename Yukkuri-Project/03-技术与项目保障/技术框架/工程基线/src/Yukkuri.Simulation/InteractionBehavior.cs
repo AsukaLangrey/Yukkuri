@@ -31,7 +31,8 @@ public sealed partial class WorldSimulation
         if(needsWaitFood)
         {
             if(UsesConsumableStock&&State.Food<=0)return Unavailable("等待练习需要眼前的一份食物。 ");
-            if(!WoodlandLayout.GroundFits(State,c.RegionId,waitFoodX,c.Z,.2)||
+            if(!ShelterGroundFits(c.RegionId,waitFoodX,c.Z,.32)||
+                !WoodlandLayout.GroundFits(State,c.RegionId,waitFoodX,c.Z,.2)||
                 !ClearOfStations(c.RegionId,waitFoodX,c.Z,.2)||
                 State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
                     Distance(s.X,s.Z,waitFoodX,c.Z)<StemVesselRadius+.2)||

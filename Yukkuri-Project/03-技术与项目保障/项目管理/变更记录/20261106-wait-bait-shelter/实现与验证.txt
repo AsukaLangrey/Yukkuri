@@ -1,0 +1,50 @@
+等待练习食物遵守小屋墙体
+日期：2026-11-06
+源码基线：e8d96a78f49182eb17e269e2b62a738c7a9bb7ea
+候选分支：alice/20261106-wait-bait-shelter
+测试环境：当前获用户授权的独立 Windows 测试工作区，不是原开发机；使用隔离构造的模拟状态，不读写个人存档。
+
+结论
+Wait 与 TeachWait 自动生成练习食物时，遗漏了普通放食物已有的小屋门墙检查。
+现已在 needsWaitFood 的预检中复用 ShelterGroundFits(region, x, z, .32)。位置不合适时沿用现有不可用反馈，不扣库存、不生成物件、不启动学习尝试。
+只新增一条共用几何守卫。没有改变学习概率、奖励、计数规则、UI 或小屋通行数值。
+
+策划依据及边界
+05-游戏设计/自由模式-昼夜作息与小屋通行.txt 第2、7行：用户要求及当前实现；墙体、真实门洞和其他实际障碍仍生效。
+05-游戏设计/自由模式-行为培养与分工.txt 第4—5行标明历史边界，不能恢复其中已撤销的手动分工。
+该文第11行的“可尝试”不承诺成功，执行须重新检查实际状态；第14—18行区分示范、尝试和实际成果。本修复不扩展预览提示或恢复历史页签。
+工程 InteractionWorld.cs 的普通 PlaceFood 已使用食物半径 .32 的同一检查，不另造半径或碰撞规则。
+
+复现与修复验证
+真实 BuyShelter、PlaceShelter 在(0,0)建立小屋。保留初始幼体并将其放在(-2.3,0)，明确断言完整身体轮廓不碰墙；自动食物点为(-1.5,0)，半径.32穿入左墙约.07。
+普通 PlaceInteractionSupply(PlaceMeal) 同点拒绝。未修复的 Wait、TeachWait 却接受，食物库存50降至49，并生成墙内物件。
+基线与修复都以 dotnet build -t:Rebuild 重编译，再以 dotnet run --no-build 运行相同检查源码。
+基线：18/34通过，16失败，退出码1。
+修复：34/34通过，0失败，退出码0。
+覆盖两种指令、平移小屋、正常空地、门前通路、已有可见Meal/Sweet复用、手持/收起/携带/空份/远处/其他区域食物不误用、无库存、24份上限、供给器、培养瓶、河道、正常生成后的序列化往返。
+失败断言覆盖库存、物件、随机数、Learning、能力证据、ActiveCue、等待计时和训练疲劳。未要求整个状态不变：正常玩家接触时间和不可用消息仍可更新。
+门前通路检查不等同于完整进出门动画验收。小屋状态当前没有旋转属性，平移检查覆盖非原点坐标。
+
+相关回归
+Interaction.Inventory：12/12通过，退出码0。
+Interaction.Shelters：13/13通过，退出码0。
+Interaction.LifeDevelopment：13/13通过，退出码0。
+Interaction.Smoke：48/48通过，退出码0。
+Interaction.Continuity：128/129通过，退出码1。唯一失败为 suspended lowering and sliding bodies retain unmet excretion until grounded and still；报 settling did not resume and finish exactly one excretion after suspended。与协调者已知主线旧失败一致，本分支未修改或降低该断言。
+强制重编译成功；保留既有两条CS8604警告（SupplyStationValidation、InteractionValidation）。
+
+证据
+原始日志保留在工程私有 .local/testing/wait-bait-shelter。包括最初两次测试源码编译修正日志、基线失败、强制重编译基线与修复、全部回归结果。不将含本机路径的原始日志发布。
+未启动Godot或画面自动化，不声称人工完整试玩、长期压力测试或门帘动画通过。
+
+冻结文件 SHA256
+src/Yukkuri.Simulation/InteractionBehavior.cs
+F84C6E01D8CD38887EF185E566D8A317B2165CCA0CF839063A6B32E26EB8BA09
+checks/Interaction.WaitBaitShelter/Program.cs
+788B42E01F6699549510DC6DDC228B8AC1800946DF2C1E360579E06A600AD1C6
+checks/Interaction.WaitBaitShelter/Interaction.WaitBaitShelter.csproj
+AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A
+
+十六项临时组合验证：69/69纯检查项目与Game强制重建通过，403源码文件前后稳定。InteractionBehavior只在前序组合源码上插入一条guard，保留健康恢复的水分门槛及取消强抬健康值修复；不整文件覆盖。组合Continuity检查通过，但本独立分支仍保留上述主线既有失败说明。223份JSON独立解析无失败，5处既有警告无新增。未运行Godot，完整排除项见组合验证.json。
+
+提交前仅清理检查源码末尾多余空行，内容TrimEnd逐字相同。组合证据保留原测试文件字节，最终独立检查重跑34/34通过。
