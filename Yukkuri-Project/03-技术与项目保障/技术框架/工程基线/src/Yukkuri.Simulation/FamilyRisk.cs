@@ -156,6 +156,7 @@ public sealed partial class WorldSimulation
         var p=c.Family.Pregnancy;p.InterventionRemaining=0;p.Elapsed=0;
         p.RecoveryRemaining=p.RecoveryDebt;p.Phase=p.RecoveryRemaining>0?PregnancyPhase.Recovering:PregnancyPhase.None;
         if(c.Condition==PhysicalCondition.Dead){p.RecoveryRemaining=0;p.Phase=PregnancyPhase.None;}
+        if(p.Phase==PregnancyPhase.None)p.RecoveryFatherIds.Clear();
         p.RetryAt=Math.Max(p.RetryAt,State.WorldSeconds+60);p.Outcome=outcome;c.Family.LastEvent=outcome;
         RecordInteraction(c,"intervention-ended",outcome,2);
     }

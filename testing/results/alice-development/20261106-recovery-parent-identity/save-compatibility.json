@@ -1,0 +1,47 @@
+{
+  "generated_from_baseline": "b03687f9b21b88e3182b1cd33d99c81b4aff7ddb",
+  "failures": 0,
+  "samples": 5,
+  "results": [
+    {
+      "sha256": "AD33E27A0EAA78BDD7C5A91B14116381866CC7A40E8AB975D71308B63A846C44",
+      "success": true,
+      "continued_simulated_seconds": 120,
+      "all_original_fields_preserved": true,
+      "sample": "ordinary-recovering.json",
+      "original_untouched": true
+    },
+    {
+      "sha256": "7EB571134D008D04FD3E21C55EA242827E83B8B9310FA6ABAE854571C2426E5E",
+      "success": true,
+      "continued_simulated_seconds": 120,
+      "all_original_fields_preserved": true,
+      "sample": "overlap-preparing.json",
+      "original_untouched": true
+    },
+    {
+      "sha256": "C5034528C65E357FFF67604B18C19A46C057DA14ABF42EEF1DF6F945D2CCBF8D",
+      "success": true,
+      "continued_simulated_seconds": 120,
+      "all_original_fields_preserved": true,
+      "sample": "overlap-cancelled.json",
+      "original_untouched": true
+    },
+    {
+      "sha256": "2198F998D1848CC2BFACD5E75B6D16A192E24B70B2D32AD96AC07CE35CCF5EBB",
+      "success": true,
+      "continued_simulated_seconds": 120,
+      "all_original_fields_preserved": true,
+      "sample": "overlap-gestating.json",
+      "original_untouched": true
+    },
+    {
+      "sha256": "32B86632B112299DD90AB2848CE1D195C41D5CB46CCCFCFA27BF1E7A3A466AD0",
+      "success": true,
+      "continued_simulated_seconds": 120,
+      "all_original_fields_preserved": true,
+      "sample": "forced-event-recovering.json",
+      "original_untouched": true
+    }
+  ]
+}

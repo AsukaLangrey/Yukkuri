@@ -43,10 +43,18 @@ public static partial class FamilyRules
             Require(f.BirthEventId==null||s.CompletedBirths.Contains(f.BirthEventId)&&f.MotherId!=null&&f.FatherId!=null,
                 "幼体出生缺少结算或亲缘记录");
             var p=f.Pregnancy;
+            Require(p.RecoveryFatherIds!=null&&p.RecoveryFatherIds.Count<=creatures.Count&&
+                p.RecoveryFatherIds.Distinct(StringComparer.Ordinal).Count()==p.RecoveryFatherIds.Count&&
+                p.RecoveryFatherIds.All(id=>!string.IsNullOrWhiteSpace(id)&&id!=c.Id&&creatures.ContainsKey(id)),
+                "恢复期父体来源引用无效");
             Require(Enum.IsDefined(p.Phase)&&Enum.IsDefined(p.Method)&&Number(p.Elapsed,GestationSeconds(p.Method))&&
                 Number(p.WaitingSeconds,90)&&Number(p.Burden,100)&&Number(p.RecoveryRemaining,900)&&
                 Number(p.RetryAt)&&p.PlannedChildren is >=0 and <=3&&Text(p.Outcome)&&
                 Reference(p.FatherId)&&(p.EventId==null||!string.IsNullOrWhiteSpace(p.EventId)&&p.EventId.Length<=128),"孕育数据无效");
+            Require(p.RecoveryFatherIds.Count==0||c.Condition!=PhysicalCondition.Dead&&
+                (p.Phase==PregnancyPhase.Recovering&&p.RecoveryRemaining>0||
+                 p.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating&&p.RecoveryDebt>0),
+                "恢复期父体来源脱离恢复负担");
             if(p.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)
                 Require(!c.IsYoung&&c.Body.ReproductionRole==ReproductionRole.Maternal&&p.FatherId!=null&&
                     !creatures[p.FatherId].IsYoung&&creatures[p.FatherId].Body.ReproductionRole==ReproductionRole.Paternal,"孕育缺少成熟角色来源");

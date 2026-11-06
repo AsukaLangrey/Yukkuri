@@ -1,0 +1,133 @@
+{
+  "new_iteration_dependency": "b03687f9b21b88e3182b1cd33d99c81b4aff7ddb",
+  "deep_chain_drift": 0,
+  "synthetic_legacy_failures": 0,
+  "walltime_policy": {
+    "execution": "serial Rebuild then DLL",
+    "per_build_or_run_seconds": 300,
+    "actual_seconds": 453.9932628,
+    "aggregate_seconds": 1800,
+    "termination": "only owned process identity verified before termination"
+  },
+  "merge_review": "Every dependency9 blob matched Git; all full context anchors unique; reversing the exact delta recovers combined32. CareContactSeconds, null caregiver rejection, active-only carrier validation and all unrelated prior fixes preserved.",
+  "limitations": [
+    "No visible UI, Godot startup, layout, sound or gameplay-feel acceptance.",
+    "Historical player Save.Compatibility not run; five generated dependency9 public-journey states separately tested with the same harness.",
+    "Old overlapping saves have already lost the original recovery identity; migration cannot restore it.",
+    "No Git writes, uploads, publication, integration commit or main changes."
+  ],
+  "parsed_runtime_json": 302,
+  "status": "partial",
+  "parsed_world_snapshots": 214,
+  "failed": [],
+  "synthetic_legacy_continued_seconds_each": 120,
+  "combination": "Prior verified iterations 1-32 plus frozen iteration33 six-file exact delta and new focused check",
+  "timeouts": 0,
+  "independent_disk_checks": 3,
+  "migration": "Missing-field ordinary recovery and completed forced-event recovery migrate the identifiable father. Old overlapping attempts and cancelled interventions cannot reconstruct already-overwritten father history; no identity is invented. Explicit empty and malformed lists remain distinct.",
+  "passed_pure": 83,
+  "verified_at": "2026-11-06T15:19:41.4213791Z",
+  "game_debug_build": 0,
+  "baseline_pristine_files": 239,
+  "independent_build_exit": 0,
+  "all_local_evidence_json_parsed": 329,
+  "worker_evidence_drift": 0,
+  "independent_checks": 4,
+  "parent_evidence_files": 1065,
+  "synthetic_legacy_run_exit": 0,
+  "unexpected_nonzero_commands": [],
+  "baseline_drift": 0,
+  "deep_chain_records": 249,
+  "new_source_files": [
+    {
+      "path": "checks/Family.RecoveryIdentity/Program.cs",
+      "sha256": "EFF1EE332CEAB708332BD3624DFE0DC2F239BA6D24D26E6E4E356C1D52A11B63"
+    },
+    {
+      "path": "checks/Family.RecoveryIdentity/Family.RecoveryIdentity.csproj",
+      "sha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A"
+    }
+  ],
+  "semantic_issues": [],
+  "focused_new_failures": 0,
+  "synthetic_legacy_build_exit": 0,
+  "source_drift": 0,
+  "independent_result": {
+    "passed": true,
+    "checks": 4,
+    "diskChecks": 3,
+    "originalFatherStillPresent": true,
+    "payment": 0,
+    "recoveryRemaining": 164.25,
+    "simulationSeconds": 745.75
+  },
+  "parent_source_files": 431,
+  "parsed_inline_json": 52,
+  "worker_source_drift": 0,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "Program.cs(5,6): CS8321",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "source_file_manifest_sha256": "4FCD3D4D2D2D76290254760EE36F31FFA8DCF9D0ED6C09C8C4522BC7476B4079",
+  "parent_source_drift": 0,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "raw_evidence_storage": "Private ignored local folder; raw logs not published.",
+  "evidence_files": 879,
+  "worker_initial_failures_preserved": 3,
+  "long_simulation_policy": "Prior three 6000-second physics stresses not repeated because no physics changes. All 83 pure checks including bounded life/soak tests rerun. Public recovery journey has a 6000-second simulation cap and explicit finite loops.",
+  "changed_previous_files": [
+    "src\\Yukkuri.Simulation\\CourtyardEconomy.cs",
+    "src\\Yukkuri.Simulation\\FamilyReproduction.cs",
+    "src\\Yukkuri.Simulation\\FamilyRisk.cs",
+    "src\\Yukkuri.Simulation\\FamilyState.cs",
+    "src\\Yukkuri.Simulation\\FamilyValidation.cs",
+    "src\\Yukkuri.Simulation\\MilestoneInteraction.cs"
+  ],
+  "new_warning_locations": [
+    "Program.cs(5,6): CS8321"
+  ],
+  "independent_run_exit": 0,
+  "failure_text_markers": 0,
+  "parent_evidence_drift": 0,
+  "focused_new_checks": 24,
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardEconomy.cs",
+      "after_sha256": "C03B55CC979FD7741786C252433C312C4DA869345D88BA656461D322D618A6C4",
+      "worker_sha256": "C03B55CC979FD7741786C252433C312C4DA869345D88BA656461D322D618A6C4"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyReproduction.cs",
+      "after_sha256": "F63D82186038EB1E104C3476BD64771CFC87E8002206F0758857BCC07A08A69E",
+      "worker_sha256": "F63D82186038EB1E104C3476BD64771CFC87E8002206F0758857BCC07A08A69E"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyRisk.cs",
+      "after_sha256": "63DF4F0B99A5024E8CE0B92D6BB5212021688755097A7B9CD492C9E24A9B762C",
+      "worker_sha256": "63DF4F0B99A5024E8CE0B92D6BB5212021688755097A7B9CD492C9E24A9B762C"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyState.cs",
+      "after_sha256": "9817174601CB796111F081DD806CA5E7CF33F1E9B8A6B052FCF4BFCF2CF6516F",
+      "worker_sha256": "41580644BFA8BD76AAF82E5D9F8F0E39E3F7007BCEC7D296B9F74F2117A4195C"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyValidation.cs",
+      "after_sha256": "F1187BFF7DF3AE6AAA4DA41C604A1AD5ECB68C61C3CCA3F1CE2913C33B8A20FA",
+      "worker_sha256": "1E10A9287310283790011A7C1BFBFA002CDC2D5DF065617A806A635AD3B5500C"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneInteraction.cs",
+      "after_sha256": "98452AC938D6656D98BD9C3EE623C7F3FD679F3473D1E2449E3D7EBAFCB91820",
+      "worker_sha256": "98452AC938D6656D98BD9C3EE623C7F3FD679F3473D1E2449E3D7EBAFCB91820"
+    }
+  ],
+  "synthetic_legacy_cases": 5,
+  "pure_projects": 83,
+  "remaining_worktree_runtime_processes": 0,
+  "final_source_files": 433
+}

@@ -1,0 +1,26 @@
+PASS A recovery survives B preparation and cancellation, B is released
+PASS B preparation body interruption preserves A only
+PASS random failed and successful interventions preserve A before B outcome
+PASS failed B gestation adds B; A+B survive C preparation and cancel
+PASS successful B birth adds B without replacing A
+PASS same-father overlap stays deduplicated
+PASS no-debt cancellation releases the unbegun father
+PASS recovery expiry clears all accumulated sources
+PASS actual death cleanup clears sources
+PASS independent detached brood still blocks its father after maternal recovery expires
+Disk snapshots retained for audit.
+PASS fresh disk round trips preserve None, Preparing, Gestating and Recovering
+PASS new property is empty by default and marker never serialized
+PASS missing legacy ordinary recovery migrates regardless of JSON property order
+PASS explicit empty legacy-compatible list never fabricates a source
+PASS missing old overlapping preparing and gestating cannot recover lost A
+PASS old forced cancelled recovery never misidentifies unbegun B
+PASS reject null, blank, unknown, self and duplicate recovery references
+PASS reject nonempty sources detached from recovery time
+PASS historical dead and changed-body father references remain valid
+PASS known sold father reference remains valid without resurrecting it
+PASS genuine baseline public saves migrate only recoverable identity
+PASS old missing None, zero clock and missing father never fabricate history
+PASS world reconstruction keeps the persisted recovery set and sale guards
+PASS real old forced recovery retains its known completed source only
+CHECKS 24; FAILURES 0

@@ -11,11 +11,29 @@ public sealed partial class PeerBond
     public double CareSeconds { get; set; }
     public string LastEvent { get; set; } = "";
 }
-public sealed partial class PregnancyState
+public sealed partial class PregnancyState : System.Text.Json.Serialization.IJsonOnDeserialized
 {
     public PregnancyPhase Phase { get; set; }
     public BirthMethod Method { get; set; }
     public string? FatherId { get; set; }
+    // Historical recovery sources are independent of the current attempt's father.
+    // A list preserves duplicate entries from malformed JSON for validation.
+    private List<string> _recoveryFatherIds = new();
+    private bool _recoveryFatherIdsPresent;
+    public List<string> RecoveryFatherIds
+    {
+        get => _recoveryFatherIds;
+        set { _recoveryFatherIds = value; _recoveryFatherIdsPresent = true; }
+    }
+    void System.Text.Json.Serialization.IJsonOnDeserialized.OnDeserialized()
+    {
+        // Only old ordinary recovery has an identifiable source. Overlapping old
+        // attempts have already overwritten that identity; never invent it from
+        // a partner or child, or mistake an unbegun cancelled attempt for a birth.
+        if (!_recoveryFatherIdsPresent && Phase == PregnancyPhase.Recovering &&
+            RecoveryRemaining > 0 && FatherId != null && !(Forced && EventId == null && RecoveryDebt > 0))
+            _recoveryFatherIds.Add(FatherId);
+    }
     public string? EventId { get; set; }
     public double Elapsed { get; set; }
     public double WaitingSeconds { get; set; }

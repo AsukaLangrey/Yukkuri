@@ -220,7 +220,7 @@ public sealed partial class WorldSimulation
             pregnancy.Outcome="母体离世，孕育中止。";
             c.Family.LastEvent=pregnancy.Outcome;
         }
-        pregnancy.Phase=PregnancyPhase.None;pregnancy.InterventionRemaining=0;pregnancy.RecoveryRemaining=0;
+        pregnancy.Phase=PregnancyPhase.None;pregnancy.InterventionRemaining=0;pregnancy.RecoveryRemaining=0;pregnancy.RecoveryFatherIds.Clear();
         c.Family.ChildThreat=new();c.Family.Conflict=new();c.Family.FlightRemaining=0;
         c.CriticalRemaining=0;c.RecoveryRemaining=0;c.Stabilized=false;c.ReactionRemaining=0;
         StopIncapacitatedActions(c);

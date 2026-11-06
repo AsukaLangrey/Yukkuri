@@ -122,10 +122,12 @@ public sealed partial class WorldSimulation
         var p=mother.Family.Pregnancy;
         if(mother.Condition==PhysicalCondition.Dead)
         {
-            p.Phase=PregnancyPhase.None;p.RecoveryRemaining=0;
+            p.Phase=PregnancyPhase.None;p.RecoveryRemaining=0;p.RecoveryFatherIds.Clear();
             p.Outcome="宝宝已出生，母体在生产后离世。";mother.Family.LastEvent=p.Outcome;
             ClearCompanionship(mother);RecordInteraction(mother,"pregnancy-outcome",p.Outcome,5);return;
         }
+        if(p.FatherId is { } recoveryFather && !p.RecoveryFatherIds.Contains(recoveryFather))
+            p.RecoveryFatherIds.Add(recoveryFather);
         p.Phase=PregnancyPhase.Recovering;p.InterventionRemaining=0;p.RecoveryRemaining=Math.Min(900,FamilyRules.RecoverySeconds(p.Method)+p.RecoveryDebt);
         p.RetryAt=State.WorldSeconds+p.RecoveryRemaining;p.Outcome=outcome;
         ClearCompanionship(mother);mother.Family.LastEvent=outcome;
@@ -145,14 +147,14 @@ public sealed partial class WorldSimulation
             {
                 if(p.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)
                 {p.Phase=PregnancyPhase.None;p.Outcome="母体离世，孕育中止。";f.LastEvent=p.Outcome;ClearCompanionship(mother);RecordInteraction(mother,"pregnancy-loss",p.Outcome,5);}
-                p.Phase=PregnancyPhase.None;p.RecoveryRemaining=0;p.InterventionRemaining=0;
+                p.Phase=PregnancyPhase.None;p.RecoveryRemaining=0;p.RecoveryFatherIds.Clear();p.InterventionRemaining=0;
                 continue;
             }
             if(p.Phase==PregnancyPhase.Recovering)
             {
                 if(mother.Fullness>35&&mother.Interaction.Hydration>35&&mother.Pain<40)
                     p.RecoveryRemaining=Math.Max(0,p.RecoveryRemaining-bodyDt);
-                if(p.RecoveryRemaining<=0){p.Phase=PregnancyPhase.None;p.Burden=0;f.LastEvent="孕育后的身体负担已经缓解。";}
+                if(p.RecoveryRemaining<=0){p.Phase=PregnancyPhase.None;p.RecoveryFatherIds.Clear();p.Burden=0;f.LastEvent="孕育后的身体负担已经缓解。";}
                 continue;
             }
             var father=State.Creatures.Find(c=>c.Id==p.FatherId);
