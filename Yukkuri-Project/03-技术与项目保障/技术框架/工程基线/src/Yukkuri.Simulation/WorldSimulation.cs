@@ -9,7 +9,7 @@ public sealed partial class WorldSimulation
         State = state; Config = state.InteractionPlaytest ? new() { HungerPerSecond = .025, EnergyPerSecond = .02, MoveSpeed = .72 } : state.MilestoneScenario ? MilestoneConfig() : config ?? new();
         foreach(var brood in state.DetachedStemBroods)brood.HeldByHand=false;
         foreach(var station in state.SupplyStations)station.HeldByHand=false;
-        foreach(var motion in state.PortableMotions){motion.Held=false;SetPortableOccupancy(motion.Id,true);}
+        NormalizePortableMotion();
         foreach(var c in state.Creatures)
             if(c.Family.Pregnancy is { Phase:PregnancyPhase.Gestating, Method:BirthMethod.Stem, Stem:null })
                 InitializeStemBrood(c.Family.Pregnancy);

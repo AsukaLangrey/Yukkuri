@@ -1,0 +1,60 @@
+{
+  "deep_chain_drift": 0,
+  "failed": [],
+  "origin_records": 413,
+  "stem_passed": 30,
+  "reverse_patch_exact": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "origin_hash_drift": 0,
+  "stem_failed": 0,
+  "game_build": 0,
+  "changed_previous_files": [
+    "checks\\Interaction.DetachedStem\\Program.cs",
+    "src\\Yukkuri.Simulation\\DetachedStemLife.cs",
+    "src\\Yukkuri.Simulation\\PortableMotion.cs",
+    "src\\Yukkuri.Simulation\\WorldSimulation.cs"
+  ],
+  "baseline_run_exit": 1,
+  "baseline_build_exit": 0,
+  "passed_pure": 74,
+  "source_hash_differences": 0,
+  "pass_text_lines": 1577,
+  "new_warning_locations": [],
+  "visual_acceptance": false,
+  "pure_projects": 74,
+  "baseline_passed": 20,
+  "source_files": 413,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "deep_chain_records": 139,
+  "parsed_inline_json": 31,
+  "godot_run": false,
+  "same_harness": true,
+  "exclusions": [
+    "ActorArt.Preview",
+    "InteractionProp.Preview",
+    "Woodland.Preview",
+    "Renderer.Probe",
+    "Renderer.Probe461",
+    "Save.Compatibility"
+  ],
+  "failure_text_markers": 0,
+  "baseline_expected_failure_count": 10,
+  "parsed_json_files": 277,
+  "merge_drift": 0,
+  "baseline_source_drift": 0,
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "json_issues": [],
+  "verified_at": "2026-11-06T09:19:02.8762555Z",
+  "reverse_patch_drift": 0,
+  "worker_evidence_drift": 0
+}

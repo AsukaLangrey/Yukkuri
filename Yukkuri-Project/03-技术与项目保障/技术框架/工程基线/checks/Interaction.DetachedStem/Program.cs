@@ -484,4 +484,99 @@ Check("independent ground placement retains world gates and failed transactions 
         "water debit changed or the 24 object cap was bypassed");
 });
 
+// Synthetic fixtures set only starting needs/maturity. Cut, bottle, release,
+// failure and birth still run through public actions and real frame order.
+foreach(bool airborne in new[]{false,true})
+Check("terminal failure clears portable motion immediately, airborne="+airborne,()=>
+{
+    var sim=Loose();Bottle(sim);var s=Brood(sim);
+    s.Integrity=.01;s.Hydration=0;s.Nutrition=0;
+    int vessels=sim.State.StemVessels,purchases=sim.State.StemVesselPurchases,money=sim.State.Money;
+    Require(sim.BeginPortableCarry(s.EventId),"carry failed");
+    if(airborne)sim.ReleasePortableCarry(s.EventId,new System.Numerics.Vector2(2,0));
+    Require(sim.PortableStatus(s.EventId)!.Held==!airborne,"release fixture did not release");
+    for(int n=0;n<20&&s.Phase==DetachedStemPhase.Bottled;n++)Frame(sim);
+    Require(s.Phase==DetachedStemPhase.Failed&&!s.HeldByHand,"real need failure did not finish");
+    Require(sim.PortableStatus(s.EventId)==null,"terminal brood retained portable motion");
+    Require(sim.State.StemVessels==vessels&&sim.State.StemVesselPurchases==purchases&&sim.State.Money==money&&s.VesselIntegrity==100,
+        "failure changed vessel/accounting");
+    var restored=Reload(sim);SaveStore.Validate(restored.State);
+});
+
+foreach(bool airborne in new[]{false,true})
+Check("healthy portable motion survives load and settles, airborne="+airborne,()=>
+{
+    var sim=Loose();Bottle(sim);var s=Brood(sim);
+    Require(sim.BeginPortableCarry(s.EventId),"carry failed");
+    if(airborne)sim.ReleasePortableCarry(s.EventId,new System.Numerics.Vector2(2,0));
+    var before=sim.PortableStatus(s.EventId)!;double height=before.Height,vx=before.VelocityX;
+    var restored=Reload(sim);var motion=restored.PortableStatus(s.EventId);
+    Require(motion!=null&&!motion.Held&&motion.Height==height&&motion.VelocityX==vx&&Brood(restored).HeldByHand,
+        "load discarded healthy motion or resumed hand drag");
+    SaveStore.Validate(restored.State);
+    for(int n=0;n<20;n++)Frame(restored);
+    Require(restored.PortableStatus(s.EventId)==null&&!Brood(restored).HeldByHand&&Brood(restored).Phase==DetachedStemPhase.Bottled,
+        "healthy motion failed to land");
+    SaveStore.Validate(restored.State);
+});
+
+foreach(bool born in new[]{false,true})
+foreach(bool cleared in new[]{false,true})
+foreach(bool paused in new[]{false,true})
+Check($"legacy terminal motion loads and re-saves: born={born}, cleared={cleared}, paused={paused}",()=>
+{
+    var sim=Loose(born?FamilyRules.GestationSeconds(BirthMethod.Stem)-.05:0);Bottle(sim);var s=Brood(sim);
+    if(born){s.Hydration=90;s.Nutrition=90;}
+    else{s.Integrity=.01;s.Hydration=0;s.Nutrition=0;}
+    for(int n=0;n<20&&s.Phase==DetachedStemPhase.Bottled;n++)Frame(sim);
+    Require(s.Phase==(born?DetachedStemPhase.Born:DetachedStemPhase.Failed),"terminal transition not reached");
+    if(cleared){Hold(sim,Input(sim,InteractionAction.ClearStem));sim.EndInteractionGesture();Require(s.Cleared,"clear failed");}
+    int children=sim.State.Creatures.Count(c=>c.Family.BirthEventId==s.EventId);
+    Require(children==(born?s.PlannedChildren:0),"birth count incorrect");
+    int vessels=sim.State.StemVessels,purchases=sim.State.StemVesselPurchases,money=sim.State.Money;
+    string brood=JsonSerializer.Serialize(s,SaveStore.JsonOptions);
+    string births=JsonSerializer.Serialize(sim.State.CompletedBirths,SaveStore.JsonOptions);
+    // Previously accepted JSON can contain a residual motion for a terminal brood.
+    sim.State.PortableMotions.Add(new(){Id=s.EventId,Height=.65,VelocityX=2,VerticalVelocity=1.2});
+    sim.State.Settings.Pause=paused;SaveStore.Validate(sim.State);
+    string directory=Path.Combine(Path.GetTempPath(),"yukkuri-terminal-motion-"+Guid.NewGuid().ToString("N"));
+    try
+    {
+        var store=new SaveStore(directory);store.Save(sim.State,0);
+        var restored=new WorldSimulation(store.Load(0).State);SaveStore.Validate(restored.State);
+        Require(restored.PortableStatus(s.EventId)==null&&!Brood(restored).HeldByHand,"load resurrected terminal occupancy");
+        Require(JsonSerializer.Serialize(Brood(restored),SaveStore.JsonOptions)==brood,"normalization changed brood history or vessel");
+        store.Save(restored.State,1);
+        for(int n=0;n<100;n++)Frame(restored);
+        SaveStore.Validate(restored.State);store.Save(restored.State,2);
+        Require(restored.State.Creatures.Count(c=>c.Family.BirthEventId==s.EventId)==children&&
+            JsonSerializer.Serialize(restored.State.CompletedBirths,SaveStore.JsonOptions)==births&&
+            restored.State.StemVessels==vessels&&restored.State.StemVesselPurchases==purchases&&restored.State.Money==money,
+            "load/ticks duplicated birth or refunded stock");
+        restored.State.Settings.Pause=false;Frame(restored);SaveStore.Validate(restored.State);store.Save(restored.State,3);
+    }
+    finally{if(Directory.Exists(directory))Directory.Delete(directory,true);}
+});
+Check("mature held and airborne brood waits for landing, then births once",()=>
+{
+    var sim=Loose(FamilyRules.GestationSeconds(BirthMethod.Stem)-.05);Bottle(sim);var s=Brood(sim);
+    s.Hydration=90;s.Nutrition=90;int vessels=sim.State.StemVessels;
+    Require(sim.BeginPortableCarry(s.EventId),"carry failed");
+    for(int n=0;n<10;n++)Frame(sim);
+    Require(s.Phase==DetachedStemPhase.Bottled&&s.HeldByHand&&sim.PortableStatus(s.EventId)!.Held,
+        "held mature brood birthed");
+    sim.ReleasePortableCarry(s.EventId,new System.Numerics.Vector2(2,0));
+    Require(!sim.PortableStatus(s.EventId)!.Held&&s.HeldByHand,"release lost airborne occupancy");
+    for(int n=0;n<20&&sim.PortableStatus(s.EventId)!=null;n++)
+    {
+        Frame(sim);
+        if(sim.PortableStatus(s.EventId)!=null)Require(s.Phase==DetachedStemPhase.Bottled&&s.HeldByHand,"airborne brood birthed");
+    }
+    for(int n=0;n<20&&s.Phase==DetachedStemPhase.Bottled;n++)Frame(sim);
+    Require(s.Phase==DetachedStemPhase.Born&&!s.HeldByHand&&sim.PortableStatus(s.EventId)==null,"landed brood did not birth cleanly");
+    var restored=Reload(sim);for(int n=0;n<20;n++)Frame(restored);
+    Require(restored.State.Creatures.Count(c=>c.Family.BirthEventId==s.EventId)==s.PlannedChildren&&restored.State.StemVessels==vessels,
+        "reload duplicated birth or refunded vessel");
+    SaveStore.Validate(restored.State);
+});
 return failures==0?0:1;

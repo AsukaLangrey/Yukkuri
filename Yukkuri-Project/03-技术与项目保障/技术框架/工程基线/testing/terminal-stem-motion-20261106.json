@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "title": "离体茎终态运动残留修复",
+  "date_utc": "2026-11-06",
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_branch": "alice/20261106-terminal-stem-motion",
+  "source_state": "uncommitted scoped fix on pinned main; final publication commit owned by coordinator",
+  "overall_status": "partial",
+  "focused_status": "passed",
+  "configuration": "Debug/net10.0; explicit build -t:Rebuild followed by direct DLL execution",
+  "environment": {
+    "kind": "authorized local Windows test environment",
+    "machine_identity": "redacted",
+    "DOTNET_GENERATE_ASPNET_CERTIFICATE": "false",
+    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1"
+  },
+  "modified_source": [
+    {
+      "path": "src/Yukkuri.Simulation/WorldSimulation.cs",
+      "sha256": "e799babdf8251e6edd5fac17cd766fdf77c17d9522d1e427c114ebb85b6c0c33"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/PortableMotion.cs",
+      "sha256": "9f3efe41850f73b5c1f2a670ddff3328b067a818a188711d910fee9a576b3375"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/DetachedStemLife.cs",
+      "sha256": "88bd581dff44a1da36f003a882767407d88330349c43b0879528f422817cfc4c"
+    },
+    {
+      "path": "checks/Interaction.DetachedStem/Program.cs",
+      "sha256": "c3468e5dd95bcdabc4c49d51c1944c0d07973aad7373e36eb9f19bc4fbec4143"
+    }
+  ],
+  "baseline_provenance": {
+    "description": "Baseline product files were reconstructed after testing by reversing only the scoped edits. These are not pre-test snapshots. Coordinator independently verified git hash-object --path against the pinned main blobs with repository EOL rules.",
+    "verified_blobs": {
+      "WorldSimulation": "c78e2c43cf01fecb860c19f6dc44e52839a6a70a",
+      "DetachedStemLife": "3fed3dc165917a36a74a3f19ee0379f6eadeb36c",
+      "PortableMotion": "f23b07ca58fee858f06a79988dd41d18b3d28710"
+    }
+  },
+  "main_regression": {
+    "name": "Interaction.DetachedStem",
+    "build_command": "dotnet build checks/Interaction.DetachedStem -t:Rebuild --nologo",
+    "run_command": "dotnet checks/Interaction.DetachedStem/bin/Debug/net10.0/Interaction.DetachedStem.dll",
+    "harness_sha256": "c3468e5dd95bcdabc4c49d51c1944c0d07973aad7373e36eb9f19bc4fbec4143",
+    "existing_cases": 17,
+    "added_cases": 13,
+    "baseline": {
+      "run_exit_code": 1,
+      "added_failed": 10,
+      "passed": 20,
+      "build_exit_code": 0,
+      "added_passed": 3,
+      "build_log": ".local/testing/stem-terminal-motion-20261106/regression-baseline-final-build.log",
+      "run_log": ".local/testing/stem-terminal-motion-20261106/regression-baseline-final.log",
+      "failed": 10
+    },
+    "fixed": {
+      "failed": 0,
+      "run_exit_code": 0,
+      "passed": 30,
+      "run_log": ".local/testing/stem-terminal-motion-20261106/regression-fixed.log",
+      "build_log": ".local/testing/stem-terminal-motion-20261106/regression-fixed-build.log",
+      "build_exit_code": 0
+    }
+  },
+  "related_checks": [
+    {
+      "name": "Interaction.StemCare",
+      "status": "passed",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 12,
+      "failed": 0,
+      "build_command": "dotnet build checks/Interaction.StemCare -t:Rebuild --nologo",
+      "run_command": "dotnet checks/Interaction.StemCare/bin/Debug/net10.0/Interaction.StemCare.dll",
+      "build_log": ".local/testing/stem-terminal-motion-20261106/Interaction.StemCare-build.log",
+      "run_log": ".local/testing/stem-terminal-motion-20261106/Interaction.StemCare-run.log"
+    },
+    {
+      "name": "Family.Reproduction",
+      "status": "passed",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 10,
+      "failed": 0,
+      "build_command": "dotnet build checks/Family.Reproduction -t:Rebuild --nologo",
+      "run_command": "dotnet checks/Family.Reproduction/bin/Debug/net10.0/Family.Reproduction.dll",
+      "build_log": ".local/testing/stem-terminal-motion-20261106/Family.Reproduction-build.log",
+      "run_log": ".local/testing/stem-terminal-motion-20261106/Family.Reproduction-run.log"
+    },
+    {
+      "name": "Family.Compatibility",
+      "status": "passed",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 77,
+      "failed": 0,
+      "build_command": "dotnet build checks/Family.Compatibility -t:Rebuild --nologo",
+      "run_command": "dotnet checks/Family.Compatibility/bin/Debug/net10.0/Family.Compatibility.dll",
+      "build_log": ".local/testing/stem-terminal-motion-20261106/Family.Compatibility-build.log",
+      "run_log": ".local/testing/stem-terminal-motion-20261106/Family.Compatibility-run.log"
+    },
+    {
+      "name": "Family.PregnancyBoundaries",
+      "status": "passed",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 12,
+      "failed": 0,
+      "build_command": "dotnet build checks/Family.PregnancyBoundaries -t:Rebuild --nologo",
+      "run_command": "dotnet checks/Family.PregnancyBoundaries/bin/Debug/net10.0/Family.PregnancyBoundaries.dll",
+      "build_log": ".local/testing/stem-terminal-motion-20261106/Family.PregnancyBoundaries-build.log",
+      "run_log": ".local/testing/stem-terminal-motion-20261106/Family.PregnancyBoundaries-run.log"
+    },
+    {
+      "name": "Interaction.Inventory",
+      "status": "passed",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "passed": 12,
+      "failed": 0,
+      "build_command": "dotnet build checks/Interaction.Inventory -t:Rebuild --nologo",
+      "run_command": "dotnet checks/Interaction.Inventory/bin/Debug/net10.0/Interaction.Inventory.dll",
+      "build_log": ".local/testing/stem-terminal-motion-20261106/Interaction.Inventory-build.log",
+      "run_log": ".local/testing/stem-terminal-motion-20261106/Interaction.Inventory-run.log"
+    }
+  ],
+  "synthetic_save_tests": {
+    "slots": "0 before normalization, 1 immediately after load, 2 after 100 frames, 3 after resuming",
+    "load_calls_fixed": 8,
+    "matrix": "Failed/Born x cleared/not cleared x paused/unpaused",
+    "cases": 8,
+    "historical_user_saves_used": 0,
+    "successful_save_calls_fixed": 32,
+    "temporary_directories": 8,
+    "cleanup": "unique temporary directories deleted in finally",
+    "note": "Born/cleared residual motion is a synthetic compatibility fixture, not evidence of a naturally airborne birth."
+  },
+  "preliminary_runs": [
+    {
+      "name": "baseline-held",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "meaning": "Diagnostic probe reports invalid post-load/paused state; exit zero is not a product pass"
+    },
+    {
+      "name": "baseline-airborne",
+      "build_exit_code": 0,
+      "run_exit_code": 0,
+      "meaning": "Real ReleasePortableCarry velocity (2,0), then failure with residual motion; diagnostic reports invalid load"
+    },
+    {
+      "failed": 10,
+      "run_exit_code": 1,
+      "passed": 19,
+      "meaning": "Initial fixture used one frame before a simulation tick; terminal transition assertions failed; superseded without product edits",
+      "name": "regression-baseline",
+      "build_exit_code": 0
+    },
+    {
+      "failed": 10,
+      "run_exit_code": 1,
+      "passed": 19,
+      "meaning": "Corrected tick stepping; 29 cases before mature landing case added; superseded by final baseline",
+      "name": "regression-baseline-2",
+      "build_exit_code": 0
+    },
+    {
+      "name": "initial tool path lookup",
+      "status": "blocked",
+      "meaning": "Initial dotnet path was absent; no build ran. Verified existing installed executable was then used."
+    }
+  ],
+  "warnings": [
+    "All successful rebuilds emitted 2 existing CS8604 nullable warnings: SupplyStationValidation.cs:12 and InteractionValidation.cs:15; zero build errors.",
+    "Some raw redirected diagnostic text has console encoding artifacts; ASCII PASS/FAIL and exit codes remain readable. Raw evidence is retained unchanged."
+  ],
+  "not_run": [
+    "Visible UI/input automation or manual gameplay verification",
+    "Full application/Godot build and runtime",
+    "Historical Save.Compatibility: no authorized explicit historical save samples supplied",
+    "Long-running soak/performance tests",
+    "Combined branch verification and remote publishing are coordinator tasks"
+  ],
+  "evidence": [
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/baseline-airborne-build.log",
+      "sha256": "9ad7fbfbeb6ef5f8c4d7ee30b2b6f1dad69d94de3043c06bf44ccf16e86cd3be",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/baseline-airborne.log",
+      "sha256": "16dbc4d7df0be10f497cdcb8b878bb2bfbb65d6b272d66ef36785fd7b1b73aee",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/baseline-build.log",
+      "sha256": "78a4f43bc495608225731420060e174eb2d81a88885657f64baafa7041f1710d",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/baseline-held.log",
+      "sha256": "f5277dff071a3195bdf59e52d8b9462b22636724c4d82e579787764c43d342c1",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Family.Compatibility-build.log",
+      "sha256": "b6b8b91d382546bcea6c8e0bcef009def3cf3b8ae095ef2a0bbd655cbfcf1c5c",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Family.Compatibility-run.log",
+      "sha256": "d2330721db4e0021dd801a8caaed48366ef2c88baf4efd80ad39b4f8041bb93e",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Family.PregnancyBoundaries-build.log",
+      "sha256": "77ce2edc11b86a2df7970400acf3e5311a5f6ee6f2f04a9ea0eb4aa3ee1900b5",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Family.PregnancyBoundaries-run.log",
+      "sha256": "22b4ccab069b1463462efe5455b3352259acbdef5b459d23ef089fb0556421b7",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Family.Reproduction-build.log",
+      "sha256": "6bce06da8160f4477d1a3de6c89fb9d17e92ce82749af6783cba1e409c12eab6",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Family.Reproduction-run.log",
+      "sha256": "5c130f9e5a3afb039623a37916c9386c2afebf7481691057c8d0ca771f5ac7d6",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Interaction.Inventory-build.log",
+      "sha256": "2bfa1008bf6e0941e30d9dab66f4200c58f717b592b4112b38a0c95ea6509986",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Interaction.Inventory-run.log",
+      "sha256": "1058acb5b45dab122e66af33e3eb979a6637dfd0cbff627e8084d4a78b7a7710",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Interaction.StemCare-build.log",
+      "sha256": "efc2f181d515dcec59f121fc171adb9f1c82a9fe2b226d86b99b05e6c85e367f",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/Interaction.StemCare-run.log",
+      "sha256": "07bfb4fcb31eecb0d66137b0d5604897a6ed0eed62bcdca35ee242057bdc5623",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-baseline-2-build.log",
+      "sha256": "b0f20d7b621d63a18c4c1dd47ce264d91ad922acb039b2f968ec3225cf81e316",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-baseline-2.log",
+      "sha256": "429baabb1d2cd28844dad8753512ecb6dc881ea51ddc9aab9b7b3abbf3af4e64",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-baseline-build.log",
+      "sha256": "c3ff724f339fdbd80db320eb2fde146ff7b2ed4dc31277f30916b43a36aff8cd",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-baseline-final-build.log",
+      "sha256": "6140865cc3a4df4ca417d42235b5adb94471912abd99f459c60c68c385f8ff6b",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-baseline-final.log",
+      "sha256": "afae23aecc600587a8d43f696170abe7232542b64b2782ddc7632b5a74123c33",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-baseline.log",
+      "sha256": "b15e7a5d783b771cf0c573e0ab0e418ed8667e070b5d7ddd90ebad73426aeb8c",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-fixed-build.log",
+      "sha256": "d85a3fa60dbea01700ddf892ad1447c20e0c8db0674b0ee55e38794b9c77bec2",
+      "availability": "local_only_not_committed"
+    },
+    {
+      "path": ".local/testing/stem-terminal-motion-20261106/regression-fixed.log",
+      "sha256": "092d5e40387f68afb405261d98ce50a56081e9bf116f76bc6283c9dd404269b5",
+      "availability": "local_only_not_committed"
+    }
+  ]
+}

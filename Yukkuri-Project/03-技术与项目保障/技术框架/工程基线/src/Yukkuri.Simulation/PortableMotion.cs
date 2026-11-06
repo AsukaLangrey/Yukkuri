@@ -94,6 +94,15 @@ public sealed partial class WorldSimulation
         if(obj==null||State.Settings.Pause||State.PortableMotions.Count>0)return;
         State.PortableMotions.Add(new(){Id=id,Height=.6,Held=true});SetPortableOccupancy(id,true);ReleasePortableCarry(id,velocity);
     }
+    private void NormalizePortableMotion()
+    {
+        // Older saves can retain a motion after the brood failed. Never restore
+        // occupancy for a terminal/cleared brood, even while the world is paused.
+        State.PortableMotions.RemoveAll(m=>DetachedStem(m.Id) is { } stem&&
+            (stem.Cleared||stem.Phase!=DetachedStemPhase.Bottled));
+        foreach(var motion in State.PortableMotions)
+        {motion.Held=false;SetPortableOccupancy(motion.Id,true);}
+    }
     private void TickPortableMotion(double dt)
     {
         foreach(var m in State.PortableMotions.ToArray())

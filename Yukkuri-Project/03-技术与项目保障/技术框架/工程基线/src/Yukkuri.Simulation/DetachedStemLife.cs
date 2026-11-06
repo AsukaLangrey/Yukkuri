@@ -134,6 +134,7 @@ public sealed partial class WorldSimulation
     private void FailDetachedStem(DetachedStemBrood s,string cause)
     {
         s.Integrity=0;s.Phase=DetachedStemPhase.Failed;s.HeldByHand=false;
+        ReleasePortableCarry(s.EventId,default,cancel:true);
         s.LastDamageCause=cause;s.LastDamageAt=State.WorldSeconds;s.LastEvent="这窝离体茎未能存活。原因："+cause+"。";
         // Seeing a failed brood is not knowledge of a past unseen cause.
         NotifyDetachedStemWitnesses(s,"眼前的这一窝离体茎已经失去活性，没能继续发育。",false,4);
