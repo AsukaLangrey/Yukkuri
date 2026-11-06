@@ -1,0 +1,1094 @@
+{
+  "schema_version": 1,
+  "source_base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "source_branch": "alice/20261106-grab-supply-action",
+  "source_state": "Base commit plus four listed C# working files. Coordinator commits after review.",
+  "environment": "Authorized local Windows isolated checkout; headless engine callbacks and pure .NET rules, not native input or visual acceptance.",
+  "toolchain": {
+    "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+    "dotnet": "10.0.402",
+    "offline": true
+  },
+  "source_sha256": [
+    {
+      "sha256": "4F7288DED3DD4B1D90EB49E77C3CC22977712D41D138A8021F7B8C7206B0A83D",
+      "file": "src/Yukkuri.Game/InteractionRoom.Input.cs"
+    },
+    {
+      "sha256": "60528036863DB3398A54443CADD9DC1203CBB32F9AF99004D93C9B56CD47EBFA",
+      "file": "src/Yukkuri.Game/InteractionRoom.GrabSupplyDiagnostic.cs"
+    },
+    {
+      "sha256": "6B67978D33D0F6BAF6A723FA35387C1D1C5A4F5ECFD81AF41ECB7D20344E97DD",
+      "file": "src/Yukkuri.Game/InteractionRoom.cs"
+    },
+    {
+      "sha256": "8BBDFDC73517BD898CD4513D6CAC70667FEBCD713774C60C11E70AC8CA34B040",
+      "file": "src/Yukkuri.Game/Main.cs"
+    },
+    {
+      "sha256": "2D61E86E2EE3FD4AB2808B835BAC343900188AC9C318EE22CABBE2FCC7F5DDD8",
+      "file": "tools/check-grab-supply-offline.ps1"
+    }
+  ],
+  "baseline_source_sha256": [
+    {
+      "file": "InteractionRoom.cs",
+      "sha256": "6B67978D33D0F6BAF6A723FA35387C1D1C5A4F5ECFD81AF41ECB7D20344E97DD"
+    },
+    {
+      "file": "InteractionRoom.Input.cs",
+      "sha256": "9D7A1A689E2296C28C385EA01188898A63D35887DC815C6F1C24196710E69559"
+    },
+    {
+      "file": "InteractionRoom.Gestures.cs",
+      "sha256": "71D189B8E8B3F5F12B25461F6F566D4C961BE4B908EFE84252218A37930412B6"
+    },
+    {
+      "file": "InteractionRoom.GrabSupplyDiagnostic.cs",
+      "sha256": "F6A9A02EC8C7CE1F227CC9A975318882277C6B5236D5A735CF2FEF8E0D66D763"
+    },
+    {
+      "file": "Main.cs",
+      "sha256": "8B0306E24FB8D724CCFF3E0A74D01722857D7D01E4A527AD411248D4085CCC56"
+    }
+  ],
+  "baseline": {
+    "failed_assertions": [
+      {
+        "title": "空手 · 抓取",
+        "name": "Water / pause-cancel: next empty click does not create supply or spend stock",
+        "action": "Drink",
+        "mode": "Grab",
+        "groundSupplyCount": 2,
+        "water": 18,
+        "food": 50
+      },
+      {
+        "title": "空手 · 抓取",
+        "name": "Water / normal-release: next empty click does not create supply or spend stock",
+        "action": "Drink",
+        "mode": "Grab",
+        "groundSupplyCount": 2,
+        "water": 18,
+        "food": 50
+      },
+      {
+        "title": "空手 · 抓取",
+        "name": "Meal / pause-cancel: next empty click does not create supply or spend stock",
+        "action": "FeedMeal",
+        "mode": "Grab",
+        "groundSupplyCount": 2,
+        "water": 20,
+        "food": 48
+      },
+      {
+        "title": "空手 · 抓取",
+        "name": "Meal / normal-release: next empty click does not create supply or spend stock",
+        "action": "FeedMeal",
+        "mode": "Grab",
+        "groundSupplyCount": 2,
+        "water": 20,
+        "food": 48
+      },
+      {
+        "title": "空手 · 抓取",
+        "name": "Sweet / pause-cancel: next empty click does not create supply or spend stock",
+        "action": "FeedSweet",
+        "mode": "Grab",
+        "groundSupplyCount": 2,
+        "water": 20,
+        "food": 48
+      },
+      {
+        "title": "空手 · 抓取",
+        "name": "Sweet / normal-release: next empty click does not create supply or spend stock",
+        "action": "FeedSweet",
+        "mode": "Grab",
+        "groundSupplyCount": 2,
+        "water": 20,
+        "food": 48
+      }
+    ],
+    "total": 48,
+    "failures": 6,
+    "passed": 42,
+    "fixtureFailures": 0
+  },
+  "final": {
+    "success": true,
+    "total": 192,
+    "failures": 0,
+    "fixtureFailures": 0,
+    "results": [
+      {
+        "passed": true,
+        "name": "Water / held-source-feeding: first mouth contact preserves portion and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / held-source-feeding: held original portion feeds without inventory purchase"
+      },
+      {
+        "passed": true,
+        "name": "Water / held-source-feeding: continued hold cannot consume a second portion"
+      },
+      {
+        "passed": true,
+        "name": "Water / held-source-feeding: consumed-source cancellation restores Grab without new purchase"
+      },
+      {
+        "passed": true,
+        "name": "Meal / held-source-feeding: first mouth contact preserves portion and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / held-source-feeding: held original portion feeds without inventory purchase"
+      },
+      {
+        "passed": true,
+        "name": "Meal / held-source-feeding: continued hold cannot consume a second portion"
+      },
+      {
+        "passed": true,
+        "name": "Meal / held-source-feeding: consumed-source cancellation restores Grab without new purchase"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / held-source-feeding: first mouth contact preserves portion and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / held-source-feeding: held original portion feeds without inventory purchase"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / held-source-feeding: continued hold cannot consume a second portion"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / held-source-feeding: consumed-source cancellation restores Grab without new purchase"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / pause-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / normal-release: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / focus-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / outside-release: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / camera-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / right-click-control: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Water / tool-switch-control: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / pause-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / normal-release: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / focus-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / outside-release: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / camera-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / right-click-control: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Meal / tool-switch-control: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / pause-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / normal-release: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / focus-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / outside-release: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: Grab restores Lift after ending"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / camera-cancel: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / right-click-control: explicit food tool still creates one supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: pickup preserves ID, portions, and stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: ending preserves original portion and spends no extra stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: cancellation preserves original ground position"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: next empty click does not create supply or spend stock"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: original ID and portions remain distinguishable"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: repeated Grab retains feeding action while held"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: repeated cancellation cannot purchase supply"
+      },
+      {
+        "passed": true,
+        "name": "Sweet / tool-switch-control: explicit food tool still creates one supply"
+      }
+    ]
+  },
+  "existing_checks": {
+    "state_boundaries": {
+      "failed": 0,
+      "passed": 10,
+      "exitCode": 0
+    },
+    "input_intent": {
+      "success": true,
+      "total": 43,
+      "failures": 0
+    }
+  },
+  "guards": [
+    {
+      "passed": true,
+      "case": "direct",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    },
+    {
+      "passed": true,
+      "case": "duplicate",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    },
+    {
+      "passed": true,
+      "case": "legacy",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    },
+    {
+      "passed": true,
+      "case": "missing",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    },
+    {
+      "passed": true,
+      "case": "relative",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    },
+    {
+      "passed": true,
+      "case": "reuse-output",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    },
+    {
+      "passed": true,
+      "case": "reuse-profile",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    },
+    {
+      "passed": true,
+      "case": "unknown",
+      "rejectedBeforeWorld": true,
+      "ordinarySaveDirectories": 0,
+      "exitCode": 2
+    }
+  ],
+  "executions": [
+    {
+      "timedOut": false,
+      "seconds": 7.4615409,
+      "stage": "build-baseline",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 4.16313,
+      "stage": "build-fixed01",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 4.1497779,
+      "stage": "build-fixed02",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 1.153885,
+      "stage": "build-runnerfinal",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 4.3903083,
+      "stage": "import-baseline",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 41.831795,
+      "stage": "run-baseline",
+      "exitCode": 1
+    },
+    {
+      "timedOut": false,
+      "seconds": 74.6439215,
+      "stage": "run-fixed01",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 88.862694,
+      "stage": "run-fixed02",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 91.0731039,
+      "stage": "run-reproducible",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 2.4256598,
+      "stage": "checkbuild-intent",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 4.4378489,
+      "stage": "checkrun-intent",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 2.2375182,
+      "stage": "checkbuild-boundaries",
+      "exitCode": 0
+    },
+    {
+      "timedOut": false,
+      "seconds": 1.0672589,
+      "stage": "checkrun-boundaries",
+      "exitCode": 0
+    }
+  ],
+  "budget": {
+    "maximumSeconds": 1800,
+    "perProcessSeconds": 300,
+    "startedUtc": "2026-11-06T23:32:22.626421Z"
+  },
+  "warnings": [
+    "Initial full build: CS8604 at SupplyStationValidation.cs(12,21) and InteractionValidation.cs(15,19). Final incremental builds report zero new warnings; existing warnings are not claimed resolved.",
+    "Baseline and final headless runs: 2 ObjectDB instances leaked at exit. Preserved and not fixed."
+  ],
+  "nuget_config_restored": true,
+  "runner_validation": "Committed runner actually executed build-runnerfinal, guard-runnerunknown, and run-reproducible (192/192). Not only parser review.",
+  "limitations": [
+    "No native OS input, visual/audio acceptance, historical user saves, long soak or full aggregate suite.",
+    "Focus coverage emits the actual Godot focus signals, not OS window automation.",
+    "Timeout termination ownership branch was reviewed but not exercised; no process timed out."
+  ],
+  "raw_evidence_sha256": [
+    {
+      "sha256": "D7E2A6958D1729402E145412F2FDEC85CF1A8577CD7110C965B7E8D73117945A",
+      "artifact": "result-baseline/result.json"
+    },
+    {
+      "sha256": "71E0AFA406C4FD34B08D501BEA22FE2F2CFBC4BDBC71FF86C35AD1E41090DB56",
+      "artifact": "result-fixed02/result.json"
+    },
+    {
+      "sha256": "58762F94B181B4F489F0A298B30AF755B0F09D15B8C4FA57B90A5ABC0DF00D82",
+      "artifact": "result-reproducible/result.json"
+    },
+    {
+      "sha256": "0A1B2D8BC7BF5202476945945617BD5A48C8D790355DBD454545B1A358271D76",
+      "artifact": "input-intent-intent.json"
+    },
+    {
+      "sha256": "88E8AA9F0EB09113EB1D033D43B2A4A2C57563EE588482A8101939CC8C7EB24E",
+      "artifact": "build-baseline.stdout.log"
+    },
+    {
+      "sha256": "93CE593A551099A16DEBA3247F05F919E4FA395603DAFAE4EEF325040D1E813F",
+      "artifact": "run-reproducible.stdout.log"
+    },
+    {
+      "sha256": "23F60E542FF9A09A2B8F942AC0D8006DEC22BBF92F6FDCFA1562F5D46B28F1FE",
+      "artifact": "run-reproducible.stderr.log"
+    },
+    {
+      "sha256": "43483F4B07AA1A1022E832A29C8E126B269AC14142AD0CA024AC645556A6ADEF",
+      "artifact": "checkrun-boundaries.stdout.log"
+    }
+  ]
+}

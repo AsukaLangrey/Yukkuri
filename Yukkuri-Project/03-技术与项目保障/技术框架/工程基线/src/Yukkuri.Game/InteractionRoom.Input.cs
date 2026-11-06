@@ -446,6 +446,12 @@ public partial class InteractionRoom
         _stationContactId=null;
         ResetBodySupplyContact();
     }
+    // A ground supply borrows a feeding action only for the active Grab gesture.
+    // Ending that gesture must restore the selected tool, not arm stock placement.
+    private void ResetHeldSupplyAction()
+    {
+        if(_roomMode==RoomMode.Grab&&IsFoodTool(_action))_action=InteractionAction.Lift;
+    }
     private void CancelGesture()
     {
         CancelCreatureArrival();
@@ -464,7 +470,7 @@ public partial class InteractionRoom
         if(Sim?.HasInteractionGesture==true)AcceptFeedback(Sim.EndInteractionGesture(true));
         if(carriedTarget!=null&&Sim?.State.Creatures.Find(c=>c.Id==carriedTarget&&c.Interaction.Carried) is { } carried)
             AcceptFeedback(Sim.ExecuteInteraction(carried.Id,new(InteractionAction.PutDown,X:carried.X,Z:carried.Z)),carried.Id);
-        if(_heldSupplyId is { } supply){Sim?.ReleaseSupply(supply);_heldSupplyId=null;}
+        if(_heldSupplyId is { } supply){Sim?.ReleaseSupply(supply);_heldSupplyId=null;ResetHeldSupplyAction();}
         _mouseHeld=false;_ballDragId=null;if(_hand!=null)_hand.Visible=false;
     }
     private void EndPointerGesture()
@@ -486,7 +492,7 @@ public partial class InteractionRoom
             bool placed=IsScenePoint(point)&&TryGroundPoint(point,0,out var drop)&&Sim.ReleaseSupply(supply,drop.X,drop.Z);
             if(!placed)Sim.ReleaseSupply(supply);
             else Sim.LaunchReleasedSupply(supply,_portableRelease.Velocity);
-            _heldSupplyId=null;_message=placed?"已经放到地面，可以让它自己过来吃喝。":"没有安全落点，剩余食水放回原处。";
+            _heldSupplyId=null;ResetHeldSupplyAction();_message=placed?"已经放到地面，可以让它自己过来吃喝。":"没有安全落点，剩余食水放回原处。";
         }
         if(place&&target!=null)
         {
