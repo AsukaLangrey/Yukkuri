@@ -1,0 +1,32 @@
+[
+  {
+    "file": "report.json",
+    "sha256": "849b9e06dcfdc066b9d514c7cbb904f7fc6debb974747b007ea7bdf8d6b92b79",
+    "bytes": 9690
+  },
+  {
+    "file": "single-cache-rejected.json",
+    "sha256": "4cbb9e082c17c7e2f91123cb6d13997759784d06da6b68eca3f035620dbc8e67",
+    "bytes": 45680
+  },
+  {
+    "file": "source-manifest.json",
+    "sha256": "dd35ff2716e07d7fb41b29b2998dc76a8b0322c3c25c6414bdb2503e18abf7ea",
+    "bytes": 1227
+  },
+  {
+    "file": "summary.md",
+    "sha256": "54a7ed353a0cff24c3190bf60c7b5fed86a0c494e529c2c66f51b2bdcfb99752",
+    "bytes": 6897
+  },
+  {
+    "file": "two-level-run1.json",
+    "sha256": "076c37f55edb89f610dfaae4a8a09f343f0eaba14bc6370db1491e58763fc2cc",
+    "bytes": 45704
+  },
+  {
+    "file": "two-level-run2.json",
+    "sha256": "68d7e659adb780bcfd3f4b9463bf060ddd4d25df094e7b153bd08b5b62355ffa",
+    "bytes": 45718
+  }
+]

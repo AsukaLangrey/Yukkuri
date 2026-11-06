@@ -1,0 +1,607 @@
+{
+  "runtime_warnings": [
+    {
+      "run": "final-headless-company-selection.stderr.txt",
+      "kind": "ObjectDB instances leaked at exit"
+    }
+  ],
+  "eye_paired_cpu_samples": [
+    {
+      "repetition": 0,
+      "population": 3,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 274,
+      "cacheCount": 0,
+      "totalMs": 2474.7022999999986,
+      "medianMs": 13.9482,
+      "p95Ms": 77.6362
+    },
+    {
+      "repetition": 0,
+      "population": 3,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 2250.446999999999,
+      "medianMs": 13.5401,
+      "p95Ms": 61.8468
+    },
+    {
+      "repetition": 0,
+      "population": 6,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 406,
+      "cacheCount": 0,
+      "totalMs": 4805.174800000001,
+      "medianMs": 30.2748,
+      "p95Ms": 100.1784
+    },
+    {
+      "repetition": 0,
+      "population": 6,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 3610.2283999999986,
+      "medianMs": 21.2905,
+      "p95Ms": 81.0498
+    },
+    {
+      "repetition": 1,
+      "population": 3,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 2229.0087000000008,
+      "medianMs": 12.9791,
+      "p95Ms": 70.0293
+    },
+    {
+      "repetition": 1,
+      "population": 3,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 274,
+      "cacheCount": 0,
+      "totalMs": 2432.0053000000007,
+      "medianMs": 14.2764,
+      "p95Ms": 70.2231
+    },
+    {
+      "repetition": 1,
+      "population": 6,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 3920.8583,
+      "medianMs": 28.1328,
+      "p95Ms": 80.3934
+    },
+    {
+      "repetition": 1,
+      "population": 6,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 406,
+      "cacheCount": 0,
+      "totalMs": 4406.776499999999,
+      "medianMs": 29.1319,
+      "p95Ms": 101.9217
+    },
+    {
+      "repetition": 2,
+      "population": 3,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 274,
+      "cacheCount": 0,
+      "totalMs": 2238.0751,
+      "medianMs": 8.6586,
+      "p95Ms": 73.101
+    },
+    {
+      "repetition": 2,
+      "population": 3,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 2040.8304999999998,
+      "medianMs": 9.4735,
+      "p95Ms": 74.947
+    },
+    {
+      "repetition": 2,
+      "population": 6,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 406,
+      "cacheCount": 0,
+      "totalMs": 3810.578500000001,
+      "medianMs": 26.2419,
+      "p95Ms": 90.7793
+    },
+    {
+      "repetition": 2,
+      "population": 6,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 3724.1605999999997,
+      "medianMs": 28.847,
+      "p95Ms": 81.7514
+    },
+    {
+      "repetition": 3,
+      "population": 3,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 2113.797,
+      "medianMs": 13.7302,
+      "p95Ms": 53.7557
+    },
+    {
+      "repetition": 3,
+      "population": 3,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 274,
+      "cacheCount": 0,
+      "totalMs": 2291.3477000000016,
+      "medianMs": 10.7717,
+      "p95Ms": 71.5128
+    },
+    {
+      "repetition": 3,
+      "population": 6,
+      "shared": true,
+      "frames": 120,
+      "speed": 10,
+      "builds": 206,
+      "cacheCount": 96,
+      "totalMs": 3717.254,
+      "medianMs": 26.7995,
+      "p95Ms": 69.5945
+    },
+    {
+      "repetition": 3,
+      "population": 6,
+      "shared": false,
+      "frames": 120,
+      "speed": 10,
+      "builds": 406,
+      "cacheCount": 0,
+      "totalMs": 4619.352099999998,
+      "medianMs": 29.4305,
+      "p95Ms": 108.1805
+    }
+  ],
+  "merge_review": "Twelve unique complete hunks across six existing files reconstruct dependency-based worker delta; exact reversal recovers combined35 bytes. Two new files. Room and Family prior fixes remain untouched.",
+  "failed": [],
+  "authorized_worker_document_revisions": 4,
+  "expected_runtime_warning": "Restart negative fixture deliberately triggers world-data-out-of-range warning; save-preservation assertions passed.",
+  "deep_chain_records": 276,
+  "parent_evidence_files": 969,
+  "main_safety_wiring": "Main only rejects the new speed diagnostic before legacy initialization; no normal Main timing changes.",
+  "raw_evidence_storage": "Private ignored local folder; no raw logs published.",
+  "diagnostic_game_debug_build": 0,
+  "baseline_pristine_files": 243,
+  "environment": "Authorized isolated Windows test copy; no original development working tree execution",
+  "eye_stress_results": [
+    {
+      "name": "eye-over-capacity-staggered-revisit",
+      "shared": false,
+      "uniqueRequests": 192,
+      "cycles": 2,
+      "builds": 384,
+      "cacheCount": 0
+    },
+    {
+      "name": "eye-over-capacity-staggered-revisit",
+      "shared": true,
+      "uniqueRequests": 192,
+      "cycles": 2,
+      "builds": 384,
+      "cacheCount": 96
+    }
+  ],
+  "worker_negative_guards": "Inherited unchanged speed guard evidence; three final combined negative checks rerun",
+  "diagnostic_scope": "Temporary pre-route and pre-SaveStore guards for old Selection/Restart only. Two files restored byte-for-byte before final formal Game Rebuild and Speed/Company/Autosave reruns.",
+  "initial_failures_preserved": [
+    "Combined full-scene attempt stopped at2193 assertions on missing checkpoint parent. Preserved output/logs; approved test-only directory initialization repair was rebuilt and rerun under original deadline.",
+    "All earlier worker failures remain in private evidence; initial and corrected outcomes are not conflated."
+  ],
+  "walltime_policy": {
+    "first_command": "2026-11-06T18:01:33.6142569Z",
+    "per_build_or_run_seconds": 300,
+    "aggregate_seconds": 1800,
+    "execution": "Serial explicit Rebuild then exact fresh DLL; headless only",
+    "termination": "Only owned identity-verified process tree on timeout",
+    "actual_seconds": 1459.6396432
+  },
+  "parsed_world_snapshots": 222,
+  "performance_samples": [
+    {
+      "population": 3,
+      "median_ms": 6.5937,
+      "max_ms": 14.6723,
+      "speed": 1,
+      "p95_ms": 8.8238,
+      "build": "diagnostic-protected",
+      "frames": 24
+    },
+    {
+      "population": 3,
+      "median_ms": 4.4659,
+      "max_ms": 47.7681,
+      "speed": 5,
+      "p95_ms": 47.4454,
+      "build": "diagnostic-protected",
+      "frames": 24
+    },
+    {
+      "population": 3,
+      "median_ms": 14.9049,
+      "max_ms": 109.1602,
+      "speed": 10,
+      "p95_ms": 94.7218,
+      "build": "diagnostic-protected",
+      "frames": 24
+    },
+    {
+      "population": 6,
+      "median_ms": 7.2789,
+      "max_ms": 13.0138,
+      "speed": 1,
+      "p95_ms": 12.7185,
+      "build": "diagnostic-protected",
+      "frames": 24
+    },
+    {
+      "population": 6,
+      "median_ms": 14.4438,
+      "max_ms": 66.2336,
+      "speed": 5,
+      "p95_ms": 61.4456,
+      "build": "diagnostic-protected",
+      "frames": 24
+    },
+    {
+      "population": 6,
+      "median_ms": 30.6136,
+      "max_ms": 163.5852,
+      "speed": 10,
+      "p95_ms": 148.4936,
+      "build": "diagnostic-protected",
+      "frames": 24
+    }
+  ],
+  "parent_evidence_drift": 0,
+  "verified_at": "2026-11-06T18:26:46.7559470Z",
+  "inherited_iteration35_baseline_1x_equivalence": {
+    "maximum_frames_per_scenario": 60,
+    "scenarios": 4,
+    "variants": [
+      {
+        "mode": "old",
+        "sha256": "ECC76CEA1500A386F440F2AE850AF2E06328FAB6D6FA23E958EFF194D32F1D7B",
+        "build_exit_code": 0,
+        "exit_code": 0,
+        "variant": "b0"
+      },
+      {
+        "mode": "planned",
+        "sha256": "ECC76CEA1500A386F440F2AE850AF2E06328FAB6D6FA23E958EFF194D32F1D7B",
+        "build_exit_code": 0,
+        "exit_code": 0,
+        "variant": "b1"
+      }
+    ],
+    "float_input": "identical float cast of min(.1,delta)",
+    "scope": "pristine main simulation vs same main with frozen speed-only simulation delta; no baseline Game actor binary claim",
+    "equal": true
+  },
+  "evidence_files": 949,
+  "limitations": [
+    "No visible UI, native mouse input, rendered FPS, layout, sound or gameplay-feel acceptance.",
+    "Prior iteration35 pristine-main1x evidence is inherited, not rerun; no Simulation source changed. Current paired headless checks compare identical world/actor/face/mesh states with room reuse disabled/enabled.",
+    "Historical player Save.Compatibility not run; only authorized synthetic fixtures and speed save/load matrix.",
+    "Closeup retains existing all-presentations1x and only-selected-actor-visible behavior; not only-selected-state advancement.",
+    "Existing float and presentation clamp semantics retained; not a bit-exact common clock or step-size-invariant physics claim.",
+    "Legacy Selection/Restart safety guards are diagnostic-only; any ObjectDB exit warnings are preserved, no leak-free claim.",
+    "Cache retains original actor-local96-pair working sets and adds at most96 room-level pairs; bound meshes and deferred disposal prevent a strict total-memory claim.",
+    "No Git writes, commits, uploads, publication or main changes."
+  ],
+  "parsed_runtime_json": 318,
+  "worker_source_drift": 0,
+  "baseline_drift": 0,
+  "all_local_evidence_json_parsed": 365,
+  "parent_source_drift": 0,
+  "changed_previous_files": [
+    "src\\Yukkuri.Game\\CreatureActor.Contact.cs",
+    "src\\Yukkuri.Game\\CreatureActor.Face.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.Audio.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.Family.cs",
+    "src\\Yukkuri.Game\\InteractionRoom.SpeedVerification.cs"
+  ],
+  "source_drift": 0,
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "diagnostic_source_hashes": [
+    {
+      "diagnostic_sha256": "82AFBCE182C621FC38827E6241964B088C88F9547AD282EEAAD96C4B088B0645",
+      "product_sha256": "1EEE5742812AE147FC9DC8AFA666F58F27A4CBEEE59787E3247DB70879556303",
+      "path": "src/Yukkuri.Game/InteractionRoom.cs"
+    },
+    {
+      "diagnostic_sha256": "037933EB5F1273509704CD269022CF052ED0B69E550EF8DF0E406D4A5C4C5A30",
+      "product_sha256": "EA952C3392F4BCDD3264FB63162383F788584C8B25B348031341598D180C63F3",
+      "path": "src/Yukkuri.Game/InteractionRoom.AutosavePlacementVerification.cs"
+    }
+  ],
+  "performance_scope": "CPU _Process only, not rendered FPS. Eye comparison uses four alternating AB/BA repetitions, each120 frames at10x for3/6 authored actors; identical initial state and end-state checks, trace null and snapshot/assertion work outside timed loops. All paired timings are reported, not only favorable samples. Ordinary speed samples use3 warmup plus24 measured frames. The unchanged100ms frame acceptance cap still limits achieved wall-clock acceleration under stalls; no smoothness or full10x guarantee.",
+  "global_runtime_compiler_processes": 0,
+  "semantic_issues": [],
+  "final_source_files": 442,
+  "shared_compilation_disabled": true,
+  "parent_source_files": 440,
+  "source_hashes": [
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Face.cs",
+      "after_sha256": "195DC89261E062403C1C55DACA3C63F524295426781AD3C427341E04B68366AE",
+      "worker_sha256": "195dc89261e062403c1c55daca3c63f524295426781ad3c427341e04b68366ae"
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Contact.cs",
+      "after_sha256": "EBFEDEDBF385E623E8039F60EC59BAD1F0482121EEE86B129CD5288B0EBDC3C8",
+      "worker_sha256": "ebfededbf385e623e8039f60ec59bad1f0482121eee86b129cd5288b0ebdc3c8"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "after_sha256": "1EEE5742812AE147FC9DC8AFA666F58F27A4CBEEE59787E3247DB70879556303",
+      "worker_sha256": "77ddf010b432e8e551db6ad0919a9c9bfe275a0f7498dc38c8a4e56b5d377f1a"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Family.cs",
+      "after_sha256": "F5EF94B6634E63F1548468BE0FC6526932262DBD0AB6B9BDC2FD0F240D774E5E",
+      "worker_sha256": "10e5e5249e93c777e548800ec0dba34277449ae94f20199a88633192a7044627"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Audio.cs",
+      "after_sha256": "51A3C1B538E7DFB7F643DF7F9DE8ADDBD1A106C730A0060CC2B78B86DE81545E",
+      "worker_sha256": "51a3c1b538e7dfb7f643df7f9de8addbd1a106c730a0060cc2b78b86de81545e"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.SpeedVerification.cs",
+      "after_sha256": "48150DA00642EE9A2221397558490340B31F4023DE546A3614F2BAA1C9899DD5",
+      "worker_sha256": "48150da00642ee9a2221397558490340b31f4023de546a3614f2baa1c9899dd5"
+    }
+  ],
+  "baseline_main_blob_match_count": 243,
+  "test_only_repair": {
+    "scope": "Verifier entry now creates guarded output directory before checkpoint/mismatch writes; no product or assertion changes",
+    "path": "src/Yukkuri.Game/InteractionRoom.EyeMeshVerification.cs",
+    "other_checks": "84 pure suites and Company/Selection/Restart/Autosave retain their exact tested product bytes; only diagnostic verifier changed before final retest",
+    "final_retest": "Explicit Rebuild and all2218 assertions rerun against the repaired source using a new profile and nonexistent output parent; original deadline retained",
+    "old_sha256": "78CC6168B73D4E3AA23EC35010A0C5B804A1E688748E21A7A3C022B0D4632655",
+    "new_sha256": "51F1DC8FA23667054F830DAF1430E586271652AF151068091FDD015EA2A1DDB7",
+    "original_assertions": 2193,
+    "original_failure": "DirectoryNotFoundException on first checkpoint when output parent did not exist"
+  },
+  "diagnostic_protected_headless": [
+    {
+      "name": "company-selection",
+      "exit_code": 0,
+      "checks": 31,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "2744515A7E2B695E267E3B6EA0D87259297FF34B40AF7AA177EBF6BE2DCF5A38"
+    },
+    {
+      "name": "selection",
+      "exit_code": 0,
+      "checks": 24,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "2744515A7E2B695E267E3B6EA0D87259297FF34B40AF7AA177EBF6BE2DCF5A38"
+    },
+    {
+      "name": "restart",
+      "exit_code": 0,
+      "checks": 19,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "2744515A7E2B695E267E3B6EA0D87259297FF34B40AF7AA177EBF6BE2DCF5A38"
+    },
+    {
+      "name": "autosave-placement",
+      "exit_code": 0,
+      "checks": 48,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "2744515A7E2B695E267E3B6EA0D87259297FF34B40AF7AA177EBF6BE2DCF5A38"
+    }
+  ],
+  "combination": "Verified iterations1-35 plus iteration36 room-owned second-level eye-mesh reuse",
+  "worker_evidence_drift": 0,
+  "status": "partial",
+  "source_file_manifest_sha256": "52AA4BB459B8E20B5E4181BC8E90FA187D18AA35EAF56D3AEF9313E0500495C3",
+  "passed_pure": 84,
+  "game_debug_build": 0,
+  "parsed_inline_json": 51,
+  "inherited_iteration35_baseline_state_identity": {
+    "states": [
+      {
+        "scenario": "yard-eight",
+        "phase": "initial",
+        "sha256": "C4807798E6B2903D742D3AC1C182D84F552DEB1073239B95B3E7B3733E6CD65D",
+        "equal": true
+      },
+      {
+        "scenario": "yard-eight",
+        "phase": "final",
+        "sha256": "580E76EA915F21DD3888314516481711F5E51154ACB813D5FB0E32D5400B199E",
+        "equal": true
+      },
+      {
+        "scenario": "capped-varying",
+        "phase": "initial",
+        "sha256": "C4807798E6B2903D742D3AC1C182D84F552DEB1073239B95B3E7B3733E6CD65D",
+        "equal": true
+      },
+      {
+        "scenario": "capped-varying",
+        "phase": "final",
+        "sha256": "561ECF3776746C002091BD4FB70CCCF060DC639719017C38472B5A3A6F0F74A3",
+        "equal": true
+      },
+      {
+        "scenario": "pause-resume",
+        "phase": "initial",
+        "sha256": "C4807798E6B2903D742D3AC1C182D84F552DEB1073239B95B3E7B3733E6CD65D",
+        "equal": true
+      },
+      {
+        "scenario": "pause-resume",
+        "phase": "final",
+        "sha256": "56632D6DCBBB6E9B82E82F56E13DCAA0EAB9DE1E431D32B2897DDD10C7E259A3",
+        "equal": true
+      },
+      {
+        "scenario": "closeup",
+        "phase": "initial",
+        "sha256": "6CFFB7497BC01E1864A7558AFFDED5CC464E9A54B808205B40C778CF8334C4B1",
+        "equal": true
+      },
+      {
+        "scenario": "closeup",
+        "phase": "final",
+        "sha256": "6CFFB7497BC01E1864A7558AFFDED5CC464E9A54B808205B40C778CF8334C4B1",
+        "equal": true
+      }
+    ],
+    "fixture": "Fixed synthetic RoomObject IDs assigned before all actions in both variants; no output normalization or behavioral fields removed",
+    "all_final_states_identical": true,
+    "all_initial_states_identical": true
+  },
+  "diagnostic_test_source_drift": 0,
+  "final_product_headless": [
+    {
+      "name": "company-selection",
+      "exit_code": 0,
+      "checks": 31,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "225443B149847E3F81BFC13C776FF815B10C41A2B80C40219C3B1B00E590AF83"
+    },
+    {
+      "name": "autosave-placement",
+      "exit_code": 0,
+      "checks": 48,
+      "assertions": null,
+      "status": null,
+      "failures": 0,
+      "success": true,
+      "game_dll_sha256": "225443B149847E3F81BFC13C776FF815B10C41A2B80C40219C3B1B00E590AF83"
+    },
+    {
+      "name": "courtyard-speed",
+      "exit_code": 0,
+      "checks": null,
+      "assertions": 2218,
+      "status": "passed",
+      "failures": null,
+      "success": true,
+      "game_dll_sha256": "115566F1A2BE3C9D72ED83928E09D25E121C20C8B1AFFADA80B5DE1C4CC37EF8"
+    }
+  ],
+  "pure_projects": 84,
+  "diagnostic_manifest_sha256": "B990144544CFCFD1455B3DE9EE56983D20BE400709BB7234D2B1AA47891CCFAA",
+  "failure_text_markers": 0,
+  "worker_evidence_records": 142,
+  "final_speed_pure": {
+    "failures": 0,
+    "passed": 52,
+    "build_exit_code": 0,
+    "exit_code": 0
+  },
+  "simulation_sources_unchanged_from_combined35": true,
+  "new_source_files": [
+    {
+      "path": "src/Yukkuri.Game/EyeSurfaceMeshCache.cs",
+      "sha256": "265d478cac8f425d982b7601798f729ad140dcbceb8088ffd1eca247804be62a"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.EyeMeshVerification.cs",
+      "sha256": "51F1DC8FA23667054F830DAF1430E586271652AF151068091FDD015EA2A1DDB7"
+    }
+  ],
+  "unexpected_nonzero_commands": [],
+  "combined_negative_guards": [
+    {
+      "output_created": false,
+      "exit_code": 2,
+      "name": "legacy",
+      "rejected_before_ready": true
+    },
+    {
+      "output_created": false,
+      "exit_code": 2,
+      "name": "selection-check-output",
+      "rejected_before_ready": true
+    },
+    {
+      "output_created": false,
+      "exit_code": 2,
+      "name": "autosave-placement-check-output",
+      "rejected_before_ready": true
+    }
+  ],
+  "timeouts": 0,
+  "deep_chain_drift": 0,
+  "base_commit": "a50b5ced7007a9b701228699c5b86c75ccd65f62",
+  "final_product_game_debug_build": 0,
+  "original_speed_assertions": 439,
+  "long_simulation_policy": "No unrelated 6000-second physics repetition. Entire bounded84-project pure suite rerun plus affected actual scene checks.",
+  "remaining_worktree_runtime_processes": 0,
+  "formal_suite_manifest_sha256": "7BB09566869F3F2B2ED2E81BE6093056997636F3415C23C1652BB5A49DFC02C9"
+}

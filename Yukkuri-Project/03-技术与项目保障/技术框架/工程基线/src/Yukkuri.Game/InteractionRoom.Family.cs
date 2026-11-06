@@ -79,7 +79,7 @@ public partial class InteractionRoom
             }
             if(!_actors.ContainsKey(c.Id))
             {
-                actor=new CreatureActor();AddChild(actor);actor.Setup(c,index,_font);_actors[c.Id]=actor;
+                actor=new CreatureActor{SharedEyeMeshes=_eyeReuseDisabledForCheck?null:_eyeMeshes};AddChild(actor);actor.Setup(c,index,_font);_actors[c.Id]=actor;
                 // Loaded actors are created together in BuildActors. This path sees only
                 // a new child, never a pregnancy failure that also entered recovery.
                 if(c.IsYoung&&c.Family.BirthEventId is { } birth&&Sim.State.CompletedBirths.Contains(birth))

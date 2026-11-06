@@ -12,6 +12,7 @@ public partial class CreatureActor
             return new(x,ActorFaceSurface.Bottom(x,z,offset),z);
         },color,flipNormal:true);
     }
+    internal EyeSurfaceMeshCache? SharedEyeMeshes {get;set;}
     private const int EyeCacheLimit=96;
     private readonly Dictionary<(float,float),(ArrayMesh left,ArrayMesh right)> _eyeSurfaceCache=new();
     private float _eyeOpen=-1;
@@ -116,15 +117,20 @@ public partial class CreatureActor
     }
     private void BuildSurfaceEyes()
     {
-        _leftEye=SceneArt.Mesh(_visual,EyeSurfaceMesh(-1,1,0),Vector3.Zero,"ffffff");
-        _rightEye=SceneArt.Mesh(_visual,EyeSurfaceMesh(1,1,0),Vector3.Zero,"ffffff");
+        // Initial construction also reuses room geometry, but always replaces the
+        // local initial pair just as the old Setup did (including a repeated Setup).
+        var pair=AcquireEyeMeshes(1,0);_eyeSurfaceCache[(1,0)]=pair;
+        _leftEye=SceneArt.Mesh(_visual,pair.left,Vector3.Zero,"ffffff");
+        _rightEye=SceneArt.Mesh(_visual,pair.right,Vector3.Zero,"ffffff");
         var material=(StandardMaterial3D)SceneArt.Mat("ffffff").Duplicate();material.VertexColorUseAsAlbedo=true;material.Roughness=.38f;
         _leftEye.MaterialOverride=material;_rightEye.MaterialOverride=material;
         _leftEye.CastShadow=_rightEye.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
-        _eyeSurfaceCache[(1,0)]=((ArrayMesh)_leftEye.Mesh,(ArrayMesh)_rightEye.Mesh);_eyeOpen=1;
+        _eyeOpen=1;
     }
+    internal int EyeMeshBuildCount {get;private set;}
     private ArrayMesh EyeSurfaceMesh(float side,float openness,float arc)
     {
+        EyeMeshBuildCount++;
         using var surface=new SurfaceTool();surface.Begin(Mesh.PrimitiveType.Triangles);
         foreach(EyeLayer layer in System.Enum.GetValues<EyeLayer>())
         {
@@ -168,14 +174,26 @@ public partial class CreatureActor
     private void SetSurfaceEyes(float openness,float arc=0)
     {
         if(Mathf.IsEqualApprox(_eyeOpen,openness)&&Mathf.IsEqualApprox(_eyeArc,arc))return;
+        var pair=EyeMeshes(openness,arc);
+        _leftEye.Mesh=pair.left;_rightEye.Mesh=pair.right;_eyeOpen=openness;_eyeArc=arc;
+    }
+    private (ArrayMesh left,ArrayMesh right) EyeMeshes(float openness,float arc)
+    {
+        // Keep the original per-actor working set: a crowded room must not evict
+        // shapes another actor still reuses locally. Share only on a local miss.
         var key=(openness,arc);
         if(!_eyeSurfaceCache.TryGetValue(key,out var pair))
         {
             // Render nodes retain their current meshes while cache references are
             // released. The cache cannot grow with every intermediate emotion.
             if(_eyeSurfaceCache.Count>=EyeCacheLimit)_eyeSurfaceCache.Clear();
-            pair=(EyeSurfaceMesh(-1,openness,arc),EyeSurfaceMesh(1,openness,arc));_eyeSurfaceCache[key]=pair;
+            pair=AcquireEyeMeshes(openness,arc);_eyeSurfaceCache[key]=pair;
         }
-        _leftEye.Mesh=pair.left;_rightEye.Mesh=pair.right;_eyeOpen=openness;_eyeArc=arc;
+        return pair;
     }
+    private (ArrayMesh left,ArrayMesh right) AcquireEyeMeshes(float openness,float arc)
+        =>SharedEyeMeshes is { } shared
+            ?shared.Get(openness,arc,_hatAccessory,()=>
+                (EyeSurfaceMesh(-1,openness,arc),EyeSurfaceMesh(1,openness,arc)))
+            :(EyeSurfaceMesh(-1,openness,arc),EyeSurfaceMesh(1,openness,arc));
 }

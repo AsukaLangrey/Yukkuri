@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "status": "partial",
+  "branch": "alice/20261106-eye-mesh-reuse",
+  "base_commit": "a50b5ced7007a9b701228699c5b86c75ccd65f62",
+  "dependency": {
+    "iteration": 35,
+    "published_commit": "f0dac00db61c68d22158256a3950065dd064f675",
+    "description": "courtyard speed prerequisite; do not merge this change without iteration 35"
+  },
+  "tested_source": "Standalone run4/run5 tested the base commit plus the original eight-file manifest, SHA256 31e6c4313166aa0180db6bd667fb6591d60dbb1cac300fc5a27b5a440082863d, retained privately. The later test-only output-directory fix is identified by the current source-manifest.json and was not built or run in the standalone budget.",
+  "environment": {
+    "renderer": "headless",
+    "os": "Windows",
+    "godot": "4.7.2.stable.mono.official.ed1daf0bf",
+    "configuration": "Debug",
+    "full_resources_imported": true,
+    "dotnet": "10.0.402"
+  },
+  "started_utc": "2026-11-06T17:37:57.0718995Z",
+  "finished_utc": "2026-11-06T18:00:04.2982764Z",
+  "limits": {
+    "deadline_utc": "2026-11-06T18:07:57.0718995Z",
+    "subprocess_seconds": 300,
+    "budget_reset": false,
+    "aggregate_seconds": 1800,
+    "aggregate_enforcement": "Original runner UTC/local subtraction was defective. Actual UTC elapsed independently verified below 1800 seconds; no reset or additional test run. Local runner corrected after validation.",
+    "actual_elapsed_seconds": 1327.2263769
+  },
+  "game_dll_sha256": "5a29b1bc437c83db40b264e800703a7831c634b41b9291c6a87960491cf73136",
+  "validation": [
+    {
+      "warning_codes": [
+        "CS8604"
+      ],
+      "name": "explicit Rebuild",
+      "warning_sources": [
+        "src/Yukkuri.Simulation/SupplyStationValidation.cs",
+        "src/Yukkuri.Simulation/InteractionValidation.cs"
+      ],
+      "errors": 0,
+      "warnings": 2,
+      "status": "passed"
+    },
+    {
+      "stderr_bytes": 0,
+      "name": "resource import",
+      "status": "passed"
+    },
+    {
+      "failed": 0,
+      "passed": 52,
+      "name": "pure Courtyard.Speed final rerun",
+      "status": "passed"
+    },
+    {
+      "assertions": 2218,
+      "exit_code": 0,
+      "name": "two-level runtime run 1",
+      "evidence": "two-level-run1.json",
+      "status": "passed",
+      "original_speed_assertions": 439
+    },
+    {
+      "assertions": 2218,
+      "exit_code": 0,
+      "name": "two-level runtime run 2 same DLL",
+      "evidence": "two-level-run2.json",
+      "status": "passed",
+      "original_speed_assertions": 439
+    }
+  ],
+  "cache_bounds": {
+    "ownership": "room-instance lifetime, no static shared cache; eviction/actor exit never Dispose shared meshes",
+    "per_actor_existing_pairs": 96,
+    "eviction": "room FIFO; existing per-actor clear-at-cap retained",
+    "room_additional_pairs": 96
+  },
+  "metrics": [
+    {
+      "change_percent": -10.688020626624862,
+      "frames_per_case": 120,
+      "population": 3,
+      "pairs": 8,
+      "baseline_process_elapsed_ms": 18833.1345,
+      "candidate_process_elapsed_ms": 16820.245199999998
+    },
+    {
+      "change_percent": -22.611996367692466,
+      "frames_per_case": 120,
+      "population": 6,
+      "pairs": 8,
+      "baseline_process_elapsed_ms": 35503.7117,
+      "candidate_process_elapsed_ms": 27475.613699999994
+    }
+  ],
+  "build_counts": {
+    "three_actor_120_frames": {
+      "baseline": 274,
+      "candidate": 206
+    },
+    "six_actor_120_frames": {
+      "baseline": 406,
+      "candidate": 206
+    },
+    "staggered_192_keys_two_cycles": {
+      "rejected_single_cache": 768,
+      "baseline": 384,
+      "candidate": 384
+    }
+  },
+  "failure_history": [
+    {
+      "stage": "pure-run1",
+      "reason": "Invocation omitted required fresh absolute synthetic-output directory; guard rejected before tests. Corrected invocation passed as pure-run2 and pure-run3.",
+      "status": "failed"
+    },
+    {
+      "stage": "run1/run2",
+      "assertion": 2167,
+      "reason": "New fingerprint mistakenly included inherited Godot NativePtr. Saved actual/reference snapshots differed only in six native object addresses; independently verified. Fingerprint corrected to CreatureActor-declared fields; all business comparisons retained.",
+      "status": "failed"
+    },
+    {
+      "reason": "Shared-only capacity 96 doubled builds on staggered local-working-set revisit; replaced by original local cache plus shared second level.",
+      "stage": "run3 single-cache experiment",
+      "assertions": 2202,
+      "status": "passed but rejected design"
+    },
+    {
+      "status": "defect found after validation",
+      "reason": "DateTime.Parse converted the UTC start to local time; cumulative remaining-seconds values were wrong. Actual UTC start/end span verified below the 1800-second budget. Subprocess 300-second caps remained valid. Local runner corrected without restarting the budget or rerunning tests.",
+      "stage": "runner aggregate budget accounting"
+    },
+    {
+      "stage": "combination first checkpoint",
+      "status": "failed",
+      "reason": "New output parent directory did not exist; DirectoryNotFoundException at assertion 2193. Test-only directory creation added at verifier entry; original failed evidence retained by combination task."
+    }
+  ],
+  "warnings": [
+    "run4 logged two ObjectDB instances at exit. Same-count warning also exists in earlier diagnostic baseline. Same-DLL verbose run5 did not reproduce it and had empty stderr. Object types and root cause remain unconfirmed; no memory-leak-free claim.",
+    "Final combination Company check also recorded an ObjectDB exit warning; no leak-free claim."
+  ],
+  "not_run": [
+    "Rendered FPS, human visual/interaction acceptance, long gameplay soak, regression items outside the enumerated combination scope, private historical-save compatibility"
+  ],
+  "notes": [
+    "Stopwatch measures CPU-side _Process elapsed time, not CPU utilization or rendered FPS.",
+    "Two runtime runs contain eight AB/BA pairs per population, 120 frames per case, identical initial serialized state/RNG and resource environment. Raw sample arrays are included.",
+    "Three-actor total elapsed time regressed in one of eight pairs; one p95 also regressed. Six-actor totals decreased in all eight pairs. Do not generalize to all workloads.",
+    "The six-actor workload is a bounded authored clone fixture, not a validated player save.",
+    "No gameplay clock/substep/quantization changes, no material/skin sharing, no player saves, no main merge. All original guard restrictions remain unchanged.",
+    "Raw failed logs and native-address snapshots are retained privately, not uploaded. No iteration-27 artifacts are included."
+  ],
+  "post_validation_changes": {
+    "validation": "Limited final combination validation passed after explicit Rebuild of the repaired verifier, using a fresh profile and nonexistent output parent. All 2218 assertions, including the original 439, passed on the final combination DLL. The standalone DLL remains historical evidence only.",
+    "discovery": "Combination verification reached assertion 2193 after 103.67 seconds, then failed with DirectoryNotFoundException on the first checkpoint because the requested output parent did not exist. Standalone output parents already existed, so those runs did not exercise this case.",
+    "scope": "Test harness only; product logic, assertions and early argument guards unchanged",
+    "dll_scope": "game_dll_sha256 and the two standalone result files identify the pre-fix standalone DLL. final_combination.game_dll_sha256 identifies the repaired combination DLL.",
+    "change": "Create the output parent directory once at VerifyEyeMeshReuse entry, after the existing early output guard, before either checkpoint or mismatch-file writes.",
+    "sha256": "51f1dc8fa23667054f830daf1430e586271652af151068091fdd015ea2a1ddb7",
+    "file": "src/Yukkuri.Game/InteractionRoom.EyeMeshVerification.cs"
+  },
+  "final_combination_status": "passed_with_limits",
+  "final_combination": {
+    "status": "passed_with_limits",
+    "audit_file": "combined-audit.json",
+    "audit_sha256": "b33bc29885b2a6196b33427d62132aa0b6ab7b6cd377bb67f328b91ff6328e10",
+    "verified_at": "2026-11-06T18:26:46.7559470Z",
+    "game_dll_sha256": "115566f1a2be3c9d72ed83928e09d25e121c20c8b1affada80b5de1c4cc37ef8",
+    "source_file_manifest_sha256": "52aa4bb459b8e20b5e4181bc8e90fa187d18aa35eaf56d3aef9313e0500495c3",
+    "final_source_files": 442,
+    "evidence_files": 949,
+    "deep_chain_records": 276,
+    "unknown_drift": 0,
+    "pure_projects_passed": 84,
+    "pure_projects_total": 84,
+    "diagnostic_scene_checks": {
+      "autosave": 48,
+      "restart": 19,
+      "company": 31,
+      "selection": 24
+    },
+    "formal_product_scene_checks": {
+      "company": 31,
+      "autosave": 48
+    },
+    "final_repaired_speed_assertions": 2218,
+    "original_speed_assertions": 439,
+    "negative_guards_passed": 3,
+    "repaired_full_run_seconds": 277.07,
+    "aggregate_seconds": 1459.6396432,
+    "aggregate_limit_seconds": 1800,
+    "timeouts": 0,
+    "residual_worktree_runtime_processes": 0,
+    "scope": "84 pure suites and Company/Selection/Restart/Autosave checks ran before the verifier-only directory repair. Their tested product source bytes remain unchanged. The final repaired DLL separately passed all 2218 speed/eye assertions. Diagnostic-only guards were restored before formal builds. Candidate eight-file manifest and final integrated 442-file manifest are distinct."
+  }
+}

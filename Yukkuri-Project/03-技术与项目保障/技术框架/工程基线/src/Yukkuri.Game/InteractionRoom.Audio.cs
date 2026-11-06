@@ -124,6 +124,7 @@ public partial class InteractionRoom
 
     public override void _ExitTree()
     {
+        _eyeMeshes.Clear();
         if(_audioTree!=null)_audioTree.ProcessFrame-=SyncRoomAudio;
         _audioTree=null;
         if(GodotObject.IsInstanceValid(_sound)){_sound.Stop();_sound.Stream=null;}

@@ -12,6 +12,7 @@ public partial class InteractionRoom : Node3D
     private Font _font=null!;
     private SaveStore _saves=null!;
     private readonly Dictionary<string,CreatureActor> _actors=new();
+    private readonly EyeSurfaceMeshCache _eyeMeshes=new();
     private readonly Dictionary<string,Node3D> _objects=new();
     private Node3D _yard=null!,_hand=null!,_player=null!,_closeFloor=null!;
     private Node3D _woodland=null!;
@@ -117,9 +118,10 @@ public partial class InteractionRoom : Node3D
         ResetDetachedStemActors();
         _heardReactions.Clear();
         foreach(var actor in _actors.Values)actor.QueueFree();_actors.Clear();
+        _eyeMeshes.Clear();
         int index=0;
         foreach(var c in Sim.State.Creatures)
-        {var actor=new CreatureActor();AddChild(actor);actor.Setup(c,index++,_font);_actors[c.Id]=actor;}
+        {var actor=new CreatureActor{SharedEyeMeshes=_eyeReuseDisabledForCheck?null:_eyeMeshes};AddChild(actor);actor.Setup(c,index++,_font);_actors[c.Id]=actor;}
         ResetFamilyPresentation();
         RefreshOilSelector(true);
         foreach(var obj in _objects.Values)obj.QueueFree();_objects.Clear();

@@ -26,6 +26,7 @@ public partial class InteractionRoom
     {
         var results=new List<object>();
         int assertions=0;
+        bool birthEyeCacheBound=false,restartEyeCacheBound=false;
         string initialState=JsonSerializer.Serialize(WorldSimulation.CreateCourtyardEconomy(48271).State,SaveStore.JsonOptions);
         void Require(bool condition,string message)
         {assertions++;if(!condition)throw new InvalidOperationException(message);}
@@ -144,6 +145,7 @@ public partial class InteractionRoom
             Require(_speedTrace.Count(e=>e=="actor:speed-birth-0")==6,"newborn did not observe birth substep and all later substeps");
             SaveStore.Validate(Sim.State);
             results.Add(new{name="real-birth-at-substep-five-actor-six-observations",passed=true});
+            birthEyeCacheBound=ReferenceEquals(_actors["speed-birth-0"].SharedEyeMeshes,_eyeMeshes);
 
             foreach(int speed in new[]{1,10})
             {
@@ -203,6 +205,7 @@ public partial class InteractionRoom
             _modalContents.GetChildren().OfType<Button>().Single(b=>b.Text=="重新开一间小院").EmitSignal(BaseButton.SignalName.Pressed);
             _modalContents.GetChildren().OfType<Button>().Single(b=>b.Text=="保存并重新开始").EmitSignal(BaseButton.SignalName.Pressed);
             Require(Sim.State.Settings.Speed==1&&!Sim.State.Settings.Pause&&!_modalOpen,"restart did not reset speed/pause");
+            restartEyeCacheBound=_actors.Values.All(a=>ReferenceEquals(a.SharedEyeMeshes,_eyeMeshes))&&_eyeMeshes.Count>0&&_eyeMeshes.Count<=EyeSurfaceMeshCache.Capacity;
             LoadRoom(1);Require(Sim.State.Settings.Speed==10&&Sim.State.Settings.Pause,"manual saved speed lost after restart");
             results.Add(new{name="actual-settings-save-load-restart",passed=true});
 
@@ -213,6 +216,12 @@ public partial class InteractionRoom
             Sim.State.Settings.Speed=1;_Process(.05);
             Near(Sim.State.WorldSeconds+Sim.State.TickRemainder-beforeChange,(float).05,"speed transition caught up old debt");
             results.Add(new{name="long-frame-cap-speed-change-no-debt",passed=true});
+
+            int speedAssertions=assertions;
+            Require(birthEyeCacheBound,"actual birth actor binds room eye cache");
+            Require(restartEyeCacheBound,"actual restart actors bind fresh bounded room cache");
+            await VerifyEyeMeshReuse(output,Require,results,Reset,StateSnapshot,ActorSnapshot,BallSnapshot);
+            results.Add(new{name="original-speed-assertions",count=speedAssertions,passed=true});
 
             foreach(int population in new[]{3,6})foreach(int speed in new[]{1,5,10})
             {

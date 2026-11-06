@@ -1,0 +1,34 @@
+[
+  {
+    "sha256": "265d478cac8f425d982b7601798f729ad140dcbceb8088ffd1eca247804be62a",
+    "file": "src/Yukkuri.Game/EyeSurfaceMeshCache.cs"
+  },
+  {
+    "sha256": "195dc89261e062403c1c55daca3c63f524295426781ad3c427341e04b68366ae",
+    "file": "src/Yukkuri.Game/CreatureActor.Face.cs"
+  },
+  {
+    "sha256": "ebfededbf385e623e8039f60ec59bad1f0482121eee86b129cd5288b0ebdc3c8",
+    "file": "src/Yukkuri.Game/CreatureActor.Contact.cs"
+  },
+  {
+    "sha256": "77ddf010b432e8e551db6ad0919a9c9bfe275a0f7498dc38c8a4e56b5d377f1a",
+    "file": "src/Yukkuri.Game/InteractionRoom.cs"
+  },
+  {
+    "sha256": "10e5e5249e93c777e548800ec0dba34277449ae94f20199a88633192a7044627",
+    "file": "src/Yukkuri.Game/InteractionRoom.Family.cs"
+  },
+  {
+    "sha256": "51a3c1b538e7dfb7f643df7f9de8addbd1a106c730a0060cc2b78b86de81545e",
+    "file": "src/Yukkuri.Game/InteractionRoom.Audio.cs"
+  },
+  {
+    "sha256": "48150da00642ee9a2221397558490340b31f4023de546a3614f2baa1c9899dd5",
+    "file": "src/Yukkuri.Game/InteractionRoom.SpeedVerification.cs"
+  },
+  {
+    "sha256": "51f1dc8fa23667054f830daf1430e586271652af151068091fdd015ea2a1ddb7",
+    "file": "src/Yukkuri.Game/InteractionRoom.EyeMeshVerification.cs"
+  }
+]
