@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "status": "partial",
+  "source_sha256": "D10DBABCDBFB9B670DD45F7DB5DD45F284F7B154045A30500B851060E6F0CBDF",
+  "test_sha256": "24D2FD87769C04D19354B551D27EE666AA763CDDCFB87C21377FE94B58A9E9DB",
+  "environment": "Authorized isolated Windows C: test worktree",
+  "process_walltime_seconds": 180,
+  "baseline": {
+    "result_sha256": "2C4485D6235908BA991ECDF6B348879F168E446A75B0AC8EC8F7D798DA3C1A84",
+    "checks": 17,
+    "passed": 9,
+    "failed": 8
+  },
+  "candidate": {
+    "result_sha256": "E716B4A2D6C1957156010F656E2E33AE0096C84665E889FF0DB3FF3E588C76F7",
+    "checks": 17,
+    "passed": 17,
+    "failed": 0
+  },
+  "related": [
+    {
+      "failed": 0,
+      "passed": 8,
+      "name": "Interaction.SupplyStations"
+    },
+    {
+      "failed": 0,
+      "passed": 5,
+      "name": "Family.Growth"
+    },
+    {
+      "failed": 0,
+      "passed": 13,
+      "name": "Interaction.Shelters"
+    },
+    {
+      "failed": 0,
+      "passed": 9,
+      "name": "Interaction.WaterAttempts"
+    },
+    {
+      "failed": 1,
+      "passed": 128,
+      "name": "Interaction.Continuity"
+    },
+    {
+      "failures": 1,
+      "status": "failed",
+      "name": "NaturalLife.Soak"
+    },
+    {
+      "failed": 0,
+      "passed": 95,
+      "name": "NaturalLife.Smoke"
+    },
+    {
+      "failed": 0,
+      "passed": 48,
+      "name": "Interaction.Smoke"
+    }
+  ],
+  "limitations": [
+    "No UI, graphics or audio acceptance.",
+    "No personal or historical save used; only fresh synthetic slots.",
+    "Continuity settling/excretion and Soak exhausted/rest failures remain.",
+    "Combined branch acceptance belongs to separate integration verification."
+  ],
+  "evidence_manifest_sha256": "B3B174C87D11FCE60BCC1F45F7994BF5A2823D580BDDE59757F0689B2A787714",
+  "raw_logs": "Local ignored evidence only; no raw or sanitized build-output bundle."
+}

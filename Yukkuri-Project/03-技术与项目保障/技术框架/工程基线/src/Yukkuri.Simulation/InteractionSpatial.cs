@@ -18,12 +18,14 @@ public sealed partial class WorldSimulation
         return scale*Math.Max(body,equipment);
     }
     private bool CanOccupyRoom(Creature c,double x,double z,RestraintKind? restraint=null,bool? supine=null,bool allowWater=false)
+        =>CanOccupyRoomCore(c,x,z,restraint,supine,allowWater,false);
+    private bool CanOccupyRoomCore(Creature c,double x,double z,RestraintKind? restraint,bool? supine,bool allowWater,bool stationRecovery)
     {
         double own=InteractionFootprint(c,restraint,supine);
         if(!ShelterBodyFits(c,x,z,own))return false;
         if(Math.Abs(x)>8-own||Math.Abs(z)>8-own)return false;
         if(!WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,allowWater))return false;
-        if(!ClearOfStations(c.RegionId,x,z,own))return false;
+        if(stationRecovery?!ClearOfStationsForGroundStep(c,x,z,own):!ClearOfStations(c.RegionId,x,z,own))return false;
         if(State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
             Distance(x,z,s.X,s.Z)<own+StemVesselRadius))return false;
         if((restraint??c.Interaction.Restraint) is RestraintKind.Box or RestraintKind.Frame or RestraintKind.Hanging)
@@ -43,6 +45,31 @@ public sealed partial class WorldSimulation
         }
         return true;
     }
+    // Growth can expand a legal standing body into a station. Ground steps may
+    // only reduce that existing overlap; placement and every other obstacle stay strict.
+    private bool ClearOfStationsForGroundStep(Creature c,double x,double z,double own)
+    {
+        double gap=own+SupplyStationRadius;
+        foreach(var station in State.SupplyStations)
+        {
+            if(station.RegionId!=c.RegionId)continue;
+            double before=Distance(c.X,c.Z,station.X,station.Z),after=Distance(x,z,station.X,station.Z);
+            if(before>=gap)
+            {
+                double dx=x-c.X,dz=z-c.Z,lengthSquared=dx*dx+dz*dz;
+                double t=lengthSquared==0?0:Math.Clamp(((station.X-c.X)*dx+(station.Z-c.Z)*dz)/lengthSquared,0,1);
+                if(Distance(c.X+t*dx,c.Z+t*dz,station.X,station.Z)<gap)return false;
+                continue;
+            }
+            // A farther endpoint alone could cross the centre. The whole short
+            // segment must start outward and make measurable clearance progress.
+            double outward=(c.X-station.X)*(x-c.X)+(c.Z-station.Z)*(z-c.Z);
+            if(outward<0||after<=before+.00000001)return false;
+        }
+        return true;
+    }
+    private bool HasGroundStationOverlap(Creature c)=>State.SupplyStations.Any(station=>
+        station.RegionId==c.RegionId&&Distance(c.X,c.Z,station.X,station.Z)<InteractionFootprint(c)+SupplyStationRadius);
     private bool GroundMove(Creature c,double x,double z,bool slide,bool allowWater=false)
     {
         double dx=x-c.X,dz=z-c.Z,length=Math.Sqrt(dx*dx+dz*dz);
@@ -52,7 +79,7 @@ public sealed partial class WorldSimulation
         bool complete=true;
         for(int n=0;n<slices;n++)
         {
-            if(ShelterMovePathClear(c,c.X+dx,c.Z+dz)&&CanOccupyRoom(c,c.X+dx,c.Z+dz,allowWater:allowWater)){c.X+=dx;c.Z+=dz;continue;}
+            if(ShelterMovePathClear(c,c.X+dx,c.Z+dz)&&CanOccupyRoomCore(c,c.X+dx,c.Z+dz,null,null,allowWater,true)){c.X+=dx;c.Z+=dz;continue;}
             complete=false;
             if(!slide)break;
             // Try a small turn around the obstacle. Never displace a restrained or injured neighbor.
@@ -60,8 +87,20 @@ public sealed partial class WorldSimulation
             foreach(double angle in new[]{Math.PI/4,-Math.PI/4,Math.PI/2,-Math.PI/2})
             {
                 double sx=dx*Math.Cos(angle)-dz*Math.Sin(angle),sz=dx*Math.Sin(angle)+dz*Math.Cos(angle);
-                if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanOccupyRoom(c,c.X+sx,c.Z+sz,allowWater:allowWater))continue;
+                if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanOccupyRoomCore(c,c.X+sx,c.Z+sz,null,null,allowWater,true))continue;
                 c.X+=sx;c.Z+=sz;moved=true;break;
+            }
+            if(!moved&&HasGroundStationOverlap(c))
+            {
+                // Existing growth overlap only: bounded equal-length directions,
+                // all subject to the same swept stations and strict other obstacles.
+                double step=Math.Sqrt(dx*dx+dz*dz);
+                for(int direction=0;direction<16;direction++)
+                {
+                    double angle=direction*Math.Tau/16,sx=Math.Cos(angle)*step,sz=Math.Sin(angle)*step;
+                    if(!ShelterMovePathClear(c,c.X+sx,c.Z+sz)||!CanOccupyRoomCore(c,c.X+sx,c.Z+sz,null,null,allowWater,true))continue;
+                    c.X+=sx;c.Z+=sz;moved=true;break;
+                }
             }
             if(!moved)break;
         }

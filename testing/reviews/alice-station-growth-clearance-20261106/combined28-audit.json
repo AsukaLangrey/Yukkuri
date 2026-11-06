@@ -1,0 +1,170 @@
+{
+  "disk_save": {
+    "passed": true,
+    "checks": 3,
+    "savedAt": 1800,
+    "resumedAt": 2000
+  },
+  "warning_scope": "Final combined source builds only; pristine baseline has separate existing InteractionValidation.cs(15,19): CS8604 warning.",
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "distinct_warning_locations": [
+    "InteractionValidation.cs(17,19): CS8604",
+    "Program.cs(147,41): CS8602",
+    "Program.cs(227,83): CS8602",
+    "Program.cs(315,62): CS8604",
+    "SupplyStationValidation.cs(12,21): CS8604"
+  ],
+  "deep_chain_records": 203,
+  "deep_chain_drift": 0,
+  "long_harness_input_drift": 0,
+  "final_source_files": 424,
+  "parsed_json_files": 322,
+  "visual_acceptance": false,
+  "walltime_policy": {
+    "aggregate_seconds": 1800,
+    "actual_seconds": 402.0729574,
+    "per_build_or_run_seconds": 300,
+    "execution": "serial",
+    "process_termination": "only verified owned process tree if limit exceeded"
+  },
+  "pure_projects": 79,
+  "semantic_audit_scope": "All JSON parsed; world snapshots are state, not test outcomes. Initial overly broad scan and its 1217 false-positive in-game Success fields across 229 snapshots retained separately.",
+  "baseline_pristine_files": 239,
+  "remaining_worktree_build_runtime_processes": 0,
+  "independent_joint_growth_checks": 7,
+  "failure_text_markers": 0,
+  "parent_evidence_files": 2142,
+  "combined_spatial_sha256": "A2924E02D5061A5DF1004EFCC9C50E4BA101AD6049EB9BD8C13B9906F1E37A51",
+  "baseline_source_drift": 0,
+  "focused_gates": [
+    {
+      "name": "Interaction.StationGrowthClearance",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.GrowthOverlap",
+      "build_exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "Interaction.WaterPassage",
+      "build_exit_code": 0,
+      "exit_code": 0
+    }
+  ],
+  "reverse_previous_exact": true,
+  "peer_logic_preserved": true,
+  "six_argument_wrapper_unchanged": true,
+  "failed": [],
+  "baseline_checks": 17,
+  "passed_pure": 79,
+  "worker_helper_exact": true,
+  "parsed_inline_json": 40,
+  "fresh_lifecycles": [
+    {
+      "name": "care-stem-42",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 3,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "care-live-72381",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 24,
+      "born": 1,
+      "grown": 1,
+      "reloads": 10
+    },
+    {
+      "name": "shelter-20261031",
+      "success": true,
+      "seconds": 6000,
+      "checks": 100,
+      "accepted": 0,
+      "born": 0,
+      "grown": 0,
+      "reloads": 10
+    }
+  ],
+  "source_hash_differences": 0,
+  "independent_joint_growth_failures": 0,
+  "status": "partial",
+  "baseline_failed_cases": [
+    "natural growth permits bounded outward steps but not static overlap placement",
+    "tangent outward progress is bounded with sliding enabled",
+    "every overlapping station must improve and new station overlap stays blocked",
+    "swept short chords cannot enter a previously clear station",
+    "fresh disk synthetic slot preserves natural growth recovery",
+    "slide-enabled inward goal can recover without an inward step",
+    "radial inward goals recover from sixteen natural-growth approach angles",
+    "natural food and water seeking recover on both station sides"
+  ],
+  "publication": "not_attempted",
+  "baseline_expected_failures": 8,
+  "long_runs": [
+    {
+      "name": "fresh-three-6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original1200-growth",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day2-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "original-day9-to6000",
+      "exit_code": 0
+    },
+    {
+      "name": "synthetic-disk-roundtrip",
+      "exit_code": 0
+    }
+  ],
+  "changed_previous_files": [
+    "src\\Yukkuri.Simulation\\InteractionSpatial.cs"
+  ],
+  "json_issues": [],
+  "focused_station_checks": 17,
+  "limits": [
+    "Pure simulation and synthetic snapshots only; no native UI, visual/audio or player-save acceptance.",
+    "Historical Save.Compatibility was not run.",
+    "Original baseline failures and inherited failed-attempt evidence retained.",
+    "No upload, commit, push or publication was performed."
+  ],
+  "verified_at": "2026-11-06T12:20:51.1952712Z",
+  "focused_station_failures": 0,
+  "parsed_world_snapshots": 230,
+  "original_resumes": [
+    {
+      "deaths": 0,
+      "simulated_seconds": 4800,
+      "success": true,
+      "end": 6000,
+      "start": 1200
+    },
+    {
+      "deaths": 0,
+      "simulated_seconds": 600,
+      "success": true,
+      "end": 6000,
+      "start": 5400
+    }
+  ],
+  "game_build": 0,
+  "headless": "not_run",
+  "new_warning_locations": [],
+  "parent_evidence_drift": 0,
+  "harness_drift": 0,
+  "worker_spatial_sha256": "D10DBABCDBFB9B670DD45F7DB5DD45F284F7B154045A30500B851060E6F0CBDF",
+  "timeouts": 0
+}
