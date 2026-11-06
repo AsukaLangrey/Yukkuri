@@ -1,0 +1,13 @@
+PASS kindness breakpoints and interpolation
+PASS education breakpoints and interpolation
+PASS all existing license aliases and ungraded
+PASS maximum of three curves not additive or proficiency based
+PASS exact deficit multiplier zero and sixty cap
+PASS individual region and live traits objects
+PASS actual emotion descent and recovery preserve original rates
+PASS tolerant mood unchanged and no direct trust health change
+PASS zero delta and cold storage freeze emotional update
+PASS public world pause and close-up freeze mood
+PASS save reload derives requirement and resumes emotion
+PASS feedback reports target penalty without instant mood claim
+Individual hygiene: 0 failures

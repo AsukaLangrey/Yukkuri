@@ -25,6 +25,22 @@ public static class EnvironmentHygiene
         return score;
     }
 
+    // Approved 2026-11-02 curves; derived from current traits, never saved separately.
+    public static double Requirement(Creature c)
+    {
+        double kindness=Math.Clamp(c.Personality.Kindness,0,1);
+        double education=Math.Clamp(c.Interaction.RuleLearning,0,100);
+        double byKindness=kindness<=.15?0:kindness<=.65?(kindness-.15)/.5*92:92+(kindness-.65)/.35*7;
+        double byEducation=education<=50?education/50*90:90+(education-50)/50*9;
+        return Math.Min(99,Math.Max(Math.Max(byKindness,byEducation),WorldSimulation.CleaningLicenseLevel(c)*24));
+    }
+
+    public static double Discomfort(WorldState state,Creature c)=>
+        Math.Min(60,Math.Max(0,Requirement(c)-Score(state,c.RegionId))*.65);
+
+    public static string DescribeIndividual(WorldState state,Creature c)=>
+        $"个体卫生要求 {Requirement(c):0.##}/100 · 当前不适 {Discomfort(state,c):0.##}（馒馒来目标扣值）";
+
     public static string DescribeWaste(WorldState state,RoomObject obj)
     {
         string name=obj.Kind==RoomObjectKind.Urine?"尿液":"粪便";

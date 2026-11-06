@@ -1,0 +1,10 @@
+using System.Reflection;
+using Yukkuri.Simulation;
+var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;
+sim.State.Creatures.RemoveAll(o=>o!=c);sim.State.RoomObjects.Clear();
+c.Personality.Kindness=1;c.Interaction.RuleLearning=100;c.Fullness=90;c.Energy=90;c.Fear=0;c.Pain=0;c.Trust=0;c.Attachment=0;
+var advance=typeof(WorldSimulation).GetMethod("AdvanceEmotionalContinuity",BindingFlags.NonPublic|BindingFlags.Instance)!;
+c.Interaction.Emotion.Manmanlai=65;advance.Invoke(sim,new object[]{c,1d});Console.WriteLine("clean mood="+c.Interaction.Emotion.Manmanlai);
+sim.State.RoomObjects.Add(new(){Kind=RoomObjectKind.Feces,Portions=20,RegionId=c.RegionId});
+c.Interaction.Emotion.Manmanlai=65;advance.Invoke(sim,new object[]{c,1d});Console.WriteLine("dirty mood="+c.Interaction.Emotion.Manmanlai);
+Console.WriteLine("Individual requirement API="+(typeof(EnvironmentHygiene).GetMethod("Requirement")!=null));

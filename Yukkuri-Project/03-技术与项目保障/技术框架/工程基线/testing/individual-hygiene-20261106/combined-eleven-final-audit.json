@@ -1,0 +1,70 @@
+{
+  "continuity_cases": 129,
+  "pure_projects": 64,
+  "source_hash_differences": 0,
+  "json_reports": [
+    {
+      "failures": null,
+      "false_checks": 0,
+      "name": "ActorGeometry.Smoke",
+      "false_scenarios": 0,
+      "false_results": 0,
+      "success": true
+    },
+    {
+      "failures": 0,
+      "false_checks": 0,
+      "name": "Input.Intent",
+      "false_scenarios": 0,
+      "false_results": 0,
+      "success": true
+    },
+    {
+      "failures": 0,
+      "false_checks": 0,
+      "name": "Interaction.Continuity",
+      "false_scenarios": 0,
+      "false_results": 0,
+      "success": true
+    },
+    {
+      "failures": 0,
+      "false_checks": 0,
+      "name": "Interaction.Smoke",
+      "false_scenarios": 0,
+      "false_results": 0,
+      "success": true
+    },
+    {
+      "failures": 0,
+      "false_checks": 0,
+      "name": "NaturalLife.Smoke",
+      "false_scenarios": 0,
+      "false_results": 0,
+      "success": true
+    },
+    {
+      "failures": 0,
+      "false_checks": 0,
+      "name": "NaturalLife.Soak",
+      "false_scenarios": 0,
+      "false_results": 0,
+      "success": true
+    }
+  ],
+  "distinct_warnings": [
+    "ENGINE\\src\\Yukkuri.Simulation\\InteractionValidation.cs(17,19): warning CS8604: “IEnumerable<string> Enumerable.Select<Creature, string>(IEnumerable<Creature> source, Func<Creature, string> selector)”中的形参“source”可能传入 null 引用实参。 [ENGINE\\src\\Yukkuri.Simulation\\Yukkuri.Simulation.csproj]",
+    "ENGINE\\src\\Yukkuri.Simulation\\SupplyStationValidation.cs(12,21): warning CS8604: “IEnumerable<string> Enumerable.Select<DetachedStemBrood, string>(IEnumerable<DetachedStemBrood> source, Func<DetachedStemBrood, string> selector)”中的形参“source”可能传入 null 引用实参。 [ENGINE\\src\\Yukkuri.Simulation\\Yukkuri.Simulation.csproj]"
+  ],
+  "new_warnings_vs_ten": 0,
+  "source_files": 389,
+  "verified_at": "2026-11-06T04:20:20.1247137Z",
+  "origin_hash_drift": 0,
+  "pass_text_lines": 1357,
+  "soak_cases": 24,
+  "failure_text_markers": 0,
+  "individual_hygiene_pass_lines": 12,
+  "passed_pure": 64,
+  "origin_records": 394,
+  "game_build": 0
+}

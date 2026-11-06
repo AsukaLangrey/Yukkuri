@@ -1,0 +1,32 @@
+{
+  "baseline": "2812619facf3bf6bc9de3d39e286ad2f303218a2",
+  "source_state": "baseline plus listed working-tree modifications",
+  "published_parent": "3cde9b5aeaeec150a02437729132d1ca8102d261",
+  "files": [
+    {
+      "path": "src/Yukkuri.Simulation/EnvironmentHygiene.cs",
+      "sha256": "05ea20c4dd0c60a6e22922520396eea5a254ae09f44d6e7622f6c6bcdde36eb9"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/EmotionalContinuity.cs",
+      "sha256": "6333ff035cc4f6022a29e71b09a10c0bcd67359e6a18374e4e997726e0dd3852"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+      "sha256": "41a7ae7682680a76cf7e6491ad285f99a58132e133a023d82feb89ddcc02b3f0"
+    },
+    {
+      "path": "checks/Interaction.IndividualHygiene/Program.cs",
+      "sha256": "f19fe06c61e3d3cda693f323063379ddccf6cf69a9d3dbb2bb182ed5bfe4f136"
+    },
+    {
+      "path": "checks/Interaction.IndividualHygiene/Interaction.IndividualHygiene.csproj",
+      "sha256": "af16fc5ffcedb208f8352fa7824eb96d8f6720d3bef6cc03980ad9752855ca8a"
+    },
+    {
+      "path": "checks/Interaction.AffectionJourney/Program.cs",
+      "sha256": "0b6c6179e2ab71be0cd6fb77c4c1d48361618ccd155ca1f402a7e8cc5291e387"
+    }
+  ],
+  "integration_test_base": "537ba2ec113ef3abf2f7c62b5c6c967bfe0f312e"
+}

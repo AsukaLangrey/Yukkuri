@@ -1,0 +1,24 @@
+PASS actual release can enter water without snapping to shore
+PASS injured submerged creature eventually dies and cannot be revived by rescue
+PASS rescue requires purchased stock and preserves injury and fear
+PASS paused shop can buy but pause stops rescue and exposure
+PASS water exposure and fear survive a save without replaying entry
+PASS put in danger then rescued does not farm trust
+PASS recent hurt remains visible after the action and survives food attraction
+PASS punch combo uses actual consecutive hits and expires with time
+PASS new nested state rejects invalid save values
+PASS visible witness remembers human harm while another region does not
+PASS human rescue gratitude requires actual nearby observation and cannot repeat
+PASS hunger attack can be stopped by feeding and preserves victim memory
+PASS close-up presentation expires combo without advancing ordinary time
+PASS lighter causes actual local damage and escape while fixed bodies tense
+PASS legacy continuous harm shares witnesses without per-frame public incident spam
+PASS support migration settles water immediately even in close-up
+PASS human interruption stops hunger pursuit without feeding or healing
+PASS close-up support change cancels hunger pursuit without ordinary time
+PASS nearby capable kind companion blocks starvation assault but distant one cannot
+PASS held harm depends on contact duration rather than input sampling rate
+PASS water concern presentation query rejects stale hidden or inaccessible targets without mutation
+PASS continuous witness event survives a save without restarting or remembering each sample
+PASS hearing then seeing the actor adds one first-sight response without replaying each contact
+Water/emotion checks: 0 failure(s).

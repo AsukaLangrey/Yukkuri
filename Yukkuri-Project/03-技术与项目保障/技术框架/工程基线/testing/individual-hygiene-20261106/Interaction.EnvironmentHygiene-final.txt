@@ -1,0 +1,10 @@
+PASS clean and exact per-portion penalties
+PASS stacks preserve actual portions and zero floor
+PASS regions and empty portions are independent
+PASS stored hand carried and raised objects excluded live
+PASS motion survives save and grounded residual record is harmless
+PASS actual throw landing resumes ground score
+PASS real cleaning and paused reads immediately recover without ticking
+PASS reload derives current objects and does not serialize a score
+PASS waste feedback names counts and nominal penalties without claiming recovery
+Environment hygiene: 0 failures

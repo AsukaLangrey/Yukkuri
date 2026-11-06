@@ -210,7 +210,8 @@ public partial class InteractionRoom
         RefreshYardHelpButton();
         _choiceList.Visible=_toolbarCategory!=0;
         var c=Sim.Selected;
-        _environmentLabel.Text=$"当前区域环境评分 {EnvironmentHygiene.Score(Sim.State,Sim.State.ActiveRegionId)}/100";
+        _environmentLabel.Text=$"当前区域环境评分 {EnvironmentHygiene.Score(Sim.State,Sim.State.ActiveRegionId)}/100"+
+            (c==null?"":"\n"+EnvironmentHygiene.DescribeIndividual(Sim.State,c));
         _clockLabel.Text=Sim.State.Settings.Pause?"小院暂停中":Sim.State.Mode==PlayMode.CloseUp?"近看 · 自然时间暂停":"小院时间  "+TimeSpan.FromSeconds(Sim.State.WorldSeconds).ToString(@"mm\:ss");
         _pauseButton.Text=Sim.State.Settings.Pause?"继续":"停一停";_closeButton.Text=Sim.State.Mode==PlayMode.CloseUp?"回到小院 · Tab":"靠近看看 · 双击";
         _resetViewButton.Text=Sim.State.Mode==PlayMode.CloseUp?"正面":"居中";

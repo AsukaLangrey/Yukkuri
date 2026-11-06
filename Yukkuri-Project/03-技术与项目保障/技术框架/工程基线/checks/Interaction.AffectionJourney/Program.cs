@@ -55,6 +55,8 @@ try
     try{FamilyNurseryJourney.Run(sim,mother,father,birthId);}
     catch{Console.WriteLine($"nursery inventory on failure: money={sim.State.Money}, food={sim.State.Food}, water={sim.State.StationWaterPortions}, objects={sim.State.RoomObjects.Count}");throw;}
     Require(sim.ShopQuantity("wrap")==wrapStock+planned,"nursery did not return the same reusable wraps after release");
+    Require(journey.CleanedWasteObjects>0&&journey.CleanedWastePortions>=journey.CleanedWasteObjects,
+        "household hygiene was not maintained through actual waste cleanup");
     journey.Trace("actual nursery care and completed maternal recovery");
     Console.WriteLine("PASS default stranger -> trusted company -> reciprocal partnership -> autonomous pregnancy -> birth -> actual nursery and maternal recovery");
     return 0;
@@ -75,6 +77,8 @@ sealed class AffectionJourney(WorldSimulation sim,Creature mother,Creature fathe
     public int AcceptedDrinks { get; private set; }
     public int Conversations { get; private set; }
     public int CompanionInvitations { get; private set; }
+    public int CleanedWasteObjects { get; private set; }
+    public long CleanedWastePortions { get; private set; }
     private double nextCare,nextTalk,nextInvitation,nextHandPosition;
     private double handX=mother.X+1.8,handZ=mother.Z;
     private bool showHand;
@@ -85,6 +89,9 @@ sealed class AffectionJourney(WorldSimulation sim,Creature mother,Creature fathe
         Console.WriteLine($"{milestone}: t={sim.State.WorldSeconds:F1}, trust={mother.Trust:F1}, attachment={mother.Attachment:F1}, "+
             $"handSafety={mother.Interaction.HumanBond.Safety:F1}, familiarity={bond?.Familiarity:F1}, affection={bond?.Affection:F1}, "+
             $"interest={mother.Family.BreedingInterest:F1}, alarm={mother.Interaction.Emotion.Alarm:F1}, "+
+            $"hygiene={EnvironmentHygiene.Score(sim.State,mother.RegionId)}, requirement={EnvironmentHygiene.Requirement(mother):F2}, "+
+            $"discomfort={EnvironmentHygiene.Discomfort(sim.State,mother):F2}, mood={mother.Interaction.Emotion.Manmanlai:F2}, "+
+            $"cleanedObjects={CleanedWasteObjects}, cleanedPortions={CleanedWastePortions}, "+
             $"needs={mother.Fullness:F1}/{mother.Interaction.Hydration:F1}/{mother.Energy:F1}, activity={mother.Activity}");
     }
 
@@ -128,7 +135,20 @@ sealed class AffectionJourney(WorldSimulation sim,Creature mother,Creature fathe
     private void CareForHousehold()
     {
         // Keep the original inhabitants and natural environment. Care uses the
-        // same finite mouthful, rest and rescue commands as ordinary play.
+        // same finite mouthful, rest, rescue and waste-cleanup commands as ordinary play.
+        // The hygiene rules require maintaining the actual environment, not
+        // injecting comfort or relaxing the autonomous pregnancy threshold.
+        foreach(var waste in sim.State.RoomObjects.Where(o=>o.RegionId==sim.State.ActiveRegionId&&
+            EnvironmentHygiene.IsGroundWaste(sim.State,o)).ToArray())
+        {
+            int portions=waste.Portions;
+            int beforeScore=EnvironmentHygiene.Score(sim.State,waste.RegionId);
+            if(!sim.CleanRoomWaste(waste.Id)||sim.State.RoomObjects.Any(o=>o.Id==waste.Id))
+                throw new Exception("actual household waste cleanup did not remove its target");
+            if(EnvironmentHygiene.Score(sim.State,waste.RegionId)<beforeScore)
+                throw new Exception("actual household cleanup reduced environmental hygiene");
+            CleanedWasteObjects++;CleanedWastePortions+=portions;
+        }
         foreach(var c in sim.State.Creatures.ToArray())
         {
             if(c.Condition==PhysicalCondition.Dead)continue;

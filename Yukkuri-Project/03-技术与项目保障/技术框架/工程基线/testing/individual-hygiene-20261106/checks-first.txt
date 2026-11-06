@@ -1,0 +1,15 @@
+<engine>/src/Yukkuri.Simulation\SupplyStationValidation.cs(12,21): warning CS8604: 鈥淚Enumerable<string> Enumerable.Select<DetachedStemBrood, string>(IEnumerable<DetachedStemBrood> source, Func<DetachedStemBrood, string> selector)鈥濅腑鐨勫舰鍙傗€渟ource鈥濆彲鑳戒紶鍏?null 寮曠敤瀹炲弬銆?[<engine>/src/Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+<engine>/src/Yukkuri.Simulation\InteractionValidation.cs(15,19): warning CS8604: 鈥淚Enumerable<string> Enumerable.Select<Creature, string>(IEnumerable<Creature> source, Func<Creature, string> selector)鈥濅腑鐨勫舰鍙傗€渟ource鈥濆彲鑳戒紶鍏?null 寮曠敤瀹炲弬銆?[<engine>/src/Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+PASS kindness breakpoints and interpolation
+PASS education breakpoints and interpolation
+PASS all existing license aliases and ungraded
+PASS maximum of three curves not additive or proficiency based
+PASS exact deficit multiplier zero and sixty cap
+PASS individual region and live traits objects
+PASS actual emotion descent and recovery preserve original rates
+PASS tolerant mood unchanged and no direct trust health change
+PASS zero delta and cold storage freeze emotional update
+PASS public world pause and close-up freeze mood
+FAIL save reload derives requirement and resumes emotion: 浜掑姩鍦烘櫙鐗╁搧鏃犳晥
+PASS feedback reports target penalty without instant mood claim
+Individual hygiene: 1 failures

@@ -1,0 +1,5 @@
+<engine>/src/Yukkuri.Simulation\SupplyStationValidation.cs(12,21): warning CS8604: 鈥淚Enumerable<string> Enumerable.Select<DetachedStemBrood, string>(IEnumerable<DetachedStemBrood> source, Func<DetachedStemBrood, string> selector)鈥濅腑鐨勫舰鍙傗€渟ource鈥濆彲鑳戒紶鍏?null 寮曠敤瀹炲弬銆?[<engine>/src/Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+<engine>/src/Yukkuri.Simulation\InteractionValidation.cs(15,19): warning CS8604: 鈥淚Enumerable<string> Enumerable.Select<Creature, string>(IEnumerable<Creature> source, Func<Creature, string> selector)鈥濅腑鐨勫舰鍙傗€渟ource鈥濆彲鑳戒紶鍏?null 寮曠敤瀹炲弬銆?[<engine>/src/Yukkuri.Simulation\Yukkuri.Simulation.csproj]
+clean mood=65
+dirty mood=65
+Individual requirement API=False

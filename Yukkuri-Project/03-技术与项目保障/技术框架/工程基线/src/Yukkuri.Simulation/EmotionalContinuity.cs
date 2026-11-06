@@ -116,7 +116,7 @@ public sealed partial class WorldSimulation
         c.Fear=Math.Max(c.Fear,EmotionalReadiness.FearFloor(c));
         if(e.SafeSeconds>=30)c.Fear=Math.Max(EmotionalReadiness.FearFloor(c),c.Fear-dt*.025);
         double target=Math.Clamp(65+c.Trust*.15+c.Attachment*.1-c.Pain*.55-c.Fear*.45-
-            e.Alarm*.25-Math.Max(0,30-c.Fullness)*.8-Math.Max(0,25-c.Energy)*.5,0,100);
+            e.Alarm*.25-Math.Max(0,30-c.Fullness)*.8-Math.Max(0,25-c.Energy)*.5-EnvironmentHygiene.Discomfort(State,c),0,100);
         e.Manmanlai+=Math.Clamp(target-e.Manmanlai,-dt*1.2,dt*.15);
     }
 
