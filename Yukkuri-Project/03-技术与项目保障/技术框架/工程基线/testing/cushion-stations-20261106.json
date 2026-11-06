@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "source_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "alice/20261106-cushion-static-collision",
+  "configuration": "Release",
+  "source_state": "baseline plus uncommitted patch",
+  "seed": 20261106,
+  "baseline": {
+    "passed": 6,
+    "failed": 32,
+    "original_product_blob": "ff661f5f99373202aadf0a3d5906acb7bffc7425",
+    "run_sha256": "9cf53a338baf897fbb5454b7d93a011fc7e0d84130e4200f8cbc098413135fec"
+  },
+  "fixed": {
+    "passed": 264,
+    "failed": 0,
+    "checks": [
+      {
+        "name": "Interaction.CushionStations",
+        "build": 0,
+        "run": 0,
+        "passed": 38,
+        "failed": 0
+      },
+      {
+        "name": "Interaction.Inventory",
+        "build": 0,
+        "run": 0,
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "name": "Interaction.SupplyStations",
+        "build": 0,
+        "run": 0,
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "name": "Interaction.Shelters",
+        "build": 0,
+        "run": 0,
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "name": "Interaction.Smoke",
+        "build": 0,
+        "run": 0,
+        "passed": 48,
+        "failed": 0
+      },
+      {
+        "name": "ActorGeometry.Smoke",
+        "build": 0,
+        "run": 0,
+        "passed": 128,
+        "failed": 0
+      },
+      {
+        "name": "Interaction.DetachedStem",
+        "build": 0,
+        "run": 0,
+        "passed": 17,
+        "failed": 0
+      }
+    ]
+  },
+  "source_files": [
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardObjects.cs",
+      "sha256": "ea0fde1bb717a5340a7531bacfa9cb1d2a7efcdf5bdf3fd3792479c80814c10e"
+    },
+    {
+      "path": "checks/Interaction.CushionStations/Program.cs",
+      "sha256": "b3dbae67cd91ebe2f8d9c1cac59a0539f43ec9c3b52303c78de28b53b3323609"
+    },
+    {
+      "path": "checks/Interaction.CushionStations/Interaction.CushionStations.csproj",
+      "sha256": "4eea16c5ee6cd92ad51707ebe659e6149cfee4f12e6f09a525587550850554c9"
+    }
+  ],
+  "scope": "Cushion movement against supply station body only",
+  "not_run": [
+    "game build",
+    "Godot runtime",
+    "visual interaction acceptance",
+    "long soak",
+    "full required_checks",
+    "historical user save compatibility"
+  ]
+}

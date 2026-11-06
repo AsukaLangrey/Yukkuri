@@ -6,7 +6,7 @@ public sealed partial class WorldSimulation
     {
         var o=State.RoomObjects.Find(o=>o.Id==id&&!o.Stored&&o.RegionId==State.ActiveRegionId);
         if(o==null||State.Settings.Pause||!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>7.7||Math.Abs(z)>7.7||
-            !WoodlandLayout.GroundFits(State,o.RegionId,x,z,.2)||!ClearOfStations(o.RegionId,x,z,.2)||
+            !WoodlandLayout.GroundFits(State,o.RegionId,x,z,.2)||!LooseObjectStationMoveClear(o,x,z)||
             State.Creatures.Any(c=>!c.Family.Memorialized&&!c.Family.ColdStorage.Stored&&c.RegionId==o.RegionId&&Distance(c.X,c.Z,x,z)<InteractionFootprint(c)+.2))return false;
         double distance=Distance(o.X,o.Z,x,z);int steps=Math.Max(1,(int)Math.Ceiling(distance/.08));
         double shelterRadius=o.Kind==RoomObjectKind.Cushion?1.3:StationObjectRadius(o.Kind);
@@ -15,7 +15,7 @@ public sealed partial class WorldSimulation
         for(int n=1;n<=steps;n++)
         {
             double nx=ox+(x-ox)*n/steps,nz=oz+(z-oz)*n/steps;
-            if(!WoodlandLayout.GroundFits(State,o.RegionId,nx,nz,.2)||!ClearOfStations(o.RegionId,nx,nz,.2)||
+            if(!WoodlandLayout.GroundFits(State,o.RegionId,nx,nz,.2)||!LooseObjectStationMoveClear(o,nx,nz)||
                 State.Creatures.Any(c=>c.RegionId==o.RegionId&&!c.Family.Memorialized&&!c.Family.ColdStorage.Stored&&Distance(c.X,c.Z,nx,nz)<InteractionFootprint(c)+.2)||
                 State.DetachedStemBroods.Any(s=>s.RegionId==o.RegionId&&!s.Cleared&&Distance(s.X,s.Z,nx,nz)<StemVesselRadius+.2)||
                 State.RoomObjects.Any(other=>other!=o&&!other.Stored&&other.RegionId==o.RegionId&&other.Kind is RoomObjectKind.Ball or RoomObjectKind.Cushion&&Distance(other.X,other.Z,nx,nz)<.5))break;
@@ -23,6 +23,24 @@ public sealed partial class WorldSimulation
         }
         o.VelocityX=o.VelocityZ=0;return true;
     }
+    private bool LooseObjectStationMoveClear(RoomObject o,double x,double z)
+    {
+        if(o.Kind!=RoomObjectKind.Cushion)return ClearOfStations(o.RegionId,x,z,.2);
+        foreach(var station in State.SupplyStations)
+        {
+            if(station.RegionId!=o.RegionId)continue;
+            double next=CushionStationOverlapDepth(x,z,station);
+            if(next<=0)continue;
+            // Old saves may already overlap. Each actual step must strictly
+            // reduce that overlap; leaving it never permits entry into another.
+            if(next>=CushionStationOverlapDepth(o.X,o.Z,station))return false;
+        }
+        return true;
+    }
+    private static double CushionStationOverlapDepth(double x,double z,SupplyStationState station)=>
+        // Match CanPlaceStation's expanded rectangle, including its corners.
+        Math.Max(0,Math.Min(InteractionFixtureGeometry.CushionWidth*.5+SupplyStationRadius-Math.Abs(x-station.X),
+            InteractionFixtureGeometry.CushionDepth*.5+SupplyStationRadius-Math.Abs(z-station.Z)));
     public bool MoveSupportedBodyOrFixture(string id,double x,double z)
     {
         var c=InteractionTarget(id);
