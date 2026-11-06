@@ -1,0 +1,14 @@
+Fixed product SHA256: CB4FF385A8F799329962C71EC8468B3DA1DBAC54EEE8FD4E33A0368E4850F81F Unchanged final test SHA256: EE3C9CD603C018290049C53DA99218ACC175842D7BC5509E9DC0BFAB8ADCE48D
+PASS normal starting yard reaches its first autonomous birth
+PASS price priorities, safe needs plateau, cosmetic modifiers
+PASS read-only quotes, stale confirmation, duplicate sale, reload and legacy save
+PASS real birth, infant sale and parent departure retain ancestry
+PASS income unlocks tools permanently; no immediate arrival arbitrage
+PASS sale interrupts care without destroying parcels or fabricating inventory
+inheritance: high n=60 mean=89.66; low n=60 mean=10.41
+PASS high quality parents statistically produce better offspring without skill or rank inheritance
+journey: 4226.5 simulated seconds, births=4, revenue=1324, balance=1428, food=58, water=23
+PASS paid supplies sustain real growth and repeated profitable breeding
+PASS both parents remain unsellable through real birth recovery and reload
+PASS interrupting a new intervention preserves the existing parent recovery sale guard
+FAILURES 0

@@ -1,0 +1,2 @@
+PASS: real scene, locked shop controls, confirmation refresh, sale payment, actor removal, pause preservation, food purchase, save validation.
+Renderer: headless

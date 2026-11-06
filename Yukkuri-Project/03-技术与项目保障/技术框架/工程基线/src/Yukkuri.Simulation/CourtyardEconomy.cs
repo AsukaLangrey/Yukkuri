@@ -106,7 +106,7 @@ public sealed partial class WorldSimulation
             c.Family.ColdStorage.Stored||c.Interaction.EatingRemaining>0||c.Interaction.Physiology.Active||
             State.PortableMotions.Any(m=>m.Id==id))return "请先结束接触、进食或装置操作，将它安稳放下。";
         if(c.Family.Pregnancy.Phase!=PregnancyPhase.None||State.Creatures.Any(m=>m.Family.Pregnancy.FatherId==id&&
-            m.Family.Pregnancy.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)||
+            m.Family.Pregnancy.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating or PregnancyPhase.Recovering)||
             State.DetachedStemBroods.Any(s=>(s.Mother.Id==id||s.Father.Id==id)&&s.Phase is DetachedStemPhase.Loose or DetachedStemPhase.Bottled))
             return "请等待这次孕育与恢复结束，再出售相关亲油。";
         if(State.CreatureSales.Count>=10000)return "售油档案已满。";

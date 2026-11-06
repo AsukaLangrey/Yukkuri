@@ -182,4 +182,66 @@ Check("paid supplies sustain real growth and repeated profitable breeding",()=>
     Require(s.State.CreatureSalesRevenue>=1000&&s.BuyShopProduct("shelter")&&s.BuyShopProduct("inducer"),"later tool tiers did not unlock");
     Console.WriteLine($"journey: {s.State.WorldSeconds:F1} simulated seconds, births={s.State.CompletedBirths.Count}, revenue={s.State.CreatureSalesRevenue}, balance={s.State.Money}, food={s.State.Food}, water={s.State.StationWaterPortions}");
 });
+Check("both parents remain unsellable through real birth recovery and reload",()=>
+{
+    var s=Pair();var m=s.State.Creatures[0];var f=s.State.Creatures[1];
+    int earlierQuote=CourtyardEconomy.Quote(f).Price;
+    Require(s.CreatureSaleReason(f.Id)==null,"father initially unavailable");
+    var babies=Birth(s);
+    Require(m.Family.Pregnancy.Phase==PregnancyPhase.Recovering&&m.Family.Pregnancy.FatherId==f.Id,
+        "real birth did not enter linked recovery");
+    string expected="请等待这次孕育与恢复结束，再出售相关亲油。";
+    foreach(var parent in new[]{m,f})
+    {
+        string before=Json(s);
+        Require(s.CreatureSaleReason(parent.Id)==expected,"recovering parent preview allowed: "+parent.Id);
+        Require(s.SellCreatureToShop(parent.Id,earlierQuote)==expected,"old confirmation bypassed recovery");
+        Require(s.SellCreatureToShop(parent.Id,CourtyardEconomy.Quote(parent).Price)==expected,"fresh quote bypassed recovery");
+        Require(Json(s)==before,"blocked sale changed state or RNG");
+    }
+    Require(s.CreatureSaleReason(babies[0].Id)==null,"recovery incorrectly blocked offspring");
+    var profile=new CreatureArrival("marisa",Role:ReproductionRole.Paternal);
+    var spots=(from x in Enumerable.Range(-6,13) from z in Enumerable.Range(-6,13)
+        where s.NewCreaturePlacementReason(profile,x,z)==null select (x,z)).ToArray();
+    Require(spots.Length>0,"no valid ground for unrelated adult fixture");
+    var arrival=s.PlaceNewCreature(profile,spots[0].x,spots[0].z);
+    Require(arrival.Success,arrival.Message);var unrelated=s.Selected!;
+    Require(s.CreatureSaleReason(unrelated.Id)==null,"recovery incorrectly blocked unrelated father role");
+    Sell(s,unrelated);
+    s=Reload(s);m=s.State.Creatures.Single(c=>c.Id==m.Id);f=s.State.Creatures.Single(c=>c.Id==f.Id);
+    Require(s.CreatureSaleReason(f.Id)==expected,"reload lost paternal recovery guard");
+    string restored=Json(s);
+    Require(s.SellCreatureToShop(f.Id,CourtyardEconomy.Quote(f).Price)==expected&&Json(s)==restored,
+        "reloaded confirmation changed state");
+    Tick(s,180);
+    Require(m.Family.Pregnancy.Phase==PregnancyPhase.None,"real recovery did not finish");
+    Require(m.Family.Pregnancy.FatherId==f.Id,"fixture did not retain historical father reference");
+    Require(s.CreatureSaleReason(f.Id)==null,"completed recovery still blocked father");
+    Sell(s,f);s=Reload(s);
+    Require(s.State.CreatureSales.Any(sale=>sale.Creature.Id==f.Id)&&
+        s.State.Creatures.Any(c=>c.Family.FatherId==f.Id),"father departure lost ledger or ancestry");
+});
+Check("interrupting a new intervention preserves the existing parent recovery sale guard",()=>
+{
+    var s=Pair();Birth(s);var m=s.State.Creatures[0];var f=s.State.Creatures[1];
+    Require(m.Family.Pregnancy.Phase==PregnancyPhase.Recovering,"real recovery required");
+    double recovery=m.Family.Pregnancy.RecoveryRemaining;
+    string result=s.CollectBreedingMaterial(f.Id);
+    Require(s.State.BreedingMaterials.Count==1,result);
+    result=s.RequestForcedPregnancy(m.Id,f.Id,BirthMethod.Stem);
+    Require(FamilyRules.UnderIntervention(m)&&m.Family.Pregnancy.RecoveryDebt==recovery,result);
+    string expected="请等待这次孕育与恢复结束，再出售相关亲油。";
+    Require(s.CreatureSaleReason(f.Id)==expected,"active intervention allowed father sale");
+    string before=Json(s);
+    Require(s.SellCreatureToShop(f.Id,CourtyardEconomy.Quote(f).Price)==expected&&Json(s)==before,
+        "active intervention confirmation changed state");
+    result=s.InterruptPregnancyIntervention(m.Id);
+    Require(m.Family.Pregnancy.Phase==PregnancyPhase.Recovering&&
+        m.Family.Pregnancy.RecoveryRemaining==recovery,result);
+    s=Reload(s);f=s.State.Creatures.Single(c=>c.Id==f.Id);
+    before=Json(s);
+    Require(s.CreatureSaleReason(f.Id)==expected&&
+        s.SellCreatureToShop(f.Id,CourtyardEconomy.Quote(f).Price)==expected&&Json(s)==before,
+        "interruption or reload bypassed existing recovery");
+});
 Console.WriteLine($"FAILURES {failures}");return failures==0?0:1;
