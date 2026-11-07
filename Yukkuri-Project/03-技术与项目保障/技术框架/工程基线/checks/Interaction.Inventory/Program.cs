@@ -113,6 +113,88 @@ Check("ordinary care requires real medicine and cancelled or completed contact c
     Require(s.State.Medicine==2&&c.Interaction.Injuries.At(BodyPart.Side)!.CareRemaining>0,"real completed care did not use one dose");
     Hold(s,input,30);s.EndInteractionGesture(cancelled:true);Require(s.State.Medicine==2,"completed hold consumed repeatedly or refunded");
 });
+// Controlled ordinary Side injury through the production Hurt API, not a claim
+// that autonomous play generated the injury. No passive time is advanced here.
+WorldSimulation CareFixture()
+{
+    var s=Fresh();var c=s.Selected!;s.Hurt(c,12,"护理中断反馈受控轻伤",null,BodyPart.Side);
+    Require(c.Condition is not (PhysicalCondition.Critical or PhysicalCondition.Dead)&&
+        c.Interaction.Injuries.At(BodyPart.Side) is {Damage:>0,CareRemaining:0}&&s.State.Medicine>0,
+        "controlled ordinary care target was not available");
+    return s;
+}
+string CareFacts(WorldSimulation s)
+{
+    var c=s.Selected!;var i=c.Interaction;
+    return JsonSerializer.Serialize(new{s.State.Medicine,s.State.Food,s.State.Money,c.Health,c.Pain,c.Condition,
+        c.CriticalRemaining,c.FillingIntegrity,i.Injuries,i.Digestion,i.CareContinuity,i.FootTreated,i.FootRecovery,
+        i.HeadSensitivity,i.Dressings,i.DressingPart,i.DressingSide,i.DressingRemaining,s.State.Progress.CareActions},SaveStore.JsonOptions);
+}
+foreach(bool cancelled in new[]{false,true})
+{
+    foreach(bool leaveContact in new[]{false,true})
+    Check($"unfinished care reports stopped on {(cancelled?"cancel":"release")}, leave contact={leaveContact}",()=>
+    {
+        var s=CareFixture();var c=s.Selected!;var input=new InteractionInput(InteractionAction.Care,BodyPart.Side,Duration:.1);
+        string facts=CareFacts(s);Require(s.BeginInteractionGesture(c.Id,input).Success,"ordinary care could not begin");
+        Hold(s,input,7);var pending=s.ContinueInteractionGesture(input,true);
+        Require(pending.Message.Contains("正在处理伤处")&&s.InteractionGestureOwnsPose&&CareFacts(s)==facts,
+            "partial care was not active or changed treatment facts");
+        if(leaveContact)
+        {
+            var off=s.ContinueInteractionGesture(input,false);
+            Require(off.Message.Contains("接触停止")&&!s.InteractionGestureOwnsPose&&CareFacts(s)==facts,
+                "leaving contact did not stop without treatment");
+        }
+        var ended=s.EndInteractionGesture(cancelled);
+        Require(!s.HasInteractionGesture&&!s.InteractionGestureOwnsPose&&CareFacts(s)==facts,
+            "end retained gesture ownership or changed medicine, injury, health or care flags");
+        Require(ended.Success&&!ended.Refused&&ended.Message.Contains("护理已停止")&&ended.Message.Contains("尚未使用护理包")&&
+            !ended.Message.Contains("正在处理伤处")&&!ended.Message.Contains("松开"),
+            "ended care still advertises an active hold: "+ended.Message);
+        Require(string.IsNullOrEmpty(s.EndInteractionGesture(cancelled).Message)&&CareFacts(s)==facts,"repeated end replayed feedback or treatment");
+        SaveStore.Validate(s.State);
+    });
+    Check($"completed care retains its result after leaving contact and {(cancelled?"cancel":"release")}",()=>
+    {
+        var s=CareFixture();var c=s.Selected!;var input=new InteractionInput(InteractionAction.Care,BodyPart.Side,Duration:.1);
+        int stock=s.State.Medicine,careActions=s.State.Progress.CareActions;
+        Require(s.BeginInteractionGesture(c.Id,input).Success,"ordinary completed care could not begin");Hold(s,input,20);
+        var complete=s.ContinueInteractionGesture(input,true);string facts=CareFacts(s);
+        Require(complete.Message.Contains("护理完成")&&s.State.Medicine==stock-1&&s.State.Progress.CareActions==careActions+1&&
+            c.Interaction.Injuries.At(BodyPart.Side)!.CareRemaining>0&&c.Interaction.HasDressing(BodyPart.Side),"care did not complete exactly once");
+        Hold(s,input,30);s.ContinueInteractionGesture(input,false);var ended=s.EndInteractionGesture(cancelled);
+        Require(ended.Message==complete.Message&&!s.HasInteractionGesture&&CareFacts(s)==facts,
+            "completed result was replaced or completed treatment was repeated/refunded");
+        s.EndInteractionGesture(cancelled);Require(CareFacts(s)==facts,"repeated end changed completed care");SaveStore.Validate(s.State);
+    });
+}
+Check("care end preserves latest wrong-part feedback and exhausted-stock refusal",()=>
+{
+    foreach(bool exhausted in new[]{false,true})
+    {
+        var s=CareFixture();var c=s.Selected!;var input=new InteractionInput(InteractionAction.Care,BodyPart.Side,Duration:.1);
+        Require(s.BeginInteractionGesture(c.Id,input).Success,"refusal fixture could not begin");Hold(s,input,7);
+        if(exhausted){s.State.Medicine=0;Hold(s,input,20);}else input=input with {Part=BodyPart.Accessory};
+        var last=s.ContinueInteractionGesture(input,true);string facts=CareFacts(s);
+        Require(exhausted?last.Refused&&last.Message.Contains("护理用品不足"):last.Message.Contains("不是需要处理的伤处"),"expected latest care feedback absent");
+        var ended=s.EndInteractionGesture(cancelled:true);
+        Require(ended.Message==last.Message&&ended.Success==last.Success&&ended.Refused==last.Refused&&CareFacts(s)==facts,
+            "care end masked the latest invalid-part/refusal result or changed treatment");
+    }
+});
+Check("care entry refusals remain non-mutating and do not leave a gesture",()=>
+{
+    foreach(string reason in new[]{"no injury","no medicine","invalid target"})
+    {
+        var s=reason=="no injury"?Fresh():CareFixture();var c=s.Selected!;
+        if(reason=="no medicine")s.State.Medicine=0;
+        string before=Snapshot(s);var feedback=s.BeginInteractionGesture(reason=="invalid target"?"missing-patient":c.Id,
+            new(InteractionAction.Care,BodyPart.Side,Duration:.1));
+        Require(!feedback.Success&&!s.HasInteractionGesture&&Snapshot(s)==before,"care entry changed a refused state: "+reason);
+        Require(string.IsNullOrEmpty(s.EndInteractionGesture().Message)&&Snapshot(s)==before,"ending a refused entry created an interruption: "+reason);
+    }
+});
 Check("legacy feeding and treatment share actual playtest inventory",()=>
 {
     var s=Fresh();var c=s.Selected!;s.State.Food=0;s.State.Medicine=0;

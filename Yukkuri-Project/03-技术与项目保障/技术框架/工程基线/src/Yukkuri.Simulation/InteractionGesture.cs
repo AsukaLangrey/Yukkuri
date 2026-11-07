@@ -663,6 +663,10 @@ public sealed partial class WorldSimulation
         if(!releasedImpulse&&!g.Refused&&c.ReactionSerial==g.ReactionSerial)
         {i.ReactionPose="idle";i.ReactionPoseRemaining=0;}
         string message=g.Last.Message;
+        // End only the unfinished nursing prompt, preserving refusals, target
+        // advice and an already completed treatment's result.
+        if(g.Input.Action==InteractionAction.Care&&!g.Applied&&g.Last is {Success:true,Refused:false,Pose:"nursing"})
+            message="护理已停止，尚未使用护理包；已有伤势仍需继续照料。";
         if(g.Applied&&c.Condition!=PhysicalCondition.Dead)
             message=g.Input.Action switch
             {
