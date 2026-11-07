@@ -30,14 +30,14 @@ WorldSimulation AfterHarm(string need="warmth",bool adultRecipient=false,bool es
         var s=WorldSimulation.CreateInteractionPlaytest(seed);s.State.RoomObjects.Clear();s.State.PlayerX=0;s.State.PlayerZ=7;
         for(int n=0;n<s.State.Creatures.Count;n++)
         {
-            var c=s.State.Creatures[n];c.IsYoung=false;c.Body.AgeSeconds=c.InnerAgeSeconds=2000;
+            var c=s.State.Creatures[n];GrowthRules.Initialize(c,false);
             c.Fullness=c.Energy=c.Interaction.Hydration=90;c.Pain=c.Fear=0;c.Courage=.1;
             c.Personality.Initialized=true;c.Personality.Kindness=.8;c.Aggression=.1;c.Patience=.8;
             c.Family.NextCareAt=c.Family.NextSocialAt=c.Interaction.NextAutonomyAt=10000;c.Interaction.ToyInterest=0;
             c.X=c.TargetX=n==0?0:-6;c.Z=c.TargetZ=n==0?0:-6;
         }
         var a=s.State.Creatures[0];var helper=s.State.Creatures[1];var r=s.State.Creatures[2];
-        r.IsYoung=!adultRecipient;r.Body.AgeSeconds=r.InnerAgeSeconds=adultRecipient?2000:0;
+        GrowthRules.Initialize(r,!adultRecipient);
         // Initial dependency and a pending dangerous intent are component
         // preconditions. Harm, its identity, stopping it and later care are real.
         r.Interaction.FootIntegrity=0;r.Family.Warmth=20;
