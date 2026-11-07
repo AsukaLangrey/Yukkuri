@@ -37,6 +37,8 @@ public partial class Main : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            if(args.Any(a=>a.StartsWith("--shelter-unlock",StringComparison.Ordinal)||a.StartsWith("shelter-unlock-",StringComparison.Ordinal)))
+                throw new ArgumentException("Shelter audit must enter through InteractionRoom.tscn.");
             for(int i=0;i<args.Length;i++)
             {
                 if(args[i]=="--smoke-output"&&i+1<args.Length)_smokeOutput=args[++i];

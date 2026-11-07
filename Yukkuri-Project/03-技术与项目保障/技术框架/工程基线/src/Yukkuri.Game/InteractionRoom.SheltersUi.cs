@@ -82,14 +82,15 @@ public partial class InteractionRoom
         _panelContents.AddChild(Text($"待摆放小家：{Sim.State.ShelterStock} 间"));
         _panelContents.AddChild(Text($"现有金钱：{Sim.State.Money} 元；摆放消耗已购入的小家。"));
         if(!string.IsNullOrEmpty(result))_panelContents.AddChild(Text(result,14));
+        if(Sim.ShopUnlockReason("shelter") is { } locked)_panelContents.AddChild(Text(locked,13));
         string cost=$"{WorldSimulation.ShelterPrice} 元";
         var buy=PanelButton("购买一间 · "+cost,()=>
         {
             bool success=Sim.BuyShelter();
-            ShowShelterSupplies(success?"小家已入库，拿起来后点击空地摆放。":"未能购买，请检查金钱和库存。原有用品没有减少。");
+            ShowShelterSupplies(success?"小家已入库，拿起来后点击空地摆放。":Sim.ShopUnlockReason("shelter")??"未能购买，请检查金钱和库存。原有用品没有减少。");
             RefreshSupplyStock();
         });
-        buy.Disabled=Sim.State.ShelterStock>=99||Sim.State.Money<WorldSimulation.ShelterPrice;
+        buy.Disabled=Sim.ShopUnlockReason("shelter")!=null||Sim.State.ShelterStock>=99||Sim.State.Money<WorldSimulation.ShelterPrice;
         _panelContents.AddChild(buy);
         var place=PanelButton("拿小家 · 点击地面摆放",()=>{CloseActivityPanel();ArmShelterPlacement();});
         place.Disabled=Sim.State.ShelterStock<=0;_panelContents.AddChild(place);
