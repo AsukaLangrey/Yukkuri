@@ -71,14 +71,33 @@ Check("暂停和近看不推进成长，恢复普通时间后才到龄",()=>
     Require(c.IsYoung&&c.Body.AgeSeconds==age&&c.InnerAgeSeconds==inner,"近看推进了成长");
     sim.ExitCloseUp();Tick(sim,1);Require(!c.IsYoung,"恢复普通时间仍不成长");
 });
-Check("冷藏中成长使用十分之一身体时间而非全局时间",()=>
+Check("冷藏冻结成长跨过旧期限，读档手动取回后才自然成年",()=>
 {
-    var sim=Fixture();var c=sim.Selected!;double age=c.Body.AgeSeconds;
+    var sim=Fixture();var c=sim.Selected!;
+    GrowthRules.Initialize(c,true);c.Body.AgeSeconds=c.InnerAgeSeconds=GrowthRules.AdultAge-.5;
+    double age=c.Body.AgeSeconds,inner=c.InnerAgeSeconds;
+    string id=c.Id,body=c.Body.Id,identity=c.Registration.IdentityId;var role=c.Body.ReproductionRole;
+    SaveStore.Validate(sim.State);
     BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"冷藏前置失败");
-    Tick(sim,1);
-    Require(c.IsYoung&&Math.Abs(c.Body.AgeSeconds-age-.1)<1e-7,"冷藏用全速年龄使幼体过早成熟");
-    Tick(sim,5);
-    Require(!c.IsYoung&&Math.Abs(c.Body.AgeSeconds-age-.6)<1e-7,"有限冷藏被误当成完全冻结成长");
+    double duration=WorldSimulation.ColdStorageLimitSeconds+1;Tick(sim,duration);
+    Require(sim.State.WorldSeconds==duration&&c.Family.ColdStorage.Elapsed==duration,"未实际推进世界时间跨过旧期限");
+    Require(c.Family.ColdStorage.Stored&&WorldSimulation.BiologicalTimeScale(c)==0&&c.IsYoung&&
+        c.Body.AgeSeconds==age&&c.InnerAgeSeconds==inner&&c.Interaction.Memories.GetValueOrDefault("grown")==0,
+        "冷藏推进身体年龄、自动到期或提前结算成年");
+    sim.State.Settings.Pause=true;Tick(sim,5);
+    Require(sim.State.WorldSeconds==duration&&c.Family.ColdStorage.Elapsed==duration&&c.Body.AgeSeconds==age,"暂停推进冷藏或成长");
+    sim=Reload(sim);c=sim.Selected!;
+    Require(sim.State.Settings.Pause&&c.Family.ColdStorage.Stored&&c.Family.ColdStorage.Elapsed==duration&&
+        c.Body.AgeSeconds==age&&c.InnerAgeSeconds==inner&&c.IsYoung&&c.Id==id&&c.Body.Id==body&&c.Registration.IdentityId==identity,
+        "冷藏存读档改变年龄、保存状态或持续身份");
+    sim.State.Settings.Pause=false;sim.SetColdStorage(c.Id,false);
+    Require(!c.Family.ColdStorage.Stored&&c.Family.ColdStorage.RecoveryRemaining==0&&c.IsYoung&&
+        c.Body.AgeSeconds==age&&c.InnerAgeSeconds==inner,"手动取回跳过剩余成长或强加复苏等待");
+    Tick(sim,.25);Require(c.IsYoung&&c.Body.AgeSeconds==age+.25,"取回后未到实际年龄就成年");
+    Tick(sim,.5);
+    Require(!c.IsYoung&&c.Body.AgeSeconds==age+.75&&c.InnerAgeSeconds==inner+.75&&
+        c.Id==id&&c.Body.Id==body&&c.Registration.IdentityId==identity&&c.Body.ReproductionRole==role&&
+        c.Interaction.Memories.GetValueOrDefault("grown")==3,"取回后成长、身份或固定角色未正常续接");
     Require(c.Family.BirthEventId==null&&sim.State.CompletedBirths.Count==0,"冷藏成长生成伪出生记录");
     SaveStore.Validate(sim.State);
 });
