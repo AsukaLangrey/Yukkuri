@@ -15,6 +15,11 @@ public sealed partial class WorldSimulation
     {
         if(ShelterWorldError() is { } error)return error;
         if(s.RegionId!=State.ActiveRegionId)return "住居不在当前小院。";
+        if(s.Capacity==5)
+        {
+            if(!s.DoorOpen)return "门帘关着，先打开出口。";
+            return SharedCallGuest(s)==null?"没有当前愿意且能够走出来的住户。":null;
+        }
         var c=ValidShelterGuest(s);if(c==null||!ShelterBodyPresent(c,s))return "屋内没有可以回应的住户。";
         if(!s.DoorOpen)return "门还关着，先打开真实出口。";
         if(!CanSelfMove(c))return "它现在不能自己走出来，需要实际护理或经门洞低托救出。";
@@ -34,23 +39,29 @@ public sealed partial class WorldSimulation
         long sequence=State.ShelterSequence;string id;
         do{if(sequence==long.MaxValue)return Unavailable("住居身份序号已用尽。");id="shelter-"+(++sequence).ToString(System.Globalization.CultureInfo.InvariantCulture);}
         while(StationIdentityUsed(id)||State.Shelters.Any(s=>s.Id==id));
-        State.ShelterSequence=sequence;State.Shelters.Add(new(){Id=id,RegionId=State.ActiveRegionId,X=x,Z=z});State.ShelterStock--;
+        State.ShelterSequence=sequence;State.Shelters.Add(new(){Id=id,RegionId=State.ActiveRegionId,X=x,Z=z,Capacity=State.EconomyProgression?5:1});State.ShelterStock--;
         return new(true,"住居已放好，门朝前打开；它需要自己沿门口走进去。","","shelter-place",Changed:true);
     }
     public ShelterView? ShelterStatus(string id)=>Shelter(id) is { } s?DescribeShelter(s):null;
     public IReadOnlyList<ShelterView> Shelters(string? regionId=null)=>State.Shelters.Where(s=>regionId==null||s.RegionId==regionId).Select(DescribeShelter).ToArray();
     private ShelterView DescribeShelter(ShelterState s)
     {
+        if(s.Capacity==5)return DescribeSharedShelter(s);
         var guest=ValidShelterGuest(s);var physical=PhysicalShelterGuest(s);
         var phase=guest==null?ShelterVisitPhase.Empty:s.Phase;
         string? reason=guest!=null?ShelterExitBlockReason(s,guest):null;
         return new(s.Id,s.RegionId,s.X,s.Z,s.DoorOpen,phase,guest!=null&&phase is ShelterVisitPhase.Approaching or ShelterVisitPhase.Entering?guest.Id:null,
             physical?.Id,guest!=null&&s.ExitRequested,guest!=null?s.BlockedSeconds:0,ShelterDoorError(s,true)==null,
-            ShelterDoorError(s,false)==null,ShelterCallError(s)==null,reason??ShelterWorldError(),s.LastEvent,ShelterCallError(s));
+            ShelterDoorError(s,false)==null,ShelterCallError(s)==null,reason??ShelterWorldError(),s.LastEvent,ShelterCallError(s)){DoorProgress=s.DoorProgress};
     }
     public CreatureShelterView? CreatureShelterStatus(Creature c)
     {
         if(!State.Creatures.Contains(c)||c.Condition==PhysicalCondition.Dead||c.Family.ColdStorage.Stored||c.Family.Memorialized)return null;
+        if(SharedHome(c) is { } shared)
+        {
+            var v=shared.Residents.Single(v=>v.CreatureId==c.Id);
+            return new(shared.Id,v.Phase,v.ExitRequested,v.BlockedSeconds>=1,v.BlockedSeconds>=1?shared.LastEvent:null);
+        }
         var s=State.Shelters.Find(s=>s.GuestId==c.Id&&ValidShelterGuest(s)==c);if(s==null)return null;
         string? reason=ShelterExitBlockReason(s,c);
         return new(s.Id,s.Phase,s.ExitRequested,reason!=null||s.BlockedSeconds>=1,reason);
@@ -65,24 +76,47 @@ public sealed partial class WorldSimulation
             input.SupplyObjectId!=null||StationHandOccupied()||!Enum.IsDefined(input.Action)||!Enum.IsDefined(input.Side)||
             !new[]{input.X,input.Z,input.Height,input.Force,input.Duration,input.Motion,input.DirectionX,input.DirectionZ,input.StopImpact,input.TouchTangentFraction,input.TouchNormalSpeed}.All(double.IsFinite)||
             input.Force is <0 or >1||input.Duration is <0 or >1||input.Motion<0||input.StopImpact is <0 or >1||input.TouchTangentFraction is <0 or >1||
-            input.Height<0||input.Height>ShelterGeometry.CeilingY+.12||Math.Abs(input.X-s.X)>ShelterGeometry.OuterWidth*.5+.12||
-            Math.Abs(input.Z-s.Z)>ShelterGeometry.OuterDepth*.5+.12)
+            input.Height<0||input.Height>ShelterGeometry.CeilingY+.12||Math.Abs(input.X-s.X)>ShelterGeometry.OuterWidth*.5*ShelterGeometry.Scale(s)+.12||
+            Math.Abs(input.Z-s.Z)>ShelterGeometry.OuterDepth*.5*ShelterGeometry.Scale(s)+.12)
             return Unavailable("请点击当前住居的真实表面。");
         if(input.Action is InteractionAction.OpenShelterDoor or InteractionAction.CloseShelterDoor)
         {
-            if(!ShelterGeometry.DoorControlHit(input.X-s.X,input.Height,input.Z-s.Z))return Unavailable("请点击前门帘或门边的拉带。");
+            if(!ShelterGeometry.DoorControlHit((input.X-s.X)/ShelterGeometry.Scale(s),input.Height,(input.Z-s.Z)/ShelterGeometry.Scale(s)))return Unavailable("请点击前门帘或门边的拉带。");
             bool open=input.Action==InteractionAction.OpenShelterDoor;
             if(ShelterDoorError(s,open) is { } refused)return Unavailable(refused);
-            s.DoorOpen=open;s.LastEvent=open?"门已打开，住户仍需实际走过门槛。":"门已关闭；住户的位置和情绪没有改变。";
+            RecordObjectEvent(s.Id,open?"打开了门帘。":"关闭了门帘。");
+            s.DoorOpen=open;s.DoorHoldRemaining=2;s.DoorIdleSeconds=0;s.LastEvent=open?"门已打开，住户仍需实际走过门槛。":"门已关闭；住户的位置和情绪没有改变。";
             return new(true,s.LastEvent,"","shelter-door",Changed:true);
         }
         if(input.Action==InteractionAction.CallFromShelter)
         {
             if(ShelterCallError(s) is { } refused)return Unavailable(refused);
+            if(s.Capacity==5)
+            {
+                var guest=SharedCallGuest(s)!;var visit=s.Residents.Single(v=>v.CreatureId==guest.Id);
+                visit.ExitRequested=true;guest.Interaction.ShelterSearchAfter=State.WorldSeconds+30;
+                s.LastEvent=$"{guest.Name}回应呼唤，准备从门口出来。";
+                return Feedback(guest,"shelter-call",Expression.Curious,s.LastEvent,"idle",false);
+            }
             var c=ValidShelterGuest(s)!;s.ExitRequested=true;c.Interaction.ShelterSearchAfter=State.WorldSeconds+30;
             s.LastEvent="它回应了呼唤，准备沿门口慢慢走出来。";
             return Feedback(c,"shelter-call",EmotionalReadiness.Settled(c)?Expression.Curious:Expression.Worried,s.LastEvent,"idle",false);
         }
         return Unavailable("住居只接受真实门控或呼唤工具，不能当作身体或食水来源。");
+    }
+    private Creature? SharedCallGuest(ShelterState s)=>SharedOccupants(s).FirstOrDefault(c=>
+        s.Residents.Any(v=>v.CreatureId==c.Id&&!v.ExitRequested)&&CanSelfMove(c)&&c.Interaction.EatingRemaining<=0&&
+        !FamilyRules.UnderIntervention(c)&&c.Interaction.ActiveCue==null&&c.Trust>=35&&c.Fear<55&&
+        (c.Interaction.HumanBond.LastHarmAt<0||State.WorldSeconds-c.Interaction.HumanBond.LastHarmAt>=120));
+    private ShelterView DescribeSharedShelter(ShelterState s)
+    {
+        var occupants=SharedOccupants(s).Select(c=>c.Id).ToArray();
+        var incoming=s.Residents.Where(v=>!occupants.Contains(v.CreatureId)).Select(v=>v.CreatureId).ToArray();
+        var phase=s.Residents.FirstOrDefault()?.Phase??ShelterVisitPhase.Empty;
+        return new(s.Id,s.RegionId,s.X,s.Z,s.DoorOpen,phase,incoming.FirstOrDefault(),occupants.FirstOrDefault(),
+            s.Residents.Any(v=>v.ExitRequested),s.Residents.Select(v=>v.BlockedSeconds).DefaultIfEmpty().Max(),
+            ShelterDoorError(s,true)==null,ShelterDoorError(s,false)==null,ShelterCallError(s)==null,
+            ShelterWorldError(),s.LastEvent,ShelterCallError(s))
+        {DoorProgress=s.DoorProgress,Capacity=5,OccupantIds=occupants,IncomingIds=incoming,Comfort=ShelterComfort(occupants.Length)};
     }
 }

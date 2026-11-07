@@ -47,6 +47,8 @@ public sealed partial class InteractionLife
     public double ExploreUntil { get; set; }
     public double LastHelpDecisionAt { get; set; } = -100;
     public double HelpWaitingUntil { get; set; }
+    // Keep low-nutrition bites together as one meal; stop before the next hunger cycle.
+    public bool MealSeeking { get; set; }
 }
 
 public sealed partial class WorldState
@@ -81,7 +83,7 @@ public static class NaturalResources
     }
     // Centre-to-source reach follows the same body scale as the standing envelope.
     // Equipment does not extend the mouth's reach.
-    public static double Reach(Creature c) => .8*(c.IsYoung?.73:c.IsElder?1.03:1);
+    public static double Reach(Creature c) => .8*(GrowthRules.Scale(c));
     public static (double X,double Z) Approach(Creature c,ResourceMemory source)
     {
         double reach=Reach(c)*.99;
@@ -96,19 +98,18 @@ public static class NaturalResources
     public static bool IsWater(RoomObjectKind k) => k is RoomObjectKind.Water or RoomObjectKind.RiverWater;
     public static bool IsResource(RoomObjectKind k) => IsFood(k)||IsWater(k);
     public static bool IsWild(RoomObjectKind k) => k is RoomObjectKind.Leaves or RoomObjectKind.RiverWater;
-    public static bool WantsFood(Creature c)=>c.Fullness<(c.Interaction.Digestion.Symptomatic?55:70);
-    public static bool WantsWater(Creature c)=>c.Interaction.Hydration<70;
+    public static bool WantsFood(Creature c)=>c.Fullness<(c.Interaction.Digestion.Symptomatic?55:CourtyardSurvival.MealStart)||
+        c.Interaction.MealSeeking&&c.Fullness<CourtyardSurvival.MealSatisfied;
+    public static bool WantsWater(Creature c)=>c.Interaction.Hydration<CourtyardSurvival.DrinkStart;
     // All values are editable game balance, not claimed to be the reference game's numbers.
-    public static double FoodValue(RoomObjectKind k) => k switch {RoomObjectKind.Leaves=>7,RoomObjectKind.Sweet=>9,RoomObjectKind.Meal=>19,_=>0};
-    public static double WaterValue(RoomObjectKind k) => IsWater(k)?24:0;
+    public static double FoodValue(RoomObjectKind k) => k switch {RoomObjectKind.Leaves=>7,RoomObjectKind.Sweet=>9,RoomObjectKind.Meal=>30,_=>0};
+    public static double WaterValue(RoomObjectKind k) => IsWater(k)?CourtyardSurvival.ManualWaterGain:0;
     public static double IllnessChance(double contamination,double vulnerability) =>
         Math.Clamp(contamination*(.32+.18*vulnerability),0,.8);
 
     public static void AddWoodland(WorldState state,string regionId)
     {
         // Sources sit at dry approach points. River geometry is beyond the eastern bank.
-        state.RoomObjects.Add(new(){Id=$"{regionId}-leaves-west",RegionId=regionId,Kind=RoomObjectKind.Leaves,X=-5.5,Z=-1.5,Portions=12,Contamination=.75});
-        state.RoomObjects.Add(new(){Id=$"{regionId}-leaves-north",RegionId=regionId,Kind=RoomObjectKind.Leaves,X=.8,Z=-5.6,Portions=10,Contamination=.65});
         state.RoomObjects.Add(new(){Id=$"{regionId}-river-bank",RegionId=regionId,Kind=RoomObjectKind.RiverWater,X=WoodlandLayout.DrinkX,Z=WoodlandLayout.BankZ,Portions=1,Contamination=.95});
     }
 }
@@ -122,7 +123,7 @@ public sealed partial class WorldSimulation
         if(engaged&&double.IsFinite(x)&&double.IsFinite(z))
         {
             _interactionHandLive=true;
-            State.PlayerX=Math.Clamp(x,-7.7,7.7);State.PlayerZ=Math.Clamp(z,-7.7,7.7);
+            State.PlayerX=Math.Clamp(x,-CourtyardGround.PointerEdge,CourtyardGround.PointerEdge);State.PlayerZ=Math.Clamp(z,-CourtyardGround.PointerEdge,CourtyardGround.PointerEdge);
             State.InteractionHandPresent=true;State.InteractionHandUntil=State.WorldSeconds+3;
             State.InteractionHandRegionId=State.ActiveRegionId;
         }
@@ -172,7 +173,7 @@ public sealed partial class WorldSimulation
         double dx=x-c.X,dz=z-c.Z,len=dx*dx+dz*dz;
         if(c.Interaction.Restraint==RestraintKind.Box)
         {
-            double size=c.IsYoung?.73:c.IsElder?1.03:1;
+            double size=GrowthRules.Scale(c);
             double innerX=(InteractionFixtureGeometry.BoxSideX-InteractionFixtureGeometry.BoxWallThickness*.5)*size;
             double back=(InteractionFixtureGeometry.BoxBackZ+InteractionFixtureGeometry.BoxBackThickness*.5)*size;
             double front=InteractionFixtureGeometry.BoxFrontZ*size;
@@ -189,7 +190,7 @@ public sealed partial class WorldSimulation
         foreach(var other in State.Creatures)
         {
             if(other.Id==c.Id||other.RegionId!=c.RegionId||other.Interaction.Restraint!=RestraintKind.Box)continue;
-            double size=other.IsYoung?.73:other.IsElder?1.03:1;
+            double size=GrowthRules.Scale(other);
             if(Math.Abs(x-other.X)<InteractionFixtureGeometry.BoxSideX*size&&
                 Math.Abs(z-other.Z)<InteractionFixtureGeometry.BoxDepth*.5*size)return false;
             if(Blocks(other.X,other.Z,InteractionFootprint(other)))return false;
@@ -245,7 +246,7 @@ public sealed partial class WorldSimulation
             if(m.RegionId!=c.RegionId||!m.Available||m.AvoidUntil>State.WorldSeconds)continue;
             bool water=NaturalResources.IsWater(m.Kind);if(water?!thirsty:!hungry||DigestiveFoodPause(c))continue;
             double need=water?100-life.Hydration:100-c.Fullness;
-            bool urgentNeed=need>85;
+            bool urgentNeed=water?c.Interaction.Hydration<CourtyardSurvival.UrgentWater:c.Fullness<CourtyardSurvival.UrgentFood;
             double distance=Distance(c.X,c.Z,m.X,m.Z);
             double score=need*.10-distance*.45-m.Suspicion*.025;
             // A remembered belief affects caution, never the source's real safety
@@ -253,7 +254,7 @@ public sealed partial class WorldSimulation
             if(c.Family.LifeKnowledge.TryGetValue("safe:"+m.Kind,out bool believedSafe))score+=believedSafe?.2:-.4;
             if(!NaturalResources.IsWild(m.Kind)&&hand&&c.Trust<40&&Distance(m.X,m.Z,State.PlayerX,State.PlayerZ)<1.8)
                 score-=(40-c.Trust)*.15;
-            if(id==life.ResourceTargetId)score+=.4;
+            if(id==life.ResourceTargetId)score+=1.2;
             // A less urgent nearby snack must not displace available water (or
             // food) needed to interrupt rest. Keep normal scoring within a tier.
             if(target==null||urgentNeed&&!targetUrgent||urgentNeed==targetUrgent&&score>best)
@@ -318,7 +319,7 @@ public sealed partial class WorldSimulation
         if(State.WorldSeconds>=life.ExploreUntil||Distance(c.X,c.Z,c.TargetX,c.TargetZ)<.3)
         {
             life.ExploreUntil=State.WorldSeconds+5;
-            double angle=Next()*Math.Tau,edge=8-InteractionFootprint(c);
+            double angle=Next()*Math.Tau,edge=CourtyardGround.HalfSize-InteractionFootprint(c);
             c.TargetX=Math.Clamp(c.X+Math.Cos(angle)*3.2,-edge,edge);
             c.TargetZ=Math.Clamp(c.Z+Math.Sin(angle)*3.2,-edge,edge);
         }
@@ -392,6 +393,7 @@ public sealed partial class WorldSimulation
         Feedback(c,water?"drink":obj.Kind==RoomObjectKind.Leaves?"eat-leaves":obj.Kind==RoomObjectKind.Sweet?"sweet":"eat",
             Expression.Content,water?"它自己找到了水，小口喝着。":obj.Kind==RoomObjectKind.Leaves?
                 "它找到一簇能吃的叶子，慢慢嚼起来。":"食物在嘴边，它自己吃到了这一口。",water?"sip":"eat");
+        RecordObjectEvent(obj.Id,$"{c.Name}实际取用了一份{(water?"水":"食物")}。",c.Id);
         RegisterNaturalExposure(c,obj);
     }
     private void DetachNaturalIntake(Creature c)
@@ -416,15 +418,14 @@ public sealed partial class WorldSimulation
     {
         var health=c.Interaction.Digestion;health.Exposures++;
         RememberRecentIntake(c,obj.Id,obj.Kind);
-        double vulnerability=(100-c.Health)/100+(c.IsYoung?.3:0);
-        if(obj.Contamination<=0||Next()>=NaturalResources.IllnessChance(obj.Contamination,vulnerability))return;
+        if(health.Severity>0||obj.Contamination<=0||Next()>=CourtyardSurvival.InfectionChance(c,obj.Kind,obj.Contamination))return;
         double severity=20+obj.Contamination*30;
         if(health.Severity<=0)
         {
             health.IncubationRemaining=18+Next()*15;health.Severity=severity;
             health.Episodes++;
         }
-        else health.Severity=Math.Min(85,health.Severity+severity*.15);
+        // Existing episodes finish on their own recovery clock; repeat exposure never prolongs them.
         // Repeated exposures increase burden but cannot restart an already running incubation.
     }
 

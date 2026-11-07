@@ -42,6 +42,11 @@ public partial class InteractionRoom
         _roomMode=mode;for(int i=0;i<Toolbar.Length;i++)if(Toolbar[i].Entries.Any(e=>e.Mode==mode)){_toolbarCategory=i;break;}
     }
     private int _toolbarCategory;
+    private readonly Button[] _categoryButtons=new Button[Toolbar.Length+2];
+    private readonly Button[] _categoryIconButtons=new Button[Toolbar.Length+2];
+    private readonly MarginContainer[] _categoryChoices=new MarginContainer[Toolbar.Length+2];
+    private readonly System.Collections.Generic.List<(Button Button,RoomMode Mode)> _navigationActions=new();
+    private Control _navigationDivider=null!,_navigationOperations=null!,_navigationCategories=null!;
     private VBoxContainer _objectActions=null!;
     private Label _objectDetails=null!;
     private string? _selectedRoomObjectId;
@@ -80,16 +85,66 @@ public partial class InteractionRoom
     };
     private void BuildToolbar(Control parent)
     {
-        _groupList=ToolGrid(parent);
         string[] categoryIcons=["eye","hand","food","ball","chat","care","sprout","tool"];
-        for(int i=0;i<Toolbar.Length;i++){int index=i;_groupList.AddChild(ToolButton(Toolbar[i].Name,categoryIcons[i],()=>SelectToolbarCategory(index)));}
-        // Keep the active category's operations directly below its navigation.
-        _choiceList=ToolGrid(parent);
-        var services=ToolGrid(parent);
-        services.AddChild(ToolButton("投放新油","add",ShowCreatureArrival));
-        services.AddChild(ToolButton("商店","shop",()=>ShowShop()));
-        _supplyStockLabel=Text("",12);parent.AddChild(_supplyStockLabel);
-        parent.AddChild(Text("右键收起 · 中键平移 · 滚轮缩放",12,"78816e"));
+        var navigation=Row(parent,6);
+        var categories=Column(navigation,4);categories.CustomMinimumSize=new(76,0);
+        _navigationCategories=categories;
+        var divider=new VSeparator();
+        divider.AddThemeStyleboxOverride("separator",new StyleBoxLine{Color=new Color("40524720"),Thickness=1,Vertical=true});
+        navigation.AddChild(divider);
+        _navigationDivider=divider;
+        var operations=Column(navigation,4);operations.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        _navigationOperations=operations;
+        for(int i=0;i<Toolbar.Length;i++)
+        {
+            int index=i;
+            _categoryButtons[i]=ToolButton(Toolbar[i].Name,categoryIcons[i],()=>ToggleToolbarCategory(index));
+            categories.AddChild(_categoryButtons[i]);
+            var iconButton=ToolButton("",categoryIcons[i],()=>OpenToolbarCategory(index));
+            iconButton.Alignment=HorizontalAlignment.Center;
+            _collapsedNavigation.AddChild(iconButton);_categoryIconButtons[i]=iconButton;
+            var inset=new MarginContainer{Visible=false,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
+            operations.AddChild(inset);_categoryChoices[i]=inset;
+            var choices=Column(inset,3);
+            foreach(var entry in Toolbar[i].Entries)
+            {
+                var button=ToolButton(entry.Name,ToolIcon(entry.Mode),()=>SelectRoomMode(entry));
+                choices.AddChild(button);_navigationActions.Add((button,entry.Mode));
+            }
+        }
+        VBoxContainer ServiceCategory(int index,string name,string icon)
+        {
+            _categoryButtons[index]=ToolButton(name,icon,()=>ToggleToolbarCategory(index));
+            categories.AddChild(_categoryButtons[index]);
+            var iconButton=ToolButton("",icon,()=>OpenToolbarCategory(index));
+            iconButton.Alignment=HorizontalAlignment.Center;
+            _collapsedNavigation.AddChild(iconButton);_categoryIconButtons[index]=iconButton;
+            var inset=new MarginContainer{Visible=false,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
+            operations.AddChild(inset);_categoryChoices[index]=inset;
+            return Column(inset,3);
+        }
+        var arrivals=ServiceCategory(Toolbar.Length,"新油","add");
+        arrivals.AddChild(ToolButton("投放新油","add",ShowCreatureArrival));
+        arrivals.AddChild(ToolButton("回收箱 · 12格","cold",ShowContainer));
+        var shop=ServiceCategory(Toolbar.Length+1,"商店","shop");
+        foreach(string category in CourtyardShop.Products.Select(p=>p.Category).Distinct())
+        {
+            string selected=category;
+            shop.AddChild(ToolButton(category,"shop",()=>ShowShop(category:selected)));
+        }
+    }
+    private void ToggleToolbarCategory(int index)
+    {
+        CancelGesture();
+        _toolbarCategory=index;
+        if(index<Toolbar.Length&&Toolbar[index].Entries.Length==1&&Toolbar[index].Entries[0].Name==Toolbar[index].Name)
+        {SelectRoomMode(Toolbar[index].Entries[0]);return;}
+        RebuildToolbarChoices();
+    }
+    private void OpenToolbarCategory(int index)
+    {
+        ToggleToolbarCategory(index);
+        if(_leftCollapsed)ToggleLeftSidebar();
     }
     private void SelectToolbarCategory(int index)
     {
@@ -100,7 +155,7 @@ public partial class InteractionRoom
         CancelGesture();_roomMode=entry.Mode;_directToolMode=false;
         _group=InteractionCatalog.Group(entry.Action);_action=entry.Action;_toolArmed=entry.Mode!=RoomMode.Observe;
         RebuildToolbarChoices();_force=.25f;_forceSlider.SetValueNoSignal(_force);
-        _message=entry.Mode==RoomMode.Observe?"只观察，不接触。点击油或物件查看右侧属性。":"已选择"+entry.Name+"。";
+        _message="";
         if(entry.Mode==RoomMode.Commands)ShowCommandChoices();
         if(entry.Mode==RoomMode.Teaching)ShowTeachingChoices();
         if(entry.Mode==RoomMode.Stem)ShowStemChoices();
@@ -112,10 +167,21 @@ public partial class InteractionRoom
     }
     private void RebuildToolbarChoices()
     {
-        ClearChildren(_choiceList);
-        if(_toolbarCategory!=0)foreach(var e in Toolbar[_toolbarCategory].Entries)
-        {_choiceList.AddChild(ToolButton(e.Name,ToolIcon(e.Mode),()=>SelectRoomMode(e),_roomMode==e.Mode));}
-        int i=0;foreach(var child in _groupList.GetChildren())if(child is Button b)SetQuickToolHighlight(b,i++==_toolbarCategory);
+        for(int i=0;i<_categoryButtons.Length;i++)
+        {
+            bool expanded=i==_toolbarCategory;
+            bool redundant=i<Toolbar.Length&&Toolbar[i].Entries.Length==1&&Toolbar[i].Entries[0].Name==Toolbar[i].Name;
+            _categoryChoices[i].Visible=expanded&&!redundant;
+            SetQuickToolHighlight(_categoryButtons[i],expanded);
+            SetQuickToolHighlight(_categoryIconButtons[i],expanded);
+        }
+        foreach(var (button,mode) in _navigationActions)SetQuickToolHighlight(button,mode==_roomMode);
+        bool hasChoices=_categoryChoices.Any(c=>c.Visible);
+        _navigationDivider.Visible=_navigationOperations.Visible=hasChoices;
+        _navigationCategories.SizeFlagsHorizontal=hasChoices?Control.SizeFlags.Fill:Control.SizeFlags.ExpandFill;
+        _ui.SetMeta("left_sidebar_single",!hasChoices);
+        GameUiLayout.Left(_leftPanel,_leftCollapsed);
+        _layoutCanvasWidgets?.Invoke();
     }
     private void ShowCommandChoices()
     {
@@ -128,7 +194,6 @@ public partial class InteractionRoom
         _panelContents.AddChild(PanelButton("教自己打扫卫生",CloseActivityPanel));
         foreach(var action in new[]{InteractionAction.TeachFollow,InteractionAction.TeachStop,InteractionAction.TeachWait})
         {var selected=action;_panelContents.AddChild(PanelButton(InteractionCatalog.Choice(selected).Label,()=>{CloseActivityPanel();SelectAction(selected);}));}
-        _panelContents.AddChild(PanelButton("能力记录与持续分工",()=>ShowDevelopment()));
     }
     private void ShowStemChoices()
     {
@@ -146,13 +211,14 @@ public partial class InteractionRoom
         _panelContents.AddChild(PanelButton("提交实际养护记录 · 领取委托收入",()=>ShowShop(Sim.ClaimCareContract().Message,category)));
         _panelContents.AddChild(PanelButton("商店收购 · 出售当前油",()=>ShowCreatureMarket()));
         _panelContents.AddChild(Text($"累计售油收入 {Sim.State.CreatureSalesRevenue} 元 · 道具解锁进度",14));
+        if(category=="养护用品")_panelContents.AddChild(Text("庭院已自带12格回收箱，无需另购冷藏箱。旧库存保留。",13));
         if(result!=null)_panelContents.AddChild(Text(result,14));
         var categories=Row(_panelContents,4);
         var selector=new InlineChoice();foreach(var name in CourtyardShop.Products.Select(p=>p.Category).Distinct())selector.AddItem(name);
         var names=CourtyardShop.Products.Select(p=>p.Category).Distinct().ToArray();
         int selected=Array.IndexOf(names,category??names[0]);selector.Select(Math.Max(0,selected));
         selector.ItemSelected+=i=>ShowShop(category:names[(int)i]);categories.AddChild(selector);
-        foreach(var p in CourtyardShop.Products.Where(p=>p.Category==(category??names[0])))
+        foreach(var p in CourtyardShop.Products.Where(p=>p.Id!="freezer"&&p.Category==(category??names[0])))
         {
             _panelContents.AddChild(Text($"{p.Name} · 每包{p.Pack}份 · {p.Price}元 · 持有{Sim.ShopOwnedQuantity(p.Id)} / 仓库{Sim.ShopQuantity(p.Id)}",14));
             if(Sim.ShopUnlockReason(p.Id) is { } locked)_panelContents.AddChild(Text(locked,13));
@@ -168,7 +234,8 @@ public partial class InteractionRoom
     }
     private void ShowFamilyDetails()
     {
-        OpenActivityPanel("对象详细记录",ShowFamilyDetails);if(Sim.Selected is { } c){_panelContents.AddChild(Text(FamilySummary(c)));_panelContents.AddChild(Text(FamilyRules.DescribeLearning(c)));}
-        _panelContents.AddChild(PanelButton("返回",CloseActivityPanel));
+        OpenActivityPanel("家庭记录",ShowFamilyDetails);
+        _recordTabText=Text(FamilyRecordsText(),14);_panelContents.AddChild(_recordTabText);
+        _activityActions.AddChild(PanelButton("家庭照护",ShowFamily));
     }
 }

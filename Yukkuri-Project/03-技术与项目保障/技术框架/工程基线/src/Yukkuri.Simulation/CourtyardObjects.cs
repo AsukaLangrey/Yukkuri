@@ -5,7 +5,7 @@ public sealed partial class WorldSimulation
     public bool MoveLooseObject(string id,double x,double z)
     {
         var o=State.RoomObjects.Find(o=>o.Id==id&&!o.Stored&&o.RegionId==State.ActiveRegionId);
-        if(o==null||State.Settings.Pause||!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>7.7||Math.Abs(z)>7.7||
+        if(o==null||State.Settings.Pause||!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>CourtyardGround.PointerEdge||Math.Abs(z)>CourtyardGround.PointerEdge||
             !WoodlandLayout.GroundFits(State,o.RegionId,x,z,.2)||!ClearOfStations(o.RegionId,x,z,.2)||
             State.Creatures.Any(c=>!c.Family.Memorialized&&!c.Family.ColdStorage.Stored&&c.RegionId==o.RegionId&&Distance(c.X,c.Z,x,z)<InteractionFootprint(c)+.2))return false;
         double distance=Distance(o.X,o.Z,x,z);int steps=Math.Max(1,(int)Math.Ceiling(distance/.08));
@@ -38,15 +38,18 @@ public sealed partial class WorldSimulation
         }
         c.TargetX=c.X;c.TargetZ=c.Z;return true;
     }
-    public string RecycleCourtyardObject(string id)
+    public string RecycleCourtyardObject(string id)=>RecycleCourtyardObject(id,out _);
+    public string RecycleCourtyardObject(string id,out bool committed)
     {
-        if(State.Settings.Pause)return "暂停时不能收容。";
+        committed=false;
+        if(CourtyardRecycleReason(id) is { } rejection)return rejection;
         if(PortableStatus(id) is { } motion&&motion.Held)return "先结束当前搬运，再收容对象。";
         if(DetachedStem(id) is { } brood&&!brood.Cleared&&brood.RegionId==State.ActiveRegionId)
         {
             ReleasePortableCarry(id,default,cancel:true);
             EnsureContainerRegion();brood.RegionId="courtyard-container";brood.HeldByHand=false;
             brood.LastEvent="整瓶移入收容箱，仍保留这一窝的实际生命与食水状态。";
+            committed=true;
             return "整瓶已收容，生命记录保留；没有折算成空瓶或退款，可从收容箱取回。";
         }
         if(Station(id) is { } station&&station.RegionId==State.ActiveRegionId)
@@ -58,6 +61,7 @@ public sealed partial class WorldSimulation
             ReleasePortableCarry(id,default,cancel:true);
             if(StationOutlet(station) is { } outlet)State.RoomObjects.Remove(outlet);
             State.SupplyStations.Remove(station);ChangeShopQuantity(contents,remaining);ChangeShopQuantity(item,1);
+            committed=true;
             return "器具与剩余食水已回仓，未退钱。";
         }
         var obj=State.RoomObjects.Find(o=>o.Id==id&&!o.Stored&&o.RegionId==State.ActiveRegionId);
@@ -76,21 +80,21 @@ public sealed partial class WorldSimulation
             else State.RoomObjects.Remove(obj);
             if(item!=null)ChangeShopQuantity(item,count);
             if(PortableStatus(id) is { } removedMotion)State.PortableMotions.Remove(removedMotion);
+            committed=true;
             return item==null?"已收拾废弃物。":"物品已回仓，未退钱。";
         }
         var c=InteractionTarget(id);if(c==null||c.Family.Memorialized||c.Family.ColdStorage.Stored)return "这个对象已经不在小院。";
-        ReleasePortableCarry(id,default,cancel:true);
-        var fixture=InstalledItem(c.Interaction.Restraint);
-        if(fixture!=null)ChangeShopQuantity(fixture,1);
-        StopIncapacitatedActions(c);ClearCompanionship(c);ClearFamilyTargetsTo(c);DetachNaturalIntake(c);
-        c.Interaction.Restraint=RestraintKind.None;c.Interaction.Carried=false;c.Interaction.Falling=false;c.Interaction.Lowering=false;
-        c.Interaction.PersistentPressure=false;
+        if(State.Creatures.Count(x=>x.Family.ColdStorage.Stored)>=ColdStorageCapacity)return "回收箱12个位置已满，对象仍留在庭院。";
+        // A released grab may still be lowering. Storage must never silently tear down a fixture.
+        if(c.Interaction.Restraint!=RestraintKind.None)return "先解除装置，再放入回收箱。";
+        if(WaterEnvironment.IsInWater(State,c))return "先救援到岸上，再放入回收箱。";
+        if(c.Interaction.EatingRemaining>0)return "先等它咽下这一口。";
+        if(HasInteractionGesture&&InteractionGestureTarget==id)return "先结束当前接触。";
+        c.Interaction.Carried=false;c.Interaction.Falling=false;c.Interaction.Lowering=false;
         c.Interaction.Height=0;c.Interaction.VerticalVelocity=c.Interaction.VelocityX=c.Interaction.VelocityZ=0;
-        EnsureContainerRegion();
-        c.RegionId="courtyard-container";c.X=c.Z=c.TargetX=c.TargetZ=0;
-        if(State.SelectedId==id){State.SelectedId=null;State.Mode=PlayMode.Management;}
-        return c.Condition==PhysicalCondition.Dead?"遗体已收容，保留生命记录；没有墓碑或家族安定加成。":"已移入收容箱，身份与关系保留；没有退款，可从收容箱取回。";
+        string message=SetColdStorage(id,true);committed=c.Family.ColdStorage.Stored;return message;
     }
+
     private void EnsureContainerRegion()
     {
         if(!State.Regions.Any(r=>r.Id=="courtyard-container"))State.Regions.Add(new(){Id="courtyard-container",Name="收容箱",Kind=RegionKind.Sanctuary});
@@ -106,6 +110,7 @@ public sealed partial class WorldSimulation
     {
         var c=State.Creatures.Find(c=>c.Id==id&&c.RegionId=="courtyard-container");
         if(c==null||State.Settings.Pause)return "当前不能取回。";
+        if(c.Family.ColdStorage.Stored)return SetColdStorage(id,false);
         string old=c.RegionId;c.RegionId=State.ActiveRegionId;
         for(double x=-6;x<=6;x+=1.5)for(double z=-6;z<=6;z+=1.5)
             if(CanOccupyRoom(c,x,z)){c.X=c.TargetX=x;c.Z=c.TargetZ=z;return "已取回小院空地。";}

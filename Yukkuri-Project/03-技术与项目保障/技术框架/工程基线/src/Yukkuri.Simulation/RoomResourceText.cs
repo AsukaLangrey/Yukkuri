@@ -23,11 +23,15 @@ public static class RoomResourceText
         RoomObjectKind.Water=>obj.Portions>0?"水杯 · 空手按住拿起":"水杯 · 已经喝空",
         RoomObjectKind.Ball=>state!=null&&RoomBallEnvironment.InWater(state,obj)?"软球 · 漂在水上":"软球 · 空手拖动，松开推球",
         RoomObjectKind.Treasure=>"小宝物",
+        RoomObjectKind.Feces=>"粪便",
+        RoomObjectKind.Urine=>"尿液",
         _=>""
         };
     }
     public static string Describe(RoomObject obj,WorldState? state=null)=>obj.Kind switch
     {
+        RoomObjectKind.Feces=>"地面的粪便会降低环境评分，让在意卫生的油感到不适。可用收拾清理。",
+        RoomObjectKind.Urine=>"地面的尿液会降低环境评分，让在意卫生的油感到不适。可用收拾清理。",
         RoomObjectKind.Leaves when obj.Portions==0&&state!=null&&NaturalResources.Consumer(state,obj)!=null=>"这一簇的最后一口还没吃完，暂时没有多余的叶子。",
         RoomObjectKind.Leaves=>obj.Portions>0?"这里还有可食的叶子。油饿了会自己来找，但野外叶子不如备好的饭饭稳妥，吃后可能不舒服。":"这簇叶子已经吃空，只剩残叶；需要再找别的食物。",
         RoomObjectKind.RiverWater=>"这里可以站在岸边喝水。河水未经处理，喝后可能不舒服；饮水不需要下河。",

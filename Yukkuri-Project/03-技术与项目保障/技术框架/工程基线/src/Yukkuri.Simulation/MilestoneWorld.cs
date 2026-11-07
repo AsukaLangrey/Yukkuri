@@ -21,7 +21,7 @@ public sealed partial class WorldSimulation
             c.DecisionIn=3+i*.7;c.BehaviorCooldown=45+i*7;c.Observation.Hypothesis="尚需通过行为了解它";
         }
         s.Creatures[0].IsElder=true;s.Creatures[1].GuardDuty=true;s.Creatures[1].GuardSkill=22;
-        s.Creatures[2].IsYoung=true;s.Creatures[2].ParentId=s.Creatures[0].Id;s.Creatures[2].SharingSkill=5;
+        GrowthRules.Initialize(s.Creatures[2],true);s.Creatures[2].ParentId=s.Creatures[0].Id;s.Creatures[2].SharingSkill=5;
         s.Creatures[3].IsElder=true;s.Creatures[3].GuardSkill=10;
         s.Creatures[5].Health=72;s.Creatures[5].Pain=10;s.Creatures[5].Speech="这里……安全吗？";
         s.Creatures[7].GuardSkill=35;s.Creatures[7].Fullness=45;s.Creatures[7].Belonging=0;

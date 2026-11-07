@@ -90,7 +90,8 @@ public partial class InteractionRoom
         CancelGesture();
         bool show=!_debugPanel.Visible;
         if(show)CloseActivityPanel();
-        _debugPanel.Visible=show;_rightPanel.Visible=!show&&!ActivityPanelVisible;
+        _ui.SetMeta("right_sidebar_hidden",false);GameUiLayout.Right(_debugPanel);
+        _debugPanel.Visible=show;_rightPanel.Visible=!show;
         if(show){_debugFrozen=false;RefreshDebugPanel(true);}
         else GetViewport().GuiGetFocusOwner()?.ReleaseFocus();
     }
@@ -258,7 +259,7 @@ public partial class InteractionRoom
         "CourtshipTools"=>"诱导用品库存","CourtshipToolPurchases"=>"诱导用品购买次数",
         "BreedingInterest"=>"繁育兴趣","InducedInterestRemaining"=>"诱导剩余时间","NextInductionAt"=>"下次可诱导时间",
         "Pregnancy"=>"孕育状态","PlannedChildren"=>"本窝计划数量","Burden"=>"孕育负担",
-        "RecoveryRemaining"=>"恢复剩余时间","Warmth"=>"幼体保暖","CareSeconds"=>"稳定照护累计",
+        "RecoveryRemaining"=>"恢复剩余时间","Warmth"=>"保暖","CareSeconds"=>"稳定照护累计",
         "CareTargetId"=>"当前照护对象","CareParcelId"=>"当前递送份额",
         "HeatTension"=>"灼烧紧绷","HitCount"=>"连续命中","HitRemaining"=>"连击剩余时间",
         "Pause"=>"暂停","LethalInjuries"=>"致命后果","AgeSeconds"=>"身体年龄","InnerAgeSeconds"=>"内在年龄",

@@ -51,8 +51,10 @@ public static class ShelterBodyEnvelope
     }
     public static double Radius(Creature c)
     {
-        double age=c.IsYoung?.73:c.IsElder?1.03:1;
-        return Math.Max(WorldSimulation.InteractionFootprint(c),For(c).Radius*age);
+        double age=GrowthRules.Scale(c);
+        double body=Math.Max(WorldSimulation.InteractionFootprint(c),For(c).Radius*age);
+        bool stem=c.Family.Pregnancy is {Phase:PregnancyPhase.Gestating,Method:BirthMethod.Stem};
+        return stem?Math.Max(body,(1.45-.65*c.Interaction.StemFold)*age):body;
     }
-    public static double Height(Creature c)=>For(c).Height*(c.IsYoung?.73:c.IsElder?1.03:1);
+    public static double Height(Creature c)=>Math.Max(For(c).Height,c.Family.Pregnancy is {Phase:PregnancyPhase.Gestating,Method:BirthMethod.Stem}?1.65-.25*c.Interaction.StemFold:0)*GrowthRules.Scale(c);
 }

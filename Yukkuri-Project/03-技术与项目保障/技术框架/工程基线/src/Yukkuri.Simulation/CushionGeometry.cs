@@ -23,7 +23,7 @@ public static class RoomSupplySupport
         foreach(var c in state.Creatures)
         {
             if(c.RegionId!=region||c.Interaction.Restraint is not (RestraintKind.Box or RestraintKind.Frame))continue;
-            double scale=c.IsYoung?.73:c.IsElder?1.03:1;
+            double scale=GrowthRules.Scale(c);
             double width=c.Interaction.Restraint==RestraintKind.Box?InteractionFixtureGeometry.BoxWidth:InteractionFixtureGeometry.FrameWidth;
             double depth=c.Interaction.Restraint==RestraintKind.Box?InteractionFixtureGeometry.BoxDepth:InteractionFixtureGeometry.FrameDepth;
             if(Math.Abs(x-c.X)<width*.5*scale&&Math.Abs(z-c.Z)<depth*.5*scale)

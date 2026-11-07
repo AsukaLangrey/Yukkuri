@@ -5,6 +5,14 @@ namespace Yukkuri.Simulation;
 public readonly record struct ShelterWallBox(Vector3 Center,Vector3 Size);
 public static class ShelterGeometry
 {
+    public const double SharedScale=1.65;
+    public static double Scale(ShelterState shelter)=>shelter.Capacity==5?SharedScale:1;
+    public static double ApproachDepth(double scale)=>OuterDepth*.5*scale+1.25;
+    public static bool FullyInside(double x,double z,double radius,double scale)=>FullyInside(x/scale,z/scale,radius/scale);
+    public static bool OverlapsInterior(double x,double z,double radius,double scale)=>OverlapsInterior(x/scale,z/scale,radius/scale);
+    public static bool FitsLocalCircle(double x,double z,double radius,bool open,double scale)=>FitsLocalCircle(x/scale,z/scale,radius/scale,open);
+    public static bool SweptCircleClear(double ax,double az,double bx,double bz,double radius,bool open,double scale)=>
+        SweptCircleClear(ax/scale,az/scale,bx/scale,bz/scale,radius/scale,open);
     public const double InteriorWidth=2.30,InteriorDepth=2.40,DoorWidth=2.10,DoorHeight=2.30,CeilingY=2.35,
         WallThickness=.10,OuterWidth=2.50,OuterDepth=2.60;
     private static readonly ShelterWallBox[] OpenWalls=
@@ -35,11 +43,29 @@ public static class ShelterGeometry
     public static bool SweptCircleClear(double fromX,double fromZ,double toX,double toZ,double radius,bool doorOpen)
     {
         if(!new[]{fromX,fromZ,toX,toZ,radius}.All(double.IsFinite)||radius<0)return false;
-        // A swept circle is conservatively tested against each wall's expanded
-        // rectangle. No frame or cursor jump can tunnel across its thickness.
         foreach(var wall in WallBoxes(doorOpen))
-            if(SegmentBox(fromX,fromZ,toX,toZ,wall.Center.X-wall.Size.X*.5-radius,wall.Center.X+wall.Size.X*.5+radius,
-                wall.Center.Z-wall.Size.Z*.5-radius,wall.Center.Z+wall.Size.Z*.5+radius))return false;
+        {
+            double minX=wall.Center.X-wall.Size.X*.5,maxX=wall.Center.X+wall.Size.X*.5;
+            double minZ=wall.Center.Z-wall.Size.Z*.5,maxZ=wall.Center.Z+wall.Size.Z*.5;
+            double ax=fromX-Math.Clamp(fromX,minX,maxX),az=fromZ-Math.Clamp(fromZ,minZ,maxZ);
+            double bx=toX-Math.Clamp(toX,minX,maxX),bz=toZ-Math.Clamp(toZ,minZ,maxZ);
+            double dx=toX-fromX,dz=toZ-fromZ,length2=dx*dx+dz*dz,radius2=radius*radius;
+            double fromDistance=ax*ax+az*az,toDistance=bx*bx+bz*bz;
+            // Growth can enlarge a body already resting against a wall. Permit only
+            // a short outward step that fully clears this existing overlap.
+            if(fromDistance<radius2-1e-9&&fromDistance>1e-12&&toDistance>=radius2-1e-9&&
+                length2<=.01&&ax*dx+az*dz>0)continue;
+            if(SegmentBox(fromX,fromZ,toX,toZ,minX,maxX,minZ,maxZ))return false;
+            double distance=Math.Min(fromDistance,toDistance);
+            foreach(double x in new[]{minX,maxX})foreach(double z in new[]{minZ,maxZ})
+            {
+                double t=length2<1e-20?0:Math.Clamp(((x-fromX)*dx+(z-fromZ)*dz)/length2,0,1);
+                double vx=x-fromX-t*dx,vz=z-fromZ-t*dz;distance=Math.Min(distance,vx*vx+vz*vz);
+            }
+            // Exact segment-to-box distance keeps rounded corner clearance; the old
+            // expanded rectangle trapped growing bodies that were outside the wall.
+            if(distance<radius2-1e-9)return false;
+        }
         return true;
     }
     private static bool SegmentBox(double ax,double az,double bx,double bz,double minX,double maxX,double minZ,double maxZ)

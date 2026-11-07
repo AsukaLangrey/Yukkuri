@@ -99,6 +99,9 @@ public sealed class SimulationConfig
 {
     public double TickSeconds { get; set; } = 0.25;
     public double HungerPerSecond { get; set; } = 0.22;
+    public double HydrationPerSecond { get; set; } = CourtyardSurvival.HydrationPerSecond;
+    public bool WildGrassEnabled { get; set; } = true;
+    public double WildGrassNutritionPerDay { get; set; } = WorldSimulation.GrassNutritionPerDay;
     public double EnergyPerSecond { get; set; } = 0.12;
     public double MoveSpeed { get; set; } = 0.8;
     public double FeedGain { get; set; } = 30;
@@ -111,6 +114,8 @@ public sealed class SimulationConfig
             ?? throw new InvalidDataException("模拟配置为空");
         if (!double.IsFinite(result.TickSeconds) || result.TickSeconds is < 0.05 or > 1 ||
             !double.IsFinite(result.HungerPerSecond) || result.HungerPerSecond is < 0 or > 10 ||
+            !double.IsFinite(result.HydrationPerSecond)||result.HydrationPerSecond is <0 or >10||
+            !double.IsFinite(result.WildGrassNutritionPerDay)||result.WildGrassNutritionPerDay is <0 or >300||
             !double.IsFinite(result.EnergyPerSecond) || result.EnergyPerSecond is < 0 or > 10 ||
             !double.IsFinite(result.MoveSpeed) || result.MoveSpeed is <= 0 or > 10 ||
             !double.IsFinite(result.FeedGain) || result.FeedGain is <= 0 or > 100 ||

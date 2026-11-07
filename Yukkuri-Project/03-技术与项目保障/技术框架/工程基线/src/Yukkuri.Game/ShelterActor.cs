@@ -28,6 +28,17 @@ public partial class ShelterActor : Node3D
                 new(side*1.10f,1.05f,1.33f),"e1d1a3");
             pull.RotationDegrees=new(90,0,0);
         }
+        // Timber edging and a shallow pitched roof stay outside the walking clearance.
+        foreach(float side in new[]{-1f,1f})
+        {
+            SceneArt.Box(this,new(side*1.22f,1.18f,1.28f),new(.10f,2.38f,.14f),"816b50");
+            for(int n=0;n<5;n++)SceneArt.Box(this,new(side*1.255f,.28f+n*.43f,0),new(.018f,.035f,2.5f),"9c8766");
+            var roof=SceneArt.Box(this,new(side*.67f,2.58f,0),new(1.42f,.12f,2.95f),"7c9273");roof.RotationDegrees=new(0,0,side*-17);
+            SceneArt.Box(this,new(side*.72f,.09f,1.41f),new(.40f,.13f,.23f),"a68a62");
+            for(int n=0;n<3;n++)SceneArt.Ball(this,new(side*.72f+(n-1)*.1f,.21f,1.43f),new(.12f,.14f,.12f),n==1?"e3c875":"849b6c");
+        }
+        SceneArt.Box(this,new(0,2.79f,0),new(.14f,.12f,2.98f),"657b60");
+        SceneArt.Box(this,new(0,2.22f,1.34f),new(.58f,.20f,.055f),"ddcca6");
         RememberContacts(this);
         float width=(float)ShelterGeometry.OuterWidth,depth=(float)ShelterGeometry.OuterDepth;
         foreach(float side in new[]{-1f,1f})
@@ -45,7 +56,12 @@ public partial class ShelterActor : Node3D
     public void Present(ShelterView state,bool selected)
     {
         Position=new((float)state.X,0,(float)state.Z);
-        foreach(var mesh in _door)mesh.Visible=!state.DoorOpen;
+        float scale=state.Capacity==5?(float)ShelterGeometry.SharedScale:1;Scale=new(scale,1,scale);
+        foreach(var mesh in _door)
+        {
+            float remaining=Mathf.Max(.025f,1-(float)state.DoorProgress);
+            mesh.Visible=true;mesh.Scale=new(1,remaining,1);mesh.Position=new(0,2.30f-1.15f*remaining,1.25f);
+        }
         foreach(var mesh in _selection)mesh.Visible=selected;
     }
     public SurfaceHit? RayContact(Vector3 origin,Vector3 direction)

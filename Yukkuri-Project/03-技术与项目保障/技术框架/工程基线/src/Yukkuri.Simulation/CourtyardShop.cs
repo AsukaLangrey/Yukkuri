@@ -16,7 +16,7 @@ public static class CourtyardShop
         new("box","工具与装置","箱子",18,Reusable:true),new("hanger","工具与装置","悬挂装置",30,Reusable:true),
         new("food-station","食水供给设施","食物供给器",WorldSimulation.FoodStationPrice,Reusable:true),
         new("water-station","食水供给设施","饮水器",WorldSimulation.WaterStationPrice,Reusable:true),
-        new("shelter","居所","单住户小家",WorldSimulation.ShelterPrice,Reusable:true)
+        new("shelter","居所","油库里小屋",WorldSimulation.ShelterPrice,Reusable:true)
     ];
 }
 public sealed partial class WorldState

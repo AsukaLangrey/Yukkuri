@@ -10,7 +10,7 @@ public sealed class ActorHopMotion
     public const float Duration=.50f, Launch=.08f, Touchdown=.39f;
     private bool _initialized,_active;
     private float _age;
-    private Vector2 _start,_end,_position;
+    private Vector2 _start,_end,_position,_lastTarget;
     public bool Active=>_active;
     public float Heading {get;private set;}
     public bool Turning {get;private set;}
@@ -22,32 +22,43 @@ public sealed class ActorHopMotion
     public static bool AllowsView(bool close,bool paused,bool wasPresented)=>!close||paused&&wasPresented;
 
     public void Reset(Vector2 target)
-    { _initialized=true;_active=false;Turning=false;_age=0;_start=_end=_position=target; }
+    { _initialized=true;_active=false;Turning=false;_age=0;_start=_end=_position=_lastTarget=target; }
     public void Face(float heading) { if(!_active)Heading=heading; }
 
-    public void Advance(Vector2 target,float delta,bool allowed,bool paused)
+    public void Advance(Vector2 target,float delta,bool allowed,bool paused,float worldSpeed=1)
     {
-        if(!_initialized||!allowed||Vector2.Distance(_position,target)>1.5f){Reset(target);return;}
+        // A real relocation/support loss invalidates the old arc, even while paused.
+        // Compare consecutive logical targets, never accumulated display lag.
+        if(!_initialized||!allowed||Vector2.Distance(_lastTarget,target)>1.5f){Reset(target);return;}
         if(paused)return;
-        delta=Math.Clamp(delta,0,.1f);
+        _lastTarget=target;
+        // Consume full world time, including the remainder after landing.
+        // All speeds use planted turns and airborne translation, never a sliding centre.
+        if(!float.IsFinite(delta)||delta<=0)return;
+        float remaining=delta*Math.Clamp(worldSpeed,1,10);
         Turning=false;
-        if(!_active)
+        while(remaining>0.000001f)
         {
-            if(Vector2.DistanceSquared(_position,target)<.0001f){_position=target;return;}
-            var direction=target-_position;
-            float desired=MathF.Atan2(direction.X,direction.Y);
-            float turn=MathF.IEEERemainder(desired-Heading,MathF.Tau);
-            float step=MathF.Tau*1.5f*delta;
-            Heading=MathF.IEEERemainder(Heading+Math.Clamp(turn,-step,step),MathF.Tau);
-            // Turn on the ground before launching. Lock this heading and destination
-            // through the entire hop, even if the simulation changes direction midair.
-            if(MathF.Abs(turn)>step+.00001f){Turning=true;return;}
-            Heading=desired;
-            _active=true;_age=0;_start=_position;_end=target;
+            if(!_active)
+            {
+                if(Vector2.DistanceSquared(_position,target)<.0001f)return;
+                var direction=target-_position;
+                float desired=MathF.Atan2(direction.X,direction.Y);
+                float turn=MathF.IEEERemainder(desired-Heading,MathF.Tau);
+                const float turnRate=MathF.Tau*1.5f;
+                float turnTime=MathF.Abs(turn)/turnRate;
+                float consumed=MathF.Min(remaining,turnTime);
+                Heading=MathF.IEEERemainder(Heading+MathF.Sign(turn)*turnRate*consumed,MathF.Tau);
+                remaining-=consumed;
+                if(turnTime>consumed+.000001f){Turning=true;return;}
+                Heading=desired;
+                _active=true;_age=0;_start=_position;_end=target;
+            }
+            float step=MathF.Min(remaining,Duration-_age);
+            _age+=step;remaining-=step;
+            _position=Vector2.Lerp(_start,_end,Frame.Travel);
+            if(_age>=Duration-.000001f){_position=_end;_active=false;_age=0;}
         }
-        _age+=delta;
-        _position=Vector2.Lerp(_start,_end,Frame.Travel);
-        if(_age>=Duration){_position=_end;_active=false;_age=0;}
     }
 
     public static HopFrame Sample(float age)

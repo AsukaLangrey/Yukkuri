@@ -100,6 +100,7 @@ public sealed partial class WorldSimulation
         c.PersonalMemories.Add(new() { IncidentId = $"interaction-{++State.InteractionSequence}",
             At = State.WorldSeconds, Text = description, EmotionalWeight = weight });
         if (c.PersonalMemories.Count > 48) c.PersonalMemories.RemoveAt(0);
+        RecordObjectEvent(c.Id,description);
         Log($"{c.Name}：{description}");
     }
 
@@ -137,7 +138,7 @@ public sealed partial class WorldSimulation
             !new[] { input.Force, input.Duration, input.Motion, input.X, input.Z, input.Height,
                 input.DirectionX, input.DirectionZ,input.StopImpact,input.TouchTangentFraction,input.TouchNormalSpeed }.All(double.IsFinite) ||
             input.Force is < 0 or > 1 || input.StopImpact is < 0 or > 1 ||input.TouchTangentFraction is <0 or >1|| input.Duration is < 0 or > 1 || input.Motion < 0 ||
-            Math.Abs(input.X) > 8 || Math.Abs(input.Z) > 8 || input.Height is < 0 or > 3)
+            Math.Abs(input.X)>CourtyardGround.HalfSize || Math.Abs(input.Z)>CourtyardGround.HalfSize || input.Height is < 0 or > 3)
             return "这个动作的位置或输入无效。";
         if (State.Settings.Pause) return "先恢复时间，再开始互动。";
         if(ShopActionError(input.Action) is { } shopError)return shopError;
@@ -378,7 +379,7 @@ public sealed partial class WorldSimulation
                 life.Restraint = input.Action switch { InteractionAction.Pin => RestraintKind.Frame, InteractionAction.Box => RestraintKind.Box, _ => RestraintKind.Hanging };
                 life.RestraintSeconds = 0; life.Supine = life.Restraint == RestraintKind.Frame;
                 life.WetRestRemaining=0;
-                life.Height = life.Restraint == RestraintKind.Hanging ? InteractionFixtureGeometry.HangingInitialHeight*(oil.IsYoung?.73:oil.IsElder?1.03:1) : 0;
+                life.Height = life.Restraint == RestraintKind.Hanging ? InteractionFixtureGeometry.HangingInitialHeight*(GrowthRules.Scale(oil)) : 0;
                 life.ContainerFear = Clamp100(life.ContainerFear + 3); Distress(oil, 3);
                 RecordInteraction(oil, "restraint", $"被限制在{(life.Restraint == RestraintKind.Box ? "箱子里" : life.Restraint == RestraintKind.Frame ? "固定具上" : "悬挂装置上")}。", 3);
                 string key = life.Restraint == RestraintKind.Box ? oil.Courage > .6 ? "box-brave" : "box" : life.Restraint == RestraintKind.Hanging ? "hang" : "restrained";
@@ -446,6 +447,7 @@ public sealed partial class WorldSimulation
         var i = c.Interaction;
         var details = new List<string>();
         if (c.Condition == PhysicalCondition.Dead) return "已经离世，不再回应。"+(i.Injuries.DeathCause.Length>0?$"记录原因：{i.Injuries.DeathCause}。":"");
+        if(c.Family.ColdStorage.Stored)return "冷藏保存中，生理时间暂停；取出后再观察食水、睡眠与伤势。";
         if (c.Condition == PhysicalCondition.Critical) details.Add("重伤，急需稳定伤势");
         if (i.FootIntegrity <= 25 && UsesGroundFoot(c)) details.Add("底部受伤，无法自行走动");
         else if (i.FootIntegrity < 80) details.Add("底部有伤，动作受影响");
@@ -460,10 +462,8 @@ public sealed partial class WorldSimulation
         details.AddRange(InteractionSurfaceObservation.Describe(i));
         if (c.Pain > 15) details.Add("碰到痛处会躲开");
         if (!i.HasAccessory) details.Add("没有戴着自己的饰品");
-        if (c.Fullness < 30) details.Add("肚子饿了");
-        if(i.Hydration<25)details.Add("常常抿嘴，想喝一口水");
+        details.AddRange(CreatureNeedsObservation.Needs(c));
         if(i.Digestion.Symptomatic)details.Add(i.Digestion.CareRemaining>0?"肚子不适已经照护，仍需吃喝和休息":"肚子不舒服，先看看最近吃喝与休息情况");
-        if (c.Energy < 25) details.Add("需要休息");
         return details.Count > 0 ? string.Join("；", details) + "。" : "外表和动作暂时没有明显不适，仍可继续观察。";
     }
 }

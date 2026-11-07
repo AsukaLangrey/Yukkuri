@@ -21,7 +21,7 @@ public sealed partial class WorldSimulation
         string basis=c.Personality.Kindness>=.65?"性格友善":c.Interaction.RuleLearning>=50?"已有较好的规则教育":CleaningLicenseLevel(c)>0?$"已有{c.Registration.Grade}水平":"性格与教育尚不足以形成主动习惯";
         string order=HasPeerCleaningOrder(c)?"；正在响应其他油的清洁要求":c.Interaction.Development.Duty==LifeDuty.Cleaning?"；已收到玩家清洁安排":"";
         return $"清洁意愿：{initiative}（{basis}）{order}。"+(PushesChoresOntoPeers(c)?"特别恶劣且自负时可能把活推给其他油；对方可以拒绝。":"")+
-            $"\n规则教育 {c.Interaction.RuleLearning:0}/100 · 牌照 {c.Registration.Grade} · 清洁熟悉度 {c.Interaction.CleaningLearning:0}/100";
+            "\n"+EnvironmentSummary(c)+$"\n规则教育 {c.Interaction.RuleLearning:0}/100 · 牌照 {c.Registration.Grade} · 清洁熟悉度 {c.Interaction.CleaningLearning:0}/100";
     }
     private static double CleaningRetryDelay(Creature c)=>CleaningLicenseLevel(c) switch
     {>=3=>6,2=>8,1=>10,_=>c.Interaction.RuleLearning>=50||c.Personality.Kindness>=.65?10:14};

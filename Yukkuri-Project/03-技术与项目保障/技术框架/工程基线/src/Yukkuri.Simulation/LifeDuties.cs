@@ -26,7 +26,7 @@ public sealed partial class WorldSimulation
         return null;
     }
     private string? CleaningWorkReason(Creature c)=>CleaningBodyReason(c)??
-        (!SelfMotivatedCleaner(c)&&!HasCleaningInstruction(c)?"没有主动清洁的意愿；需要明确命令，或继续培养规则教育。":null);
+        (!(SelfMotivatedCleaner(c)&&WantsCleanerEnvironment(c))&&!HasCleaningInstruction(c)&&c.Interaction.CleaningTargetId==null?"没有主动清洁的意愿；需要明确命令，或继续培养规则教育。":null);
     private void StopCleaningTask(Creature c,string reason,SkillEvidenceKind kind=SkillEvidenceKind.Interrupted)
     {
         var i=c.Interaction;
@@ -44,23 +44,7 @@ public sealed partial class WorldSimulation
         c.Interaction.CleaningTargetId=waste.Id;c.Interaction.CleaningSeconds=0;c.Interaction.Development.CleaningStalledSeconds=0;
         RecordAbility(c,LifeSkill.Cleaning,SkillEvidenceKind.Attempt,HasPeerCleaningOrder(c)?"收到其他油的要求，开始实际尝试清理。":c.Interaction.Development.Duty==LifeDuty.Cleaning?"收到玩家安排，开始实际尝试清理。":"主动选择一处脏污，开始实际尝试清理。");
     }
-    public string SetLifeDuty(string id,LifeDuty duty,string? recipientId=null)
-    {
-        var c=InteractionTarget(id);
-        if(!State.InteractionPlaytest||c==null||c.RegionId!=State.ActiveRegionId||!Enum.IsDefined(duty))return "请选择当前小院中的对象。";
-        var d=c.Interaction.Development;
-        if(duty!=LifeDuty.None&&(c.Condition==PhysicalCondition.Dead||c.Family.Memorialized))return "这个对象已无法承担新安排。";
-        if(duty==LifeDuty.Care&&(c.IsYoung||!State.Creatures.Any(other=>other.Id==recipientId&&other!=c&&other.RegionId==c.RegionId&&other.IsYoung&&other.Condition!=PhysicalCondition.Dead)))
-            return "照护分工需要一只成熟油和当前小院中的另一只幼体。";
-        recipientId=duty==LifeDuty.Care?recipientId:null;
-        if(d.Duty==duty&&d.RecipientId==recipientId&&d.CleaningOrderedById==null)return "已经是这项安排，不会重置休息或重试间隔。";
-        if(d.Duty==LifeDuty.Care&&c.Family.CareTargetId==d.RecipientId)
-            CancelFamilyCare(c,reason:"分工已调整，已取的食水留在实际位置。" );
-        if(c.Interaction.CleaningTargetId!=null)StopCleaningTask(c,"分工调整，当前清洁未计为完成。");
-        ClearPeerCleaningOrder(c);
-        d.Duty=duty;d.RecipientId=recipientId;d.NextDutyCheck=State.WorldSeconds+1;
-        return duty==LifeDuty.None?"已取消分工要求；仍会按自己的需要生活和照顾家人。":"已记录分工；有意愿和余力时执行，中断后会重新评估。";
-    }
+    public string SetLifeDuty(string id,LifeDuty duty,string? recipientId=null)=>"手动分工暂未开放；个体仍会自主照料与清洁。";
     public string DutySummary(string id)
     {
         var c=State.Creatures.Find(c=>c.Id==id);if(c==null)return "对象已不在这里。";
@@ -84,21 +68,19 @@ public sealed partial class WorldSimulation
         {
             SynchronizeAbilityAttempts(c);
             var i=c.Interaction;var d=i.Development;
+            if(d.Duty!=LifeDuty.None)
+            {
+                if(d.Duty==LifeDuty.Care&&c.Family.CareTargetId==d.RecipientId)CancelFamilyCare(c,reason:"旧手动分工已取消，恢复自主生活。");
+                if(d.Duty==LifeDuty.Cleaning&&i.CleaningTargetId!=null)StopCleaningTask(c,"旧手动分工已取消，恢复自主生活。");
+                d.Duty=LifeDuty.None;d.RecipientId=null;
+            }
             if(d.CleaningOrderedById!=null&&!HasPeerCleaningOrder(c))ClearPeerCleaningOrder(c);
             // Release stale reservations before the ordinary autonomy loop, so needs and danger can take over this tick.
             if(i.CleaningTargetId!=null&&CleaningWorkReason(c) is { } reason)StopCleaningTask(c,reason);
             if(State.WorldSeconds<d.NextDutyCheck)continue;
             d.NextDutyCheck=State.WorldSeconds+2;
             if(i.CleaningTargetId==null&&TryDelegateCleaning(c))continue;
-            if(d.Duty==LifeDuty.Cleaning&&i.CleaningTargetId==null&&State.WorldSeconds>=i.NextCleaningAt&&CleaningWorkReason(c)==null&&FindCleaningWaste(c) is { } waste)
-                BeginCleaningTask(c,waste);
-            if(d.Duty!=LifeDuty.Care||c.Family.CareTargetId!=null||State.WorldSeconds<c.Family.NextCareAt)continue;
-            var child=State.Creatures.Find(other=>other.Id==d.RecipientId);
-            if(child is not {IsYoung:true}||!ChildNeedsDutyCare(child)||FamilyCareReasonCore(c,child)!=null||!CanContinueFamilyCare(c,child))continue;
-            if(i.CleaningTargetId!=null)StopCleaningTask(c,"先执行幼体照护，清洁留待以后。");
-            c.Family.CareTargetId=child.Id;c.Family.CareApproachSeconds=0;c.Family.CareBestDistance=100;
-            RecordAbility(c,LifeSkill.Care,SkillEvidenceKind.Attempt,$"重新评估后，开始照看{child.Name}。");
-            RecordFamilyCareStatus(c,$"按安排留意{child.Name}的需要，仍需实际取用和送达食水。");
+
         }
     }
 }

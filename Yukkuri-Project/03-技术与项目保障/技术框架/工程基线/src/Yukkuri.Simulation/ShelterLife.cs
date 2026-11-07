@@ -2,7 +2,7 @@ namespace Yukkuri.Simulation;
 
 public sealed partial class WorldSimulation
 {
-    private bool ShelterNeedsPriority(Creature c)=>NaturalResources.WantsFood(c)||NaturalResources.WantsWater(c)||c.Pain>=40||c.Energy<22||
+    private bool ShelterNeedsPriority(Creature c)=>NeedsOutdoorToilet(c)||(ScheduledRest(c)?CourtyardSurvival.Urgent(c,sleeping:true):NaturalResources.WantsFood(c)||NaturalResources.WantsWater(c))||c.Pain>=40||
         HasPriorityWaterDuty(c)||c.Interaction.EatingRemaining>0||c.Interaction.ActiveCue!=null||c.Interaction.FollowPlayer||
         c.Family.CompanionTargetId!=null||FamilyRules.UnderIntervention(c)||
         c.Family.Pregnancy.Phase==PregnancyPhase.Preparing||c.Family.Conflict.TargetId!=null||c.Family.ChildThreat.TargetId!=null||
@@ -11,6 +11,7 @@ public sealed partial class WorldSimulation
     public string? ShelterEntryReason(Creature c,string shelterId)
     {
         var s=Shelter(shelterId);
+        if(s?.Capacity==5)return SharedShelterEntryReason(c,s);
         if(!State.InteractionPlaytest||!State.Creatures.Contains(c)||s==null||c.RegionId!=s.RegionId)return "住居与个体不在同一区域。";
         if(!CanSelfMove(c)||c.Interaction.Rolling||c.Interaction.Lowering||c.Interaction.Height>.05||
             c.Family.ColdStorage.RecoveryRemaining>0||c.Quarantine||c.IsIntruder)return "当前身体姿势或状态不能自行走进门。";
@@ -28,7 +29,8 @@ public sealed partial class WorldSimulation
     {s.GuestId=null;s.Phase=ShelterVisitPhase.Empty;s.ExitRequested=false;s.BlockedSeconds=0;s.LastEvent=message;}
     private void SynchronizeShelters()
     {
-        foreach(var s in State.Shelters)
+        SynchronizeSharedShelters();
+        foreach(var s in State.Shelters.Where(s=>s.Capacity==1))
         {
             var c=ValidShelterGuest(s);
             if(s.GuestId!=null&&c==null)
@@ -89,12 +91,14 @@ public sealed partial class WorldSimulation
     // They do not complete care, intake, teaching or breeding on their behalf.
     private bool TryActiveShelter(Creature c,double dt)
     {
+        if(TryActiveSharedShelter(c,dt))return true;
         var s=State.Shelters.Find(s=>s.GuestId==c.Id&&ValidShelterGuest(s)==c);if(s==null)return false;
         bool inside=ShelterBodyPresent(c,s);
         if(s.Phase==ShelterVisitPhase.Approaching&&ShelterEntryReason(c,s.Id)!=null)
         {ReleaseShelterGuest(s,"眼前事务优先，这次入住预约已结束。");return false;}
+        if(IsNightHouseSleep(c)){c.TargetX=c.X;c.TargetZ=c.Z;c.Activity="在小屋里睡觉";return true;}
         if(inside&&(ShelterNeedsPriority(c)||!CanSelfMove(c)||
-            EmotionalReadiness.Settled(c)&&c.Fear<25&&c.Interaction.Emotion.Alarm<8))s.ExitRequested=true;
+            !ScheduledRest(c)&&EmotionalReadiness.Settled(c)&&c.Fear<25&&c.Interaction.Emotion.Alarm<8))s.ExitRequested=true;
         if(c.Interaction.EatingRemaining>0||c.Interaction.Physiology.Active||FamilyRules.UnderIntervention(c))return false;
         // A blocked exit must not suppress food already within real mouth reach.
         if(inside&&(NaturalResources.WantsFood(c)||NaturalResources.WantsWater(c))&&TryEatNearby(c))return true;
@@ -149,13 +153,16 @@ public sealed partial class WorldSimulation
     }
     private bool TrySeekShelter(Creature c,double dt)
     {
-        if(c.Interaction.ShelterSearchAfter>State.WorldSeconds||c.Fear<35&&c.Interaction.Emotion.Alarm<12||
+        bool searchDeferred=c.Interaction.ShelterSearchAfter>State.WorldSeconds;
+        if(TrySeekSharedShelter(c,dt))return true;
+        if(searchDeferred||!ScheduledRest(c)&&c.Fear<35&&c.Interaction.Emotion.Alarm<12||
             State.Shelters.Any(s=>s.GuestId==c.Id))return false;
-        var shelter=State.Shelters.Where(s=>s.RegionId==c.RegionId&&ShelterEntryReason(c,s.Id)==null&&
+        var shelter=State.Shelters.Where(s=>s.Capacity==1&&s.RegionId==c.RegionId&&ShelterEntryReason(c,s.Id)==null&&
             Distance(c.X,c.Z,s.X,s.Z)<=5&&HasGroundSightLine(c,s.X,s.Z+ShelterGeometry.OutsideZ(ShelterPassageRadius(c))))
             .OrderBy(s=>Distance(c.X,c.Z,s.X,s.Z)).ThenBy(s=>s.Id,StringComparer.Ordinal).FirstOrDefault();
         if(shelter==null)return false;
+        c.Interaction.ShelterSearchAfter=0;
         shelter.GuestId=c.Id;shelter.Phase=ShelterVisitPhase.Approaching;shelter.ExitRequested=false;shelter.BlockedSeconds=0;
-        shelter.LastEvent=$"{c.Name}有些不安，决定先走到门口看看。";return TryActiveShelter(c,dt);
+        shelter.LastEvent=ScheduledRest(c)?$"{c.Name}想进屋睡一觉。":$"{c.Name}有些不安，决定先走到门口看看。";return TryActiveShelter(c,dt);
     }
 }

@@ -6,7 +6,13 @@ public sealed partial class WorldSimulation
     public SimulationConfig Config { get; }
     public WorldSimulation(WorldState state, SimulationConfig? config = null)
     {
-        State = state; Config = state.InteractionPlaytest ? new() { HungerPerSecond = .025, EnergyPerSecond = .02, MoveSpeed = .72 } : state.MilestoneScenario ? MilestoneConfig() : config ?? new();
+        // Migrate the old unbounded container into available real freezer slots.
+        // Any excess stays identifiable in the legacy return queue, never discarded.
+        int available=ColdStorageCapacity-state.Creatures.Count(c=>c.Family.ColdStorage.Stored);
+        foreach(var c in state.Creatures.Where(c=>c.RegionId=="courtyard-container"&&!c.Family.ColdStorage.Stored).Take(Math.Max(0,available)))
+        {c.Family.ColdStorage.Stored=true;c.Family.ColdStorage.Elapsed=0;c.Family.ColdStorage.RecoveryRemaining=0;}
+        GrowthRules.MigrateWorld(state);
+        State = state; Config = state.InteractionPlaytest ? new() { HungerPerSecond = CourtyardSurvival.HungerPerSecond, EnergyPerSecond = .02, MoveSpeed = .72 } : state.MilestoneScenario ? MilestoneConfig() : config ?? new();
         foreach(var brood in state.DetachedStemBroods)brood.HeldByHand=false;
         foreach(var station in state.SupplyStations)station.HeldByHand=false;
         foreach(var motion in state.PortableMotions){motion.Held=false;SetPortableOccupancy(motion.Id,true);}
@@ -45,6 +51,7 @@ public sealed partial class WorldSimulation
                 Fullness = 40 + sim.Next() * 45, Energy = 50 + sim.Next() * 40,
                 TrueDisposition = new[] { "curious", "shy", "greedy" }[i % 3],
                 Body = new() { ReproductionRole = i % 2 == 0 ? ReproductionRole.Maternal : ReproductionRole.Paternal } };
+            GrowthRules.Initialize(c,false);
             c.TargetX = c.X; c.TargetZ = c.Z;
             if (i < population) c.Observation.Notes.Add("养护日记：已登记入住；性格仍待观察。");
             state.Creatures.Add(c);
@@ -70,7 +77,8 @@ public sealed partial class WorldSimulation
     {
         if (!double.IsFinite(delta) || delta < 0) throw new ArgumentOutOfRangeException(nameof(delta));
         if (State.Mode == PlayMode.CloseUp || State.Settings.Pause) return;
-        State.TickRemainder += delta;
+        // The courtyard owns the multiplier here; presentation and pointer clocks remain real time.
+        State.TickRemainder += delta * (State.InteractionPlaytest ? CourtyardSpeed : 1);
         while (State.TickRemainder + 1e-9 >= Config.TickSeconds)
         {
             State.TickRemainder = Math.Max(0, State.TickRemainder - Config.TickSeconds);
@@ -87,6 +95,7 @@ public sealed partial class WorldSimulation
             SynchronizeCareParcels();
             SynchronizeShelters();
             TickSupplyStations();
+            TickShelterDoors(dt);TickWildGrass(dt);
             TickLifeDuties();
             TickInteractionWorld(dt);TickPhysiology(dt);TickFamilies(dt);TickDetachedStems(dt);TickFamilySocial(dt);
             TickMaternalRisks(dt);TickAutonomousBreeding();TickFamilyAftermath(dt);TickFamilyLearning(dt);SynchronizeCareParcels();TickColdStorage(dt);
@@ -196,7 +205,7 @@ public sealed partial class WorldSimulation
     }
     public static double Distance(double x, double z, double x2, double z2) => Math.Sqrt((x-x2)*(x-x2)+(z-z2)*(z-z2));
     private static void ClampResident(Creature c)
-    {c.X=Math.Clamp(c.X,c.Quarantine?-7:-8,c.Quarantine?-4.5:8);c.Z=Math.Clamp(c.Z,c.Quarantine?4.2:-8,c.Quarantine?6.6:8);}
+    {c.X=Math.Clamp(c.X,c.Quarantine?-7:-CourtyardGround.HalfSize,c.Quarantine?-4.5:CourtyardGround.HalfSize);c.Z=Math.Clamp(c.Z,c.Quarantine?4.2:-CourtyardGround.HalfSize,c.Quarantine?6.6:CourtyardGround.HalfSize);}
     public bool Select(string id)
     {
         if (!State.Creatures.Any(c=>c.Id==id && c.RegionId==State.ActiveRegionId)) return false;
@@ -256,7 +265,7 @@ public sealed partial class WorldSimulation
     }
     public bool Place(FacilityKind kind,double x,double z)
     {
-        if(State.Mode!=PlayMode.Management || ActiveRegion.Kind!=RegionKind.Sanctuary || !double.IsFinite(x) || !double.IsFinite(z) || Math.Abs(x)>8 || Math.Abs(z)>8) return false;
+        if(State.Mode!=PlayMode.Management || ActiveRegion.Kind!=RegionKind.Sanctuary || !double.IsFinite(x) || !double.IsFinite(z) || Math.Abs(x)>CourtyardGround.HalfSize || Math.Abs(z)>CourtyardGround.HalfSize) return false;
         x=Math.Round(x);z=Math.Round(z);
         if(ActiveRegion.Facilities.Any(f=>Distance(x,z,f.X,f.Z)<2)) return false;
         int cost=kind==FacilityKind.Feeder?Config.FeederCost:Config.BedCost;
@@ -293,7 +302,7 @@ public sealed partial class WorldSimulation
         var c=State.Creatures.Find(c=>c.Id==id);if(c==null)return;
         if(State.InteractionPlaytest&&(!ShelterMovePathClear(c,x,z)||!ShelterBodyFits(c,x,z)))return;
         CancelWildSelfCare(c,"身体被移动，自行护伤已中断；尚未获得护理效果。");
-        c.X=Math.Clamp(x,-8,8);c.Z=Math.Clamp(z,-8,8);c.TargetX=c.X;c.TargetZ=c.Z;
+        c.X=Math.Clamp(x,-CourtyardGround.HalfSize,CourtyardGround.HalfSize);c.Z=Math.Clamp(z,-CourtyardGround.HalfSize,CourtyardGround.HalfSize);c.TargetX=c.X;c.TargetZ=c.Z;
         SynchronizeWaterSupport(c);
     }
 }

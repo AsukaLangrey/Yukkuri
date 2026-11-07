@@ -59,41 +59,40 @@ RoomObject WaitForParcel(WorldSimulation sim,Creature adult)
 }
 int ResourcePortions(WorldSimulation sim,RoomObjectKind kind)=>sim.State.RoomObjects.Where(o=>o.Kind==kind&&!o.Stored).Sum(o=>o.Portions);
 
-Check("冷藏十倍延缓实际年龄与消耗，普通时间仍前进",()=>
+Check("制冷箱暂停实际年龄与消耗，普通时间仍前进",()=>
 {
     var warm=Fixture();var cold=Reload(warm);var a=warm.State.Creatures[0];var b=cold.State.Creatures[0];
     double age=a.Body.AgeSeconds,inner=a.InnerAgeSeconds,full=a.Fullness,water=a.Interaction.Hydration;
     BuyTool(cold,"freezer");cold.SetColdStorage(b.Id,true);Require(b.Family.ColdStorage.Stored,"未进入冷藏");
     Tick(warm,10);Tick(cold,10);
-    Near(a.Body.AgeSeconds-age,10,"普通年龄未推进");Near(b.Body.AgeSeconds-age,1,"冷藏年龄不是十分之一");
-    Near(b.InnerAgeSeconds-inner,(a.InnerAgeSeconds-inner)/10,"内馅年龄未同速延缓");
-    Near(full-b.Fullness,(full-a.Fullness)/10,"冷藏饥饿未十倍延缓");
-    Near(water-b.Interaction.Hydration,(water-a.Interaction.Hydration)/10,"冷藏口渴未十倍延缓");
+    Near(a.Body.AgeSeconds-age,10,"普通年龄未推进");Near(b.Body.AgeSeconds-age,0,"制冷箱年龄未暂停");
+    Near(b.InnerAgeSeconds-inner,0,"内馅年龄未暂停");
+    Near(full-b.Fullness,0,"制冷箱饥饿未暂停");
+    Near(water-b.Interaction.Hydration,0,"制冷箱口渴未暂停");
     Near(cold.State.WorldSeconds,10,"冷藏错误地减慢全世界");
     Require(!cold.ExecuteInteraction(b.Id,new(InteractionAction.Greet)).Success,"冷藏中仍能正常互动");
 });
-Check("濒危救治时间只延缓，取出和读档不重新派发",()=>
+Check("濒危救治时间暂停，取出和读档不重新派发",()=>
 {
     var sim=Fixture();var c=sim.State.Creatures[0];c.Health=1;sim.Hurt(c,2,"冷藏前重伤",null);
     Require(c.Condition==PhysicalCondition.Critical,"前置未进入濒危");double before=c.CriticalRemaining;
     BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"救治夹具未进入冷藏");Tick(sim,20);
-    Near(before-c.CriticalRemaining,2,"冷藏把救治期冻结或按正常速度耗尽");
+    Near(before-c.CriticalRemaining,0,"制冷箱救治期未暂停");
     double saved=c.CriticalRemaining;var loaded=Reload(sim);var copy=loaded.State.Creatures[0];
     Near(copy.CriticalRemaining,saved,"读档重置救治窗口");
     loaded.SetColdStorage(copy.Id,false);Near(copy.CriticalRemaining,saved,"取出重新派发救治期");
     Require(copy.Condition==PhysicalCondition.Critical&&!copy.Family.ColdStorage.Stored,"取出自动治愈或没取出");
 });
-Check("冷藏有保存期限，到期不能无限暂停生命过程",()=>
+Check("超过旧保存期限仍暂停，取回后可再次收纳且不重置生理状态",()=>
 {
-    var sim=Fixture();var c=sim.State.Creatures[0];BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
-    Require(c.Family.ColdStorage.Stored,"前置未真正进入冷藏");
-    // Near-expiry fixture tests the actual boundary without fabricating elapsed biological age.
-    c.Family.ColdStorage.Elapsed=WorldSimulation.ColdStorageLimitSeconds-.5;Tick(sim,1);
-    Require(!c.Family.ColdStorage.Stored,"空院保存到期仍未取出");
-    Near(WorldSimulation.BiologicalTimeScale(c),1,"到期仍维持十倍延缓");
-    sim.SetColdStorage(c.Id,true);Require(!c.Family.ColdStorage.Stored,"复苏期立刻重新冷藏");
+    var sim=Fixture();var c=sim.State.Creatures[0];sim.SetColdStorage(c.Id,true);
+    Require(c.Family.ColdStorage.Stored,"未进入制冷箱");
+    double age=c.Body.AgeSeconds;c.Family.ColdStorage.Elapsed=WorldSimulation.ColdStorageLimitSeconds-.5;Tick(sim,1);
+    Require(c.Family.ColdStorage.Stored,"旧期限自动取出了个体");Near(c.Body.AgeSeconds,age,"生理时间未暂停");
+    sim.SetColdStorage(c.Id,false);Require(!c.Family.ColdStorage.Stored,"无法取回");
+    sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"再次收纳失败");Near(c.Body.AgeSeconds,age,"收纳重置年龄");
 });
-Check("到期没有空位时仍留冷藏但不再延缓，腾空后可以取出",()=>
+Check("庭院没有空位时取回失败仍暂停，腾空后可以取出",()=>
 {
     var sim=Fixture();var c=sim.State.Creatures[0];BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
     Require(c.Family.ColdStorage.Stored,"前置未真正进入冷藏");
@@ -106,10 +105,11 @@ Check("到期没有空位时仍留冷藏但不再延缓，腾空后可以取出"
     }
     c.Family.ColdStorage.Elapsed=WorldSimulation.ColdStorageLimitSeconds-.5;Tick(sim,1);
     Require(c.Family.ColdStorage.Stored,"满院没有空位却穿透其他身体取出");
-    Near(WorldSimulation.BiologicalTimeScale(c),1,"满院导致保存期限无限延长");
+    sim.SetColdStorage(c.Id,false);Require(c.Family.ColdStorage.Stored,"满院错误地取回");
+    Near(WorldSimulation.BiologicalTimeScale(c),0,"满院仍推进生理时间");
     double age=c.Body.AgeSeconds,full=c.Fullness;Tick(sim,2);
-    Near(c.Body.AgeSeconds-age,2,"超时无空位仍减慢年龄");
-    Near(full-c.Fullness,sim.Config.HungerPerSecond*2,"超时无空位仍减慢代谢");
+    Near(c.Body.AgeSeconds-age,0,"满院存储年龄未暂停");
+    Near(full-c.Fullness,0,"满院存储代谢未暂停");
     sim.State.Creatures.RemoveAll(o=>o.Id.StartsWith("cold-blocker-",StringComparison.Ordinal));sim.SetColdStorage(c.Id,false);
     Require(!c.Family.ColdStorage.Stored,"腾出空间仍不能取出");
 });

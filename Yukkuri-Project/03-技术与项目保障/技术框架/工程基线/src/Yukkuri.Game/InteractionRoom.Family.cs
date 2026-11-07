@@ -6,9 +6,7 @@ using Yukkuri.Simulation;
 
 public partial class InteractionRoom
 {
-    private InlineChoice _oilSelector=null!;
-    private readonly List<string> _selectorIds=new();
-    private string _selectorSignature="";
+    private Label _selectionName=null!;
     private string? _familyFirstId,_familySecondId;
     private string _familyCareFeedback="";
     private string _familyCareSelection="";
@@ -24,9 +22,9 @@ public partial class InteractionRoom
 
     private string OilListName(Creature c)=>c.Name+" · "+SpeciesName(c.Body.SpeciesId)+
         (c.Family.Memorialized?" · 已安置":c.Family.ColdStorage.Stored?
-            (c.Condition==PhysicalCondition.Dead?" · 遗体冷藏中":" · 冷藏中"):c.Condition==PhysicalCondition.Dead?" · 已离世":c.IsYoung?" · 幼体":"");
+            (c.Condition==PhysicalCondition.Dead?" · 遗体冷藏中":" · 冷藏中"):c.Condition==PhysicalCondition.Dead?" · 已离世":" · "+GrowthRules.Name(c));
 
-    private static bool HasVisibleFamilyBody(Creature c)=>!c.Family.ColdStorage.Stored&&!c.Family.Memorialized;
+    private bool HasVisibleFamilyBody(Creature c)=>!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&!Sim.IsShelteredHidden(c);
 
     private bool LeaveUnavailableCloseup()
     {
@@ -39,30 +37,22 @@ public partial class InteractionRoom
 
     private void BuildOilSelector(Control parent)
     {
-        _oilSelector=new InlineChoice{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,
-            CustomMinimumSize=new(0,32),
-            FocusMode=Control.FocusModeEnum.None};
-        _oilSelector.ItemSelected+=index=>
-        {
-            if(index>=0&&index<_selectorIds.Count)SelectOil(_selectorIds[(int)index]);
-        };
-        parent.AddChild(_oilSelector);
+        var heading=Row(parent,12);heading.CustomMinimumSize=new(0,44);
+        _selectionName=Text("",16);_selectionName.AutowrapMode=TextServer.AutowrapMode.WordSmart;_selectionName.MaxLinesVisible=2;
+        _selectionName.TextOverrunBehavior=TextServer.OverrunBehavior.TrimEllipsis;
+        _selectionName.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;heading.AddChild(_selectionName);
+        _closeButton=Button("",FocusSelectedCreature);_closeButton.CustomMinimumSize=new(28,28);
+        _closeButton.SizeFlagsVertical=Control.SizeFlags.ShrinkCenter;
+        UiActionIcons.Apply(_closeButton,"focus");heading.AddChild(_closeButton);
         RefreshOilSelector(true);
     }
 
     private void RefreshOilSelector(bool force=false)
     {
-        if(_oilSelector==null)return;
-        var oils=Sim.State.Creatures.Where(c=>c.RegionId==Sim.State.ActiveRegionId).ToArray();
-        string signature=string.Join("\n",oils.Select(c=>c.Id+"="+OilListName(c)));
-        if(force||signature!=_selectorSignature)
-        {
-            _selectorSignature=signature;_oilSelector.Clear();_selectorIds.Clear();
-            foreach(var c in oils){_selectorIds.Add(c.Id);_oilSelector.AddItem(OilListName(c));}
-        }
-        int selected=_selectorIds.IndexOf(Sim.State.SelectedId??"");
-        if(selected>=0)_oilSelector.Select(selected);
-        _oilSelector.Disabled=_selectorIds.Count==0;
+        if(_selectionName==null)return;
+        _selectionName.Text=Sim.Selected is { } c?OilListName(c):"未选择对象";
+        if(_focusSelectionId!=Sim.Selected?.Id)
+        {_focusSelectionId=Sim.Selected?.Id;_locatedCreatureId=null;}
     }
 
     private void SynchronizeFamilyActors()
@@ -72,11 +62,9 @@ public partial class InteractionRoom
         int index=0;
         foreach(var c in Sim.State.Creatures)
         {
-            float expectedScale=c.IsYoung?.73f:c.IsElder?1.03f:1;
-            if(_actors.TryGetValue(c.Id,out var actor)&&Math.Abs(actor.BodyScale-expectedScale)>.001f)
-            {
-                actor.QueueFree();_actors.Remove(c.Id);_familyMarkers.Remove(c.Id);
-            }
+            float expectedScale=(float)GrowthRules.Scale(c);
+            _actors.TryGetValue(c.Id,out var actor);
+            actor?.UpdateGrowthScale(c);
             if(!_actors.ContainsKey(c.Id))
             {
                 actor=new CreatureActor();AddChild(actor);actor.Setup(c,index,_font);_actors[c.Id]=actor;
@@ -113,8 +101,7 @@ public partial class InteractionRoom
     {
         var oils=Sim.State.Creatures.Where(c=>c.RegionId==Sim.State.ActiveRegionId).ToArray();
         if(!oils.Any(c=>c.Id==_familyFirstId))_familyFirstId=Sim.Selected?.Id??oils.FirstOrDefault()?.Id;
-        if(!oils.Any(c=>c.Id==_familySecondId)||_familyFirstId==_familySecondId)
-            _familySecondId=oils.FirstOrDefault(c=>c.Id!=_familyFirstId)?.Id;
+
         OpenActivityPanel("同伴、家庭与照护",ShowFamily);
         _panelContents.AddChild(Text("相处、结伴与孕育由双方决定。先放稳、照顾好身体，再给它们安静相处的时间。",14));
         if(Sim.State.Settings.Pause)
@@ -122,7 +109,7 @@ public partial class InteractionRoom
         else if(Sim.State.Mode==PlayMode.CloseUp)
             _panelContents.AddChild(Text("近看时可以先提出安排，回到小院后过程才会推进。放入冷藏需要先回到小院。",13,"8a624e"));
         if(oils.Length==0){_panelContents.AddChild(PanelButton("关闭面板",CloseActivityPanel));return;}
-        AddFamilyChoice("这只油",oils,_familyFirstId,id=>{_familyFirstId=id;ShowFamily();});
+        AddFamilyChoice("这只油",oils,_familyFirstId,id=>{SelectOil(id);_familySecondId=null;ShowFamily();});
         var first=oils.FirstOrDefault(c=>c.Id==_familyFirstId);
         if(first==null)return;
         _panelContents.AddChild(Text(FamilySummary(first),14));
@@ -145,7 +132,7 @@ public partial class InteractionRoom
         }
         if(first.Family.ColdStorage.Stored)
         {
-            _panelContents.AddChild(Text("它正在有限冷藏中。先取出并观察恢复，再安排相处或照护。",14));
+            _panelContents.AddChild(Text("它正在回收箱中，生理时间暂停。取回庭院后再安排相处或照护。",14));
             _panelContents.AddChild(PanelButton("取出这只油，观察复苏",()=>ApplyFamilyCommand(()=>Sim.SetColdStorage(firstId,false))));
             _panelContents.AddChild(PanelButton("关闭面板",CloseActivityPanel));return;
         }
@@ -162,10 +149,12 @@ public partial class InteractionRoom
         AddBreedingInduction(first);
 
         Creature? other=null;
-        var otherOils=oils.Where(c=>c.Id!=firstId&&c.Condition!=PhysicalCondition.Dead&&HasVisibleFamilyBody(c)).ToArray();
+        var otherOils=oils.Where(c=>c.Id!=firstId&&c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized).ToArray();
         if(otherOils.Length>0)
         {
-            var second=otherOils.FirstOrDefault(c=>c.Id==_familySecondId)??otherOils[0];
+            var second=otherOils.FirstOrDefault(c=>c.Id==_familySecondId)??
+                otherOils.OrderByDescending(c=>GrowthRules.IsAdult(c)&&c.Body.ReproductionRole!=first.Body.ReproductionRole)
+                    .ThenByDescending(c=>first.Family.PartnerIds.Contains(c.Id)).First();
             other=second;
             _familySecondId=second.Id;
             AddFamilyChoice("另一只油",otherOils,_familySecondId,id=>{_familySecondId=id;ShowFamily();});
@@ -207,9 +196,20 @@ public partial class InteractionRoom
             _panelContents.AddChild(Text(rolesMatch?"安排孕育："+mother.Name+"承担母体，"+father.Name+"承担父体。成熟度、双方意愿或身体不合适时，会说明原因。":
                 "这两只承担相同的繁殖角色，无法共同孕育。仍然可以相处、建立关系和照护家人。",13));
             string motherId=mother.Id,fatherId=father.Id;
+            foreach(var resident in new[]{mother,father}.Where(c=>Sim.IsShelteredHidden(c)))
+            {
+                string id=resident.Id;
+                _panelContents.AddChild(PanelButton("请"+resident.Name+"先出屋",()=>ApplyFamilyCommand(()=>Sim.RequestShelterResidentExit(id))));
+            }
             var methods=Row(_panelContents);
-            methods.AddChild(PanelButton("安排茎生孕育",()=>ApplyFamilyCommand(()=>Sim.RequestPregnancy(motherId,fatherId,BirthMethod.Stem))));
-            methods.AddChild(PanelButton("安排胎生孕育",()=>ApplyFamilyCommand(()=>Sim.RequestPregnancy(motherId,fatherId,BirthMethod.Live))));
+            foreach(var method in new[]{BirthMethod.Stem,BirthMethod.Live})
+            {
+                string label=method==BirthMethod.Stem?"茎生":"胎生";
+                string? reason=Sim.PregnancyRequestReason(motherId,fatherId,method);
+                var button=PanelButton("安排"+label+"孕育",()=>ApplyFamilyCommand(()=>Sim.RequestPregnancy(motherId,fatherId,method)));
+                button.Disabled=reason!=null;methods.AddChild(button);
+                _panelContents.AddChild(Text(label+"："+(reason??"当前可提出安排，仍需实际靠近并接受。"),13,reason==null?"78816e":"8a624e"));
+            }
             _panelContents.AddChild(Text("胎生需要更久、宝宝较少，母体也需要更多吃喝与恢复。已开始的孕育不会因为关闭繁殖许可而消失。",13,"78816e"));
             if(first.IsYoung!=second.IsYoung)
             {
@@ -230,7 +230,7 @@ public partial class InteractionRoom
         else _panelContents.AddChild(Text("这里暂时没有另一只可以邀请的油。冷藏中的个体需要先取出。",14));
         // This redesign exposes no coercive breeding action.
         _panelContents.AddChild(PanelButton("制止这只油的家庭冲突",()=>ApplyFamilyCommand(()=>Sim.InterruptFamilyConflict(firstId))));
-        _panelContents.AddChild(Text("冷藏只让相关生命过程以正常速度的十分之一推进。有保存期限和复苏风险，需要及时取出照护；旧伤仍会保留，不能无限拖住濒危状态。",13,"78816e"));
+        _panelContents.AddChild(Text("回收箱共12格，箱内生理时间暂停；取回后沿用原有伤势和救治余量，不会自动治愈。",13,"78816e"));
         bool stored=first.Family.ColdStorage.Stored;
         _panelContents.AddChild(PanelButton(stored?(first.Condition==PhysicalCondition.Dead?"取出遗体":"取出这只油，观察复苏"):"把这只油放入冷藏",
             ()=>ApplyFamilyCommand(()=>Sim.SetColdStorage(firstId,!stored))));
@@ -274,6 +274,8 @@ public partial class InteractionRoom
         _panelContents.AddChild(Text(caption,13,"78816e"));
         var choice=new InlineChoice{CustomMinimumSize=new(0,38),SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,
             FocusMode=Control.FocusModeEnum.None};
+        // IDs, not a remembered row index, own this selection across births and removals.
+        choice.SetMeta("identity_selection",true);
         for(int n=0;n<oils.Length;n++)
         {
             choice.AddItem(OilListName(oils[n]));
@@ -377,7 +379,7 @@ public partial class InteractionRoom
 
     private string FamilySummary(Creature c)
     {
-        string NameFor(string? id)=>id==null?"未记录":Sim.State.Creatures.FirstOrDefault(o=>o.Id==id)?.Name??"不在这里的家人";
+        string NameFor(string? id)=>id==null?"未记录":Sim.State.KnownCreatures.FirstOrDefault(o=>o.Id==id)?.Name??"不在这里的家人";
         var details=new List<string>{c.Name+" · "+(c.Body.ReproductionRole==ReproductionRole.Maternal?"母体角色":"父体角色")};
         if(c.Family.MotherId!=null||c.Family.FatherId!=null)details.Add("母亲："+NameFor(c.Family.MotherId)+"；父亲："+NameFor(c.Family.FatherId));
         if(c.Family.PartnerIds.Count>0)details.Add("伴侣："+string.Join("、",c.Family.PartnerIds.OrderBy(id=>id).Select(id=>NameFor(id))));
@@ -388,6 +390,10 @@ public partial class InteractionRoom
             if(parents.Length>0)details.Add("亲代照护者："+string.Join("、",parents.Select(id=>NameFor(id))));
             if(foster.Length>0)details.Add("持续照顾后认下的养亲："+string.Join("、",foster.Select(id=>NameFor(id))));
         }
+        var children=Sim.State.KnownCreatures.Where(other=>other.Id!=c.Id&&(other.Family.MotherId==c.Id||other.Family.FatherId==c.Id||other.ParentId==c.Id)).ToArray();
+        if(children.Length>0)details.Add("子女："+string.Join("、",children.Select(other=>NameFor(other.Id))));
+        var adopted=Sim.State.KnownCreatures.Where(other=>other.Id!=c.Id&&other.Family.CaregiverIds.Contains(c.Id)&&!children.Contains(other)).ToArray();
+        if(adopted.Length>0)details.Add("认下的养子女："+string.Join("、",adopted.Select(other=>NameFor(other.Id))));
         string care=FamilyCareSummary(c);
         if(care.Length>0)details.Add(care);
         if(c.Family.CareLastEvent.Length>0)details.Add("照护记录："+c.Family.CareLastEvent);
@@ -397,7 +403,11 @@ public partial class InteractionRoom
         if(aftermath.Length>0)details.Add(aftermath);
         string risk=c.Condition==PhysicalCondition.Dead?"":FamilyRules.DescribeRisk(c);
         if(risk.Length>0)details.Add(risk);
-        if(c.Condition!=PhysicalCondition.Dead)details.Add(FamilyRules.DescribeLearning(c));
+        if(c.Condition!=PhysicalCondition.Dead)
+        {
+            string learning=FamilyRules.DescribeLearning(c);
+            if(learning!="还在通过相处和经历了解食水。")details.Add(learning);
+        }
         return string.Join("\n",details);
     }
 
@@ -428,17 +438,10 @@ public partial class InteractionRoom
 // anatomical model or a replacement for the simulation's injury / posture priority.
 internal partial class FamilyStatusMarker : Node3D
 {
-    private Node3D _stem=null!,_cradle=null!;
     private Label3D _label=null!;
     public void Build(Font font)
     {
-        _stem=new Node3D();AddChild(_stem);
-        SceneArt.Mesh(_stem,new CylinderMesh{TopRadius=.018f,BottomRadius=.025f,Height=.21f,RadialSegments=8},new(0,.1f,0),"739463");
-        SceneArt.Ball(_stem,new(-.07f,.14f,0),new(.14f,.06f,.09f),"94ad73");
-        SceneArt.Ball(_stem,new(.06f,.22f,0),new(.13f,.10f,.12f),"e9cba4");
-        _cradle=new Node3D();AddChild(_cradle);
-        SceneArt.Mesh(_cradle,new TorusMesh{InnerRadius=.08f,OuterRadius=.14f,Rings=20,RingSegments=8},new(0,.05f,0),"d5b080");
-        SceneArt.Ball(_cradle,new(0,.10f,0),new(.15f,.12f,.13f),"e9cba4");
+        // Pregnancy already has an attached anatomical model; no floating duplicate sprout or cradle.
         _label=new Label3D{Font=font,FontSize=30,PixelSize=.004f,Position=new(0,.39f,0),
             Billboard=BaseMaterial3D.BillboardModeEnum.Enabled,Modulate=new Color("fff4d7"),
             OutlineModulate=new Color("425044"),OutlineSize=9};
@@ -447,10 +450,10 @@ internal partial class FamilyStatusMarker : Node3D
     public void Present(Creature c,float bodyScale,Vector3 motion,bool selected)
     {
         var p=c.Family.Pregnancy;
-        Visible=c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&p.Phase==PregnancyPhase.Gestating;
+        Visible=selected&&c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&p.Phase==PregnancyPhase.Gestating;
         if(!Visible)return;
-        Position=motion+new Vector3(.76f*bodyScale,.80f*bodyScale,-.10f);
-        _stem.Visible=p.Method==BirthMethod.Stem;_cradle.Visible=p.Method==BirthMethod.Live;
+        Position=motion+new Vector3(0,1.4f*bodyScale,0);
+
         float progress=Mathf.Clamp((float)(p.Elapsed/FamilyRules.GestationSeconds(p.Method)),0,1);
         _label.Visible=selected;_label.Text=(p.Method==BirthMethod.Stem?"茎生孕育":"胎生孕育")+$" {progress*100:0}%";
     }

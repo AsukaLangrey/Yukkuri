@@ -36,7 +36,7 @@ public sealed partial class WorldSimulation
         var c=InteractionTarget(id);
         if(c==null)return "先选择当前小院里的个体。";
         if(c.Condition==PhysicalCondition.Dead)return "它已经离世，不能再接受诱导。";
-        if(c.IsYoung||!FamilyRules.SupportedSpecies(c.Body.SpeciesId))
+        if(!GrowthRules.IsAdult(c)||!FamilyRules.SupportedSpecies(c.Body.SpeciesId))
             return "只适用于已成熟、已制作繁育规则的个体。";
         if(c.Family.ColdStorage.Stored)return "先从冷藏取出。";
         if(State.WorldSeconds<c.Family.NextInductionAt)return "刚进行过诱导，需要留出恢复间隔。";
@@ -92,7 +92,7 @@ public sealed partial class WorldSimulation
         if(dt<=0)return;
         bool induced=f.InducedInterestRemaining>0;
         f.InducedInterestRemaining=Math.Max(0,f.InducedInterestRemaining-dt);
-        if(c.IsYoung||f.Pregnancy.Phase!=PregnancyPhase.None||c.Family.ColdStorage.Stored||
+        if(!GrowthRules.IsAdult(c)||f.Pregnancy.Phase!=PregnancyPhase.None||c.Family.ColdStorage.Stored||
             c.Condition!=PhysicalCondition.Active||c.Pain>=25||c.Fear>=55||WaterEnvironment.IsInWater(State,c))
         {f.BreedingInterest=Math.Max(0,f.BreedingInterest-dt*.35);return;}
         bool comfortable=c.Fullness>=60&&c.Interaction.Hydration>=60&&c.Energy>=50&&SecureForBreeding(c);

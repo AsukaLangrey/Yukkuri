@@ -1,0 +1,2 @@
+# Reuse the identical ordinary Git blob already published in the art library.
+foliage-cluster-v01.png -filter -diff -merge -text

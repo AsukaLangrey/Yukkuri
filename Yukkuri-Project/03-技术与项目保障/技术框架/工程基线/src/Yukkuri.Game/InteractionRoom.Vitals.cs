@@ -9,7 +9,7 @@ public partial class InteractionRoom
     private ProgressBar _fullnessMeter=null!,_hydrationMeter=null!;
     private StyleBoxFlat _fullnessFill=null!,_hydrationFill=null!;
     private Label _comfortLabel=null!,_trustLabel=null!,_lifeLabel=null!,_fearLabel=null!,_continuityLabel=null!,_personalityLabel=null!;
-    private Label _waterSupportLabel=null!,_hungerFeedingLabel=null!,_familyNeedsLabel=null!;
+    private Label _waterSupportLabel=null!,_hungerFeedingLabel=null!,_familyNeedsLabel=null!,_hydrationWarningLabel=null!;
     private ProgressBar _comfortMeter=null!,_trustMeter=null!,_lifeMeter=null!,_fearMeter=null!;
     private StyleBoxFlat _comfortFill=null!,_trustFill=null!,_lifeFill=null!,_fearFill=null!;
     private void BuildVitalMeters(Control parent)
@@ -17,6 +17,7 @@ public partial class InteractionRoom
         var meters=Column(parent,4);_creatureVitalMeters=meters;
         _healthLabel=Text("身体状态：正常",14);meters.AddChild(_healthLabel);
         BuildImmediateInterventions(meters);
+        _hydrationWarningLabel=Text("",12,"b15b48");meters.AddChild(_hydrationWarningLabel);
         _personalityLabel=Text("",12,"78816e");meters.AddChild(_personalityLabel);
         var overview=new GridContainer{Columns=2,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
         overview.AddThemeConstantOverride("h_separation",10);overview.AddThemeConstantOverride("v_separation",4);meters.AddChild(overview);
@@ -47,8 +48,9 @@ public partial class InteractionRoom
     {
         double full=Math.Clamp(c.Fullness,0,100),hydration=Math.Clamp(c.Interaction.Hydration,0,100);
         _fullnessMeter.Value=full;_hydrationMeter.Value=hydration;
-        _fullnessLabel.Text=$"饱食度  {Math.Round(full):0}/100";
-        _hydrationLabel.Text=$"水分  {Math.Round(hydration):0}/100";
+        bool active=c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored;
+        _fullnessLabel.Text=$"饱食 {Math.Round(full):0}"+(active?" · "+CreatureNeedsObservation.Food(c):"/100");
+        _hydrationLabel.Text=$"水分 {Math.Round(hydration):0}"+(active?" · "+CreatureNeedsObservation.Water(c):"/100");
         _fullnessFill.BgColor=new Color(full<25?"bd795d":"8aa576");
         _hydrationFill.BgColor=new Color(hydration<25?"bd795d":"7cabc0");
         _healthLabel.Text="身体状态："+(c.HealthStatus switch
@@ -56,6 +58,10 @@ public partial class InteractionRoom
             HealthStatus.Dead=>"死亡",HealthStatus.Critical=>"重伤 · 急需救治",
             HealthStatus.Recovering=>"恢复中",HealthStatus.Injured=>"受伤",_=>"正常"
         });
+        _hydrationWarningLabel.Text=CourtyardSurvival.DehydrationStatus(c);
+        _hydrationWarningLabel.Visible=_hydrationWarningLabel.Text.Length>0;
+        if(_hydrationWarningLabel.Visible&&c.HealthStatus==HealthStatus.Healthy)
+            _healthLabel.Text="身体状态："+(hydration<=0?"严重脱水":"缺水");
         if(c.Condition==PhysicalCondition.Critical)
             _healthLabel.Text+=$" · 救治余下约 {Math.Ceiling(Math.Max(0,c.CriticalRemaining)):0} 秒";
         var personality=c.Personality;
@@ -73,12 +79,13 @@ public partial class InteractionRoom
         _lifeFill.BgColor=new Color(health<35?"b86e61":"88a877");
         _fearFill.BgColor=new Color(fear>50?"b86e61":"ae8c74");
         var emotion=c.Interaction.Emotion;var water=c.Interaction.Water;
-        _continuityLabel.Text=c.Condition==PhysicalCondition.Dead?"生命已经结束，经历和关系记录仍保留。":
+        _continuityLabel.Text=c.Condition==PhysicalCondition.Dead?"生命已经结束，经历和关系记录仍保留。":c.Family.ColdStorage.Stored?"":
             WaterEnvironment.IsInWater(Sim.State,c)?$"落水 {water.ExposureSeconds:0} 秒 · 挣扎 {water.Struggle:0}\n拿救援用品点击它，可尝试带回岸上。":
             water.RecoverySeconds>0?$"已经离水，仍在恢复 · 余下 {water.RecoverySeconds:0} 秒\n先擦干并检查伤势。":
             emotion.Alarm>0?$"惊惧余波 {emotion.Alarm:0.0} · 需要持续安全\n愿意接近食物，也可能仍然害怕；先给它一点空间。":
             !EmotionalReadiness.Settled(c)?$"疼痛 {c.Pain:0} · 恐惧 {fear:0}\n还没有安定下来，先照顾身体并留出空间。":
-            "0—100：馒馒来是当前心情；信任取决于相处经历。";
+            "";
+        _continuityLabel.Visible=_continuityLabel.Text.Length>0;
         RefreshImmediateInterventions(c);
         RefreshHungerFeedingStatus(c);
         RefreshFamilyNeedsStatus(c);
@@ -98,13 +105,10 @@ public partial class InteractionRoom
     private void RefreshFamilyNeedsStatus(Creature c)
     {
         var pregnancy=c.Family.Pregnancy;
-        _familyNeedsLabel.Visible=c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored&&
-            (c.IsYoung||pregnancy.Phase==PregnancyPhase.Recovering);
-        if(!_familyNeedsLabel.Visible)return;
-        _familyNeedsLabel.Text=c.IsYoung?
-            $"幼体保暖 {Math.Clamp(c.Family.Warmth,0,100):0}/100"+
-                (c.Family.Warmth<35?" · 正在发冷":"")+"\n吃喝、保暖和陪伴都需要持续照看。":
-            $"孕育恢复尚需 {Math.Ceiling(Math.Max(0,pregnancy.RecoveryRemaining)):0} 秒\n吃喝不足或疼痛时，恢复进度会停住。";
+        _familyNeedsLabel.Visible=c.Condition!=PhysicalCondition.Dead&&!c.Family.ColdStorage.Stored;
+        _familyNeedsLabel.Text=$"体力 {c.Energy:0} · {CreatureNeedsObservation.Energy(c)}\n困意 {c.Interaction.Sleepiness:0} · {CreatureNeedsObservation.Sleep(c)}\n保暖 {c.Family.Warmth:0}/100\n环境 {CourtyardClimate.Temperature(Sim.State.WorldSeconds):0}°C · 所在处 {Sim.EffectiveTemperature(c):0}°C"+
+            (c.Family.SeekingWarmth?"\n正在寻找同伴或小屋保暖。":"")+
+            (pregnancy.Phase==PregnancyPhase.Recovering?$"\n孕育恢复尚需 {Math.Ceiling(Math.Max(0,pregnancy.RecoveryRemaining)):0} 秒":"");
     }
 
     private void RefreshHungerFeedingStatus(Creature c)

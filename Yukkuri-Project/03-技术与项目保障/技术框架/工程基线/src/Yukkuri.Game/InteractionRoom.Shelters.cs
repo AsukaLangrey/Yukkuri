@@ -44,6 +44,8 @@ public partial class InteractionRoom
             foreach(var line in _shelterPlacementLines)line.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
         }
         bool clear=ContactAt(pointer)==null&&ObjectAt(pointer)==null&&Sim.CanPlaceShelterAt(point.X,point.Z);
+        float placementScale=Sim.State.EconomyProgression?(float)ShelterGeometry.SharedScale:1;
+        _shelterPlacement.Scale=new(placementScale,1,placementScale);
         _shelterPlacement.Visible=true;_shelterPlacement.Position=point+Vector3.Up*.018f;
         foreach(var line in _shelterPlacementLines)line.MaterialOverride=SceneArt.Mat(clear?"899e90":"b7806c");
     }
@@ -116,12 +118,12 @@ public partial class InteractionRoom
         return best;
     }
     private bool IsShelterDoorContact(Contact contact,ShelterView state)=>
-        ShelterGeometry.DoorControlHit(contact.World.X-state.X,contact.World.Y,contact.World.Z-state.Z);
+        ShelterGeometry.DoorControlHit((contact.World.X-state.X)/(state.Capacity==5?ShelterGeometry.SharedScale:1),contact.World.Y,(contact.World.Z-state.Z)/(state.Capacity==5?ShelterGeometry.SharedScale:1));
     private string ShelterHint(Contact contact)
     {
         var state=Sim.ShelterStatus(contact.Id);
         if(state==null)return "这个居所已不在这里";
-        string title="居所 · "+(state.DoorOpen?"门已打开":"门帘关闭");
+        string title="居所 · "+(state.DoorProgress>=.999?"门已打开":state.DoorProgress<=.001?"门帘关闭":state.DoorOpen?"正在开门":"正在关门");
         if(_waterRescueToolArmed)return title+" · 救援用品请对准落水油";
         if(_heldSupplyId!=null)return title+" · 门墙挡住了食水，请从实际门洞递送";
         if(_toolArmed&&_action is InteractionAction.OpenShelterDoor or InteractionAction.CloseShelterDoor)

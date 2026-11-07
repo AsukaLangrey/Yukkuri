@@ -64,7 +64,7 @@ public partial class InteractionRoom
     private bool TryGroundPoint(Vector2 point,float height,out Vector3 hit)
     {
         bool valid=TryCameraPlanePoint(point,height,out hit);
-        hit=new(Mathf.Clamp(hit.X,-7.7f,7.7f),height,Mathf.Clamp(hit.Z,-7.7f,7.7f));return valid;
+        hit=new(Mathf.Clamp(hit.X,-(float)CourtyardGround.PointerEdge,(float)CourtyardGround.PointerEdge),height,Mathf.Clamp(hit.Z,-(float)CourtyardGround.PointerEdge,(float)CourtyardGround.PointerEdge));return valid;
     }
     private bool TryCameraPlanePoint(Vector2 point,float height,out Vector3 hit)
     {
@@ -90,7 +90,7 @@ public partial class InteractionRoom
         if(ActivityContainsPoint(point))return false;
         if(DebugPanelVisible&&DebugContainsPoint(point))return false;
         if(_objectActions!=null&&_objectActions.IsVisibleInTree()&&_objectActions.GetGlobalRect().HasPoint(point))return false;
-        return GameUiLayout.Canvas(_ui).HasPoint(point)&&!GameUiLayout.Hit(_forceSlider,point)&&!_eventFeed.BlocksPoint(point);
+        return GameUiLayout.Canvas(_ui).HasPoint(point)&&!GameUiLayout.Hit(_speedButton,point)&&!GameUiLayout.Hit(_recycleBox,point)&&!GameUiLayout.Hit(_forceSlider,point)&&!_eventFeed.BlocksPoint(point);
     }
     private Contact? ContactAt(Vector2 point)
     {
@@ -174,6 +174,8 @@ public partial class InteractionRoom
     public override void _Input(InputEvent input)
     {
         if(!_ready||!_windowFocused)return;
+        if(input is InputEventKey{Pressed:true,Echo:false,Keycode:Key.F11})
+        {ToggleFullscreen();GetViewport().SetInputAsHandled();return;}
         if(HandleRedesignRelease(input)){GetViewport().SetInputAsHandled();return;}
         if(input is InputEventKey{Pressed:true,Echo:false} debugKey&&
             (debugKey.Keycode==Key.F3||debugKey.Keycode==Key.Escape&&DebugPanelVisible&&!_modalOpen))
@@ -207,7 +209,7 @@ public partial class InteractionRoom
             if(TryCameraPlanePoint(pan.Position-pan.Relative,0,out var previous)&&TryCameraPlanePoint(pan.Position,0,out var current))
             {
                 Vector3 shift=previous-current;
-                _yardFocus+=shift;_camera.Position+=shift;
+                _yardFocus+=shift;_camera.Position+=shift;_locatedCreatureId=null;
             }
             GetViewport().SetInputAsHandled();return;
         }
@@ -238,7 +240,9 @@ public partial class InteractionRoom
         {
             if(key.Keycode!=Key.Escape&&(GetViewport().GuiGetFocusOwner() is LineEdit or TextEdit))return;
             if(key.Keycode==Key.Escape)
-            {if(_modalOpen)CloseModal();else if(ActivityPanelVisible)CloseActivityPanel();else if(_toolArmed||Sim.HasInteractionGesture)DisarmTool();else if(Sim.State.Mode==PlayMode.CloseUp)ToggleClose();else ShowSettings();GetViewport().SetInputAsHandled();}
+            {if(_modalOpen)CloseModal();else if(ActivityPanelVisible)CloseActivityPanel();else if(_mouseHeld||_sceneDragId!=null||_heldSupplyId!=null||Sim.HasInteractionGesture||_panning||_orbiting)DisarmTool();else if(Sim.State.Mode==PlayMode.CloseUp)ToggleClose();else ShowSystemMenu();GetViewport().SetInputAsHandled();}
+            else if(key.Keycode==Key.F5){ShowSaveSlots(false);GetViewport().SetInputAsHandled();}
+            else if(key.Keycode==Key.F9){ShowSaveSlots(true);GetViewport().SetInputAsHandled();}
             else if(!_modalOpen&&key.Keycode==Key.Space){TogglePause();GetViewport().SetInputAsHandled();}
             else if(!_modalOpen&&key.Keycode==Key.Tab){ToggleClose();GetViewport().SetInputAsHandled();}
             else if(!_modalOpen&&key.Keycode==Key.Delete&&IsScenePoint(GetViewport().GetMousePosition()))
@@ -278,7 +282,7 @@ public partial class InteractionRoom
             {
                 CancelGesture();
                 if(Sim.State.Mode==PlayMode.CloseUp)_closeZoom=Mathf.Clamp(_closeZoom-step*.08f,.65f,1.6f);
-                else _zoom=Mathf.Clamp(_zoom-step,9,23);
+                else _zoom=Mathf.Clamp(_zoom-step,9,23*(float)CourtyardGround.Expansion);
             }
             GetViewport().SetInputAsHandled();return;
         }
@@ -562,7 +566,7 @@ public partial class InteractionRoom
             if(_action==InteractionAction.Roll)worldMotion=relative;
         }
         double appliedMotion=_action==InteractionAction.Touch?motionSample.Distance:surfaceMotion?stroke.Distance:worldMotion.Length();
-        var input=new InteractionInput(_action,contact?.Part??BodyPart.Side,_appliedForce,dt,appliedMotion,Math.Clamp(carriedTarget.X,-7.7,7.7),Math.Clamp(carriedTarget.Z,-7.7,7.7),_height,direction.X,direction.Z,contact?.Side??SurfaceSide.Whole,_action==InteractionAction.PlayBall?_ballDragId:null);
+        var input=new InteractionInput(_action,contact?.Part??BodyPart.Side,_appliedForce,dt,appliedMotion,Math.Clamp(carriedTarget.X,-CourtyardGround.PointerEdge,CourtyardGround.PointerEdge),Math.Clamp(carriedTarget.Z,-CourtyardGround.PointerEdge,CourtyardGround.PointerEdge),_height,direction.X,direction.Z,contact?.Side??SurfaceSide.Whole,_action==InteractionAction.PlayBall?_ballDragId:null);
         input=input with {TargetKind=_gestureTargetKind,ObjectId=_gestureTargetObject};
         if(_action==InteractionAction.Touch)input=input with {StopImpact=motionSample.StopImpact,TouchTangentFraction=motionSample.TangentFraction,TouchNormalSpeed=motionSample.NormalSpeed};
         // Dragging off the scene never creates force, consumes a dose, or drops a held oil.

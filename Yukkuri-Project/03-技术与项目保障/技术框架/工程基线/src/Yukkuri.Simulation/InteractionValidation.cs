@@ -18,7 +18,7 @@ public static class InteractionValidation
         foreach (var o in s.RoomObjects!)
             Require(o != null && !string.IsNullOrWhiteSpace(o.Id) && objectIds.Add(o.Id) && Enum.IsDefined(o.Kind) &&
                 s.Regions.Any(r => r.Id == o.RegionId) && (o.OwnerId == null || ids.Contains(o.OwnerId)) &&
-                Finite(o.X, o.Z, o.Height, o.VelocityX, o.VelocityZ,o.Contamination) && o.Contamination is >=0 and <=1 && Math.Abs(o.X) <= 9 && Math.Abs(o.Z) <= 9 &&
+                Finite(o.X, o.Z, o.Height, o.VelocityX, o.VelocityZ,o.Contamination) && o.Contamination is >=0 and <=1 && Math.Abs(o.X)<=CourtyardGround.SaveLimit && Math.Abs(o.Z)<=CourtyardGround.SaveLimit &&
                 o.Height is >= 0 and <= 5 && o.Portions is >= 0 and <= 1000, "互动场景物品无效");
         var accessoryIds = new HashSet<string>();
         foreach (var c in s.Creatures)
@@ -99,7 +99,7 @@ public static class InteractionValidation
             var a = i.Accessory!;
             Require(!string.IsNullOrWhiteSpace(a.Id) && accessoryIds.Add(a.Id) && Enum.IsDefined(a.Place) &&
                 Range(a.Integrity, a.Dirt) && Finite(a.X, a.Z, a.Height, a.RepairProgress) &&
-                Math.Abs(a.X) <= 9 && Math.Abs(a.Z) <= 9 && a.Height is >= 0 and <= 5 &&
+                Math.Abs(a.X)<=CourtyardGround.SaveLimit && Math.Abs(a.Z)<=CourtyardGround.SaveLimit && a.Height is >= 0 and <= 5 &&
                 a.Losses >= 0 && a.Replacements >= 0&&a.RepairProgress>=0&&a.CompletedRepairs>=0, "饰品归属或状态无效");
             foreach (var (cue, learning) in i.Learning!)
                 Require(Enum.IsDefined(cue) && learning != null && Range(learning.Familiarity) &&
@@ -115,7 +115,7 @@ public static class InteractionValidation
             Require(i.Resources!=null&&i.Resources.Count<=128&&i.Resources.All(p=>!string.IsNullOrWhiteSpace(p.Key)&&p.Value!=null&&
                 s.Regions.Any(r=>r.Id==p.Value.RegionId)&&NaturalResources.IsResource(p.Value.Kind)&&
                 Finite(p.Value.X,p.Value.Z,p.Value.SeenAt,p.Value.AvoidUntil,p.Value.Suspicion)&&
-                Math.Abs(p.Value.X)<=9&&Math.Abs(p.Value.Z)<=9&&Range(p.Value.Suspicion)),"资源记忆无效");
+                Math.Abs(p.Value.X)<=CourtyardGround.SaveLimit&&Math.Abs(p.Value.Z)<=CourtyardGround.SaveLimit&&Range(p.Value.Suspicion)),"资源记忆无效");
             Require(Finite(i.ResourceBestDistance,i.ResourceStuckSeconds,i.NextResourceScanAt,i.ExploreUntil,i.LastHelpDecisionAt,i.HelpWaitingUntil)&&
                 i.ResourceBestDistance>=0&&i.ResourceStuckSeconds>=0,"自主寻找进度无效");
             Require(Finite(i.RestBestDistance,i.RestStuckSeconds,i.RestOnGroundUntil)&&

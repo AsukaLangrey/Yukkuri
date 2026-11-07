@@ -4,7 +4,7 @@ using Yukkuri.Simulation;
 public partial class CreatureActor
 {
     private Node3D? _gestationPlant;
-    private readonly Node3D[] _gestationBuds=new Node3D[3];
+    private readonly Node3D[] _gestationBuds=new Node3D[5];
     private bool _gestationReady;
     private float _gestationMass,_stemAmount,_lastStemProgress,_birthCueRemaining,_birthCueWindow,_newbornCueRemaining;
     private int _lastStemChildren=2;
@@ -13,10 +13,11 @@ public partial class CreatureActor
     private float _stemIntegrity=1,_stemMoisture=1,_stemSupport,_stemStress;
     private bool _stemStressReady;
     private Node3D? _stemSupportBand;
-    private readonly MeshInstance3D[] _stemBudEyes=new MeshInstance3D[6];
-    private readonly MeshInstance3D[] _stemBudMouths=new MeshInstance3D[3];
-    private readonly StandardMaterial3D[] _stemBudMaterials=new StandardMaterial3D[3];
-    private readonly StandardMaterial3D[] _stemLeafMaterials=new StandardMaterial3D[3];
+    private readonly Node3D[] _gestationBranches=new Node3D[5];
+    private readonly MeshInstance3D[] _stemBudEyes=new MeshInstance3D[10];
+    private readonly MeshInstance3D[] _stemBudMouths=new MeshInstance3D[5];
+    private readonly StandardMaterial3D[] _stemBudMaterials=new StandardMaterial3D[5];
+    private readonly StandardMaterial3D[] _stemLeafMaterials=new StandardMaterial3D[5];
 
     // The room supplies the current simulation's whole-clutch status, never a text cue.
     public void PrepareStemPresentation(StemCareView? status)
@@ -32,7 +33,7 @@ public partial class CreatureActor
         _stemMoisture=Mathf.Clamp((float)(status?.Hydration??0)/100,0,1);
         _stemSupport=Mathf.Clamp((float)(status?.SupportRemaining??0)/8,0,1);
         _lastStemProgress=Mathf.Clamp((float)(status?.Progress??0),0,1);
-        _lastStemChildren=System.Math.Clamp(status?.PlannedChildren??0,0,3);
+        _lastStemChildren=System.Math.Clamp(status?.PlannedChildren??0,0,5);
     }
 
     // Called only when the room discovers a real newly-created child with a birth event.
@@ -90,10 +91,11 @@ public partial class CreatureActor
         SculptTube(_gestationPlant,u=>new(.70f*Mathf.Sin(u*Mathf.Pi*.5f),.53f*u,Mathf.Sin(u*Mathf.Pi)*.035f),.014f,"7e9b68",24);
         for(int n=0;n<_gestationBuds.Length;n++)
         {
-            float side=n-1;
+            var branch=new Node3D();_gestationPlant.AddChild(branch);_gestationBranches[n]=branch;
+            float side=n-2;
             var tip=new Vector3(.70f+side*.16f,.58f+(n==1?.10f:0),.035f+Mathf.Abs(side)*.04f);
-            SculptTube(_gestationPlant,u=>new Vector3(.52f,.29f,.025f).Lerp(tip,u)+Vector3.Up*Mathf.Sin(u*Mathf.Pi)*.06f,.010f,"8ba676",18);
-            var bud=new Node3D{Position=tip};_gestationPlant.AddChild(bud);_gestationBuds[n]=bud;
+            SculptTube(branch,u=>new Vector3(.52f,.29f,.025f).Lerp(tip,u)+Vector3.Up*Mathf.Sin(u*Mathf.Pi)*.06f,.010f,"8ba676",18);
+            var bud=new Node3D{Position=tip};branch.AddChild(bud);_gestationBuds[n]=bud;
             var skin=SceneArt.Ball(bud,Vector3.Zero,new(.16f,.14f,.14f),"eddbb7");
             _stemBudMaterials[n]=(StandardMaterial3D)skin.MaterialOverride.Duplicate();skin.MaterialOverride=_stemBudMaterials[n];
             SceneArt.Ball(bud,new(0,.046f,-.012f),new(.15f,.065f,.12f),"a2b382");
@@ -101,7 +103,7 @@ public partial class CreatureActor
                 _stemBudEyes[n*2+eye]=SceneArt.Ball(bud,new(eye==0?-.028f:.028f,.005f,.067f),new(.011f,.017f,.006f),"665244");
             _stemBudMouths[n]=SceneArt.Ball(bud,new(0,-.025f,.069f),new(.018f,.007f,.005f),"9b6953");
             float sign=n%2==0?-1:1;
-            var leaf=SculptSurface(_gestationPlant,12,8,(u,v)=>
+            var leaf=SculptSurface(branch,12,8,(u,v)=>
                 new(.52f+sign*u*.15f,.29f+u*.055f+Mathf.Sin(u*Mathf.Pi)*.025f,
                     .025f+(v-.5f)*Mathf.Sin(u*Mathf.Pi)*.075f),"9bb67c",flipNormal:sign>0);
             leaf.CastShadow=GeometryInstance3D.ShadowCastingSetting.Off;
@@ -138,14 +140,15 @@ public partial class CreatureActor
         else if(dt>0)_stemStress=Mathf.Lerp(_stemStress,stress,1-Mathf.Exp(-dt*3));
         var deformation=_visual.Scale/BodyScale;
         float growth=(.20f+_lastStemProgress*.80f)*_stemAmount;
-        _gestationPlant.Scale=new(1/deformation.X,growth/deformation.Y,1/deformation.Z);
+        float fold=(float)c.Interaction.StemFold;
+        _gestationPlant.Scale=new((1-.6f*fold)/deformation.X,growth*(1-.3f*fold)/deformation.Y,1/deformation.Z);
         float sway=c.Condition==PhysicalCondition.Active?Mathf.Sin(_phase*1.8f)*1.5f*(1-_stemSupport*.7f)*(1-_stemStress*.65f):0;
         _gestationPlant.RotationDegrees=new(0,0,sway-_stemStress*13*(1-_stemSupport*.45f));
         _stemSupportBand!.Visible=_stemSupport>0;
         for(int n=0;n<_gestationBuds.Length;n++)
         {
             float size=(.18f+.82f*Mathf.SmoothStep(.10f,1,_lastStemProgress))*_stemAmount;
-            _gestationBuds[n].Visible=n<_lastStemChildren;
+            _gestationBranches[n].Visible=n<_lastStemChildren;_gestationBuds[n].Visible=n<_lastStemChildren;
             _gestationBuds[n].Scale=new(size,size/Mathf.Max(.05f,growth),size);
             _gestationBuds[n].RotationDegrees=new(_stemStress*6,0,-_stemStress*8);
             _stemBudMaterials[n].AlbedoColor=new Color("eddbb7").Lerp(new Color("bdac89"),_stemStress*.65f);

@@ -197,8 +197,8 @@ Check("immersion damages supported stems and cold storage uses the existing biol
     BuyFixtureProduct(cold,"freezer");
     cold.SetColdStorage(m.Id,true);Require(m.Family.ColdStorage.Stored,"cold storage refused fixture");
     double before=m.Family.Pregnancy.Elapsed;for(int n=0;n<10;n++)Frame(cold);
-    Require(Math.Abs(m.Family.Pregnancy.Elapsed-before-.1)<1e-7&&Math.Abs(m.Family.Pregnancy.Stem!.SupportRemaining-59.9)<1e-7,
-        "stem diverged from slowed biological time");
+    Require(Math.Abs(m.Family.Pregnancy.Elapsed-before)<1e-7&&Math.Abs(m.Family.Pregnancy.Stem!.SupportRemaining-60)<1e-7,
+        "stored stem advanced despite paused biological time");
     Require(!cold.StemCareStatus(m.Id)!.CanSupport,"cold mother remained touchable");
 });
 

@@ -19,6 +19,10 @@ public partial class InteractionRoom
             _autoClock=-10000;_muted=true;
             await RenderFrames(12);
             Sim.State.Settings.Pause=true;
+            ShowShelterSupplies();await RenderFrames(3);
+            var shelterBuy=_panelContents.GetChildren().OfType<Button>().Single(b=>b.Text.StartsWith("购买一间"));
+            if(!shelterBuy.Disabled||!_panelContents.GetChildren().OfType<Label>().Any(l=>l.Text==Sim.ShopUnlockReason("shelter")))
+                throw new Exception("shelter shortcut did not explain or enforce the income unlock");
             ShowShop(category:"食水供给设施");await RenderFrames(3);
             if(_panelContents.FindChildren("*","Button",true,false).OfType<Button>().Where(b=>b.Text.StartsWith("购买 ·")).Any(b=>!b.Disabled))
                 throw new Exception("locked tools are purchasable in UI");
@@ -37,7 +41,7 @@ public partial class InteractionRoom
             if(Sim.State.Food<=food)throw new Exception("sale revenue could not buy food");
             CloseActivityPanel();Sim.State.Settings.Pause=false;await RenderFrames(20);
             Directory.CreateDirectory(Path.GetDirectoryName(output)!);
-            File.WriteAllText(output,"PASS: real scene, locked shop controls, confirmation refresh, sale payment, actor removal, pause preservation, food purchase, save validation.\nRenderer: "+DisplayServer.GetName());
+            File.WriteAllText(output,"PASS: real scene, shelter shortcut unlock message and disabled purchase, locked shop controls, confirmation refresh, sale payment, actor removal, pause preservation, food purchase, save validation.\nRenderer: "+DisplayServer.GetName());
             GetTree().Quit();
         }
         catch(Exception e)

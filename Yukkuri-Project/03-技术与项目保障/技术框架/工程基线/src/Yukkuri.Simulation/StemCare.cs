@@ -159,6 +159,7 @@ public sealed partial class WorldSimulation
         amount=Math.Min(amount,s.Integrity);
         s.Integrity=Math.Max(0,s.Integrity-amount);
         s.LastDamageAt=State.WorldSeconds;s.LastDamageCause=cause;s.LastDamageActorId=actor;
+        if(direct)RecordObjectEvent(s.EventId,cause,mother.Id);
         if(direct)
         {
             // This is a witnessed threat to the brood, not a Head injury or a
@@ -192,10 +193,10 @@ public sealed partial class WorldSimulation
         s.SupportRemaining=Math.Max(0,s.SupportRemaining-dt);
         bool submerged=WaterEnvironment.IsInWater(State,mother);
         bool nourished=mother.Fullness>=25&&mother.Interaction.Hydration>=25&&mother.Condition!=PhysicalCondition.Critical;
-        s.Hydration=Math.Clamp(s.Hydration+dt*(submerged?-.8:nourished?.08:-.4),0,100);
+        s.Hydration=Math.Clamp(s.Hydration+dt*(submerged?-.8:nourished?.025:-.025),0,100);
         if(submerged)DamageAttachedStem(mother,dt*1.2,"母体浸水使外茎泡损",null,direct:false);
         else if(!nourished||s.Hydration<20)
-            DamageAttachedStem(mother,dt*(s.Hydration<20?.45:.12),"母体失养使外茎缺水枯损",null,direct:false);
+            DamageAttachedStem(mother,dt*(s.Hydration<20?.012:.004),"母体失养使外茎缺水枯损",null,direct:false);
         else if(s.Hydration>=40)s.Integrity=Clamp100(s.Integrity+dt*.015);
         return mother.Family.Pregnancy.Phase==PregnancyPhase.Gestating;
     }

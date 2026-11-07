@@ -9,7 +9,7 @@ public sealed partial class WorldSimulation
     }
     public static double InteractionFootprint(Creature c,RestraintKind? restraint=null,bool? supine=null)
     {
-        double scale=c.IsYoung?.73:c.IsElder?1.03:1;
+        double scale=GrowthRules.Scale(c);
         var fixture=restraint??c.Interaction.Restraint;
         bool turned=supine??(restraint.HasValue?fixture==RestraintKind.Frame:c.Interaction.Supine||c.Interaction.Rolling);
         double body=turned?InteractionFixtureGeometry.SupineFootprint:InteractionFixtureGeometry.StandingFootprint;
@@ -21,7 +21,7 @@ public sealed partial class WorldSimulation
     {
         double own=InteractionFootprint(c,restraint,supine);
         if(!ShelterBodyFits(c,x,z,own))return false;
-        if(Math.Abs(x)>8-own||Math.Abs(z)>8-own)return false;
+        if(Math.Abs(x)>CourtyardGround.HalfSize-own||Math.Abs(z)>CourtyardGround.HalfSize-own)return false;
         if(!WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,allowWater))return false;
         if(!ClearOfStations(c.RegionId,x,z,own))return false;
         if(State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&
@@ -35,14 +35,21 @@ public sealed partial class WorldSimulation
                 if(dx*dx+dz*dz<(own+.02)*(own+.02))return false;
             }
         }
+        if(IsShelterCollisionSuppressed(c))return true;
         foreach(var other in State.Creatures)
         {
-            if(other.Id==c.Id||other.Family.ColdStorage.Stored||other.Family.Memorialized||other.RegionId!=c.RegionId||other.Interaction.Height>1&&other.Interaction.Restraint==RestraintKind.None)continue;
+            // House visitors do not block each other while entering or indoors.
+            if(other.Id==c.Id||IsShelterCollisionSuppressed(other)||IsShelteredHidden(other)||other.Family.ColdStorage.Stored||other.Family.Memorialized||other.RegionId!=c.RegionId||other.Interaction.Height>1&&other.Interaction.Restraint==RestraintKind.None)continue;
             double gap=own+InteractionFootprint(other);
             if(Distance(x,z,other.X,other.Z)<gap-.00001)return false;
         }
         return true;
     }
+    private bool HasGroundBodyOverlap(Creature c)=>!IsShelterCollisionSuppressed(c)&&State.Creatures.Any(o=>o.Id!=c.Id&&o.RegionId==c.RegionId&&
+        !IsShelterCollisionSuppressed(o)&&!IsShelteredHidden(o)&&!o.Family.ColdStorage.Stored&&!o.Family.Memorialized&&
+        !(o.Interaction.Height>1&&o.Interaction.Restraint==RestraintKind.None)&&
+        Distance(c.X,c.Z,o.X,o.Z)<InteractionFootprint(c)+InteractionFootprint(o)-.00001);
+
     private bool GroundMove(Creature c,double x,double z,bool slide,bool allowWater=false)
     {
         double dx=x-c.X,dz=z-c.Z,length=Math.Sqrt(dx*dx+dz*dz);
@@ -69,14 +76,30 @@ public sealed partial class WorldSimulation
     }
     private void ClearLandingOverlap(Creature c)
     {
-        if(CanOccupyRoom(c,c.X,c.Z,allowWater:true))return;
-        double originX=c.X,originZ=c.Z;
-        for(double radius=.08;radius<=3;radius+=.08)
-            for(int angle=0;angle<32;angle++)
-            {
-                double x=originX+Math.Cos(angle*Math.Tau/32)*radius,z=originZ+Math.Sin(angle*Math.Tau/32)*radius;
-                if(!ShelterMovePathClear(c,x,z)||!CanOccupyRoom(c,x,z,allowWater:true))continue;
-                c.X=x;c.Z=z;c.TargetX=x;c.TargetZ=z;return;
-            }
+        // Landing can start inside a neighbour. Never relocate to a distant free point in one tick.
+        c.Interaction.LandingSeparationPending=!CanOccupyRoom(c,c.X,c.Z,allowWater:true);
+    }
+    private void AdvanceLandingSeparation(Creature c,double dt)
+    {
+        if(!c.Interaction.LandingSeparationPending)return;
+        if(c.Interaction.Carried||c.Interaction.Falling||c.Interaction.Height>.01)return;
+        if(CanOccupyRoom(c,c.X,c.Z,allowWater:true)){c.Interaction.LandingSeparationPending=false;return;}
+        double own=InteractionFootprint(c);
+        double Penetration(double x,double z)=>State.Creatures.Where(o=>o.Id!=c.Id&&o.RegionId==c.RegionId&&!IsShelterCollisionSuppressed(o)&&!IsShelteredHidden(o)&&!o.Family.ColdStorage.Stored&&!o.Family.Memorialized&&!(o.Interaction.Height>1&&o.Interaction.Restraint==RestraintKind.None))
+            .Sum(o=>Math.Max(0,own+InteractionFootprint(o)-Distance(x,z,o.X,o.Z)));
+        double best=Penetration(c.X,c.Z),tx=c.X,tz=c.Z,step=Math.Min(.08,.60*dt);
+        for(int n=0;n<32;n++)
+        {
+            double x=c.X+Math.Cos(n*Math.Tau/32)*step,z=c.Z+Math.Sin(n*Math.Tau/32)*step;
+            if(!ShelterMovePathClear(c,x,z)||!ShelterBodyFits(c,x,z,own)||!WoodlandLayout.GroundFits(State,c.RegionId,x,z,own,true)||!ClearOfStations(c.RegionId,x,z,own)||State.DetachedStemBroods.Any(s=>s.RegionId==c.RegionId&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&Distance(x,z,s.X,s.Z)<own+StemVesselRadius)||Math.Abs(x)>CourtyardGround.HalfSize-own||Math.Abs(z)>CourtyardGround.HalfSize-own)continue;
+            double score=Penetration(x,z);if(score<best-1e-7&&!State.Creatures.Any(o=>o.Id!=c.Id&&o.RegionId==c.RegionId&&!IsShelterCollisionSuppressed(o)&&!IsShelteredHidden(o)&&!o.Family.ColdStorage.Stored&&!o.Family.Memorialized&&
+                !(o.Interaction.Height>1&&o.Interaction.Restraint==RestraintKind.None)&&
+                Math.Max(0,own+InteractionFootprint(o)-Distance(x,z,o.X,o.Z))>Math.Max(0,own+InteractionFootprint(o)-Distance(c.X,c.Z,o.X,o.Z))+1e-7))
+            {best=score;tx=x;tz=z;}
+        }
+        if(Distance(c.X,c.Z,tx,tz)>.00001){c.Interaction.AutonomousMotionSerial++;c.Interaction.LastWalkAt=State.WorldSeconds;}
+        c.X=tx;c.Z=tz;c.TargetX=tx;c.TargetZ=tz;
+        c.Activity=best>0?"落地后缓缓让开，避免挤压同伴":"落地后整理站位";
+        if(CanOccupyRoom(c,c.X,c.Z,allowWater:true))c.Interaction.LandingSeparationPending=false;
     }
 }

@@ -10,31 +10,28 @@ public sealed class ColdStorageState
 
 public sealed partial class WorldSimulation
 {
-    // Finite preservation, never a reset of a rescue window. Tuning is a draft.
+    public const int ColdStorageCapacity=12;
+    // Kept for source compatibility with older checks; stored biology no longer expires.
     public const double ColdStorageLimitSeconds=600;
-    public static double BiologicalTimeScale(Creature c)=>c.Family.ColdStorage.Stored&&
-        c.Family.ColdStorage.Elapsed<ColdStorageLimitSeconds?.1:1;
-    public static double BiologicalDelta(Creature c,double dt)
-    {
-        double slowed=c.Family.ColdStorage.Stored?Math.Clamp(ColdStorageLimitSeconds-c.Family.ColdStorage.Elapsed,0,dt):0;
-        return slowed*.1+(dt-slowed);
-    }
+    public static double BiologicalTimeScale(Creature c)=>c.Family.ColdStorage.Stored?0:1;
+    public static double BiologicalDelta(Creature c,double dt)=>dt*BiologicalTimeScale(c);
 
     public string SetColdStorage(string id,bool stored)
     {
-        var c=State.Creatures.Find(x=>x.Id==id);var error=FamilyCommandError(c,allowDead:!stored);
+        var c=State.Creatures.Find(x=>x.Id==id);
+        var error=!stored&&c?.Family.ColdStorage.Stored==true?
+            (State.Settings.Pause?"先恢复时间。":null):FamilyCommandError(c,allowDead:true);
         if(error!=null)return error;
         var cold=c!.Family.ColdStorage;var i=c.Interaction;
         if(cold.Stored==stored)return stored?"它已经在冷藏中。":"它已经在小院里。";
         if(stored)
         {
-            if(State.InteractionPlaytest&&ShopQuantity("freezer")<=0)return "先在商店购买冷藏箱。";
+            if(c.Family.Memorialized)return "已经安置的个体不能再次收纳。";
             if(WaterEnvironment.IsInWater(State,c))return "先用救援用品带回岸上，冷藏不能代替水域救援。";
             if(State.Mode==PlayMode.CloseUp)return "先回到小院，再安排冷藏。";
-            if(cold.RecoveryRemaining>0)return "取出后还需要恢复，不能立即反复冷藏。";
             if(i.Carried||i.Falling||i.Lowering||i.Restraint!=RestraintKind.None||i.Height>.05||HasInteractionGesture&&InteractionGestureTarget==id)
                 return "先放稳并结束接触、解除装置，再安排冷藏。";
-            if(State.Creatures.Count(x=>x.Family.ColdStorage.Stored)>=4)return "目前四个保存位置已占满，先妥善安置取出的个体。";
+            if(State.Creatures.Count(x=>x.Family.ColdStorage.Stored)>=ColdStorageCapacity)return "回收箱12个位置已满，对象仍留在庭院。";
             if(i.EatingRemaining>0)return "先等它咽下这一口。";
             if(FamilyRules.UnderIntervention(c))CancelIntervention(c,"安排冷藏时干预已停止；已用材料和关系后果保留。");
             CancelWildSelfCare(c,"进入冷藏，自行护伤已中断；尚未获得护理效果。");
@@ -43,27 +40,20 @@ public sealed partial class WorldSimulation
             i.ActiveCue=null;i.FollowPlayer=false;i.Resting=false;i.RestRemaining=0;
             i.ReactionPose="idle";i.ReactionPoseRemaining=0;i.PendingConversation=null;
             i.VelocityX=0;i.VelocityZ=0;i.Physiology.Excreting=ExcretionKind.None;i.Physiology.Remaining=0;
-            cold.Stored=true;cold.Elapsed=0;cold.Sessions=Math.Min(int.MaxValue-1,cold.Sessions)+1;
+            cold.Stored=true;cold.Elapsed=0;cold.RecoveryRemaining=0;cold.Sessions=Math.Min(int.MaxValue-1,cold.Sessions)+1;
             ClearFamilyTargetsTo(c);
             c.TargetX=c.X;c.TargetZ=c.Z;c.Activity="冷藏保存中";c.Speech="";c.ReactionRemaining=0;
-            RecordInteraction(c,"cold-storage","进入有限冷藏，生命过程十倍延缓，仍有保存期限。",2);
-            return State.LastActionMessage="已放入冷藏。相关过程按正常速度的十分之一推进，需要及时取出。";
+            RecordInteraction(c,"cold-storage","进入回收箱，生理时间暂停，身份与关系保留。",2);
+            return State.LastActionMessage="已放入回收箱，生理时间暂停。可从新油分类的回收箱管理。";
         }
-        if(!TryColdReturnPoint(c,out var point))return "小院没有合适的干燥空位，先腾出位置；冷藏不会因此无限延长期限。";
+        string oldRegion=c.RegionId;c.RegionId=State.ActiveRegionId;
+        if(!TryColdReturnPoint(c,out var point))
+        {c.RegionId=oldRegion;return "庭院没有合适的干燥空位，仍在回收箱。";}
         cold.Stored=false;c.X=point.X;c.Z=point.Z;c.TargetX=c.X;c.TargetZ=c.Z;
-        cold.RecoveryRemaining=c.Condition==PhysicalCondition.Dead?0:30;
-        // Once per exit, after storage has ended. Loading never rerolls it.
-        if(c.Condition!=PhysicalCondition.Dead&&cold.Elapsed>300&&Next()<.12+Math.Max(0,40-c.Health)*.008)
-            Hurt(c,4+Math.Max(0,cold.Elapsed-ColdStorageLimitSeconds)*.02,"冷藏后的复苏负担",null);
-        if(c.Condition==PhysicalCondition.Dead)
-        {
-            cold.RecoveryRemaining=0;
-            RecordInteraction(c,"cold-return","遗体已从冷藏取出，保存位置已释放。",2);
-            return State.LastActionMessage="遗体已经取出，冷藏位置已释放。";
-        }
-        c.Activity="取出冷藏，慢慢恢复";
-        RecordInteraction(c,"cold-return","从冷藏取出，已有伤势仍在，需要观察复苏与照护。",2);
-        return State.LastActionMessage="已经取出，先观察身体并提供适用照护。原有伤势和期限没有重置。";
+        cold.RecoveryRemaining=0;
+        c.Activity=c.Condition==PhysicalCondition.Dead?"遗体已取出":"已返回庭院";
+        RecordInteraction(c,"cold-return","同一个体从回收箱返回庭院，原有身体状态保留。",2);
+        return State.LastActionMessage="已返回庭院，回收箱位置已释放。";
     }
 
     private bool TryColdReturnPoint(Creature c,out (double X,double Z) point)
@@ -88,9 +78,7 @@ public sealed partial class WorldSimulation
             if(cold.Stored)
             {
                 cold.Elapsed=Math.Min(1000000,cold.Elapsed+dt);
-                if(cold.Elapsed>=ColdStorageLimitSeconds&&c.RegionId==State.ActiveRegionId)
-                    SetColdStorage(c.Id,false);
-                if(cold.Stored)c.Activity=cold.Elapsed>=ColdStorageLimitSeconds?"冷藏已超时，需腾出空位取出":"冷藏保存中";
+                c.Activity="回收箱保存中 · 生理时间暂停";
             }
             else cold.RecoveryRemaining=Math.Max(0,cold.RecoveryRemaining-dt);
         }

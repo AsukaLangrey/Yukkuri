@@ -12,7 +12,7 @@ public sealed partial class WorldSimulation
             !new[]{input.Force,input.Duration,input.Motion,input.X,input.Z,input.Height,input.DirectionX,input.DirectionZ,
                 input.StopImpact,input.TouchTangentFraction,input.TouchNormalSpeed}.All(double.IsFinite)||
             input.Force is <0 or >1||input.Duration is <0 or >1||input.Motion<0||input.Height is <0 or >3||
-            Math.Abs(input.X)>8||Math.Abs(input.Z)>8||input.StopImpact is <0 or >1||input.TouchTangentFraction is <0 or >1)
+            Math.Abs(input.X)>CourtyardGround.HalfSize||Math.Abs(input.Z)>CourtyardGround.HalfSize||input.StopImpact is <0 or >1||input.TouchTangentFraction is <0 or >1)
             return "离体茎的接触身份或输入无效。";
         var s=DetachedStem(eventId);var error=DetachedStemError(s,allowTerminal:input.Action==InteractionAction.ClearStem);if(error!=null)return error;
         if(input.Action==InteractionAction.ClearStem&&s!.Phase is not (DetachedStemPhase.Failed or DetachedStemPhase.Born))

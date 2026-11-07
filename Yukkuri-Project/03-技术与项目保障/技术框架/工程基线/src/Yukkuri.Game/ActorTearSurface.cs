@@ -53,7 +53,7 @@ public sealed class ActorTearPresentation
     private void AdvanceTowards(float target,float delta,float fadeSpeed)
     {
         target=Math.Clamp(target,0,1);
-        float step=Math.Clamp(delta,0,.1f)*(target>Amount?3:fadeSpeed);
+        float step=(float.IsFinite(delta)?Math.Max(0,delta):0)*(target>Amount?3:fadeSpeed);
         Amount=target>Amount?MathF.Min(target,Amount+step):MathF.Max(target,Amount-step);
     }
 }

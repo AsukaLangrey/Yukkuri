@@ -71,7 +71,7 @@ public sealed partial class WorldSimulation
     {
         var i=c.Interaction;
         bool interrupted=(c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical)||
-            c.Family.ColdStorage.Stored||i.Water.InWater||
+            c.Family.ColdStorage.Stored||i.Water.InWater||IsInsideToiletBoundary(c)||
             i.Carried||i.Falling||i.Lowering||i.Height>.25||i.Supine||
             Math.Abs(i.VelocityX)+Math.Abs(i.VelocityZ)>.05||i.EatingRemaining>0||
             (InteractionGestureTarget==c.Id&&InteractionGestureBlocksAutonomy);
@@ -86,6 +86,7 @@ public sealed partial class WorldSimulation
     {
         foreach(var c in State.Creatures)
         {
+            if(c.Family.ColdStorage.Stored)continue;
             var i=c.Interaction;var p=i.Physiology;
             bool interrupted=SynchronizeInterruptedPhysiology(c);
             if(c.Condition is PhysicalCondition.Dead or PhysicalCondition.Critical)continue;
@@ -95,6 +96,7 @@ public sealed partial class WorldSimulation
             // rate, but cannot perform an action or leave waste at their old yard position.
             p.Bladder=Math.Min(100,p.Bladder+bodyDt*(.10+.12*i.Hydration/100));
             p.Bowel=Math.Min(100,p.Bowel+bodyDt*(.06+.08*c.Fullness/100+(i.Digestion.Symptomatic?.16:0)));
+            RequestOutdoorToilet(c);
             if(interrupted)continue;
             if(p.Active)
             {
@@ -108,11 +110,12 @@ public sealed partial class WorldSimulation
                 p.Excreting=ExcretionKind.None;c.Activity=urine?"撒完尿，轻松了一些":"排便结束，轻松了一些";
                 c.DecisionIn=0;
             }
-            else if(p.Bladder>=85||p.Bowel>=85)
+            else if(p.Bladder>=(HousingNight&&i.Resting?95:85)||p.Bowel>=(HousingNight&&i.Resting?95:85))
             {
+                bool urineUrgent=p.Bladder>=(HousingNight&&i.Resting?95:85);
                 CancelWildSelfCare(c,"需要先排泄，自行护伤已中断；尚未获得护理效果。");
                 i.Resting=false;
-                p.Excreting=p.Bladder>=85?ExcretionKind.Urine:ExcretionKind.Feces;
+                p.Excreting=urineUrgent?ExcretionKind.Urine:ExcretionKind.Feces;
                 p.Remaining=p.Excreting==ExcretionKind.Urine?2.5:3.5;
                 c.TargetX=c.X;c.TargetZ=c.Z;
                 c.Activity=p.Excreting==ExcretionKind.Urine?"正在撒尿":"正在排便";

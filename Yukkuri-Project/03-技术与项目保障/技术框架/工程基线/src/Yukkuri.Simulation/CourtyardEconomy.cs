@@ -2,7 +2,11 @@ using System.Text.Json.Serialization;
 
 namespace Yukkuri.Simulation;
 
-public sealed record CreatureSale(Creature Creature, int Amount, double At);
+public enum CreatureDepartureKind { Sale, Release, Destroy }
+public sealed record CreatureSale(Creature Creature, int Amount, double At)
+{
+    public CreatureDepartureKind Kind { get; init; } = CreatureDepartureKind.Sale;
+}
 public sealed partial class WorldState
 {
     public long CreatureSalesRevenue { get; set; }
@@ -27,7 +31,7 @@ public static class CourtyardEconomy
     public static CreatureQuote Quote(Creature c)
     {
         double quality=Quality(c),ability=Ability(c);
-        double age=c.IsYoung?100-30*Math.Clamp(c.Body.AgeSeconds/FamilyRules.YoungSeconds,0,1):c.IsElder?40:60;
+        double age=100-40*Math.Clamp(c.Body.AgeSeconds/GrowthRules.AdultAge,0,1);
         double rank=WorldSimulation.CleaningLicenseLevel(c) switch {1=>1.5,2=>2.3,>=3=>3.5,_=>1};
         double core=age*(.5+quality/100*1.5)*(1+ability/100)*rank;
         double clean=.95+.1*(1-c.Interaction.Dirt/100);
@@ -59,7 +63,8 @@ public static class CourtyardEconomy
             if(c==null||string.IsNullOrWhiteSpace(c.Id)||!ids.Add(c.Id)||string.IsNullOrWhiteSpace(c.Name)||
                 c.Body==null||c.Family==null||c.Personality==null||c.Registration==null||
                 string.IsNullOrWhiteSpace(c.Body.Id)||!bodies.Add(c.Body.Id)||
-                string.IsNullOrWhiteSpace(c.Registration.IdentityId)||!identities.Add(c.Registration.IdentityId)||sale!.Amount<=0||
+                string.IsNullOrWhiteSpace(c.Registration.IdentityId)||!identities.Add(c.Registration.IdentityId)||!Enum.IsDefined(sale!.Kind)||
+                (sale.Kind==CreatureDepartureKind.Sale?sale.Amount<=0:sale.Amount!=0)||
                 !double.IsFinite(sale.At)||sale.At<0||sale.At>s.WorldSeconds)
                 throw new InvalidDataException("售油离场档案无效");
             total+=sale.Amount;
@@ -90,20 +95,26 @@ public sealed partial class WorldSimulation
         father.Family.Peers[mother.Id]=new(){Familiarity=80,Affection=80};
         mother.Family.PartnerIds.Add(father.Id);father.Family.PartnerIds.Add(mother.Id);
         s.FamilyRelationshipEvents.Add(new(){Id="economy-starting-pair",FirstId=mother.Id,SecondId=father.Id});
-        s.LastActionMessage="小铃和松果是已有伴侣。照顾吃喝后可在家庭栏安排繁育，商店可出售幼体和成年油。";
+        father.Z=father.TargetZ=.5;
+        foreach(var cushion in s.RoomObjects.Where(o=>o.Kind==RoomObjectKind.Cushion))
+        {cushion.X=cushion.X<0?-4.3:4.3;cushion.Z=-2;}
+        if(s.RoomObjects.Find(o=>o.Id=="home-leaves-north") is { } leaves){leaves.X=3;leaves.Z=-4.8;}
+        s.ShelterStock=1;
+        if(!sim.PlaceShelter(-.3,-5).Success)throw new InvalidOperationException("默认小屋的位置不可用。");
+        s.LastActionMessage="开局已备一间最多住5只的小屋。小铃和松果是伴侣；照顾吃喝、夜间住宿和繁育，商店可出售各成长阶段的油。";
         return sim;
     }
     private double InheritTrait(double mother,double father)=>Math.Clamp((mother+father)*.5+(Next()+Next()-1)*.2,0,1);
     public string? ShopUnlockReason(string id)=>State.EconomyProgression&&State.CreatureSalesRevenue<CourtyardEconomy.UnlockRevenue(id)
         ?$"累计售油收入达到 {CourtyardEconomy.UnlockRevenue(id)} 元解锁（当前 {State.CreatureSalesRevenue} 元）。":null;
 
-    public string? CreatureSaleReason(string id)
+    public string? CreatureSaleReason(string id,bool fromColdStorage=false)
     {
         var c=State.Creatures.Find(c=>c.Id==id);
-        if(!State.InteractionPlaytest||c==null||c.RegionId!=State.ActiveRegionId)return "请选择当前小院的油。";
+        if(!State.InteractionPlaytest||c==null||c.RegionId!=State.ActiveRegionId&&!(fromColdStorage&&c.Family.ColdStorage.Stored))return "请选择当前小院的油。";
         if(c.Condition==PhysicalCondition.Dead||c.Family.Memorialized)return "商店只收购存活的油。";
         if(HasInteractionGesture||c.Interaction.Carried||c.Interaction.Falling||c.Interaction.Restraint!=RestraintKind.None||
-            c.Family.ColdStorage.Stored||c.Interaction.EatingRemaining>0||c.Interaction.Physiology.Active||
+            c.Family.ColdStorage.Stored&&!fromColdStorage||c.Interaction.EatingRemaining>0||c.Interaction.Physiology.Active||
             State.PortableMotions.Any(m=>m.Id==id))return "请先结束接触、进食或装置操作，将它安稳放下。";
         if(c.Family.Pregnancy.Phase!=PregnancyPhase.None||State.Creatures.Any(m=>m.Family.Pregnancy.FatherId==id&&
             m.Family.Pregnancy.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)||
@@ -114,11 +125,22 @@ public sealed partial class WorldSimulation
         return null;
     }
 
-    public string SellCreatureToShop(string id,int expectedPrice)
+    public string SellCreatureToShop(string id,int expectedPrice,bool fromColdStorage=false)
     {
-        if(CreatureSaleReason(id) is { } reason)return reason;
+        if(State.Settings.Pause)return "先恢复时间，再出售。";
+        if(fromColdStorage&&!State.Creatures.Any(c=>c.Id==id&&c.Family.ColdStorage.Stored))return "对象已不在回收箱。";
+        if(CreatureSaleReason(id,fromColdStorage) is { } reason)return reason;
         var c=State.Creatures.Single(c=>c.Id==id);var quote=CourtyardEconomy.Quote(c);
         if(quote.Price!=expectedPrice)return "状态变化使报价更新，请查看新报价后再次确认。";
+        CompleteCreatureDeparture(c,quote.Price,CreatureDepartureKind.Sale);
+        State.Money+=quote.Price;State.CreatureSalesRevenue+=quote.Price;
+        if(State.SelectedId==id){State.SelectedId=State.Creatures.FirstOrDefault(o=>o.RegionId==State.ActiveRegionId)?.Id;State.Mode=PlayMode.Management;}
+        State.LastActionMessage=$"{c.Name}已出售给商店，到账 {quote.Price} 元。";
+        Log(State.LastActionMessage);return State.LastActionMessage;
+    }
+    private void CompleteCreatureDeparture(Creature c,int amount,CreatureDepartureKind kind)
+    {
+        string id=c.Id;
         ClearCompanionship(c);CancelFamilyCare(c);DetachNaturalIntake(c);
         foreach(var other in State.Creatures)
         {
@@ -138,15 +160,14 @@ public sealed partial class WorldSimulation
         foreach(var e in State.FamilyRelationshipEvents.Where(e=>e.EndedAt==null&&(e.FirstId==id||e.SecondId==id)))e.EndedAt=State.WorldSeconds;
         foreach(var shelter in State.Shelters.Where(s=>s.GuestId==id))
         {shelter.GuestId=null;shelter.Phase=ShelterVisitPhase.Empty;shelter.ExitRequested=false;shelter.BlockedSeconds=0;}
+        foreach(var shelter in State.Shelters)shelter.Residents.RemoveAll(r=>r.CreatureId==id);
         foreach(var o in State.RoomObjects.Where(o=>o.OwnerId==id))o.OwnerId=null;
         if(State.HelpTargetId==id)State.HelpTargetId=null;
         if(State.Threat.IntruderId==id)State.Threat.IntruderId=null;
         if(State.Threat.DefenderId==id)State.Threat.DefenderId=null;
         c.Family.Lesson=null;c.Family.PartnerIds.Clear();
-        State.Creatures.Remove(c);State.CreatureSales.Add(new(c,quote.Price,State.WorldSeconds));
-        State.Money+=quote.Price;State.CreatureSalesRevenue+=quote.Price;
-        if(State.SelectedId==id){State.SelectedId=State.Creatures.FirstOrDefault(o=>o.RegionId==State.ActiveRegionId)?.Id;State.Mode=PlayMode.Management;}
-        State.LastActionMessage=$"{c.Name}已出售给商店，到账 {quote.Price} 元。";
-        Log(State.LastActionMessage);return State.LastActionMessage;
+        c.Family.ColdStorage.Stored=false;
+        State.Creatures.Remove(c);State.CreatureSales.Add(new(c,amount,State.WorldSeconds){Kind=kind});
     }
+
 }

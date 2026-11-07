@@ -135,18 +135,18 @@ Check("旧档默认身体状态，显式空或坏伤势拒绝",()=>
     void c_bad(Creature c)
     {c.Interaction.Injuries.Sites.Add(new(){Part=BodyPart.Bottom,Damage=double.NaN});bool rejected=false;try{SaveStore.Validate(sim.State);}catch(InvalidDataException){rejected=true;}Require(rejected,"非法伤势数值被接受");}
 });
-Check("冷藏只以十分之一速度累积生理负荷",()=>
+Check("制冷箱暂停生理负荷",()=>
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var p=c.Interaction.Physiology;
     p.Bladder=10;p.Bowel=10;BuyTool(sim,"freezer");
     sim.SetColdStorage(c.Id,true);Require(c.Family.ColdStorage.Stored,"冷藏夹具未进入");
     Tick(sim,10);
-    // At hydration/fullness 0..100 the rates bound the biological ten-second interval.
-    Require(p.Bladder>=10.099&&p.Bladder<=10.221,"冷藏尿量按普通世界时间积累或停止积累");
-    Require(p.Bowel>=10.059&&p.Bowel<=10.141,"冷藏肠道负荷没有使用身体时间");
+    // Stored biology must not accumulate even while world time continues.
+    Require(p.Bladder==10,"制冷箱仍积累尿量");
+    Require(p.Bowel==10,"制冷箱仍积累肠道负荷");
     Require(!p.Active&&p.Urinations==0&&p.Defecations==0,"冷藏启动了空间排泄动作");
 });
-Check("冷藏达到排泄阈值不产物，取出后才完成一次",()=>
+Check("制冷箱阈值前暂停，取出后才达到阈值并完成一次",()=>
 {
     var sim=WorldSimulation.CreateInteractionPlaytest();var c=sim.Selected!;var p=c.Interaction.Physiology;
     p.Bladder=99;p.Bowel=10;BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
@@ -181,7 +181,7 @@ Check("冷藏危重时钟只减一次身体时间",()=>
     c.Health=1;sim.Hurt(c,2,"待救伤势",null);BuyTool(sim,"freezer");sim.SetColdStorage(c.Id,true);
     Require(c.Family.ColdStorage.Stored,"危重时钟夹具未进入冷藏");
     double before=c.CriticalRemaining;Tick(sim,10);
-    Require(Math.Abs(c.CriticalRemaining-(before-1))<.0001,"冷藏救治时钟多减、未减或未按十分之一速度");
+    Require(Math.Abs(c.CriticalRemaining-before)<.0001,"制冷箱救治时钟未暂停");
     Require(Math.Abs(c.Interaction.Injuries.CriticalCareBudget-c.CriticalRemaining)<.0001,"累计救治余量和实际时钟分离");
 });
 Environment.ExitCode=failures==0?0:1;

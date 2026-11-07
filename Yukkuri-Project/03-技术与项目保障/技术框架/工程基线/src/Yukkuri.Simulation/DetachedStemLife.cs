@@ -52,7 +52,7 @@ public sealed partial class WorldSimulation
         if(!ShelterGroundFits(regionId,x,z,radius,false)||ignore!=null&&DetachedStem(ignore) is { } moving&&
             !ShelterObjectPathClear(regionId,moving.X,moving.Z,x,z,radius))return false;
         if(!ClearOfStations(regionId,x,z,radius))return false;
-        if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8-radius||Math.Abs(z)>8-radius||
+        if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>CourtyardGround.HalfSize-radius||Math.Abs(z)>CourtyardGround.HalfSize-radius||
             !WoodlandLayout.GroundFits(State,regionId,x,z,radius))return false;
         if(State.Creatures.Any(c=>c.RegionId==regionId&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&
             !(c.Interaction.Height>1&&c.Interaction.Restraint==RestraintKind.None)&&Distance(c.X,c.Z,x,z)<InteractionFootprint(c)+radius))return false;
@@ -100,16 +100,16 @@ public sealed partial class WorldSimulation
             if(s.Integrity<=0){FailDetachedStem(s,s.LastDamageCause.Length>0?s.LastDamageCause:"离体茎已经耗尽活性");continue;}
             bool vessel=s.Phase==DetachedStemPhase.Bottled&&s.VesselIntegrity>25;
             bool wet=WoodlandLayout.HasRiver(State,s.RegionId)&&s.X>WoodlandLayout.RiverEdge(s.Z)&&!s.HeldByHand;
-            s.Hydration=Math.Max(0,s.Hydration-dt*(wet?.8:vessel?.22:.65));
-            s.Nutrition=Math.Max(0,s.Nutrition-dt*(vessel?.16:.25));
+            s.Hydration=Math.Max(0,s.Hydration-dt*(wet?.8:vessel?.025:.10)*(s.PlannedChildren/3.5));
+            s.Nutrition=Math.Max(0,s.Nutrition-dt*(vessel?.02:.04)*(s.PlannedChildren/3.5));
             if(wet)DamageDetachedStem(s,dt*1.2,"离体茎浸入河水",null,false);
-            else if(!vessel)DamageDetachedStem(s,dt*.1,s.Phase==DetachedStemPhase.Bottled?"培养瓶破损后漏水失养":"离体茎尚未入瓶，持续失水",null,false);
+            else if(!vessel)DamageDetachedStem(s,dt*.008,s.Phase==DetachedStemPhase.Bottled?"培养瓶破损后漏水失养":"离体茎尚未入瓶，持续失水",null,false);
             if(!LivingDetachedStem(s))continue;
-            if(s.Hydration<20||s.Nutrition<20)DamageDetachedStem(s,dt*.5,s.Hydration<20?"离体茎持续缺水":"离体茎持续缺乏营养",null,false);
+            if(s.Hydration<20||s.Nutrition<20)DamageDetachedStem(s,dt*.012,s.Hydration<20?"离体茎持续缺水":"离体茎持续缺乏营养",null,false);
             if(!LivingDetachedStem(s))continue;
             bool nourished=vessel&&!wet&&s.Hydration>=20&&s.Nutrition>=20;
             s.Elapsed=Math.Min(FamilyRules.GestationSeconds(BirthMethod.Stem),s.Elapsed+dt*(nourished?1:.25));
-            s.Burden=Math.Clamp(s.Burden+dt*(nourished?-.045:.12),0,100);
+            s.Burden=Math.Clamp(s.Burden+dt*(nourished?-.006:.008),0,100);
             if(s.Elapsed<FamilyRules.GestationSeconds(BirthMethod.Stem)||!nourished||s.HeldByHand)continue;
             var mother=State.Creatures.Find(c=>c.Id==s.Mother.Id);var father=State.Creatures.Find(c=>c.Id==s.Father.Id);
             if(mother==null||father==null){FailDetachedStem(s,"父母身份记录缺失，无法建立真实家谱");continue;}

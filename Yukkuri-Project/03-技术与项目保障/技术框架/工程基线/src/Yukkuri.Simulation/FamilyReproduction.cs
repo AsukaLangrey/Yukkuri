@@ -34,7 +34,7 @@ public sealed partial class WorldSimulation
         foreach(var mother in State.Creatures)
         {
             var f=mother.Family;
-            if(mother.Body.ReproductionRole!=ReproductionRole.Maternal||mother.IsYoung||mother.RegionId!=State.ActiveRegionId||
+            if(mother.Body.ReproductionRole!=ReproductionRole.Maternal||!GrowthRules.IsAdult(mother)||mother.RegionId!=State.ActiveRegionId||
                 f.Pregnancy.Phase!=PregnancyPhase.None||State.WorldSeconds<Math.Max(f.NextBreedingDecisionAt,f.Pregnancy.RetryAt))continue;
             f.NextBreedingDecisionAt=State.WorldSeconds+120;
             // Existing dependent children and the parents' own needs take precedence.
@@ -65,7 +65,7 @@ public sealed partial class WorldSimulation
         if(mother.Id==father.Id||mother.Body.ReproductionRole!=ReproductionRole.Maternal||father.Body.ReproductionRole!=ReproductionRole.Paternal)
             return "需要出生角色分别为母体与父体的两只成熟油。";
         if(mother.RegionId!=father.RegionId)return "它们不在同一个地方。";
-        if(mother.IsYoung||father.IsYoung)return "幼体还没有成熟，不能安排繁育。";
+        if(!GrowthRules.IsAdult(mother)||!GrowthRules.IsAdult(father))return "幼体还没有成熟，不能安排繁育。";
         if(WaterEnvironment.IsInWater(State,mother)||WaterEnvironment.IsInWater(State,father))
             return "先将落水的个体救回安全岸边，再考虑繁育安排。";
         if(!FamilyRules.SupportedSpecies(mother.Body.SpeciesId)||!FamilyRules.SupportedSpecies(father.Body.SpeciesId))
@@ -78,7 +78,7 @@ public sealed partial class WorldSimulation
         return null;
     }
 
-    public string RequestPregnancy(string motherId,string fatherId,BirthMethod method)
+    public string? PregnancyRequestReason(string motherId,string fatherId,BirthMethod method)
     {
         var mother=State.Creatures.Find(c=>c.Id==motherId);var father=State.Creatures.Find(c=>c.Id==fatherId);
         var error=FamilyCommandError(mother)??FamilyCommandError(father);
@@ -92,6 +92,16 @@ public sealed partial class WorldSimulation
         if(!FamilyActionReady(mother)||!FamilyActionReady(father!)||
             mother.Family.CompanionTargetId is { } mt&&mt!=fatherId||father!.Family.CompanionTargetId is { } ft&&ft!=motherId)
             return "先等双方结束眼前的照护、休息或其他相处，再提出孕育安排。";
+        return null;
+    }
+
+    public string RequestPregnancy(string motherId,string fatherId,BirthMethod method)
+    {
+        var error=PregnancyRequestReason(motherId,fatherId,method);
+        if(error!=null)return error;
+        var mother=State.Creatures.Find(c=>c.Id==motherId)!;
+        var father=State.Creatures.Find(c=>c.Id==fatherId)!;
+        var p=mother.Family.Pregnancy;
         p.Phase=PregnancyPhase.Preparing;p.Method=method;p.FatherId=fatherId;
         p.Elapsed=0;p.WaitingSeconds=0;p.Burden=0;p.PlannedChildren=0;p.EventId=null;p.Outcome="";p.Stem=null;
         p.Forced=false;p.InterventionRemaining=0;p.RecoveryDebt=0;p.Decision=PregnancyDecision.Undecided;
@@ -99,6 +109,11 @@ public sealed partial class WorldSimulation
         p.NextDecisionAt=State.WorldSeconds+30;
         BeginCompanionship(mother,father!);
         return State.LastActionMessage="已向双方提出安排。它们需要实际靠近并接受，之后才会开始孕育。";
+    }
+
+    private int RollBroodSize(BirthMethod method)
+    {
+        double roll=Next();return method==BirthMethod.Live?(roll<.6?1:2):roll<.15?2:roll<.5?3:roll<.85?4:5;
     }
 
     private string NewFamilyId(string kind)
@@ -126,7 +141,7 @@ public sealed partial class WorldSimulation
             p.Outcome="宝宝已出生，母体在生产后离世。";mother.Family.LastEvent=p.Outcome;
             ClearCompanionship(mother);RecordInteraction(mother,"pregnancy-outcome",p.Outcome,5);return;
         }
-        p.Phase=PregnancyPhase.Recovering;p.InterventionRemaining=0;p.RecoveryRemaining=Math.Min(900,FamilyRules.RecoverySeconds(p.Method)+p.RecoveryDebt);
+        p.Phase=PregnancyPhase.Recovering;p.InterventionRemaining=0;p.RecoveryRemaining=Math.Min(900,FamilyRules.RecoverySeconds(p.Method)*(.8+.2*FamilyRules.BroodDemand(p))+p.RecoveryDebt);
         p.RetryAt=State.WorldSeconds+p.RecoveryRemaining;p.Outcome=outcome;
         ClearCompanionship(mother);mother.Family.LastEvent=outcome;
         RecordInteraction(mother,"pregnancy-outcome",outcome,3);
@@ -137,6 +152,7 @@ public sealed partial class WorldSimulation
         // Snapshot: births append complete individuals only after a parent update.
         foreach(var mother in State.Creatures.ToArray())
         {
+            if(mother.Family.ColdStorage.Stored)continue;
             var f=mother.Family;var p=f.Pregnancy;double bodyDt=BiologicalDelta(mother,dt);
             TickYoungLife(mother,bodyDt);
             AdvanceBreedingInterest(mother,bodyDt);
@@ -191,7 +207,7 @@ public sealed partial class WorldSimulation
                 {p.Phase=PregnancyPhase.None;p.Elapsed=0;p.RetryAt=State.WorldSeconds+300;ClearCompanionship(mother);f.LastEvent="它们接受了彼此，但这次没有开始孕育。";continue;}
                 p.Phase=PregnancyPhase.Gestating;p.Elapsed=0;p.WaitingSeconds=0;p.EventId=NewFamilyId("birth");
                 SettleBreedingInterest(mother,father);
-                p.PlannedChildren=p.Method==BirthMethod.Live?1:2+(Next()<.25?1:0);
+                p.PlannedChildren=RollBroodSize(p.Method);
                 InitializeStemBrood(p);
                 ClearCompanionship(mother);f.LastEvent=p.Method==BirthMethod.Live?"胎生孕育开始了。":"茎生孕育开始了。";
                 RecordInteraction(mother,"pregnancy",f.LastEvent,3);
@@ -200,17 +216,17 @@ public sealed partial class WorldSimulation
             if(!AdvanceStemBrood(mother,bodyDt))continue;
             bool distressed=mother.Fullness<25||mother.Interaction.Hydration<25||mother.Pain>=40||mother.Interaction.Digestion.Symptomatic||mother.Condition==PhysicalCondition.Critical||
                 mother.Interaction.Water.InWater||WaterEnvironment.IsInWater(State,mother);
-            double burdenRate=p.Method==BirthMethod.Live?.22:.12;
+            double burdenRate=p.Method==BirthMethod.Live?.012:.008;
             if(father!=null&&FamilyRules.CrossEcology(mother,father))burdenRate*=FamilyRules.Predator(mother.Body.SpeciesId)?1.15:1.5;
-            p.Burden=Math.Clamp(p.Burden+bodyDt*(distressed?burdenRate:-.045),0,100);
-            mother.Fullness=Math.Max(0,mother.Fullness-bodyDt*(p.Method==BirthMethod.Live?.022:.01));
-            mother.Interaction.Hydration=Math.Max(0,mother.Interaction.Hydration-bodyDt*(p.Method==BirthMethod.Live?.018:.008));
-            mother.Energy=Math.Max(0,mother.Energy-bodyDt*(p.Method==BirthMethod.Live?.02:.008));
+            p.Burden=Math.Clamp(p.Burden+bodyDt*(distressed?burdenRate:-.006),0,100);
+            mother.Fullness=Math.Max(0,mother.Fullness-bodyDt*(p.Method==BirthMethod.Live?.022:.01)*FamilyRules.BroodDemand(p));
+            mother.Interaction.Hydration=Math.Max(0,mother.Interaction.Hydration-bodyDt*(p.Method==BirthMethod.Live?.018:.008)*FamilyRules.BroodDemand(p));
+            mother.Energy=Math.Max(0,mother.Energy-bodyDt*(p.Method==BirthMethod.Live?.02:.008)*FamilyRules.BroodDemand(p));
             p.Elapsed=Math.Min(FamilyRules.GestationSeconds(p.Method),p.Elapsed+bodyDt*(distressed?(p.Decision==PregnancyDecision.ProtectYoung?.5:.25):1));
             if(ConsiderPregnancyRisk(mother,bodyDt))continue;
             if(p.Burden>=(p.Decision==PregnancyDecision.ProtectYoung?95:80))
             {EndPregnancy(mother,p.Method==BirthMethod.Live?"身体持续处于危险中，发生了生理性吸收；这次孕育未能继续。":"持续失养或伤病使茎生发育失败，需要照护母体。");continue;}
-            if(p.Burden>=50)Hurt(mother,bodyDt*.035,"孕育负担",null);
+            if(p.Burden>=50)Hurt(mother,bodyDt*.0035,"孕育负担",null);
             if(mother.Condition==PhysicalCondition.Dead)continue;
             if(p.Elapsed>=FamilyRules.GestationSeconds(p.Method)&&!f.ColdStorage.Stored)
                 TryDeliverFamily(mother,father);
@@ -252,7 +268,7 @@ public sealed partial class WorldSimulation
                 for(int angle=0;angle<24&&!found;angle++)
                 {
                     double x=originX+Math.Cos(angle*Math.Tau/24)*radius,z=originZ+Math.Sin(angle*Math.Tau/24)*radius;
-                    if(!CanOccupyRoom(probe,x,z)||babies.Any(b=>Distance(b.X,b.Z,x,z)<InteractionFootprint(b)+InteractionFootprint(probe)))continue;
+                    if(!ShelterGroundFits(regionId,x,z,InteractionFootprint(probe),allowInterior:false)||!CanOccupyRoom(probe,x,z)||babies.Any(b=>Distance(b.X,b.Z,x,z)<InteractionFootprint(b)+InteractionFootprint(probe)))continue;
                     probe.X=x;probe.Z=z;probe.TargetX=x;probe.TargetZ=z;found=true;
                 }
             if(!found||State.Creatures.Count+babies.Count>=10000)
@@ -293,6 +309,7 @@ public sealed partial class WorldSimulation
                     if(FamilyRules.KnowledgeName(knowledge.Key).Length>0)
                         baby.Family.LearningSources[knowledge.Key]=new(){Source=LifeKnowledgeSource.Inherited,FromId=mother.Id,At=State.WorldSeconds};
                 }
+            GrowthRules.Initialize(baby,true);baby.Robustness=InheritTrait(maternal.Robustness,paternal.Robustness);
             State.Creatures.Add(baby);
             mother.Family.Peers[baby.Id]=new(){Familiarity=20,Affection=30};
             father.Family.Peers[baby.Id]=new(){Familiarity=10,Affection=20};

@@ -17,6 +17,8 @@ public partial class InteractionRoom
     private readonly Dictionary<string,int> _pageScroll=new();
     private readonly Dictionary<string,Dictionary<string,Variant>> _pageInputs=new();
     private int _pageGeneration;
+    private bool _autoRefreshingActivity;
+    private ulong _nextActivityRefresh;
     private readonly CanvasNoticeSource _eventSource=new();
     private bool ActivityPanelVisible=>_activityPanel!=null&&_activityPanel.Visible;
     private bool ActivityContainsPoint(Vector2 point)=>ActivityPanelVisible&&_activityPanel.GetGlobalRect().HasPoint(point);
@@ -34,51 +36,68 @@ public partial class InteractionRoom
     {
         if(!control.HasMeta("inline_hint"))
         {
-            control.MouseEntered+=()=>{_inlineHintControl=control;_feedback.Text=CurrentInlineFeedback();};
-            control.MouseExited+=()=>{if(_inlineHintControl==control){_inlineHintControl=null;_feedback.Text=CurrentInlineFeedback();}};
+            control.MouseEntered+=()=>{_inlineHintControl=control;RefreshInlineFeedback();};
+            control.MouseExited+=()=>{if(_inlineHintControl==control){_inlineHintControl=null;RefreshInlineFeedback();}};
         }
         control.SetMeta("inline_hint",text);
     }
 
+    private string _lastInlineMessage="";
+    private ulong _inlineMessageUntil;
+    private void RefreshInlineFeedback()
+    {
+        _feedback.Text=CurrentInlineFeedback();
+        _feedback.Visible=_feedback.Text.Length>0;
+    }
     private string CurrentInlineFeedback()
     {
-        if(Time.GetTicksMsec()<_actionResultUntil)return _message;
+        ulong now=Time.GetTicksMsec();
+        if(_message!=_lastInlineMessage){_lastInlineMessage=_message;_inlineMessageUntil=now+5000;}
+        if(now<_actionResultUntil&&_message.Length>0)return _message;
         var control=_inlineHintControl;
         if(control!=null&&GodotObject.IsInstanceValid(control)&&control.IsVisibleInTree())
             return control.GetMeta("inline_hint").AsString();
-        return _sceneHoverHint.Length>0?_sceneHoverHint:_message;
+        if(_sceneHoverHint.Length>0&&(_actionPreview==null||!_actionPreview.Visible))return _sceneHoverHint;
+        return now<_inlineMessageUntil?_message:"";
     }
 
     private void BuildActivityPanel()
     {
-        _activityPanel=Panel(_ui,"f3f0e6");_activityPanel.Name="GameplaySidebar";
-        GameUiLayout.Right(_activityPanel);_activityPanel.Visible=false;
+        _activityPanel=Panel(_rightBody,"f3f0e6");_activityPanel.Name="GameplaySidebar";
+        _activityPanel.AddThemeStyleboxOverride("panel",RoomStyle("f3f0e6",6,0));
+        _activityPanel.SizeFlagsVertical=Control.SizeFlags.ExpandFill;_activityPanel.Visible=false;
         var column=Column(_activityPanel,6);
         var heading=Row(column,5);
+        _activityHeading=heading;
         _panelTitle=Text("",19);_panelTitle.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;heading.AddChild(_panelTitle);
-        heading.AddChild(Button("刷新",()=>_refreshActivityPanel?.Invoke()));
-        heading.AddChild(Button("返回对象",CloseActivityPanel));
-        column.AddChild(Text("可同时查看小院 · 空格暂停 / 继续",12,"78816e"));
         _panelScroll=new ScrollContainer{HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,
             SizeFlagsVertical=Control.SizeFlags.ExpandFill,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
         column.AddChild(_panelScroll);
         _panelContents=Column(_panelScroll,6);_panelContents.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;
+        _activityActions=Column(column,4);
     }
 
     private void OpenActivityPanel(string title,Action refresh)
     {
         bool returning=_activityTitle!=title||!ActivityPanelVisible;
         if(returning)RememberActivityPage();
-        bool rescueTool=_waterRescueToolArmed;CancelGesture();_waterRescueToolArmed=rescueTool;
-        if(_modalOpen)CloseModal();
+        if(!_autoRefreshingActivity)
+        {
+            bool rescueTool=_waterRescueToolArmed;CancelGesture();_waterRescueToolArmed=rescueTool;
+            if(_modalOpen)CloseModal();
+        }
         if(_debugPanel!=null)_debugPanel.Visible=false;
-        _rightPanel.Visible=false;
+        _ui.SetMeta("right_sidebar_hidden",false);GameUiLayout.Right(_rightPanel);
+        _rightPanel.Visible=true;_objectPage.Visible=false;
         _activityPanel.Visible=true;_panelTitle.Text=title;_refreshActivityPanel=refresh;
         if(returning)_panelScroll.ScrollVertical=0;
         _activityTitle=title;
+        _activityHeading.Visible=title is not ("事件记录" or "家庭记录" or "能力与分工" or "回收箱");
+        ClearChildren(_activityActions);_recordTabText=null;
+        RefreshInspectorTabs();
         ClearChildren(_panelContents);
         int generation=++_pageGeneration;
-        if(returning)Callable.From(()=>
+        if(returning||_autoRefreshingActivity)Callable.From(()=>
         {
             if(generation!=_pageGeneration||!ActivityPanelVisible)return;
             if(_pageInputs.TryGetValue(title,out var inputs))
@@ -89,11 +108,27 @@ public partial class InteractionRoom
                     if(!inputs.TryGetValue(key,out var value))continue;
                     if(input is SpinBox number)number.Value=value.AsDouble();
                     else if(input is LineEdit edit)edit.Text=value.AsString();
+                    else if(input is InlineChoice choice&&!choice.HasMeta("identity_selection"))choice.Select(value.AsInt32());
                 }
             }
             if(_pageScroll.TryGetValue(title,out var scroll))_panelScroll.ScrollVertical=scroll;
         }).CallDeferred();
         // Opening or rebuilding gameplay UI must never change the player's pause choice.
+    }
+
+    private void AutoRefreshActivity()
+    {
+        if(!ActivityPanelVisible||_autoRefreshingActivity||_modalOpen||
+            _activityTitle is "事件记录" or "家庭记录" or "能力与分工"||
+            Time.GetTicksMsec()<_nextActivityRefresh)return;
+        if(Input.IsMouseButtonPressed(MouseButton.Left)||Input.IsMouseButtonPressed(MouseButton.Right))return;
+        var focus=GetViewport().GuiGetFocusOwner();
+        if(focus is LineEdit or TextEdit&&_activityPanel.IsAncestorOf(focus))return;
+        _nextActivityRefresh=Time.GetTicksMsec()+1000;
+        RememberActivityPage();
+        _autoRefreshingActivity=true;
+        try{_refreshActivityPanel?.Invoke();}
+        finally{_autoRefreshingActivity=false;}
     }
 
     private void CloseActivityPanel()
@@ -104,6 +139,7 @@ public partial class InteractionRoom
         if(focus!=null&&_activityPanel.IsAncestorOf(focus))focus.ReleaseFocus();
         _activityPanel.Visible=false;_refreshActivityPanel=null;_activityTitle="";
         _rightPanel.Visible=!DebugPanelVisible;
+        _objectPage.Visible=true;RefreshInspectorTabs();
         RefreshRoomUi();
     }
 
@@ -117,17 +153,19 @@ public partial class InteractionRoom
             string key=input.GetType().Name+":"+index++;
             if(input is SpinBox number)values[key]=number.Value;
             else if(input is LineEdit edit)values[key]=edit.Text;
+            else if(input is InlineChoice choice)values[key]=choice.Selected;
         }
         _pageInputs[_activityTitle]=values;
     }
     private static IEnumerable<Control> PageInputs(Node node)
     {
-        if(node is SpinBox or LineEdit){yield return (Control)node;yield break;}
+        if(node is SpinBox or LineEdit or InlineChoice){yield return (Control)node;yield break;}
         foreach(var child in node.GetChildren())foreach(var input in PageInputs(child))yield return input;
     }
     private void ResetRoomUiSession()
     {
         _dutyRecipientDrafts.Clear();_developmentCreatureId=null;_actionResultUntil=0;
+        _focusSelectionId=null;_locatedCreatureId=null;
         _pageInputs.Clear();_pageScroll.Clear();_shopQuantities.Clear();++_pageGeneration;_eventFeed.ResetSession();_sceneHoverHint="";_inlineHintControl=null;
     }
     private void RefreshRoomEvents()
@@ -147,10 +185,7 @@ public partial class InteractionRoom
     }
     private void ShowRoomRecords()
     {
-        OpenActivityPanel("事件与完整记录",ShowRoomRecords);
-        _panelContents.AddChild(Text("重点事件 · 本次会话",18));
-        foreach(var line in _eventFeed.History.Reverse())_panelContents.AddChild(Text(line,14));
-        _panelContents.AddChild(Text("世界记录",18));
-        foreach(var line in Sim.State.Journal.AsEnumerable().Reverse())_panelContents.AddChild(Text(line,14));
+        OpenActivityPanel("事件记录",ShowRoomRecords);
+        _recordTabText=Text(RoomRecordsText(),14);_panelContents.AddChild(_recordTabText);
     }
 }

@@ -45,7 +45,7 @@ public static partial class FamilyRules
             var p=f.Pregnancy;
             Require(Enum.IsDefined(p.Phase)&&Enum.IsDefined(p.Method)&&Number(p.Elapsed,GestationSeconds(p.Method))&&
                 Number(p.WaitingSeconds,90)&&Number(p.Burden,100)&&Number(p.RecoveryRemaining,900)&&
-                Number(p.RetryAt)&&p.PlannedChildren is >=0 and <=3&&Text(p.Outcome)&&
+                Number(p.RetryAt)&&p.PlannedChildren is >=0 and <=5&&Text(p.Outcome)&&
                 Reference(p.FatherId)&&(p.EventId==null||!string.IsNullOrWhiteSpace(p.EventId)&&p.EventId.Length<=128),"孕育数据无效");
             if(p.Phase is PregnancyPhase.Preparing or PregnancyPhase.Gestating)
                 Require(!c.IsYoung&&c.Body.ReproductionRole==ReproductionRole.Maternal&&p.FatherId!=null&&
@@ -54,7 +54,7 @@ public static partial class FamilyRules
                 Require(p.EventId==null&&p.PlannedChildren==0&&p.Elapsed<=6.001,"准备期提前生成了出生数据");
             if(p.Phase==PregnancyPhase.Gestating)
                 Require(p.EventId!=null&&!s.CompletedBirths.Contains(p.EventId)&&
-                    (p.Method==BirthMethod.Live?p.PlannedChildren==1:p.PlannedChildren is 2 or 3),"孕育数量或结算状态无效");
+                    (p.Method==BirthMethod.Live?p.PlannedChildren is 1 or 2:p.PlannedChildren is >=2 and <=5),"孕育数量或结算状态无效");
             var cold=f.ColdStorage;
             // Null is the legacy representation. World construction initializes
             // only missing active broods; querying status never repairs a save.
@@ -72,7 +72,7 @@ public static partial class FamilyRules
                     c.Interaction.Height<=.05&&c.Interaction.Restraint==RestraintKind.None&&!c.Interaction.Physiology.Active&&
                     c.Interaction.EatingRemaining==0&&f.CareParcelId==null,"冷藏与正在进行的身体动作冲突");
         }
-        Require(s.Creatures.Count(c=>c.Family.ColdStorage.Stored)<=4,"冷藏容量无效");
+        Require(s.Creatures.Count(c=>c.Family.ColdStorage.Stored)<=WorldSimulation.ColdStorageCapacity,"冷藏容量无效");
         var pregnancies=s.Creatures.Where(c=>c.Family.Pregnancy.EventId!=null).Select(c=>c.Family.Pregnancy.EventId).ToArray();
         Require(pregnancies.Distinct().Count()==pregnancies.Length,"孕育事件重复归属");
         // Iterative ancestry validation avoids recursion over corrupted deep saves.

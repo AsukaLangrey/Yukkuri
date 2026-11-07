@@ -27,7 +27,7 @@ public partial class CreatureActor : RigidBody3D
     public void Setup(Creature c,int index,Font font)
     {
         CreatureId=c.Id;Name="Creature_"+c.Id;Mass=c.IsYoung?.65f:1;Freeze=true;FreezeMode=FreezeModeEnum.Kinematic;
-        BodyScale=c.IsYoung?.73f:c.IsElder?1.03f:1;
+        BodyScale=(float)GrowthRules.Scale(c);
         CollisionLayer=2;CollisionMask=3;LinearDamp=.6f;AngularDamp=10;LockRotation=true;ContactMonitor=true;MaxContactsReported=4;
         PhysicsMaterialOverride=new PhysicsMaterial{Friction=.8f,Bounce=.12f};
         AddChild(new CollisionShape3D{Shape=new SphereShape3D{Radius=.43f*BodyScale}});
@@ -79,6 +79,11 @@ public partial class CreatureActor : RigidBody3D
         BuildMouth(Expression.Neutral);
         if(System.Array.Exists(OS.GetCmdlineUserArgs(),arg=>arg=="--merge-actor"))
             SceneArt.CombineStatic(_visual,_leftEye,_rightEye,_brows,_blushRoot,_mouth,_tearRoot,_bandage);
+    }
+    public void UpdateGrowthScale(Creature c)
+    {
+        BodyScale=(float)GrowthRules.Scale(c);Mass=.65f+.35f*(float)Math.Clamp(c.Body.AgeSeconds/GrowthRules.AdultAge,0,1);
+        foreach(var child in GetChildren())if(child is CollisionShape3D {Shape:SphereShape3D sphere})sphere.Radius=.43f*BodyScale;
     }
     private MeshInstance3D Triangle(Node3D parent,Vector3 a,Vector3 b,Vector3 c,string color)
     {

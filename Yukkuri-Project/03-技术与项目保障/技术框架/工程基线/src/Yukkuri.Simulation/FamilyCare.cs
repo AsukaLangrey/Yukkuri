@@ -186,22 +186,14 @@ public sealed partial class WorldSimulation
 
     private void TickYoungLife(Creature c,double dt)
     {
-        if(!c.IsYoung||c.Condition==PhysicalCondition.Dead)return;
+        if(c.Condition==PhysicalCondition.Dead)return;
+        bool wasYoung=c.IsYoung;c.IsYoung=c.Body.AgeSeconds<GrowthRules.AdultAge;
+        if(wasYoung&&!c.IsYoung){c.Family.LastEvent="已经长成成油，可以独立生活与繁育。";RecordInteraction(c,"grown",c.Family.LastEvent,3);}
         var f=c.Family;
-        if(!f.ColdStorage.Stored)
-        {
-            bool supported=c.Interaction.Restraint==RestraintKind.Wrap||HasCushionedRestSupport(c);
-            bool warmAdult=State.Creatures.Any(a=>CanShareFamilyWarmth(a,c));
-            f.Warmth=Math.Clamp(f.Warmth+dt*(supported||warmAdult ? .18 : -.025),0,100);
-            if(f.Warmth<15)Hurt(c,dt*.025,"幼体持续失温",null);
-            if(c.Condition==PhysicalCondition.Dead)return;
-            if(c.Condition==PhysicalCondition.Active&&f.Warmth<35&&c.ReactionRemaining<=0)
-                React(c,Expression.Calling,"冷冷……陪陪……","幼体缩着身体，寻找温暖和陪伴。",5);
-        }
+        TickWarmth(c,dt);
         // Birth provenance is optional in old saves, but real body age is not.
         // Growing up must not fabricate a birth event or reset age/role/history.
-        if(c.Body.AgeSeconds>=FamilyRules.YoungSeconds&&c.Fullness>35&&c.Health>50&&f.Warmth>40)
-        {c.IsYoung=false;f.LastEvent="已经长大，开始学习独立生活。";RecordInteraction(c,"grown",f.LastEvent,3);}
+        // Age advances continuously even during illness; no condition permanently blocks a stage.
     }
 
     private void DropCareParcel(Creature adult)

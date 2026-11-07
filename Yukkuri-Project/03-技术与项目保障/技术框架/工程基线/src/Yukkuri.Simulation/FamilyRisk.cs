@@ -85,7 +85,7 @@ public sealed partial class WorldSimulation
     {
         var father=State.Creatures.Find(c=>c.Id==fatherId);var error=FamilyCommandError(father);
         if(error!=null)return error;
-        if(father!.IsYoung||father.Body.ReproductionRole!=ReproductionRole.Paternal||!FamilyRules.SupportedSpecies(father.Body.SpeciesId))
+        if(!GrowthRules.IsAdult(father!)||father.Body.ReproductionRole!=ReproductionRole.Paternal||!FamilyRules.SupportedSpecies(father.Body.SpeciesId))
             return "需要一只已成熟、具备父体角色的兼容个体。";
         if(!FamilyActionReady(father)||father.Trust<35||father.Fear>=35||father.Fullness<50||father.Energy<50)
             return "它没有接受这次材料采集，或身体还没有准备好。";
@@ -103,7 +103,7 @@ public sealed partial class WorldSimulation
     {
         var mother=State.Creatures.Find(c=>c.Id==motherId);var father=State.Creatures.Find(c=>c.Id==fatherId);
         var error=FamilyCommandError(mother);if(error!=null)return error;
-        if(father==null||motherId==fatherId||!Enum.IsDefined(method)||mother!.IsYoung||father.IsYoung||
+        if(father==null||motherId==fatherId||!Enum.IsDefined(method)||!GrowthRules.IsAdult(mother!)||!GrowthRules.IsAdult(father)||
             mother.Body.ReproductionRole!=ReproductionRole.Maternal||father.Body.ReproductionRole!=ReproductionRole.Paternal||
             !FamilyRules.SupportedSpecies(mother.Body.SpeciesId)||!FamilyRules.SupportedSpecies(father.Body.SpeciesId))
             return "强制干预也不能改变成熟条件、固定角色或物种兼容。";
@@ -179,7 +179,7 @@ public sealed partial class WorldSimulation
         if(Next()>=chance){CancelIntervention(mother,"强制干预没有使孕育开始，身体与关系后果仍在。");return;}
         p.Phase=PregnancyPhase.Gestating;p.EventId=NewFamilyId("birth");p.Elapsed=0;p.WaitingSeconds=0;
         SettleBreedingInterest(mother,father);
-        p.PlannedChildren=p.Method==BirthMethod.Live?1:2+(Next()<.25?1:0);
+        p.PlannedChildren=RollBroodSize(p.Method);
         InitializeStemBrood(p);
         p.NextDecisionAt=State.WorldSeconds+30;mother.Family.LastEvent="强制干预后开始孕育，需要密切照护身体与情绪。";
         RecordInteraction(mother,"forced-pregnancy",mother.Family.LastEvent,5);
@@ -299,8 +299,8 @@ public sealed partial class WorldSimulation
                 double dx=child.X-c.X,dz=child.Z-c.Z;
                 if(Math.Abs(dx)+Math.Abs(dz)<.001)dx=1;
                 double distance=Math.Sqrt(dx*dx+dz*dz);
-                child.Family.FlightX=Math.Clamp(child.X+dx/distance*3,-7,7);
-                child.Family.FlightZ=Math.Clamp(child.Z+dz/distance*3,-7,7);
+                child.Family.FlightX=Math.Clamp(child.X+dx/distance*3,-CourtyardGround.HalfSize+1,CourtyardGround.HalfSize-1);
+                child.Family.FlightZ=Math.Clamp(child.Z+dz/distance*3,-CourtyardGround.HalfSize+1,CourtyardGround.HalfSize-1);
                 child.Family.FlightRemaining=5;
             }
         }

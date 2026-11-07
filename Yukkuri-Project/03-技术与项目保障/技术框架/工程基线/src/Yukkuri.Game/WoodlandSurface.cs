@@ -44,18 +44,18 @@ public static class WoodlandSurface
     {
         // Ground is at y=0. Water and dry banks sit just above it in this prototype terrain.
         yield return new("west river bank","aaa584",64,6,(u,v)=>
-        {float z=-8+16*u,edge=(float)WoodlandLayout.RiverEdge(z);return new(edge-.32f+v*.32f,.0025f,z);},Flip:true);
+        {float z=(float)CourtyardGround.HalfSize*(-1+2*u),edge=(float)WoodlandLayout.RiverEdge(z);return new(edge-.32f+v*.32f,.0025f,z);},Flip:true);
         yield return new("river surface","7aaba3",96,12,(u,v)=>
-        {float z=-8+16*u,edge=(float)WoodlandLayout.RiverEdge(z);return new(edge+(8.1f-edge)*v,WaterHeight,z);},Flip:true);
+        {float z=(float)CourtyardGround.HalfSize*(-1+2*u),edge=(float)WoodlandLayout.RiverEdge(z);return new(edge+((float)CourtyardGround.HalfSize+.1f-edge)*v,WaterHeight,z);},Flip:true);
         for(int i=0;i<22;i++)
         {
-            float z=-7.6f+i*.69f,side=i%3*.34f;
+            float z=(-7.6f+i*.69f)*(float)CourtyardGround.Expansion,side=i%3*.34f;
             yield return new("flow trace "+i,"aacac0",12,1,(u,v)=>
             {float zz=z+u*.29f;return new((float)WoodlandLayout.RiverEdge(zz)+.24f+side+.04f*MathF.Sin(u*MathF.PI)+(v-.5f)*.016f,.027f,zz);},Flip:true);
         }
         for(int i=0;i<11;i++)
         {
-            float z=-7+i*1.3f;
+            float z=(-7+i*1.3f)*(float)CourtyardGround.Expansion;
             // Keep the authored drinking approach free of decorative stones.
             if(MathF.Abs(z-(float)WoodlandLayout.BankZ)<.8f)continue;
             var center=new Vector3((float)WoodlandLayout.RiverEdge(z)-.17f,.05f,z);

@@ -14,7 +14,7 @@ public sealed partial class WorldSimulation
         var i=c.Interaction;
         if(!i.Lowering)return;
         if(!i.Carried||i.Falling||i.Restraint!=RestraintKind.None){i.Lowering=false;return;}
-        double scale=c.IsYoung?.73:c.IsElder?1.03:1;
+        double scale=GrowthRules.Scale(c);
         i.Height=Math.Max(0,i.Height-dt*1.2*scale);
         if(i.Height>0)return;
         i.Lowering=false;i.Carried=false;

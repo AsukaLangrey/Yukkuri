@@ -64,8 +64,9 @@ public sealed partial class WorldState
 // Prototype tuning, not historical Hakkei formulas or final balance.
 public static partial class FamilyRules
 {
-    public const double YoungSeconds = 1800;
-    public static double GestationSeconds(BirthMethod method) => method == BirthMethod.Live ? 480 : 240;
+    public const double YoungSeconds = GrowthRules.AdultAge;
+    public static double GestationSeconds(BirthMethod method) => method == BirthMethod.Live ? 14*GrowthRules.Day : 7*GrowthRules.Day;
+    public static double BroodDemand(PregnancyState p)=>p.PlannedChildren/(p.Method==BirthMethod.Live?1.4:3.5);
     public static double RecoverySeconds(BirthMethod method) => method == BirthMethod.Live ? 300 : 180;
     public static bool CommonSpecies(string species) => species is "reimu" or "marisa" or "alice" or "patchouli";
     public static bool WillSocialize(Creature c) => !UnderIntervention(c)&&c.Family.ChildThreat.TargetId==null&&
@@ -78,15 +79,13 @@ public static partial class FamilyRules
     public static bool Predator(string species) => species is "remilia" or "flandre";
     public static bool SupportedSpecies(string species) => CommonSpecies(species)||Predator(species);
     public static bool CrossEcology(Creature a,Creature b) => Predator(a.Body.SpeciesId)!=Predator(b.Body.SpeciesId);
-    public static bool WillPair(Creature c, Creature other) => WillSocialize(c) && EmotionalReadiness.Settled(c) && !c.IsYoung &&
+    public static bool WillPair(Creature c, Creature other) => WillSocialize(c) && EmotionalReadiness.Settled(c) && GrowthRules.IsAdult(c) &&
         c.Family.Peers.TryGetValue(other.Id, out var bond) &&
         bond.Familiarity >= (CrossEcology(c,other)?75:30) && bond.Affection >= (CrossEcology(c,other)?80:35) && bond.Fear < 25 && bond.Resentment < 25;
     public static string Describe(Creature c)
     {
         var p=c.Family.Pregnancy;
-        if(c.Family.ColdStorage.Stored)return WorldSimulation.BiologicalTimeScale(c)<1?
-            "冷藏保存中 · 生命过程按十倍延缓；需要及时取出":
-            "冷藏已超时，延缓已结束；需要腾出空位并尽快取出";
+        if(c.Family.ColdStorage.Stored)return "回收箱保存中 · 生理时间暂停";
         string stage=p.Phase switch
         {
             PregnancyPhase.Preparing => UnderIntervention(c)?"繁育干预进行中，可及时停止":"正在等待双方靠近与接受",
@@ -94,7 +93,7 @@ public static partial class FamilyRules
             PregnancyPhase.Recovering => "孕育后的恢复期",
             _ => ""
         };
-        if(c.IsYoung)stage="幼体，需要吃喝、保暖与陪伴"+(c.Family.Warmth<35?"；正在发冷":"");
+        if(c.IsYoung)stage=GrowthRules.Name(c)+"，需要吃喝、保暖与陪伴"+(c.Family.Warmth<35?"；正在发冷":"");
         return string.Join("；",new[]{stage,p.Burden>=40?"身体负担加重，需要及时照护":"",c.Family.ColdStorage.RecoveryRemaining>0?"取出冷藏后正在缓慢恢复":"",c.Family.LastEvent}.Where(x=>x.Length>0));
     }
 }

@@ -58,10 +58,12 @@ public partial class CreatureActor
         }
     }
 
-    private bool _hadHopPresentation;
+    private bool _hadHopPresentation,_autonomousTravelPending;
+    private long _lastAutonomousMotionSerial;
     public void RefreshInteraction(Creature c, bool selected, bool close, float delta,
-        string pose, float force, Vector2 gestureDirection, bool paused,SurfaceSide contactSide=SurfaceSide.Whole,System.Collections.Generic.IReadOnlyList<RoomObject>? roomObjects=null)
+        string pose, float force, Vector2 gestureDirection, bool paused,SurfaceSide contactSide=SurfaceSide.Whole,System.Collections.Generic.IReadOnlyList<RoomObject>? roomObjects=null,float worldSpeed=1,bool allowGroundGait=true)
     {
+        delta *= close ? 1 : System.Math.Clamp(worldSpeed,1,10);
         if(_roomEquipment==null)BuildInteractionVisuals();
         var previousBodyPosition=Position+_visual.Position;
         var previousBodyScale=_visual.Scale;
@@ -69,6 +71,9 @@ public partial class CreatureActor
         // Reuse facial expression assets, but room positions are authored by the simulation.
         Refresh(c,selected,false,paused?0:delta,0,true,true);
         Freeze=true;
+        // Courtyard collisions are resolved by RoomMove. A kinematic frozen body
+        // defers its target until the next physics tick and invents a second motion.
+        FreezeMode=FreezeModeEnum.Static;
         var life=c.Interaction;
         bool waterBody=HasWaterBodyPresentation(c);
         pose=ActorInjuryPresentation.GuardPose(c,pose);
@@ -79,6 +84,8 @@ public partial class CreatureActor
             &&!life.Carried&&!life.Falling&&!life.Supine&&!life.Rolling&&!life.Resting&&life.EatingRemaining<=0)
             pose=life.Physiology.Excreting==ExcretionKind.Urine?"urinate":"defecate";
         Position=new((float)c.X,.46f*BodyScale+(float)life.Height,(float)c.Z);
+        // Flush the Node3D transform notification before physics queries and picking.
+        ForceUpdateTransform();
         if(_startShelterPassage)
         {
             // The doorway follows real ground motion. Drop only an old hop's
@@ -87,12 +94,15 @@ public partial class CreatureActor
                 System.Numerics.Vector3.Zero,new(previousBodyRotation.X,previousBodyRotation.Y,previousBodyRotation.Z,previousBodyRotation.W));
             _startShelterPassage=false;
         }
-        bool canHop=ActorHopMotion.AllowsView(close,paused,_hadHopPresentation)&&WorldSimulation.CanSelfMove(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine
-            &&!waterBody&&!_shelterPassage
+        if(!paused&&life.AutonomousMotionSerial!=_lastAutonomousMotionSerial)_autonomousTravelPending=true;
+        _lastAutonomousMotionSerial=life.AutonomousMotionSerial;
+        if(!paused&&!_hopMotion.Active&&System.Numerics.Vector2.Distance(_hopMotion.Position,new(Position.X,Position.Z))<.01f)_autonomousTravelPending=false;
+        bool canHop=allowGroundGait&&!life.Physiology.Active&&life.EatingRemaining<=0&&ActorHopMotion.AllowsView(close,paused,_hadHopPresentation)&&WorldSimulation.CanSelfMove(c)&&!life.Carried&&!life.Falling&&!life.Rolling&&!life.Supine
+            &&!waterBody
             &&!life.Resting&&life.Restraint==RestraintKind.None&&life.Height<=.001
             &&System.Math.Abs(life.VelocityX)+System.Math.Abs(life.VelocityZ)<.005
-            &&pose is "idle" or "guard" or "stomach" or "careful-step";
-        bool smoothHandoff=!_shelterPassage&&(close||life.Physiology.Active||pose=="help-look"||life.GroundIntake&&life.EatingRemaining>0&&pose is "eat" or "sip");
+            &&(_autonomousTravelPending||pose is "idle" or "guard" or "stomach" or "careful-step");
+        bool smoothHandoff=!_shelterPassage;
         bool physicalHandoff=(life.Carried||life.Falling)&&!waterBody&&!life.Supine&&!life.Rolling&&
             life.Restraint==RestraintKind.None&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering;
         if(!paused&&_hadHopPresentation&&!canHop&&physicalHandoff)
@@ -111,7 +121,7 @@ public partial class CreatureActor
             _poseSmoothing.BeginFrom(new(previousBodyScale.X,previousBodyScale.Y,previousBodyScale.Z),
                 new(offset.X,offset.Y,offset.Z),new(previousBodyRotation.X,previousBodyRotation.Y,previousBodyRotation.Z,previousBodyRotation.W));
         }
-        if(!paused)_hadHopPresentation=canHop;
+        if(!paused){_hadHopPresentation=canHop;if(!canHop)_autonomousTravelPending=false;}
         _hopMotion.Advance(new(Position.X,Position.Z),delta,canHop,paused);
         _interactionPoseClock.Advance(pose,c.ReactionSerial,delta,paused);
         float age=_interactionPoseClock.Age;
@@ -217,7 +227,7 @@ public partial class CreatureActor
             new(targetRotation.X,targetRotation.Y,targetRotation.Z,targetRotation.W),delta,paused,life.GroundIntake&&life.EatingRemaining>0);
         _visual.Scale=AccessoryPoint(_poseSmoothing.Scale);_visual.Position=AccessoryPoint(_poseSmoothing.Offset);
         var smoothed=_poseSmoothing.Rotation;_visual.Quaternion=new(smoothed.X,smoothed.Y,smoothed.Z,smoothed.W);
-        if(canHop&&!_waterConcernFacing&&!_companyFacing)
+        if(canHop&&(_hopMotion.Active||_hopMotion.Turning||!_waterConcernFacing&&!_companyFacing))
         {
             // Heading has already turned at a bounded speed while planted. A second
             // rotation filter would leave the face trailing behind the flight direction.
@@ -230,6 +240,7 @@ public partial class CreatureActor
         if(_hopMotion.Active)
         {
             var hop=ActorInjuryPresentation.AdaptHop(c,_hopMotion.Frame);
+            if(_shelterPassage)hop=hop with {Lift=hop.Lift*.22f,Pitch=hop.Pitch*.25f,Scale=System.Numerics.Vector3.Lerp(System.Numerics.Vector3.One,hop.Scale,.25f)};
             _visual.Scale*=AccessoryPoint(hop.Scale);
             _visual.Position+=new Vector3(_hopMotion.Position.X-Position.X,hop.Lift*BodyScale,_hopMotion.Position.Y-Position.Z);
             _visual.Rotation+=new Vector3(Mathf.DegToRad(hop.Pitch),0,0);

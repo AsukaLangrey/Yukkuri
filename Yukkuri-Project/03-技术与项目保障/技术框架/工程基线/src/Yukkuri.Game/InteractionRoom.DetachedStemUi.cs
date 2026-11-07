@@ -53,6 +53,7 @@ public partial class InteractionRoom
         ClearShelterSelection();
         if(cancelGesture)CancelGesture();
         _detachedSelectionWorld=Sim.State;_selectedDetachedStemEventId=eventId;
+        Sim.State.SelectedId=null;_selectedRoomObjectId=_observedStemMotherId=null;
         Sim.State.Mode=PlayMode.Management;
         _message=stem.Cleared?"正在查看已收拾的离体茎记录。":"正在观察这一窝离体茎。操作需要实际接触。";
         RefreshRoomUi();

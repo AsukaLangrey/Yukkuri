@@ -13,22 +13,40 @@ public partial class InteractionRoom
     private bool _swingArmed,_pulled;
     private string? _observedStemMotherId;
     private PanelContainer _recycleBox=null!;
+    private Label _recycleLabel=null!;
     private bool _recycleReady;
     private readonly CarryReleaseMotion _portableRelease=new();
     private Vector3 _sceneDragOffset;
     private void BuildRecycleBox(Control parent)
     {
-        _recycleBox=Panel(parent,"d9dfcbea");_recycleBox.CustomMinimumSize=new(160,38);
-        _recycleBox.AddThemeStyleboxOverride("panel",RoomStyle("d9dfcbea",8,8));
-        _recycleBox.AddChild(Text("收容箱 · 拖入回收，不退款",12));
-        _recycleBox.Modulate=new Color(1,1,1,.65f);
+        _recycleBox=Panel(parent,"d9dfcbea");_recycleBox.Visible=false;
+        _recycleBox.MouseFilter=Control.MouseFilterEnum.Ignore;
+        var column=Column(_recycleBox,2);column.MouseFilter=Control.MouseFilterEnum.Ignore;
+        _recycleIcon=new TextureRect{Texture=GD.Load<Texture2D>("res://Assets/Icons/Actions/box.svg"),
+            CustomMinimumSize=new(64,64),ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,
+            StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,Modulate=new Color("405247"),MouseFilter=Control.MouseFilterEnum.Ignore};
+        column.AddChild(_recycleIcon);_recycleLabel=Text("回收箱",13);
+        _recycleLabel.AutowrapMode=TextServer.AutowrapMode.Off;
+        _recycleLabel.HorizontalAlignment=HorizontalAlignment.Center;
+        column.AddChild(_recycleLabel);
     }
+
     private bool HandleRedesignRelease(InputEvent input)
     {
         if(input is not InputEventMouseButton{ButtonIndex:MouseButton.Left,Pressed:false} mouse)return false;
         string? recycleId=_sceneDragId??_heldSupplyId??Sim.InteractionGestureObject??Sim.InteractionGestureTarget;
-        if(_recycleReady&&!_modalOpen&&!Sim.State.Settings.Pause&&_recycleBox.GetGlobalRect().HasPoint(mouse.Position)&&recycleId!=null)
-        {CancelGesture();_message=Sim.RecycleCourtyardObject(recycleId);RefreshRoomUi();return true;}
+        if(_recycleReady&&!_modalOpen&&!Sim.State.Settings.Pause&&GameUiLayout.Hit(_recycleBox,mouse.Position)&&recycleId!=null)
+        {
+            string? rejection=RecycleRejection(recycleId);
+            CancelGesture();
+            if(rejection!=null)_message=rejection;
+            else
+            {
+                _message=Sim.RecycleCourtyardObject(recycleId,out bool committed);
+                if(committed)PlayRecycleReceipt();
+            }
+            RefreshRoomUi();return true;
+        }
         if(_sceneDragId!=null)
         {
             if(_sceneDragKind=="accessory"&&IsScenePoint(mouse.Position)&&ContactAt(mouse.Position)?.Id==_sceneDragId&&ObjectAt(mouse.Position)==null&&_actors.TryGetValue(_sceneDragId,out var ownerActor)&&
@@ -51,16 +69,23 @@ public partial class InteractionRoom
         Sim?.SetGroundHandTarget(null);
         if(_sceneDragId!=null&&_sceneDragKind=="portable")Sim?.ReleasePortableCarry(_sceneDragId,System.Numerics.Vector2.Zero,true);
         _sceneDragId=_sceneDragKind=_hoverGestureId=null;_pokeContact=null;_swingArmed=false;
-        _recycleReady=false;
-        if(_recycleBox!=null)_recycleBox.Modulate=new Color(1,1,1,.65f);
+        _recycleReady=false;_recycleReceipt=0;_recycleTween?.Kill();
+        if(_recycleIcon!=null){_recycleIcon.Scale=Vector2.One;_recycleIcon.Rotation=0;}
+        if(_recycleLabel!=null){_recycleLabel.Text="回收箱";_recycleBox.Visible=false;}
     }
     private void SelectObserved(Contact? contact,RoomObject? obj)
     {
+        if(InspectingRecycleBox&&(contact!=null||obj!=null))CloseActivityPanel();
+        if(contact==null&&obj==null)
+        {
+            if((!ActivityPanelVisible||_activityTitle is "事件记录" or "家庭记录")&&Sim.State.Mode==PlayMode.Management)DeselectInspector();
+            return;
+        }
         ClearShelterSelection();
         _observedStemMotherId=null;
         if(contact?.TargetKind==InteractionTargetKind.SupplyStation){_selectedRoomObjectId=null;SelectSupplyStation(contact.Id);}
         else if(contact?.TargetKind==InteractionTargetKind.DetachedStem){_selectedRoomObjectId=null;SelectDetachedStem(contact.Id);}
-        else if(obj!=null){CancelGesture();ClearSupplyStationSelection();_selectedDetachedStemEventId=null;_selectedRoomObjectId=obj.Id;_message=RoomResourceText.Describe(obj,Sim.State);}
+        else if(obj!=null){CancelGesture();ClearSupplyStationSelection();_selectedDetachedStemEventId=null;Sim.State.SelectedId=null;_selectedRoomObjectId=obj.Id;_message=RoomResourceText.Describe(obj,Sim.State);}
         else if(contact!=null){SelectOil(contact.Id);if(contact.TargetKind==InteractionTargetKind.Stem)_observedStemMotherId=contact.Id;}
         RefreshRoomUi();
     }
@@ -172,7 +197,7 @@ public partial class InteractionRoom
         Vector2 point=GetViewport().GetMousePosition();
         bool dragging=_sceneDragId!=null||_heldSupplyId!=null||_mouseHeld&&(_action==InteractionAction.Lift||_gestureTargetKind is InteractionTargetKind.SupplyStation or InteractionTargetKind.DetachedStem);
         _recycleReady=dragging&&_roomMode==RoomMode.Grab&&!_modalOpen&&!Sim.State.Settings.Pause;
-        _recycleBox.Modulate=new Color(1,1,1,_recycleReady?1:.65f);
+        RefreshRecycleDrop(point);
         if(!_windowFocused||_modalOpen||Sim.State.Settings.Pause){if(_hoverGestureId!=null){Sim.EndInteractionGesture(true);_hoverGestureId=null;}return;}
         if(_roomMode is RoomMode.Meal or RoomMode.Sweet or RoomMode.Water&&_toolArmed&&!_mouseHeld&&_clickOfferId==null&&_offerReturnId==null)
         {
@@ -195,7 +220,7 @@ public partial class InteractionRoom
                     if(before.HasValue&&after.HasValue)_portableRelease.Sample(after.Value-before.Value,dt);
                 }
                 else if(_sceneDragKind=="accessory"&&Sim.State.Creatures.Find(c=>c.Id==id) is { } owner)
-                {owner.Interaction.Accessory.Place=AccessoryPlace.Hand;owner.Interaction.Accessory.X=Math.Clamp(ground.X,-7.7,7.7);owner.Interaction.Accessory.Z=Math.Clamp(ground.Z,-7.7,7.7);owner.Interaction.Accessory.Height=.7;}
+                {owner.Interaction.Accessory.Place=AccessoryPlace.Hand;owner.Interaction.Accessory.X=Math.Clamp(ground.X,-CourtyardGround.PointerEdge,CourtyardGround.PointerEdge);owner.Interaction.Accessory.Z=Math.Clamp(ground.Z,-CourtyardGround.PointerEdge,CourtyardGround.PointerEdge);owner.Interaction.Accessory.Height=.7;}
             }
             else _portableRelease.Reset();
             _redesignPrevious=point;return;

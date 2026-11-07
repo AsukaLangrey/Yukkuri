@@ -252,8 +252,8 @@ public sealed partial class WorldSimulation
                 double dx=target.X-c.X,dz=target.Z-c.Z;
                 if(Math.Abs(dx)+Math.Abs(dz)<.001)dx=1;
                 double distance=Math.Sqrt(dx*dx+dz*dz);
-                target.Family.FlightX=Math.Clamp(target.X+dx/distance*3,-7,7);
-                target.Family.FlightZ=Math.Clamp(target.Z+dz/distance*3,-7,7);
+                target.Family.FlightX=Math.Clamp(target.X+dx/distance*3,-CourtyardGround.HalfSize+1,CourtyardGround.HalfSize-1);
+                target.Family.FlightZ=Math.Clamp(target.Z+dz/distance*3,-CourtyardGround.HalfSize+1,CourtyardGround.HalfSize-1);
                 target.Family.FlightRemaining=5;
             }
         }

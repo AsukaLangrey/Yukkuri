@@ -1,0 +1,1024 @@
+{
+  "date": "2026-11-07",
+  "baseCommit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "recover/local-features-20261107",
+  "verifiedFiles": 145,
+  "scope": "Recovered original local feature source and assets; byte hashes before Git line ending normalization; no Alice feature merges.",
+  "files": [
+    {
+      "path": "checks/Courtyard.AutonomyStalls/Courtyard.AutonomyStalls.csproj",
+      "bytes": 317,
+      "originalSha256": "9ED6351695D6958BDCCD114A32B1613703017F70076601E66648CAB846BCB031",
+      "recoveredSha256": "9ED6351695D6958BDCCD114A32B1613703017F70076601E66648CAB846BCB031",
+      "authority": "stuck-20261103/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.AutonomyStalls/Program.cs",
+      "bytes": 6590,
+      "originalSha256": "B6E00FC3D815E008B6CC79936F982A87BD4EABEABE2C8FB561A7589B3AD7D5F3",
+      "recoveredSha256": "B6E00FC3D815E008B6CC79936F982A87BD4EABEABE2C8FB561A7589B3AD7D5F3",
+      "authority": "sleep-housing-20261103/source-manifest.json"
+    },
+    {
+      "path": "checks/Courtyard.Calendar/Courtyard.Calendar.csproj",
+      "bytes": 326,
+      "originalSha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "recoveredSha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.Calendar/Program.cs",
+      "bytes": 3698,
+      "originalSha256": "0307FCA7989668630DF41A6F7387D5B4F76456ADC4CF7F83B84406364B3D1CE9",
+      "recoveredSha256": "0307FCA7989668630DF41A6F7387D5B4F76456ADC4CF7F83B84406364B3D1CE9",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.ColdStorage/Courtyard.ColdStorage.csproj",
+      "bytes": 330,
+      "originalSha256": "98DD33254E7358998840E4CE26CD964D4B8FAABADA49489A5C6E64F569694459",
+      "recoveredSha256": "98DD33254E7358998840E4CE26CD964D4B8FAABADA49489A5C6E64F569694459",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.ColdStorage/Program.cs",
+      "bytes": 7872,
+      "originalSha256": "093B39F66702ED4B0C49D9E81E2D4868B419616F7A3BC7CB1CCDA376D375CDA2",
+      "recoveredSha256": "093B39F66702ED4B0C49D9E81E2D4868B419616F7A3BC7CB1CCDA376D375CDA2",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.Economy/Program.cs",
+      "bytes": 13825,
+      "originalSha256": "F5DE52708FEF04E45503198CCA6536C12F6303E8C129E808C8028E13ECB5A503",
+      "recoveredSha256": "F5DE52708FEF04E45503198CCA6536C12F6303E8C129E808C8028E13ECB5A503",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "checks/Courtyard.Housing/Courtyard.Housing.csproj",
+      "bytes": 326,
+      "originalSha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "recoveredSha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.Housing/Program.cs",
+      "bytes": 8124,
+      "originalSha256": "63831963C55BC55633EB50F160B57E260914FCD308625CFD5685C81118E4CFC5",
+      "recoveredSha256": "63831963C55BC55633EB50F160B57E260914FCD308625CFD5685C81118E4CFC5",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.NeedsRhythm/Courtyard.NeedsRhythm.csproj",
+      "bytes": 319,
+      "originalSha256": "6E8FB30C5F0930787492DEF362E4E1CE04EE3870F7A40358ACB46B720DE35DC7",
+      "recoveredSha256": "6E8FB30C5F0930787492DEF362E4E1CE04EE3870F7A40358ACB46B720DE35DC7",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.NeedsRhythm/Program.cs",
+      "bytes": 11342,
+      "originalSha256": "A7504BC86512D423B506C95B78AC0BCA86C60BC9D9440EB2EEB1673FCB4DCACA",
+      "recoveredSha256": "A7504BC86512D423B506C95B78AC0BCA86C60BC9D9440EB2EEB1673FCB4DCACA",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.SanitationMotion/Courtyard.SanitationMotion.csproj",
+      "bytes": 489,
+      "originalSha256": "A1E0C9879961F1800EA060BBAE2D1C496D34DC79F31F4B27FF15C5CB58EE3613",
+      "recoveredSha256": "A1E0C9879961F1800EA060BBAE2D1C496D34DC79F31F4B27FF15C5CB58EE3613",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.SanitationMotion/Program.cs",
+      "bytes": 10457,
+      "originalSha256": "255FDAD05A5DC9623F6E3248A587FF98A68FF98B6D056730E7FEAB64CDD02571",
+      "recoveredSha256": "255FDAD05A5DC9623F6E3248A587FF98A68FF98B6D056730E7FEAB64CDD02571",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.SleepHousing/Courtyard.SleepHousing.csproj",
+      "bytes": 317,
+      "originalSha256": "9ED6351695D6958BDCCD114A32B1613703017F70076601E66648CAB846BCB031",
+      "recoveredSha256": "9ED6351695D6958BDCCD114A32B1613703017F70076601E66648CAB846BCB031",
+      "authority": "sleep-housing-20261103/source-manifest.json"
+    },
+    {
+      "path": "checks/Courtyard.SleepHousing/Program.cs",
+      "bytes": 8035,
+      "originalSha256": "4B8AA44327919913733F8EC36693449D6864941C7B7C2AAD97CCAF9D8AF4B4D5",
+      "recoveredSha256": "4B8AA44327919913733F8EC36693449D6864941C7B7C2AAD97CCAF9D8AF4B4D5",
+      "authority": "sleep-housing-20261103/source-manifest.json"
+    },
+    {
+      "path": "checks/Courtyard.SurvivalGrowth/Courtyard.SurvivalGrowth.csproj",
+      "bytes": 413,
+      "originalSha256": "6E569413713996FEFFC16785FDC855FE42864AF264918C53274AAC42944B8019",
+      "recoveredSha256": "6E569413713996FEFFC16785FDC855FE42864AF264918C53274AAC42944B8019",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Courtyard.SurvivalGrowth/Program.cs",
+      "bytes": 19466,
+      "originalSha256": "1CA950D2E0AD7DEAE08341D081E2AB73128826D1C0C04C47965EE4A2E41EBA3F",
+      "recoveredSha256": "1CA950D2E0AD7DEAE08341D081E2AB73128826D1C0C04C47965EE4A2E41EBA3F",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "checks/Family.ColdCare/Program.cs",
+      "bytes": 12119,
+      "originalSha256": "88FA55033684F39C4F7D993517ABBC17253848A08BB637C159A94843156D5582",
+      "recoveredSha256": "88FA55033684F39C4F7D993517ABBC17253848A08BB637C159A94843156D5582",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "checks/Interaction.Injury/Program.cs",
+      "bytes": 12420,
+      "originalSha256": "A26D9A9326D569212C6811EAA419C5287FF13B5F15EFD84BF97028EBF06039F8",
+      "recoveredSha256": "A26D9A9326D569212C6811EAA419C5287FF13B5F15EFD84BF97028EBF06039F8",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "checks/Interaction.StateDetail/Interaction.StateDetail.csproj",
+      "bytes": 326,
+      "originalSha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "recoveredSha256": "AF16FC5FFCEDB208F8352FA7824EB96D8F6720D3BEF6CC03980AD9752855CA8A",
+      "authority": "state-detail-20261103/metadata.json"
+    },
+    {
+      "path": "checks/Interaction.StateDetail/Program.cs",
+      "bytes": 6251,
+      "originalSha256": "0B1A1D2EB39A7AA387D589C459F00809BDB26BA0798CD7DE7A79721FB68388A9",
+      "recoveredSha256": "0B1A1D2EB39A7AA387D589C459F00809BDB26BA0798CD7DE7A79721FB68388A9",
+      "authority": "state-detail-20261103/metadata.json"
+    },
+    {
+      "path": "checks/Interaction.StemCare/Program.cs",
+      "bytes": 19616,
+      "originalSha256": "250C6F8C5BA4211413BFD9CE0B5C18B09C1506EE9954F749F110C480BD76A84A",
+      "recoveredSha256": "250C6F8C5BA4211413BFD9CE0B5C18B09C1506EE9954F749F110C480BD76A84A",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "Play Current.cmd",
+      "bytes": 132,
+      "originalSha256": "8218082FC6E4C57522C5D21A67C976FB579C86857663C20EEDAD43A8693BE10D",
+      "recoveredSha256": "8218082FC6E4C57522C5D21A67C976FB579C86857663C20EEDAD43A8693BE10D",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "Preview Starter Garden.cmd",
+      "bytes": 106,
+      "originalSha256": "0FA2F97F9AAF6D9406A07ECA31EA6E1EC69C42BA81C711E6195F37BDD7B88A53",
+      "recoveredSha256": "0FA2F97F9AAF6D9406A07ECA31EA6E1EC69C42BA81C711E6195F37BDD7B88A53",
+      "authority": "20261103-v05 源码与素材清单.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorHopMotion.cs",
+      "bytes": 4287,
+      "originalSha256": "E888320F9F5F32A4E9749776B76AD548F8FD480F6BABF2CFB1D7CF21EDA978A7",
+      "recoveredSha256": "E888320F9F5F32A4E9749776B76AD548F8FD480F6BABF2CFB1D7CF21EDA978A7",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorNaturalPose.cs",
+      "bytes": 6428,
+      "originalSha256": "57BE455A30439909D9565EE6B9E40B6042D45999F3D1C8D1FAEE7C88D142327F",
+      "recoveredSha256": "57BE455A30439909D9565EE6B9E40B6042D45999F3D1C8D1FAEE7C88D142327F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorPoseClock.cs",
+      "bytes": 538,
+      "originalSha256": "06AB36F8696698DC06FD49DC239DF859DBC3486852A7A1857257965D3D49C27A",
+      "recoveredSha256": "06AB36F8696698DC06FD49DC239DF859DBC3486852A7A1857257965D3D49C27A",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ActorTearSurface.cs",
+      "bytes": 2488,
+      "originalSha256": "960C3076F935C34D5830F4DB12612A6351C7E5FC8D589159E0E865E3D1FC1B25",
+      "recoveredSha256": "960C3076F935C34D5830F4DB12612A6351C7E5FC8D589159E0E865E3D1FC1B25",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ArtPreview/GardenGround.gdshader",
+      "bytes": 1161,
+      "originalSha256": "FE487322DB8C52FAB637E5B7A5299181D9B9B994A3499D0C5AE33A34B75E9C4E",
+      "recoveredSha256": "FE487322DB8C52FAB637E5B7A5299181D9B9B994A3499D0C5AE33A34B75E9C4E",
+      "authority": "20261103-v05 源码与素材清单.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ArtPreview/GardenWood.gdshader",
+      "bytes": 430,
+      "originalSha256": "AF1268614C01AF9674166A844CC116031E7ED50C92398AE9CB6D0DC709419F73",
+      "recoveredSha256": "AF1268614C01AF9674166A844CC116031E7ED50C92398AE9CB6D0DC709419F73",
+      "authority": "20261103-v05 源码与素材清单.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ArtPreview/StarterGarden.gd",
+      "bytes": 28969,
+      "originalSha256": "1D4BF2F35785F25815B4977C3E9ADA58E46A5BF07F3B689C6382090F72B153D0",
+      "recoveredSha256": "1D4BF2F35785F25815B4977C3E9ADA58E46A5BF07F3B689C6382090F72B153D0",
+      "authority": "20261103-v05 源码与素材清单.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ArtPreview/StarterGarden.tscn",
+      "bytes": 189,
+      "originalSha256": "3CA26BE2CAEA2630CBDEC5A9CF6B97EF8BE7D37F53496151CC51718D53F0F7CA",
+      "recoveredSha256": "3CA26BE2CAEA2630CBDEC5A9CF6B97EF8BE7D37F53496151CC51718D53F0F7CA",
+      "authority": "20261103-v05 源码与素材清单.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ArtPreview/Textures/foliage-cluster-v01.png",
+      "bytes": 1907076,
+      "originalSha256": "AE74FC985B9DC7BCC8F243CC83EC2E97CA57AF508405651D4B3285DEAFF0D1F3",
+      "recoveredSha256": "AE74FC985B9DC7BCC8F243CC83EC2E97CA57AF508405651D4B3285DEAFF0D1F3",
+      "authority": "20261103-v05 源码与素材清单.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/Actions/coin.svg",
+      "bytes": 262,
+      "originalSha256": "946C389BAE3F38AEE46394A410D8CAC67B90A227463908D14E36B43390A3D06C",
+      "recoveredSha256": "946C389BAE3F38AEE46394A410D8CAC67B90A227463908D14E36B43390A3D06C",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/Assets/Icons/Actions/focus.svg",
+      "bytes": 291,
+      "originalSha256": "1833862FA3E4839F7115C1A8DEBBCF9FDECB26ADC966CB30CBC96274B8AB9408",
+      "recoveredSha256": "1833862FA3E4839F7115C1A8DEBBCF9FDECB26ADC966CB30CBC96274B8AB9408",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.cs",
+      "bytes": 14935,
+      "originalSha256": "807A8CDC299A706086C0B8F199FF57E92F810B1652A5DD96F4AF0BFB9FA60056",
+      "recoveredSha256": "807A8CDC299A706086C0B8F199FF57E92F810B1652A5DD96F4AF0BFB9FA60056",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Gestation.cs",
+      "bytes": 9868,
+      "originalSha256": "D5E62806C1C857C7398C2CEEF94537651A508EA77C28B8BCD18DEFC31F6C1D8F",
+      "recoveredSha256": "D5E62806C1C857C7398C2CEEF94537651A508EA77C28B8BCD18DEFC31F6C1D8F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/CreatureActor.Interaction.cs",
+      "bytes": 26563,
+      "originalSha256": "13539CC13355082DBF7A999B0D9F72363D8BF2B18B4FC8356073986C5BCD5379",
+      "recoveredSha256": "13539CC13355082DBF7A999B0D9F72363D8BF2B18B4FC8356073986C5BCD5379",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/DetachedStemActor.cs",
+      "bytes": 9051,
+      "originalSha256": "10BA744114962712E5434FDCF69BA3FBCE4449D1A28D7CCE88D662B34ABB5DB9",
+      "recoveredSha256": "10BA744114962712E5434FDCF69BA3FBCE4449D1A28D7CCE88D662B34ABB5DB9",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/GameUiLayout.cs",
+      "bytes": 3099,
+      "originalSha256": "5AAD6BAF71E07A83C3D84DB6EEE37ABD7138208EA2EABA4D5754DBE7C073FF2F",
+      "recoveredSha256": "5AAD6BAF71E07A83C3D84DB6EEE37ABD7138208EA2EABA4D5754DBE7C073FF2F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Celestial.cs",
+      "bytes": 2218,
+      "originalSha256": "978928AED9193164E7008A23C0B723A10EE0DF25B2F24AE415C39826A62D281A",
+      "recoveredSha256": "978928AED9193164E7008A23C0B723A10EE0DF25B2F24AE415C39826A62D281A",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.ColdStorageVerification.cs",
+      "bytes": 5936,
+      "originalSha256": "16622E5EC45B161933B2443B2DE9B9905A3CF39BB49634AC43401EA78CE82BC8",
+      "recoveredSha256": "16622E5EC45B161933B2443B2DE9B9905A3CF39BB49634AC43401EA78CE82BC8",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.CreatureArrival.cs",
+      "bytes": 4710,
+      "originalSha256": "7A7C480841A2BF1DADD21F066E97650CFE7AEF499F4A649D5D9E6B4B62DF4944",
+      "recoveredSha256": "7A7C480841A2BF1DADD21F066E97650CFE7AEF499F4A649D5D9E6B4B62DF4944",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "bytes": 21091,
+      "originalSha256": "6435822F09EFB11EA693D036408081ED218DC9EC453F917AB788137C03B72D68",
+      "recoveredSha256": "6435822F09EFB11EA693D036408081ED218DC9EC453F917AB788137C03B72D68",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.DayNight.cs",
+      "bytes": 4743,
+      "originalSha256": "2EF8CD184A68423AB0D516A76C76F08F1D879421C2952243E4C0401E9EFD6E97",
+      "recoveredSha256": "2EF8CD184A68423AB0D516A76C76F08F1D879421C2952243E4C0401E9EFD6E97",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.DayNightVerification.cs",
+      "bytes": 5309,
+      "originalSha256": "D2D5CE2D043E72494676B163C61150BBE838A4056C7832C076545F27AF2F2F1A",
+      "recoveredSha256": "D2D5CE2D043E72494676B163C61150BBE838A4056C7832C076545F27AF2F2F1A",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Debug.cs",
+      "bytes": 21418,
+      "originalSha256": "CD169E0B8EE7BA216533ECC17F5C5706996A55B6216251FE8192B4C100F53FDA",
+      "recoveredSha256": "CD169E0B8EE7BA216533ECC17F5C5706996A55B6216251FE8192B4C100F53FDA",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.DetachedStemUi.cs",
+      "bytes": 7160,
+      "originalSha256": "E5A6A05A3D5E56197F5AA5E8E379979EADF3BC900F9AC1411CC88C50E188F983",
+      "recoveredSha256": "E5A6A05A3D5E56197F5AA5E8E379979EADF3BC900F9AC1411CC88C50E188F983",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Development.cs",
+      "bytes": 4836,
+      "originalSha256": "D937A5A98936C65C456DF7ED5875879700CA5343DDD6A262653FC1E94159AC10",
+      "recoveredSha256": "D937A5A98936C65C456DF7ED5875879700CA5343DDD6A262653FC1E94159AC10",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Family.cs",
+      "bytes": 29586,
+      "originalSha256": "4C5EC3DE9DB39FCAB6A330BC75D8BD0CA8473B74A2EE4FF4DBEA2C80954FCA94",
+      "recoveredSha256": "4C5EC3DE9DB39FCAB6A330BC75D8BD0CA8473B74A2EE4FF4DBEA2C80954FCA94",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.FollowupVerification.cs",
+      "bytes": 4582,
+      "originalSha256": "274B1DCFD1CD67627E7DB5710EE131236DCDFB7ABCC8AAEF5F8310B34B45D147",
+      "recoveredSha256": "274B1DCFD1CD67627E7DB5710EE131236DCDFB7ABCC8AAEF5F8310B34B45D147",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Gestures.cs",
+      "bytes": 20332,
+      "originalSha256": "EFE8C6D836116BE2434445E854809E100B5D247BC2F4A7F412CF49309CCDFAF6",
+      "recoveredSha256": "EFE8C6D836116BE2434445E854809E100B5D247BC2F4A7F412CF49309CCDFAF6",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.HousingVerification.cs",
+      "bytes": 3168,
+      "originalSha256": "529A17FADB58A5DAE16C7BAC628F4FF7046712F0065895A02587357936964B07",
+      "recoveredSha256": "529A17FADB58A5DAE16C7BAC628F4FF7046712F0065895A02587357936964B07",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Input.cs",
+      "bytes": 57526,
+      "originalSha256": "BAB98AC2AC44F37C811D1BBE32FDA78168E7BF5BCE455DB291D9C79DFA26C4D4",
+      "recoveredSha256": "BAB98AC2AC44F37C811D1BBE32FDA78168E7BF5BCE455DB291D9C79DFA26C4D4",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Inspector.cs",
+      "bytes": 9094,
+      "originalSha256": "71F456DA197930016831EFF37697CBBFDD3BD9C116A4395524675CAF823D4BD3",
+      "recoveredSha256": "71F456DA197930016831EFF37697CBBFDD3BD9C116A4395524675CAF823D4BD3",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Market.cs",
+      "bytes": 3229,
+      "originalSha256": "08712C9D7815510DC7466E30E138C3BD3C6D3F9BA9E1F266F91D1192E493CB14",
+      "recoveredSha256": "08712C9D7815510DC7466E30E138C3BD3C6D3F9BA9E1F266F91D1192E493CB14",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.MarketVerification.cs",
+      "bytes": 3152,
+      "originalSha256": "6172FFA26B7905056A2D8F6DE29E822BA419297AA014745839D3D06C3965F07E",
+      "recoveredSha256": "6172FFA26B7905056A2D8F6DE29E822BA419297AA014745839D3D06C3965F07E",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.MotionMonitor.cs",
+      "bytes": 6607,
+      "originalSha256": "73CADED7CBF805A885BCB744D6241BCCDC5E9ACF39563937E9EA99D4B37EA181",
+      "recoveredSha256": "73CADED7CBF805A885BCB744D6241BCCDC5E9ACF39563937E9EA99D4B37EA181",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.NeedsVerification.cs",
+      "bytes": 5177,
+      "originalSha256": "2105103665B7E72DEBE5BC95D7FC21FD39F8C9900FBD72E2F388A244DAB01C1D",
+      "recoveredSha256": "2105103665B7E72DEBE5BC95D7FC21FD39F8C9900FBD72E2F388A244DAB01C1D",
+      "authority": "state-detail-20261103/metadata.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.ObjectProperties.cs",
+      "bytes": 12573,
+      "originalSha256": "9D573D4DB8CDF39EEE5D7A5B5F20F1C0BF9904C3B71CD0885E79C62876172DEA",
+      "recoveredSha256": "9D573D4DB8CDF39EEE5D7A5B5F20F1C0BF9904C3B71CD0885E79C62876172DEA",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Panels.cs",
+      "bytes": 9270,
+      "originalSha256": "99421091EF0EF58F22A9B61B50AF73615E07582F856DD97681AC75690C14D12F",
+      "recoveredSha256": "99421091EF0EF58F22A9B61B50AF73615E07582F856DD97681AC75690C14D12F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.RecycleFeedback.cs",
+      "bytes": 2726,
+      "originalSha256": "350CBF32A0913A8351006835589B7FBE64AD381F1062C647EBF3909B06617553",
+      "recoveredSha256": "350CBF32A0913A8351006835589B7FBE64AD381F1062C647EBF3909B06617553",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.RegressionVerification.cs",
+      "bytes": 9711,
+      "originalSha256": "1425970F7804B833D52AC4F6B14D2A0D3801C4E10D69A2A58F753D1C96C3DE7A",
+      "recoveredSha256": "1425970F7804B833D52AC4F6B14D2A0D3801C4E10D69A2A58F753D1C96C3DE7A",
+      "authority": "stuck-20261103/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Shelters.cs",
+      "bytes": 9170,
+      "originalSha256": "31F1EA5C481930044A50691A1FF6B783EE1E60018B7339AFEE170550DEA8ACDE",
+      "recoveredSha256": "31F1EA5C481930044A50691A1FF6B783EE1E60018B7339AFEE170550DEA8ACDE",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.SheltersUi.cs",
+      "bytes": 8832,
+      "originalSha256": "A0733FC5142D0B1CB7391379EB0245CB88A1B73659DD1685C5A74061004B2626",
+      "recoveredSha256": "A0733FC5142D0B1CB7391379EB0245CB88A1B73659DD1685C5A74061004B2626",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.SleepHousingVerification.cs",
+      "bytes": 5103,
+      "originalSha256": "0945434412EC61536A43B931C04E5FF4285F632FD013A8930450A3976C9A5BBA",
+      "recoveredSha256": "0945434412EC61536A43B931C04E5FF4285F632FD013A8930450A3976C9A5BBA",
+      "authority": "sleep-housing-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Supplies.cs",
+      "bytes": 3207,
+      "originalSha256": "0CBE559C2CC458A97FC14D1216D9137439A18D59DE14F24F97884BDB9C498A76",
+      "recoveredSha256": "0CBE559C2CC458A97FC14D1216D9137439A18D59DE14F24F97884BDB9C498A76",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs",
+      "bytes": 4697,
+      "originalSha256": "1569AF197900214703C8692FC04FBB1B10253863E1A6A4F5B9B1B145C65E363F",
+      "recoveredSha256": "1569AF197900214703C8692FC04FBB1B10253863E1A6A4F5B9B1B145C65E363F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.SurvivalVerification.cs",
+      "bytes": 4123,
+      "originalSha256": "92174D735AB8990D82AABB9C0B6BBDBE2D129711CF10D884F3F77A28EDAFB8B5",
+      "recoveredSha256": "92174D735AB8990D82AABB9C0B6BBDBE2D129711CF10D884F3F77A28EDAFB8B5",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.SystemMenu.cs",
+      "bytes": 1613,
+      "originalSha256": "F879438DDB29B45D2BE132882EA6A77E251F842813553B1F47797F29A5A06C3D",
+      "recoveredSha256": "F879438DDB29B45D2BE132882EA6A77E251F842813553B1F47797F29A5A06C3D",
+      "authority": "stuck-20261103/source-final.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Toolbar.cs",
+      "bytes": 17101,
+      "originalSha256": "5AE4BF14EA9D86DC470D1F57778A0A173E80FC4FBE33A83CE1F16394E0F84548",
+      "recoveredSha256": "5AE4BF14EA9D86DC470D1F57778A0A173E80FC4FBE33A83CE1F16394E0F84548",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Ui.cs",
+      "bytes": 32329,
+      "originalSha256": "6DE64A13F7E114D27223ADE8A38DE24CBED7882DF1C55A0AEAAF59092BCA6B8F",
+      "recoveredSha256": "6DE64A13F7E114D27223ADE8A38DE24CBED7882DF1C55A0AEAAF59092BCA6B8F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Verification.cs",
+      "bytes": 22171,
+      "originalSha256": "324FAA57B4C030231775F0E22CBAB96B3DCEC2CDD8B612E5AF42F8D112F57BE2",
+      "recoveredSha256": "324FAA57B4C030231775F0E22CBAB96B3DCEC2CDD8B612E5AF42F8D112F57BE2",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.Vitals.cs",
+      "bytes": 10306,
+      "originalSha256": "9F68799390CCE01ECC2E2087CC0A59290D66D5B3D3A4C562DE9DFAD62063A285",
+      "recoveredSha256": "9F68799390CCE01ECC2E2087CC0A59290D66D5B3D3A4C562DE9DFAD62063A285",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.cs",
+      "bytes": 19049,
+      "originalSha256": "488A5DC7445FDEFD3EB666870FCE864A35725FD7F7CA9051E35DCC6917A5DB05",
+      "recoveredSha256": "488A5DC7445FDEFD3EB666870FCE864A35725FD7F7CA9051E35DCC6917A5DB05",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/project.godot",
+      "bytes": 808,
+      "originalSha256": "C777D0E99410DB1472178307C9E0ECF583692044EBC2D2CFAA17F3C998B1D714",
+      "recoveredSha256": "C777D0E99410DB1472178307C9E0ECF583692044EBC2D2CFAA17F3C998B1D714",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/ShelterActor.cs",
+      "bytes": 5205,
+      "originalSha256": "7CC398BCC3D8058995172C9148F53AF1F94F712F63B318754EEBF5D406E072F9",
+      "recoveredSha256": "7CC398BCC3D8058995172C9148F53AF1F94F712F63B318754EEBF5D406E072F9",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Game/WoodlandSurface.cs",
+      "bytes": 4591,
+      "originalSha256": "745B5CD731E7D11A878733874D332E741DDB57B162206E49EF788B77DA636231",
+      "recoveredSha256": "745B5CD731E7D11A878733874D332E741DDB57B162206E49EF788B77DA636231",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CleaningMotivation.cs",
+      "bytes": 5114,
+      "originalSha256": "A7020AE81B92E399540D64AAEF69600D7DF58F18AC72029BA1C8C9D87E88FC50",
+      "recoveredSha256": "A7020AE81B92E399540D64AAEF69600D7DF58F18AC72029BA1C8C9D87E88FC50",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardBehavior.cs",
+      "bytes": 10765,
+      "originalSha256": "986F6FC284047A340F7F66628651A225AE1008B660FB0AE26F8C01790D48F3DC",
+      "recoveredSha256": "986F6FC284047A340F7F66628651A225AE1008B660FB0AE26F8C01790D48F3DC",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardCalendar.cs",
+      "bytes": 2117,
+      "originalSha256": "A45F56D61498CBFC606E359F824728589C62172A66A626DB9EF85D28D149EA66",
+      "recoveredSha256": "A45F56D61498CBFC606E359F824728589C62172A66A626DB9EF85D28D149EA66",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardClimate.cs",
+      "bytes": 3281,
+      "originalSha256": "AE008891FF6D560339CE80D959FDA37C017BC0C175D989C8E8BB181D2950748D",
+      "recoveredSha256": "AE008891FF6D560339CE80D959FDA37C017BC0C175D989C8E8BB181D2950748D",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardColdStorage.cs",
+      "bytes": 4486,
+      "originalSha256": "4BCE9EB4E788A61DD7264775889F7B78270E45F2C2FDA17B0A47256CA733B6E1",
+      "recoveredSha256": "4BCE9EB4E788A61DD7264775889F7B78270E45F2C2FDA17B0A47256CA733B6E1",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardEconomy.cs",
+      "bytes": 11018,
+      "originalSha256": "7C2BBFF224F0D4CBF2CAFF8749AF9AF96A2A58A5DC60EBCCEA32C918DB1B9FD4",
+      "recoveredSha256": "7C2BBFF224F0D4CBF2CAFF8749AF9AF96A2A58A5DC60EBCCEA32C918DB1B9FD4",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardGround.cs",
+      "bytes": 3423,
+      "originalSha256": "902284854BC99657B0659555E5477FEAE234BF48C4BBCBA61EFEF88102327330",
+      "recoveredSha256": "902284854BC99657B0659555E5477FEAE234BF48C4BBCBA61EFEF88102327330",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardLifeRules.cs",
+      "bytes": 6996,
+      "originalSha256": "43DBF17ED87A8006FB348FDE45D982D26B9E990D218A70CCAB21C4880CF67C6B",
+      "recoveredSha256": "43DBF17ED87A8006FB348FDE45D982D26B9E990D218A70CCAB21C4880CF67C6B",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardObjects.cs",
+      "bytes": 9005,
+      "originalSha256": "A2E64FD639745BC83B9D74387145DB8E0C496A6ADA95900054513F7DE5CCCE88",
+      "recoveredSha256": "A2E64FD639745BC83B9D74387145DB8E0C496A6ADA95900054513F7DE5CCCE88",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardSanitation.cs",
+      "bytes": 2373,
+      "originalSha256": "8E95C23810F324074A59F92B2E48F084C4102E890D5D94DE272C7CDD1B328652",
+      "recoveredSha256": "8E95C23810F324074A59F92B2E48F084C4102E890D5D94DE272C7CDD1B328652",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CourtyardShop.cs",
+      "bytes": 8650,
+      "originalSha256": "F76AA1D129748FB28824819A9279A8F2F3D9383FA1B2329C1C0CDDE4A940F308",
+      "recoveredSha256": "F76AA1D129748FB28824819A9279A8F2F3D9383FA1B2329C1C0CDDE4A940F308",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CreatureArrival.cs",
+      "bytes": 3839,
+      "originalSha256": "8095DA024B9706FBAF3FDEE6D5C1FE51B30091BF47E7EF918B056857B2EA2A2F",
+      "recoveredSha256": "8095DA024B9706FBAF3FDEE6D5C1FE51B30091BF47E7EF918B056857B2EA2A2F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CreatureNeedsObservation.cs",
+      "bytes": 2294,
+      "originalSha256": "F84C71D42107762AEA6A0EC8D988588A7D5497BFA855D100915B609460FE4BF5",
+      "recoveredSha256": "F84C71D42107762AEA6A0EC8D988588A7D5497BFA855D100915B609460FE4BF5",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CreaturePersonality.cs",
+      "bytes": 15186,
+      "originalSha256": "4249F25B00FD115CDE161FC1FF6BEDA223600B1F353A11C821719E880C5373A9",
+      "recoveredSha256": "4249F25B00FD115CDE161FC1FF6BEDA223600B1F353A11C821719E880C5373A9",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/CushionGeometry.cs",
+      "bytes": 2643,
+      "originalSha256": "0D60A12C96D3A82987EAC7D5E70E4DB96D5ED10F96624A0FF6620CFD7F57F86A",
+      "recoveredSha256": "0D60A12C96D3A82987EAC7D5E70E4DB96D5ED10F96624A0FF6620CFD7F57F86A",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/DetachedStemGesture.cs",
+      "bytes": 12519,
+      "originalSha256": "AB265D050713BF669A87A995E2FFDADF2C46D4341DDC40A6A496E3C8CBAABDD9",
+      "recoveredSha256": "AB265D050713BF669A87A995E2FFDADF2C46D4341DDC40A6A496E3C8CBAABDD9",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/DetachedStemLife.cs",
+      "bytes": 10993,
+      "originalSha256": "0310BA508F461FD2AD8AE684A581C5D4A363F3511E458D997D34A888793E8365",
+      "recoveredSha256": "0310BA508F461FD2AD8AE684A581C5D4A363F3511E458D997D34A888793E8365",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/DetachedStemState.cs",
+      "bytes": 2949,
+      "originalSha256": "0D2FE21EECEC7DE8120BA443206D9A557CB6043D6F395540AE83078100545C66",
+      "recoveredSha256": "0D2FE21EECEC7DE8120BA443206D9A557CB6043D6F395540AE83078100545C66",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/DetachedStemValidation.cs",
+      "bytes": 3945,
+      "originalSha256": "E17418E1BA3CA9EDE4988C0653C8880900E5E729DF5DBD5885EB3C1918B7AE46",
+      "recoveredSha256": "E17418E1BA3CA9EDE4988C0653C8880900E5E729DF5DBD5885EB3C1918B7AE46",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/EmotionalContinuity.cs",
+      "bytes": 8362,
+      "originalSha256": "ADBD53F6645D1F14851720C728C204642A69C1427F222934B9E0DFE7D1CBBEBB",
+      "recoveredSha256": "ADBD53F6645D1F14851720C728C204642A69C1427F222934B9E0DFE7D1CBBEBB",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyCare.cs",
+      "bytes": 28470,
+      "originalSha256": "FCE7440F2F13569AD9162F2BB3FB5D1E60EC6FFBD794A5D6ABA59E58816D289A",
+      "recoveredSha256": "FCE7440F2F13569AD9162F2BB3FB5D1E60EC6FFBD794A5D6ABA59E58816D289A",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyColdStorage.cs",
+      "bytes": 4728,
+      "originalSha256": "A0EBB48B44ECF2E8C13AE244DB1928CFB17EAF8A37CEAEE7D1A28FEA7E6F9C8D",
+      "recoveredSha256": "A0EBB48B44ECF2E8C13AE244DB1928CFB17EAF8A37CEAEE7D1A28FEA7E6F9C8D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyDesire.cs",
+      "bytes": 7605,
+      "originalSha256": "A9C4E9058845B78F30F8BE74BD43337631A584F9A7ABD25A155D996850E27D4D",
+      "recoveredSha256": "A9C4E9058845B78F30F8BE74BD43337631A584F9A7ABD25A155D996850E27D4D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyReproduction.cs",
+      "bytes": 23384,
+      "originalSha256": "583093F25FD5CEEEF6279797BD8F62DF8EA42E6B61493180A6ACBC2A39A6F927",
+      "recoveredSha256": "583093F25FD5CEEEF6279797BD8F62DF8EA42E6B61493180A6ACBC2A39A6F927",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyRisk.cs",
+      "bytes": 21311,
+      "originalSha256": "EA3C96343F33DF5761EBC50F7FA87835B463A980A3556BCB9BFB725142192302",
+      "recoveredSha256": "EA3C96343F33DF5761EBC50F7FA87835B463A980A3556BCB9BFB725142192302",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilySocial.cs",
+      "bytes": 42415,
+      "originalSha256": "74627B1F35DCF6539C2CF20B40D31900280ACB39459C4892B5A52B246D881A83",
+      "recoveredSha256": "74627B1F35DCF6539C2CF20B40D31900280ACB39459C4892B5A52B246D881A83",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyState.cs",
+      "bytes": 5463,
+      "originalSha256": "AE5054574E7A4A89AB159C125FF3F4CBE1C35729F1B256126739F4632FFC183D",
+      "recoveredSha256": "AE5054574E7A4A89AB159C125FF3F4CBE1C35729F1B256126739F4632FFC183D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/FamilyValidation.cs",
+      "bytes": 8700,
+      "originalSha256": "021ACB6767681F83B2CEB408A3905720942D5ED1886E7E76D053B15892E348C6",
+      "recoveredSha256": "021ACB6767681F83B2CEB408A3905720942D5ED1886E7E76D053B15892E348C6",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBallDynamics.cs",
+      "bytes": 7521,
+      "originalSha256": "35CD99787036560306296E6F1B84229BC3E55E3018B5B3772C65D06C1246BB9E",
+      "recoveredSha256": "35CD99787036560306296E6F1B84229BC3E55E3018B5B3772C65D06C1246BB9E",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionBehavior.cs",
+      "bytes": 42803,
+      "originalSha256": "76B9073D49F216843837C5117B1D5CB25E1AECE46D895FDE61314C92C788C733",
+      "recoveredSha256": "76B9073D49F216843837C5117B1D5CB25E1AECE46D895FDE61314C92C788C733",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionGesture.cs",
+      "bytes": 55914,
+      "originalSha256": "59F877D4B2E1247372F6750C1970733BB8FBF26ACC19729746F63EFA431E0042",
+      "recoveredSha256": "59F877D4B2E1247372F6750C1970733BB8FBF26ACC19729746F63EFA431E0042",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionLandingState.cs",
+      "bytes": 126,
+      "originalSha256": "6C2605F7EB1EEADA1B5EEDCEDBC7AA99434F3966E35715B12B08A741877F7316",
+      "recoveredSha256": "6C2605F7EB1EEADA1B5EEDCEDBC7AA99434F3966E35715B12B08A741877F7316",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionLowering.cs",
+      "bytes": 1020,
+      "originalSha256": "0AF75505F304B4D42D5437DC122DC7392118DA94CD3E05300EC3C2EE075B1E1D",
+      "recoveredSha256": "0AF75505F304B4D42D5437DC122DC7392118DA94CD3E05300EC3C2EE075B1E1D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionPhysiology.cs",
+      "bytes": 7240,
+      "originalSha256": "4CBDA08E23DD6113861280032CE58242FD81C63ADFAC7F224C4C9F0869258752",
+      "recoveredSha256": "4CBDA08E23DD6113861280032CE58242FD81C63ADFAC7F224C4C9F0869258752",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionRest.cs",
+      "bytes": 6025,
+      "originalSha256": "E089343043AD8825689FCAFA63BF20543CF7CFE0ABC6331B543E36465D515A76",
+      "recoveredSha256": "E089343043AD8825689FCAFA63BF20543CF7CFE0ABC6331B543E36465D515A76",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSpatial.cs",
+      "bytes": 7079,
+      "originalSha256": "A5BA4DEF0036A2C5C108DAE9B6D7B57BF1CE51ADF3DE38A6D73943C33DA0E927",
+      "recoveredSha256": "A5BA4DEF0036A2C5C108DAE9B6D7B57BF1CE51ADF3DE38A6D73943C33DA0E927",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionSupply.cs",
+      "bytes": 4780,
+      "originalSha256": "CCAF56271A48F8A719590C33C3011E88DF83C01C6E1C13FEAA8941164C0FBBE9",
+      "recoveredSha256": "CCAF56271A48F8A719590C33C3011E88DF83C01C6E1C13FEAA8941164C0FBBE9",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionValidation.cs",
+      "bytes": 14081,
+      "originalSha256": "78C390B52681A6DCE368628FEAB57B0E56A878C500DC4205C7A3F04B508F6757",
+      "recoveredSha256": "78C390B52681A6DCE368628FEAB57B0E56A878C500DC4205C7A3F04B508F6757",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/InteractionWorld.cs",
+      "bytes": 36548,
+      "originalSha256": "4C34A9F4E719AA43DDC8E83AB44BB885378ED768E5DE3872609A80D03B6208E3",
+      "recoveredSha256": "4C34A9F4E719AA43DDC8E83AB44BB885378ED768E5DE3872609A80D03B6208E3",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/LifeDuties.cs",
+      "bytes": 6519,
+      "originalSha256": "6EE892019480E0157FA6B0AF9251AB0591CE0462B360E8F4B1D341E5897686AD",
+      "recoveredSha256": "6EE892019480E0157FA6B0AF9251AB0591CE0462B360E8F4B1D341E5897686AD",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/LifeObservation.cs",
+      "bytes": 8205,
+      "originalSha256": "367E509B844D5DAF0E795AAF53BC6734498416D889D663F9CCE8139E03E8BC97",
+      "recoveredSha256": "367E509B844D5DAF0E795AAF53BC6734498416D889D663F9CCE8139E03E8BC97",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneValidation.cs",
+      "bytes": 3818,
+      "originalSha256": "424070C715492DF512E614F8A93564CA323E6B670996EA8E18EF944D824F23A4",
+      "recoveredSha256": "424070C715492DF512E614F8A93564CA323E6B670996EA8E18EF944D824F23A4",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/MilestoneWorld.cs",
+      "bytes": 14873,
+      "originalSha256": "D3D1E8479DA37BBE42970F1C3CAB241D5B5C0377CCC4FD8DDB1950BE0FDA91FD",
+      "recoveredSha256": "D3D1E8479DA37BBE42970F1C3CAB241D5B5C0377CCC4FD8DDB1950BE0FDA91FD",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/NaturalIntakeGeometry.cs",
+      "bytes": 4260,
+      "originalSha256": "F39148573379F6E4CF0733B5283696F7101B8EF6877DCDF5E23C1C004FAD37F8",
+      "recoveredSha256": "F39148573379F6E4CF0733B5283696F7101B8EF6877DCDF5E23C1C004FAD37F8",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/NaturalLife.cs",
+      "bytes": 29138,
+      "originalSha256": "D87A8F9D7CD81C0AEB3F3B5AED967A65C16A05DF4DD56C786D07AFC4746B966D",
+      "recoveredSha256": "D87A8F9D7CD81C0AEB3F3B5AED967A65C16A05DF4DD56C786D07AFC4746B966D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ObjectEvents.cs",
+      "bytes": 911,
+      "originalSha256": "E1F1EF0DD4309CD5CB7A2EC947D096C1BBFAABB486F5A485AC527130C6AE4AE2",
+      "recoveredSha256": "E1F1EF0DD4309CD5CB7A2EC947D096C1BBFAABB486F5A485AC527130C6AE4AE2",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/RoomResourceText.cs",
+      "bytes": 2716,
+      "originalSha256": "715C4A909E763B9380C1C195D848178A6A54968117444AFBF2CC526DAA45760D",
+      "recoveredSha256": "715C4A909E763B9380C1C195D848178A6A54968117444AFBF2CC526DAA45760D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/SaveStore.cs",
+      "bytes": 7497,
+      "originalSha256": "497F92D2A6A67AEA4CAABF66420519599085EC7F3E6F5F27B6833AB4CC9A0D28",
+      "recoveredSha256": "497F92D2A6A67AEA4CAABF66420519599085EC7F3E6F5F27B6833AB4CC9A0D28",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/SharedShelterLife.cs",
+      "bytes": 11286,
+      "originalSha256": "D37FEC8539B71484E71E082E2ED1F9948F0C7123F50155A24BE14D0D2DA659A3",
+      "recoveredSha256": "D37FEC8539B71484E71E082E2ED1F9948F0C7123F50155A24BE14D0D2DA659A3",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterBodyEnvelope.cs",
+      "bytes": 3312,
+      "originalSha256": "A07145942D776BD2A7C6F578084E231D6504386646B3245B7BB8EB1D77FEB59F",
+      "recoveredSha256": "A07145942D776BD2A7C6F578084E231D6504386646B3245B7BB8EB1D77FEB59F",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterDoors.cs",
+      "bytes": 3593,
+      "originalSha256": "BFC2DFAE00C8C90C894D80C1905241160260C4912B0CB35EA34760DD1F6DCEE8",
+      "recoveredSha256": "BFC2DFAE00C8C90C894D80C1905241160260C4912B0CB35EA34760DD1F6DCEE8",
+      "authority": "individual-stage-numeric-review-20261103/source-manifest.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterGeometry.cs",
+      "bytes": 5313,
+      "originalSha256": "69CB95FD18992E4D9F4D2F870AD0FDDEF497DC7584E89D4D7D3627905E92CB90",
+      "recoveredSha256": "69CB95FD18992E4D9F4D2F870AD0FDDEF497DC7584E89D4D7D3627905E92CB90",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterLife.cs",
+      "bytes": 11922,
+      "originalSha256": "14D9AED69D47698467A8A878A9FB415A702B297BF1CB72EA3B86FAADBCB4191D",
+      "recoveredSha256": "14D9AED69D47698467A8A878A9FB415A702B297BF1CB72EA3B86FAADBCB4191D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/Shelters.cs",
+      "bytes": 9931,
+      "originalSha256": "C8E1E2DA24C04B66F54B667750380BB6E782F9AC95FBE5A6FD7FCB6678FE757D",
+      "recoveredSha256": "C8E1E2DA24C04B66F54B667750380BB6E782F9AC95FBE5A6FD7FCB6678FE757D",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterSpatial.cs",
+      "bytes": 8924,
+      "originalSha256": "1363715E3015F723BF9EDCC5685BA6E5B3412D50ED1FED9C3D1C60C9CDEF58F4",
+      "recoveredSha256": "1363715E3015F723BF9EDCC5685BA6E5B3412D50ED1FED9C3D1C60C9CDEF58F4",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterState.cs",
+      "bytes": 2603,
+      "originalSha256": "FFEFBFE809B213395BA59FEB691CAD27B8BA464741BF69AE60E5BC0A2F746232",
+      "recoveredSha256": "FFEFBFE809B213395BA59FEB691CAD27B8BA464741BF69AE60E5BC0A2F746232",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/ShelterValidation.cs",
+      "bytes": 4313,
+      "originalSha256": "9DB2E4CD8B559200C739A377A0AB1A5B1E19D264D3D29630EC2824339ABCE337",
+      "recoveredSha256": "9DB2E4CD8B559200C739A377A0AB1A5B1E19D264D3D29630EC2824339ABCE337",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/StemCare.cs",
+      "bytes": 11553,
+      "originalSha256": "89AB3CE723014BAEB11789C08A87230C5872EC0D200B6E99AF3BB80D56447316",
+      "recoveredSha256": "89AB3CE723014BAEB11789C08A87230C5872EC0D200B6E99AF3BB80D56447316",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/SupplyStationGesture.cs",
+      "bytes": 4800,
+      "originalSha256": "01438EB15D8DF52C45DB2F657E5E21C22651DFC0CB1FBF3119DB22C2BE68E78B",
+      "recoveredSha256": "01438EB15D8DF52C45DB2F657E5E21C22651DFC0CB1FBF3119DB22C2BE68E78B",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/SupplyStationSpatial.cs",
+      "bytes": 5590,
+      "originalSha256": "220989340ECE676AB5ADF42DBA4D62E3BF2F9A98B8393B9288E2D868D6257188",
+      "recoveredSha256": "220989340ECE676AB5ADF42DBA4D62E3BF2F9A98B8393B9288E2D868D6257188",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/SupplyStationValidation.cs",
+      "bytes": 3710,
+      "originalSha256": "39A5B2AE6C3DE90D94E3070299C189DA5726CA313610F2DCDE5612BFAD76129E",
+      "recoveredSha256": "39A5B2AE6C3DE90D94E3070299C189DA5726CA313610F2DCDE5612BFAD76129E",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WoodlandLayout.cs",
+      "bytes": 1818,
+      "originalSha256": "B8F49B5676EF63817F0FF1F35A68E9FAD36AF2507C108078348FAF02EE31A4B1",
+      "recoveredSha256": "B8F49B5676EF63817F0FF1F35A68E9FAD36AF2507C108078348FAF02EE31A4B1",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WorldSimulation.cs",
+      "bytes": 19135,
+      "originalSha256": "061F05FDA93E7FC95F40AC63FEEA55BF7EA54926F6F3E33401A7CB0514049296",
+      "recoveredSha256": "061F05FDA93E7FC95F40AC63FEEA55BF7EA54926F6F3E33401A7CB0514049296",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "src/Yukkuri.Simulation/WorldState.cs",
+      "bytes": 5854,
+      "originalSha256": "7A633EFE3CE75CBB94B7B8CC9820CC77FEADDE3A69C8201010F12022E82BAE9E",
+      "recoveredSha256": "7A633EFE3CE75CBB94B7B8CC9820CC77FEADDE3A69C8201010F12022E82BAE9E",
+      "authority": "20261106 before-tracked-sha256.json"
+    },
+    {
+      "path": "tools/play-current.ps1",
+      "bytes": 1429,
+      "originalSha256": "C6438B052D1D2131E14B206EAEC27F25223208ED48604F690DFC91B16742EC5F",
+      "recoveredSha256": "C6438B052D1D2131E14B206EAEC27F25223208ED48604F690DFC91B16742EC5F",
+      "authority": "seven-fixes-20261102/source-final.json"
+    },
+    {
+      "path": "tools/preview-starter-garden.ps1",
+      "bytes": 875,
+      "originalSha256": "E1CA6302ADCF5DC94221170B355FE22451C834FC43A04C9A26DD608333F8A9E7",
+      "recoveredSha256": "E1CA6302ADCF5DC94221170B355FE22451C834FC43A04C9A26DD608333F8A9E7",
+      "authority": "20261103-v05 源码与素材清单.json"
+    },
+    {
+      "path": "tools/render-starter-garden.ps1",
+      "bytes": 3052,
+      "originalSha256": "8CD8FEBF0F1AC9807EC8FAFB7D8A8603BC82D7310463DEE18493017EDCDBC713",
+      "recoveredSha256": "8CD8FEBF0F1AC9807EC8FAFB7D8A8603BC82D7310463DEE18493017EDCDBC713",
+      "authority": "20261103-v05 源码与素材清单.json"
+    }
+  ]
+}

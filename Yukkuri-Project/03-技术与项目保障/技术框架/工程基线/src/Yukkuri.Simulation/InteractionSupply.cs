@@ -12,7 +12,7 @@ public sealed partial class WorldSimulation
         if(State.Settings.Pause)return Unavailable("先恢复时间，再放置食水。");
         if(State.Mode==PlayMode.CloseUp)return Unavailable("先退出特写，再向小院地面放置食水。");
         if(action is not (InteractionAction.PlaceMeal or InteractionAction.PlaceSweet or InteractionAction.PlaceWater)||
-            !double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8||Math.Abs(z)>8)
+            !double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>CourtyardGround.HalfSize||Math.Abs(z)>CourtyardGround.HalfSize)
             return Unavailable("这个食水种类或放置位置无效。");
         return PlaceFood(State.ActiveRegionId,new(action,X:x,Z:z));
     }
@@ -48,7 +48,7 @@ public sealed partial class WorldSimulation
         if(obj==null)return false;
         if(x.HasValue&&z.HasValue)
         {
-            if(!double.IsFinite(x.Value)||!double.IsFinite(z.Value)||Math.Abs(x.Value)>7.7||Math.Abs(z.Value)>7.7)return false;
+            if(!double.IsFinite(x.Value)||!double.IsFinite(z.Value)||Math.Abs(x.Value)>CourtyardGround.PointerEdge||Math.Abs(z.Value)>CourtyardGround.PointerEdge)return false;
             if(!WoodlandLayout.GroundFits(State,obj.RegionId,x.Value,z.Value,.2))return false;
             if(!ClearOfStations(obj.RegionId,x.Value,z.Value,.2))return false;
             if(!ShelterGroundFits(obj.RegionId,x.Value,z.Value,StationObjectRadius(obj.Kind)))return false;

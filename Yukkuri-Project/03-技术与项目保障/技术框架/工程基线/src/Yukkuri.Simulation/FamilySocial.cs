@@ -88,7 +88,7 @@ public static partial class FamilyRules
             Require(Number(f!.ConflictCooldownUntil) && Number(f.CompanionUntil) && Number(f.NextCompanionReactionAt) &&
                 double.IsFinite(f.LastCompanionActivityAt) && f.LastCompanionActivityAt >= -100 &&
                 f.LastCompanionActivityAt <= state.WorldSeconds + .001 && Number(f.FlightRemaining, 5) &&
-                double.IsFinite(f.FlightX) && double.IsFinite(f.FlightZ) && Math.Abs(f.FlightX) <= 8 && Math.Abs(f.FlightZ) <= 8, "同伴计时无效");
+                double.IsFinite(f.FlightX) && double.IsFinite(f.FlightZ) && Math.Abs(f.FlightX)<=CourtyardGround.HalfSize && Math.Abs(f.FlightZ)<=CourtyardGround.HalfSize, "同伴计时无效");
             Require(f.CompanionTargetId == null || f.CompanionTargetId != c.Id && ids.Contains(f.CompanionTargetId), "相处对象无效");
             foreach (var p in f.Peers!)
                 Require(ids.Contains(p.Key) && p.Key != c.Id && p.Value != null &&

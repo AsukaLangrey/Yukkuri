@@ -42,6 +42,7 @@ public partial class InteractionRoom
         if(cancelGesture)CancelGesture();
         _selectedDetachedStemEventId=null;
         _supplyStationSelectionWorld=Sim.State;_selectedSupplyStationId=id;
+        Sim.State.SelectedId=null;_selectedRoomObjectId=_observedStemMotherId=null;
         Sim.State.Mode=PlayMode.Management;
         _message="正在观察"+SupplyStationName(station.Kind)+"。可设置仓库补充频率。";
         RefreshRoomUi();

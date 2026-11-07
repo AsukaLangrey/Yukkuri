@@ -24,7 +24,7 @@ public sealed partial class WorldSimulation
         var candidate=ArrivalCreature(profile,x,z);
         double radius=InteractionFootprint(candidate);
         if(!CanOccupyRoom(candidate,x,z)||State.Shelters.Any(s=>s.RegionId==candidate.RegionId&&
-            ShelterGeometry.OverlapsInterior(x-s.X,z-s.Z,radius))||
+            ShelterGeometry.OverlapsInterior(x-s.X,z-s.Z,radius,ShelterGeometry.Scale(s)))||
             State.RoomObjects.Any(o=>o.RegionId==candidate.RegionId&&!o.Stored&&!o.HeldByHand&&o.Kind!=RoomObjectKind.RiverWater&&
                 Distance(x,z,o.X,o.Z)<radius+(o.Kind==RoomObjectKind.Cushion?1.3:StationObjectRadius(o.Kind))))
             return "这里放不下，请避开水面、身体、物品和小家，选择干燥空地。";
@@ -34,7 +34,8 @@ public sealed partial class WorldSimulation
     private Creature ArrivalCreature(CreatureArrival profile,double x,double z)=>new()
     {
         Name=string.IsNullOrWhiteSpace(profile.Name)?(profile.SpeciesId=="marisa"?"新来的魔理沙":"新来的灵梦"):profile.Name.Trim(),
-        RegionId=State.ActiveRegionId,X=x,Z=z,TargetX=x,TargetZ=z,IsYoung=profile.Young,
+        RegionId=State.ActiveRegionId,X=x,Z=z,TargetX=x,TargetZ=z,IsYoung=profile.Young,GrowthVersion=1,
+        InnerAgeSeconds=profile.Young?0:GrowthRules.AdultAge,
         Trust=20,Attachment=0,Fullness=75,Energy=85,Activity="初来乍到，正在观察小院",
         Body=new(){SpeciesId=profile.SpeciesId,ReproductionRole=profile.Role,AgeSeconds=profile.Young?0:FamilyRules.YoungSeconds},
         Interaction=new(){Enabled=true,Hydration=80,NextAutonomyAt=State.WorldSeconds+3,

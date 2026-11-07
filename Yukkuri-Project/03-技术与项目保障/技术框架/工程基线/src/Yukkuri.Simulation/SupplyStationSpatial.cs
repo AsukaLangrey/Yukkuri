@@ -10,7 +10,7 @@ public sealed partial class WorldSimulation
     {
         const double radius=.32;
         if(!ShelterGroundFits(region,x,z,radius))return false;
-        if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8-radius||Math.Abs(z)>8-radius||
+        if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>CourtyardGround.HalfSize-radius||Math.Abs(z)>CourtyardGround.HalfSize-radius||
             !WoodlandLayout.GroundFits(State,region,x,z,radius)||!ClearOfStations(region,x,z,radius,stationId))return false;
         if(State.DetachedStemBroods.Any(s=>s.RegionId==region&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&Distance(x,z,s.X,s.Z)<radius+StemVesselRadius))return false;
         if(!existingPlate&&State.Creatures.Any(c=>c.RegionId==region&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&
@@ -29,7 +29,7 @@ public sealed partial class WorldSimulation
         const double radius=SupplyStationRadius;
         if(!ShelterGroundFits(region,x,z,radius,false)||moving!=null&&
             !ShelterObjectPathClear(region,moving.X,moving.Z,x,z,radius))return false;
-        if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8-radius||Math.Abs(z)>8-radius||
+        if(!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>CourtyardGround.HalfSize-radius||Math.Abs(z)>CourtyardGround.HalfSize-radius||
             !WoodlandLayout.GroundFits(State,region,x,z,radius)||!ClearOfStations(region,x,z,radius,moving?.Id))return false;
         if(State.DetachedStemBroods.Any(s=>s.RegionId==region&&!s.Cleared&&s.Phase!=DetachedStemPhase.Born&&Distance(x,z,s.X,s.Z)<radius+StemVesselRadius))return false;
         if(State.Creatures.Any(c=>c.RegionId==region&&!c.Family.ColdStorage.Stored&&!c.Family.Memorialized&&

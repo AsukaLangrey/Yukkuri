@@ -16,8 +16,8 @@ public static class SupplyStationValidation
             Require(s!=null&&s.RefillIntervalSeconds is 0 or 10 or 30 or 60 or 120&&double.IsFinite(s.NextRefillAt)&&s.NextRefillAt>=0,"供给器补充频率无效");
             Require(s!=null&&!string.IsNullOrWhiteSpace(s.Id)&&ids.Add(s.Id)&&Enum.IsDefined(s.Kind)&&
                 state.Regions.Any(r=>r.Id==s.RegionId)&&double.IsFinite(s.X)&&double.IsFinite(s.Z)&&
-                Math.Abs(s.X)<=8-WorldSimulation.SupplyStationRadius&&Math.Abs(s.Z)<=8-WorldSimulation.SupplyStationRadius&&
-                Math.Abs(s.Z+WorldSimulation.SupplyStationOutletOffset)<=7.68&&s.OutputSequence>=0&&s.LastEvent!=null,
+                Math.Abs(s.X)<=CourtyardGround.HalfSize-WorldSimulation.SupplyStationRadius&&Math.Abs(s.Z)<=CourtyardGround.HalfSize-WorldSimulation.SupplyStationRadius&&
+                Math.Abs(s.Z+WorldSimulation.SupplyStationOutletOffset)<=CourtyardGround.HalfSize-.32&&s.OutputSequence>=0&&s.LastEvent!=null,
                 "供给器身份或位置无效");
             int capacity=s!.Kind==SupplyStationKind.Food?WorldSimulation.FoodStationCapacity:WorldSimulation.WaterStationCapacity;
             int pending=0,portions=0;

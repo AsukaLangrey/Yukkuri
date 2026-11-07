@@ -13,7 +13,7 @@ public sealed partial class WorldSimulation
                 input.StopImpact,input.TouchTangentFraction,input.TouchNormalSpeed}.All(double.IsFinite)||
             input.Duration is <0 or >1||input.Force is <0 or >1||input.Motion<0||input.Height is <0 or >3||
             input.StopImpact is <0 or >1||input.TouchTangentFraction is <0 or >1||
-            Math.Abs(input.X)>8||Math.Abs(input.Z)>8)return "请用补给工具或托举，接触当前供给器的真实外表。";
+            Math.Abs(input.X)>CourtyardGround.HalfSize||Math.Abs(input.Z)>CourtyardGround.HalfSize)return "请用补给工具或托举，接触当前供给器的真实外表。";
         return StationError(Station(id));
     }
     private InteractionFeedback BeginStationCore(string id,InteractionInput input)

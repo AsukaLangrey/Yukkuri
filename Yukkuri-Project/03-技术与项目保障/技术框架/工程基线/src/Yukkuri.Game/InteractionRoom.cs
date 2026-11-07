@@ -20,11 +20,11 @@ public partial class InteractionRoom : Node3D
     private bool _ready,_recovered,_windowFocused;
     private double _uiClock,_autoClock,_elapsed;
     private int _slot=1;
-    private float _force=.25f,_height=.8f,_zoom=16;
+    private float _force=.25f,_height=.8f,_zoom=16*(float)CourtyardGround.Expansion;
     private InteractionAction _action=InteractionAction.Greet;
     private bool _toolArmed;
     private Vector3 _closeFocus;
-    private string _message="点一下小油打招呼，双击进入近看。按空格可以停一停。";
+    private string _message="";
     private bool WoodlandVisible=>Sim.State.Mode!=PlayMode.CloseUp&&WoodlandLayout.HasRiver(Sim.State,Sim.State.ActiveRegionId);
 
     public override void _Ready()
@@ -51,10 +51,7 @@ public partial class InteractionRoom : Node3D
             }
             _saves=new SaveStore(ProjectSettings.GlobalizePath(saveDirectory));
             _camera=new Camera3D{Projection=Camera3D.ProjectionType.Orthogonal,Size=_zoom,Current=true,Far=100};AddChild(_camera);
-            AddChild(new WorldEnvironment{Environment=new Godot.Environment{BackgroundMode=Godot.Environment.BGMode.Color,
-                BackgroundColor=new Color("c3cfba"),AmbientLightSource=Godot.Environment.AmbientSource.Color,
-                AmbientLightColor=new Color("f3ead8"),AmbientLightEnergy=.30f,TonemapMode=Godot.Environment.ToneMapper.Linear}});
-            AddChild(new DirectionalLight3D{RotationDegrees=new(-48,-28,0),LightEnergy=.34f,ShadowEnabled=true});
+            BuildDayNightLighting();
             BuildYard();BuildRoomUi();BuildActors();DisarmTool();
             InitializeRoomAudio();
             _windowFocused=GetWindow().HasFocus();
@@ -71,6 +68,15 @@ public partial class InteractionRoom : Node3D
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
+            StartDayNightVerificationIfRequested(args);
+            StartHousingVerificationIfRequested(args);
+            StartFollowupVerification(args);
+            StartNeedsVerification(args);
+            StartRegressionVerification(args);
+            StartSleepHousingVerification(args);
+            StartMotionMonitor(args);
+            StartSurvivalUiVerificationIfRequested(args);
+            StartColdStorageVerificationIfRequested(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }
@@ -80,20 +86,20 @@ public partial class InteractionRoom : Node3D
         _yard=new Node3D();AddChild(_yard);
         _closeFloor=new Node3D{Visible=false};AddChild(_closeFloor);
         SceneArt.Box(_closeFloor,new(0,-.045f,0),new(60,.08f,60),"c6cbb4");
-        SceneArt.Box(_yard,new(0,-.17f,0),new(17,.28f,17),"c6c99b");
-        SceneArt.Box(_yard,new(0,-.025f,0),new(11,.03f,10),"ded3b6");
+        SceneArt.Box(_yard,new(0,-.17f,0),new((float)CourtyardGround.HalfSize*2+1,.28f,(float)CourtyardGround.HalfSize*2+1),"c6c99b");
+        SceneArt.Box(_yard,new(0,-.025f,0),new(11*(float)CourtyardGround.Expansion,.03f,10*(float)CourtyardGround.Expansion),"ded3b6");
         var floor=new StaticBody3D{CollisionLayer=1,CollisionMask=0};_yard.AddChild(floor);
-        floor.AddChild(new CollisionShape3D{Position=new(0,-.15f,0),Shape=new BoxShape3D{Size=new(17,.3f,17)}});
-        for(int a=-8;a<=8;a++)
+        floor.AddChild(new CollisionShape3D{Position=new(0,-.15f,0),Shape=new BoxShape3D{Size=new((float)CourtyardGround.HalfSize*2+1,.3f,(float)CourtyardGround.HalfSize*2+1)}});
+        for(int a=-(int)CourtyardGround.HalfSize;a<=(int)CourtyardGround.HalfSize;a++)
         {
-            foreach(float z in new[]{-8.2f,8.2f})SceneArt.Box(_yard,new(a,.32f,z),new(.14f,.8f,.12f),"aa9a71");
-            foreach(float x in new[]{-8.2f,8.2f})SceneArt.Box(_yard,new(x,.32f,a),new(.12f,.8f,.14f),"aa9a71");
+            foreach(float z in new[]{-(float)CourtyardGround.HalfSize-.2f,(float)CourtyardGround.HalfSize+.2f})SceneArt.Box(_yard,new(a,.32f,z),new(.14f,.8f,.12f),"aa9a71");
+            foreach(float x in new[]{-(float)CourtyardGround.HalfSize-.2f,(float)CourtyardGround.HalfSize+.2f})SceneArt.Box(_yard,new(x,.32f,a),new(.12f,.8f,.14f),"aa9a71");
         }
-        foreach(float edge in new[]{-8.2f,8.2f})
-        {SceneArt.Box(_yard,new(0,.41f,edge),new(16.7f,.10f,.10f),"aa9a71");SceneArt.Box(_yard,new(edge,.41f,0),new(.10f,.10f,16.7f),"aa9a71");}
+        foreach(float edge in new[]{-(float)CourtyardGround.HalfSize-.2f,(float)CourtyardGround.HalfSize+.2f})
+        {SceneArt.Box(_yard,new(0,.41f,edge),new((float)CourtyardGround.HalfSize*2+.7f,.10f,.10f),"aa9a71");SceneArt.Box(_yard,new(edge,.41f,0),new(.10f,.10f,(float)CourtyardGround.HalfSize*2+.7f),"aa9a71");}
         for(int a=0;a<5;a++)
         {
-            float x=-6.8f,z=-6.5f+a*2.7f;
+            float x=-6.8f*(float)CourtyardGround.Expansion,z=(-6.5f+a*2.7f)*(float)CourtyardGround.Expansion;
             SceneArt.Ball(_yard,new(x,.12f,z),new(.65f,.36f,.7f),a%3==0?"a6b78c":"b6bf92");
             SceneArt.Ball(_yard,new(x+.16f,.29f,z+.12f),new(.15f,.12f,.15f),"e1c087");
         }
@@ -174,8 +180,11 @@ public partial class InteractionRoom : Node3D
         {
             if(_windowFocused){ProcessRedesignGestures(dt);ProcessRoomGesture(dt,delta);}
             UpdateInteractionHand();
-            Sim.AdvanceInteractionPresentation(dt);Sim.Advance(dt);
+            Sim.AdvanceInteractionPresentation(dt);
+            if(_controlledMotionProbe!=null){if(!Sim.State.Settings.Pause)_controlledMotionProbe(dt);}else Sim.Advance(dt);
         }
+        UpdateRecycleReceipt(dt);
+        RefreshDayNightLighting();
         bool close=Sim.State.Mode==PlayMode.CloseUp;
         bool paused=Sim.State.Settings.Pause||_modalOpen;
         SynchronizeFamilyActors();
@@ -186,6 +195,8 @@ public partial class InteractionRoom : Node3D
         foreach(var c in Sim.State.Creatures)
         {
             var actor=_actors[c.Id];actor.Visible=HasVisibleFamilyBody(c)&&c.RegionId==Sim.State.ActiveRegionId&&(!close||Sim.State.SelectedId==c.Id);
+            bool collisionEnabled=actor.Visible&&!Sim.IsShelterCollisionSuppressed(c);
+            actor.CollisionLayer=collisionEnabled?2u:0u;actor.CollisionMask=collisionEnabled?3u:0u;
             string pose=InteractionPresentation.Pose(c);
             if(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose)pose=_gesturePose;
             var waterSupport=Sim.WaterSupportStatus(c);
@@ -200,7 +211,8 @@ public partial class InteractionRoom : Node3D
             actor.PrepareWaterAttempt(c,Sim.WaterAttemptStatus(c),Sim.State.WorldSeconds,paused,close);
             actor.PrepareStemPresentation(Sim.StemCareStatus(c.Id));
             actor.PrepareShelterPassage(c,Sim.CreatureShelterStatus(c));
-            actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects);
+            actor.RefreshInteraction(c,c.Id==Sim.State.SelectedId,close,dt,pose,Sim.InteractionGestureTarget==c.Id?_appliedForce:_force,_gestureDirection,paused,Sim.InteractionGestureTarget==c.Id?Sim.CurrentInteractionSide:SurfaceSide.Whole,Sim.State.RoomObjects,(float)Sim.CourtyardSpeed,
+                !(_sceneDragKind=="body"&&_sceneDragId==c.Id)&&!(Sim.InteractionGestureTarget==c.Id&&Sim.InteractionGestureOwnsPose));
             RefreshFamilyPresentation(c,actor);
         }
         if(!paused)PlayRoomReactionVoice();
@@ -279,7 +291,7 @@ public partial class InteractionRoom : Node3D
         // Selecting comfort explicitly offers a quiet hand in the scene. Merely
         // leaving an ordinary cursor over the yard does not create a caregiver.
         if(quietCompany&&!_orbiting&&inScene&&TryGroundPoint(point,.5f,out var quietPoint)&&
-            Math.Abs(quietPoint.X)<=7.7f&&Math.Abs(quietPoint.Z)<=7.7f)
+            Math.Abs(quietPoint.X)<=CourtyardGround.PointerEdge&&Math.Abs(quietPoint.Z)<=CourtyardGround.PointerEdge)
         {
             ShowInteractionTool();_hand.GlobalBasis=Basis.Identity;
             _hand.GlobalPosition=quietPoint;_hand.Visible=true;

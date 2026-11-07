@@ -7,10 +7,10 @@ public partial class DetachedStemActor : Node3D
     public const float MouthHeight=.60f,MouthRadius=.14f;
     private Node3D _vessel=null!,_plant=null!,_residue=null!;
     private MeshInstance3D _water=null!,_selection=null!;
-    private readonly MeshInstance3D[] _buds=new MeshInstance3D[3],_nutrients=new MeshInstance3D[3],_cracks=new MeshInstance3D[3];
-    private readonly MeshInstance3D[] _eyes=new MeshInstance3D[6];
-    private readonly MeshInstance3D[] _mouths=new MeshInstance3D[3],_branches=new MeshInstance3D[3];
-    private readonly Vector3[] _budCenters=new Vector3[3];
+    private readonly MeshInstance3D[] _buds=new MeshInstance3D[5],_nutrients=new MeshInstance3D[5],_cracks=new MeshInstance3D[5];
+    private readonly MeshInstance3D[] _eyes=new MeshInstance3D[10];
+    private readonly MeshInstance3D[] _mouths=new MeshInstance3D[5],_branches=new MeshInstance3D[5];
+    private readonly Vector3[] _budCenters=new Vector3[5];
     private readonly List<MeshInstance3D> _contacts=new();
     private readonly Dictionary<Mesh,TriangleMesh> _trees=new();
     private DetachedStemView? _state;
@@ -25,24 +25,24 @@ public partial class DetachedStemActor : Node3D
         SceneArt.Mesh(_vessel,new TorusMesh{InnerRadius=MouthRadius,OuterRadius=.18f,Rings=32,RingSegments=8},new(0,MouthHeight,0),"b8d0c8");
         _water=SceneArt.Mesh(_vessel,new CylinderMesh{TopRadius=.275f,BottomRadius=.275f,Height=1,RadialSegments=32},Vector3.Zero,"91bfc5");
         SceneArt.EnableSurfaceFade(_water);SceneArt.SetSurfaceOpacity(_water,.55f);
-        for(int n=0;n<3;n++)
+        for(int n=0;n<5;n++)
         {
-            _nutrients[n]=SceneArt.Ball(_vessel,new((n-1)*.10f,.06f,.05f),new(.08f,.035f,.07f),"bba776");
+            _nutrients[n]=SceneArt.Ball(_vessel,new((n-2)*.07f,.06f,.05f),new(.08f,.035f,.07f),"bba776");
             _cracks[n]=SceneArt.Box(_vessel,new((n-1)*.085f,.22f+n*.045f,.292f),new(.009f,.12f,.006f),"687e79");
             _cracks[n].RotationDegrees=new(0,0,n%2==0?25:-35);
         }
         _plant=new Node3D();AddChild(_plant);
         SceneArt.Mesh(_plant,new CylinderMesh{TopRadius=.012f,BottomRadius=.018f,Height=.48f,RadialSegments=8},new(0,.24f,0),"91a774");
-        for(int n=0;n<3;n++)
+        for(int n=0;n<5;n++)
         {
             // The tapered round section stays inside the former .018-square
             // branch; its length, endpoints and actual contact mesh stay aligned.
             var branch=SceneArt.Mesh(_plant,new CylinderMesh
                 {TopRadius=.005f,BottomRadius=.009f,Height=.22f,RadialSegments=10,CapTop=true,CapBottom=true},
-                new((n-1)*.085f,.47f,0),"91a774");
+                new((n-2)*.065f,.47f,0),"91a774");
             _branches[n]=branch;
-            branch.RotationDegrees=new(0,0,(n-1)*-45);
-            _budCenters[n]=new((n-1)*.17f,.60f+(n==1?.04f:0),0);
+            branch.RotationDegrees=new(0,0,(n-2)*-30);
+            _budCenters[n]=new((n-2)*.13f,.60f+(n==2?.04f:0),0);
             var bud=SceneArt.Ball(_plant,_budCenters[n],new(.15f,ActorStemBudPresentation.MatureHeight,.14f),"ebdab6");
             bud.MaterialOverride=bud.MaterialOverride.Duplicate() as Material;_buds[n]=bud;
             for(int eye=0;eye<2;eye++)
@@ -50,9 +50,9 @@ public partial class DetachedStemActor : Node3D
             _mouths[n]=SceneArt.Ball(_plant,bud.Position+new Vector3(0,-.025f,.068f),new(.022f,.008f,.005f),"a87564");
         }
         _residue=new Node3D();AddChild(_residue);
-        for(int n=0;n<3;n++)
+        for(int n=0;n<5;n++)
         {
-            var twig=SceneArt.Box(_residue,new((n-1)*.035f,.008f,0),new(.014f,.012f,.18f),"a89a76");
+            var twig=SceneArt.Box(_residue,new((n-2)*.025f,.008f,0),new(.014f,.012f,.18f),"a89a76");
             twig.RotationDegrees=new(0,(n-1)*28,0);
         }
         _selection=SceneArt.Mesh(this,new TorusMesh{InnerRadius=.35f,OuterRadius=(float)WorldSimulation.StemVesselRadius,Rings=40,RingSegments=6},new(0,.008f,0),"95b6a0");
@@ -82,7 +82,7 @@ public partial class DetachedStemActor : Node3D
         float waterHeight=Mathf.Clamp((float)state.Hydration/100,0,1)*.30f;
         _water.Visible=waterHeight>.003f&&state.Phase!=DetachedStemPhase.Born;
         _water.Scale=new(1,Mathf.Max(.003f,waterHeight),1);_water.Position=new(0,.04f+waterHeight*.5f,0);
-        for(int n=0;n<3;n++)
+        for(int n=0;n<5;n++)
         {
             bool bud=n<state.PlannedChildren;
             _buds[n].Visible=_mouths[n].Visible=_branches[n].Visible=bud;

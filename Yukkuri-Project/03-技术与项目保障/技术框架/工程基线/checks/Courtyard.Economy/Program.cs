@@ -19,13 +19,23 @@ WorldSimulation Pair(ulong seed=42)
     }
     return s;
 }
-Creature[] Birth(WorldSimulation s)
+Creature[] Birth(WorldSimulation s,bool atBirth=false)
 {
     var m=s.State.Creatures[0];var f=s.State.Creatures[1];
     string message=s.RequestPregnancy(m.Id,f.Id,BirthMethod.Stem);
     Require(m.Family.Pregnancy.Phase==PregnancyPhase.Preparing,message);
-    Tick(s,280);
-    var babies=s.State.Creatures.Where(c=>c.Family.BirthEventId==m.Family.Pregnancy.EventId).ToArray();
+    if(atBirth)
+    {
+        // Inheritance must be checked at actual birth, before subsequent lived
+        // experience can legitimately award an ability completion.
+        for(int n=0;n<5600;n++)
+        {
+            Tick(s,.05);
+            if(s.State.Creatures.Any(c=>c.Family.MotherId==m.Id&&c.Family.BirthEventId!=null))break;
+        }
+    }
+    else Tick(s,280);
+    var babies=s.State.Creatures.Where(c=>c.Family.MotherId==m.Id&&c.Family.FatherId==f.Id&&c.Family.BirthEventId!=null).ToArray();
     Require(babies.Length>=2,"actual gestation did not produce brood: "+m.Family.LastEvent);
     return babies;
 }
@@ -112,8 +122,9 @@ Check("high quality parents statistically produce better offspring without skill
         var s=Pair(seed);
         foreach(var c in s.State.Creatures){c.Personality.Kindness=good?.9:.1;c.Personality.Carelessness=good?.1:.9;c.Aggression=good?.1:.9;c.Patience=good?.9:.1;
             c.Registration.Grade="金牌";c.Interaction.Development.Skills[LifeSkill.Cleaning]=new(){Completed=10};}
-        var babies=Birth(s);
-        foreach(var b in babies){(good?high:low).Add(CourtyardEconomy.Quality(b));Require(b.Registration.Grade=="未评级"&&CourtyardEconomy.Ability(b)==0,"rank or ability inherited");}
+        var babies=Birth(s,atBirth:true);
+        foreach(var b in babies){(good?high:low).Add(CourtyardEconomy.Quality(b));Require(b.Registration.Grade=="未评级"&&CourtyardEconomy.Ability(b)==0,
+            $"rank or ability inherited: seed={seed}, good={good}, age={b.Body.AgeSeconds}, grade={b.Registration.Grade}, skills={JsonSerializer.Serialize(b.Interaction.Development,SaveStore.JsonOptions)}");}
     }
     Require(high.Average()>low.Average()+40&&high.Distinct().Count()>10,"inheritance lacks quality bias or variation");
     Console.WriteLine($"inheritance: high n={high.Count} mean={high.Average():F2}; low n={low.Count} mean={low.Average():F2}");

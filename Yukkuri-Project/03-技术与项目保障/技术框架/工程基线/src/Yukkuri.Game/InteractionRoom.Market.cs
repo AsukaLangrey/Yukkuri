@@ -13,16 +13,16 @@ public partial class InteractionRoom
         var oils=Sim.State.Creatures.Where(c=>c.RegionId==Sim.State.ActiveRegionId).ToArray();
         var choice=new InlineChoice();foreach(var oil in oils)choice.AddItem(OilListName(oil));
         choice.Select(Math.Max(0,Array.FindIndex(oils,c=>c.Id==Sim.State.SelectedId)));
-        choice.ItemSelected+=index=>{Sim.State.SelectedId=oils[(int)index].Id;ShowCreatureMarket();};
+        choice.ItemSelected+=index=>{SelectOil(oils[(int)index].Id);ShowCreatureMarket();};
         _panelContents.AddChild(choice);
         if(Sim.Selected is { } c)
         {
             var q=CourtyardEconomy.Quote(c);
-            _panelContents.AddChild(Text($"{c.Name} · {(c.IsYoung?"幼体":"成体")} · {c.Registration.Grade}",18));
+            _panelContents.AddChild(Text($"{c.Name} · {GrowthRules.Name(c)} · {c.Registration.Grade}",18));
             _panelContents.AddChild(Text($"素质 {q.Quality:F0}/100 · 能力 {q.Ability:F0}/100\n年龄基础价 {q.AgeValue:F0} · 核心估值 {q.CoreValue:F1} 元",14));
             _panelContents.AddChild(Text($"清洁 ×{q.Clean:F2} · 精神 ×{q.Spirit:F2} · 健康 ×{q.Health:F2}\n饥饱 ×{q.Food:F2} · 水分 ×{q.Water:F2}（安全线均为25）",14));
             _panelContents.AddChild(Text($"商店收购价 {q.Price} 元",20));
-            if(c.IsYoung)_panelContents.AddChild(Text($"成长 {Math.Min(100,c.Body.AgeSeconds/FamilyRules.YoungSeconds*100):F0}% · 满30分钟模拟时间后，还需饥饱>35、健康>50、保暖>40。",13));
+            if(c.IsYoung)_panelContents.AddChild(Text($"成长 {Math.Min(100,c.Body.AgeSeconds/FamilyRules.YoungSeconds*100):F0}% · 幼油7天、子油14天、若油14天；累计35天成为成油。",13));
             _panelContents.AddChild(Text("留种可繁衍后代；好素质更容易遗传。年龄溢价会随成长下降，实际能力和牌照可提高价值。",13));
             if(Sim.CreatureSaleReason(c.Id) is { } reason)_panelContents.AddChild(Text(reason,14));
             else if(confirmingId==c.Id)
@@ -33,7 +33,7 @@ public partial class InteractionRoom
             }
             else _panelContents.AddChild(PanelButton("出售 · 查看确认",()=>ShowCreatureMarket(confirmingId:c.Id,expectedPrice:q.Price)));
         }
-        foreach(var sale in Sim.State.CreatureSales.TakeLast(5).Reverse())
+        foreach(var sale in Sim.State.CreatureSales.Where(s=>s.Kind==CreatureDepartureKind.Sale).TakeLast(5).Reverse())
             _panelContents.AddChild(Text($"已售 {sale.Creature.Name} · +{sale.Amount} 元",13));
         _panelContents.AddChild(PanelButton("购买补给与道具",()=>ShowShop()));
     }

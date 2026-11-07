@@ -13,11 +13,11 @@ public partial class InteractionRoom
     {
         OpenActivityPanel("投放新油",ShowCreatureArrival);
         _panelContents.AddChild(Text($"每只 {WorldSimulation.NewCreaturePrice} 元 · 余额 {Sim.State.Money} 元",20));
-        _panelContents.AddChild(Text("选择后点击场景空地。成功放下才扣款，右键取消。新油从陌生开始相处。"));
+        _panelContents.AddChild(Text("放置后扣款 · 右键取消",12,"78816e"));
         _panelContents.AddChild(Text("油种"));
         var species=new InlineChoice();species.AddItem("灵梦");species.AddItem("魔理沙");_panelContents.AddChild(species);
         _panelContents.AddChild(Text("成长阶段"));
-        var age=new InlineChoice();age.AddItem("成体");age.AddItem("幼体 · 需要保暖和照护");_panelContents.AddChild(age);
+        var age=new InlineChoice();age.AddItem("成油");age.AddItem("幼油 · 需要保暖和照护");_panelContents.AddChild(age);
         _panelContents.AddChild(Text("繁育角色"));
         var role=new InlineChoice();role.AddItem("母方");role.AddItem("父方");_panelContents.AddChild(role);
         species.Select(_arrivalSpecies);age.Select(_arrivalAge);role.Select(_arrivalRole);
@@ -34,8 +34,7 @@ public partial class InteractionRoom
             _arrivingCreature=profile;_toolArmed=true;RebuildToolbarChoices();
             _message="点击干燥空地投放一只新油，右键取消；成功放下才扣款。";RefreshRoomUi();
         });
-        place.Disabled=Sim.State.Money<WorldSimulation.NewCreaturePrice;_panelContents.AddChild(place);
-        _panelContents.AddChild(PanelButton("返回小院",CloseActivityPanel));
+        place.Disabled=Sim.State.Money<WorldSimulation.NewCreaturePrice;_activityActions.AddChild(place);
     }
     private void CancelCreatureArrival()
     {_arrivingCreature=null;if(_arrivalPreview!=null)_arrivalPreview.Visible=false;}

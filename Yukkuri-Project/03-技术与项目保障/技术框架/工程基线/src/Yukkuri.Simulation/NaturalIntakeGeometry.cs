@@ -60,7 +60,7 @@ public static class NaturalIntakeGeometry
     public static float LowestSupportedMouth(Creature c,RoomObjectKind kind)
     {
         bool water=NaturalResources.IsWater(kind),wrapped=c.Interaction.Restraint==RestraintKind.Wrap;
-        float scale=c.IsYoung?.73f:c.IsElder?1.03f:1;
+        float scale=(float)GrowthRules.Scale(c);
         float floor=c.Interaction.Restraint is RestraintKind.Box or RestraintKind.Frame?
             .46f+InteractionFixtureGeometry.BoxFloorY+InteractionFixtureGeometry.BoxFloorThickness*.5f:0;
         return (floor+(wrapped?(water?WrappedWater:WrappedFood):(water?BareWater:BareFood)))*scale;

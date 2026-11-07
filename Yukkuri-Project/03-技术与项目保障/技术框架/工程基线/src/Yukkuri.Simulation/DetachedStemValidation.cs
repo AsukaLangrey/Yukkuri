@@ -17,14 +17,14 @@ public static partial class FamilyRules
         var ids=new HashSet<string>(StringComparer.Ordinal);
         bool Source(StemParentSource? p)=>p!=null&&Identity(p.Id)&&creatures.ContainsKey(p.Id)&&Identity(p.BodyId)&&
             Text(p.Name,128)&&Identity(p.SpeciesId)&&SupportedSpecies(p.SpeciesId)&&Text(p.Disposition,128)&&
-            Number(p.Courage,1)&&Number(p.Patience,1)&&Number(p.Aggression,1)&&Number(p.Kindness,1)&&Number(p.Carelessness,1)&&Number(p.Pride,1);
+            Number(p.Robustness,1)&&Number(p.Courage,1)&&Number(p.Patience,1)&&Number(p.Aggression,1)&&Number(p.Kindness,1)&&Number(p.Carelessness,1)&&Number(p.Pride,1);
         foreach(var s in state.DetachedStemBroods!)
         {
             Require(s!=null&&Identity(s.EventId)&&ids.Add(s.EventId)&&Enum.IsDefined(s.Phase)&&
                 Source(s.Mother)&&Source(s.Father)&&s.Mother.Id!=s.Father.Id,"离体茎身份或遗传来源无效");
             Require(state.Regions.Any(r=>r.Id==s.RegionId)&&double.IsFinite(s.X)&&double.IsFinite(s.Z)&&
-                Math.Abs(s.X)<=8-WorldSimulation.StemVesselRadius&&Math.Abs(s.Z)<=8-WorldSimulation.StemVesselRadius&&
-                s.PlannedChildren is 2 or 3&&Number(s.Elapsed,GestationSeconds(BirthMethod.Stem))&&Number(s.Burden,100)&&
+                Math.Abs(s.X)<=CourtyardGround.HalfSize-WorldSimulation.StemVesselRadius&&Math.Abs(s.Z)<=CourtyardGround.HalfSize-WorldSimulation.StemVesselRadius&&
+                s.PlannedChildren is >=2 and <=5&&Number(s.Elapsed,GestationSeconds(BirthMethod.Stem))&&Number(s.Burden,100)&&
                 Number(s.Integrity,100)&&Number(s.Hydration,100)&&Number(s.Nutrition,100)&&Number(s.VesselIntegrity,100)&&
                 Number(s.DetachedAt,state.WorldSeconds+.001)&&Text(s.LastDamageCause)&&Text(s.LastEvent)&&
                 double.IsFinite(s.LastDamageAt)&&s.LastDamageAt>=-100&&s.LastDamageAt<=state.WorldSeconds+.001&&

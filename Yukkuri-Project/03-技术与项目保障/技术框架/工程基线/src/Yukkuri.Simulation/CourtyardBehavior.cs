@@ -2,6 +2,7 @@ namespace Yukkuri.Simulation;
 
 public sealed partial class InteractionLife
 {
+    [System.Text.Json.Serialization.JsonIgnore] public long AutonomousMotionSerial { get; set; }
     public double CleaningLearning { get; set; }
     public double LastCleaningLessonAt { get; set; } = -100;
     public double NextCleaningAt { get; set; }
@@ -81,7 +82,7 @@ public sealed partial class WorldSimulation
     public bool SlideAlongGround(string id,double x,double z,bool manual=true)
     {
         var c=InteractionTarget(id);
-        if(c==null||State.Settings.Pause||!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>8||Math.Abs(z)>8||
+        if(c==null||State.Settings.Pause||!double.IsFinite(x)||!double.IsFinite(z)||Math.Abs(x)>CourtyardGround.HalfSize||Math.Abs(z)>CourtyardGround.HalfSize||
             (manual?c.Family.ColdStorage.Stored||c.Family.Memorialized||c.Interaction.Carried||c.Interaction.Falling||c.Interaction.Restraint!=RestraintKind.None:!CanSelfMove(c)))return false;
         double distance=Distance(c.X,c.Z,x,z);int steps=Math.Max(1,(int)Math.Ceiling(distance/.08));
         double startX=c.X,startZ=c.Z;
@@ -90,6 +91,8 @@ public sealed partial class WorldSimulation
             double nx=startX+(x-startX)*n/steps,nz=startZ+(z-startZ)*n/steps;
             if(!ShelterMovePathClear(c,nx,nz)||!CanOccupyRoom(c,nx,nz))break;c.X=nx;c.Z=nz;
         }
+        if(!manual&&Distance(startX,startZ,c.X,c.Z)>.00001)
+        {c.Interaction.AutonomousMotionSerial++;c.Interaction.LastWalkAt=State.WorldSeconds;}
         c.TargetX=c.X;c.TargetZ=c.Z;c.Interaction.VelocityX=c.Interaction.VelocityZ=0;return true;
     }
     public string ExamineBody(string id)

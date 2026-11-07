@@ -370,7 +370,7 @@ public sealed partial class WorldSimulation
                 return g.Last with { Pose = i.ReactionSituation=="lift-low"&&i.ReactionPoseRemaining>0?"carry-ease":"carry", Message = "托稳了。Shift＋滚轮调高度；选择“放稳”再点落点。" };
             case InteractionAction.AdjustHanging:
                 if(!CanOccupyRoom(c,input.X,input.Z))return g.Last=new(false,"支点旁没有足够空间，装置保持原位。",c.Speech,"hang");
-                double hangingHeight=InteractionFixtureGeometry.ClampSupportHeight(input.Height,c.IsYoung?.73:c.IsElder?1.03:1,true);
+                double hangingHeight=InteractionFixtureGeometry.ClampSupportHeight(input.Height,GrowthRules.Scale(c),true);
                 g.Applied|=Distance(c.X,c.Z,input.X,input.Z)>.01||Math.Abs(i.Height-hangingHeight)>.01;
                 MoveCreature(c.Id,input.X,input.Z);i.Height=hangingHeight;
                 return Say("hang",Expression.Calling,"支点与承托仍然连接。松开停止移动，选择“托住解下”才能解除。","hang");
@@ -421,10 +421,10 @@ public sealed partial class WorldSimulation
                 if(supply!=null)supply.Portions--;
                 else if(drinking&&UsesConsumableStock)State.StationWaterPortions--;
                 else if (input.Action != InteractionAction.Drink && UsesConsumableStock) State.Food--;
-                c.Fullness = Clamp100(c.Fullness + (input.Action == InteractionAction.FeedMeal ? 19 : input.Action == InteractionAction.FeedSweet ? 9 : 0));
+                c.Fullness = Clamp100(c.Fullness + (input.Action == InteractionAction.FeedMeal ? NaturalResources.FoodValue(RoomObjectKind.Meal) : input.Action == InteractionAction.FeedSweet ? NaturalResources.FoodValue(RoomObjectKind.Sweet) : 0));
                 i.BeginIntake(drinking?IntakeKind.Water:input.Action==InteractionAction.FeedSweet?IntakeKind.Sweet:IntakeKind.Meal);
                 if(!drinking&&i.Digestion.Symptomatic)i.Digestion.NextFoodAt=State.WorldSeconds+6;
-                if(drinking)i.Hydration=Clamp100(i.Hydration+28);
+                if(drinking)i.Hydration=Clamp100(i.Hydration+CourtyardSurvival.ManualWaterGain);
                 i.FoodSuspicion = Math.Max(0, i.FoodSuspicion - 2);
                 ImproveAffection(c, input.Action == InteractionAction.FeedSweet ? .8 : .5);
                 State.Progress.CareActions=Math.Min(int.MaxValue-1,State.Progress.CareActions+1);
@@ -537,7 +537,7 @@ public sealed partial class WorldSimulation
                 GroundMove(c,c.X+rollX*fraction,c.Z+rollZ*fraction,false);c.TargetX=c.X;c.TargetZ=c.Z;
                 double travelled=Distance(oldX,oldZ,c.X,c.Z);
                 if(travelled<=.00001)return g.Last with {Message="前方没有翻滚空间，手停在这里。",Changed=false};
-                i.MoveRoll(c.X-oldX,c.Z-oldZ,c.IsYoung?.73:c.IsElder?1.03:1);
+                i.MoveRoll(c.X-oldX,c.Z-oldZ,GrowthRules.Scale(c));
                 Distress(c,travelled*(1+force));i.SoilSurface(travelled*2);g.Applied=true;g.Effect+=travelled;
                 return Say("roll", Expression.Frightened, "身体沿实际拖动的方向滚过地面；停手就会停下。", "roll");
             case InteractionAction.Hold:

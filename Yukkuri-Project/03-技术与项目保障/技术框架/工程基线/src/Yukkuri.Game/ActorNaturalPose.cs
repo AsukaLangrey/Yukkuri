@@ -60,7 +60,7 @@ public static class ActorNaturalPose
     }
     public static bool CanReachSource(Creature creature,RoomObject source,System.Collections.Generic.IReadOnlyList<RoomObject> objects,double? atX=null,double? atZ=null,int appearanceIndex=0)
     {
-        float size=creature.IsYoung?.73f:creature.IsElder?1.03f:1;
+        float size=(float)GrowthRules.Scale(creature);
         float dx=(float)(source.X-(atX??creature.X)),dz=(float)(source.Z-(atZ??creature.Z));
         var kind=NaturalResources.IsWater(source.Kind)?IntakeKind.Water:source.Kind==RoomObjectKind.Sweet?IntakeKind.Sweet:IntakeKind.Meal;
         var intake=ActorIntakePresentation.Sample(kind,InteractionLife.IntakeDuration(kind)-NaturalResources.BiteContactSeconds,false,true);

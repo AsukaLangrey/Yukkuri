@@ -27,7 +27,7 @@ public sealed partial class WorldSimulation
         bool needsWaitFood=cue==LearnedCue.Wait&&!State.RoomObjects.Any(o=>o.RegionId==c.RegionId&&o.Portions>0&&
             o.Kind is RoomObjectKind.Meal or RoomObjectKind.Sweet&&!o.Stored&&!o.HeldByHand&&o.CarrierId==null&&
             Distance(c.X,c.Z,o.X,o.Z)<2&&CanSeeResource(c,o));
-        double waitFoodX=Math.Clamp(c.X+.8,-7,7);
+        double waitFoodX=Math.Clamp(c.X+.8,-CourtyardGround.HalfSize+1,CourtyardGround.HalfSize-1);
         if(needsWaitFood)
         {
             if(UsesConsumableStock&&State.Food<=0)return Unavailable("等待练习需要眼前的一份食物。 ");
@@ -116,6 +116,17 @@ public sealed partial class WorldSimulation
                 foreach(var c in State.Creatures)AdvanceMouthProgress(c,dt);
             return;
         }
+        // World effects share one clock. Substeps keep contacts stable at 10x.
+        double remaining=dt*(State.Mode==PlayMode.CloseUp?1:CourtyardSpeed);
+        while(remaining>1e-9)
+        {
+            double step=Math.Min(.025,remaining);
+            AdvanceInteractionPresentationStep(step);
+            remaining-=step;
+        }
+    }
+    private void AdvanceInteractionPresentationStep(double dt)
+    {
         SynchronizeCareParcels();
         SettleRoomSupplies();
         TickPortableMotion(dt);
@@ -194,9 +205,11 @@ public sealed partial class WorldSimulation
                     if(inWater)EnterWater(c,true);
                 }
             }
+            if(i.LandingSeparationPending){AdvanceLandingSeparation(c,dt);if(i.LandingSeparationPending)continue;}
             if (Math.Abs(i.VelocityX) + Math.Abs(i.VelocityZ) > .005)
             {
-                double nextX=Math.Clamp(c.X+i.VelocityX*dt,-7.5,7.5),nextZ=Math.Clamp(c.Z+i.VelocityZ*dt,-6,6);
+                double edge=CourtyardGround.HalfSize-InteractionFootprint(c);
+                double nextX=Math.Clamp(c.X+i.VelocityX*dt,-edge,edge),nextZ=Math.Clamp(c.Z+i.VelocityZ*dt,-edge,edge);
                 if(i.Height>1&&ShelterMovePathClear(c,nextX,nextZ)&&ShelterBodyFits(c,nextX,nextZ)){c.X=nextX;c.Z=nextZ;}
                 else if(!GroundMove(c,nextX,nextZ,false,allowWater:true)){i.VelocityX*= -.18;i.VelocityZ*= -.18;}
                 double drag = Math.Exp(-dt * (i.Falling ? .4 : 4));
@@ -219,6 +232,7 @@ public sealed partial class WorldSimulation
         {
             SynchronizeInterruptedPhysiology(c);
             if (c.Condition == PhysicalCondition.Dead) continue;
+            if(c.Family.ColdStorage.Stored)continue;
             double dt=BiologicalDelta(c,worldDt);
             InitializePersonality(c);
             SynchronizeHungerThreat(c);
@@ -232,8 +246,13 @@ public sealed partial class WorldSimulation
             c.InnerAgeSeconds += dt; c.Body.AgeSeconds += dt;
             if(!c.Family.ColdStorage.Stored)AdvanceHumanBond(c,dt);
             if(i.HumanCompany.Until>0&&!CanSeekHumanCompany(c))EndHumanCompany(c);
-            c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * dt);
-            i.Hydration = Math.Max(0,i.Hydration-dt*.025);
+            c.Fullness = Math.Max(0, c.Fullness - Config.HungerPerSecond * GrowthRules.NeedsFactor(c) * dt);
+            i.Hydration = Math.Max(0,i.Hydration-dt*Config.HydrationPerSecond*GrowthRules.NeedsFactor(c));
+            if(c.Fullness<(i.Digestion.Symptomatic?55:CourtyardSurvival.MealStart))i.MealSeeking=true;
+            else if(c.Fullness>=CourtyardSurvival.MealSatisfied)i.MealSeeking=false;
+            double dehydration=1-Math.Clamp(i.Hydration/CourtyardSurvival.DehydrationWarning,0,1);
+            if(dehydration>0)c.Energy=Math.Max(0,c.Energy-dt*.08*dehydration);
+            if(i.Hydration<=0)Hurt(c,dt*.12,"持续脱水",null);
             i.AdvanceDressings(c,dt);
             c.Energy = Math.Max(0, c.Energy - Config.EnergyPerSecond * dt);
             c.TrainingFatigue = Math.Max(0, c.TrainingFatigue - dt * .12);
@@ -243,7 +262,10 @@ public sealed partial class WorldSimulation
             i.PraiseRemaining = Math.Max(0, i.PraiseRemaining - dt);
             if (i.PraiseRemaining == 0) i.PendingPraise = null;
             if (c.Fullness <= 0) Hurt(c, dt * .12, "饥饿", null);
+            TickNightHousing(c,dt);
             if(!inWater&&!c.Family.ColdStorage.Stored&&c.Condition is PhysicalCondition.Active or PhysicalCondition.Recovering)UpdateInteractionRest(c,dt);
+            i.Sleepiness=Clamp100(i.Sleepiness+dt*(i.Resting?-CourtyardSurvival.SleepRecoveryPerSecond*SleepQuality(c):CourtyardSurvival.AwakeSleepinessPerSecond+
+                (Distance(c.X,c.Z,c.TargetX,c.TargetZ)>.2||i.CleaningTargetId!=null||c.Family.CareTargetId!=null?CourtyardSurvival.ActivitySleepinessPerSecond:0)));
             AdvanceBodyInjuries(c,dt);
             if(c.Condition==PhysicalCondition.Dead)continue;
             if (c.Condition == PhysicalCondition.Critical)
@@ -270,7 +292,7 @@ public sealed partial class WorldSimulation
                 c.Energy = Clamp100(c.Energy + dt * .4);
                 if (c.RecoveryRemaining <= 0) { c.Condition = PhysicalCondition.Active; c.Health = Math.Max(25, c.Health); }
             }
-            if (c.Fullness > 40 && c.Energy > 40 && !i.Digestion.Symptomatic)
+            if (c.Fullness > 40 && i.Hydration>=CourtyardSurvival.DehydrationWarning && c.Energy > 40 && !i.Digestion.Symptomatic)
             { c.Health = Clamp100(c.Health + dt * .025); c.Pain = Math.Max(0, c.Pain - dt * .06); }
             if(c.Family.ColdStorage.Stored){c.Activity="冷藏保存中";continue;}
             if(FamilyRules.UnderIntervention(c)){c.Activity="强制干预进行中";continue;}
@@ -296,7 +318,7 @@ public sealed partial class WorldSimulation
                 c.Activity=i.Physiology.Excreting==ExcretionKind.Urine?"正在撒尿":"正在排便";
                 continue;
             }
-            if(!CanSelfMove(c)&&i.Hydration<12&&i.EatingRemaining<=0&&c.ReactionRemaining<=0&&State.WorldSeconds-i.LastThirstRequestAt>24)
+            if(i.Hydration<CourtyardSurvival.DehydrationWarning&&i.EatingRemaining<=0&&c.ReactionRemaining<=0&&State.WorldSeconds-i.LastThirstRequestAt>60)
             {
                 i.LastThirstRequestAt=State.WorldSeconds;i.LastHelpAt=State.WorldSeconds;
                 i.NextAutonomyAt=Math.Max(i.NextAutonomyAt,State.WorldSeconds+5);
@@ -391,8 +413,13 @@ public sealed partial class WorldSimulation
                 continue;
             }
             if(i.EatingRemaining>0){TickNaturalNeeds(c,dt);continue;}
-            if((c.Fullness<15||i.Hydration<15)&&TickNaturalNeeds(c,dt))continue;
-            if (i.RestRemaining > 0 || c.Energy < 22 || i.Resting)
+            // Sleep and its pre-empting needs must share one threshold; moderate
+            // hunger/thirst waits until morning, emergency needs still win.
+            bool needsBeforeRest=ScheduledRest(c)||i.RestRemaining>0||i.Resting;
+            if(CourtyardSurvival.Urgent(c,sleeping:needsBeforeRest)&&TickNaturalNeeds(c,dt))continue;
+            if(TrySeekWarmth(c,dt))continue;
+            if(TrySeekShelter(c,dt))continue;
+            if (i.RestRemaining > 0 || ScheduledRest(c) || i.Resting)
             {
                 ResetNaturalResourceSearch(c);
                 i.HelpWaitingUntil=0;
@@ -472,7 +499,7 @@ public sealed partial class WorldSimulation
             if (c.DecisionIn <= 0)
             {
                 c.DecisionIn = 5 + Next() * 5;
-                if (c.ReactionRemaining <= 0) { c.TargetX = Math.Clamp(c.X + Next() * 3 - 1.5, -6, 6); c.TargetZ = Math.Clamp(c.Z + Next() * 2 - 1, -4, 4); }
+                if (c.ReactionRemaining <= 0) { c.TargetX = Math.Clamp(c.X + Next() * 3 - 1.5, -CourtyardGround.HalfSize+1, CourtyardGround.HalfSize-1); c.TargetZ = Math.Clamp(c.Z + Next() * 2 - 1, -CourtyardGround.HalfSize+1, CourtyardGround.HalfSize-1); }
             }
             if (CanSelfMove(c) && Distance(c.X, c.Z, c.TargetX, c.TargetZ) > .2)
             { RoomMove(c, c.TargetX, c.TargetZ, dt); c.Activity = "在小院里慢慢走"; }
@@ -522,14 +549,24 @@ public sealed partial class WorldSimulation
     private void RoomMove(Creature c, double x, double z, double dt, bool slide=true)
     {
         if (!CanSelfMove(c)) return;
-        double speed = UsesGroundFoot(c) ? Math.Clamp(c.Interaction.FootIntegrity / 100, .3, 1) : 1;
+        // Growth and old saves can overlap ground bodies without any fall. Let an
+        // attempted walk resolve that contact gradually before taking the route.
+        if(HasGroundBodyOverlap(c))
+        {
+            c.Interaction.LandingSeparationPending=true;
+            double savedTargetX=c.TargetX,savedTargetZ=c.TargetZ;
+            AdvanceLandingSeparation(c,dt);
+            c.TargetX=savedTargetX;c.TargetZ=savedTargetZ;
+            return;
+        }
+        double speed = (UsesGroundFoot(c) ? Math.Clamp(c.Interaction.FootIntegrity / 100, .3, 1) : 1)*CourtyardSurvival.DehydrationMovementFactor(c);
         if(c.Interaction.Digestion.Symptomatic)speed*=Math.Max(.5,1-c.Interaction.Digestion.Severity*.005);
         double distance = Distance(c.X, c.Z, x, z);
         if (distance < .001) return;
         double step = Math.Min(distance, Config.MoveSpeed * speed * dt);
         double dx = (x - c.X) / distance, dz = (z - c.Z) / distance;
         double previousX=c.X,previousZ=c.Z;
-        double edge=8-InteractionFootprint(c);
+        double edge=CourtyardGround.HalfSize-InteractionFootprint(c);
         GroundMove(c,Math.Clamp(c.X+dx*step,-edge,edge),Math.Clamp(c.Z+dz*step,-edge,edge),slide);
         var life=c.Interaction;
         // A finished mouthful may acknowledge swallowing while planted. Once
@@ -538,7 +575,8 @@ public sealed partial class WorldSimulation
         if((c.X!=previousX||c.Z!=previousZ)&&life.EatingRemaining<=0&&
             life.ReactionSituation=="mouthful-done"&&life.ReactionPose=="swallow"&&life.ReactionPoseRemaining>0)
         {life.ReactionPose="idle";life.ReactionPoseRemaining=0;}
-        if(Distance(previousX,previousZ,c.X,c.Z)>.005)c.Interaction.LastWalkAt=State.WorldSeconds;
+        if(Distance(previousX,previousZ,c.X,c.Z)>.00001)
+        {c.Interaction.LastWalkAt=State.WorldSeconds;c.Interaction.AutonomousMotionSerial++;}
         c.Interaction.Facing = Math.Atan2(dx, dz);
     }
 
@@ -578,7 +616,7 @@ public sealed partial class WorldSimulation
         foreach(var boxed in State.Creatures.Where(o=>o.RegionId==c.RegionId&&o.Interaction.Restraint==RestraintKind.Box))
         {
             double dx=food.X-(boxed.Id==c.Id?atX??boxed.X:boxed.X),dz=food.Z-(boxed.Id==c.Id?atZ??boxed.Z:boxed.Z);
-            double scale=boxed.IsYoung?.73:boxed.IsElder?1.03:1;
+            double scale=GrowthRules.Scale(boxed);
             // This box has a solid back and sides, with a low front feeding gap.
             if(boxed.Id==c.Id&&!(Math.Abs(dx)<.43*scale&&dz>-.40*scale&&dz<.86*scale))return false;
             if(boxed.Id!=c.Id&&Math.Abs(dx)<InteractionFixtureGeometry.BoxSideX*scale&&Math.Abs(dz)<InteractionFixtureGeometry.BoxDepth*.5*scale)return false;

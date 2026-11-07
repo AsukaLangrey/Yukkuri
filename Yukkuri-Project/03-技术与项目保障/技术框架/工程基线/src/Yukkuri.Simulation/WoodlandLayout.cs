@@ -14,10 +14,10 @@ public readonly record struct WoodlandTree(double X,double Z,double Scale= .92)
 /// <summary>Shared by source art and movement. River mouths are approached from the dry west bank.</summary>
 public static class WoodlandLayout
 {
-    public const double BankZ = 2.3;
+    public const double BankZ = 2.3*CourtyardGround.Expansion;
     public static IReadOnlyList<WoodlandTree> Trees { get; }=Array.AsReadOnly(new WoodlandTree[]
-    {new(-6.7,-4.8),new(-5.7,-6.7),new(2.7,-6.9),new(-6.9,4.6)});
-    public static double RiverEdge(double z) => 6.35 + .16*Math.Sin(z*.65);
+    {new(-6.7*CourtyardGround.Expansion,-4.8*CourtyardGround.Expansion),new(-5.7*CourtyardGround.Expansion,-6.7*CourtyardGround.Expansion),new(2.7*CourtyardGround.Expansion,-6.9*CourtyardGround.Expansion),new(-6.9*CourtyardGround.Expansion,4.6*CourtyardGround.Expansion)});
+    public static double RiverEdge(double z) => CourtyardGround.Expansion*(6.35 + .16*Math.Sin(z/CourtyardGround.Expansion*.65));
     public static double DrinkX => RiverEdge(BankZ);
     public static bool HasRiver(WorldState state,string region) =>
         state.RoomObjects.Any(o=>o.RegionId==region&&o.Kind==RoomObjectKind.RiverWater);
