@@ -1,0 +1,1664 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "branch": "alice/20261107-station-inspector-selection",
+  "sourceIdentity": "Base commit plus the listed uncommitted source hashes; not a claim that the base commit contains the fix.",
+  "environment": "Authorized isolated Windows workspace; headless Godot 4.7.2 Mono and .NET SDK 10.0.402",
+  "scope": "Synthetic isolated world state, real toolbar/button signals and projected production callbacks. No player saves, native UI, visual, audio or long-play acceptance.",
+  "budget": {
+    "started": "2026-11-07T01:00:13.0932769Z",
+    "finished": "2026-11-07T01:10:10.8118508Z",
+    "wallSeconds": 597.7185739,
+    "totalLimitSeconds": 1800,
+    "perProcessLimitSeconds": 300,
+    "longestProcessSeconds": 46.2344853,
+    "timeouts": 0,
+    "ownMatchingProcessesAlive": 0
+  },
+  "sourceHashes": [
+    {
+      "file": "src/Yukkuri.Game/InteractionRoom.SupplyStationsUi.cs",
+      "sha256": "5A43EFB8DA19E2D1C7CACF776C2C65CDC2AE59B82F2BA95D9B8963D781BD6CB4"
+    },
+    {
+      "file": "src/Yukkuri.Game/InteractionRoom.cs",
+      "sha256": "45DC022035AA0C617E8810CCFAE1E298156EAD57F40BDEF35E93DC0DE7AB4368"
+    },
+    {
+      "file": "src/Yukkuri.Game/Main.cs",
+      "sha256": "4E112FB96C09B6CDC02D3B3B7ACF9D692DB54FA3C89F409A4951BD3DD558795B"
+    },
+    {
+      "file": "src/Yukkuri.Game/StationInspectorVerification.cs",
+      "sha256": "C720C07B37FA09969D87ECA287E4868051CF807A865969BC23AA6C873A975FED"
+    },
+    {
+      "file": "src/Yukkuri.Game/InteractionRoom.StationInspectorVerification.cs",
+      "sha256": "12608230F7FE0FFE420DA7D36C6FD162256756ED8B54EC797252AA8BEE9BAFE1"
+    }
+  ],
+  "baselineHashes": [
+    {
+      "file": "src\\Yukkuri.Game\\InteractionRoom.SupplyStationsUi.cs",
+      "sha256": "1AD34E0646B808E80FC33356CC569A5CC285D52A49C90C05CBD365D566932172"
+    },
+    {
+      "file": "src\\Yukkuri.Game\\InteractionRoom.cs",
+      "sha256": "45DC022035AA0C617E8810CCFAE1E298156EAD57F40BDEF35E93DC0DE7AB4368"
+    },
+    {
+      "file": "src\\Yukkuri.Game\\Main.cs",
+      "sha256": "4E112FB96C09B6CDC02D3B3B7ACF9D692DB54FA3C89F409A4951BD3DD558795B"
+    },
+    {
+      "file": "src\\Yukkuri.Game\\StationInspectorVerification.cs",
+      "sha256": "C720C07B37FA09969D87ECA287E4868051CF807A865969BC23AA6C873A975FED"
+    },
+    {
+      "file": "src\\Yukkuri.Game\\InteractionRoom.StationInspectorVerification.cs",
+      "sha256": "12608230F7FE0FFE420DA7D36C6FD162256756ED8B54EC797252AA8BEE9BAFE1"
+    },
+    {
+      "file": "src\\Yukkuri.Game\\.godot\\mono\\temp\\bin\\Debug\\Yukkuri.Game.dll",
+      "sha256": "9586D06DCDA398751F0441A662CF9F588FB28EBAB36E1D000551449B4272634E"
+    }
+  ],
+  "finalAssemblySha256": "DAF138E9190D2197C2D8D15B6F603B193D4035187C474FF12E3E590FEF5F43D5",
+  "attempts": [
+    {
+      "stage": "baseline-01",
+      "sha256": "D61B2CC3FFAE556F92C80C1033ABD494101AAA3E0A12D179FAA340D1F9A9E65A",
+      "result": {
+        "success": false,
+        "failures": 10,
+        "checks": 10,
+        "renderer": "headless",
+        "scope": "Headless real toolbar/button signals and projected production input callbacks; real sale unlock and station purchase; default cushions; controlled validated pregnancy fixture. No native UI or visual acceptance.",
+        "results": [
+          {
+            "name": "Food / placement fixture and transition",
+            "passed": false,
+            "error": "No unobscured projected object point."
+          },
+          {
+            "name": "Food / grab fixture and transition",
+            "passed": false,
+            "error": "No unobscured projected object point."
+          },
+          {
+            "name": "Food / observe fixture and transition",
+            "passed": false,
+            "error": "No unobscured projected object point."
+          },
+          {
+            "name": "Food / stem-placement fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact in fixture."
+          },
+          {
+            "name": "Food / stem-grab fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact in fixture."
+          },
+          {
+            "name": "Water / placement fixture and transition",
+            "passed": false,
+            "error": "No unobscured projected object point."
+          },
+          {
+            "name": "Water / grab fixture and transition",
+            "passed": false,
+            "error": "No unobscured projected object point."
+          },
+          {
+            "name": "Water / observe fixture and transition",
+            "passed": false,
+            "error": "No unobscured projected object point."
+          },
+          {
+            "name": "Water / stem-placement fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact in fixture."
+          },
+          {
+            "name": "Water / stem-grab fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact in fixture."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "baseline-02",
+      "sha256": "DF7D87DC8315CD6D2CF0BCB38BAEE746728194AD40804FBF80A237D8D97C38DB",
+      "result": {
+        "success": false,
+        "failures": 10,
+        "checks": 10,
+        "renderer": "headless",
+        "scope": "Headless real toolbar/button signals and projected production input callbacks; real sale unlock and station purchase; default cushions; controlled validated pregnancy fixture. No native UI or visual acceptance.",
+        "results": [
+          {
+            "name": "Food / placement fixture and transition",
+            "passed": false,
+            "error": "No projected object point. center=(456.25, 374.01602), canvas=(306, 88), (728, 798), viewport=(0, 0), (1440, 900), scene=1271, hits=0, visible=True"
+          },
+          {
+            "name": "Food / grab fixture and transition",
+            "passed": false,
+            "error": "No projected object point. center=(456.25, 374.01602), canvas=(306, 88), (728, 798), viewport=(0, 0), (1440, 900), scene=1271, hits=0, visible=True"
+          },
+          {
+            "name": "Food / observe fixture and transition",
+            "passed": false,
+            "error": "No projected object point. center=(456.25, 374.01602), canvas=(306, 88), (728, 798), viewport=(0, 0), (1440, 900), scene=1271, hits=0, visible=True"
+          },
+          {
+            "name": "Food / stem-placement fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact. center=(518.125, 454.55325), canvas=(306, 88), (728, 798), status=False"
+          },
+          {
+            "name": "Food / stem-grab fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact. center=(518.125, 454.55325), canvas=(306, 88), (728, 798), status=False"
+          },
+          {
+            "name": "Water / placement fixture and transition",
+            "passed": false,
+            "error": "No projected object point. center=(456.25, 374.01602), canvas=(306, 88), (728, 798), viewport=(0, 0), (1440, 900), scene=1271, hits=0, visible=True"
+          },
+          {
+            "name": "Water / grab fixture and transition",
+            "passed": false,
+            "error": "No projected object point. center=(456.25, 374.01602), canvas=(306, 88), (728, 798), viewport=(0, 0), (1440, 900), scene=1271, hits=0, visible=True"
+          },
+          {
+            "name": "Water / observe fixture and transition",
+            "passed": false,
+            "error": "No projected object point. center=(456.25, 374.01602), canvas=(306, 88), (728, 798), viewport=(0, 0), (1440, 900), scene=1271, hits=0, visible=True"
+          },
+          {
+            "name": "Water / stem-placement fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact. center=(518.125, 454.55325), canvas=(306, 88), (728, 798), status=False"
+          },
+          {
+            "name": "Water / stem-grab fixture and transition",
+            "passed": false,
+            "error": "No live projected external stem contact. center=(518.125, 454.55325), canvas=(306, 88), (728, 798), status=False"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "baseline-03",
+      "sha256": "EE348B936B39A00A8A38BF428B3B624B0682C9B4DDEB4FBC6ABC76C9F8F07F20",
+      "result": {
+        "success": false,
+        "failures": 16,
+        "checks": 50,
+        "renderer": "headless",
+        "scope": "Headless real toolbar/button signals and projected production input callbacks; real sale unlock, station purchase and meal placement; controlled validated pregnancy fixture. No native UI or visual acceptance.",
+        "results": [
+          {
+            "name": "Food / placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Food / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection."
+          },
+          {
+            "name": "Water / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab fixture and transition",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "stage": "baseline-04",
+      "sha256": "FC251780DB2EB1A57768B44A3E52D9960FE5F1FA244B54CD76221F8F62B7535F",
+      "result": {
+        "success": false,
+        "failures": 16,
+        "checks": 60,
+        "renderer": "headless",
+        "scope": "Headless real toolbar/button signals and projected production input callbacks; real sale unlock, station purchase and meal placement; controlled validated pregnancy fixture. No native UI or visual acceptance.",
+        "results": [
+          {
+            "name": "Food / placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "0bb77aa18d45452eb2b31b348e525823",
+            "observedStem": null,
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Food / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "0bb77aa18d45452eb2b31b348e525823",
+            "observedStem": null,
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Food / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "6ef45ff62af24f61a046e88c938ef05f",
+            "observedStem": null,
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Food / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "6ef45ff62af24f61a046e88c938ef05f",
+            "observedStem": null,
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Food / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Food / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Food / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Food / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Food / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "52a6f09bb6644c3aa9b5d5f8378766d5",
+            "observedStem": null,
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Water / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "52a6f09bb6644c3aa9b5d5f8378766d5",
+            "observedStem": null,
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Water / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "30d6c91fddcc4d0fa7288ce4a252d96e",
+            "observedStem": null,
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Water / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "饭饭 · 空手按住拿起",
+            "details": "饭饭 · 空手按住拿起\n实际份数 1",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": "30d6c91fddcc4d0fa7288ce4a252d96e",
+            "observedStem": null,
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Water / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Water / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-2"
+          },
+          {
+            "name": "Water / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab header and details",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Water / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab repeated refresh",
+            "passed": false,
+            "error": "Stale object/stem selection survives station selection.",
+            "header": "外茎与幼芽",
+            "details": "完整度 100 · 水分 100\n成长 17% · 计划幼体 2\n支护剩余 0秒",
+            "detailsVisible": true,
+            "stationPanelVisible": true,
+            "selectedObject": null,
+            "observedStem": "interaction-oil-0",
+            "selectedStation": "station-1"
+          },
+          {
+            "name": "Water / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe fixture and transition",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "stage": "fixed-01",
+      "sha256": "887302E85BB43B330A146EB7AF033BCDE203653FDDED7BDB51E00D64782CA9CE",
+      "result": {
+        "success": true,
+        "failures": 0,
+        "checks": 60,
+        "renderer": "headless",
+        "scope": "Headless real toolbar/button signals and projected production input callbacks; real sale unlock, station purchase and meal placement; controlled validated pregnancy fixture. No native UI or visual acceptance.",
+        "results": [
+          {
+            "name": "Food / placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe fixture and transition",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "stage": "fixed-final",
+      "sha256": "887302E85BB43B330A146EB7AF033BCDE203653FDDED7BDB51E00D64782CA9CE",
+      "result": {
+        "success": true,
+        "failures": 0,
+        "checks": 60,
+        "renderer": "headless",
+        "scope": "Headless real toolbar/button signals and projected production input callbacks; real sale unlock, station purchase and meal placement; controlled validated pregnancy fixture. No native UI or visual acceptance.",
+        "results": [
+          {
+            "name": "Food / placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Food / stem-observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / observe fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-placement fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-grab fixture and transition",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe header and details",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe frequency target and inventory",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe repeated refresh",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe select previous object",
+            "passed": true
+          },
+          {
+            "name": "Water / stem-observe fixture and transition",
+            "passed": true
+          }
+        ]
+      }
+    }
+  ],
+  "relatedSuites": [
+    {
+      "name": "Input.Intent",
+      "passed": 43,
+      "failed": 0,
+      "exitCode": 0,
+      "logSha256": "651088B48D532BD73D58965B78AD568EBAE396AD622A552EE937E0E7FA159398"
+    },
+    {
+      "name": "Interaction.StateBoundaries",
+      "passed": 10,
+      "failed": 0,
+      "exitCode": 0,
+      "logSha256": "81706BB1C6F7C5CFD27C66E3341A898ADF8EE8FEFB5F85C47143BD1C9C49E471"
+    },
+    {
+      "name": "Interaction.SupplyStations",
+      "passed": 8,
+      "failed": 0,
+      "exitCode": 0,
+      "logSha256": "609F25309656D1DE111CE67862B0191D6C5530FEE47B0E87F4A47B0F6C9E7EF4"
+    }
+  ],
+  "guards": {
+    "success": true,
+    "checks": 8,
+    "results": [
+      {
+        "name": "missing-profile",
+        "passed": true,
+        "exitCode": 2,
+        "beforeWorld": true,
+        "seconds": 0.3902152
+      },
+      {
+        "name": "legacy-direct",
+        "passed": true,
+        "exitCode": 2,
+        "beforeWorld": true,
+        "seconds": 0.4745283
+      },
+      {
+        "name": "route-to-main",
+        "passed": true,
+        "exitCode": 2,
+        "beforeWorld": true,
+        "seconds": 0.3769576
+      },
+      {
+        "name": "existing-profile",
+        "passed": true,
+        "exitCode": 2,
+        "beforeWorld": true,
+        "seconds": 0.3786974
+      },
+      {
+        "name": "existing-output",
+        "passed": true,
+        "exitCode": 2,
+        "beforeWorld": true,
+        "seconds": 0.3783566
+      },
+      {
+        "name": "no-isolation",
+        "passed": true,
+        "exitCode": 2,
+        "beforeWorld": true,
+        "seconds": 0.3760464
+      },
+      {
+        "name": "existing profile/output byte preservation",
+        "passed": true
+      },
+      {
+        "name": "no ordinary save directories",
+        "passed": true
+      }
+    ]
+  },
+  "processes": [
+    {
+      "stage": "restore-baseline",
+      "started": "2026-11-07T01:00:38.7531745Z",
+      "finished": "2026-11-07T01:00:43.805633Z",
+      "seconds": 5.0537519,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "build-baseline",
+      "started": "2026-11-07T01:00:54.7177142Z",
+      "finished": "2026-11-07T01:01:01.1972732Z",
+      "seconds": 6.4804206,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "import-baseline",
+      "started": "2026-11-07T01:01:01.2474344Z",
+      "finished": "2026-11-07T01:01:06.0650354Z",
+      "seconds": 4.8176165,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "baseline-01",
+      "started": "2026-11-07T01:01:17.1448818Z",
+      "finished": "2026-11-07T01:01:48.120118Z",
+      "seconds": 30.9761221,
+      "exitCode": 1,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "build-fixture02",
+      "started": "2026-11-07T01:02:34.1261467Z",
+      "finished": "2026-11-07T01:02:37.989175Z",
+      "seconds": 3.8638404,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "baseline-02",
+      "started": "2026-11-07T01:02:38.0668974Z",
+      "finished": "2026-11-07T01:03:09.6681277Z",
+      "seconds": 31.6012371,
+      "exitCode": 1,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "build-fixture03",
+      "started": "2026-11-07T01:04:03.4667853Z",
+      "finished": "2026-11-07T01:04:07.0663937Z",
+      "seconds": 3.6010621,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "baseline-03",
+      "started": "2026-11-07T01:04:07.1524377Z",
+      "finished": "2026-11-07T01:04:43.4847206Z",
+      "seconds": 36.3322876,
+      "exitCode": 1,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "build-fixture04",
+      "started": "2026-11-07T01:05:09.6980752Z",
+      "finished": "2026-11-07T01:05:13.3113214Z",
+      "seconds": 3.614179,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "baseline-04",
+      "started": "2026-11-07T01:05:13.3630235Z",
+      "finished": "2026-11-07T01:05:59.5009792Z",
+      "seconds": 46.1379629,
+      "exitCode": 1,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "build-fixed",
+      "started": "2026-11-07T01:06:50.3324399Z",
+      "finished": "2026-11-07T01:06:53.9529959Z",
+      "seconds": 3.6213009,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "fixed-01",
+      "started": "2026-11-07T01:06:53.9993396Z",
+      "finished": "2026-11-07T01:07:40.2338215Z",
+      "seconds": 46.2344853,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "restore-Input.Intent",
+      "started": "2026-11-07T01:07:40.2777735Z",
+      "finished": "2026-11-07T01:07:40.9565398Z",
+      "seconds": 0.6787702,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "build-Input.Intent",
+      "started": "2026-11-07T01:07:40.985711Z",
+      "finished": "2026-11-07T01:07:43.0302167Z",
+      "seconds": 2.0445097,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "check-Input.Intent",
+      "started": "2026-11-07T01:07:43.0551415Z",
+      "finished": "2026-11-07T01:07:46.5045153Z",
+      "seconds": 3.4493767,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "restore-Interaction.StateBoundaries",
+      "started": "2026-11-07T01:07:46.5382382Z",
+      "finished": "2026-11-07T01:07:47.2171472Z",
+      "seconds": 0.6789117,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "build-Interaction.StateBoundaries",
+      "started": "2026-11-07T01:07:47.2416282Z",
+      "finished": "2026-11-07T01:07:49.0708851Z",
+      "seconds": 1.8292613,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "check-Interaction.StateBoundaries",
+      "started": "2026-11-07T01:07:49.1002033Z",
+      "finished": "2026-11-07T01:07:50.1058823Z",
+      "seconds": 1.0056838,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "restore-Interaction.SupplyStations",
+      "started": "2026-11-07T01:07:50.1257064Z",
+      "finished": "2026-11-07T01:07:50.7994298Z",
+      "seconds": 0.6737274,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "build-Interaction.SupplyStations",
+      "started": "2026-11-07T01:07:50.8295071Z",
+      "finished": "2026-11-07T01:07:52.7280554Z",
+      "seconds": 1.8985531,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "check-Interaction.SupplyStations",
+      "started": "2026-11-07T01:07:52.7518495Z",
+      "finished": "2026-11-07T01:07:54.6788475Z",
+      "seconds": 1.9270029,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "missing-profile",
+      "started": "2026-11-07T01:08:38.0280222Z",
+      "finished": "2026-11-07T01:08:38.4175398Z",
+      "seconds": 0.3902152,
+      "exitCode": 2,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "legacy-direct",
+      "started": "2026-11-07T01:08:38.4694651Z",
+      "finished": "2026-11-07T01:08:38.9439899Z",
+      "seconds": 0.4745283,
+      "exitCode": 2,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "route-to-main",
+      "started": "2026-11-07T01:08:38.9704418Z",
+      "finished": "2026-11-07T01:08:39.3473955Z",
+      "seconds": 0.3769576,
+      "exitCode": 2,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "existing-profile",
+      "started": "2026-11-07T01:08:39.3720507Z",
+      "finished": "2026-11-07T01:08:39.7507453Z",
+      "seconds": 0.3786974,
+      "exitCode": 2,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "existing-output",
+      "started": "2026-11-07T01:08:39.7736585Z",
+      "finished": "2026-11-07T01:08:40.1520122Z",
+      "seconds": 0.3783566,
+      "exitCode": 2,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "no-isolation",
+      "started": "2026-11-07T01:08:40.1804412Z",
+      "finished": "2026-11-07T01:08:40.5564842Z",
+      "seconds": 0.3760464,
+      "exitCode": 2,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    },
+    {
+      "stage": "build-final-rebuild",
+      "started": "2026-11-07T01:09:18.7710092Z",
+      "finished": "2026-11-07T01:09:25.3567118Z",
+      "seconds": 6.5865166,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "ABCE6623A6729059CF39BB0F728C4A7804F625895099C88C17E6E704661E09EB"
+    },
+    {
+      "stage": "fixed-final",
+      "started": "2026-11-07T01:09:25.4113985Z",
+      "finished": "2026-11-07T01:10:10.8118508Z",
+      "seconds": 45.4004556,
+      "exitCode": 0,
+      "timeout": false,
+      "toolSha256": "2445D009A5E0474FC7064B9767100E9D2C09521890AC5625476BFB81CF03F2D4"
+    }
+  ],
+  "warnings": [
+    "Full baseline and final rebuild: two pre-existing CS8604 warnings at SupplyStationValidation.cs:12 and InteractionValidation.cs:15.",
+    "Initial restore: two missing relative .tools package-source warnings; offline restore succeeded using the explicitly supplied installed bundled source.",
+    "Godot editor import: four get_system_dir errors under the fresh isolated profile; import exit code 0, following diagnostics loaded and ran successfully."
+  ],
+  "notRun": [
+    "Native desktop mouse/keyboard and visual/audio acceptance",
+    "Long-duration gameplay or performance soak",
+    "Player saves and historical save compatibility",
+    "Cushion hit-geometry fix; outside this change"
+  ]
+}
