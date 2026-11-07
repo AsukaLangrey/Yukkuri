@@ -1,9 +1,11 @@
 using System.Text.Json;
 using Yukkuri.Simulation;
 
-// Check source only. Run on an independently authorised remote machine, never this workstation.
+// Pure simulation check. Run only on a machine explicitly authorised for testing.
 int failures=0;
 void Require(bool ok,string why){if(!ok)throw new Exception(why);}
+// Additional preparation checks are counted separately from the original 37 assertions.
+void Valid(bool ok,string why){if(!ok)throw new Exception("fixture validity: "+why);}
 void Check(string name,Action body)
 {try{body();Console.WriteLine("PASS "+name);}catch(Exception e){failures++;Console.WriteLine("FAIL "+name+": "+e);}}
 string Snapshot(WorldSimulation s)=>JsonSerializer.Serialize(s.State,SaveStore.JsonOptions);
@@ -23,11 +25,24 @@ void Meal(WorldSimulation s,Creature c)
     for(int n=0;n<100&&c.Interaction.EatingRemaining>0;n++)Step(s);
     Require(c.Interaction.EatingRemaining<=0,"meal did not finish its real mouth clock");
 }
+void Drink(WorldSimulation s,Creature c)
+{
+    double before=c.Interaction.Hydration;int stock=s.State.StationWaterPortions,actions=s.State.Progress.CareActions;
+    var input=new InteractionInput(InteractionAction.Drink,BodyPart.Mouth,Duration:.1);
+    Valid(s.BeginInteractionGesture(c.Id,input).Success,"actual recovery drink could not begin");
+    for(int n=0;n<12&&!s.InteractionIntakeAccepted;n++){s.ContinueInteractionGesture(input,true);Step(s);}
+    Valid(s.InteractionIntakeAccepted,"recovery drink did not actually enter");s.EndInteractionGesture();
+    for(int n=0;n<100&&c.Interaction.EatingRemaining>0;n++)Step(s);
+    Valid(c.Interaction.EatingRemaining<=0&&c.Interaction.Hydration>before&&s.State.StationWaterPortions==stock-1&&s.State.Progress.CareActions==actions+1,
+        "recovery drink did not finish its real mouth clock exactly once");
+}
 WorldSimulation AfterHarm(string need="warmth",bool adultRecipient=false,bool established=false)
 {
     for(ulong seed=1;seed<=64;seed++)
     {
-        var s=WorldSimulation.CreateInteractionPlaytest(seed);s.State.RoomObjects.Clear();s.State.PlayerX=0;s.State.PlayerZ=7;
+        var s=WorldSimulation.CreateInteractionPlaytest(seed);
+        // Keep the initial food isolation in effect when ordinary world ticks regrow grass.
+        s.Config.WildGrassEnabled=false;s.State.RoomObjects.Clear();s.State.PlayerX=0;s.State.PlayerZ=7;
         for(int n=0;n<s.State.Creatures.Count;n++)
         {
             var c=s.State.Creatures[n];GrowthRules.Initialize(c,false);
@@ -45,7 +60,8 @@ WorldSimulation AfterHarm(string need="warmth",bool adultRecipient=false,bool es
         r.X=r.TargetX=WorldSimulation.InteractionFootprint(a)+WorldSimulation.InteractionFootprint(r)+.1;r.Z=r.TargetZ=0;
         r.Fullness=need=="meal"?35:90;r.Interaction.Hydration=need=="water"?35:90;
         if(established)r.Family.CaregiverIds.Add(a.Id);
-        a.Aggression=.5;a.Fullness=adultRecipient?5:19;
+        // The adult starts hungry enough to accept all four real recovery meals.
+        a.Aggression=.5;a.Fullness=adultRecipient?1:19;
         if(adultRecipient)
         {a.Personality.Kindness=.05;a.Personality.HungerTargetId=r.Id;a.Personality.NextHungerStrikeAt=0;}
         else a.Family.ChildThreat=new(){TargetId=r.Id,WarningRemaining=0,Remaining=45,NextCheckAt=120,Cause="饥饿与求生压力"};
@@ -63,7 +79,8 @@ WorldSimulation AfterHarm(string need="warmth",bool adultRecipient=false,bool es
         Require(s.State.Food==stock-meals&&a.Fullness>=70,"caregiver needs were not resolved with actual portions");
         Require(s.State.Incidents.Count(e=>e.Kind==IncidentKind.Attack&&e.ActorId==a.Id&&e.TargetId==r.Id)==1,
             "fixture suffered a second strike instead of a timely interruption");
-        if(s.State.WorldSeconds-memory!.LastHarmAt<29&&FamilyRules.WillSocialize(a))return s;
+        if(s.State.WorldSeconds-memory!.LastHarmAt<29&&FamilyRules.WillSocialize(a))
+        {Console.WriteLine($"PREP harm seed={seed} adult={adultRecipient} need={need} meals={meals} time={s.State.WorldSeconds:F1}");return s;}
     }
     throw new Exception("no actual interrupted early-recovery fixture was reached");
 }
@@ -200,14 +217,48 @@ Check("real safe recovery and subsequent sustained care can establish a stable r
     }
     Require(Earned(a,r).Care==0&&!r.Family.CaregiverIds.Contains(a.Id),"waiting alone earned stable care credit");
     BringBeside(s,a,r);
-    double start=s.State.WorldSeconds;
-    while(!r.Family.CaregiverIds.Contains(a.Id)&&s.State.WorldSeconds-start<180)
+    // Spring night lasts 200 simulation seconds (22:00 to 06:00). The old
+    // 180-second preparation budget could not include it. This 900-second bound
+    // waits through real sleep and bodily needs; it does not lower the 60-second care threshold.
+    double start=s.State.WorldSeconds,deadline=start+900,nightStarted=-1,nightEnded=-1,nightCare=-1;
+    int sleepingSteps=0,postNightMeals=0,postNightDrinks=0,physiologySteps=0;
+    bool WaitingForBody()=>a.Interaction.Resting||a.Interaction.NightRest||a.Interaction.RestRemaining>0||
+        a.Interaction.Physiology.Active||r.Interaction.Physiology.Active||a.Interaction.EatingRemaining>0;
+    void WaitForBody()
     {
-        if(a.Fullness<75)Meal(s,a);
+        while(WaitingForBody())
+        {
+            Valid(s.State.WorldSeconds<deadline,
+                $"care preparation exceeded 900 seconds: time={s.State.WorldSeconds:F1}, rest={a.Interaction.Resting}, night={a.Interaction.NightRest}, physiology={a.Interaction.Physiology.Excreting}, reason={s.FamilyCareReason(a.Id,r.Id)}");
+            bool asleep=a.Interaction.Resting&&a.Interaction.NightRest;
+            var beforeA=Earned(a,r);var beforeR=Earned(r,a);
+            if(asleep&&nightStarted<0){nightStarted=s.State.WorldSeconds;nightCare=beforeA.Care;}
+            if(a.Interaction.Physiology.Active||r.Interaction.Physiology.Active)physiologySteps++;
+            Step(s);
+            if(asleep&&a.Interaction.Resting&&a.Interaction.NightRest)
+            {
+                sleepingSteps++;
+                Valid(Earned(a,r)==beforeA&&Earned(r,a)==beforeR,"night sleep earned care or relationship credit");
+            }
+            if(nightStarted>=0&&nightEnded<0&&!a.Interaction.NightRest&&!a.Interaction.Resting)
+                nightEnded=s.State.WorldSeconds;
+        }
+    }
+    while(!r.Family.CaregiverIds.Contains(a.Id)&&s.State.WorldSeconds-start<900)
+    {
+        WaitForBody();
+        if(a.Fullness<75){Meal(s,a);if(nightEnded>=0)postNightMeals++;}
+        if(a.Interaction.Hydration<55){Drink(s,a);if(nightEnded>=0)postNightDrinks++;}
+        WaitForBody();
         if(a.Family.CareTargetId==null)Arrange(s,a,r);
         Step(s);
         if(Earned(a,r).Care<60)Require(!r.Family.CaregiverIds.Contains(a.Id),"stable caregiver formed below the original sixty seconds");
     }
+    Valid(nightStarted>=0&&nightEnded>nightStarted&&sleepingSteps>0&&nightCare<60,
+        "sustained care did not traverse the real incomplete-care night boundary");
+    Valid(postNightMeals>0&&postNightDrinks>0&&physiologySteps>0,
+        "post-night recovery omitted real food, water or physiological completion");
+    Console.WriteLine($"PREP night={nightStarted:F1}->{nightEnded:F1} careAtSleep={nightCare:F1} sleepingSteps={sleepingSteps} postNightMeals={postNightMeals} postNightDrinks={postNightDrinks} physiologySteps={physiologySteps} complete={s.State.WorldSeconds:F1} care={Earned(a,r).Care:F1}");
     Require(r.Family.CaregiverIds.Contains(a.Id)&&Earned(a,r).Care>=60&&Earned(r,a).Affection>0&&
         r.Family.Peers[a.Id].LastHarmAt==harmedAt&&r.Family.MotherId==a.Id,
         "genuine later care was permanently blocked or erased the old harm/family identity");
