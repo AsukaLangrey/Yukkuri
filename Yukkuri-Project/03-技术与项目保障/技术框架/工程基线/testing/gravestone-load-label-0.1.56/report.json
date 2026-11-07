@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "version": "0.1.56",
+  "branch": "alice/0.1.56-gravestone-load-label",
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "status": "partial",
+  "targeted_fix_status": "passed",
+  "scope": "Independent main-based gravestone load-label fix, opt-in regression diagnostics and version bump only; not an assembly of other unpublished branches",
+  "environment": "Authorized local Windows run, Godot 4.7.2 mono headless GL Compatibility, .NET SDK 10.0.402, Debug",
+  "product_change": "BuildActors queues existing gravestones for release and clears the dictionary when replacing a world; no per-frame label allocations",
+  "source_manifest": "evidence/source-manifest.json",
+  "checks": {
+    "fixtures": "22/22",
+    "unfixed_baseline": "57/60, 3 label failures",
+    "fixed_reproduction_fixtures": "158/158, 22 system-slot loads",
+    "fixed_main_fixtures": "158/158, 22 system-slot loads",
+    "family_aftermath": "17/17",
+    "guard_negative_cases": "5/5",
+    "final_rebuild": "0 errors, 2 existing CS8604 warnings"
+  },
+  "preserved_warnings": [
+    "SupplyStationValidation.cs:12 CS8604",
+    "InteractionValidation.cs:15 CS8604"
+  ],
+  "process_stages": [
+    {
+      "stage": "build-fixture-01",
+      "exit_code": 0,
+      "elapsed_seconds": 5.7018103,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "run-fixture-01",
+      "exit_code": 0,
+      "elapsed_seconds": 2.3749028,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "build-game-baseline",
+      "exit_code": 0,
+      "elapsed_seconds": 7.877011,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "import-game-01",
+      "exit_code": 0,
+      "elapsed_seconds": 4.5624135,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "run-baseline-02",
+      "exit_code": 1,
+      "elapsed_seconds": 38.9046557,
+      "timeout": false,
+      "status": "expected_baseline_failure"
+    },
+    {
+      "stage": "build-game-fixed-01",
+      "exit_code": 0,
+      "elapsed_seconds": 4.273078,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "run-fixed-01",
+      "exit_code": 0,
+      "elapsed_seconds": 78.9236167,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "rebuild-game-final",
+      "exit_code": 0,
+      "elapsed_seconds": 6.9807888,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "run-fixed-main-fixtures",
+      "exit_code": 0,
+      "elapsed_seconds": 76.6673179,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "build-aftermath",
+      "exit_code": 0,
+      "elapsed_seconds": 2.4084588,
+      "timeout": false,
+      "status": "passed"
+    },
+    {
+      "stage": "run-aftermath",
+      "exit_code": 0,
+      "elapsed_seconds": 1.2631423,
+      "timeout": false,
+      "status": "passed"
+    }
+  ],
+  "interrupted_attempt": {
+    "stage": "run-baseline-01",
+    "status": "interrupted",
+    "reason": "Desktop connection interrupted; no terminal result; owned PID and matching child/workspace processes were absent before one authorized fresh retry",
+    "not_counted_as_product_failure": true
+  },
+  "budget": {
+    "started_utc": "2026-11-07T02:19:30.0004603Z",
+    "deadline_utc": "2026-11-07T02:49:30.0023790Z",
+    "maximum_process_seconds": 300,
+    "reset": false
+  },
+  "save_compatibility": "Synthetic valid v0.1.55-era fixtures validate and load under v0.1.56; SaveStore disk roundtrip and unchanged saved bytes checked. Not full historical-save compatibility.",
+  "limits": [
+    "No native mouse or visual acceptance",
+    "No audio/feel acceptance",
+    "No long-duration performance or general memory-leak conclusion",
+    "No full repository aggregate suite",
+    "No private historical player-save samples",
+    "No merge, staging, commit or push performed by implementation worker"
+  ],
+  "evidence": [
+    "evidence/baseline.json",
+    "evidence/fixed-reproduction-fixtures.json",
+    "evidence/fixed-main-fixtures.json",
+    "evidence/fixture.json",
+    "evidence/guards.json",
+    "evidence/source-manifest.json"
+  ]
+}

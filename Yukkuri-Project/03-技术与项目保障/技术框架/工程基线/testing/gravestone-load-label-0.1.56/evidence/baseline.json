@@ -1,0 +1,452 @@
+{
+  "status": "failed",
+  "version": "v0.1.55",
+  "checks": 60,
+  "failures": 3,
+  "results": [
+    {
+      "name": "initial fresh scene has no gravestones",
+      "passed": true
+    },
+    {
+      "name": "A first: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A first: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A first: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A first: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A first: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A same-file: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A same-file: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A same-file: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A same-file: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A same-file: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "B after A: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B after A: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B after A: label matches current loaded identity",
+      "passed": false
+    },
+    {
+      "name": "B after A: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B after A: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: label matches current loaded identity",
+      "passed": false
+    },
+    {
+      "name": "B same-file stale control: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A after B: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A after B: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A after B: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A after B: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A after B: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: label matches current loaded identity",
+      "passed": false
+    },
+    {
+      "name": "A after fresh B: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "manual files remain byte identical",
+      "passed": true
+    },
+    {
+      "name": "no automatic save was created",
+      "passed": true
+    }
+  ],
+  "scope": "Temporary test-only instrumentation; actual LoadRoom via system slot button signals and production presentation with zero simulation delta; headless, no native mouse or visual acceptance",
+  "raw_result_sha256": "A8AD96C379212F62D1D280AC86F5E08DCB3D4CBB42776413E78EDA96CFA9DCC3",
+  "snapshots": [
+    {
+      "stage": "A first",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "A same-file",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": true,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "B after A",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": true,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "B same-file stale control",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": true,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "A after B",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": true,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "no-grave cleanup",
+      "slot": 3,
+      "treeNodeCount": 1453,
+      "directChildren": 16,
+      "graveDictionary": 0,
+      "graveTreeCount": 0,
+      "previousNodeStillValid": false,
+      "graves": []
+    },
+    {
+      "stage": "B fresh after cleanup",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "B fresh same-file",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": true,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "A after fresh B",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": true,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "second no-grave cleanup",
+      "slot": 3,
+      "treeNodeCount": 1453,
+      "directChildren": 16,
+      "graveDictionary": 0,
+      "graveTreeCount": 0,
+      "previousNodeStillValid": false,
+      "graves": []
+    },
+    {
+      "stage": "A fresh after cleanup",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    }
+  ]
+}

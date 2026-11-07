@@ -1,0 +1,41 @@
+{
+  "base_commit": "e8d96a78f49182eb17e269e2b62a738c7a9bb7ea",
+  "version": "0.1.56",
+  "changed_files": [
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.cs",
+      "sha256": "D88E33ED6635BDE821F662FD9B611185EE687CAE1212D87A29D46352D5F964A3"
+    },
+    {
+      "path": "src/Yukkuri.Game/Main.cs",
+      "sha256": "607FDDB49766707B80ED90EBAF1D2CAC002D5B4EB76C5C66A04AC8BABDA8D171"
+    },
+    {
+      "path": "src/Yukkuri.Game/GravestoneLoadGuard.cs",
+      "sha256": "99FAAF79DE059AF49318CBF57363920F021DC81D0C83FBAA769E6CFCA7B8C0FF"
+    },
+    {
+      "path": "src/Yukkuri.Game/InteractionRoom.GravestoneLoadAudit.cs",
+      "sha256": "A298453422882C371572317F3B53F578B7EFAFA2110DF1CF7E91734BE54A9A8A"
+    },
+    {
+      "path": "src/Yukkuri.Game/Yukkuri.Game.csproj",
+      "sha256": "E182A15970486AF87A205189E665FF6A2949401291D40CB3AF145645A6D54E17"
+    },
+    {
+      "path": "checks/Gravestone.LoadFixtures/Program.cs",
+      "sha256": "3BD97FEEFC92EB6B450F441D87B0FF38D27EFFA00B955EAB50A55283865DE328"
+    },
+    {
+      "path": "checks/Gravestone.LoadFixtures/Gravestone.LoadFixtures.csproj",
+      "sha256": "71748DF3AA9312EA4742EBF7CFFE272830907EEC75748163A4F0C9EB72CB7DA9"
+    },
+    {
+      "path": "checks/Gravestone.LoadFixtures/README.md",
+      "sha256": "D14138960D97EC34712EA764C5359A99795207555DD5913F72DB172F45A2152E"
+    }
+  ],
+  "game_binary_sha256": "29F5BCB9C68D86C8FD0B9BE4A7B77B22A087A4C2379A2F62F765AB55D9D7F5A5",
+  "simulation_binary_sha256": "795094A51A62FBDA5DC0BF9BA997462B3E6B31DED391573A9CDC02D467A0F147",
+  "generated_import_metadata_excluded": true
+}

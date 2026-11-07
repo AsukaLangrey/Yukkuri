@@ -1,0 +1,1064 @@
+{
+  "status": "passed",
+  "version": "v0.1.56",
+  "checks": 158,
+  "failures": 0,
+  "results": [
+    {
+      "name": "valid divergent fixtures share production ID but differ in name",
+      "passed": true
+    },
+    {
+      "name": "no-grave control is valid",
+      "passed": true
+    },
+    {
+      "name": "initial fresh scene has no gravestones",
+      "passed": true
+    },
+    {
+      "name": "A first: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A first: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A first: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A first: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A first: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A same-file: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A same-file: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A same-file: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A same-file: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A same-file: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A same-file: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "A same-file: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "B after A: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B after A: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B after A: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "B after A: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B after A: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "B after A: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "B same-file stale control: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "A after B: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A after B: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A after B: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A after B: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A after B: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A after B: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "A after B: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "no-grave cleanup: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "B fresh after cleanup: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "B fresh same-file: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "A after fresh B: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "second no-grave cleanup: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "A fresh after cleanup: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 1: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 1: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 1: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 1: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 1: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 1: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 1: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 2: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 2: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 2: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 2: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 2: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 2: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 2: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 3: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 3: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 3: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 3: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 3: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 3: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 3: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 4: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 4: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 4: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 4: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 4: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 4: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 4: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 5: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 5: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 5: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 5: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 5: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 5: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 5: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 6: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 6: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 6: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 6: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 6: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 6: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 6: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 7: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 7: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 7: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 7: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 7: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 7: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 7: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 8: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 8: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 8: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 8: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 8: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 8: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 8: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 9: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 9: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 9: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 9: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 9: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 9: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 9: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 10: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 10: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 10: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 10: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 10: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 10: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 10: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 11: actual system slot button loads exact valid world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 11: grave dictionary and tree count",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 11: label matches current loaded identity",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 11: marker position and visibility match loaded world",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 11: source save bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 11: prior grave node actually freed",
+      "passed": true
+    },
+    {
+      "name": "alternating reload 11: settled node counts remain constant for this fixture",
+      "passed": true
+    },
+    {
+      "name": "production close-up toggle hides grave",
+      "passed": true
+    },
+    {
+      "name": "return from close-up restores grave",
+      "passed": true
+    },
+    {
+      "name": "grave is hidden outside its region",
+      "passed": true
+    },
+    {
+      "name": "return to region restores marker without reallocating it",
+      "passed": true
+    },
+    {
+      "name": "presentation controls do not advance simulation",
+      "passed": true
+    },
+    {
+      "name": "manual files remain byte identical",
+      "passed": true
+    },
+    {
+      "name": "no automatic save was created",
+      "passed": true
+    }
+  ],
+  "scope": "Opt-in isolated diagnostic; actual LoadRoom via system slot button signals and production presentation with zero simulation delta; finite reloads, headless, no native mouse or visual acceptance",
+  "raw_result_sha256": "819835C32E1B0693D182276763D4F35D2C9DC5EAFAEDAF75215A32EA9BC16EBB",
+  "snapshots": [
+    {
+      "stage": "A first",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "A same-file",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "B after A",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "B same-file stale control",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "A after B",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "no-grave cleanup",
+      "slot": 3,
+      "treeNodeCount": 1453,
+      "directChildren": 16,
+      "graveDictionary": 0,
+      "graveTreeCount": 0,
+      "previousNodeStillValid": false,
+      "graves": []
+    },
+    {
+      "stage": "B fresh after cleanup",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "B fresh same-file",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "A after fresh B",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "second no-grave cleanup",
+      "slot": 3,
+      "treeNodeCount": 1453,
+      "directChildren": 16,
+      "graveDictionary": 0,
+      "graveTreeCount": 0,
+      "previousNodeStillValid": false,
+      "graves": []
+    },
+    {
+      "stage": "A fresh after cleanup",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 1",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 2",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 3",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 4",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 5",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 6",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 7",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 8",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 9",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 10",
+      "slot": 1,
+      "treeNodeCount": 1734,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "小铃的宝宝1",
+          "label": "小铃的宝宝1",
+          "X": -1.7719752966834967,
+          "Z": 4.047573074576239,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    },
+    {
+      "stage": "alternating reload 11",
+      "slot": 2,
+      "treeNodeCount": 1724,
+      "directChildren": 22,
+      "graveDictionary": 1,
+      "graveTreeCount": 1,
+      "previousNodeStillValid": false,
+      "graves": [
+        {
+          "Id": "family-birth-3-0",
+          "expectedName": "豆豆的宝宝1",
+          "label": "豆豆的宝宝1",
+          "X": -3.0890563536402404,
+          "Z": 2.6850383906102913,
+          "DeathAt": 486,
+          "MemorializedAt": 486
+        }
+      ]
+    }
+  ]
+}

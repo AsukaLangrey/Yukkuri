@@ -1,0 +1,115 @@
+{
+  "success": true,
+  "checks": 22,
+  "results": [
+    {
+      "name": "production FormPartnership 小铃",
+      "passed": true
+    },
+    {
+      "name": "production FormPartnership 豆豆",
+      "passed": true
+    },
+    {
+      "name": "same prebirth world has exactly two established pairs",
+      "passed": true
+    },
+    {
+      "name": "base SaveStore disk roundtrip",
+      "passed": true
+    },
+    {
+      "name": "branch 1 production request enters preparing: 已向双方提出安排。它们需要实际靠近并接受，之后才会开始孕育。",
+      "passed": true
+    },
+    {
+      "name": "branch 1 production companionship reaches gestation",
+      "passed": true
+    },
+    {
+      "name": "branch 1 birth identity created by production sequence",
+      "passed": true
+    },
+    {
+      "name": "branch 1 actual gestation clock reaches one live birth",
+      "passed": true
+    },
+    {
+      "name": "branch 1 name and ID are untouched production outputs",
+      "passed": true
+    },
+    {
+      "name": "branch 1 production Hurt records death",
+      "passed": true
+    },
+    {
+      "name": "branch 1 production BuryCreature creates grave: 已经妥善安置；留下来的油仍需要正常吃喝、照护和陪伴。",
+      "passed": true
+    },
+    {
+      "name": "branch 1 final SaveStore disk roundtrip",
+      "passed": true
+    },
+    {
+      "name": "branch 2 production request enters preparing: 已向双方提出安排。它们需要实际靠近并接受，之后才会开始孕育。",
+      "passed": true
+    },
+    {
+      "name": "branch 2 production companionship reaches gestation",
+      "passed": true
+    },
+    {
+      "name": "branch 2 birth identity created by production sequence",
+      "passed": true
+    },
+    {
+      "name": "branch 2 actual gestation clock reaches one live birth",
+      "passed": true
+    },
+    {
+      "name": "branch 2 name and ID are untouched production outputs",
+      "passed": true
+    },
+    {
+      "name": "branch 2 production Hurt records death",
+      "passed": true
+    },
+    {
+      "name": "branch 2 production BuryCreature creates grave: 已经妥善安置；留下来的油仍需要正常吃喝、照护和陪伴。",
+      "passed": true
+    },
+    {
+      "name": "branch 2 final SaveStore disk roundtrip",
+      "passed": true
+    },
+    {
+      "name": "legal divergent branches share child ID but have different maternal names",
+      "passed": true
+    },
+    {
+      "name": "no-grave control has valid disk roundtrip",
+      "passed": true
+    }
+  ],
+  "scope": "Controlled mature healthy deep-bond fixture; production pairing/request/preparation/full gestation/birth/Hurt/BuryCreature, not natural courtship or user-input death",
+  "outcomes": [
+    {
+      "Id": "family-birth-3-0",
+      "Name": "小铃的宝宝1",
+      "MotherId": "interaction-oil-0",
+      "BirthEventId": "family-birth-3",
+      "DeathAt": 486,
+      "MemorializedAt": 486,
+      "HasGravestone": true
+    },
+    {
+      "Id": "family-birth-3-0",
+      "Name": "豆豆的宝宝1",
+      "MotherId": "interaction-oil-2",
+      "BirthEventId": "family-birth-3",
+      "DeathAt": 486,
+      "MemorializedAt": 486,
+      "HasGravestone": true
+    }
+  ]
+}

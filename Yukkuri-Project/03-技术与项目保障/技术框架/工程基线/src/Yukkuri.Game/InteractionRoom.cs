@@ -32,6 +32,7 @@ public partial class InteractionRoom : Node3D
         try
         {
             var args=OS.GetCmdlineUserArgs();
+            GravestoneLoadGuard.Validate(args);
             if(args.Any(a=>a.StartsWith("--m01-")||a=="--integration"||a=="--legacy"))
             {GetTree().ChangeSceneToFile("res://Main.tscn");return;}
             GetWindow().Title=$"油库里乐园 · 慢慢来，相处小院 · {GameVersion.Display}";
@@ -71,6 +72,7 @@ public partial class InteractionRoom : Node3D
             GD.Print("INTERACTION_ROOM_READY: 20 groups, isolated saves, first batch in development");
             StartRoomVerificationIfRequested(args);
             StartMarketVerificationIfRequested(args);
+            StartGravestoneLoadAudit(args);
         }
         catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(2);}
     }
@@ -112,6 +114,8 @@ public partial class InteractionRoom : Node3D
         ResetShelterActors();
         ResetDetachedStemActors();
         _heardReactions.Clear();
+        foreach(var marker in _gravestones.Values)marker.QueueFree();
+        _gravestones.Clear();
         foreach(var actor in _actors.Values)actor.QueueFree();_actors.Clear();
         int index=0;
         foreach(var c in Sim.State.Creatures)

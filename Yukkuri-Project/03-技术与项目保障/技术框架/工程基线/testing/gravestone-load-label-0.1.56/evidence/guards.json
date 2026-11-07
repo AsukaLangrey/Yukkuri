@@ -1,0 +1,47 @@
+{
+  "checks": 5,
+  "cases": [
+    {
+      "case": "direct-main",
+      "status": "passed",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "noWorldInitializationLog": true,
+      "saveFilesCreated": 0
+    },
+    {
+      "case": "missing-profile",
+      "status": "passed",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "noWorldInitializationLog": true,
+      "saveFilesCreated": 0
+    },
+    {
+      "case": "extra-flag",
+      "status": "passed",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "noWorldInitializationLog": true,
+      "saveFilesCreated": 0
+    },
+    {
+      "case": "existing-output",
+      "status": "passed",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "noWorldInitializationLog": true,
+      "saveFilesCreated": 0
+    },
+    {
+      "case": "existing-profile",
+      "status": "passed",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "noWorldInitializationLog": true,
+      "saveFilesCreated": 0
+    }
+  ],
+  "existingProfileSentinelPreserved": true,
+  "baselineResultPreserved": true
+}
