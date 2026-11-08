@@ -1,0 +1,345 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "source": "assets/art/production/starter-garden/foliage-cluster-v01.png",
+      "target": "src/Yukkuri.Game/ArtPreview/Textures/foliage-cluster-v01.png",
+      "sha256": "ae74fc985b9dc7bcc8f243cc83ec2e97ca57af508405651d4b3285deaff0d1f3"
+    },
+    {
+      "source": "assets/art/runtime/sanctuary-morning.png",
+      "target": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png",
+      "sha256": "1eafed66bc8e3a117b84df85c9c38f3c2aff86adfc9aaadadc237163853d6024"
+    },
+    {
+      "source": "assets/art/runtime/sanctuary-morning.png.import",
+      "target": "src/Yukkuri.Game/Assets/Art/sanctuary-morning.png.import",
+      "sha256": "ecb2e298d27e8080f2aa20005dd2e3e0c5f167628e2f22ce7078f1034ee179e0"
+    },
+    {
+      "source": "assets/audio/runtime/audio-analysis.json",
+      "target": "src/Yukkuri.Game/Assets/Audio/audio-analysis.json",
+      "sha256": "92e6336301280da3cb22049d82357ab58a26d9042c1d83b3ea88db9a172a479a"
+    },
+    {
+      "source": "assets/audio/runtime/build.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/build.wav",
+      "sha256": "6e3756a135836e95efec8254c838a24eb883f63364600aebe54f6d97357aaef1"
+    },
+    {
+      "source": "assets/audio/runtime/build.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/build.wav.import",
+      "sha256": "1946fc443bfe6c0b65dc740af6847f2f45b6bef9561232218836b6caf22911b1"
+    },
+    {
+      "source": "assets/audio/runtime/coo-help.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-help.wav",
+      "sha256": "5868016b8ddc94f8674d794d689941d0b95370b31fa24e88d6b6fcff47314eb4"
+    },
+    {
+      "source": "assets/audio/runtime/coo-help.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-help.wav.import",
+      "sha256": "42fa7da44182a77c80e780c6849b416054a6c54d1703a27ae01a9903a98e6556"
+    },
+    {
+      "source": "assets/audio/runtime/coo-hug.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav",
+      "sha256": "35b1f33d01c2b5f009623c8e47e6ae0867cfc7aefcd4400a367fc4d2eeb8a462"
+    },
+    {
+      "source": "assets/audio/runtime/coo-hug.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-hug.wav.import",
+      "sha256": "d23fd6d21427b980259283969a363892cb54e404d14c85875fa8b125e782f371"
+    },
+    {
+      "source": "assets/audio/runtime/coo-hurt.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav",
+      "sha256": "cd3ca277c9b4a9ca7145db4d9d530baf8e6e68128c112525e5e8319d36621f91"
+    },
+    {
+      "source": "assets/audio/runtime/coo-hurt.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-hurt.wav.import",
+      "sha256": "349bee5138c0598e563affeff6fef5a3cca7d43e7ff489e8c34d669081e44419"
+    },
+    {
+      "source": "assets/audio/runtime/coo-nuzzle.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav",
+      "sha256": "ca06f9c5bad578adfed9f5774d29fb9fec075b3fcd0b29b66352bb46dabe205e"
+    },
+    {
+      "source": "assets/audio/runtime/coo-nuzzle.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-nuzzle.wav.import",
+      "sha256": "5fc4c9f7358b18893301ede71af1d2ac051f8efb45af300551dc2e2ac71c9341"
+    },
+    {
+      "source": "assets/audio/runtime/coo-refuse.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav",
+      "sha256": "2b214b1777f26f834093457e7ad024b1d67b7e8ba170448219f9a97887fff177"
+    },
+    {
+      "source": "assets/audio/runtime/coo-refuse.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-refuse.wav.import",
+      "sha256": "b322bc90a1b8faa7cac26db45205b90f123bd2d1e7c990b3302c68c2e6e3f2aa"
+    },
+    {
+      "source": "assets/audio/runtime/coo-stroke.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav",
+      "sha256": "0865402d67fa4a4e6dbb22ba7e782f0417e4f2328a8feaa05acfb483eeba5781"
+    },
+    {
+      "source": "assets/audio/runtime/coo-stroke.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/coo-stroke.wav.import",
+      "sha256": "33f5c5be24cadf477bfcd970f18807ec395753e67fd8dad4bc9ec07ff7f84f4f"
+    },
+    {
+      "source": "assets/audio/runtime/feed.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/feed.wav",
+      "sha256": "43a0ed0539db0024e18526c4e7777d1480970edce0002fff5ee20e19cb98f176"
+    },
+    {
+      "source": "assets/audio/runtime/feed.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/feed.wav.import",
+      "sha256": "1591932cfaa6af559e35815211a5ea20dc52ddff4728fc500545d48c398f1ac5"
+    },
+    {
+      "source": "assets/audio/runtime/m01-audio-analysis.json",
+      "target": "src/Yukkuri.Game/Assets/Audio/m01-audio-analysis.json",
+      "sha256": "55257e71d37458967f8a861308e98166113d3b263a09f5fd8feadb4497bdf5cc"
+    },
+    {
+      "source": "assets/audio/runtime/sanctuary-loop.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav",
+      "sha256": "7044a062fbbe06e56cf46a3a4a072e247c74fd4e3d242b5feed6c09ab6682852"
+    },
+    {
+      "source": "assets/audio/runtime/sanctuary-loop.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/sanctuary-loop.wav.import",
+      "sha256": "865a696565cfe4e96e92b3f90e3f5d0cbfa2c1ac022a803e67ebebcfa8e2b729"
+    },
+    {
+      "source": "assets/audio/runtime/select.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/select.wav",
+      "sha256": "efe490c946b376ad5f05eb070d9a9dc8db7b4cea4a6a7cb961ef6e24a57169fd"
+    },
+    {
+      "source": "assets/audio/runtime/select.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/select.wav.import",
+      "sha256": "8225b6d61809414811b45226d8cf0efdaad4728348413642de310e7a83bd72e5"
+    },
+    {
+      "source": "assets/audio/runtime/wild-edge-loop.wav",
+      "target": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav",
+      "sha256": "1d72103845e2bd6d529c00c8a78659316dc32cac099a11f9703626b4d9b97a06"
+    },
+    {
+      "source": "assets/audio/runtime/wild-edge-loop.wav.import",
+      "target": "src/Yukkuri.Game/Assets/Audio/wild-edge-loop.wav.import",
+      "sha256": "49156feebfe0828a41de41c14bcecaec7b2bc8d9dc9949e66474ae047713abc4"
+    },
+    {
+      "source": "assets/fonts/runtime/NotoSansSC.ttf",
+      "target": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf",
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da"
+    },
+    {
+      "source": "assets/fonts/runtime/NotoSansSC.ttf.import",
+      "target": "src/Yukkuri.Game/Assets/Fonts/NotoSansSC.ttf.import",
+      "sha256": "314106103e2ddc51c1630d54c75a8fc1869d2721e5dd2be47db22e89a070ff6b"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/add.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/add.svg",
+      "sha256": "14e9cf61bda10644a8252c7a81be645b5d72fd704f455856d63c1885a9ee9490"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/ball.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/ball.svg",
+      "sha256": "4debad2f5818fe0fbda051d9ca413fb321491e86f227467e4dbf7e629c2b7ba2"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/book.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/book.svg",
+      "sha256": "01928ebb635c87cc0cc6da7896bb511ae35abc725e68e038c2c037a1c3ff3e79"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/bow.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/bow.svg",
+      "sha256": "3833a021c4c66a727f18b58cd6e5d06f6ecfb0b35b1f1afa0fb719c6362a41c9"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/box.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/box.svg",
+      "sha256": "b2f5aa31d927cc64f36e1eab203d649adfaea6b3490c1bb1ba70335a65c008af"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/care.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/care.svg",
+      "sha256": "2330ed35a490a56e16ebbad501d3765dc0f790328e75eb60b864e4ec6f7f2d1c"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/chat.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/chat.svg",
+      "sha256": "0f19a70dbcf2d59aa9b4fa5f2b68f38881039c0add7563f1028f237543e6bf29"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/clean.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/clean.svg",
+      "sha256": "e4f7a06b46e1644528196524156ba6fb18bb4c6fc84ae8de56aafd4e65ea05d7"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/coin.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/coin.svg",
+      "sha256": "653096105a1213fb642975d4283732c6a5103ea52b29b10332c902fe472fcf98"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/cold.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/cold.svg",
+      "sha256": "2f6a36a57d2294258cde7c59beebbda79f32a208d5fa475fe0b8046fca9906a2"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/eye.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/eye.svg",
+      "sha256": "fc70dac25f70464ff27623d2d3c1332e847cea4615749d17303fb4c623d7b6cf"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/flame.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/flame.svg",
+      "sha256": "c9aa679194fdde09aedff03ee344767efeb8f1f8ae6eff4842feba81453a0bfa"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/focus.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/focus.svg",
+      "sha256": "5edb2a50f530448ad47fc1caced04911122cb6df54a5ca1f22b999c72618bfab"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/food.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/food.svg",
+      "sha256": "a17be4f9f38f2a1088f9b9ec3c5ba86396de8031e85758e6cfaf2a8441ebd66d"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/hand.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/hand.svg",
+      "sha256": "c22269728ba624e561623b3ce0edf7498c1dfc14df3b8f0d84c68cf309c768c4"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/home.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/home.svg",
+      "sha256": "38d8eb7fab415aa4663ecab6c28c58f1ef686b20f70d2889b3b46cd0be3bfcbc"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/leaf.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/leaf.svg",
+      "sha256": "113433f33fee57dbe32d891b8e08670ee9043c9dadd666dea2b9162a37197d1c"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/music.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/music.svg",
+      "sha256": "6cf16a35a327416f05cab6819445f60d4674781a79eafb57c18aa566bff53026"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/shop.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/shop.svg",
+      "sha256": "c7943ae8179ebf88556a3603c74604467726416301ec9f1e12e94e13511ee3e1"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/spray.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/spray.svg",
+      "sha256": "c1908eb638b6ac73b3c49eeee607ec8452c1220532521f68911cae9c32788d58"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/sprout.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/sprout.svg",
+      "sha256": "094a41fdc7aeda0469e1efbfec466000e06d08a2753b8bf44c3bbcadfae06091"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/tool.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/tool.svg",
+      "sha256": "370d5783c2dea66f4a9d998ceacf42ad9a40f833997e4a4aee52e71818cd3c79"
+    },
+    {
+      "source": "assets/art/runtime/icons/Actions/water.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/Actions/water.svg",
+      "sha256": "be8ffcbebe851bcf6d9296c1e548c74e06b8da9461cb09127d2a3706c983b93a"
+    },
+    {
+      "source": "assets/art/runtime/icons/food.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/food.svg",
+      "sha256": "e6d3a4c4a096763db5fb45db50b2c9b7c985233fa0aa2807e7acddf810a243a3"
+    },
+    {
+      "source": "assets/art/runtime/icons/food.svg.import",
+      "target": "src/Yukkuri.Game/Assets/Icons/food.svg.import",
+      "sha256": "83516c3f82383679bda6cf2d44ef7d2cb21900df8c2b0887a9e31c9e114567d4"
+    },
+    {
+      "source": "assets/art/runtime/icons/hand.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/hand.svg",
+      "sha256": "2d74d0f4561ff951c237a8b67d28645096e401efc244fbe32617870b65b4ec24"
+    },
+    {
+      "source": "assets/art/runtime/icons/hand.svg.import",
+      "target": "src/Yukkuri.Game/Assets/Icons/hand.svg.import",
+      "sha256": "1a582f81c8702d4d8cdf41177f0082d345dabee52f0f614fb898fd98161042d7"
+    },
+    {
+      "source": "assets/art/runtime/icons/home.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/home.svg",
+      "sha256": "c016f58330d1806dfd61f4c4459d5430bf9c33a9fe81c8211c1034632aa860b5"
+    },
+    {
+      "source": "assets/art/runtime/icons/home.svg.import",
+      "target": "src/Yukkuri.Game/Assets/Icons/home.svg.import",
+      "sha256": "7fa7b669a9a90344e09ca96e5b199581d13ceb1d5da07ee71985bde8c2aa3c4c"
+    },
+    {
+      "source": "assets/art/runtime/icons/observe.svg",
+      "target": "src/Yukkuri.Game/Assets/Icons/observe.svg",
+      "sha256": "a69a74f49be5de4c79e4f45711023e70b4c16b6dd4d297479f4d9ffbdd6a6539"
+    },
+    {
+      "source": "assets/art/runtime/icons/observe.svg.import",
+      "target": "src/Yukkuri.Game/Assets/Icons/observe.svg.import",
+      "sha256": "9f7d41cbb876cace7ffe15171e6a34b64d5ac86686a5a6806ddbec2f5acbbee2"
+    },
+    {
+      "source": "assets/art/runtime/third-party/KenneyNature/Kenney-Nature-License.txt",
+      "target": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/Kenney-Nature-License.txt",
+      "sha256": "cb96b75e3560ac78d7a53ce6f083f4cdb5c53faea6141b62d63458dcfe1e4b9d"
+    },
+    {
+      "source": "assets/art/runtime/third-party/KenneyNature/SOURCE.md",
+      "target": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/SOURCE.md",
+      "sha256": "a70b1a241e02e83cf518e5a6dd4743baef25f620e048284693d4a7db249c8d60"
+    },
+    {
+      "source": "assets/art/runtime/third-party/KenneyNature/flower_yellowA.glb",
+      "target": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/flower_yellowA.glb",
+      "sha256": "8a3b08cd2ca411c21f9c581d5bda651d78b13c50cba45ad8fa0389398ead6d1d"
+    },
+    {
+      "source": "assets/art/runtime/third-party/KenneyNature/flower_yellowA.glb.import",
+      "target": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/flower_yellowA.glb.import",
+      "sha256": "c44600ebb15277c11efff116026eacc87867e341502a62e90195704932de3619"
+    },
+    {
+      "source": "assets/art/runtime/third-party/KenneyNature/grass.glb",
+      "target": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/grass.glb",
+      "sha256": "260e41d3e5f2472492ed7b475c5b92a30b13ce2bad408535b5ff50574d4575e7"
+    },
+    {
+      "source": "assets/art/runtime/third-party/KenneyNature/grass.glb.import",
+      "target": "src/Yukkuri.Game/Assets/ThirdParty/KenneyNature/grass.glb.import",
+      "sha256": "07aeed7b9c59592b7c0b87c272415bf02f2327cb6d7340f316719c81107dafa0"
+    },
+    {
+      "source": "assets/art/runtime/pipeline/pipeline-probe.glb",
+      "target": "src/Yukkuri.Game/Assets/pipeline-probe.glb",
+      "sha256": "8c401241f57943f94e797247774cc1eabb42e7d8ce4cdf1e468c4780a2dc2352"
+    },
+    {
+      "source": "assets/art/runtime/pipeline/pipeline-probe.glb.import",
+      "target": "src/Yukkuri.Game/Assets/pipeline-probe.glb.import",
+      "sha256": "a333b27a4f5de253d45775a1f4224adadc01ca675862fe5f25385592585f1cca"
+    }
+  ]
+}

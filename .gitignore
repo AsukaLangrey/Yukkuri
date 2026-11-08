@@ -37,3 +37,10 @@ export_credentials.cfg
 /TestResults/
 **/__pycache__/
 *.pyc
+
+# Recreated from assets/manifests/runtime-assets.json.
+/game/src/Yukkuri.Game/Assets/
+/game/src/Yukkuri.Game/ArtPreview/Textures/
+# Godot generates sidecars for source files that did not have one at the baseline.
+/game/src/Yukkuri.Game/**/*.uid
+/game/src/Yukkuri.Game/**/*.import
