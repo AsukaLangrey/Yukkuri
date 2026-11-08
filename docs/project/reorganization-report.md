@@ -23,11 +23,11 @@ archive/          legacy-engine、stages、superseded-docs
 .local/           应用数据、合成存档、构建包、验证日志
 ```
 
-[逐文件清单](migration-manifest.csv) 每个原路径一行，记录处置类型、实际目标和两个实体 SHA-256。基准 2,611 个文件中 2 个原位保留，1,568 个迁移并保持字节，995 个以相同 SHA-256 去重，46 个改写。目标 SHA-256 取 Windows 检出实体，文本检出使用 `core.autocrlf=true` 和仓库属性。LFS 校验基于实体。对不同内容的同名材料保留差异副本，见 `archive/superseded-docs/variants`。曾指向改写文件的历史副本改为指向同 SHA-256 原件，其中 39 个不同原件保存在 `archive/superseded-docs/originals`。历史路径、日期、失败结果与素材许可可按清单追溯。
+[逐文件清单](migration-manifest.csv) 每个原路径一行，记录处置类型、实际目标和两个实体 SHA-256。基准 2,611 个文件中 1 个原位保留，1,568 个迁移并保持字节，995 个以相同 SHA-256 去重，47 个改写。目标 SHA-256 取 Windows 检出实体，文本检出使用 `core.autocrlf=true` 和仓库属性。LFS 校验基于实体。对不同内容的同名材料保留差异副本，见 `archive/superseded-docs/variants`。曾指向改写文件的历史副本改为指向同 SHA-256 原件，其中 39 个不同原件保存在 `archive/superseded-docs/originals`。历史路径、日期、失败结果与素材许可可按清单追溯。
 
 运行源码和测试断言沿用工程基线。改写集中于启动、工具路径、输出隔离、NuGet、Windows 导出配置、测试入口链接及原案媒体链接。Godot 正常首次导入重新序列化了 `project.godot`，主场景、应用标识、渲染器与物理设置保留，默认过滤设置由引擎省略。20 个 `.import` 文件统一 LF，保留原 UID 和设置。原有 C# 等源码 sidecar 随工程迁移。新生成 sidecar、导入缓存、编译缓存和验证输出由忽略规则排除。旧启动批处理使用 `.cmd.disabled` 后缀。
 
-新增文件单独列于此处。根目录的 README 和两个 CMD 为新入口，原 README 和旧启动器可通过清单查到。新增各区域 README 负责阅读导航。新增 `game/tools/build-game.ps1` 负责现行 C# 构建，`sync-assets.ps1` 校验并接入共享素材。新增 `assets/manifests/runtime-assets.json` 和 `asset-provenance.json` 分别提供运行映射和更新后的许可来源路径。其余新增交付是本报告与逐文件清单。历史记录里的机器路径和历史引用继续按原文保存，当前导航中的相对链接已检查。
+新增文件单独列于此处。根目录的 README 和两个 CMD 为新入口，原 README 和旧启动器可通过清单查到。新增各区域 README 负责阅读导航。新增 `game/tools/build-game.ps1` 负责现行 C# 构建，`sync-assets.ps1` 校验并接入共享素材。新增 `assets/manifests/runtime-assets.json` 和 `asset-provenance.json` 分别提供运行映射和更新后的许可来源路径。其余新增交付是本报告与逐文件清单。历史记录里的机器路径和历史引用继续按原文保存，当前导航中的相对链接已检查。验收反馈后将世界观目录统一为 02，并清理迁移后残留的空目录。
 
 ## 资源与工具链
 
