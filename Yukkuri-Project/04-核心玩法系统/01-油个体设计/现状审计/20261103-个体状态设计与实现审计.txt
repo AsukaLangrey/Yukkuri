@@ -164,5 +164,5 @@ Interaction.CompletedNeeds仍有旧补水预期失败记录，不能把整个检
 引用路径说明
 上述.cs文件若无其他说明，均相对工程基线/src/Yukkuri.Simulation；InteractionRoom.Vitals.cs相对工程基线/src/Yukkuri.Game。
 历史总设计：05-游戏设计/参考资料/planning/game-design-20261029.txt。
-v054/v060：03-技术与项目保障/项目管理/历史资料/planning/requirements-v054.txt、requirements-v060.txt。
+v054/v060：仓库根目录 planning/requirements-v054.txt 和 planning/requirements-v060.txt。
 变更记录：03-技术与项目保障/项目管理/变更记录/下相应日期目录。

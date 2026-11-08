@@ -269,6 +269,6 @@ F01 被抱起、固定、箱内、落水、回收箱保存
 参考
 本目录上级/现状审计/20261103-个体状态设计与实现审计.txt。
 Yukkuri-Project/05-游戏设计/参考资料/planning/game-design-20261029.txt：第5–8章。
-Yukkuri-Project/03-技术与项目保障/项目管理/历史资料/planning/requirements-v054.txt：奖牌认同与负担方向。
+仓库根目录 planning/requirements-v054.txt：奖牌认同与负担方向。
 当前专题：自由模式-环境卫生与排泄.txt、自由模式-小屋与夜间住宿.txt、自由模式-繁育经营闭环.txt，以及后续变更记录。
 本稿不把其他作品的生命周期或病理设定直接升级为本作规则。

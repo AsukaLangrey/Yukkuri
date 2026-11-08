@@ -36,5 +36,5 @@ src/Yukkuri.Game/project.godot 指向 InteractionRoom.tscn。
 
 路径与运行边界
 完整保留了src、checks、tools等内部相对路径，没有为分类重写工程或脚本。
-旧文档可能引用原区域的planning、builds、artifacts、.tools或绝对路径；相应历史资料在项目管理中，旧包和本机环境仍留原区。
+旧文档可能引用原区域的planning、builds、artifacts、.tools或绝对路径；历史资料的位置见项目管理/历史资料/归档索引.txt。旧包和本机环境仍留原区。
 本次没有验证迁移后可编译或可运行，没有复制完整运行环境。原开发机禁运行继续适用。
