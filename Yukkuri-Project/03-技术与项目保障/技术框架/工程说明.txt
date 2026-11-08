@@ -1,40 +1,48 @@
-唯一工程副本
+Yukkuri 工程说明
 
-编译更新（2026-11-01 07:35，北京时间）
-本次按用户明确授权完成Debug主工程与规则依赖编译：0错误、2条可能空引用警告。
-补齐新工程.tools中的4个Godot依赖包，编译器使用原区域已有.NET SDK 10.0.402，缓存与产物写入新区域，未修改产品源码。
-详见“../项目管理/编译记录/20261101-073521/编译结果.txt”。未启动游戏、测试、渲染或预览。
-下文保留最初整理时的说明；其中“本次没有验证迁移后可编译”描述整理阶段，本条记录后续编译结果。
+获取源码
 
-位置：本目录/工程基线。
-来源：原区域整理时的工作区，包含未提交的素材及元数据。来源HEAD和逐文件内容身份见项目管理/整理记录。
+在 Windows x64 安装 Git 和 Git LFS。先在准备存放仓库的目录打开 PowerShell。
 
-保留的结构
-src/Yukkuri.Game：场景、输入、表现、界面和已接入资源。
-src/Yukkuri.Simulation：规则与公共计算。现有项目还引用部分Game目录的几何源码，相对位置必须保留。
-checks：既有检查源码。
-tools：既有工具与脚本，仅复制，未执行。
-testing：整理时的测试请求及报告副本。
-assets-source：对应素材来源和引擎来源记录。
-third-party：工程依赖的许可记录。
-根配置和旧启动器：保留原文件内容，不改写其历史路径或启动行为。
+  git lfs install
+  git clone https://github.com/AsukaLangrey/Yukkuri.git
+  Set-Location Yukkuri
+  git switch --track origin/alice/0.1.60-cold-contract
+  git lfs pull
 
-当前工程入口
-src/Yukkuri.Game/project.godot 指向 InteractionRoom.tscn。
-另有 Main.tscn 等既有场景。它们是当前实现入口，不等于已经按新框架完成自由、剧情和DIY模式。
+上面的分支是本次交接记录的试玩基线。复现 2026-11-08 验证版本时，在 git lfs pull 前执行 git switch --detach d786790f121488fa7d301e726d08176421c060c8。日常开发按任务选择分支。使用发布页的源码包时，确认交付说明写明包含实际 LFS 素材。GitHub 自动生成的 Source code ZIP 可能仅包含指针。
 
-新框架与旧源码
-文件索引把当前实现关联到十三类职责；共享文件可关联多个类别。
-源码仍保持既有组织。需要拆分时依据游戏设计和统一接口逐步演进，不能只搬文件来宣称消除耦合。
-唯一工程用于新区域的后续源码工作。分类目录中不另存第二套可编辑规则源码。
+工程位置与工具链
 
-资源接入
-素材制作与选择：02-基础资源与内容设计/美术动画、音乐音效。
-场景与UI使用：对应分类提出资源需求与使用方式。
-工程接入：由技术框架统一维护工程Assets中的资源引用及版本。
-整理时两个位置的同源文件内容一致；后续变更应记录接入，不能假设自动同步。
+从仓库根目录进入现行工程。
 
-路径与运行边界
-完整保留了src、checks、tools等内部相对路径，没有为分类重写工程或脚本。
-旧文档可能引用原区域的planning、builds、artifacts、.tools或绝对路径；历史资料的位置见项目管理/历史资料/归档索引.txt。旧包和本机环境仍留原区。
-本次没有验证迁移后可编译或可运行，没有复制完整运行环境。原开发机禁运行继续适用。
+  Set-Location -LiteralPath 'Yukkuri-Project/03-技术与项目保障/技术框架/工程基线'
+
+工程的 toolchain.lock.json 和 global.json 记录锁定版本。试玩使用 Godot 4.7.2 .NET（Mono）和 .NET SDK 10.0.402。首次在新检出中准备工具链并导入资源。
+
+  .\tools\setup.ps1
+  .\tools\import-assets.ps1
+
+安装脚本按锁定清单下载、校验并解压工具到工程 .tools，也包括导出模板和 Blender。已有本机工作区通过目录联接复用 repo/.local/toolchain 的安装。资源导入由 Godot 执行，导入日志和编译结果各自记录。
+
+启动与检查
+
+  & '.\Play Current.cmd'
+
+该启动器编译游戏后进入 src/Yukkuri.Game/InteractionRoom.tscn。也可从工程根目录双击启动器。试玩存档使用工程 .local/play-current，启动日志在 .local/testing 下的 play-current-* 目录。
+
+Open Editor.cmd 用于打开工程。tools/build.ps1 会编译并执行脚本内置检查。需要 Windows 导出时使用 tools/export-windows.ps1，普通导出和自编译引擎候选各有流程，后者见 assets-source/engine-provenance/README.txt。启动、导出与玩法验收分别记录。测试记录入口见 testing/PROTOCOL.md 及《更新日志》。
+
+Windows 试玩包和独立源码包的说明见 ../../package-readme.txt。打包时将该说明写入包内 README.txt。
+
+源码与资源
+
+- src/Yukkuri.Game 保存场景、输入、界面和运行素材。
+- src/Yukkuri.Simulation 保存世界状态、模拟规则和存档。部分检查和项目共用 Game 中的几何源码，移动时需同时维护项目引用。
+- checks 保存规则与集成检查，testing 保存协作规范和验证记录。
+- assets-source 保存素材生成记录和引擎来源，tools 保存安装、构建、诊断、导出和打包脚本。
+- third-party 保存已有的第三方许可和声明，仓库目前未为项目整体添加开源许可证。
+
+分类目录的源码索引用于导航。美术和音频资源先在各自资源库维护，再通过接入流程同步到工程 Assets，记录来源与版本。
+
+旧工程与阶段材料可从 ../项目管理/历史资料/归档索引.txt 追溯。旧包、旧启动器和原开发机路径按对应记录理解。

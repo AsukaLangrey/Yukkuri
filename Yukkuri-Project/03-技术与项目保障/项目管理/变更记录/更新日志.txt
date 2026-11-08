@@ -1,0 +1,202 @@
+Yukkuri 更新日志
+整理日期 2026-11-08（北京时间）
+
+当前版本关系
+
+• 线上主线 origin/main 指向 e8d96a7。11 月 6 日这一提交归档策划资料，主线最后一批玩法提交是 11 月 1 日的 988751c。
+• 本地功能恢复分支 origin/recover/local-features-20261107 指向 3da3bf9，包含 11 月 2—3 日的本机玩法、测试、启动器与独立美术预览。
+• Alice 的 v0.1.58、v0.1.59、v0.1.60 在恢复分支上依次提交。11 月 8 日本机启动核对的是 v0.1.60，使用工程基线的相处小院入口与独立存档。
+• v0.1.56 是 Alice 从 e8d96a7 分出的墓碑读档修复。它与其他并行修复是否进入某个试玩版本，以该版本的提交祖先为准。当前远端引用未发现可核实的 v0.1.57 提交。
+
+版本与阶段摘要（由近到远）
+
+2026-11-08　现行文档合并　更新方 本机 Codex
+在 play/current-0.1.60 工作区合并入口、交接和工程说明，新增 Git 提交与推送指南，清理重复入口及协作规范。基线提交 49668b0f9453b02b612f8cc35086caeacb53ce78。本次验证范围为文档链接、路径和打包说明的静态核对。
+
+2026-11-08　v0.1.60 本机启动　更新方／验证方 本机 Codex
+提交 d786790f121488fa7d301e726d08176421c060c8。Shiki-5060Ti-PC 使用 .NET 10.0.402、Godot 4.7.2 Mono、Debug、1440×900、60 FPS 上限。编译 0 错误、4 条既有空引用警告，资源导入与启动日志无报错，确认进入相处小院。范围为启动验证。
+本机证据位于当前工程基线/.local/testing/consolidate-workspace-20261108/alice-runtime/testing/alice-0.1.60-20261108-203032 下的 launch.json 与 game.log。
+
+2026-11-07　v0.1.60 冷藏测试对齐　更新方 Alice
+提交 d786790f121488fa7d301e726d08176421c060c8。测试按 12 格冷藏、冻结生理时间、手动取回的现行规则校验，生产玩法规则与 v0.1.59 一致。Family.Presentation 3/3，Courtyard.ColdStorage 7/7，Family.Growth 4/5，Family.ColdCare 3/9。扩展验证中止时完成 48/66 个项目，其中 18 个正常退出（含一个观测程序）、30 个失败，余下 18 个未运行。
+依据见工程基线/testing/cold-contract-0.1.60/README.md（d786790）。
+
+2026-11-07　v0.1.56 墓碑读档修复　更新方 Alice
+提交 d2c712e（独立分支）。读档切换世界时清理旧墓碑节点和索引，按新存档重建标签。旧基线 57/60，两个最终诊断各 158/158，每次覆盖 22 次实际槽位读取。夹具为合成有效存档。
+依据见工程基线/testing/gravestone-load-label-0.1.56/summary.md（d2c712e）。
+
+2026-11-07　v0.1.59 照护测试准备　更新方 Alice
+提交 da5085a。以真实受伤、喂食、饮水和夜间休息恢复验证照护，Family.CareContinuity 由 4/6 到 6/6。扩展 66 个纯 .NET 项目构建成功，默认运行 22 个检查通过、1 个观测程序正常退出、43 个失败或异常。Soak 24 场景中报告 13 处失败。
+依据见工程基线/testing/family-care-preparation-0.1.59/README.md（da5085a）。
+
+2026-11-07　v0.1.58 成年照护夹具　更新方 Alice
+提交 8834977。通过 GrowthRules.Initialize 建立合法成年夹具，Family.CareContinuity 由 0/6 到 4/6。保留原检查语义和失败记录。游戏编译 0 错误、4 条空引用警告。
+依据见工程基线/testing/family-care-fixtures-0.1.58/README.md（8834977）。
+
+2026-11-07　本地功能恢复并发布　更新方 本机 Codex
+提交 3da3bf948052e875364a4ed6dbb207a9f3b3843c，恢复 145 个经原哈希核对的文件，编译通过。自主行动卡住、昼夜与小屋、个体状态三个专项共 61 项通过。功能恢复和 Alice 分支的整合为两项独立工作。
+依据见工程基线/testing/local-feature-recovery-20261107/README.md 与 source-integrity.json（3da3bf9）。
+
+2026-11-06—07　并行修复　更新方 Alice
+涵盖存档校验、家庭身份、出入小屋、成长避障、河岸救助、庭院时间和卫生、照护中断、商店操作、补给站观察等。逐分支的更新内容与祖先关系见附录 B。此前本机还对旧基线上的 46 条 Alice 分支做过单独整合试玩，提交 0bf1a1f，属于本地试跑记录。
+
+2026-11-06　策划资料归档　更新方 仓库主线（提交署名 AsukaLangrey）
+提交 e8d96a7。归档世界观、游戏设计、自由模式、成长数值和庭院布局配图。该次归档的代码范围以提交差异为准。
+依据见 项目管理/整理记录/20261106-策划案同步/整理说明.txt。
+
+2026-11-02—03　恢复版的本机玩法迭代　更新方 本机开发
+陆续加入日期、四季和温度、1/2/3/5/10 倍速、12 格冷藏、需求节奏和多阶段成长、共享小屋与拥挤反馈、环境卫生与屋外排泄。后续补齐出入屋碰撞恢复、日落入睡与日出起床、卡住恢复、F5/F9 存读档、体力与困意说明。StarterGarden 属于独立美术样板。11 月 7 日统一恢复发布于 3da3bf9，具体文件和本次复核见该提交的恢复记录。
+
+2026-11-01　v0.1.55 与新工程基线　更新方 仓库主线（提交署名 AsukaLangrey）
+bf27420 接入付费购入及落地投放，02ca01f 整理 Yukkuri-Project 并把玩法弹窗改为侧栏流程。5666ef7 与 9454300 收敛顶部栏、两侧栏和画布布局，补齐图标和紧凑控件。57ac71f 接入能力记录和行为培养。988751c 完成繁育、成长、出售、累计售油解锁道具的经营闭环，经营专项 8 项通过，并有受控连续养育和旧档复制检查记录。后续本机版本的分工与冷藏规则按各自时间点的记录解释。
+依据见 项目管理/变更记录/20261101-courtyard-economy/修改与验证.txt 及同目录 UI、行为培养记录。
+
+2026-10-31　v0.1.54　更新方 仓库主线（提交署名 AsukaLangrey）
+76cc3e0 完成小屋并标记 0.1.54，d13140e 修复小屋和模拟回归。同期加入有限食水供给器、付费商店与庭院交互模式，显示剩余水分。
+依据见工程基线/testing/shelter-completion-20261031.md 和对应提交。
+
+2026-10-31　v53 试玩包与交付　更新方 仓库主线及 Alice（按原交付记录）
+718f63e 记录公开源码交付，f129b35 打包 v53。同期完成直接补给、离体茎照护、基于接触的救护与真实动作反馈，并细化面部、帽饰及身体表面表现。
+依据见工程基线/testing/goal-completion-20261031.md 和对应提交。
+
+2026-10-29—30　初始源码导入与系统迭代　更新方 仓库主线（逐项署名见附录 A）
+950b0eb 导入源码、素材与项目记录。后续完善接触及拖拽中断、可恢复存档、家庭繁育与照护、伤势及生理、教学和自主求生。更早的设计、验证及试玩资料保留在仓库根目录 planning。归档位置见 项目管理/历史资料/归档索引.txt。导入日期只代表入库时间。
+
+附录 A　v0.1.60 第一父提交链（82 条）
+字段为提交时间、完整提交、Git 作者、原始摘要。Git 作者是署名，Alice 执行归属由分支及报告佐证。
+2026-11-07 13:28:25 +0800	d786790f121488fa7d301e726d08176421c060c8	AsukaLangrey	test: align cold storage contracts and preserve stop checkpoint (0.1.60)
+2026-11-07 13:10:13 +0800	da5085a477c0f3c166c24b721a50d173186a7162	AsukaLangrey	test: prepare care fixtures through lawful life cycles (0.1.59)
+2026-11-07 12:35:41 +0800	88349779f3e09b649a6397c013519af96564648c	AsukaLangrey	test: initialize valid adult care fixtures (0.1.58)
+2026-11-07 11:17:57 +0800	3da3bf948052e875364a4ed6dbb207a9f3b3843c	AsukaLangrey	Restore local courtyard features and original verification sources
+2026-11-06 01:20:26 +0800	e8d96a78f49182eb17e269e2b62a738c7a9bb7ea	AsukaLangrey	docs: organize local planning documents and design references
+2026-11-01 15:48:11 +0800	988751c4c349b46c64348571b6f83f4541f55849	AsukaLangrey	feat: close courtyard breeding and shop economy loop
+2026-11-01 13:16:25 +0800	57ac71f5a9e20f2b5a15373516c3ed5f4d3e515e	AsukaLangrey	feat: connect behavior feedback, learning records and daily duties
+2026-11-01 10:19:12 +0800	9454300316e58e575337c77f30ef27e4bb0fd906	AsukaLangrey	feat: add action icons and compact sidebar layouts
+2026-11-01 09:53:15 +0800	5666ef7cb252c27324d0e380492722efbf9743dd	AsukaLangrey	feat: unify game UI around sidebars and canvas widgets
+2026-11-01 08:14:03 +0800	02ca01fe8e7d8750224b11a43d5e14b2bc897dea	AsukaLangrey	feat: organize Yukkuri-Project and remove gameplay popups
+2026-11-01 00:09:52 +0800	bf274206fcd451d989dd7895f5c28addd499e857	AsukaLangrey	feat: add paid creature placement to courtyard in v0.1.55
+2026-10-31 17:52:58 +0800	d13140ed8302570edbef846093396b6a518da476	AsukaLangrey	Fix v0.1.54 shelter and simulation regressions
+2026-10-31 15:00:40 +0800	76cc3e0caed4cfcc0e65100ae26bae0854dd6a6b	AsukaLangrey	Complete shelters and label game builds v0.1.54
+2026-10-31 13:19:36 +0800	98de479a57abaf912e5b9d325a79f69dcf3af958	AsukaLangrey	Redesign courtyard interaction modes and paid shop
+2026-10-31 10:18:11 +0800	8440d57fda93e7f8bdb359626b476abc824622e9	AsukaLangrey	Show remaining hydration instead of increasing thirst
+2026-10-31 09:38:35 +0800	f129b35da1a378f34da5b71b1c25cb1307f1c834	AsukaLangrey	Package v53 playtest and apply CPU affinity before game startup
+2026-10-31 08:42:28 +0800	718f63ef107297640408e596a4101438e9a13ece	AsukaLangrey	Close out development and record public v53 source delivery
+2026-10-31 08:25:20 +0800	5b0015e11271815f3b639bd15f0cdc4f78a6cb62	AsukaLangrey	Add finite food and water supply stations with direct interaction
+2026-10-31 08:02:31 +0800	c95ee69c1ba9efafcb2c1ca1bad2920d66ee7331	AsukaLangrey	docs: close seven-hour phase and record full process affinity repair
+2026-10-31 07:34:58 +0800	4889e393fb06c1aad51def04de7a907c5c7a141a	AsukaLangrey	docs: publish verified Alice night source delivery
+2026-10-31 07:28:44 +0800	4a2adc6c4c137e7e98387def474177f0bab3d034	AsukaLangrey	docs: freeze night scope audit and verified asset candidates
+2026-10-31 07:13:17 +0800	63f573ae672146c1a626e6f668358d08f642d792	AsukaLangrey	Add contact-based live brood withdrawal with preserved lifecycle
+2026-10-31 06:59:34 +0800	60c335a541184ea16d0182c1580a3a310c0ae977	AsukaLangrey	Bound support mesh references and refresh public source handoff
+2026-10-31 06:53:00 +0800	7a6f7127220d8ce49d8925b818a1dcd35514933a	AsukaLangrey	Complete transient debug snapshots and continuous detached bud growth
+2026-10-31 06:41:16 +0800	40373f35e645e43c93646c772bbb817c20025240	AsukaLangrey	Distinguish bruising from permanent injury surface marks
+2026-10-31 06:35:31 +0800	56287ee6f6b23d1243a3f5ec461fdadcf3285ae8	AsukaLangrey	Preserve saved pause state and show pinned heat tension
+2026-10-31 06:30:14 +0800	283d1fb3d3dfb074a392a2262d353a2e6752ce38	AsukaLangrey	Keep independent bottle supplies usable without a living selection
+2026-10-31 06:22:46 +0800	fe5b36c7b9d5180b22be5f238b49c1c33086abfc	AsukaLangrey	Cover natural drinking accidents and real shore aftercare
+2026-10-31 06:21:02 +0800	9cd55a24b9e2c138297aa12844504bd35ed54df8	AsukaLangrey	Refine wet body droplets and restore current tool hints
+2026-10-31 06:07:30 +0800	815baed7c6b8e2041813a422de99be7f0a301007	AsukaLangrey	Cover forced birth recovery and clarify rescue cursor state
+2026-10-31 06:01:32 +0800	9cfbfc8a6356661bb4b8d463419303fee4e77318	AsukaLangrey	Refine care dressing folds and show actual rescue tool selection
+2026-10-31 05:55:55 +0800	7a72ec2bb93ffa63379cd9c1b8d7a7af4c493b25	AsukaLangrey	Extend current lighter journey and refine food facets and tool controls
+2026-10-31 05:44:14 +0800	3bb4f2203f3617f9b8b0a0e48f128f0b4fe9c667	AsukaLangrey	Extend real nursery journeys and refine flame and tear surfaces
+2026-10-31 05:31:15 +0800	f067c01464c6440dcfb25150a821ad245971640e	AsukaLangrey	Allow care handoff and palm placement after interrupted carrying
+2026-10-31 05:26:02 +0800	d4c6b8e980e7df4e30ac11ca5d59216e245c702b	AsukaLangrey	Preserve family warmth during company and refine brow surfaces
+2026-10-31 05:13:38 +0800	bd190cea4efe2cf83f148fa2306a46e84bbdbffb	AsukaLangrey	Keep care benefits distinct from trust and preserve guarded landings
+2026-10-31 05:04:38 +0800	4ce8fc318ee118efeb022f36955d3b0b97b62cc1	AsukaLangrey	Tie heat escape posture to actual travel and residual tension
+2026-10-31 05:01:13 +0800	a0553f3c52d1e0dc6b055eef26f204b8bde81011	AsukaLangrey	Preserve peer harm during companionship and refine folded hat brim
+2026-10-31 04:54:27 +0800	7bc1ecde9a62432c3332456ca0de6ac49e0d665a	AsukaLangrey	Require continuous real contact for held food offers
+2026-10-31 04:47:17 +0800	eb4ec0bb041ab8edc052758c065872f600758b4b	AsukaLangrey	Drive water struggle reaches from actual attempts
+2026-10-31 04:45:38 +0800	11a5d004d903c4996157cedd517036863026e7a4	AsukaLangrey	Separate playtest money from supplies and retain guarded hit feedback
+2026-10-31 04:34:06 +0800	40183c9d722dac9924f523daa9a70d689ce2d7ca	AsukaLangrey	Shape hair bundles on the shared contact surface
+2026-10-31 04:32:03 +0800	cc01a07f5031f70a861da22044bfbda17efcdb4a	AsukaLangrey	Add interruptible hunger bites with conserved intake sources
+2026-10-31 04:27:08 +0800	16b1f9251e0fb3f4457a92d05084646dbbebf5e8	AsukaLangrey	Sculpt folded ribbon knots with matching support geometry
+2026-10-31 04:15:38 +0800	b737699c24587ea68536e5c33dd10c9f7cd706c5	AsukaLangrey	Smooth mouth geometry along actual intake progress
+2026-10-31 04:09:10 +0800	8615cebd1fd08b8d21ae58ecb5bf79fb1b770840	AsukaLangrey	Preserve rescue causality and sustained shore support
+2026-10-31 04:02:48 +0800	f08a25b119ea6fefc59ed104620ee593e559ce12	AsukaLangrey	Refine continuous eyes and tears with real contact progress
+2026-10-31 03:50:09 +0800	cee5171ed450a7bb44bc28b20e0252c1fb4fa817	AsukaLangrey	Add independent stem nursery lifecycle and direct bottle interaction
+2026-10-31 03:31:18 +0800	30d587c559beebfcd56ba9fe13423adec1c36d55	AsukaLangrey	Blend pickup poses and integrate licensed low-poly root plants
+2026-10-31 03:17:14 +0800	af5160206b0a85d5dd83f2f71b098c0d7b2fc873	AsukaLangrey	Add persistent stem brood care and independent surface interaction
+2026-10-31 03:01:11 +0800	890256949439d661e7231bcd047d1f26b06ae8c9	AsukaLangrey	Preserve peer attack consequences and expose care supplies and water transitions
+2026-10-31 02:42:23 +0800	39dc3244e56a7aa98137bc4c185b9c6900ba0563	AsukaLangrey	Preserve cautious approach and add contact feedback and debug comparison
+2026-10-31 02:23:19 +0800	e773cbaf923c420953d43b9f37bde63d4fdf7393	AsukaLangrey	Expose live courtyard help and continuous human companionship
+2026-10-31 02:06:57 +0800	322091dfea0460b8f1244ec931e7f6d632739cfa	AsukaLangrey	Keep harm feedback continuous and add direct emergency controls
+2026-10-31 01:50:41 +0800	5ea5a9d39d4988292878ab628b2ef8401086aaee	AsukaLangrey	Add safe breeding interest, gestation presentation and live status meters
+2026-10-31 01:31:09 +0800	629213094991f779d883fb825198a182c0071294	AsukaLangrey	Add continuous emotions, water rescue and direct tool interactions
+2026-10-30 22:30:19 +0800	c4f654f267ff36d51ce6c50c44d99c4f63bc478a	AsukaLangrey	feat: add bounded wild self-care and preserve interrupted care
+2026-10-30 09:52:24 +0800	2da4423f00e2723722611ded8f2108980480c6bd	AsukaLangrey	fix: restore build checks and verify actual contact boundaries
+2026-10-30 03:35:51 +0800	281d0cf63c87adcbe14d5503d67713e430acba3c	AsukaLangrey	feat: connect autonomous adoption and assisted family care
+2026-10-30 03:12:39 +0800	cd369758f9e13754970731611d31fc4ad9a369f4	AsukaLangrey	docs: explain completed drinking regression scope
+2026-10-30 03:12:13 +0800	c5ba5ea11bacf37e2ada7807bd03c428e73bea9d	AsukaLangrey	fix: preserve short autonomous responses before new companionship
+2026-10-30 03:01:56 +0800	881458c93622444b565efc4a70c30223671835fb	AsukaLangrey	fix: align pregnancy rescue and paused interactions with body state
+2026-10-30 02:46:21 +0800	fd2230df2d4d095951ccf2f26f17a8b6440e441e	AsukaLangrey	feat: apply mouth injuries to intake and family communication
+2026-10-30 02:34:13 +0800	f91146391e2a1629b86530eff5b82fbf0085ec23	AsukaLangrey	feat: add real companionship and tighten family protection
+2026-10-30 02:20:06 +0800	7977738745894cf6bbf4022d47b4889d17d1192b	AsukaLangrey	feat: add family teaching and close interaction state gaps
+2026-10-30 02:00:14 +0800	6ae81c9a45bac2cf003132f16bfd6984b6a4a8df	AsukaLangrey	feat: connect family aftermath, maternal risk and injury presentation
+2026-10-30 01:39:17 +0800	cc3aecca7663d10d37f5b5e2a1a1f1291f18f75d	AsukaLangrey	feat: connect family life, reproduction, care and finite cold storage
+2026-10-30 00:58:49 +0800	c400a4c5eedc236d779b1e28142b5c8f6ca5014d	AsukaLangrey	feat: preserve touch caution and respect physical limits during affection
+2026-10-30 00:33:31 +0800	fb0238508514720f267ed039b0beed89effc1f8d	AsukaLangrey	test: preserve c04 failure and add held drinking diagnostics
+2026-10-30 00:30:31 +0800	65f06c36bf5396fcc5406312402e6f03e515c09f	AsukaLangrey	fix: integrate physiology and dragging with safe interruption and deterministic saves
+2026-10-30 00:08:39 +0800	f02b0fcfbb3e9649b5f94d35201c4c22661158b9	AsukaLangrey	fix: release dead carry support and wire room audio; document full game design
+2026-10-29 23:58:31 +0800	8dc072d2c71c33a445d6503d1c5ac865dd444411	AsukaLangrey	fix: release invalid contact and interrupted rest safely; preserve recoverable saves
+2026-10-29 23:23:57 +0800	8238c6e6380fd605ec84cc5267f38de875f6d647	AsukaLangrey	docs: refresh handoff for published v4 changes and pending dot results
+2026-10-29 23:07:28 +0800	f6d98c16a55543a39b30d411e2175aa7552e0e3c	AsukaLangrey	Keep held supplies and scene picking consistent with visible state
+2026-10-29 22:47:10 +0800	ee65c8041f4cfd66eb17f533690358798a13e9ec	AsukaLangrey	Release completed care and feeding gestures back to autonomous life
+2026-10-29 10:30:51 +0800	c6fc7d89795501c26057b991276b4657d62dc122	AsukaLangrey	Cover accepted legacy intake when pending fields are absent
+2026-10-29 10:21:43 +0800	fc3a77578bd77efa34d964f692aa1d885ae9c157	AsukaLangrey	Document transition review and completed-action follow-up
+2026-10-29 10:14:29 +0800	2ef67e93a59df7fb349be1086d4656f47afe552c	AsukaLangrey	Record first cloud report and distinguish current untested changes
+2026-10-29 10:05:35 +0800	7b18eca98df4202de34e759f22f30251bc0edc96	AsukaLangrey	Refine contact and autonomous care; preserve progress on save failure
+2026-10-29 09:45:41 +0800	4a7acd621c2b37d201e0cf196aab63ed83a6eb04	AsukaLangrey	Document local no-execution policy and parallel polish ownership
+2026-10-29 09:20:21 +0800	d729036ccfa4773c92b2f8794f804e26fc9c02a1	AsukaLangrey	Document hourly dot testing and GitHub result protocol
+2026-10-29 09:17:07 +0800	950b0eb0b3322c30c0e12c81230176beb8413920	AsukaLangrey	Import Yukkuri source, assets, and project records
+
+附录 B　Alice 远端分支快照（50 条，其中 3 条属于 v0.1.60 祖先）
+字段为提交时间、更新方、相对 v0.1.60 的状态、远端引用、完整提交、Git 作者、原始摘要。
+并行分支表示其尖端提交不在 v0.1.60 的祖先链上。相似功能可能在不同分支独立实现。
+2026-11-07 13:28:25 +0800 | Alice | 包含于 v0.1.60 | origin/alice/0.1.60-cold-contract | d786790f121488fa7d301e726d08176421c060c8 | AsukaLangrey | test: align cold storage contracts and preserve stop checkpoint (0.1.60)
+2026-11-07 13:24:52 +0800 | Alice | 并行分支 | origin/alice/0.1.56-gravestone-load-label | d2c712e78d50698e69cde293be9bd04bad919455 | AsukaLangrey | fix: rebuild gravestone labels when loading worlds (0.1.56)
+2026-11-07 13:10:13 +0800 | Alice | 包含于 v0.1.60 | origin/alice/0.1.59-care-preparation | da5085a477c0f3c166c24b721a50d173186a7162 | AsukaLangrey | test: prepare care fixtures through lawful life cycles (0.1.59)
+2026-11-07 12:35:41 +0800 | Alice | 包含于 v0.1.60 | origin/alice/0.1.58-family-care-fixtures | 88349779f3e09b649a6397c013519af96564648c | AsukaLangrey | test: initialize valid adult care fixtures (0.1.58)
+2026-11-07 09:19:40 +0800 | Alice | 并行分支 | origin/alice/20261107-station-inspector-selection | 969e483da2b136f4215869524585570820fcc422 | AsukaLangrey | Clear prior object observation when selecting supply stations
+2026-11-07 08:47:03 +0800 | Alice | 并行分支 | origin/alice/20261107-care-interruption-feedback | c7e72054e68ec96b7a870aec9bc4d3e40acd3873 | AsukaLangrey | Report unfinished care as stopped after release or cancellation
+2026-11-07 08:24:07 +0800 | Alice | 并行分支 | origin/alice/20261106-shelter-unlock-feedback | e524eda41d8d0ee1706271b33a371203b2768818 | AsukaLangrey | Show shelter unlock requirements in dedicated purchase page
+2026-11-07 07:53:17 +0800 | Alice | 并行分支 | origin/alice/20261106-grab-supply-action | dfb9e39fd4e7632fddb8510ff1b0b533574110b4 | AsukaLangrey | Fix Grab supply action after release and cancellation
+2026-11-07 07:12:25 +0800 | Alice | 并行分支 | origin/alice/20261106-poke-prop-occlusion | bf47123c11be82b7ad271c6e7a5042d4949098a1 | AsukaLangrey | Fix poke release occluded by foreground props
+2026-11-07 06:35:18 +0800 | Alice | 并行分支 | origin/alice/20261106-pressure-canvas-boundary | 2bb786d1679de7f56c23a52acd61ff967b9c3d7e | AsukaLangrey | fix: keep pressure flip gestures inside the canvas
+2026-11-07 06:10:03 +0800 | Alice | 并行分支 | origin/alice/20261106-poke-release-contact | 2d0a6be4f68247e287c181b928a10686ac985d8e | AsukaLangrey | fix: verify current body contact on poke release
+2026-11-07 05:40:44 +0800 | Alice | 并行分支 | origin/alice/20261106-installed-return-capacity | 0d6cbe0f58278bf4efb40857145a36fd36406bee | AsukaLangrey | fix: reject installed-item returns when warehouse is full
+2026-11-07 05:19:12 +0800 | Alice | 并行分支 | origin/alice/20261106-archived-birth-identity | 69d223313f8c1f13a13ce3c19058b5b7271ee066 | AsukaLangrey | fix: reserve archived identities during birth allocation
+2026-11-07 04:02:10 +0800 | Alice | 并行分支 | origin/alice/20261106-shop-quantity-drafts | fa4a7868dfce2e572b3bcaa6c3d61379ea7069a4 | AsukaLangrey | fix: preserve shop quantity drafts by product
+2026-11-07 03:18:44 +0800 | Alice | 并行分支 | origin/alice/20261106-document-current-entry | 0760090dcf7ffc3beb4748898849496b91356fd2 | AsukaLangrey | docs: distinguish current nested project and historical launchers
+2026-11-07 02:33:28 +0800 | Alice | 并行分支 | origin/alice/20261106-eye-mesh-reuse | 45511a9b17c8be2f177353351f85227ca62aa4ba | AsukaLangrey | perf: reuse exact courtyard eye meshes across actors
+2026-11-07 01:12:39 +0800 | Alice | 并行分支 | origin/alice/20261106-courtyard-speed | f0dac00db61c68d22158256a3950065dd064f675 | AsukaLangrey | feat: synchronize courtyard speed with bounded world and actor steps
+2026-11-07 00:13:36 +0800 | Alice | 并行分支 | origin/alice/20261106-company-selection-reset | f055f7e610f84963fede9de8a1b2178f8790813e | AsukaLangrey | fix: clear pending companionship on explicit tool and session changes
+2026-11-06 23:25:28 +0800 | Alice | 并行分支 | origin/alice/20261106-recovery-parent-identity | 8bf71607fbe74a4548a9330d67b7525cdd8d7550 | AsukaLangrey | fix: preserve parent identities across overlapping recovery
+2026-11-06 22:31:07 +0800 | Alice | 并行分支 | origin/alice/20261106-sold-parent-identity | 6452bdbd47b309c2d9c19a327189148bc2c1586b | AsukaLangrey | Preserve sold parent names in historical family text
+2026-11-06 22:02:19 +0800 | Alice | 并行分支 | origin/alice/20261106-growth-shelter-clearance | c0e5fbbaf99176f85bd163eae9ee4681c954b467 | AsukaLangrey | Recover exterior shelter side clearance after growth within walking budget
+2026-11-06 21:24:15 +0800 | Alice | 并行分支 | origin/alice/20261106-growth-riverbank-clearance | 10ac55095183460434c6c423d5e93534aa59d857 | AsukaLangrey | Recover dry-bank clearance after natural growth without entering water
+2026-11-06 20:57:15 +0800 | Alice | 并行分支 | origin/alice/20261106-growth-woodland-clearance | c1538448d285fab8f2f6df3548f8dd5ee78fdcae | AsukaLangrey | Recover autonomous tree clearance after natural growth
+2026-11-06 20:24:35 +0800 | Alice | 并行分支 | origin/alice/20261106-growth-station-clearance | 29a1157c0615e13a7f75d3e60e793d0d4c457142 | AsukaLangrey | Recover gradual station clearance after natural growth
+2026-11-06 19:03:49 +0800 | Alice | 并行分支 | origin/alice/20261106-shelter-clearance-escape | 9275dd958d1617e1c63ae087676dbec428597170 | AsukaLangrey | Allow monotonic escape from shelter front ball clearance deficit
+2026-11-06 18:32:58 +0800 | Alice | 并行分支 | origin/alice/20261106-shelter-entry-priority | 4cb335c24f8e5266e554bd776e910637a5b6b0ab | AsukaLangrey | Release outside shelter entry reservations for priority needs
+2026-11-06 18:05:55 +0800 | Alice | 并行分支 | origin/alice/20261106-autosave-placement | b6f6e93da32564979a28592e6183ce0a25904898 | AsukaLangrey | Defer background saves while placement selection is active
+2026-11-06 17:43:31 +0800 | Alice | 并行分支 | origin/alice/20261106-waste-stack-capacity | 62c17327f6cc95b773d23990fb70049dc1e8acc5 | AsukaLangrey | Preserve waste portions by selecting available stack capacity
+2026-11-06 17:24:24 +0800 | Alice | 并行分支 | origin/alice/20261106-terminal-stem-motion | 5c4f692d01676a6bd4052fc276626f5b6258a456 | AsukaLangrey | Clear terminal detached stem motion before save and load
+2026-11-06 16:58:48 +0800 | Alice | 并行分支 | origin/alice/20261106-cushion-static-collision | 75cd54cfa0ff4caadae2b3a816715817a5567871 | AsukaLangrey | Fix cushion movement into supply station footprints
+2026-11-06 16:25:45 +0800 | Alice | 并行分支 | origin/alice/20261106-idle-stop-evidence | a824989dbc5ee8d46417049f497ba1150b54d653 | AsukaLangrey | Keep idle stop control without awarding unearned learning credit
+2026-11-06 16:03:58 +0800 | Alice | 并行分支 | origin/alice/20261106-care-contact-progress | 0f35f51fb9e76b9a3224c5748642b5bc296fb87b | AsukaLangrey | Separate actual care contact progress from blocked approach time
+2026-11-06 15:26:34 +0800 | Alice | 并行分支 | origin/alice/20261106-dragged-station-outlet | de43c8206e1e06db93c4868d2f42bccffa645741 | AsukaLangrey | Release stale station outlet ownership after physical object dragging
+2026-11-06 14:37:54 +0800 | Alice | 并行分支 | origin/alice/20261106-save-archived-carrier | ff7ea933427a31269e484bfc3417ac31b5eb2676 | AsukaLangrey | Reject archived creatures as current supply carriers in saves
+2026-11-06 14:18:54 +0800 | Alice | 并行分支 | origin/alice/20261106-wait-bait-shelter | dc4d6f3ed62da7c36579a5fe4f624c52b03a611c | AsukaLangrey | Apply shelter geometry to automatically placed wait practice food
+2026-11-06 14:00:01 +0800 | Alice | 并行分支 | origin/alice/20261106-save-sold-partner | 56c3528ed6080b4321246ef8de5cc5265797ab0c | AsukaLangrey | Reject sold active partner references without bypassing backup recovery
+2026-11-06 13:42:34 +0800 | Alice | 并行分支 | origin/alice/20261106-courtyard-light-cycle | 461774e6ae66383428c347f70207e7b8f21d7796 | AsukaLangrey | Add calendar-driven courtyard lighting with isolated verification
+2026-11-06 13:08:31 +0800 | Alice | 并行分支 | origin/alice/20261106-courtyard-calendar | 62f9a4bbbff19cda7ba8c6c8d10cac388872a52f | AsukaLangrey | feat: project courtyard calendar from simulation time
+2026-11-06 12:48:52 +0800 | Alice | 并行分支 | origin/alice/20261106-hygiene-cleaning | de59235ff148601bc6606b23149c4f6fd6f8d25d | AsukaLangrey | fix: start autonomous cleaning only for ground hygiene needs
+2026-11-06 12:23:04 +0800 | Alice | 并行分支 | origin/alice/20261106-individual-hygiene | 44c0110be93ce8d2116e26fe72c85029f1f91f1c | AsukaLangrey | feat: apply individual hygiene standards to gradual mood targets
+2026-11-06 12:01:09 +0800 | Alice | 并行分支 | origin/alice/20261106-environment-hygiene | 3cde9b5aeaeec150a02437729132d1ca8102d261 | AsukaLangrey | feat: derive and display regional ground waste hygiene
+2026-11-06 11:55:48 +0800 | Alice | 并行分支 | origin/alice/20261106-parent-recovery-sale | b03687f9b21b88e3182b1cd33d99c81b4aff7ddb | AsukaLangrey | fix: keep fathers unavailable for sale during recovery
+2026-11-06 11:30:03 +0800 | Alice | 并行分支 | origin/alice/20261106-save-null-identifiers | 94ee3cae7c715763634ad8852ea51c2583da6430 | AsukaLangrey | fix: reject null family identifiers before save reference lookup
+2026-11-06 11:04:22 +0800 | Alice | 并行分支 | origin/alice/20261106-selection-boundaries | 38802151287f816fb0f68b808a62fd512e458bf7 | AsukaLangrey | fix: reject unavailable close-up selections across keyboard entry
+2026-11-06 10:59:24 +0800 | Alice | 并行分支 | origin/alice/20261106-save-water-validation | bf38b50dc081ce527aaf237e3e8723382643abb4 | AsukaLangrey | fix: validate water structures before cross-creature save references
+2026-11-06 10:30:18 +0800 | Alice | 并行分支 | origin/alice/20261106-courtyard-restart | ba92cbc8f8878aa85382445c119264716b24cc60 | AsukaLangrey | fix: restart courtyard with canonical economy state
+2026-11-06 09:56:28 +0800 | Alice | 并行分支 | origin/alice/20261106-water-rescue-passage | 56e7002ad61b91175f7b422feaf70102459ed63a | AsukaLangrey | fix: preserve water rescue passage and reachable peer assistance
+2026-11-06 09:38:19 +0800 | Alice | 并行分支 | origin/alice/20261106-shelter-physiology | 499c2079ee58f8070bd9d054c93256286374d508 | AsukaLangrey | fix: separate shelter passage from rest and indoor excretion
+2026-11-06 09:31:43 +0800 | Alice | 并行分支 | origin/alice/20261106-continuity-observation | 7190d61ad6551c6e96398e6c298a4a0de65ebb95 | AsukaLangrey | test: observe excretion before autonomous cleanup
+2026-11-06 09:26:44 +0800 | Alice | 并行分支 | origin/alice/20261106-design-regressions | c4a8d6258cfde81cb1a3ea760c37acebed268633 | AsukaLangrey | fix: prevent dehydration recovery bypass and clarify health status

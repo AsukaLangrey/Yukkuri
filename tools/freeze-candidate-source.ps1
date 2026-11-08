@@ -2,6 +2,7 @@ param([Parameter(Mandatory=$true)][string]$ExportDirectory,[Parameter(Mandatory=
 $ErrorActionPreference='Stop'
 $root=[IO.Path]::GetFullPath((Split-Path $PSScriptRoot -Parent))
 . "$PSScriptRoot/build-identity.ps1"
+$readme=Get-YukkuriPackageReadme $root
 function Local([string]$path){$p=[IO.Path]::GetFullPath((Join-Path $root $path));if(!$p.StartsWith($root+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Snapshot must remain inside workspace.'};return $p}
 $export=Local $ExportDirectory;$snapshot=Local $OutputDirectory
 if(Test-Path -LiteralPath $snapshot){throw 'Snapshot exists; never overwrite a frozen source version.'}
@@ -15,7 +16,8 @@ foreach($folder in @('src','checks','tools','assets-source','third-party','plann
         Copy-Item -LiteralPath $file.FullName -Destination $target
     }
 }
-foreach($file in @('README.txt','global.json','NuGet.Config','toolchain.lock.json','.gitignore','.gitattributes','.editorconfig','Open Editor.cmd','Run Preview.cmd','Play Game.cmd')){Copy-Item -LiteralPath (Join-Path $root $file) -Destination (Join-Path $snapshot $file)}
+Copy-Item -LiteralPath $readme -Destination (Join-Path $snapshot 'README.txt')
+foreach($file in @('global.json','NuGet.Config','toolchain.lock.json','.gitignore','.gitattributes','.editorconfig','Open Editor.cmd','Run Preview.cmd','Play Game.cmd')){Copy-Item -LiteralPath (Join-Path $root $file) -Destination (Join-Path $snapshot $file)}
 if((Get-YukkuriSourceIdentity $snapshot).sha256 -ne $info.source.sha256 -or (Get-YukkuriSourceIdentity $root).sha256 -ne $info.source.sha256){throw 'Sources changed during snapshot capture.'}
 [ordered]@{build_id=$info.build_id;source_sha256=$info.source.sha256;captured_at=[DateTimeOffset]::Now.ToString('o');source_directory=$snapshot;scope='Exact game sources and supporting files captured before subsequent development; not runtime acceptance'} |
     ConvertTo-Json | Set-Content (Join-Path $snapshot 'source-snapshot.json') -Encoding utf8

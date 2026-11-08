@@ -5,7 +5,9 @@ $resultPath = Join-Path $ProjectRoot 'artifacts/framework/exported-integration/i
 if (!(Test-Path $resultPath)) { throw 'Exported integration evidence is required.' }
 $result = Get-Content $resultPath -Raw | ConvertFrom-Json
 if (!$result.success -or (Get-Item $resultPath).LastWriteTime -lt (Get-Item "$output/Yukkuri.exe").LastWriteTime) { throw 'Integration evidence is missing or predates this build.' }
-Copy-Item "$ProjectRoot/README.txt" "$output/README.txt" -Force
+. "$PSScriptRoot/build-identity.ps1"
+$readme = Get-YukkuriPackageReadme $ProjectRoot
+Copy-Item -LiteralPath $readme -Destination "$output/README.txt" -Force
 Copy-Item "$ProjectRoot/assets-source/asset-manifest.json" "$output/asset-manifest.json" -Force
 Copy-Item "$ProjectRoot/assets-source/sanctuary-morning-prompt.txt" "$output/imagegen-prompt.txt" -Force
 $release = Join-Path $ProjectRoot ('builds/releases/' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
@@ -21,7 +23,8 @@ try {
             [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, $_.FullName, $relative, [System.IO.Compression.CompressionLevel]::Optimal) | Out-Null
         }
     }
-    foreach ($file in @('README.txt','global.json','NuGet.Config','toolchain.lock.json','.gitignore','.gitattributes','.editorconfig','Open Editor.cmd','Run Preview.cmd')) {
+    [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, $readme, 'README.txt', [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+    foreach ($file in @('global.json','NuGet.Config','toolchain.lock.json','.gitignore','.gitattributes','.editorconfig','Open Editor.cmd','Run Preview.cmd')) {
         [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, (Join-Path $ProjectRoot $file), $file, [System.IO.Compression.CompressionLevel]::Optimal) | Out-Null
     }
 } finally { $archive.Dispose() }

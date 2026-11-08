@@ -29,3 +29,17 @@ function Confirm-YukkuriPayload([string]$Directory,$Expected) {
         if(-not (Test-Path -LiteralPath $target -PathType Leaf) -or (Get-FileHash -LiteralPath $target -Algorithm SHA256).Hash -ne $entry.sha256) {throw "Build payload changed: $($entry.path)"}
     }
 }
+
+function Get-YukkuriPackageReadme([string]$Root) {
+    # Support a standalone source package, the repository, and its nested project.
+    $candidates = @('README.txt','Yukkuri-Project/package-readme.txt')
+    $project = [IO.Path]::GetFullPath((Join-Path $Root '../../..'))
+    if ((Split-Path -Path $project -Leaf) -eq 'Yukkuri-Project') {
+        $candidates += '../../../package-readme.txt'
+    }
+    foreach ($relative in $candidates) {
+        $path = [IO.Path]::GetFullPath((Join-Path $Root $relative))
+        if (Test-Path -LiteralPath $path -PathType Leaf) { return $path }
+    }
+    throw "Package README is missing for $Root"
+}

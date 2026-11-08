@@ -47,6 +47,7 @@ $rhythm=@'
 $text=$text.Substring(0,$begin)+$rhythm+"`r`n"+$text.Substring($end)
 $text | Set-Content planning/milestones-v003.txt -Encoding utf8
 foreach($path in @('README.txt','planning/settings/README.txt','planning/CURRENT.txt','tools/check-milestone.ps1','tools/test-milestone-gate.ps1')){
+    if($path -eq 'README.txt' -and !(Test-Path -LiteralPath $path -PathType Leaf)){continue}
     $t=Get-Content $path -Raw
     $t=$t.Replace('handbook-v003.txt','handbook-v004.txt').Replace('setting-catalog-v003.json','setting-catalog-v004.json').Replace('source-map-v003.json','source-map-v004.json').Replace('milestones-v002','milestones-v003').Replace('149条规则','150条规则').Replace('50份原始需求','51份原始需求').Replace('截至需求v050','截至需求v051').Replace('已按v001—v050归并','已按v001—v051归并').Replace('保留requirements-v001—v050','保留requirements-v001—v051').Replace('当前汇编：v003；原始确认截至 requirements-v050.txt。旧v001/v002保留。','当前汇编：v004；原始确认截至 requirements-v051.txt。旧汇编保留。').Replace('每阶段至少6小时Goal、独立玩法和用户验收','夜间Goal至少6小时，单项不足4小时达标自动接续；独立玩法和用户验收').Replace('8阶段可玩闭环、6小时Goal/用户反馈节奏','8阶段可玩闭环、至少6小时夜间Goal及不足4小时提前接续/用户反馈节奏')
     $t | Set-Content $path -Encoding utf8

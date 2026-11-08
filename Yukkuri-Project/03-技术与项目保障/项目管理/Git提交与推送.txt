@@ -1,0 +1,43 @@
+Yukkuri Git 提交与推送
+
+在仓库根目录执行命令。
+Git 地址为 https://github.com/AsukaLangrey/Yukkuri.git。
+工程目录为 Yukkuri-Project/03-技术与项目保障/技术框架/工程基线。
+
+1. 核对仓库、分支和工作区
+
+  git rev-parse --show-toplevel
+  git remote -v
+  git status --short --branch
+  git diff --stat
+  git diff
+
+从团队约定的基线开始，在对应任务分支工作。需要新分支时，先确认基线及现有工作区改动，再用 git switch -c docs/update-handoff 创建示例分支。已有暂存内容时先识别归属，避免带入其他任务的文件。
+
+2. 按文件暂存并检查
+
+以下以修改交接文档为例。先核对自己的修改，再暂存具体路径。一个文件里混有其他任务的改动时，用 git add -p -- <路径> 逐块选择。
+
+  git add -- 'Yukkuri-Project/HANDOFF.txt'
+  git diff --cached --stat
+  git diff --cached --check
+  git diff --cached
+
+素材是否进入 Git LFS 由 .gitattributes 决定。首次使用前运行 git lfs install。新增或修改素材时，用 git check-attr filter -- <路径> 核对规则，再用 git lfs status 检查暂存状态。缓存、工具链、个人存档、临时日志和凭据留在本机。遇到新增 .uid 或 .import 时，逐个确认是否属于本次需要提交的资源元数据。
+
+3. 创建本地提交
+
+  git commit -m "docs: update project handoff"
+  git status --short --branch
+  git log -1 --format="%H %s"
+
+提交说明写出实际改动。常用前缀为 docs、fix 和 feat。若 Git 提示缺少署名，用 git config --local user.name 和 git config --local user.email 为本仓库设置实际署名。涉及玩法或交付时，按《更新方案》的记录规范写明提交、验证结果和未测范围。
+
+4. 推送已授权的协作分支
+
+git commit 创建本地提交。git push 会把提交发送到远端，需要该仓库的写入权限。确认本次允许推送及目标分支后再执行。以下沿用示例分支名。
+
+  git push -u origin docs/update-handoff
+  git ls-remote --heads origin refs/heads/docs/update-handoff
+
+把返回的远端提交号与本地 git rev-parse HEAD 对照。需要合入 main 时按项目分工提交审阅。远端领先或推送被拒绝时，先用 git fetch origin 和 git log 核对双方的提交，再按协作约定处理分歧。

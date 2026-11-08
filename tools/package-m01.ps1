@@ -14,6 +14,7 @@ Confirm-YukkuriPayload $output $info.payload
 Confirm-YukkuriEngineProvenance $output $info
 $sourceRoot=if($SourceDirectory){[IO.Path]::GetFullPath((Join-Path $ProjectRoot $SourceDirectory))}else{$ProjectRoot}
 if($sourceRoot -ne $ProjectRoot -and !$sourceRoot.StartsWith($ProjectRoot+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Source snapshot must stay inside workspace.'}
+$readme=Get-YukkuriPackageReadme $sourceRoot
 $source=Get-YukkuriSourceIdentity $sourceRoot
 if($source.sha256 -ne $info.source.sha256){throw 'Game sources changed since export; rebuild and verify the new export.'}
 $infoHash=(Get-FileHash -LiteralPath $infoPath -Algorithm SHA256).Hash
@@ -74,7 +75,8 @@ try{
                 [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive,$_.FullName,$relative,[IO.Compression.CompressionLevel]::Optimal) | Out-Null
             }
     }
-    foreach($file in @('README.txt','global.json','NuGet.Config','toolchain.lock.json','.gitignore','.gitattributes','.editorconfig','Open Editor.cmd','Run Preview.cmd','Play Game.cmd')){
+    [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive,$readme,'README.txt',[IO.Compression.CompressionLevel]::Optimal) | Out-Null
+    foreach($file in @('global.json','NuGet.Config','toolchain.lock.json','.gitignore','.gitattributes','.editorconfig','Open Editor.cmd','Run Preview.cmd','Play Game.cmd')){
         [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive,(Join-Path $sourceRoot $file),$file,[IO.Compression.CompressionLevel]::Optimal) | Out-Null
     }
     if(Test-Path -LiteralPath (Join-Path $sourceRoot 'source-snapshot.json')){

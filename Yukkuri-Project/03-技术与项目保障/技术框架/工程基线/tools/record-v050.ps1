@@ -41,6 +41,7 @@ $text=(Get-Content planning/milestones-v001.txt -Raw).Replace('里程碑与验�
 $text += "`r`n本版追加（v050）：以主角、园区雇员、油库里为核心，修正原泛称居民；玩法闭环和原验收条件不删减，旧版保留。`r`n"
 $text | Set-Content planning/milestones-v002.txt -Encoding utf8
 foreach($path in @('README.txt','planning/settings/README.txt','planning/stages/README.txt','tools/check-milestone.ps1','tools/test-milestone-gate.ps1')){
+    if($path -eq 'README.txt' -and !(Test-Path -LiteralPath $path -PathType Leaf)){continue}
     $text=Get-Content $path -Raw
     $text=$text.Replace('handbook-v002.txt','handbook-v003.txt').Replace('setting-catalog-v002.json','setting-catalog-v003.json').Replace('source-map-v002.json','source-map-v003.json').Replace('milestones-v001','milestones-v002').Replace('截至需求v049','截至需求v050').Replace('当前汇编：v002；原始确认截至 requirements-v049.txt。旧v001保留。','当前汇编：v003；原始确认截至 requirements-v050.txt。旧v001/v002保留。').Replace('148条规则','149条规则').Replace('49份原始需求','50份原始需求').Replace('保留requirements-v001—v049','保留requirements-v001—v050')
     $text | Set-Content $path -Encoding utf8
